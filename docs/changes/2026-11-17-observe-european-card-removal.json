@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "observe-european-card-removal",
+  "title": "Observe removal of a yellow card in an isolated battle",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Document a user-guided Stop violation and one CH-0339 application in an isolated EUR final-battle scene."
+  ],
+  "validation": [
+    "Protected Wine/Xvfb session: forbidden Stop produced a visible yellow card on Nusrat; one maintained application recorded 24 writes and changed a target 256 to 0. After reopening status, the displayed yellow count changed from 1 to 0 and the target stayed zero for 192 frames after disarm, without more writes (dbg22-royal-stop-live-zprjyv6n).",
+    "A protected no-cheat Wine replay matched the full pre-application state, frame and clock; one and 193 frames later it retained target 256 and displayed one yellow card while the candidate had zero, at matching frames and clocks (dbg22-royal-card-control-2rzyo45b)."
+  ],
+  "limitations": [
+    "One yellow-card case and one source: red cards, other units and side effects, native Windows and original device behavior remain unverified."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "classify-european-adjacent-indexed-archive",
+  "title": "Classify the adjacent European indexed archive",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Identify and bound the separately rooted indexed archive at 3ae5a4 using its original wrapper call and existing source ownership."
+  ],
+  "validation": [
+    "Static EUR/E165 audit zy8p2uxf authenticates the caller and decodes 41 programs from 63 literal and 89 dictionary packets. The 2008-byte archive and four-byte caller literal have no E165 source-owner overlap."
+  ],
+  "limitations": [
+    "Typed integration, original-reader Wine validation, ordinary reachability, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-classify-european-direct-indexed-archive.json"
+  ]
+}

@@ -55,7 +55,7 @@ pub struct Script39RegistryPoses {
     pub pixels: Vec<PixelBlock>,
 }
 
-fn extent(at: u32, len: usize, alignment: u32) -> Result<(), String> {
+pub(super) fn extent(at: u32, len: usize, alignment: u32) -> Result<(), String> {
     if at % alignment != 0
         || len == 0
         || len > 0x0100_0000
@@ -67,18 +67,18 @@ fn extent(at: u32, len: usize, alignment: u32) -> Result<(), String> {
     }
     Ok(())
 }
-fn bytes(rom: &[u8], at: u32, len: usize) -> Result<&[u8], String> {
+pub(super) fn bytes(rom: &[u8], at: u32, len: usize) -> Result<&[u8], String> {
     extent(at, len, 1)?;
     rom.get(at as usize..at as usize + len)
         .ok_or_else(|| "Truncated opcode-39 pose source".into())
 }
-fn half(rom: &[u8], at: u32) -> Result<u16, String> {
+pub(super) fn half(rom: &[u8], at: u32) -> Result<u16, String> {
     Ok(u16::from_le_bytes(bytes(rom, at, 2)?.try_into().unwrap()))
 }
-fn word(rom: &[u8], at: u32) -> Result<u32, String> {
+pub(super) fn word(rom: &[u8], at: u32) -> Result<u32, String> {
     Ok(u32::from_le_bytes(bytes(rom, at, 4)?.try_into().unwrap()))
 }
-fn pointer(value: u32) -> Result<u32, String> {
+pub(super) fn pointer(value: u32) -> Result<u32, String> {
     value
         .checked_sub(0x0800_0000)
         .filter(|&at| at < 0x0100_0000 && at & 3 == 0)
@@ -157,9 +157,9 @@ fn producer_keys(
 
 /// Union of previously published source intervals. Partial overlap is never
 /// silently split into a guessed typed view.
-struct PriorSources(Vec<(u32, u32)>);
+pub(super) struct PriorSources(Vec<(u32, u32)>);
 impl PriorSources {
-    fn new(resources: &[Resource]) -> Result<Self, String> {
+    pub(super) fn new(resources: &[Resource]) -> Result<Self, String> {
         let mut ranges = Vec::new();
         for source in resources.iter().flat_map(|r| &r.sources) {
             extent(source.offset, source.length as usize, 1)?;
@@ -178,7 +178,7 @@ impl PriorSources {
         }
         Ok(Self(merged))
     }
-    fn contains(&self, at: u32, len: usize) -> Result<bool, String> {
+    pub(super) fn contains(&self, at: u32, len: usize) -> Result<bool, String> {
         extent(at, len, 1)?;
         let end = at + len as u32;
         let i = self.0.partition_point(|&(_, hi)| hi <= at);

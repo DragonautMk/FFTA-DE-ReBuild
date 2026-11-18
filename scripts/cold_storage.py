@@ -74,6 +74,28 @@ def relative(value):
     return Path(*p.parts)
 
 
+def external_mount(mount, expected_uuid=None):
+    """Resolve an explicitly mounted Linux volume; never fall back to its empty mountpoint."""
+    mount = Path(os.path.abspath(mount))
+    try:
+        ordinary(mount, directory=True)
+    except OSError as error:
+        raise ValueError(f'External archive volume is not available at {mount}: {error}') from error
+    try:
+        result = subprocess.run(['findmnt', '--json', '--mountpoint', str(mount),
+                                 '--output', 'TARGET,UUID'], check=True,
+                                capture_output=True, text=True)
+        filesystems = json.loads(result.stdout)['filesystems']
+    except (OSError, subprocess.SubprocessError, KeyError, ValueError) as error:
+        raise ValueError(f'External archive volume is not mounted at {mount}: {error}') from error
+    if len(filesystems) != 1 or filesystems[0].get('target') != str(mount):
+        raise ValueError(f'External archive volume is not mounted at {mount}')
+    uuid = filesystems[0].get('uuid')
+    if not uuid or (expected_uuid and uuid.lower() != expected_uuid.lower()):
+        raise ValueError(f'External archive volume UUID is missing or does not match at {mount}')
+    return mount, uuid
+
+
 def exists(path):
     return os.path.lexists(path)
 
@@ -372,13 +394,109 @@ class Store:
         self.check()
         if data['state'] == 'preparing':
             raise ValueError(f'Incomplete archive retained for review: {entry}')
-        manifest, payload = entry / 'manifest.json', entry / 'payload.tar.zst'
+        manifest, payload = entry / 'manifest.json', self.payload(entry, data)
         ordinary(manifest); ordinary(payload)
         if digest(manifest) != data['manifest_sha256'] or digest(payload) != data['archive_sha256']:
             raise ValueError('Cold archive/catalog checksum mismatch')
         rows = json.loads(manifest.read_text())
         check_manifest(rows)
         return rows
+
+    def payload(self, entry, data):
+        external = data.get('external_payload')
+        if not external:
+            return entry / 'payload.tar.zst'
+        mount_override = os.environ.get('FFTA_COLD_STORAGE_MOUNT')
+        mount, _ = external_mount(mount_override or external['mount'], external['uuid'])
+        payload = mount / relative(external['path'])
+        ordinary(payload)
+        if payload.stat().st_dev != mount.stat().st_dev:
+            raise ValueError('External archive is not on its recorded volume')
+        return payload
+
+    def offload(self, entry, data, mount, directory, *, completion_paths=()):
+        """Copy one completed archive to a mounted volume, verify it, then retire its local payload."""
+        self.check()
+        if data.get('state') != 'archived' or data.get('external_payload'):
+            raise ValueError('Only local, fully archived entries can be moved externally')
+        proof = data.get('proof', {})
+        if not proof.get('scope'):
+            raise ValueError('External offload requires an explicit completion scope')
+        scope = self.root / relative(proof['scope'])
+        source = self.root / relative(data['source'])
+        if scope == source or scope not in source.parents or not scope.is_relative_to(self.root / 'target'):
+            raise ValueError('Invalid archived completion scope')
+        evidence = proof.get('completion', [])
+        if completion_paths:
+            evidence = []
+            for value in completion_paths:
+                path = Path(os.path.abspath(value if Path(value).is_absolute() else self.root / value))
+                if path == scope or scope not in path.parents or path == source or source in path.parents:
+                    raise ValueError('Offload completion evidence must be within the scope and outside the payload')
+                evidence.append({'path': path.relative_to(self.root).as_posix(), 'sha256': offload_completion(path)})
+        if not evidence:
+            raise ValueError('External offload requires explicit completion evidence and scope')
+        if exists(source):
+            raise ValueError('Archived source exists; preserve it and review its state')
+
+        def check_evidence():
+            for record in evidence:
+                if offload_completion(self.root / relative(record['path'])) != record['sha256']:
+                    raise ValueError('Completion evidence changed; offload refused')
+            for guard in proof.get('outcome_guards', []):
+                path = scope / relative(guard['name'])
+                ordinary(path)
+                if digest(path) != guard['sha256']:
+                    raise ValueError('Historical outcome evidence changed; offload refused')
+
+        check_evidence()
+        mount, uuid = external_mount(mount)
+        directory = relative(str(directory))
+        target_dir = mount / directory
+        ordinary(target_dir, directory=True)
+        if target_dir.stat().st_dev != mount.stat().st_dev:
+            raise ValueError('Offload destination is not on the selected volume')
+        destination = target_dir / (entry.name + '.tar.zst')
+        local = entry / 'payload.tar.zst'
+        with Lease(scope, 'cold-storage-external-offload'):
+            host_activity(scope, root=self.root)
+            self.load(entry, data)
+            initial = ordinary(local)
+            with local.open('rb') as src, destination.open('xb') as dst:
+                shutil.copyfileobj(src, dst, BLOCK)
+                dst.flush(); os.fsync(dst.fileno())
+            sync_dir(target_dir)
+            ordinary(destination)
+            if digest(destination) != data['archive_sha256']:
+                raise ValueError('External copy checksum mismatch; local archive retained')
+            activity = host_activity(scope, root=self.root)
+            self.check()
+            external_mount(mount, uuid)
+            check_evidence()
+            if exists(source):
+                raise ValueError('Archived source appeared during offload; both copies retained')
+            current = ordinary(local)
+            if ((current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns)
+                    != (initial.st_dev, initial.st_ino, initial.st_size, initial.st_mtime_ns)
+                    or digest(local) != data['archive_sha256']):
+                raise ValueError('Local archive changed during offload; both copies retained')
+            target_identity = ordinary(destination)
+            published = dict(data, external_payload={'mount': str(mount), 'uuid': uuid,
+                                                      'path': (directory / destination.name).as_posix()},
+                             offloaded_at=time.time(), offload_activity=activity,
+                             offload_review={'completion': evidence,
+                                             'basis': 'explicit' if completion_paths else 'archive proof'})
+            save(entry / 'entry.json', published)
+            self.load(entry, published)
+            external_mount(mount, uuid)
+            final_identity = ordinary(destination)
+            if ((final_identity.st_dev, final_identity.st_ino, final_identity.st_size, final_identity.st_mtime_ns)
+                    != (target_identity.st_dev, target_identity.st_ino, target_identity.st_size,
+                        target_identity.st_mtime_ns)):
+                raise ValueError('External archive changed during publication; local copy retained')
+            local.unlink()
+            sync_dir(entry)
+        return published
 
     def pack(self, path, *, reason, proof, floor=5 * GIB, before_retire=None):
         self.check()
@@ -471,7 +589,7 @@ class Store:
         capacity(source.parent, size(rows) + len(rows) * 4096, floor)
         data['state'] = 'restoring'
         save(entry / 'entry.json', data)
-        read_archive(entry / 'payload.tar.zst', rows, entry / 'staging')
+        read_archive(self.payload(entry, data), rows, entry / 'staging')
         if exists(source):
             raise ValueError('Restore destination appeared; refusing overwrite')
         os.rename(entry / 'staging', source)
@@ -489,7 +607,7 @@ class Store:
     def recover(self, entry, data):
         """Recover interrupted publication without overwriting or guessing owners."""
         rows = self.load(entry, data)
-        read_archive(entry / 'payload.tar.zst', rows)
+        read_archive(self.payload(entry, data), rows)
         source = self.root / data['source']
         if data['state'] == 'retiring':
             if exists(source) and exists(entry / 'retiring'):
@@ -594,6 +712,43 @@ def completion(path):
     data = json.loads(path.read_text())
     if not isinstance(data, dict) or not (data.get('status') == 'PASS' or data.get('closed') is True
                                          or ('normal_exit' in data and data['normal_exit'] == 0)):
+        raise ValueError(f'Explicit completed/PASS evidence required: {path}')
+    return digest(path)
+
+
+def offload_completion(path):
+    """Accept existing PASS receipts and explicit zero-exit historical result formats."""
+    ordinary(path)
+    if path.stat().st_size > 2 * BLOCK:
+        raise ValueError(f'Completion evidence is too large: {path}')
+    data = json.loads(path.read_text())
+
+    def passed(value):
+        if isinstance(value, list):
+            return bool(value) and all(passed(item) for item in value)
+        if not isinstance(value, dict):
+            return False
+        if 'status' in value and value['status'] != 'PASS':
+            return False
+        if any(str(value.get(key, '')).upper().startswith(
+                ('FAIL', 'ERROR', 'PARTIAL', 'INTERRUPTED', 'SUSPENDED', 'WAITING', 'RUNNING'))
+               for key in ('outcome', 'state')):
+            return False
+        if any(key in value and value[key] is not True for key in ('protected_unchanged', 'test_result')):
+            return False
+        if value.get('error') or value.get('errors'):
+            return False
+        if any(key in value and (type(value[key]) is not int or value[key] != 0)
+               for key in ('exit', 'exit_code', 'returncode', 'normal_exit')):
+            return False
+        if any(key in value and isinstance(value[key], list) and not passed(value[key])
+               for key in ('results', 'tests', 'cases')):
+            return False
+        return (value.get('status') == 'PASS' or value.get('closed') is True
+                or any(type(value.get(key)) is int and value[key] == 0
+                       for key in ('exit', 'exit_code', 'returncode', 'normal_exit')))
+
+    if not passed(data):
         raise ValueError(f'Explicit completed/PASS evidence required: {path}')
     return digest(path)
 
@@ -716,6 +871,11 @@ def main():
     batch.add_argument('--exclude', action='append', default=[], help='additional repository-relative path glob to preserve')
     for name in ['restore', 'retire', 'verify', 'recover']:
         p = sub.add_parser(name); p.add_argument('path')
+    offload = sub.add_parser('offload', help='move one completed archive to a mounted external volume')
+    offload.add_argument('path'); offload.add_argument('--mount', required=True, type=Path)
+    offload.add_argument('--directory', required=True, help='existing directory relative to the volume root')
+    offload.add_argument('--completion', action='append', default=[], type=Path,
+                         help='reviewed completed result within the scope (repeatable)')
     plan = sub.add_parser('plan')
     plan.add_argument('path'); plan.add_argument('--scope', required=True, type=Path)
     plan.add_argument('--completion', action='append', type=Path, required=True)
@@ -750,7 +910,8 @@ def main():
                 import cold_storage_batch
                 return cold_storage_batch.run(store, args)
             if args.action == 'list':
-                print(json.dumps([{k: d.get(k) for k in ['source', 'state', 'logical_bytes', 'archive_bytes']}
+                print(json.dumps([{**{k: d.get(k) for k in ['source', 'state', 'logical_bytes', 'archive_bytes']},
+                                   'storage': 'external' if d.get('external_payload') else 'local'}
                                   for _, d in store.entries()], indent=2)); return 0
             source, rel = store.source(args.path)
             if args.action == 'plan':
@@ -772,13 +933,21 @@ def main():
             matches = store.matching([source])
             if not matches:
                 raise ValueError('No matching archive')
+            if args.action == 'offload':
+                exact = [(entry, data) for entry, data in matches if data['source'] == rel]
+                if len(exact) != 1:
+                    raise ValueError('Offload requires the exact source path of one archive')
+                entry, data = exact[0]
+                print(json.dumps(store.offload(entry, data, args.mount, args.directory,
+                                               completion_paths=args.completion), indent=2))
+                return 0
             for entry, data in matches:
                 if args.action == 'restore': store.restore(entry, data)
                 elif args.action == 'retire':
                     scope = data.get('proof', {}).get('scope', data.get('proof', {}).get('unit', data['source']))
                     host_activity(store.root / relative(scope), root=store.root); store.retire(entry, data)
                 elif args.action == 'recover': store.recover(entry, data)
-                else: read_archive(entry / 'payload.tar.zst', store.load(entry, data))
+                else: read_archive(store.payload(entry, data), store.load(entry, data))
                 print(f'PASS {args.action}: {data["source"]}')
         return 0
     except (OSError, ValueError, KeyError, tarfile.TarError, subprocess.SubprocessError) as error:

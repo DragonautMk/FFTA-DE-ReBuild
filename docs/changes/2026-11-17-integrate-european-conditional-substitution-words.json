@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-conditional-substitution-words",
+  "title": "Preserve conditional European substitution source words",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an E170-d169 separate typed source resource for 98 conditional substitution words and the original dispatcher literal, retaining the earlier candidate owner and uncapped guest indexing."
+  ],
+  "validation": [
+    "Protected source audit xf27x8sa and Windows test build mnjuuqps pass. Preliminary build n9zcsqnu passed before the explicit text.catalogs dependency was added.",
+    "Wine sjojlovh creates/reuses/verifies E170 and preserves all 112 E169 resources. All 396 new bytes, mixed-width boundaries, duplicate indices, modified words and partial overlaps are checked with source ROM copies altered. Sixty-six original-prefix comparisons across the two registry readers and substitution dispatcher match complete state and guest clock in interpreter and generated instruction dispatch; Wine drained.",
+    "Protected E170 ownership audit thuu27et assigns all 256 words conditionally addressed by the two original registry readers, preserving the 158 previous owners. Windows production CLI build gchhbcjn and Wine alfjrf8b pass create/reuse/verify with all 114 files matching the tested generation; the three-frame raw/managed continuation matches framebuffer/OAM and final state hashes but reads zero new word bytes. Wine server drained."
+  ],
+  "limitations": [
+    "Callback invocation, safety and ordinary indices are unproved; generated blocks may fall back to interpretation. Audio and source-poisoned scene comparisons, other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/conditional_substitution_words.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_substitution_words.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_substitution_words_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-substitution-complement.json"
+  ]
+}

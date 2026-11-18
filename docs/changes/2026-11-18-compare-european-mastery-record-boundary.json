@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "compare-european-mastery-record-boundary",
+  "title": "Compare the mastery cheat across three candidate records",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Document a bounded CH-0320 comparison of the first three candidate character records and the two written bytes beyond the previously inspected progress span."
+  ],
+  "validation": [
+    "A protected same-seed EUR/Wine interpreter pair matched complete pre-application state, frame, clock and all three 264-byte candidate records. One armed frame recorded 72 halfword writes; all first-record bytes 40..CF differed versus the no-cheat control, while the remaining first-record bytes and the second and third records matched. The result persisted at a matching frame and clock 60 frames after disarm; immediate captured map images matched. Inputs remained protected and Wine drained (dbg22-mastery-three-records-fiwjrgz3).",
+    "A prior execution was refused before launching the guest because the shared Wine lease was held (brha_wrb)."
+  ],
+  "limitations": [
+    "Offsets CE..CF are outside the earlier 142-byte candidate span; their meaning and possible later effects are unknown. Three records and one map scene do not establish all unit, ability, gameplay, native Windows or original device behavior."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

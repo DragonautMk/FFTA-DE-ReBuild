@@ -271,6 +271,43 @@ ordinary `--protect` guard still refuses symlinked trees: use the standalone
 wrapper or explicit restoration for historical Wine trees containing links.
 Archive extraction itself validates links without following their destinations.
 
+#### Moving completed archives to an external volume
+
+On Linux, an individual archive with unchanged completion evidence can be
+offloaded to an existing directory on a mounted volume with a filesystem UUID:
+
+```sh
+python3 scripts/cold_storage.py offload target/completed-check/resources \
+  --mount /path/to/mounted-volume --directory ffta-cold-archives
+```
+
+Review the scope, completion and current consumers first. The directory must
+already exist on the selected volume; an existing destination is never
+overwritten. Under the store and scope leases, the command checks host activity,
+copies the archive, synchronizes it, verifies its checksum and publishes the
+external reference before removing the local copy. Interrupted copies are kept
+for inspection; an interruption after publication can also leave a local
+duplicate. Do not remove either copy without reviewing its catalog entry.
+
+If an older catalog entry has no completion receipt, add a reviewed result from
+that same scope with `--completion target/completed-check/wine-result.json`.
+PASS and unambiguous successful exit results, including lists of individual
+successful results, are accepted; failed or contradictory outcomes are refused.
+Previously recorded outcome guards must still match. The original archival
+proof is preserved, and the additional offload review is recorded separately.
+
+The local catalog, manifest and readable evidence stay in `target/cold-storage`.
+`list` identifies external entries and the usual `verify`, `restore` and `run`
+commands read them when the recorded volume is mounted. If it is unavailable or
+its UUID differs, they refuse the operation and preserve the catalog. When the
+same volume is mounted at another location, set `FFTA_COLD_STORAGE_MOUNT` to
+that mount point. A restore still needs local space for the extracted files.
+
+External-volume lookup currently uses Linux `findmnt`; native Windows and the
+Docker wrapper have not been validated for external archives. Use the native
+Linux tool with the drive attached for these entries until those environments
+are supported. Other local archive entries remain available without the drive.
+
 For automatic historical adoption, run one batch command:
 
 ```sh

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-language-index-e167-ownership",
+  "title": "Reconcile the European callback ownership",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Update the conditional full-byte language-position ownership inventory after the independently rooted callback descriptor was integrated in E167."
+  ],
+  "validation": [
+    "Protected static audit 60xqqy83 checks both original readers and all 256 byte inputs against the E167 manifest. Of 261 physical pairs, 260 have an owner and one two-byte pair remains unowned.",
+    "Protected static audit s82earyr authenticates both conditional indices, neighboring list sources and a bounded exact-pointer search; it does not establish the gap's meaning or ordinary reachability."
+  ],
+  "limitations": [
+    "This does not establish ordinary reachability of indices above 4 or the meaning of the final two-byte gap. Other writers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-language-index-e166-ownership.json"
+  ]
+}

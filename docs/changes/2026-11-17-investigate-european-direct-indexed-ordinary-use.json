@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "investigate-european-direct-indexed-ordinary-use",
+  "title": "Investigate ordinary use of European direct indexed archives",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a bounded, source-guided ordinary-input locator for the two direct indexed archives and compare a short raw/managed scene when the locator observes source use."
+  ],
+  "validation": [
+    "Static audits m5katm09 and bckq9lmb find three syntactic loader-call candidates; p0qt7o6q authenticates a retained program-1 checkpoint and a later flag-gated opcode 0x49 source lead without claiming execution.",
+    "Windows GNU build xzij0tdd and Wine dh34xwul replay 6000 recorded ordinary frames from the authenticated EUR checkpoint. Neither direct archive records a source read, so no raw/managed scene pair is run; Wine server drained.",
+    "Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh after the negative contradicted the lead; effective settings are unconfirmed. The flag is clear at both negative-window endpoints. The e175 disassembly shows dispatcher request 12 selects the loader, while the proposed program-2 command requests 13; that proposed route is rejected. The e175 unit did not assert the jump-table index.",
+    "Guarded static audit eduynil3 authenticates the dispatcher index and finds four script request-12 producers in event keys 154, 156, 158 and 170; no ordinary execution was observed.",
+    "Focused Sol reconsultation identified EUR DS-20 slot 65 as a program-160 precursor, but an intervening conditional and its legacy state ancestry prevent treating it as an ordinary-use witness.",
+    "Windows GNU test build 4q2i907e passes with a bounded DS-20 diagnostic; the corresponding Wine run is pending the shared prefix.",
+    "Protected static audit 0ivxkuzk follows a mode-slot-2 source route to the loader and authenticates an existing cold-input checkpoint with that slot selected; the callback and archive reads remain unobserved.",
+    "Offline audit acjbv2hh authenticates a cold-origin preselection at frame 180 and retains a time-shifted copy of the recorded input; exact state equivalence with the other recording prefix remains unproved.",
+    "Cold locator unit c_g_r34l was refused before Wine execution because the shared prefix was already leased; no guest replay or archive observation occurred. The unit retained no lease.",
+    "Wine abz4lk0q continues the cold-origin frame-180 state with shifted recorded keys, observes 302 and 3292 managed source bytes from the two archives, and passes 11 raw/managed frames of full state, guest clock, central/wide framebuffer, OAM and nonempty audio with managed source ROM bytes altered. Wine server drained."
+  ],
+  "limitations": [
+    "The earlier negative is limited to its selected window; the positive covers one cold-origin continuation, not all scenes or request-12 execution. The input prefix is not independently proven identical to the checkpoint and no recorded ancestry does not prove a clean prior history. Other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/direct_indexed_ordinary_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-adjacent-indexed-archive.json"
+  ]
+}

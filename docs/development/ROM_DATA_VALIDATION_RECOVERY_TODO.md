@@ -44,6 +44,12 @@ The evidence does not attribute every unchecked item to lack of disk space.
 - [x] **ROMDATA-04-ADJACENT-371464-CLI:** the EUR e162 production CLI creates,
   reuses and verifies 106 matching files under Wine (`j4r9sopl`). Its bounded
   world-map scene reads no tilemap geometry bytes.
+- [x] **ROMDATA-04-SCRIPT39-REGISTRY-CLI:** the EUR e163 production CLI creates,
+  reuses and verifies 107 matching files under Wine (`vgo1cewu`). Its bounded
+  world-map window reads no opcode-39 pose bytes.
+- [x] **ROMDATA-04-SCRIPT39-SPECIAL-CLI:** the EUR e164 production CLI creates,
+  reuses and verifies 108 matching files under Wine (`72_aby76`). Its bounded
+  world-map window reads no new special-pose bytes.
 - [x] **ROMDATA-05-E162-SCENES scoped:** compare four retained checkpoints for
   three frames each (`ig6dmb65`) and an eight-frame production cold boot
   (`dcq3ml1a`) on EUR/Wine. No selected new-source reads occurred in the
@@ -307,7 +313,60 @@ current evidence before running another check.
   unchanged branch (`9k_mye2m`). Returning from French and publishing ID 0
   now passes an ordinary EUR/Wine interpreter pair (`1riwnrce`). Other writers,
   native dispatch, the global value domain, Linux, USA and native Windows
-  remain open.
+  remain open. The E164 conditional full-byte index audit (`s7fuvptv`) found
+  39 already-owned and 222 unbound physical pairs. E166 recheck (`a1j2lsxv`)
+  found 256 owned and five unowned pairs after the two archives were added.
+  E167 recheck `60xqqy83` finds 260 owned; the final two-byte gap at
+  `3ae472..3ae474` remains unclassified. Bounded audit `s82earyr` identifies
+  conditional reader inputs 35 and 30 and neighboring independent list roots;
+  its alignment and zero bytes do not prove padding. E168-d167 adds a separate
+  opaque projection; publication and controlled original-reader Wine checks
+  pass (`mncnsstk`). E168 assigns all 261 conditional physical pairs (`4ami2zcc`)
+  without establishing their live input domain. Production Wine CLI creation,
+  reuse and verification pass (`wklf6sch`); ordinary reachability of inputs
+  30/35, Linux, USA and native Windows remain pending.
+- [ ] **ROMDATA-01-CONTEXT-CALLBACK-3AE47C:** validate the drafted E167
+  independently rooted callback descriptor. The controlled original
+  dispatcher state-4 Wine retry `md0zxb9k` and production CLI `555lr8qm`
+  pass; static join `1rjf486k` links an ordinary retained trace and checkpoint
+  to the descriptor. Wine continuation `wklf6sch` reads 14 managed descriptor
+  bytes and matches three framebuffer/OAM frames and the final serialized
+  state; audio and source-poisoned scene comparisons remain open. Initial
+  `yxtwldmj` failed an intermediate call-PC observation hidden by compiled
+  chaining. The final descriptor byte is opaque; other scenes, Linux, USA and
+  native Windows remain open.
+- [ ] **ROMDATA-01-INDEXED-DIRECT-3AE484:** extend coverage of the EUR
+  four-program archive identified by `08023c98`; source audit (`j80q8jx4`),
+  controlled reader (`qk3xqc4z`), production CLI (`e87ug9pq`) and one bounded
+  ordinary-input continuation (`abz4lk0q`) pass on Wine. Other scenes and
+  consumers, Linux, USA and native Windows remain open.
+- [ ] **ROMDATA-01-INDEXED-DIRECT-3AE5A4:** finish validation of the adjacent
+  EUR archive. Static source audit `zy8p2uxf` and E166 controlled Wine test
+  `puxz2kz7` pass for 41 programs; production CLI Wine `ozq4vcii` passes.
+  Its bounded world-map window reads no archive bytes; a separate continuation
+  (`abz4lk0q`) reads both archives and passes an 11-frame pair. Other scenes
+  and consumers, Linux, USA and native Windows remain pending.
+- [ ] **ROMDATA-04-INDEXED-DIRECT-ORDINARY:** extend ordinary coverage of both
+  independently rooted archives. Wine `abz4lk0q` reads both in a cold-origin
+  continuation and compares 11 frames of state, clock, video, OAM and nonempty
+  audio with managed ROM sources altered. Its independently recorded input
+  prefix is not proven identical to the checkpoint; prior cheat ancestry is
+  not independently established. Other scenes and consumers remain open.
+  The source-guided program-1 checkpoint
+  (`p0qt7o6q`) yields zero archive reads in 6,000 recorded Wine frames
+  (`dh34xwul`); no scene pair ran. Determine whether the command or flag gate
+  was reached before selecting another route; do not repeat this negative
+  window. The proposed program-2 command requests 13, but the direct loader
+  branch requires 12; the previous program-2 lead is rejected. Static audit
+  `eduynil3` finds four request-12 script instructions (event keys 154, 156,
+  158 and 170). DS-20 slot 65 is a possible program-160 precursor but an
+  intervening conditional and unknown legacy ancestry limit its evidence.
+  A separate source audit `0ivxkuzk` associates the loader with mode slot 2 and
+  an existing cold-input checkpoint, without proving the call occurred there.
+  Offline audit `acjbv2hh` authenticates the frame-180 preselection and retains
+  shifted input; exact prefix state equivalence is unproved. Use the DS-20
+  diagnostic only for a distinct missing route, since its legacy ancestry is
+  unknown. Linux and USA remain deferred.
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
@@ -329,16 +388,52 @@ current evidence before running another check.
   callbacks 0/3 and their truncated aliases now execute fully with controlled
   RAM inputs (`rdulyaqw`). One real EUR program reaches callback 0 and returns
   through the original handler in a controlled task context (`h9c0peco`).
-  Production CLI passes (`mgaon9d6`); ordinary use, other callbacks, broader Wine regressions,
-  Linux, USA and native Windows remain open.
+  Production CLI passes (`mgaon9d6`). A cold-origin source join (`gk6kl05w`)
+  identifies a conditional message-119 callback-0 candidate in the recorded
+  home continuation. Wine locator `zonc4h0q` reads seven text programs but
+  zero callback bytes over 1,800 frames; no scene pair ran. This negative is
+  limited to that window. Other ordinary use/callbacks, broader Wine
+  regressions, Linux, USA and native Windows remain open.
+- [ ] **ROMDATA-01-TEXT-READER-REGISTRY-371068:** audit the separately rooted
+  text-reader callback registry immediately before `3710d4` against the current
+  E168 manifest, establish its conditional entry extent and consumers, and
+  integrate it if the source contract is supported. Static audit `mj5buj5x`
+  authenticates 27 callback words and two literals without E168 overlap;
+  original indexed reads precede later switch guards, so no guest bound is
+  implied. E169 publication and 12 controlled interpreter prefixes pass Wine
+  (`j15jcf44`), preserving all 111 earlier resources and checking mixed-owner
+  boundaries. Production Wine CLI `mr5vn2od` passes creation/reuse/verify and
+  a recorded 1,800-frame home continuation with 28 managed callback bytes,
+  matching framebuffer/OAM hashes and final state; audio and poisoned-source
+  scene comparisons remain open. Kind 11 conditionally selects `08016c00`,
+  but aggregate counters do not identify its use. Other scenes, translated
+  prefixes, Linux, USA and native Windows remain open.
+- [ ] **ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN:** audit physical ownership
+  for the original registry readers' full byte-index address range against
+  E169, preserving independently rooted neighboring data and distinguishing
+  conditional addresses from ordinary index reachability. Static audit
+  `nw66w3v6` finds 158 assigned and 98 unowned words, all in `371158..37140c`;
+  93 are zero and five resemble Thumb ROM pointers. Source audit `xf27x8sa`
+  authenticates their complement to the 75 earlier words and dispatcher
+  literal. E170 controlled Wine test `sjojlovh` publishes these as a separate
+  projection and matches 66 original interpreter/generated prefixes. E170
+  recheck `thuu27et` assigns all 256 conditional registry-reader words and
+  preserves the previous 158 owners. Production Wine CLI `alfjrf8b` passes
+  create/reuse/verify; its three-frame scene reads zero new words. Callback
+  semantics, ordinary indices and other dispatcher domains remain open. No
+  guest bound is imposed.
 - [ ] **ROMDATA-01-RANGE-37140C:** establish ordinary use and remaining reader
   contexts. EUR e161 publication, typed bytes and original scan pass under Wine
   (`t2mh2ei8`); production CLI passes (`emoffrjv`), while broader regressions
   remain open.
-- [ ] **ROMDATA-01-ADJACENT-371464:** establish ordinary use, remaining readers,
-  selector domains and broader Wine regression coverage. EUR e162 publishes
+- [ ] **ROMDATA-01-ADJACENT-371464:** establish remaining readers, selector
+  domains and broader Wine regression coverage. EUR e162 publishes
   six conditional geometry groups; the original-reader comparison passes
-  (`5zpi8vam`) and the CLI passes (`j4r9sopl`) without a positive ordinary read.
+  (`5zpi8vam`) and its CLI scene has no positive ordinary read (`j4r9sopl`). A
+  later E169 Wine home continuation reads 56 managed bytes across two aggregate
+  groups and matches 1,800 framebuffer/OAM frames and final state (`mr5vn2od`,
+  evidence audit `db6l43_0`); the group identities and scene audio/altered-ROM
+  comparison remain unproved.
 - [ ] **E134 ordinary updater:** establish production-cache entry availability,
   other ordinary paths and translated drawing. Current explicitly labeled
   translation has one-frame interpreter/native parity (`9ymu0twl`) and
@@ -356,9 +451,29 @@ current evidence before running another check.
   joins, then connect any new disjoint sources to the EUR resource path and
   verify them under Wine. E162 contains 71 distinct high-registry selector/group
   pairs. The typed source model and controlled task join pass under Wine
-  (`z2eftm1l`), but dataset publication, runtime readers and ordinary use remain
-  open. Source witness `B97ACB` can conditionally select four null sprite-0 cells
-  through normal job 2; this is not a guest index bound. See [the inventory](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
+  (`z2eftm1l`); e163 publication, typed reads and 12 controlled reader
+  comparisons also pass (`ga87pps5`), as does the production CLI (`vgo1cewu`).
+  Ordinary use and other producer domains remain open. Source witness `B97ACB` can conditionally select
+  four null sprite-0 cells through normal job 2; this is not a guest index bound.
+  See [the inventory](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
+- [ ] **ROMDATA-01-SCRIPT39-SPECIAL-POSES:** finish EUR low-selector
+  special-unit ordinary/remaining reader coverage. The conditional
+  E163 source plan (`stme4uml`) identifies 964 new index cells, 109 sequences,
+  seven OBJ lists and 87 pixel blocks. The typed model and a controlled original
+  unit-to-actor join pass under Wine (`aysnyiei`); e164 publication and six
+  controlled reader comparisons pass (`jrp5fb0y`), as does the production CLI
+  (`72_aby76`) without a positive ordinary read in that window. The later E169
+  Wine home continuation reads 48 index bytes, zero sequence/OBJ/pixel bytes,
+  and matches 1,800 framebuffer/OAM frames and final state (`mr5vn2od`, audit
+  `db6l43_0`); index identities and complete animation remain unproved. Two
+  excluded group-9 instructions (`B96A1E`, `BA0841`) call `0809BA84` with argument 13; their
+  conditional index and downstream sources are already owned (`wnmiows2`,
+  `4p7yr_3v`). The original task prefix selects the expected callees in three
+  controlled Wine comparisons (`uto86fc6`). Two separately seeded callee
+  continuations return with matching raw/managed state and guest clocks on Wine
+  (`_mvdi9t3`). The uninterrupted allocator path, alternate-sprite behavior,
+  actor overrides, action-13 ordinary reachability and other ordinary paths,
+  broader consumers, Linux, USA and native Windows remain open.
 - [ ] **ROMDATA-04-GAMEPLAY-6E84E0-BYTE00:** find a source-backed ordinary
   trigger for the unresolved byte, including generated/indirect sources.
   The bounded direct-dispatcher scan finds only two text-sourced candidates
@@ -436,13 +551,15 @@ space by itself does not select them.
 
 - [ ] **Linux:** validate changed ROM integrations, including the E134 ordinary
   updater, title-language routes, descriptor-1 alias and indexed graphics
-  contexts, text substitution callbacks, bounded range lookup and tilemap
-  geometry, on native
-  Linux when selected; retain older accepted Linux results.
+  contexts, text substitution callbacks, bounded range lookup, tilemap
+  geometry and the E163–E170 pose, archive, callback and text-reader resources
+  on native Linux when selected; retain older accepted Linux results.
 - [ ] **Wine sandbox access:** if sandbox-only Wine execution is required,
   provide access to its runtime directory and Unix-domain socket binds. The
   runner now refuses these known restrictions before leasing the prefix;
-  automatic approval-review availability remains outside the project.
+  automatic approval-review availability remains outside the project. An
+  interrupted E170 launch left a separate cold-storage lease; its exact marker
+  was preserved after host reboot and catalog review (`lease-recovery-20261118`).
 - [ ] **USA:** validate regional extraction/readers/scenes when USA work resumes;
   EUR evidence does not prove USA compatibility.
 - [ ] **Native Windows:** run the selected build/runtime/input matrix on an

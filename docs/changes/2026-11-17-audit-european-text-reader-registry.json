@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-text-reader-registry",
+  "title": "Audit the European text reader callback registry",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Classify a separately rooted conditional text-reader callback registry and two original literals without changing guest index semantics."
+  ],
+  "validation": [
+    "Protected offline audit mj5buj5x authenticates both original index/load paths, 27 words at 371068..3710d4, null slots 0/3/5, kind-11 reader 08016c01, the adjacent indexed-archive owner and absence of E168 overlaps. No guest execution was performed."
+  ],
+  "limitations": [
+    "Actual runtime uses and the full byte-index domain remain open; callers read the table before their later switch guards. Model, managed integration, Wine, Linux, USA and native Windows are pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-locate-european-substitution-candidate.json"
+  ]
+}

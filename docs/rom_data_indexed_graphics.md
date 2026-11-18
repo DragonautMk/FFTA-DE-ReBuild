@@ -291,3 +291,133 @@ the command and validation unit completed successfully and the server drained.
 Additional ordinary contexts, full reader ABI/indirect consumers, broader
 affected Wine regressions, native Windows, Linux, USA and the remaining
 ROM-data TODO stay open. No performance measurement was performed.
+
+## Direct European archive at 3ae484
+
+The original caller at `08023c98` loads `083ae484` from its literal at
+`08023d08`, then calls the existing indexed-archive wrapper `0800537c` with
+start and count both zero. The next direct call uses the separate archive at
+`3ae5a4`, classified below. The caller also passes
+the decoded outputs to the original upload helper. These instructions support
+the archive interpretation independently of its opaque header. A bounded
+ordinary-input continuation later observes both archives, as described below.
+
+Static EUR/E164 audit `e169-direct-indexed-source-audit-j80q8jx4` authenticates
+the caller and both wrapper calls. The first archive at `3ae484..3ae5a4` has
+four 64-byte literal programs, mode 0/width 5 and no referenced dictionary
+payload. Its 288 source bytes decode to 256 bytes. The source SHA-256 is
+`967d4b1bdbba077df4ea9b5b4aa490bef3ec5a9a7509f728e99ba8f999999da5`;
+the decoded SHA-256 is
+`32f36ef4c8f2a5eef8780010587399e0199a75fe72c771f2bc071e783a7d6e4e`.
+Neither the four-byte caller literal nor the archive overlaps an E164 source
+owner. E165-d164 adds a separate typed resource for these spans, retaining
+the original guest decoder and the existing language-group contract. Wine
+test `e170-direct-indexed-runtime-wine-qk3xqc4z` creates and reuses the dataset,
+preserves all 107 previous resources, and serves all 292 typed source bytes
+with their ROM copies altered. Mixed-width boundaries and a malformed decoded
+word are checked. The controlled original caller and decoder produce identical
+full states and guest clocks for raw and managed reads using interpreter and
+generated instruction dispatch; generated blocks may use interpreter fallback.
+The Wine server drained after the test. Production Wine CLI test
+`e170-direct-indexed-cli-wine-e87ug9pq` creates, reuses and verifies all 109
+files matching that dataset. Its 11-frame world-map window leaves the dataset
+unchanged and reads no bytes from the new archive, so it does not establish
+ordinary use. The Wine server drained. A later ordinary continuation observes
+both archives; other scenes, Linux, USA and native Windows remain pending. No
+performance measurement was made.
+
+## Adjacent direct European archive at 3ae5a4
+
+The next original caller loads `083ae5a4` from `08023d10` and passes it to
+the same indexed wrapper. Static EUR/E165 audit
+`e171-adjacent-indexed-source-audit-zy8p2uxf` parses 41 programs of 64 decoded
+bytes, using 63 literal and 89 dictionary packets. The exact used archive
+extent is `3ae5a4..3aed7c`: 2,008 source bytes including a 96-byte referenced
+dictionary prefix, producing 2,624 decoded bytes. Its archive source SHA-256
+is `170a986e3eb78464227cc6a14f71c5e102c355746f4a3e8ecc41a97feb2cd83c`;
+the decoded SHA-256 is
+`668112f0c7946c0ad46564c6c79649a615560c1054116807fb6113d8395ef1cd`.
+Neither this archive nor its four-byte caller literal overlaps an E165 owner.
+E166-d165 publishes these spans as a separate typed resource. Wine test
+`e171-adjacent-indexed-runtime-wine-puxz2kz7` creates and reuses the dataset,
+preserving all 108 previous resources. It checks all 2,012 typed source bytes
+with their ROM copies altered, mixed-width reads across both the new source
+boundaries and the previous archive, and an invalid decoded word. A controlled
+original caller and decoder match raw and managed full states and guest clocks
+through interpreter and generated instruction dispatch; generated blocks may
+use interpreter fallback. Production Wine CLI test
+`e171-adjacent-indexed-cli-wine-ozq4vcii` creates, reuses and verifies all 110
+files matching the tested dataset. Its 11-frame world-map window leaves the
+dataset unchanged and reads no bytes from this archive. The Wine server drained
+after both tests. A later ordinary continuation observes both archives; other
+scenes, Linux, USA and native Windows remain open. No performance measurement
+was made.
+
+### Source-guided ordinary-use lead
+
+A static EUR search (`m5katm09`, `bckq9lmb`) finds three syntactic Thumb calls
+to loader `08023c98`; it does not establish a complete caller census. One is
+inside script command `0x49`, which calls the loader only when its operand and
+the original flag check permit it. Source join `p0qt7o6q` identifies such an
+instruction in program 1 between the recorded cursor positions of two genuine
+normal-input checkpoints. That relationship is a lead, not proof that the
+instruction, its branch or either archive was used in the recorded interval.
+Wine locator `e174-indexed-ordinary-wine-dh34xwul` follows the authenticated
+recorded input for 6,000 frames from that checkpoint and observes zero source
+bytes from either new archive. It therefore performs no full-state pair and
+does not prove whether the command was skipped or its original flag check
+failed. The Wine server drained; Linux and USA remain deferred. Other scenes
+and callers remain open.
+
+The original flag-`0x40` getter tests bit 0 at `02001f78`; that bit is clear at
+both recorded endpoints of the negative window, though its value during the
+command is unknown. A subsequent source check corrects the proposed separate
+program-2 route: the dispatcher subtracts one from the request before indexing
+the table at `0812557c`. Entry 11 selects `08125638`, which calls the loader,
+so it requires request 12; entry 12 selects `081255b0` for request 13. The
+program-2 instruction `0x17 0d` does not by itself select the loader path.
+Disassembly evidence is retained in `e175-indexed-program2-source-lead-lt7b6kiv`;
+its original PASS did not assert this table index and does not validate the
+rejected hypothesis. A focused Sol consultation was requested as `gpt-6.1-sol`
+at `xhigh`; its effective settings were not independently confirmed. Guarded
+static audit `e175-request12-source-audit-eduynil3` authenticates the dispatch
+and finds four `0x17 0c` instructions in programs 146, 148, 150 and 160, reached
+by event keys 154, 156, 158 and 170 respectively. These are conditional source
+associations, not evidence that any corresponding event or loader call runs in
+ordinary play. Other request-12 producers and ordinary execution remain open.
+
+Another original caller is associated with mode-table slot 2. Protected static
+audit `e177-indexed-mode2-source-audit-0ivxkuzk` follows registration of
+`08025115`, the selector table and its state-zero call through `080251e4` to
+the same loader. It finds eight syntactic direct request-2 candidates. An
+authenticated normal-input cold recording reaches a checkpoint at frame 9,000
+with selector 2 and that slot populated. This is a bounded source and snapshot
+association: it does not prove that the callback or either archive was read
+during the recording. The recording is a possible future observation, not a
+replacement for the completed negative window. Offline audit `acjbv2hh` also
+verified that an independently retained cold-origin preselection is at frame
+180 with neutral input; a time-shifted copy of the recording is retained for a
+bounded continuation. It did not independently prove that the two recordings
+have identical states at frame 180.
+
+Wine locator `e178-indexed-ordinary-cold-wine-abz4lk0q` continues that cold-origin
+checkpoint with the shifted recorded keys. It first observes managed source
+reads at relative frame 967 and then records 302 and 3,292 source bytes from
+the two archives respectively. A rolling checkpoint allows an 11-frame
+raw/managed comparison through this use with the managed ROM copies of both
+archives and caller literals altered. Each frame matches complete state and
+guest clock, central and wide framebuffers, OAM and audio; audio is nonempty.
+Generated dispatch can fall back to interpretation. The Wine server drained
+and protected inputs remained unchanged. The checkpoint has no recorded cheat
+ancestry, which does not establish its full prior history; the separate input
+prefix and checkpoint were not independently proven identical. This establishes
+one bounded ordinary-input continuation, not all scenes, archive consumers or
+request-12 execution. Linux, USA and native Windows remain unverified.
+
+A retained EUR DS-20 checkpoint contains program 160 before its request-12
+instruction. Its flag `0244` is clear, so the original conditional can route
+through request 7 first; cursor proximity does not establish the subsequent
+control flow. The checkpoint is a legacy `FFTA-SL1` state with no recorded
+ancestry metadata, so it cannot independently prove a cheat-free history. A
+previously recorded neutral continuation is available for a bounded diagnostic;
+this is a source lead, not an ordinary-use witness.

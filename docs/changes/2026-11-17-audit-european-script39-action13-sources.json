@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-script39-action13-sources",
+  "title": "Audit European opcode 39 action 13 sources",
+  "kind": "docs",
+  "platforms": ["EUR"],
+  "changes": [
+    "Document the conditional source ownership of the two opcode-39 special-branch instructions separately from the newly integrated low-selector model."
+  ],
+  "validation": [
+    "Static index audit wnmiows2 authenticates the EUR ROM and E164 manifest, finding ten physical index cells already owned by normal-battle, alternate-battle and equipment resources. Target graph audit 4p7yr_3v finds five referenced sequences, four OBJ lists and sixteen pixel blocks fully covered by existing sources."
+  ],
+  "limitations": [
+    "The audit assumes valid unchanged unit and actor assignments, supported facing and no unresolved override; it does not establish original task execution or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": ["docs/changes/2026-11-17-integrate-european-script39-special-poses.json"]
+}

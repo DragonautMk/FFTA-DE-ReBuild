@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-adjacent-indexed-archive",
+  "title": "Integrate the adjacent European indexed archive",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add a separate E166-d165 typed source resource for the direct indexed dictionary archive and its caller literal, retaining the original guest decoder and earlier source owners."
+  ],
+  "validation": [
+    "Static EUR source audit zy8p2uxf and Windows GNU test build mm5f3nw5 pass. Wine puxz2kz7 creates/reuses E166-d165, preserves all 108 previous resources and checks all 2012 typed bytes and mixed-width boundaries with the new sources and the preceding archive edge altered.",
+    "A controlled original caller and decoder match raw and managed full states and guest clocks with interpreter and generated instruction dispatch; Wine server drained.",
+    "Windows GNU production build 7q7silsc and Wine CLI ozq4vcii pass create/reuse/verify for all 110 files matching the tested generation. An 11-frame world-map window reads no new archive bytes and leaves the dataset unchanged; Wine server drained.",
+    "Wine ordinary-input continuation abz4lk0q observes both managed direct archives and passes an 11-frame raw/managed state, guest clock, video, OAM and nonempty audio comparison with managed ROM sources altered; Wine server drained."
+  ],
+  "limitations": [
+    "Generated instruction blocks may fall back to interpretation. The earlier archive test was updated for E166 after this build and was not rerun. Other scenes, other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/direct_indexed_dictionary.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/direct_indexed_dictionary.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/direct_indexed_dictionary_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "crates/recomp/src/rom_data/direct_indexed_graphics_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-classify-european-adjacent-indexed-archive.json"
+  ]
+}

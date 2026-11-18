@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-substitution-complement",
+  "title": "Audit conditional European substitution source words",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Authenticate 98 previously unowned conditional substitution words and the original dispatcher literal as a separate source projection."
+  ],
+  "validation": [
+    "Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh for the uncertain source contract; effective settings are unconfirmed. Protected static audit xf27x8sa verifies the original byte-truncating dispatcher, literal 019eb4, exact complement of the 75 earlier candidates, 396 source bytes and absence of E169 overlap. No guest execution occurred."
+  ],
+  "limitations": [
+    "The 93 zero words are preserved without a padding claim. Callback semantics, safe invocation, ordinary indices, managed integration, Wine, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-text-reader-byte-ownership.json"
+  ]
+}

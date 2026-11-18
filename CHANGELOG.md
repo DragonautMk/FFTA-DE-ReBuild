@@ -3,6 +3,92 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-18 — Verify European geometry and pose index use in retained Wine evidence
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Document scoped managed tilemap-geometry and special-pose index reads in an already recorded home continuation, and retain the remaining reader and animation criteria.
+
+**Validation**
+
+- Existing production Wine CLI unit mr5vn2od passes creation, reuse and verification of the tested E169 generation. Its raw and managed home continuations match 1,800 framebuffer/OAM frames, final serialized state and final image; the Wine server was drained.
+- Read-only evidence audit db6l43_0 rechecks the Wine receipt, protected input and build source hashes, paired logs, final images and counter implementations without replaying gameplay. The managed log reports 28 geometry bus reads and 56 source bytes across two aggregate groups, plus 12 special-pose bus reads and 48 index bytes.
+
+**Limitations**
+
+- Group and index identities are not reported; the special-pose sequence, OBJ and pixel counters are zero. This does not prove full animation, action-13 ordinary reachability or all consumer paths.
+- The scene did not compare audio, altered ROM sources, guest clocks or full state at every frame. Its recorded checkpoint lineage was not independently reconstructed end-to-end. Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/changes/2026-11-17-integrate-european-script39-special-poses.json).
+
+[Change record](docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json)
+
+## 2026-11-18 — Recover the interrupted E170 cold-storage lease
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Preserve the exact interrupted cold-storage lease marker after reviewing its owner, host state and catalog so the pending E170 Wine validation can resume.
+
+**Validation**
+
+- The marker was created during the E170 CLI launch, whose session was interrupted before a validation unit was created. The bounded session audit found no other recorded relevant launch in that interval. The host rebooted afterward and the recorded PID no longer existed.
+- Read-only review found 1736 archived and two restored catalog entries, no staging or retiring entries, no catalog entry modified during the launch and no matches among the selected protected inputs. The old marker was moved intact to target/rom-data-e170-substitution-words/lease-recovery-20261118/interrupted-lease; its preimage and review are recorded alongside it.
+
+**Limitations**
+
+- The launch-to-marker attribution is based on the recorded timing and bounded session audit. Unrelated system process descriptors were not all readable; all original descendants predated the host reboot. No archive or input was deleted. Wine sandbox restrictions and approval availability remain separate, and no performance measurement was made.
+
+Documentation: [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
+
+[Change record](docs/changes/2026-11-18-recover-interrupted-e170-cold-lease.json)
+
+## 2026-11-18 — Complete the bounded advanced cheat comparison audit
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Accept DBG2-22 within the documented EUR interpreter/Wine scenarios, retain each unverified outcome and list the remaining EUR catalog groups as unverified.
+- Synchronize the debug task atlas with the accepted scope and current evidence.
+
+**Validation**
+
+- Rechecked the selected CH-0320/0330/0340, CH-0338/0339 and CH-0329/0341 comparisons, linked receipts and side-effect limits. Protected EUR/Wine pair receipts for mastery, AP, laws, yellow card, mission transition and phase-three runs report PASS and Wine drained. DBG2-21 is marked accepted.
+- Reviewed remaining EUR catalog entries by title and categorized their unverified status; did not run or infer effects for those entries. The Clear Mission source note is still missing.
+
+**Limitations**
+
+- Acceptance is limited to the documented scenarios, fields and observations; unmastered AP, red cards, rule enforcement, an actual level-up, CH-0329 mission clear, CH-0341 final victory, other side effects and original device behavior remain unverified. Native Windows and physical input are part of the integration matrix.
+
+Documentation: [cheats.md](docs/cheats.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-18-complete-advanced-cheat-comparison-audit.json)
+
+## 2026-11-18 — Compare the mastery cheat across three candidate records
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Document a bounded CH-0320 comparison of the first three candidate character records and the two written bytes beyond the previously inspected progress span.
+
+**Validation**
+
+- A protected same-seed EUR/Wine interpreter pair matched complete pre-application state, frame, clock and all three 264-byte candidate records. One armed frame recorded 72 halfword writes; all first-record bytes 40..CF differed versus the no-cheat control, while the remaining first-record bytes and the second and third records matched. The result persisted at a matching frame and clock 60 frames after disarm; immediate captured map images matched. Inputs remained protected and Wine drained (dbg22-mastery-three-records-fiwjrgz3).
+- A prior execution was refused before launching the guest because the shared Wine lease was held (brha_wrb).
+
+**Limitations**
+
+- Offsets CE..CF are outside the earlier 142-byte candidate span; their meaning and possible later effects are unknown. Three records and one map scene do not establish all unit, ability, gameplay, native Windows or original device behavior.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-18-compare-european-mastery-record-boundary.json)
+
 ## 2026-11-17 — Verify European text copy callbacks
 
 Type: changed. Platforms: EUR / Wine.
@@ -42,6 +128,46 @@ Type: fixed. Platforms: EUR / Wine.
 - The task context and substitution source are controlled; other programs and callbacks, ordinary use, broader Wine regression, Linux, USA and native Windows remain open. No performance measurements.
 
 [Change record](docs/changes/2026-11-17-verify-european-substitution-parser.json)
+
+## 2026-11-17 — Verify the European opcode 39 action 13 callee continuation
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a controlled action-13 callee continuation after the original task prefix, seeding identical reusable objects in raw and managed machines after task cleanup.
+
+**Validation**
+
+- Sol gpt-6.1-sol/xhigh identified the fixture and the need to seed after cleanup; effective settings are unconfirmed. Static helper disassembly rf09d5pm, Windows GNU test build v05dmvpw and Wine _mvdi9t3 pass. Two seeded original callee continuations return with equal raw/managed full states and guest clocks; selected index ROM bytes were altered and typed property, body and equipment reads were observed. Wine server drained.
+
+**Limitations**
+
+- The controlled fixture does not prove an uninterrupted allocator path, alternate-sprite behavior, actor overrides or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-verify-european-script39-action13-branch.json](docs/changes/2026-11-17-verify-european-script39-action13-branch.json).
+
+[Change record](docs/changes/2026-11-17-verify-european-script39-action13-callee.json)
+
+## 2026-11-17 — Verify the European opcode 39 action 13 task branch
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a controlled original-task branch check for the two authenticated script operands that select action 13, plus an adjacent default-branch control.
+
+**Validation**
+
+- Windows GNU test build 9qi34821 and Wine uto86fc6 pass three controlled comparisons: both authenticated selector/group operands enter the expected action-13 callee and an adjacent group enters the default callee; raw and managed full state and guest clock match at entry. Wine server drained.
+
+**Limitations**
+
+- The check stops at the callee entry and does not establish complete callee execution, live actor override domains or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-script39-action13-sources.json](docs/changes/2026-11-17-audit-european-script39-action13-sources.json).
+
+[Change record](docs/changes/2026-11-17-verify-european-script39-action13-branch.json)
 
 ## 2026-11-17 — Verify European title return to English
 
@@ -153,6 +279,45 @@ Documentation: [v1.1.0.md](docs/releases/v1.1.0.md).
 
 [Change record](docs/changes/2026-11-17-publish-release-1-1.json)
 
+## 2026-11-17 — Observe removal of a yellow card in an isolated battle
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Document a user-guided Stop violation and one CH-0339 application in an isolated EUR final-battle scene.
+
+**Validation**
+
+- Protected Wine/Xvfb session: forbidden Stop produced a visible yellow card on Nusrat; one maintained application recorded 24 writes and changed a target 256 to 0. After reopening status, the displayed yellow count changed from 1 to 0 and the target stayed zero for 192 frames after disarm, without more writes (dbg22-royal-stop-live-zprjyv6n).
+- A protected no-cheat Wine replay matched the full pre-application state, frame and clock; one and 193 frames later it retained target 256 and displayed one yellow card while the candidate had zero, at matching frames and clocks (dbg22-royal-card-control-2rzyo45b).
+
+**Limitations**
+
+- One yellow-card case and one source: red cards, other units and side effects, native Windows and original device behavior remain unverified.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-17-observe-european-card-removal.json)
+
+## 2026-11-17 — Model European opcode 39 special-unit poses
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a conditional typed source projection for opcode-39 low-selector special units after subtracting the e163 manifest's existing source owners.
+
+**Validation**
+
+- Static source plan stme4uml identifies 418 disjoint ranges, 964 index cells, 109 sequences, seven OBJ lists and 87 pixel blocks. Windows GNU test build sclfy2v2 and Wine aysnyiei pass source reconstruction, JSON round-trip, producer guards and a controlled original unit-to-actor join with a nonmatching actor first; Wine server drained.
+
+**Limitations**
+
+- The model is not yet published or consumed at runtime. Two special-branch instructions, ordinary reachability, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-model-european-script39-special-poses.json)
+
 ## 2026-11-17 — Model European opcode 39 registry poses
 
 Type: added. Platforms: EUR / Wine.
@@ -171,6 +336,57 @@ Type: added. Platforms: EUR / Wine.
 - The model is conditional and not yet published or consumed at runtime. Original index-reader validation, ordinary use, other producer domains, Linux, USA and native Windows remain open. No performance measurements.
 
 [Change record](docs/changes/2026-11-17-model-european-script39-registry-poses.json)
+
+## 2026-11-17 — Locate a conditional European text substitution candidate
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a source-backed home-dialogue candidate for the existing European text substitution callback without claiming ordinary execution.
+
+**Validation**
+
+- Sol /root/sol_context_callback was requested as gpt-6.1-sol/xhigh because ordinary reachability remained unclear; effective settings are unconfirmed. Existing traces identify the kind-11 indirect reader and report no ordinary witness in 19 retained checkpoints.
+- Protected offline source join gk6kl05w verifies the cold-origin snapshot checksum, recorded key/input lineage, original instruction links and E168 decoded script/text files. The first upcoming candidate range 85–95 has no opcode 25; later conditional message 119 at bb3428 contains opcode 25/0. The live actor-derived offset and execution remain unproved. First audit 6e5zt_ek stopped on a mistyped expected hash; the corrected retry passed without guest execution.
+- Wine zonc4h0q follows the retained home checkpoint and recorded input for 1800 frames: seven managed script-text programs are read, but substitution callback bytes remain zero. No scene pair ran; Wine server drained.
+
+**Limitations**
+
+- The negative is limited to one recorded window; ordinary callback invocation and scene equivalence remain open. The separately rooted reader registry at 371068 needs its own ownership/consumer audit. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [2026-11-17-integrate-european-text-substitution-candidates.json](docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json).
+
+[Change record](docs/changes/2026-11-17-locate-european-substitution-candidate.json)
+
+## 2026-11-17 — Investigate ordinary use of European direct indexed archives
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a bounded, source-guided ordinary-input locator for the two direct indexed archives and compare a short raw/managed scene when the locator observes source use.
+
+**Validation**
+
+- Static audits m5katm09 and bckq9lmb find three syntactic loader-call candidates; p0qt7o6q authenticates a retained program-1 checkpoint and a later flag-gated opcode 0x49 source lead without claiming execution.
+- Windows GNU build xzij0tdd and Wine dh34xwul replay 6000 recorded ordinary frames from the authenticated EUR checkpoint. Neither direct archive records a source read, so no raw/managed scene pair is run; Wine server drained.
+- Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh after the negative contradicted the lead; effective settings are unconfirmed. The flag is clear at both negative-window endpoints. The e175 disassembly shows dispatcher request 12 selects the loader, while the proposed program-2 command requests 13; that proposed route is rejected. The e175 unit did not assert the jump-table index.
+- Guarded static audit eduynil3 authenticates the dispatcher index and finds four script request-12 producers in event keys 154, 156, 158 and 170; no ordinary execution was observed.
+- Focused Sol reconsultation identified EUR DS-20 slot 65 as a program-160 precursor, but an intervening conditional and its legacy state ancestry prevent treating it as an ordinary-use witness.
+- Windows GNU test build 4q2i907e passes with a bounded DS-20 diagnostic; the corresponding Wine run is pending the shared prefix.
+- Protected static audit 0ivxkuzk follows a mode-slot-2 source route to the loader and authenticates an existing cold-input checkpoint with that slot selected; the callback and archive reads remain unobserved.
+- Offline audit acjbv2hh authenticates a cold-origin preselection at frame 180 and retains a time-shifted copy of the recorded input; exact state equivalence with the other recording prefix remains unproved.
+- Cold locator unit c_g_r34l was refused before Wine execution because the shared prefix was already leased; no guest replay or archive observation occurred. The unit retained no lease.
+- Wine abz4lk0q continues the cold-origin frame-180 state with shifted recorded keys, observes 302 and 3292 managed source bytes from the two archives, and passes 11 raw/managed frames of full state, guest clock, central/wide framebuffer, OAM and nonempty audio with managed source ROM bytes altered. Wine server drained.
+
+**Limitations**
+
+- The earlier negative is limited to its selected window; the positive covers one cold-origin continuation, not all scenes or request-12 execution. The input prefix is not independently proven identical to the checkpoint and no recorded ancestry does not prove a clean prior history. Other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-integrate-european-adjacent-indexed-archive.json](docs/changes/2026-11-17-integrate-european-adjacent-indexed-archive.json).
+
+[Change record](docs/changes/2026-11-17-investigate-european-direct-indexed-ordinary-use.json)
 
 ## 2026-11-17 — Inventory European opcode 39 registry poses
 
@@ -233,6 +449,160 @@ Type: added. Platforms: EUR / Wine.
 
 [Change record](docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json)
 
+## 2026-11-17 — Integrate the European text reader callback registry
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an E169-d168 typed resource for the conditional 27-word text-reader callback registry and its two original literals, preserving guest dispatch and out-of-projection reads.
+
+**Validation**
+
+- Protected static source audit mj5buj5x and Windows test build 5ec8jzgg pass. First build 45i6ch28 failed on a missing Bus trait import in the test; it was corrected.
+- Wine j15jcf44 creates/reuses/verifies E169, preserves all 111 E168 resources, rejects modified callback and partial overlap, and checks mixed-width adjacent-owner reads with source ROM bytes altered. Twelve controlled original interpreter prefixes match complete state and guest clock, including out-of-projection index 27. Wine server drained.
+- Windows GNU production CLI build 1sppxxpd and Wine mr5vn2od pass create/reuse/verify with all 113 files matching the tested E169 generation. A recorded 1800-frame home continuation reads 28 managed registry callback bytes and matches raw/managed framebuffer and OAM each frame plus final state and framebuffer hashes. Wine drained.
+
+**Limitations**
+
+- The scene compares no audio and does not poison source ROM; the controlled test covers altered source bytes. Registry counters are aggregate, and native dispatch can fall back to interpretation. Other scenes, translated-prefix attribution, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-text-reader-registry.json](docs/changes/2026-11-17-audit-european-text-reader-registry.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-text-reader-registry.json)
+
+## 2026-11-17 — Integrate European opcode 39 special-unit poses
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish e164-d163 dataset and typed guest reads for the conditional opcode-39 low-selector special-unit sources while retaining existing source owners.
+
+**Validation**
+
+- Windows GNU test build 2prxl4gj and Wine jrp5fb0y pass dataset creation/reuse, preservation of 106 previous resources, all 34,026 typed source bytes with ROM sources altered, mixed-width boundaries and the prior high-registry owner. Three controlled original reset cases each match raw and managed full states and guest clocks through interpreter and generated instruction blocks; Wine server drained.
+- Windows GNU production build eh1qq540 and Wine CLI 72_aby76 pass create/reuse/verify for 108 files matching the tested generation. The bounded 11-frame world-map window reads no new pose bytes; Wine server drained.
+
+**Limitations**
+
+- Generated instruction blocks may fall back to interpretation. The two excluded special-branch instructions, ordinary reachability, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-model-european-script39-special-poses.json](docs/changes/2026-11-17-model-european-script39-special-poses.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-script39-special-poses.json)
+
+## 2026-11-17 — Integrate European opcode 39 registry poses
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the conditional opcode-39 registry pose model in e163-d162 and serve its newly owned index, sequence and decoded pixel bytes through typed runtime reads while retaining prior owners.
+
+**Validation**
+
+- Windows GNU test build 3ecrjj2q and Wine ga87pps5 passed dataset creation/reuse, preservation of 105 previous resources, all 91,712 typed source bytes with the original bytes altered, selected mixed boundaries and the prior sprite-42 root owner.
+- Wine ga87pps5 compared six controlled original reset cases through managed interpreter and generated instruction blocks against raw interpreter; all 12 full states and guest clocks matched. Generated blocks may fall back to interpretation.
+- Windows GNU production build 84354hhl and Wine vgo1cewu passed CLI create/reuse/verify for 107 files matching the tested e163 generation. Its 11-frame world-map window read zero opcode-39 pose bytes and did not change the generation.
+
+**Limitations**
+
+- Ordinary use, other producer domains, broader Wine regressions, Linux, USA and native Windows remain open. The bounded CLI window is not evidence of global absence. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-integrate-european-script39-registry-poses.json)
+
+## 2026-11-17 — Integrate a directly rooted European indexed archive
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add the E165-d164 typed source resource for the four-program indexed archive and its original caller literal, preserving existing source ownership and the guest decoder.
+
+**Validation**
+
+- Static source audit j80q8jx4 and Windows GNU test build 3pwtuzan pass. Wine qk3xqc4z creates/reuses E165-d164 and preserves all 107 previous resources; all 292 typed source bytes, mixed-width boundaries and a malformed decoded word are checked with the ROM sources altered.
+- The controlled original caller and decoder match raw and managed full states and guest clocks in interpreter and generated instruction dispatch; Wine server drained.
+- Windows GNU production build s4nnw7v2 and Wine CLI e87ug9pq pass create/reuse/verify for 109 files matching the tested generation. An 11-frame world-map window reads no new archive bytes and leaves the dataset unchanged; Wine server drained.
+- Wine ordinary-input continuation abz4lk0q observes both managed direct archives and passes an 11-frame raw/managed state, guest clock, video, OAM and nonempty audio comparison with managed ROM sources altered; Wine server drained.
+
+**Limitations**
+
+- Generated blocks may fall back to interpretation. Other scenes, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-classify-european-direct-indexed-archive.json](docs/changes/2026-11-17-classify-european-direct-indexed-archive.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-direct-indexed-archive.json)
+
+## 2026-11-17 — Integrate the European context callback descriptor
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an E167-d166 typed source resource for the one-row context callback descriptor and its constructor literal, preserving original guest dispatch and the opaque final byte.
+
+**Validation**
+
+- Protected source audit 7hcgos9q and Windows GNU test build yu3p1awd pass. Initial Wine yxtwldmj failed an intermediate call-PC observation after the guest returned; the server drained, and final state comparison was not reached in the failing iteration.
+- Sol /root/sol_context_callback was consulted again as gpt-6.1-sol/xhigh (effective settings unconfirmed): generated block chaining can hide the intermediate PC. Windows retry build y6rnv8p4 and Wine md0zxb9k pass callback-entry argument and link checks, 12 typed bytes under ROM poisoning, boundary composition, 109 prior resources preserved and two full state/guest-clock comparisons; Wine server drained. The opaque byte is checked separately and is not read by the controlled dispatch.
+- Windows GNU production build _1k8nv0d and Wine CLI 555lr8qm pass create/reuse/verify for all 111 files matching the tested E167 generation. An 11-frame world-map window reads no callback bytes and leaves the dataset unchanged; Wine server drained.
+- Protected static join 1rjf486k authenticates a previously recorded ordinary startup callback trace and its live object/descriptor checkpoint. Wine wklf6sch continues this checkpoint for three frames, reading 14 managed descriptor bytes; framebuffer and OAM hashes match each frame, and final serialized state and framebuffer hashes match. Wine server drained.
+
+**Limitations**
+
+- Generated blocks may fall back to interpretation. Audio and source-poisoned scene comparisons, other ordinary paths, the neighboring pair’s meaning, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-context-callback-descriptor.json](docs/changes/2026-11-17-audit-european-context-callback-descriptor.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json)
+
+## 2026-11-17 — Preserve conditional European substitution source words
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an E170-d169 separate typed source resource for 98 conditional substitution words and the original dispatcher literal, retaining the earlier candidate owner and uncapped guest indexing.
+
+**Validation**
+
+- Protected source audit xf27x8sa and Windows test build mnjuuqps pass. Preliminary build n9zcsqnu passed before the explicit text.catalogs dependency was added.
+- Wine sjojlovh creates/reuses/verifies E170 and preserves all 112 E169 resources. All 396 new bytes, mixed-width boundaries, duplicate indices, modified words and partial overlaps are checked with source ROM copies altered. Sixty-six original-prefix comparisons across the two registry readers and substitution dispatcher match complete state and guest clock in interpreter and generated instruction dispatch; Wine drained.
+- Protected E170 ownership audit thuu27et assigns all 256 words conditionally addressed by the two original registry readers, preserving the 158 previous owners. Windows production CLI build gchhbcjn and Wine alfjrf8b pass create/reuse/verify with all 114 files matching the tested generation; the three-frame raw/managed continuation matches framebuffer/OAM and final state hashes but reads zero new word bytes. Wine server drained.
+
+**Limitations**
+
+- Callback invocation, safety and ordinary indices are unproved; generated blocks may fall back to interpretation. Audio and source-poisoned scene comparisons, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-substitution-complement.json](docs/changes/2026-11-17-audit-european-substitution-complement.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json)
+
+## 2026-11-17 — Preserve the conditional European language-reader pair
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an E168-d167 opaque source resource for the two bytes conditionally addressed by both original language-position readers without extending the five-language tables or assigning a meaning.
+
+**Validation**
+
+- Static audit s82earyr authenticates the reader arithmetic and adjacent nonoverlapping sources. First Windows build o9msltyw found three test budget calls missing the new parameter; Windows build retry 0pp9li2q passes after correction.
+- Wine mncnsstk creates, reuses and verifies E168 while preserving all 110 E167 resources; seeded original reader prefixes match full state and clock with altered source bytes. Mixed-width adjacent-owner reads, altered-pair rejection and partial-overlap rejection pass; Wine server drained.
+- Protected E168 manifest audit 4ami2zcc assigns all 261 physical address pairs across both byte-indexed readers; it does not establish that indices beyond the five language choices occur.
+- Windows GNU production CLI build 5029lc9q and Wine wklf6sch pass E168 create/reuse/verify; all 112 files match the tested generation and reuse and the three-frame continuation leave it unchanged. Wine server drained.
+
+**Limitations**
+
+- Ordinary input values 30 and 35, the source meaning, other writers, Linux, USA and native Windows remain unproved. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-language-index-e167-ownership.json](docs/changes/2026-11-17-audit-european-language-index-e167-ownership.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-conditional-language-pair.json)
+
 ## 2026-11-17 — Integrate European bounded range lookup
 
 Type: added. Platforms: EUR / Wine.
@@ -253,6 +623,365 @@ Type: added. Platforms: EUR / Wine.
 - Generated dispatch may fall back to interpretation. Ordinary use, broader Wine regressions, Linux, USA and native Windows remain pending. No performance measurement.
 
 [Change record](docs/changes/2026-11-17-integrate-european-bounded-range-lookup.json)
+
+## 2026-11-17 — Integrate the adjacent European indexed archive
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add a separate E166-d165 typed source resource for the direct indexed dictionary archive and its caller literal, retaining the original guest decoder and earlier source owners.
+
+**Validation**
+
+- Static EUR source audit zy8p2uxf and Windows GNU test build mm5f3nw5 pass. Wine puxz2kz7 creates/reuses E166-d165, preserves all 108 previous resources and checks all 2012 typed bytes and mixed-width boundaries with the new sources and the preceding archive edge altered.
+- A controlled original caller and decoder match raw and managed full states and guest clocks with interpreter and generated instruction dispatch; Wine server drained.
+- Windows GNU production build 7q7silsc and Wine CLI ozq4vcii pass create/reuse/verify for all 110 files matching the tested generation. An 11-frame world-map window reads no new archive bytes and leaves the dataset unchanged; Wine server drained.
+- Wine ordinary-input continuation abz4lk0q observes both managed direct archives and passes an 11-frame raw/managed state, guest clock, video, OAM and nonempty audio comparison with managed ROM sources altered; Wine server drained.
+
+**Limitations**
+
+- Generated instruction blocks may fall back to interpretation. The earlier archive test was updated for E166 after this build and was not rerun. Other scenes, other consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-classify-european-adjacent-indexed-archive.json](docs/changes/2026-11-17-classify-european-adjacent-indexed-archive.json).
+
+[Change record](docs/changes/2026-11-17-integrate-european-adjacent-indexed-archive.json)
+
+## 2026-11-17 — Keep completed cold archives on external volumes
+
+Type: added. Platforms: Linux native tools and external mounted storage.
+
+**Changes**
+
+- Allow individually reviewed completed cold archives to be offloaded to a mounted filesystem, retaining their catalog, manifest and evidence locally. Restore, verify and declared-input consumers resolve the archive through the recorded volume UUID.
+- Hold store and scope leases, check completion and host activity, verify and synchronize the copied payload, publish its location and only then retire the local copy. Refuse missing or mismatched volumes, overwritten destinations and changed sources or completion evidence.
+- Allow separately reviewed in-scope completion evidence for older idle-history archives and accept verified zero-exit result lists, retaining the original archival proof and rechecking historical outcome guards.
+
+**Validation**
+
+- 28 cold-storage tests passed in managed validation unit cold-external-evidence-9utymyyl, including external restoration, missing or corrupted volumes, interrupted copies, changed evidence and explicit historical completion review.
+- Transferred six previously archived completed scopes to an external NTFS volume, reclaiming 2225405952 locally allocated bytes. One external archive passed full cold-storage verify; all six copied payloads passed catalog checksum verification before retirement.
+- Transferred three additional completed historical archives to the external volume, reclaiming 1123049472 allocated bytes. Each external payload passed checksum verification before its local copy was removed; original archival proofs were retained.
+
+**Limitations**
+
+- External archives require the recorded volume to be mounted; native Windows and the Docker wrapper were not validated for external volumes. Historical evidence with ambiguous or conflicting outcomes is refused.
+- Three host process records were inaccessible during activity inspection; no claim of global host inactivity is made. Existing active and suspended work, private inputs and the shared Wine prefix were excluded.
+
+Documentation: [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-17-external-cold-archives.json)
+
+## 2026-11-17 — Compare Clear Mission during a European enemy attack
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Document a matched CH-0329 application and follow-up during an ordinary EUR Royal Valley enemy attack.
+
+**Validation**
+
+- In a protected Wine/Xvfb pair, control and candidate began at the same complete state, frame and clock and received one Select+Up frame. One candidate CH-0329 application wrote its target 4 to 2,836; the control remained 4. Both values persisted at 60, 120 and 600 post-disarm frames with matching sampled frames/clocks. Before, immediately after and final captures had matching hashes and remained in battle (dbg22-clear-mission-enemy-pair-br8582pm).
+- The seed was a previously retained ordinary battle checkpoint with protected ROM and source-save provenance; the pinned runtime, catalog and original checkpoint were protected and Wine drained.
+- A guarded control recorded six dialogue confirmations, Marche Wait and Montblanc turn. A protected replay pair matched the control trace and compared 18 images, frame and clock samples; all matched while the target remained 4 versus 2,836 through 3,360 frames after disarm. No mission-clear image appeared (dbg22-clear-mission-control-navigation-157op8mq, dbg22-clear-mission-continuation-pair-e1z6mjej).
+- A protected same-seed player-turn pair applied CH-0329 for one Select+Up frame: target 4 to 2,836 versus 4 in the control, persisting through 600 frames after disarm. All sampled frames/clocks and before/after/final image hashes matched; the final view was still the battle menu (dbg22-clear-mission-player-pair-0evvlyno). An earlier launch was refused before guest execution because the shared Wine lease was held (mkqgsfrp).
+
+**Limitations**
+
+- No mission clear was observed through one player Wait; the missing source note leaves the intended activation window unknown. This bounded observation does not establish all side effects, other actions or scenes, native Windows or original device-hook equivalence.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-17-compare-european-clear-mission-enemy-turn.json)
+
+## 2026-11-17 — Compare a battle-rule cheat on an isolated EUR checkpoint
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Record a same-seed CH-0338 memory and persistence comparison in EUR DS-05.
+
+**Validation**
+
+- Protected Wine/Xvfb candidate and control: one-frame candidate application recorded eight writes and changed the first target 4 to 0; control remained 4, and values persisted over 120 neutral frames after disarm. Screens appeared alike; both runs closed normally and Wine drained (dbg22-laws-paired-4x_rxqeo).
+- A protected same-seed EUR/Wine pair followed the verified deployment and battle route to System → Laws: the control displayed Cavalleria forbidden and Carica recommended; the candidate showed empty rows after one application and disarm. The target stayed zero versus 4 at the same final frame; clocks differed by one cycle (dbg22-laws-view-paired-kxaq5zm3).
+
+**Limitations**
+
+- This observes displayed rule and recommendation changes in one scene, not actual rule enforcement, all side effects, native Windows or original hardware.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-17-compare-european-battle-rule-cheat.json)
+
+## 2026-11-17 — Compare an AP cheat during a European ending transition
+
+Type: docs. Platforms: Windows GNU and Wine.
+
+**Changes**
+
+- Document a matched CH-0330 application and possible scene side effect in a cheat-derived EUR ending transition.
+- Document a separate ordinary dispatch-result comparison with matching visible AP.
+- Compare the dispatched unit skill screen and bounded candidate progress bytes after the ordinary result.
+
+**Validation**
+
+- A protected no-cheat preflight and controlled dialogue reached condition 1 at frame 48216. The successful retry reproduced the complete state and clock of the retained diagnostic; the earlier diagnostic hit the graphical-report limit and its work was retained (dbg22-ap-victory-preflight-k6sjege4, dbg22-ap-victory-dialogue-4fgbt7jy, dbg22-ap-victory-dialogue-retry-b1_fktbo).
+- A protected same-seed Wine pair matched full state, frame and clock before application; one CH-0330 application wrote the sampled target 0 to 5,000 versus control 0. Candidate clocks differed by three cycles one frame later. After disarm the target stayed 5,000 through 600 frames; control was 0 at 60 and 62,808 at 120, 300 and 600. Final captures at matching frame and clock show a new control scene and a black candidate screen (dbg22-ap-transition-pair-pzzwclhk).
+- A protected ordinary EUR dispatch-result control reached the 50 AP reward with two confirmations. A same-input CH-0330 pair matched full state, frame and clock before the second confirmation; after 36 maintained frames and disarm, the candidate target was 5,000 versus 5 in the control, persisting at matching frames and clocks for 120 further frames. Both reward captures displayed 50 AP (dbg22-ap-dispatch-preflight-p82ji7lc, dbg22-ap-dispatch-navigation-lrqa46x5, dbg22-ap-dispatch-pair-mg42vqys).
+- A protected same-input EUR/Wine pair continued through the recorded return and recruitment prompt to Sigmund: all four sampled frame/clock pairs matched, the candidate target stayed 5,000 versus 5, and 142 candidate progress bytes matched at initial, reward, map and skill-screen boundaries. Reward and Sigmund skill image hashes matched; the visible Throw entry was MASTER. Candidate recorded 36 applications and 36 writes before disarm (dbg22-ap-dispatch-progress-pair-ta7vkuk8).
+
+**Limitations**
+
+- This cheat-derived final transition does not establish the target field meaning, an AP award, the full cause of the visual divergence, all side effects, native Windows or original device-hook equivalence.
+- The ordinary result screenshot does not establish later value consumption or ability progress; the displayed value may already have been rendered.
+- The 142-byte span is a candidate, not a proven complete progress domain; only Sigmund and an already mastered visible ability were checked. Effects on unmastered abilities remain open.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-17-compare-european-ap-transition-cheat.json)
+
+## 2026-11-17 — Classify a directly rooted European indexed archive
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Identify the 3ae484 indexed archive and its direct original caller independently of conditional out-of-range language reads; preserve the adjacent callback and following archive as distinct sources.
+
+**Validation**
+
+- Static E164 audit j80q8jx4 authenticates the exact EUR ROM, caller instructions, two wrapper calls, upload calls and source literals. Four literal programs reconstruct 256 decoded bytes from 288 archive bytes; the archive and its four-byte caller literal have no prior source-owner overlap.
+- Sol /root/sol_language_adjacent requested as gpt-6.1-sol/xhigh identified the heterogeneous neighboring sources and original caller; effective model and effort are unconfirmed.
+
+**Limitations**
+
+- This is a source audit only. Typed publication, original-reader Wine verification, ordinary reachability, the following 3ae5a4 archive, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-language-index-ownership.json](docs/changes/2026-11-17-audit-european-language-index-ownership.json).
+
+[Change record](docs/changes/2026-11-17-classify-european-direct-indexed-archive.json)
+
+## 2026-11-17 — Classify the adjacent European indexed archive
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Identify and bound the separately rooted indexed archive at 3ae5a4 using its original wrapper call and existing source ownership.
+
+**Validation**
+
+- Static EUR/E165 audit zy8p2uxf authenticates the caller and decodes 41 programs from 63 literal and 89 dictionary packets. The 2008-byte archive and four-byte caller literal have no E165 source-owner overlap.
+
+**Limitations**
+
+- Typed integration, original-reader Wine validation, ordinary reachability, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-classify-european-direct-indexed-archive.json](docs/changes/2026-11-17-classify-european-direct-indexed-archive.json).
+
+[Change record](docs/changes/2026-11-17-classify-european-adjacent-indexed-archive.json)
+
+## 2026-11-17 — Clarify the E158 Wine recovery chronology
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Clarify that the first E158 sparse-reader follow-up did not execute, while the subsequent Wine result in the same section did execute and pass.
+
+**Validation**
+
+- Rechecked the existing guard and recovery record, the retained failed E158 receipt, and the later htdztv4y PASS receipt with completed server drain. The E158 lease had already been recovered; no lease was removed during this review.
+
+**Limitations**
+
+- The sandbox does not grant access to the Wine runtime directory or sockets; approval-review availability remains external. Other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-13-guard-wine-runtime-before-prefix-lease.json](docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json).
+
+[Change record](docs/changes/2026-11-17-clarify-e158-wine-recovery.json)
+
+## 2026-11-17 — Audit the European text reader callback registry
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Classify a separately rooted conditional text-reader callback registry and two original literals without changing guest index semantics.
+
+**Validation**
+
+- Protected offline audit mj5buj5x authenticates both original index/load paths, 27 words at 371068..3710d4, null slots 0/3/5, kind-11 reader 08016c01, the adjacent indexed-archive owner and absence of E168 overlaps. No guest execution was performed.
+
+**Limitations**
+
+- Actual runtime uses and the full byte-index domain remain open; callers read the table before their later switch guards. Model, managed integration, Wine, Linux, USA and native Windows are pending. No performance measurements.
+
+Documentation: [2026-11-17-locate-european-substitution-candidate.json](docs/changes/2026-11-17-locate-european-substitution-candidate.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-text-reader-registry.json)
+
+## 2026-11-17 — Complete conditional European text-reader address ownership
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Account for all physical word addresses conditionally selected by both original byte-indexed text-reader registry loads under E170.
+
+**Validation**
+
+- Protected static audit thuu27et checks all 256 word addresses: 98 use the new conditional source and all 158 earlier owners remain unchanged; no unowned, mixed or multiply owned words remain. No guest execution occurred.
+
+**Limitations**
+
+- Conditional physical ownership does not establish ordinary index values, callback invocation or the complete domains of other dispatchers. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json)
+
+## 2026-11-17 — Audit European text-reader byte-index ownership
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Map the physical source owners reached conditionally by the full byte indices of both original text-reader registry loads.
+
+**Validation**
+
+- Protected static audit nw66w3v6 checks all 256 word addresses against the accepted E169 manifest. It finds 158 owned and 98 unowned words, with no mixed or multiply owned words. All 98 are in 371158..37140c: 93 are zero and five resemble Thumb ROM pointers. No guest execution occurred.
+
+**Limitations**
+
+- This is physical address accounting, not proof of ordinary index values, callback semantics or unowned-source extent. Independently authenticate the substitution source and consumers before integrating. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [2026-11-17-integrate-european-text-reader-registry.json](docs/changes/2026-11-17-integrate-european-text-reader-registry.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-text-reader-byte-ownership.json)
+
+## 2026-11-17 — Audit conditional European substitution source words
+
+Type: changed. Platforms: EUR.
+
+**Changes**
+
+- Authenticate 98 previously unowned conditional substitution words and the original dispatcher literal as a separate source projection.
+
+**Validation**
+
+- Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh for the uncertain source contract; effective settings are unconfirmed. Protected static audit xf27x8sa verifies the original byte-truncating dispatcher, literal 019eb4, exact complement of the 75 earlier candidates, 396 source bytes and absence of E169 overlap. No guest execution occurred.
+
+**Limitations**
+
+- The 93 zero words are preserved without a padding claim. Callback semantics, safe invocation, ordinary indices, managed integration, Wine, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-text-reader-byte-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-byte-ownership.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-substitution-complement.json)
+
+## 2026-11-17 — Audit European opcode 39 action 13 sources
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Document the conditional source ownership of the two opcode-39 special-branch instructions separately from the newly integrated low-selector model.
+
+**Validation**
+
+- Static index audit wnmiows2 authenticates the EUR ROM and E164 manifest, finding ten physical index cells already owned by normal-battle, alternate-battle and equipment resources. Target graph audit 4p7yr_3v finds five referenced sequences, four OBJ lists and sixteen pixel blocks fully covered by existing sources.
+
+**Limitations**
+
+- The audit assumes valid unchanged unit and actor assignments, supported facing and no unresolved override; it does not establish original task execution or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-integrate-european-script39-special-poses.json](docs/changes/2026-11-17-integrate-european-script39-special-poses.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-script39-action13-sources.json)
+
+## 2026-11-17 — Audit European language-position index ownership
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Document the conditional source ownership of both original language-position readers for every byte-sized index without imposing a new guest limit.
+
+**Validation**
+
+- Static E164 audit s7fuvptv authenticates the EUR ROM, original reader instructions and source literals. Its 512 logical pair reads map to 261 physical pairs: ten language-position pairs, 29 existing static OBJ pairs and 222 unbound pairs.
+
+**Limitations**
+
+- Only values 0 through 4 have ordinary publication witnesses. Inputs above 4 and the independent meanings of adjacent bytes remain unproved; no additional source owner or runtime change is claimed. Linux, USA and native Windows remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-17-audit-european-language-index-ownership.json)
+
+## 2026-11-17 — Reconcile the European callback ownership
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Update the conditional full-byte language-position ownership inventory after the independently rooted callback descriptor was integrated in E167.
+
+**Validation**
+
+- Protected static audit 60xqqy83 checks both original readers and all 256 byte inputs against the E167 manifest. Of 261 physical pairs, 260 have an owner and one two-byte pair remains unowned.
+- Protected static audit s82earyr authenticates both conditional indices, neighboring list sources and a bounded exact-pointer search; it does not establish the gap's meaning or ordinary reachability.
+
+**Limitations**
+
+- This does not establish ordinary reachability of indices above 4 or the meaning of the final two-byte gap. Other writers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-language-index-e166-ownership.json](docs/changes/2026-11-17-audit-european-language-index-e166-ownership.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-language-index-e167-ownership.json)
+
+## 2026-11-17 — Update European language-index source ownership
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Reconcile the conditional full-byte language-position address inventory with the two independently owned indexed archives in E166.
+
+**Validation**
+
+- Static protected audit a1j2lsxv checks both original reader instruction windows and all 256 byte inputs. Of 261 physical pairs, 256 have an E166 owner and five remain unowned in two disjoint ranges.
+
+**Limitations**
+
+- This address inventory does not prove that values above 4 are ordinarily reachable or that adjacent data is one language table. Remaining source meanings, writers, Linux, USA and native Windows remain open; no performance measurements.
+
+Documentation: [2026-11-17-audit-european-language-index-ownership.json](docs/changes/2026-11-17-audit-european-language-index-ownership.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-language-index-e166-ownership.json)
+
+## 2026-11-17 — Identify a European context callback descriptor
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Identify the independently rooted eight-byte context callback descriptor and its original constructor and dispatcher while preserving its unproved final byte as opaque.
+
+**Validation**
+
+- Protected E166 source audit 7hcgos9q authenticates the constructor, dispatcher, callback state path and descriptor and finds no prior owner overlap. Sol /root/sol_context_callback was requested as gpt-6.1-sol/xhigh; effective settings are unconfirmed.
+
+**Limitations**
+
+- Typed publication, controlled original dispatch, ordinary invocation, the adjacent two-byte gap, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-17-audit-european-language-index-e166-ownership.json](docs/changes/2026-11-17-audit-european-language-index-e166-ownership.json).
+
+[Change record](docs/changes/2026-11-17-audit-european-context-callback-descriptor.json)
 
 ## 2026-11-16 — Verify additional EUR title language publications
 
@@ -864,10 +1593,14 @@ Type: docs. Platforms: Windows GNU and Wine.
 - Protected same-seed Wine interpreter comparisons passed for 600 neutral deployment frames, Start followed by 600 neutral frames, and Start plus an explicit confirmation followed by 600 neutral frames. In each tested window the candidate made zero writes and both complete endpoint state hashes matched.
 - Captured deployment, confirmation and battle-entry images. The ROM, source snapshot, runtime and source catalog were protected; owned test scratch was retired after normal close and Wine server drain.
 - An extended paired Start/confirmation plus 2400-neutral-frame Wine comparison reached the player turn; all eight 300-frame state samples and the final complete state matched. The candidate recorded 2432 maintained applications and zero writes; the final sampled condition was 3.
+- A protected EUR/Wine same-seed pair confirmed the first player turn and reached the next menu: ten 60-frame samples and final complete state matched; 1,946 candidate applications produced zero writes and every sampled condition was 3 (dbg22-phase3-paired-second-g5xk_wdy). A preceding diagnostic hit the eight-report limit; its failed work was retained.
+- A protected guarded control confirmed six Wait turns, recording condition 3 in 60 periodic samples and an enemy attack in the final image (dbg22-phase3-guarded-six-aarebf0u); no cheat effect was measured in that control.
+- A same-seed six-turn control and CH-0341 candidate reached frame 47005 with condition 4: the control target halfwords were 576, 470, 475, 0, 10, 50, 0, 0 and the candidate values were zero after 216 recorded writes. The first 61 frame/clock/state samples matched; the active boundary clocks differed by three cycles. Both guarded Wine runs passed and drained (qa5orklq, 7k014r54).
+- An additional matched EUR/Wine pair continued 600 frames after the active boundary: candidate condition 5 and 4,272 writes versus control condition 4, with different captured scenes. Candidate targets remained 0,0,0,10,0,0,0,0 for 120 frames after disarm and no additional writes; final control values were 576,296,475,0,10,50,0,0 (dbg22-phase3-active-continuation-vo7icw1l).
 
 **Limitations**
 
-- These bounded windows start from a cheat-derived user snapshot and do not establish ordinary progression, later battle behavior, side effects at an active condition or original device-hook equivalence. Native Windows and physical input were not tested.
+- These bounded windows start from a cheat-derived user snapshot and do not establish ordinary progression, the complete later battle outcome, all side effects at an active condition or original device-hook equivalence. Native Windows and physical input were not tested.
 
 Documentation: [debug_catalog.md](docs/debug_catalog.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 

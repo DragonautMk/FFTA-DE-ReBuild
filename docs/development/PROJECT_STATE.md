@@ -114,6 +114,9 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   completed artifacts automatically, records exclusions/progress and skips
   cataloged paths on reruns; it does not rerun validation commands. Current,
   private, failed/suspended and explicitly hot scopes remain available.
+  Individually reviewed completed cold archives can be offloaded to a mounted
+  Linux volume while their catalog stays local; restore and verification require
+  the matching volume. Native Windows and Docker external-volume use are unverified.
   Legacy artifacts without recognized success receipts can use automatic
   idle-history retention after 24 hours without mtime/ctime changes, with fresh
   host checks and preserved outcome metadata. This does not close failed or
@@ -1119,8 +1122,25 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   have an EUR conditional typed source model: 71 registry selector/group pairs,
   6,960 new index words, 410 sequences and 161 pixel blocks after prior-owner
   subtraction. Wine source reconstruction and a controlled unit-to-actor join
-  pass (`z2eftm1l`). Dataset publication, runtime readers, ordinary use and
-  Linux/USA remain open; this model alone changes no extractor revision.
+  pass (`z2eftm1l`). EUR e163-d162 publishes and serves the selected sources;
+  Wine typed reads and controlled original readers pass (`ga87pps5`); production
+  CLI passes (`vgo1cewu`) without a positive read in its bounded scene. Ordinary
+  use, other consumers and Linux/USA remain open.
+- [Opcode-39 low-selector poses](../rom_data_unit_obj.md#low-selector-special-unit-pose-projection)
+  have a conditional EUR source model: 964 index cells, 109 sequences, seven
+  OBJ lists and 87 pixel blocks after E163 owner subtraction. Wine source and
+  controlled unit-to-actor checks pass (`aysnyiei`). EUR e164-d163 publication,
+  typed reads and controlled original readers pass under Wine (`jrp5fb0y`).
+  The production CLI passes (`72_aby76`) without a positive read in its bounded
+  scene. A later E169 Wine home continuation reads 48 managed index bytes, no
+  sequence/OBJ/pixel bytes, and matches 1,800 framebuffer/OAM frames and final
+  state (`mr5vn2od`, audit `db6l43_0`); slot identities remain unproved.
+  Two excluded action-13 branches have conditional index and downstream sources
+  already owned (`wnmiows2`, `4p7yr_3v`); their controlled original task branch
+  prefixes pass under Wine (`uto86fc6`), as do two explicitly seeded callee
+  continuations (`_mvdi9t3`). Uninterrupted allocation, alternate sprites,
+  actor overrides, action-13 ordinary reachability, other paths and Linux/USA
+  remain open.
 - [Actor property words](../rom_data_unit_obj.md#actor-property-words-from-known-sprite-assignments)
   have a separate source contract:221C4reads394C14+2*sprite, unsignedu16 through
   actor9AD0E/r8/constructor r3into allocation/task+16.398knownnormal/alternate
@@ -1201,8 +1221,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
 - EUR e162-d161 publishes six conditional [tilemap geometry groups](../rom_data_runtime.md#european-tilemap-geometry-projections).
   Wine original-reader and production CLI checks pass; the bounded CLI scene
   reads no geometry bytes. Four short interpreter scene pairs and an eight-frame
-  production boot pair also match. Ordinary source use, other domains and
-  deferred platforms remain open.
+  production boot pair also match. A later E169 Wine home continuation reads 56
+  managed bytes across two aggregate groups and matches 1,800 framebuffer/OAM
+  frames and final state (`mr5vn2od`, audit `db6l43_0`). Group identities, other
+  domains and deferred platforms remain open.
 
 - The [optional bus/host ROM audit](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit)
   Cargo feature is absent by default. Scoped TLS collects successful bus and
@@ -1779,7 +1801,47 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   observes four context bytes in the same bounded input window (`27uqnksb`).
   Full consumers and deferred platforms remain open.
   [Details](../rom_data_indexed_graphics.md#european-indexed-graphics-contexts).
-  Its initial contract declared four five-slot language pointer groups/20archives649programs,24disjoint
+  The adjacent conditional text-reader registry at `371068..3710d4` is
+  published in E169-d168; controlled Wine interpreter prefixes and dataset
+  preservation pass (`j15jcf44`). Production CLI and a recorded ordinary
+  1,800-frame framebuffer/OAM/final-state comparison pass (`mr5vn2od`), with
+  28 managed callback bytes. Audio/poisoned-source scene and other paths open.
+  E169 byte-index ownership is 158/256 words (`nw66w3v6`). E170 separately
+  publishes the remaining 98 words and dispatcher literal; controlled Wine
+  interpreter/generated prefixes pass (`sjojlovh`). E170 assigns all 256
+  conditional registry-reader words (`thuu27et`). Production Wine CLI
+  `alfjrf8b` passes; its three-frame scene reads zero new words. Ordinary index
+  reachability and other dispatcher domains remain open.
+  [Details](../rom_data_text.md#conditional-european-text-reader-registry).
+  The independently rooted EUR archive at `3ae484` has four 64-byte programs
+  and an authenticated direct caller (`j80q8jx4`). An E165-d164 typed resource
+  passes publication and controlled original-reader Wine checks (`qk3xqc4z`)
+  and production CLI Wine (`e87ug9pq`); a later bounded ordinary continuation
+  reads both direct archives as described below.
+  [Source](../rom_data_indexed_graphics.md#direct-european-archive-at-3ae484).
+  Its separate neighbor at `3ae5a4..3aed7c` has 41 programs, 2,008 source
+  bytes and no E165 owner overlap (`zy8p2uxf`); E166 controlled reader and
+  CLI Wine pass (`puxz2kz7`/`ozq4vcii`).
+  [Source](../rom_data_indexed_graphics.md#adjacent-direct-european-archive-at-3ae5a4).
+  A source-guided ordinary program-1 Wine window read neither direct archive
+  (`dh34xwul`). A separate cold-origin Wine continuation (`abz4lk0q`) reads
+  both and passes 11 frames of raw/managed state, clock, video, OAM and audio
+  comparison with managed sources altered; other scenes remain open.
+  Conditional language-position addresses now have 256 of 261 physical pairs
+  assigned in E166 (`a1j2lsxv`); the remaining five pairs and the ordinary
+  selector domain are still open. [Details](../rom_data_obj.md#conditional-language-position-pairs-e141).
+  Four of those pairs form one separately rooted callback descriptor; its
+  constructor and dispatcher are source-audited (`7hcgos9q`), and E167
+  controlled Wine dispatch and production CLI pass (`md0zxb9k`/`555lr8qm`).
+  E167 has 260 of 261 conditional pairs assigned (`60xqqy83`); E168 separately
+  preserves the remaining pair as opaque and passes controlled-reader Wine
+  checks (`mncnsstk`); all 261 conditional physical pairs have owners in E168
+  (`4ami2zcc`). Production Wine CLI `wklf6sch` passes create/reuse/verify.
+  Its ordinary callback continuation reads 14 managed descriptor bytes with
+  matching video/OAM and final state over three frames; audio and poisoned-ROM
+  scene comparison remain open. The pair meaning and ordinary inputs 30/35
+  remain open.
+  The earlier language-group contract declared four five-slot language pointer groups/20archives649programs,24disjoint
   source spans74907B/278336decodedB. Original05228/0537C uses BE offsets and a
   fixed external dictionary, distinct054A0;4137 stays opaque. Raw languageu8
   selectors and low16start-count semantics are uncapped by host ownership.
@@ -2302,6 +2364,10 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   and a return from French to English (ID 0). Other writers, the global
   writer/value domain and native dispatch remain open.
   [Contract](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
+- The two EUR language-position readers conditionally address 261 physical
+  pairs across a byte-sized input. E164 has owners for 39 pairs and none for
+  222 (`s7fuvptv`); inputs above 4 and the adjacent source meanings remain
+  unproved. [Audit](../rom_data_obj.md#conditional-language-position-pairs-e141).
 - EUR e158-d157 serves conditional opening coordinate pairs and sparse
   halfwords; original-reader, ordinary sparse-branch and production CLI Wine
   checks pass. Other scenes, Linux, USA and native Windows remain open.

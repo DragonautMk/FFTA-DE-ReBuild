@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "model-european-script39-special-poses",
+  "title": "Model European opcode 39 special-unit poses",
+  "kind": "added",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Add a conditional typed source projection for opcode-39 low-selector special units after subtracting the e163 manifest's existing source owners."
+  ],
+  "validation": [
+    "Static source plan stme4uml identifies 418 disjoint ranges, 964 index cells, 109 sequences, seven OBJ lists and 87 pixel blocks. Windows GNU test build sclfy2v2 and Wine aysnyiei pass source reconstruction, JSON round-trip, producer guards and a controlled original unit-to-actor join with a nonmatching actor first; Wine server drained."
+  ],
+  "limitations": [
+    "The model is not yet published or consumed at runtime. Two special-branch instructions, ordinary reachability, other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script39_registry_poses.rs",
+    "crates/gba-core/src/rom_data/script39_special_poses.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script39_special_poses_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

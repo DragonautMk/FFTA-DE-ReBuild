@@ -245,6 +245,39 @@ eight sampled state hashes and the final state matched, with zero writes across
 negative observations do not establish whether the cheat works during a later
 action, or validate the original device hook.
 
+A subsequent same-seed pair navigated the first player's **Wait** menu and
+confirmed the turn, reaching the next player's menu. Ten samples at 60-frame
+intervals and the final complete state matched; the candidate recorded 1,946
+applications and zero writes. The sampled condition was 3 in both copies. This
+is a bounded negative result for that route, not proof of the condition's value
+between samples or of later battle effects. The isolated EUR/Wine run protected
+the ROM, original snapshot, catalog and pinned runtime and drained Wine
+(`dbg22-phase3-paired-second-g5xk_wdy`). A separate guarded control then
+confirmed six player turns; all 60 periodic samples read condition 3, and the
+final image showed an enemy attack (`dbg22-phase3-guarded-six-aarebf0u`). This
+control alone does not compare cheat effects during that attack.
+
+A continuation reached an active condition in the same cheat-derived scene.
+At frame 47005, the no-cheat control and CH-0341 candidate both sampled
+condition 4. The eight plan target halfwords were `[576, 470, 475, 0, 10, 50,
+0, 0]` in the control and all zero in the candidate, which recorded 216 writes.
+The first 61 matched frame/clock/state samples precede this divergence; at the
+active sample the two guest clocks differed by three cycles. Both runs protected
+the same inputs and drained Wine (`dbg22-phase3-six-candidate-qa5orklq`,
+`dbg22-phase3-active-control-7k014r54`). This establishes a bounded host-frame
+plan effect, not the meaning of each field, the eventual battle outcome or
+original device-hook equivalence.
+
+A further protected pair reproduced that boundary and continued for 600 neutral
+frames. The candidate reached condition 5 with 4,272 writes, while the control
+remained at condition 4; their final captures show different battle scenes. After
+explicit disarm and 120 additional frames, the candidate target halfwords
+remained `[0, 0, 0, 10, 0, 0, 0, 0]` and its write count stayed at 4,272. At
+the corresponding frame the control targets were `[576, 296, 475, 0, 10, 50,
+0, 0]`. This is a bounded persistence and visual observation, not proof of a
+final victory or of each changed field's meaning
+(`dbg22-phase3-active-continuation-vo7icw1l`).
+
 In isolated Wine/Xvfb tests, keyboard navigation selected a synthetic source,
 reviewed its preview, armed and disarmed it, applied it once and disabled all.
 Attempts to arm without a selected source or reviewed preview were refused.
@@ -1100,6 +1133,116 @@ observed change persisted after disarm; both exact seeds were restored and
 protected originals remained unchanged. This checks one ability and scene, not
 all abilities or characters, other side effects, native Windows or equivalence
 to the original device hook.
+
+A separate protected EUR/Wine pair applied CH-0320 for one frame from the
+same world-map seed and compared the first three 264-byte candidate character
+records. Complete initial states, frames, clocks and record bytes matched. At
+one frame and 60 frames after disarm, all 144 bytes at offsets `40..CF` of the
+first record differed; the rest of that record and both subsequent records
+matched at the same frame and clock. This included offsets `CE..CF`, which lie
+outside the previously examined 142-byte candidate progress span `40..CD`.
+The candidate recorded 72 halfword writes; immediate map captures matched.
+These two bytes' meaning, later effects, other records and original device
+behavior are not established (`dbg22-mastery-three-records-fiwjrgz3`).
+
+For CH-0330, a protected same-seed EUR/Wine comparison replayed a user-supplied
+cheat-derived final-victory checkpoint through its ending dialogue. At frame
+48216 both copies had the same complete state and clock, with the plan condition
+at 1 and its target at 0. One candidate application recorded one write: at the
+next frame the target was 5,000 in the candidate and 0 in the control; their
+clocks differed by three cycles. After disarm, the candidate target remained
+5,000 at 60, 120, 300 and 600 frames, while the control target was 0 at 60 and
+62,808 at 120, 300 and 600. At the final matching frame and clock, the control
+capture showed a new scene and the candidate capture was black. The test does
+not identify the field's meaning, prove an AP award or establish the full cause
+of the visual divergence. It shows a persistent plan write and a possible scene
+side effect in this particular ending; other contexts, native Windows and the
+original device hook remain unverified (`dbg22-ap-transition-pair-pzzwclhk`).
+
+A separate ordinary EUR dispatch-result checkpoint started without recorded cheat
+ancestry. A same-input pair reached the same complete state, frame and clock
+before confirming the result. With CH-0330 maintained for the following 36
+frames, the candidate's target became 5,000 while the control's became 5; the
+values persisted for 120 frames after disarm, at matching sample frames and
+clocks. Both captured reward screens displayed **50 AP**. This does not establish
+whether the value is consumed later or whether ability progress differs; the
+rendered text could reflect an earlier value. ROM, original checkpoint, catalog
+and runtime were protected and Wine drained (`dbg22-ap-dispatch-pair-mg42vqys`).
+
+A continuation replayed the same pair through the return, the recruitment
+prompt and Party navigation to the dispatched unit, Sigmund. At the reward,
+returned map and later skill screen, the candidate target still read 5,000 and
+the control 5, with matching sampled frames and clocks. The candidate recorded
+36 applications and writes before disarm. Both reward images and both Sigmund
+skill images matched exactly; the visible Ninja **Throw** entry was already
+**MASTER!**. A 142-byte candidate progress span in his third record matched
+between copies initially, at the reward, on return and at the skill screen. This
+bounded observation does not prove the complete progress domain, another unit's
+abilities, or what would happen to an unmastered ability
+(`dbg22-ap-dispatch-progress-pair-ta7vkuk8`).
+
+For CH-0329, a protected same-seed EUR/Wine pair started during an ordinary
+Royal Valley enemy attack. Both copies received one frame of Select+Up; only the
+candidate had CH-0329 armed, and it was then disarmed. The same initial complete
+state, frame and clock had target value 4. The candidate recorded one write and
+its target became 2,836; the control remained 4. These values persisted across
+60, 120 and 600 neutral frames after disarm, with matching sampled frames and
+clocks. Captures before, immediately after and at the end matched; the final
+scene remained in battle. This verifies a bounded write and persistence, not a
+mission clear, the intended activation window, all side effects or original
+hardware behavior. The source's missing Clear Mission note remains unresolved
+(`dbg22-clear-mission-enemy-pair-br8582pm`).
+
+A guarded continuation of the same comparison followed six dialogue
+confirmations, Marche's **Wait** and the next player turn. At all 18 sampled
+boundaries, frame, clock and captured image matched; the control target remained
+4 and the candidate target 2,836. The final capture showed Montblanc's turn,
+3,360 frames after disarm. No mission clear was observed in this route. This
+extends the persistence and visual comparison, without establishing the intended
+activation timing, the target field's full semantics or effects in other scenes
+(`dbg22-clear-mission-control-navigation-157op8mq`,
+`dbg22-clear-mission-continuation-pair-e1z6mjej`).
+
+A separate protected pair started at Marche's player-turn menu. One frame of
+Select+Up with CH-0329 armed changed the target from 4 to 2,836, versus 4 in
+the control; both values persisted for 600 frames after disarm. All sampled
+frames and clocks matched and the before, after and final image hashes matched;
+the final capture still showed the battle menu and its help text. Neither this
+player-turn window nor the earlier enemy-attack route established a mission
+clear (`dbg22-clear-mission-player-pair-0evvlyno`).
+
+For CH-0338, an isolated EUR DS-05 battle checkpoint and a same-seed control
+were advanced for one frame, followed by 120 neutral frames. The candidate was
+armed for that one frame and then disarmed: its first plan target changed from
+4 to 0 and the other seven remained zero, while the control stayed at 4 and
+seven zeroes. The candidate recorded eight writes; those target values remained
+unchanged through the observed post-disarm interval. The captured battle scenes
+looked alike. This checks one bounded memory effect and persistence, not whether
+the visible rules or their enforcement changed, all side effects, native
+Windows or the original device hook (`dbg22-laws-paired-4x_rxqeo`).
+
+A further same-seed EUR/Wine pair followed the deployment and battle route to
+**System → Laws**. After the same one-frame application and disarm, the control
+showed **Cavalleria** as forbidden and **Carica** as recommended; the candidate
+showed empty rows for both. Both reached the same final frame, with clocks one
+cycle apart, and the altered target remained zero versus 4 in the control. The
+candidate recorded one application and eight writes. This verifies the displayed
+change and the disappearance of a recommendation in this scene; actual rule
+enforcement, other situations and original hardware remain unverified
+(`dbg22-laws-view-paired-kxaq5zm3`).
+
+For CH-0339, an isolated EUR first-final-battle scene was prepared with
+Nusrat's Time Magic after the available Steal list did not include Stop.
+Casting the forbidden Stop produced a visible yellow card on Nusrat. One
+CH-0339 application then wrote 24 target halfwords; the observed nonzero target
+changed from 256 to zero. After reopening the status screen the displayed yellow
+card count changed from 1 to 0, and the target remained zero for 192 frames
+after disarm, with no further writes. A same-input no-cheat control reproduced
+the identical complete state, frame and clock before application; at the next
+frame and 192 frames later, frame and clock still matched while the control's
+card field and displayed yellow count remained 256 and 1. Other units and card
+types, native Windows and original device behavior remain unverified
+(`dbg22-royal-stop-live-zprjyv6n`, `dbg22-royal-card-control-2rzyo45b`).
 
 In an isolated session, the local control channel and command console can
 select a discovered cheat catalog by ID, refresh an immutable snapshot, list

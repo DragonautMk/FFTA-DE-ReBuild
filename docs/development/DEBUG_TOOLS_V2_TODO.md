@@ -808,7 +808,7 @@ No other development was selected. On resumption read only the individual ID in
   of visible/gameplay effect, toggle/deactivation or UI access. All these criteria
   remain, dependent on 19/20; do not promote the group.
 
-- [ ] **DBG2-22 — Advanced cheats for abilities, rules and transitions.**
+- [x] **DBG2-22 — Advanced cheats for abilities, rules and transitions.**
       Plan small groups for abilities/AP/level (CH-0320/0330/0340), battle rules/
       cards (CH-0338/0339) and mission end/victory (CH-0329/0341). Only afterward
       evaluate global unlocks, completed missions, inventory/monsters, clan stats
@@ -826,13 +826,52 @@ No other development was selected. On resumption read only the individual ID in
   different frame; this is secondary evidence. In another EUR Party scenario,
   CH-0320 changed Marsh's Steal: Ability display from 180 to MASTER! after one
   armed frame and disarm; the same-seed/input/frame control remained at 180.
-  Both seeds were restored exactly. Other abilities and side effects, actual
-  level-up, CH-0330, rules/cards and transition entries remain unverified.
+  Both seeds were restored exactly. A later same-seed pair found all 144 bytes
+  at offsets 40..CF changed in the first candidate record, including two beyond
+  the known 142-byte candidate span; the next two records matched the control
+  through 60 frames after disarm. Those final bytes' meanings, other abilities
+  and side effects, and actual level-up remain unverified. In a cheat-derived
+  EUR ending transition, a
+  same-state CH-0330 pair recorded one target write 0→5,000, lasting 600 frames
+  after disarm; the control reached a new scene while the candidate was black.
+  An ordinary EUR dispatch-result pair displayed 50 AP in both copies while
+  the candidate target was 5,000 versus 5 after disarm. A matched continuation
+  showed Sigmund's same mastered Throw and matching 142 candidate progress bytes
+  at four boundaries; unmastered abilities and the scene divergence remain
+  unverified. A later isolated EUR CH-0338 pair
+  changed the displayed law screen: the control showed Cavalleria forbidden and
+  Carica recommended, while one candidate application followed by disarm left
+  both rows empty; rule enforcement remains unverified. A same-input EUR/Wine
+  CH-0339 comparison removed Nusrat's visible yellow card after a forbidden
+  Stop; it remained absent 192 frames after disarm while the no-cheat control
+  retained it. Red cards and other cases remain unverified.
+  CH-0329 wrote and retained its target through 3,360 frames in an enemy-attack
+  pair and a subsequent player Wait; 18 sampled images matched and no mission
+  clear was observed. A separate player-turn application also left matching
+  menu captures after 600 frames. CH-0341 also has a bounded phase-three
+  target/persistence comparison, but no final-victory claim.
+  [Evidence and limits](../cheats.md).
 
-  **Audit 2026-11-01 — not started.** Catalog entries and the generic decoder
-  are not evidence of abilities/AP/rules/transitions. No acceptance record for
-  before/after/side effects of the requested groups; DBG2-21 remains open. The
-  original uncertainty around the Clear Mission note is retained.
+  **Accepted within the recorded EUR interpreter/Wine scenarios.** All seven
+  selected entries now have before/after comparisons and bounded checks for
+  persistence or observable side effects, with source uncertainty retained. The
+  CH-0329 mission-clear outcome, CH-0330 effect on an unmastered ability,
+  CH-0338 enforcement, CH-0339 red cards, an actual CH-0340 level-up and a final
+  CH-0341 victory remain unverified; a forced first-battle victory does not prove
+  ordinary progression. Other cases and original-device behavior are not implied
+  by this acceptance. Native Windows and physical inputs remain in DBG2-27.
+
+  After the selected groups, the remaining EUR catalog was reviewed by title and
+  scope. Global areas (CH-0326), completed missions (CH-0322), clan skills/level
+  (CH-0327/0328), monsters and inventory (CH-0332/0333), kill count (CH-0335)
+  and speed (CH-0337) remain unverified; no gameplay effect is inferred from the
+  catalog. CH-0321/0323/0325/0331/0336 retain the individual DBG2-21 status above.
+  CH-0324 and CH-0334 have the bounded DBG2-21 checks. The original source note
+  for CH-0329 remains missing.
+
+  **Historical audit 2026-11-01 — not started at that time.** Catalog entries and
+  the generic decoder did not establish gameplay, and DBG2-21 had not yet been
+  accepted. Later observations and the DBG2-21 acceptance are recorded above.
 
 - [x] **DBG2-23 — Cheats, checkpoints, replay and provenance.**
       Record cheat set/hash/parameters, decoder, order and frame of each application

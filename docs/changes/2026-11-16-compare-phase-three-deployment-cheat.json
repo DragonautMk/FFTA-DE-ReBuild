@@ -13,10 +13,14 @@
   "validation": [
     "Protected same-seed Wine interpreter comparisons passed for 600 neutral deployment frames, Start followed by 600 neutral frames, and Start plus an explicit confirmation followed by 600 neutral frames. In each tested window the candidate made zero writes and both complete endpoint state hashes matched.",
     "Captured deployment, confirmation and battle-entry images. The ROM, source snapshot, runtime and source catalog were protected; owned test scratch was retired after normal close and Wine server drain.",
-    "An extended paired Start/confirmation plus 2400-neutral-frame Wine comparison reached the player turn; all eight 300-frame state samples and the final complete state matched. The candidate recorded 2432 maintained applications and zero writes; the final sampled condition was 3."
+    "An extended paired Start/confirmation plus 2400-neutral-frame Wine comparison reached the player turn; all eight 300-frame state samples and the final complete state matched. The candidate recorded 2432 maintained applications and zero writes; the final sampled condition was 3.",
+    "A protected EUR/Wine same-seed pair confirmed the first player turn and reached the next menu: ten 60-frame samples and final complete state matched; 1,946 candidate applications produced zero writes and every sampled condition was 3 (dbg22-phase3-paired-second-g5xk_wdy). A preceding diagnostic hit the eight-report limit; its failed work was retained.",
+    "A protected guarded control confirmed six Wait turns, recording condition 3 in 60 periodic samples and an enemy attack in the final image (dbg22-phase3-guarded-six-aarebf0u); no cheat effect was measured in that control.",
+    "A same-seed six-turn control and CH-0341 candidate reached frame 47005 with condition 4: the control target halfwords were 576, 470, 475, 0, 10, 50, 0, 0 and the candidate values were zero after 216 recorded writes. The first 61 frame/clock/state samples matched; the active boundary clocks differed by three cycles. Both guarded Wine runs passed and drained (qa5orklq, 7k014r54).",
+    "An additional matched EUR/Wine pair continued 600 frames after the active boundary: candidate condition 5 and 4,272 writes versus control condition 4, with different captured scenes. Candidate targets remained 0,0,0,10,0,0,0,0 for 120 frames after disarm and no additional writes; final control values were 576,296,475,0,10,50,0,0 (dbg22-phase3-active-continuation-vo7icw1l)."
   ],
   "limitations": [
-    "These bounded windows start from a cheat-derived user snapshot and do not establish ordinary progression, later battle behavior, side effects at an active condition or original device-hook equivalence. Native Windows and physical input were not tested."
+    "These bounded windows start from a cheat-derived user snapshot and do not establish ordinary progression, the complete later battle outcome, all side effects at an active condition or original device-hook equivalence. Native Windows and physical input were not tested."
   ],
   "files": [
     "docs/cheats.md"

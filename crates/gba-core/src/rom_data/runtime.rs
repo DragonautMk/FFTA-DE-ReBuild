@@ -134,6 +134,27 @@ pub use tilemap_geometry::TilemapGeometryStats;
 mod script39_registry_poses;
 use script39_registry_poses::Script39RegistryPoseResources;
 pub use script39_registry_poses::Script39RegistryPoseStats;
+mod script39_special_poses;
+use script39_special_poses::Script39SpecialPoseResources;
+pub use script39_special_poses::Script39SpecialPoseStats;
+mod direct_indexed_graphics;
+use direct_indexed_graphics::DirectIndexedGraphicsResources;
+pub use direct_indexed_graphics::DirectIndexedGraphicsStats;
+mod direct_indexed_dictionary;
+use direct_indexed_dictionary::DirectIndexedDictionaryResources;
+pub use direct_indexed_dictionary::DirectIndexedDictionaryStats;
+mod context_callback_descriptor;
+use context_callback_descriptor::ContextCallbackDescriptorResources;
+pub use context_callback_descriptor::ContextCallbackDescriptorStats;
+mod conditional_language_pair;
+use conditional_language_pair::ConditionalLanguagePairResources;
+pub use conditional_language_pair::ConditionalLanguagePairStats;
+mod text_reader_registry;
+use text_reader_registry::TextReaderRegistryResources;
+pub use text_reader_registry::TextReaderRegistryStats;
+mod conditional_substitution_words;
+use conditional_substitution_words::ConditionalSubstitutionWordsResources;
+pub use conditional_substitution_words::ConditionalSubstitutionWordsStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -377,6 +398,13 @@ pub struct RuntimeResources {
     range_lookup: Option<Box<RangeLookupResources>>,
     tilemap_geometry: Option<Box<TilemapGeometryResources>>,
     script39_registry_poses: Option<Box<Script39RegistryPoseResources>>,
+    script39_special_poses: Option<Box<Script39SpecialPoseResources>>,
+    direct_indexed_graphics: Option<Box<DirectIndexedGraphicsResources>>,
+    direct_indexed_dictionary: Option<Box<DirectIndexedDictionaryResources>>,
+    context_callback_descriptor: Option<Box<ContextCallbackDescriptorResources>>,
+    conditional_language_pair: Option<Box<ConditionalLanguagePairResources>>,
+    text_reader_registry: Option<Box<TextReaderRegistryResources>>,
+    conditional_substitution_words: Option<Box<ConditionalSubstitutionWordsResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -648,6 +676,27 @@ impl RuntimeResources {
         if let Some((data, _)) = files.script39_registry_poses {
             resources.script39_registry_poses = Some(Box::new(Script39RegistryPoseResources::new(data.clone(), &source.script39_registry_poses.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.script39_special_poses {
+            resources.script39_special_poses = Some(Box::new(Script39SpecialPoseResources::new(data.clone(), &source.script39_special_poses.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.direct_indexed_graphics {
+            resources.direct_indexed_graphics = Some(Box::new(DirectIndexedGraphicsResources::new(data.clone(), &source.direct_indexed_graphics.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.direct_indexed_dictionary {
+            resources.direct_indexed_dictionary = Some(Box::new(DirectIndexedDictionaryResources::new(data.clone(), &source.direct_indexed_dictionary.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.context_callback_descriptor {
+            resources.context_callback_descriptor = Some(Box::new(ContextCallbackDescriptorResources::new(data.clone(), &source.context_callback_descriptor.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.conditional_language_pair {
+            resources.conditional_language_pair = Some(Box::new(ConditionalLanguagePairResources::new(data.clone(), &source.conditional_language_pair.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.text_reader_registry {
+            resources.text_reader_registry = Some(Box::new(TextReaderRegistryResources::new(data.clone(), &source.text_reader_registry.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.conditional_substitution_words {
+            resources.conditional_substitution_words = Some(Box::new(ConditionalSubstitutionWordsResources::new(data.clone(), &source.conditional_substitution_words.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -901,6 +950,13 @@ impl RuntimeResources {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1033,6 +1089,13 @@ impl RuntimeResources {
             + self.range_lookup.as_ref().map_or(0, |i| i.resident_bytes())
             + self.tilemap_geometry.as_ref().map_or(0, |i| i.resident_bytes())
             + self.script39_registry_poses.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.script39_special_poses.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.direct_indexed_graphics.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.direct_indexed_dictionary.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.context_callback_descriptor.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.conditional_language_pair.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.text_reader_registry.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.conditional_substitution_words.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1190,6 +1253,13 @@ impl RuntimeResources {
     pub fn range_lookup_stats(&self) -> Option<RangeLookupStats> {self.range_lookup.as_ref().map(|m|m.stats())}
     pub fn tilemap_geometry_stats(&self) -> Option<TilemapGeometryStats> {self.tilemap_geometry.as_ref().map(|m|m.stats())}
     pub fn script39_registry_pose_stats(&self) -> Option<Script39RegistryPoseStats> {self.script39_registry_poses.as_ref().map(|m|m.stats())}
+    pub fn script39_special_pose_stats(&self) -> Option<Script39SpecialPoseStats> {self.script39_special_poses.as_ref().map(|m|m.stats())}
+    pub fn direct_indexed_graphics_stats(&self) -> Option<DirectIndexedGraphicsStats> {self.direct_indexed_graphics.as_ref().map(|m|m.stats())}
+    pub fn direct_indexed_dictionary_stats(&self) -> Option<DirectIndexedDictionaryStats> {self.direct_indexed_dictionary.as_ref().map(|m|m.stats())}
+    pub fn context_callback_descriptor_stats(&self) -> Option<ContextCallbackDescriptorStats> {self.context_callback_descriptor.as_ref().map(|m|m.stats())}
+    pub fn conditional_language_pair_stats(&self) -> Option<ConditionalLanguagePairStats> {self.conditional_language_pair.as_ref().map(|m|m.stats())}
+    pub fn text_reader_registry_stats(&self) -> Option<TextReaderRegistryStats> {self.text_reader_registry.as_ref().map(|m|m.stats())}
+    pub fn conditional_substitution_words_stats(&self) -> Option<ConditionalSubstitutionWordsStats> {self.conditional_substitution_words.as_ref().map(|m|m.stats())}
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1465,6 +1535,34 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.script39_registry_poses {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.script39_special_poses {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.direct_indexed_graphics {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.direct_indexed_dictionary {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.context_callback_descriptor {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.conditional_language_pair {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.text_reader_registry {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.conditional_substitution_words {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -1848,6 +1946,13 @@ impl crate::MemMap {
             || RangeLookupResources::source_page(index)
             || TilemapGeometryResources::source_page(index)
             || Script39RegistryPoseResources::source_page(index)
+            || Script39SpecialPoseResources::source_page(index)
+            || DirectIndexedGraphicsResources::source_page(index)
+            || DirectIndexedDictionaryResources::source_page(index)
+            || ContextCallbackDescriptorResources::source_page(index)
+            || ConditionalLanguagePairResources::source_page(index)
+            || TextReaderRegistryResources::source_page(index)
+            || ConditionalSubstitutionWordsResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

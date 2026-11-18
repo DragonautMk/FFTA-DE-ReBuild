@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-european-script39-action13-branch",
+  "title": "Verify the European opcode 39 action 13 task branch",
+  "kind": "added",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Add a controlled original-task branch check for the two authenticated script operands that select action 13, plus an adjacent default-branch control."
+  ],
+  "validation": [
+    "Windows GNU test build 9qi34821 and Wine uto86fc6 pass three controlled comparisons: both authenticated selector/group operands enter the expected action-13 callee and an adjacent group enters the default callee; raw and managed full state and guest clock match at entry. Wine server drained."
+  ],
+  "limitations": [
+    "The check stops at the callee entry and does not establish complete callee execution, live actor override domains or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script39_action13_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": ["docs/changes/2026-11-17-audit-european-script39-action13-sources.json"]
+}

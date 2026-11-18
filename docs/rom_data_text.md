@@ -705,3 +705,97 @@ yield to the first instruction. The successful controlled setup consumes that
 pending frame and starts the injected function context awake; no runtime change
 was needed. Other programs, callback semantics, ordinary reachability, broader
 regressions and the deferred platforms remain open.
+
+A source join `e180-substitution-home-source-audit-retry-gk6kl05w` authenticates
+a retained cold-origin home checkpoint, its script key 2 and cursor `b95902`,
+and a previously recorded continuation that later reaches the selector path.
+The next source text instruction can select messages 85–95; none contains
+opcode 25. Two later instructions can conditionally select message 119, whose
+English program at `bb3428` contains opcode 25 with callback operand 0. The
+original actor-dependent helper returns offsets 0–10, but the future actor
+state, execution of those instructions and actual message selection remain
+unproved. The recorded checkpoint and input are a source-backed candidate for
+a bounded ordinary observation, not a callback witness. Wine locator
+`e180-substitution-home-locator-wine-zonc4h0q` follows that checkpoint and
+recorded input for 1,800 frames. It reads seven managed script-text programs
+but zero substitution callback bytes, so no raw/managed pair ran. This is a
+negative for that window, not all ordinary scenes. The Wine server drained.
+The first static attempt `6e5zt_ek` stopped at a mistyped expected file hash;
+the corrected retry passes without executing the game. Linux, USA and native
+Windows remain open; no performance measurement was made.
+
+## Conditional European text-reader registry
+
+Protected source audit `e181-text-reader-registry-source-audit-mj5buj5x`
+authenticates a 27-word callback projection at `371068..3710d4`, independently
+referenced by original literals `0191a0` and `019448`. Slots 0, 3 and 5 are
+null; the others point to original Thumb routines. The next byte belongs to the
+existing indexed-archive context resource. No selected source overlaps an
+E168 owner. The `0801916c` producer has cases for kinds 1–26, while both
+original callers load the indexed word before their later switch guards. This
+conditional projection must therefore not impose a guest index bound. Slot 11
+selects `08016c01`; this establishes neither its ordinary use nor any callback
+execution. E169-d168 adds a separate typed resource for the registry and
+literals. Wine `e181-text-reader-registry-wine-j15jcf44` creates, reuses and
+verifies the dataset, preserves all 111 previous resources, rejects a modified
+callback and a partial overlap, and checks mixed-width boundaries with source
+ROM bytes altered. Twelve controlled original interpreter prefixes match full
+state and guest clock, including null entries, slot 11, slot 26 and the adjacent
+existing owner at index 27. The Wine server drained. Production Wine CLI
+`e181-text-reader-registry-cli-wine-mr5vn2od` creates, reuses and verifies all
+113 files matching the tested generation. A recorded cold-origin home
+continuation reads 28 managed callback bytes; over 1,800 frames raw/managed
+framebuffer and OAM hashes match, as do final serialized-state and framebuffer
+hashes. Aggregate counters do not identify a slot. The scene does not compare
+audio or poison ROM sources; the controlled test above covers altered source
+bytes. Native dispatch can fall back to interpretation. Other scenes,
+translated-prefix attribution, Linux, USA and native Windows remain open.
+No performance measurement was made.
+
+The E169 conditional byte-index ownership audit `nw66w3v6` examines all 256
+word addresses reachable by the two original byte-truncating readers. It finds
+158 wholly assigned words and 98 unowned words, all within the independently
+rooted substitution-source vicinity `371158..37140c`. Of the unowned words,
+93 are zero and five resemble Thumb ROM pointers. Neither zero values nor
+address arithmetic alone prove their semantics, live indices or ordinary use.
+A separate source audit and integration are described below. This inventory
+was static inspection only, with no guest execution or performance
+measurement. Linux, USA and native Windows remain pending.
+
+Protected source audit `e182-substitution-complement-source-audit-xf27x8sa`
+authenticates the original byte-truncating dispatcher and its separate literal
+`019eb4`. The 98 previously unowned words are exactly the complement of the
+75 earlier selected substitution candidates within `371158..37140c`; the
+literal and words total 396 source bytes and have no E169 owner. They support
+a separate conditional word projection, without changing the previous 75
+records or assigning semantics to the zeros. Original guest indexing remains
+uncapped; callback safety, actual execution and ordinary indices remain open.
+A focused Sol consultation was requested as `gpt-6.1-sol`/`xhigh`; effective
+settings could not be independently confirmed. This audit ran no guest code
+or performance measurements.
+
+E170-d169 publishes a separate conditional substitution-word resource for
+these 396 bytes, with an explicit dependency on the unchanged E160 text catalog.
+Wine `e182-substitution-words-wine-sjojlovh` creates, reuses and verifies the
+dataset, preserves all 112 E169 resources, rejects duplicate indices, edited
+words and partial overlap, and serves all new bytes with ROM copies altered.
+Mixed-width reads preserve adjacent earlier owners. Sixty-six controlled
+original-prefix comparisons across both registry readers and the substitution
+dispatcher match full state and guest clock in interpreter and generated
+instruction dispatch; generated blocks may fall back to interpretation.
+Execution stops before callback invocation. Production Wine CLI
+`e182-substitution-words-cli-wine-alfjrf8b` creates, reuses and verifies all
+114 files matching the controlled dataset. Its retained three-frame raw/managed
+continuation matches framebuffer and OAM hashes and final serialized-state
+hash, but reads zero bytes of the new conditional resource; audio and
+source-poisoned scene comparison are outside this run. Both Wine servers
+drained. Ordinary indices, callback behavior, Linux, USA and native Windows
+remain open. No performance measurement was made.
+
+The E170 ownership recheck `e183-text-reader-byte-ownership-e170-thuu27et`
+assigns all 256 physical words conditionally addressed by the two original
+registry readers. The 98 newly assigned words use the separate conditional
+resource; the 158 earlier owners are unchanged. No mixed or multiply owned
+word is found. This inventory does not establish which byte values occur in
+ordinary play or the full domain of other dispatchers. No guest code or
+performance measurement was involved in the recheck.

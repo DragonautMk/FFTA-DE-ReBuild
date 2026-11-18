@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-text-reader-e170-ownership",
+  "title": "Complete conditional European text-reader address ownership",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Account for all physical word addresses conditionally selected by both original byte-indexed text-reader registry loads under E170."
+  ],
+  "validation": [
+    "Protected static audit thuu27et checks all 256 word addresses: 98 use the new conditional source and all 158 earlier owners remain unchanged; no unowned, mixed or multiply owned words remain. No guest execution occurred."
+  ],
+  "limitations": [
+    "Conditional physical ownership does not establish ordinary index values, callback invocation or the complete domains of other dispatchers. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json"
+  ]
+}

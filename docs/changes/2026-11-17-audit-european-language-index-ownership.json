@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-language-index-ownership",
+  "title": "Audit European language-position index ownership",
+  "kind": "docs",
+  "platforms": ["EUR"],
+  "changes": [
+    "Document the conditional source ownership of both original language-position readers for every byte-sized index without imposing a new guest limit."
+  ],
+  "validation": [
+    "Static E164 audit s7fuvptv authenticates the EUR ROM, original reader instructions and source literals. Its 512 logical pair reads map to 261 physical pairs: ten language-position pairs, 29 existing static OBJ pairs and 222 unbound pairs."
+  ],
+  "limitations": [
+    "Only values 0 through 4 have ordinary publication witnesses. Inputs above 4 and the independent meanings of adjacent bytes remain unproved; no additional source owner or runtime change is claimed. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

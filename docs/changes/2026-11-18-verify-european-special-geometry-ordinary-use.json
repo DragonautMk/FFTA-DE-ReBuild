@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-european-special-geometry-ordinary-use",
+  "title": "Verify European geometry and pose index use in retained Wine evidence",
+  "kind": "changed",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Document scoped managed tilemap-geometry and special-pose index reads in an already recorded home continuation, and retain the remaining reader and animation criteria."
+  ],
+  "validation": [
+    "Existing production Wine CLI unit mr5vn2od passes creation, reuse and verification of the tested E169 generation. Its raw and managed home continuations match 1,800 framebuffer/OAM frames, final serialized state and final image; the Wine server was drained.",
+    "Read-only evidence audit db6l43_0 rechecks the Wine receipt, protected input and build source hashes, paired logs, final images and counter implementations without replaying gameplay. The managed log reports 28 geometry bus reads and 56 source bytes across two aggregate groups, plus 12 special-pose bus reads and 48 index bytes."
+  ],
+  "limitations": [
+    "Group and index identities are not reported; the special-pose sequence, OBJ and pixel counters are zero. This does not prove full animation, action-13 ordinary reachability or all consumer paths.",
+    "The scene did not compare audio, altered ROM sources, guest clocks or full state at every frame. Its recorded checkpoint lineage was not independently reconstructed end-to-end. Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-script39-special-poses.json"
+  ]
+}

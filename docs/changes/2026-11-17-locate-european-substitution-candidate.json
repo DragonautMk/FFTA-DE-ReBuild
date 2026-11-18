@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "locate-european-substitution-candidate",
+  "title": "Locate a conditional European text substitution candidate",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Record a source-backed home-dialogue candidate for the existing European text substitution callback without claiming ordinary execution."
+  ],
+  "validation": [
+    "Sol /root/sol_context_callback was requested as gpt-6.1-sol/xhigh because ordinary reachability remained unclear; effective settings are unconfirmed. Existing traces identify the kind-11 indirect reader and report no ordinary witness in 19 retained checkpoints.",
+    "Protected offline source join gk6kl05w verifies the cold-origin snapshot checksum, recorded key/input lineage, original instruction links and E168 decoded script/text files. The first upcoming candidate range 85–95 has no opcode 25; later conditional message 119 at bb3428 contains opcode 25/0. The live actor-derived offset and execution remain unproved. First audit 6e5zt_ek stopped on a mistyped expected hash; the corrected retry passed without guest execution.",
+    "Wine zonc4h0q follows the retained home checkpoint and recorded input for 1800 frames: seven managed script-text programs are read, but substitution callback bytes remain zero. No scene pair ran; Wine server drained."
+  ],
+  "limitations": [
+    "The negative is limited to one recorded window; ordinary callback invocation and scene equivalence remain open. The separately rooted reader registry at 371068 needs its own ownership/consumer audit. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-text-substitution-candidates.json"
+  ]
+}

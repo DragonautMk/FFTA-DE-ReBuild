@@ -38,6 +38,8 @@ more detailed shop with effect shown
 
 guild level equal scout level. Higher scout level means more info about enemy and other stuff
 
+funny mode: Every sprite is mirrowed
+
 Long term:
 
 Extract data from FFTA2

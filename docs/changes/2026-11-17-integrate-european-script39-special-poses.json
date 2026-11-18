@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-script39-special-poses",
+  "title": "Integrate European opcode 39 special-unit poses",
+  "kind": "added",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Publish e164-d163 dataset and typed guest reads for the conditional opcode-39 low-selector special-unit sources while retaining existing source owners."
+  ],
+  "validation": [
+    "Windows GNU test build 2prxl4gj and Wine jrp5fb0y pass dataset creation/reuse, preservation of 106 previous resources, all 34,026 typed source bytes with ROM sources altered, mixed-width boundaries and the prior high-registry owner. Three controlled original reset cases each match raw and managed full states and guest clocks through interpreter and generated instruction blocks; Wine server drained.",
+    "Windows GNU production build eh1qq540 and Wine CLI 72_aby76 pass create/reuse/verify for 108 files matching the tested generation. The bounded 11-frame world-map window reads no new pose bytes; Wine server drained."
+  ],
+  "limitations": [
+    "Generated instruction blocks may fall back to interpretation. The two excluded special-branch instructions, ordinary reachability, other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script39_special_poses.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script39_special_runtime_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": ["docs/changes/2026-11-17-model-european-script39-special-poses.json"]
+}

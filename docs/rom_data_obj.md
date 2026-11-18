@@ -2920,6 +2920,86 @@ Global language writers/index extent, other scenes, per-read native
 attribution, frontend save/load, Linux, USA and native Windows remain open.
 No performance measurement was made.
 
+Static E164 ownership audit `e169-language-index-owner-audit-s7fuvptv`
+checks both original byte-indexed readers for all 256 possible input bytes.
+Their 512 logical pair reads address 261 distinct physical pairs because the
+two roots are five pairs apart. Of those, ten pairs are the existing language
+positions and 29 belong to existing static OBJ lists. The remaining 222 pairs
+are not bound to a declared source: one pair at `3ae472` and 221 pairs at
+`3ae47c..3ae636`. The 444 unbound bytes have SHA-256
+`5e39f32c6f107d141bbf87eafb510e628f097c9de1b9f2b53f54fe0f74f31564` in
+ascending source order. This is an address and ownership inventory, not proof
+that values above 4 occur during ordinary play or that the adjacent bytes form
+one original position table. The word at `3ae47c` is an independently
+documented callback pointer; the following four-program indexed graphics
+archive at `3ae484..3ae5a4` has a separate original caller. Other adjacent
+source meanings and any conditional view remain to be established.
+
+The E166 ownership recheck (`e172-language-index-owner-e166-a1j2lsxv`)
+finds 256 of the 261 physical pairs assigned: the two independently rooted
+archives account for 217 additional pairs. Five pairs remain unowned at
+`3ae472..3ae474` and `3ae47c..3ae484`; the latter includes the documented
+callback pointer at `3ae47c..3ae480`. This is still a conditional address
+inventory, not evidence that language values above 4 occur in ordinary play.
+
+The independent callback descriptor at `3ae47c..3ae484` is one eight-byte
+row, rooted by constructor `08144dfc` and consumed by dispatcher `08144d24`.
+The dispatcher reads a Thumb callback pointer, signed delay and flags; the
+last byte remains opaque. Exact EUR source and E166 ownership audit
+`e172-context-callback-source-audit-7hcgos9q` authenticates the constructor
+literal and descriptor without overlapping an existing owner. The two-byte
+gap `3ae472..3ae474` remains unclassified; zero bytes alone do not establish
+padding. E167-d166 publishes the descriptor and constructor literal as a
+separate typed resource. Wine retry `md0zxb9k` preserves all 109 previous
+resources and checks all 12 source bytes with their ROM copies altered. A
+controlled original state-4 dispatch checks callback arguments, the returned
+status, and full raw/managed state and guest-clock equality in interpreter and
+generated instruction dispatch. The opaque byte is preserved by a direct
+read; that controlled path does not read it. Generated blocks may fall back
+to interpretation. The first Wine attempt `yxtwldmj` failed because its
+intermediate call-PC observation was hidden by a generated block chain; its
+server drained. Production Wine CLI `555lr8qm` creates, reuses and verifies
+all 111 files matching the tested generation. Its 11-frame world-map window
+leaves the generation unchanged and reads no callback bytes. E167 recheck
+`e173-language-index-owner-e167-60xqqy83` finds 260 of 261 conditional physical
+pairs assigned; the sole unowned pair is `3ae472..3ae474` at that revision.
+
+A later static join (`e180-callback-ordinary-source-1rjf486k`) authenticates an
+existing ordinary Wine trace and its mid-frame checkpoint. The original
+callback reaches `08144b3c` with the descriptor address in `r3` and callback
+pointer in `r2`; the saved live object still points to the one-row descriptor.
+Wine CLI continuation `e179-language-pair-cli-wine-wklf6sch` reads 14 managed
+descriptor bytes from this retained cold-origin checkpoint. Across three frames,
+raw and managed framebuffer and OAM hashes match, as do the final serialized
+state and final framebuffer hashes. Native dispatch can fall back to the
+interpreter. This bounded scene does not compare audio or alter the ROM source;
+the separate controlled dispatch above covers altered source bytes.
+
+A bounded source audit (`e176-language-gap-source-audit-s82earyr`) places that
+pair between two separately owned eight-byte OBJ lists, immediately before a
+word boundary. It is addressed conditionally by the first reader at input 35
+and the second at input 30. A full-ROM search for exact embedded pointers in
+ROM mirror regions `08`–`0d` found pointers to the neighboring list roots but
+none to the pair itself. The bytes are zero, but neither that value nor the
+alignment establishes padding; computed and indirect references were not
+excluded. Ordinary language values 30 and 35 remain unproved.
+
+E168-d167 adds a separate opaque two-byte conditional source projection; it
+does not extend the five-language tables or infer a meaning. Wine validation
+`e176-language-pair-wine-mncnsstk` creates, reuses and verifies the generation,
+preserving all 110 E167 resources. Both original reader prefixes match complete
+raw/managed state and guest clocks for seeded indices 35 and 30 with the source
+bytes altered; mixed-width reads also preserve both neighboring owners. The
+check rejects an altered pair and a partial ownership overlap. Production Wine
+CLI `wklf6sch` creates, reuses and verifies E168: all 112 files match the tested
+generation, and reuse and the three-frame continuation leave it unchanged.
+Wine drained. Ordinary inputs 30 and 35, Linux, USA and native Windows remain
+open. Existing E167 generation files remain separate and unchanged. The E168
+ownership recheck `e179-language-index-owner-e168-4ami2zcc` assigns all 261
+physical pairs addressed by the two readers over byte inputs; this is a
+conditional address inventory, not proof that inputs beyond 0–4 occur or that
+the independently rooted bytes share one meaning.
+
 ## Context activation tick and gate source contract
 
 The EUR callback at `08140e6c..08140eaa` loops over indices 0–39 and
@@ -3711,7 +3791,7 @@ A focused follow-up `title_opening_sparse_ordinary_tests.rs` is prepared to
 continue the retained neutral opening to the sparse reader and compare its
 first observed frame with the original. The Windows GNU test executable
 compiled successfully (`e158-sparse-ordinary-build-oljoq5_m`), but the
-follow-up has not executed: two elevated launches timed out during automatic
+initial follow-up did not execute: two elevated launches timed out during automatic
 approval review, and sandbox-only unit `e158-sparse-ordinary-wine-aadspz22`
 failed before the test because Wine could not create its runtime lock under
 `/run/user/1000/wine`. Existing E158 Wine results remain valid. The failed

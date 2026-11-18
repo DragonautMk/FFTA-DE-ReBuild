@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "compare-european-clear-mission-enemy-turn",
+  "title": "Compare Clear Mission during a European enemy attack",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Document a matched CH-0329 application and follow-up during an ordinary EUR Royal Valley enemy attack."
+  ],
+  "validation": [
+    "In a protected Wine/Xvfb pair, control and candidate began at the same complete state, frame and clock and received one Select+Up frame. One candidate CH-0329 application wrote its target 4 to 2,836; the control remained 4. Both values persisted at 60, 120 and 600 post-disarm frames with matching sampled frames/clocks. Before, immediately after and final captures had matching hashes and remained in battle (dbg22-clear-mission-enemy-pair-br8582pm).",
+    "The seed was a previously retained ordinary battle checkpoint with protected ROM and source-save provenance; the pinned runtime, catalog and original checkpoint were protected and Wine drained.",
+    "A guarded control recorded six dialogue confirmations, Marche Wait and Montblanc turn. A protected replay pair matched the control trace and compared 18 images, frame and clock samples; all matched while the target remained 4 versus 2,836 through 3,360 frames after disarm. No mission-clear image appeared (dbg22-clear-mission-control-navigation-157op8mq, dbg22-clear-mission-continuation-pair-e1z6mjej).",
+    "A protected same-seed player-turn pair applied CH-0329 for one Select+Up frame: target 4 to 2,836 versus 4 in the control, persisting through 600 frames after disarm. All sampled frames/clocks and before/after/final image hashes matched; the final view was still the battle menu (dbg22-clear-mission-player-pair-0evvlyno). An earlier launch was refused before guest execution because the shared Wine lease was held (mkqgsfrp)."
+  ],
+  "limitations": [
+    "No mission clear was observed through one player Wait; the missing source note leaves the intended activation window unknown. This bounded observation does not establish all side effects, other actions or scenes, native Windows or original device-hook equivalence."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

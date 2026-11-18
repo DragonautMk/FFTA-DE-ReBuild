@@ -2,15 +2,11 @@
 
 ## Operational status
 
-English-first project with optional Italian. Accepted report/guide/export scopes remain recorded; the cross-tree audit remains open.
+English-first; Italian optional. Accepted report/guide/export scopes remain recorded; cross-tree audit open.
 
-Read only relevant linked sections; do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Read only relevant sections; do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Execution states `active`, `suspended`, `interrupted`, `failed`, `waiting` are
-separate from outcomes `partial`, `integrated_unverified`, `not_started`.
-Archive completed/rejected tasks after acceptance; an open parent does not
-reopen closed children. `suspended` means outside this session's selection;
-it does not authorize stopping other work or changing another thread's goal.
+States `active`, `suspended`, `interrupted`, `failed`, `waiting` and outcomes `partial`, `integrated_unverified`, `not_started` are distinct. Archive completed/rejected tasks; an open parent does not reopen closed children. `suspended` is outside this session's selection and does not authorize stopping other work or changing another thread's goal.
 
 ## Running or suspended tasks
 
@@ -36,29 +32,39 @@ it does not authorize stopping other work or changing another thread's goal.
 - State: suspended
 - Outcome: partial
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
-- Missing: EUR resources/consumers, ordinary evidence, ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 distinct. EUR/Wine; originals/saves protected.
+- Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - ROMDATA-04-METADATA14-ID1-ALIAS: Wine prefix/frame PASS (56wpztn8/gpir8qjh); importer/consumers open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
-- CONTEXT-3AE42C: IDs 1–4 and return to 0 Wine PASS (ij_gnywg/9k_mye2m/1riwnrce); writers/index/native open.
+- CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
 - E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); cache/draw open.
 - e159 CONTEXT-3710D4 (8dbsgppp/27uqnksb), e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
-- ROMDATA-01-ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); consumers/domains open.
-- SUBSTITUTION-371158: callbacks 0/3 (rdulyaqw), one controlled program-to-0 handler return (h9c0peco) Wine PASS; ordinary/other paths open.
-- ROMDATA-01-SCRIPT39-REGISTRY-POSES partial: EUR/Wine, no metrics/space limit. Model/controlled actor join PASS (z2eftm1l); 6,960 indices/410 sequences/161 pixel blocks. Ordinary use, Linux/USA open.
-- Selection ROMDATA-03-SCRIPT39-REGISTRY-POSES: e163-d162 publication/runtime implemented, unverified; Wine reader proof pending. Build rfq1pf6e failed stale budget-test argument, corrected; build 3ecrjj2q PASS. User paused; Wine ga87pps5 session 89970 was live at last observation. Inspect its handle/receipt on resume; prior owners preserved by design. docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory.
-- Resume: [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) for skipped checks; [ROM_DATA_TODO](ROM_DATA_TODO.md), only the selected criterion's section (ROMDATA-01/02/03/04/05/06/07); [inventory](ROM_DATA_INVENTORY.md). Do not read the whole TODO. Children retain their IDs and limits:
+- ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E169 home reads 56 bytes/two aggregate groups, pair PASS (mr5vn2od/db6l43_0); group IDs/other consumers/domains open.
+- SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
+- SUBSTITUTION-ORDINARY: Sol /root/sol_context_callback xhigh unconfirmed; home source gk6kl05w conditional; Wine zonc4h0q reads seven programs, zero callbacks. Other scenes open.
+- TEXT-READER-REGISTRY-371068: E169 Wine j15jcf44/mr5vn2od PASS; 28 ordinary bytes and 1,800-frame video/OAM/final-state pair. Audio/poisoned scene/other paths/Linux/USA open.
+- TEXT-READER-FULL-BYTE-DOMAIN: E169 audit nw66w3v6 owns 158/256 words; 98 in 371158..37140c lack owners. Values/reachability unproved.
+- SUBSTITUTION-REMAINING: E170 Wine sjojlovh/alfjrf8b PASS; CLI scene zero new reads. Ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
+- TEXT-READER-E170-OWNERSHIP: thuu27et assigns all 256 physical words; ordinary indices open.
+- SCRIPT39-REGISTRY-POSES: e163 runtime/12 readers/CLI PASS (ga87pps5/vgo1cewu); ordinary/domains/Linux/USA open.
+- SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76); action13 PASS (uto86fc6/_mvdi9t3); E169 home reads 48 index bytes, no sequence/OBJ/pixels (mr5vn2od/db6l43_0). Slot IDs, allocation/overrides/other paths/Linux/USA open.
+- INDEXED-DIRECT-3AE484/3AE5A4: e165 qk3xqc4z/e87ug9pq, e166 puxz2kz7/ozq4vcii PASS; other scenes/consumers/Linux/USA open.
+- CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary wklf6sch reads 14 bytes, 3-frame video/OAM and final state match. Audio/poisoned scene/other paths/Linux/USA open.
+- INDEXED-DIRECT-ORDINARY: cold-origin abz4lk0q reads both; 11-frame state/clock/video/OAM/audio pair PASS with altered sources. Other scenes/consumers open.
+- INDEXED-DS20 waiting: slot65 ancestry unknown; E167 build 4q2i907e PASS. Lower priority; rebuild run-ds20-wine.py if needed.
+- LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
+- Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.
-  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI accepted; normal-input positive/full pair pass from save of unknown ancestry, cheat-free ordinary proof open. User confirms Ambervale; recorded movement and post-save A windows are negative (inl3r0yl/l_97lwxn), not global absence. `docs/rom_data_gameplay.md`.
+  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI and full pair accepted from unknown-ancestry save; cheat-free proof open. Ambervale confirmed; movement/post-save A windows negative (inl3r0yl/l_97lwxn). `docs/rom_data_gameplay.md`.
   - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
-  - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` and `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain and ordinary invocation unproven. Unit320 negative closed; later state2/state4/selector-witnesses diagnosis closed without a scene. Archive 59..75 and 789..866; no blind navigation.
-  - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: authenticated increments accepted; global inventory/remaining consumers open. Do not repeat the broad experiment with 61 truncations. Archive 2853..2874, then only the selected family's record.
-  - `ROMDATA-05-OBJ-VALIDATION`: local equivalence/costs, GUI, archive and USA initializer have later accepted outcomes; native Windows gates, further catalogs/scenes and normal enablement remain. Archive 3945..4087. Old artificial RSS/space constraints and `ROMDATA-05-BG-SCENES-COSTS` do not authorize further measurements: superseded by EUR/no-metrics steering.
-  - Compact OBJ e101..e108: conditional prefixes/model/runtime/CLI accepted; e106/6c6928 selector2 has one ordinary 600-frame pair. Other e101..e107 ordinary use remains open; record222/candidate-table and selector33 have only static conditions/bounded negatives. e108/6cc124 IN-19 Roulette selectors0/1 native and selector2 interpreter observed; 1200-frame pair passes. Complete animation/ordinary selector-list domain remain unproved. Archive 11..65 and new ordinary-use record; no accepted replay repeated.
-  - UI context templates e109: source selector/copy catalog and ordinary templates 5 and 2 accepted with paired Wine scenes; complete UI extent/all consumers/all11 records remain unproved. docs/rom_data_ui.md. Do not repeat accepted pairs.
-  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector 5 scoped proofs accepted. Complete29-root/allselector/animation/consumer coverage remains open; catalog counters aggregate banks. Prior303/310/312 human leads excluded. docs/rom_data_compact_catalog.md.
-  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574 and Blue Screw 6c1e78 selector6 exact reads with paired Wine scenes PASS. Other banks, complete animation and global domains remain open. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` / `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain/ordinary invocation open. Unit320 negative and state2/state4/selector diagnosis closed without a scene. Archive 59..75, 789..866; no blind navigation.
+  - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: increments accepted; global inventory/consumers open. Do not repeat 61-truncation experiment. Archive 2853..2874, then selected family record.
+  - `ROMDATA-05-OBJ-VALIDATION`: equivalence/costs, GUI, archive and USA initializer accepted; native Windows, further catalogs/scenes and normal enablement open. Archive 3945..4087. Earlier RSS/space and `ROMDATA-05-BG-SCENES-COSTS` limits superseded by EUR/no-metrics steering.
+  - Compact OBJ e101..e108: prefixes/model/runtime/CLI accepted; e106/6c6928 selector2 600-frame pair accepted. Other e101..e107 ordinary use, record222/candidate-table and selector33 remain unproved. e108/6cc124 IN-19 Roulette selectors0/1 native and selector2 interpreter observed; 1200-frame pair passes. Full animation/selector-list domain open. Archive 11..65 and ordinary-use record; do not repeat accepted replays.
+  - UI context e109: selector/copy catalog and templates 5/2 paired Wine scenes accepted; full UI extent/consumers/all 11 records unproved. docs/rom_data_ui.md. Do not repeat pairs.
+  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 accepted. Full29-root/selector/animation/consumer coverage open; counters aggregate banks. Leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 paired Wine scenes PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
 
 ## Incomplete tasks and open criteria
 
@@ -109,15 +115,6 @@ it does not authorize stopping other work or changing another thread's goal.
 - Separate USA third-appearance value02: derived private entry/menu one-shot PASS (`dbg20-third-appearance-menu-xtrn7in4`); CH-0236 unchanged.
 - Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
 
-### DBG2-22
-
-- State: active
-- Outcome: partial
-- Verified: CH-0340/0320 EUR Party paired; CH-0330 conditional. CH-0341 first battle accepted; phase-two success user-reported. Phase-three Start/A and 2400 neutral: paired states identical, zero writes in 2432 applications, endpoint condition 3 (`dbg22-phase3-long-paired-melrkmru`, PASS). Shorter windows `jrwr046_`, `u_sxx94w`, `wrt01642`.
-- Missing: phase-three active-condition effects, CH-0330, other groups, level-up and device equivalence.
-- Selection: user requests Debug Tools v2 completion. Attesa navigation `_21t2h9d` PASS: two one-frame Down inputs left Muovi selected. Six-frame Down unit `dbg22-phase3-wait-six-frame-h4bxz91e`, session 87694 live; poll it. DBG2-20 paused. Model/effort unconfirmed.
-- Resume: no ordinary-progression inference; `docs/debug_catalog.md`.
-
 ### DBG2-27
 
 - State: waiting
@@ -155,9 +152,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 - State: interrupted
 - Outcome: partial
-- Verified: October 26 applied.json records applied cleanup; later sweeps have separate closed receipts. No deletion in this reorganization.
-- Missing: original task's final validation/memory closure unattested; later cleanups do not automatically prove all its criteria.
-- Resume: only upon a cleanup request, check task receipts/limits before any documentation-only closure; archive 2486..2496 and `target/local-artifact-cleanup-2026-10-26/applied.json`. No new sweep to reconstruct context.
+- Verified: Oct 26 applied.json; later sweeps closed separately; reorganization deleted nothing.
+- Missing: original final validation/memory closure unattested.
+- Resume: on cleanup review limits, archive 2486..2496 and `target/local-artifact-cleanup-2026-10-26/applied.json`; no reconstructive sweep.
 
 ## Blockers, dependencies and shared resources
 
@@ -172,9 +169,9 @@ it does not authorize stopping other work or changing another thread's goal.
 
 ## Final handover
 
-- Task: fork main synchronization completed.
-- Last verified result: origin/main, origin/decomp and local main point to 91d22adc; local main tracks origin/main.
-- Remaining work: unrelated partial tasks remain above; release 1.1 native Windows and physical Android validation remain unperformed.
-- Errors or blockers: Android release preview is debug-signed; local memory updates are uncommitted.
-- Next action: resume unrelated work only on request.
-- References: docs/changes/2026-11-17-publish-release-1-1.json; docs/releases/v1.1.0.md.
+- Task: ROM-DATA-FULL-EUR suspended by user; Wine only, no performance measurements.
+- Last verified result: existing E169 home pair reads geometry and special-pose index bytes (`mr5vn2od`, audit `db6l43_0`); scoped evidence closed.
+- Remaining work: broader EUR inventory/consumers/ordinary/ABI; Linux, USA and native Windows deferred.
+- Errors or blockers: scene has aggregate counters, no audio or altered-ROM comparison; no active Wine job owned here.
+- Next action: wait for explicit resume; then read the handoff and select only from the current request.
+- References: `docs/development/ROM_DATA_TODO.md`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/development/ROM_DATA_INVENTORY.md`.

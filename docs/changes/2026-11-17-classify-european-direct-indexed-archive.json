@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "classify-european-direct-indexed-archive",
+  "title": "Classify a directly rooted European indexed archive",
+  "kind": "docs",
+  "platforms": ["EUR"],
+  "changes": [
+    "Identify the 3ae484 indexed archive and its direct original caller independently of conditional out-of-range language reads; preserve the adjacent callback and following archive as distinct sources."
+  ],
+  "validation": [
+    "Static E164 audit j80q8jx4 authenticates the exact EUR ROM, caller instructions, two wrapper calls, upload calls and source literals. Four literal programs reconstruct 256 decoded bytes from 288 archive bytes; the archive and its four-byte caller literal have no prior source-owner overlap.",
+    "Sol /root/sol_language_adjacent requested as gpt-6.1-sol/xhigh identified the heterogeneous neighboring sources and original caller; effective model and effort are unconfirmed."
+  ],
+  "limitations": [
+    "This is a source audit only. Typed publication, original-reader Wine verification, ordinary reachability, the following 3ae5a4 archive, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": ["docs/changes/2026-11-17-audit-european-language-index-ownership.json"]
+}

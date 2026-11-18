@@ -2410,8 +2410,19 @@ creates, reuses and verifies all 106 files against the tested generation. Its
 11-frame world-map window reads no geometry source bytes; this is not evidence
 of absence in other scenes.
 
-Ordinary use, other readers and index domains, broader Wine regression checks,
-Linux, USA and native Windows remain open. No performance measurement was made.
+An existing E169 production Wine continuation from a recorded home checkpoint
+reads 56 managed geometry source bytes in 28 bus reads, spanning two aggregate
+groups (`e181-text-reader-registry-cli-wine-mr5vn2od`). Its raw and managed
+paths match framebuffer and OAM for 1,800 frames, final serialized state and
+final image. Read-only evidence audit
+`e169-special-geometry-existing-evidence-db6l43_0` verifies the retained logs,
+input guards and runtime counter implementation. The counters do not identify
+the groups or readers; the scene did not compare audio or altered ROM sources,
+guest clocks, or full state at every frame. The checkpoint's recorded lineage
+was not independently reconstructed end-to-end.
+
+Other readers and index domains, broader Wine regression checks, Linux, USA and
+native Windows remain open. No performance measurement was made.
 
 
 ## E162 bounded European scene equivalence

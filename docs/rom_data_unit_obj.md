@@ -2576,12 +2576,10 @@ the original branch and facing conditions hold, the extra-part queries select
 four currently unbound null words at `3714b0`, `3714b4`, `3714bc` and
 `3714c0`. This is a conditional source lead, not an ordinary scene witness.
 
-The existing registry-generic model selects opcode 49; it does not yet model
-this opcode-39 producer. Authenticate its code and the full selected producer
-domain, classify shared and new owners, implement disjoint resources and run
-focused Wine checks before claiming the gap is migrated. Other registry states,
-live actor assignments, ordinary use, Linux and USA remain open. No game run or
-performance measurement was performed for this inventory.
+The earlier registry-generic model selects opcode 49; the opcode-39 producer is
+handled by the separate projection below. Other registry states, live actor
+assignments, ordinary use, Linux and USA remain open. No game run or performance
+measurement was performed for this inventory.
 
 Wine disassembly `e164-script39-dis-wine-3e9ww7tc` authenticates the opcode
 handler and task setup; `e164-script39-join-dis-wine-0tx1tr41` covers its
@@ -2610,5 +2608,81 @@ passes source reconstruction, JSON round-trip, source guards and a controlled
 original task join in which a nonmatching actor precedes the matching one.
 The 91,712 new source bytes have SHA-256
 `2a43dc1998fc1a9eaff8308120aae1d6bd0d309c1fd3d8aa7c4cab39e310cadb`.
-This model is not yet published or used at runtime. Original index-reader
-validation, ordinary use, other producer domains, Linux and USA remain open.
+EUR e163-d162 publishes the model as `graphics.script39-registry-poses` and
+serves its source bytes from typed fields. Wine
+`e165-script39-runtime-wine-ga87pps5` creates and reuses the dataset, preserves
+all 105 prior resource files and records, and reads all 91,712 new bytes with
+their ROM sources altered. Mixed-width boundary reads and the previous
+normal-battle owner for the sprite-42 root pass. Six controlled original reset
+cases each match raw and managed full states and guest clocks through both the
+interpreter and generated instruction blocks; generated blocks may fall back
+to interpretation. Production Wine CLI `e165-script39-cli-wine-vgo1cewu`
+creates, reuses and verifies all 107 files against the tested generation. Its
+11-frame world-map window reads no opcode-39 pose bytes, so it does not establish
+ordinary use. Other producer domains, Linux, USA and native Windows remain open.
+No performance measurement was made.
+
+### Low-selector special-unit pose projection
+
+The same opcode can resolve low selectors through the special-unit records and
+then join the selected unit to a matching actor. A conditional E163 source
+audit (`e165-script39-special-source-graph-qcclm5w6`) derives 285 distinct
+selector/group pairs from 1,857 script instructions. Two instructions with
+group 9 and selectors 20 and 22 take a different original branch and are
+excluded from this model. A valid unit, manager,
+matching actor context, unchanged assignment, supported facing and the
+original branch conditions are required; this audit does not establish
+ordinary reachability.
+
+After subtracting existing owners, the source plan
+`e165-script39-special-source-plan-stme4uml` identifies 964 index cells, 109
+sequences, seven OBJ lists and 87 pixel blocks, totaling 34,026 source bytes in
+418 disjoint ranges. The typed model authenticates the script and metadata
+sources, reconstructs the original bytes and checks its producer witnesses.
+Wine `e166-script39-special-model-wine-aysnyiei` passes the model checks and a
+controlled original task join that skips a nonmatching actor before selecting
+the matching one. EUR e164-d163 publishes the model as
+`graphics.script39-special-poses` and serves its bytes through typed fields.
+Wine `e167-script39-special-runtime-wine-jrp5fb0y` creates and reuses the
+dataset, preserves all 106 prior resources, and reconstructs all 34,026 source
+bytes with their ROM sources altered. Mixed-width boundary reads and the prior
+high-registry owner pass. Three controlled original reset cases each match raw
+and managed full states and guest clocks through both the interpreter and
+generated instruction blocks; generated blocks may fall back to interpretation.
+Production Wine CLI `e167-script39-special-cli-wine-72_aby76` creates, reuses
+and verifies all 108 files against that generation. Its 11-frame world-map
+window reads no new pose bytes.
+
+The existing E169 production Wine home continuation later reads 48 managed
+special-pose index bytes in 12 bus reads, and zero sequence, OBJ or pixel bytes
+(`e181-text-reader-registry-cli-wine-mr5vn2od`). Raw and managed framebuffer and
+OAM match for 1,800 frames, along with the final serialized state and image.
+Read-only evidence audit `e169-special-geometry-existing-evidence-db6l43_0`
+checks the retained input guards, logs and runtime counter implementation.
+The aggregate counter does not identify index slots or prove an uninterrupted
+opcode-39 pose animation. Audio, altered ROM sources, guest clocks and full
+state at every frame were not compared in this scene. Its recorded checkpoint
+lineage was not independently reconstructed end-to-end. Other ordinary paths,
+Linux, USA and native Windows remain open. No performance measurement was made.
+
+For the excluded instructions, original task disassembly selects action 13
+through `0809ba84`: under the same unchanged-assignment and actor conditions it
+uses body animation base 48 and equipment sprite 185, base 4. Static E164 audit
+`e167-script39-action13-index-audit-wnmiows2` finds all ten resulting physical
+index cells already owned by the normal-battle, alternate-battle and equipment
+resources. Follow-up `e167-script39-action13-target-audit-4p7yr_3v` finds all
+five referenced sequences, four OBJ lists and sixteen pixel blocks fully covered
+by existing source ranges. Wine `e168-script39-action13-wine-uto86fc6` runs the
+original task prefix with both authenticated operands and a controlled adjacent
+group: the first two reach the action-13 callee with the expected actor and
+arguments, while the control reaches the default callee. Raw and managed full
+states and guest clocks match at callee entry in all three cases. Wine
+`e169-action13-callee-wine-_mvdi9t3` continues both action-13 cases through
+the original callee and back to the task. It explicitly seeds identical
+reusable body, auxiliary and equipment objects in both machines after the task
+has cleared the equipment slots. With selected index ROM bytes altered, the
+managed path reads four property bytes, sixteen normal-battle index bytes and
+24 equipment index bytes; full states and guest clocks match. This controlled
+continuation does not prove an uninterrupted allocator path, alternate-sprite
+behavior, animation or pixel upload, action-13 ordinary reachability or actor
+overrides.

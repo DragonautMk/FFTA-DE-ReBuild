@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-language-index-e166-ownership",
+  "title": "Update European language-index source ownership",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Reconcile the conditional full-byte language-position address inventory with the two independently owned indexed archives in E166."
+  ],
+  "validation": [
+    "Static protected audit a1j2lsxv checks both original reader instruction windows and all 256 byte inputs. Of 261 physical pairs, 256 have an E166 owner and five remain unowned in two disjoint ranges."
+  ],
+  "limitations": [
+    "This address inventory does not prove that values above 4 are ordinarily reachable or that adjacent data is one language table. Remaining source meanings, writers, Linux, USA and native Windows remain open; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-language-index-ownership.json"
+  ]
+}

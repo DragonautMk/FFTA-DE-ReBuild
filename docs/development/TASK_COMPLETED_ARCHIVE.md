@@ -23207,3 +23207,369 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified: the conditional high-registry/direct-job source projection authenticates 71 selector/group pairs, original opcode/task/manager code and prior source ownership; it derives 6,960 new index words, 410 sequences and 161 decoded pixel blocks, 91,712 source bytes across 2,301 ranges. Source reconstruction, strict ordering/guards and JSON round-trip pass. The controlled original task resolves a unit through registry128 and selects its matching actor after one nonmatching list node. Windows GNU build `e164-script39-model-join-build-edty2_sx`; Wine `e164-script39-model-wine-z2eftm1l` PASS, server drained.
 - Evidence: source audits `ofuwzj8a`, `gnd81dvw`, `c5fo5wt5`; Wine disassemblies `3e9ww7tc`, `0tx1tr41`, `w8l7gttx`; `docs/changes/2026-11-17-model-european-script39-registry-poses.json`; `docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory`. Initial build `28qkd4f1` failed on an import and was corrected. Sol `gpt-6.1-sol` xhigh `/root/sol_sprite0_gaps` supplied producer and resolver diagnoses; effective settings unconfirmed.
 - Limits: controlled conditional contexts, no ordinary reachability; dataset publication, runtime owners, original index readers, other producer domains, Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-REGISTRY-POSES. No performance measurement.
+
+### ROMDATA-03-SCRIPT39-REGISTRY-POSES — completed scoped EUR/Wine integration
+
+- Verified: EUR e163-d162 publishes and serves the conditional opcode-39 registry/direct-job source projection. Windows GNU build `e165-script39-runtime-build-fix-3ecrjj2q` and Wine `e165-script39-runtime-wine-ga87pps5` pass creation/reuse, all 105 prior resource files and records, all 91,712 typed bytes with original source altered, selected mixed boundaries, and the prior normal-battle sprite-42 index-root owner. Six controlled original reset cases compare raw interpreter against managed interpreter and generated instruction blocks: all 12 full states and guest clocks match. Generated blocks may fall back to interpretation; Wine server drained.
+- Evidence: `docs/changes/2026-11-17-integrate-european-script39-registry-poses.json`; `docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory`. Initial build `rfq1pf6e` failed due to a stale budget-test argument; it was corrected. Current E163 dataset retained in `target/validation/units/e165-script39-runtime-wine-ga87pps5/work/resources/`.
+- Limits: production CLI, ordinary use, other producer domains, broader Wine regressions, Linux/USA/native Windows remain open under the parent. No performance measurement.
+
+### ROMDATA-04-SCRIPT39-REGISTRY-CLI — completed scoped EUR/Wine
+
+- Verified: Windows GNU production build `e165-script39-cli-build-84354hhl` and Wine `e165-script39-cli-wine-vgo1cewu` pass create/reuse/verify for all 107 files, each matching the accepted e163 test generation. Reuse and an 11-frame world-map startup leave the generation unchanged; the bounded window reads zero opcode-39 pose source bytes. Wine server drained.
+- Evidence: `docs/changes/2026-11-17-integrate-european-script39-registry-poses.json`; `docs/rom_data_unit_obj.md#opcode-39-registry-pose-inventory`. No performance measurement.
+- Limits: the zero-read window does not establish absence elsewhere; ordinary use, other producers/consumers, broader Wine checks, Linux/USA/native Windows remain open under the parent.
+
+### TARGET-EXTERNAL-OFFLOAD-20261117
+
+- Outcome: completed
+- Verified criteria: Six completed archived payloads moved to external NTFS with catalog references and checksum checks, reclaiming 2225405952 allocated bytes; 25 storage tests and one full external verify PASS.
+- Evidence: `docs/changes/2026-11-17-external-cold-archives.json`; `target/validation/units/cold-external-offload-final-23k13rks/`; `target/external-offload-20261117-a46d9f0e/`.
+- Limits: USB must be mounted; native Windows/Docker external storage unverified. One candidate skipped due to incompatible completion format; other historical material was not swept. Three process records were unreadable.
+
+### WINE-LEASE-E158 — existing recovery verified
+
+- Verified: the E158 retained lease token was already recovered after host-visible checks and a successful Wine server drain; the current runner refuses the read-only sandbox before acquiring the prefix. Wine smoke lwzsvfgf and the resumed EUR sparse-reader validation htdztv4y PASS and drained. A later, distinct DBG2 lease was observed in use and subsequently released without intervention. Evidence: docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json; docs/rom_data_obj.md; the named unit receipts.
+- Limits: sandbox permissions and automatic approval review are external constraints; native Windows, Linux and USA remain deferred. No rerun, lease mutation or performance measurement.
+
+### TARGET-OFFLOAD-MORE-20261117
+
+- Outcome: completed
+- Verified criteria: User-requested further disk cleanup removed only the inventoried rebuildable Cargo debug incremental cache, reclaiming 2572791808 allocated bytes; the canonical executable and external hard links were preserved.
+- Evidence: `target/local-artifact-cleanup-20261117-incremental-7fb4dd47/plan.json` and `result.json`; completed-only preview `target/cold-storage-batches/20261117-143525-8a718938/batch.json`.
+- Limits: Active/suspended scopes, private inputs and current datasets were excluded. Three process records could not be fully inspected, but their identities were established as sd-pam and ssh-agent. Cache may be rebuilt by Cargo; no test/build was repeated.
+
+### ROMDATA-02-SCRIPT39-SPECIAL-SOURCE — completed scoped EUR/Wine model
+
+- Verified: Windows GNU build sclfy2v2 and Wine aysnyiei PASS for the conditional low-selector special-unit model and original controlled unit-to-actor join. The 285 selector/group pairs derive 964 new index cells, 109 sequences, seven OBJ lists and 87 pixel blocks after E163 prior-owner subtraction; 418 source ranges reconstruct 34,026 bytes. The Wine server drained.
+- Evidence: docs/changes/2026-11-17-model-european-script39-special-poses.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection; source plan stme4uml.
+- Limits: two distinct special-branch instructions excluded; dataset/runtime publication, original readers, ordinary reachability and Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-SPECIAL-POSES. No performance measurements.
+
+### ROMDATA-03-SCRIPT39-SPECIAL-POSES — completed scoped EUR/Wine integration
+
+- Verified: EUR e164-d163 publishes the conditional low-selector special-unit projection. Windows GNU build 2prxl4gj and Wine jrp5fb0y PASS create/reuse, all 106 prior resources unchanged, 34,026 typed bytes with source ROM altered, selected mixed boundaries and the prior high-registry owner. Three controlled original reset cases match raw/managed full states and guest clocks through interpreter and generated instruction blocks (which may fall back). Wine server drained; current dataset retained at target/validation/units/e167-script39-special-runtime-wine-jrp5fb0y/work/resources/.
+- Evidence: docs/changes/2026-11-17-integrate-european-script39-special-poses.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection.
+- Limits: production CLI, ordinary use, other consumers, two special-branch instructions, Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-SPECIAL-POSES. No performance measurement.
+
+### TARGET-MORE-20261117-B
+
+- Outcome: completed
+- Verified criteria: Three completed historical archives transferred to external NTFS with checksum verification and local catalog references, reclaiming 1123049472 allocated bytes; 28 cold-storage tests PASS.
+- Evidence: `docs/changes/2026-11-17-external-cold-archives.json`; `target/validation/units/cold-external-evidence-9utymyyl/`; each local catalog entry records offload review and activity.
+- Limits: USB volume required for offloaded archives; native Windows and Docker external access unverified. Current/failed/suspended work and private inputs excluded; three host process records were unreadable.
+
+### ROMDATA-01-SCRIPT39-ACTION13-SOURCES — completed scoped EUR source audit
+
+- Verified: opcode39 instructions B96A1E and BA0841 conditionally call 0809BA84 action13 for selectors 20 and 22. With unchanged matching actor assignment and covered facing, index audit wnmiows2 finds ten physical index cells already owned by normal-battle, alternate-battle or equipment; target audit 4p7yr_3v finds all five sequences, four OBJ lists and sixteen pixel blocks fully covered by existing E164 sources. No duplicate source owner is justified for this projection.
+- Evidence: docs/changes/2026-11-17-audit-european-script39-action13-sources.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection.
+- Limits: original task execution, live actor overrides, ordinary reachability and Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-SPECIAL-POSES. No performance measurement.
+
+### ROMDATA-04-SCRIPT39-SPECIAL-CLI — completed scoped EUR/Wine
+
+- Verified: Windows GNU production build eh1qq540 and Wine CLI 72_aby76 PASS create/reuse/verify for all 108 files, matching the accepted E164 generation. Reuse and an 11-frame world-map startup leave the generation unchanged; the bounded window reads zero new special-pose source bytes. Wine server drained.
+- Evidence: docs/changes/2026-11-17-integrate-european-script39-special-poses.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection.
+- Limits: the zero-read window does not establish absence elsewhere; original action13 task execution, ordinary use, other consumers, Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-04-SCRIPT39-ACTION13-TASK-PREFIX — completed scoped EUR/Wine
+
+- Verified: Windows GNU build 9qi34821 and Wine uto86fc6 run the original opcode39 task prefix for the two authenticated selector/group operands and an adjacent-group control. The first two enter 0809ba84 with the matching actor and action13; the control enters 0809d9c4. All three raw/managed full states and guest clocks match at callee entry; Wine server drained.
+- Evidence: docs/changes/2026-11-17-verify-european-script39-action13-branch.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection.
+- Limits: no full callee execution or ordinary reachability; actor overrides and Linux/USA/native Windows remain open under ROMDATA-01-SCRIPT39-SPECIAL-POSES. No performance measurements.
+
+### ROMDATA-04-SCRIPT39-ACTION13-CALLEE — completed scoped EUR/Wine
+
+- Verified: Windows GNU build v05dmvpw and Wine _mvdi9t3 run two original action13 callees through return after explicitly seeding identical reusable objects at the accepted task-prefix boundary. Selected index ROM bytes are altered, and managed reads include four property, sixteen normal-battle index and 24 equipment index bytes. Full raw/managed states and guest clocks match; Wine server drained.
+- Evidence: docs/changes/2026-11-17-verify-european-script39-action13-callee.json; docs/rom_data_unit_obj.md#low-selector-special-unit-pose-projection. Sol /root/sol_action13_fixture requested gpt-6.1-sol/xhigh; effective settings unconfirmed. Static helper disassembly rf09d5pm and cleanup evidence required seeding after the task clears equipment slots.
+- Limits: no uninterrupted allocator path, alternate-sprite behavior, animation/pixel upload, actor overrides, ordinary reachability or Linux/USA/native Windows proof. No performance measurement.
+
+### TARGET-MORE-20261117-C
+
+- Outcome: completed
+- Verified criteria: Three historical Wine prefixes were transferred to the external volume with existing completion evidence and checksum verification, reclaiming 1128239104 allocated bytes. One synthetic 16-case result was reviewed without re-execution.
+- Evidence: `target/debug-tools-v2-content/external-offload-review-20261117.json`; offload reviews and volume references in the three local cold-storage catalog entries.
+- Limits: External volume required for restoration; active/suspended scopes, private inputs and shared Wine were excluded. Three host process records were unreadable; no global inactivity is claimed. Native Windows external access remains unverified.
+
+### ROMDATA-01-CONTEXT-3AE42C-INDEX-OWNERSHIP — completed scoped EUR source audit
+
+- Verified: E164 audit s7fuvptv authenticates the EUR ROM, original reader instructions and source literals. All 256 byte inputs for both readers map 512 logical reads to 261 physical pairs: ten pairs are the known language-position sources, 29 belong to static OBJ lists, and 222 have no declared source owner. The 444 unbound bytes occur at 3ae472..474 and 3ae47c..636.
+- Evidence: docs/changes/2026-11-17-audit-european-language-index-ownership.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: values beyond 4 are not proved ordinarily reachable; adjacent bytes are not established as one original position table. Other writers, source semantics, controlled runtime and Linux/USA/native Windows remain open. No performance measurements.
+
+### ROMDATA-01-CONTEXT-3AE42C-ADJACENT — completed scoped diagnosis
+
+- Verified: Sol /root/sol_language_adjacent was requested as gpt-6.1-sol/xhigh because treating 222 unbound conditional byte-index pairs as one position table risked misclassifying adjacent data. Effective model/effort unconfirmed. Source review identifies 3ae47c..480 as the existing documented callback pointer cell, plus candidate indexed archives at 3ae484 and 3ae5a4; original caller 08023c98 passes both directly to wrapper 0800537c. Independent exact traces: target/rom-data-unit-palettes/trace-023c14.txt and docs/rom_data_ui_raw_transfers.md#additional-context-transfer-candidates.
+- Decision: identify and migrate independently authenticated resources rather than assign a duplicate semantic language owner merely because out-of-range values can read their bytes. Prefix tests 5/255 preserve raw behavior but do not prove extraction. The four-program archive candidate is selected separately; caller reachability, later archive extent, global byte/writer domains and Linux/USA remain open.
+
+### ROMDATA-01-INDEXED-DIRECT-3AE484-SOURCE — completed scoped EUR source audit
+
+- Verified: j80q8jx4 authenticates exact EUR caller 08023c98, literal 08023d08, wrapper calls 0800537c, upload calls and the independent neighbor root 3ae5a4. Archive 3ae484..3ae5a4 has four 64-byte literal programs, 288 source bytes and 256 decoded bytes; its caller literal and archive have no E164 source-owner overlap.
+- Evidence: docs/changes/2026-11-17-classify-european-direct-indexed-archive.json; docs/rom_data_indexed_graphics.md#direct-european-archive-at-3ae484. Sol /root/sol_language_adjacent requested gpt-6.1-sol/xhigh; effective settings unconfirmed. Initial runner launch was refused by the shared cold-storage lease before a unit was created; the lease released and the protected static audit then passed.
+- Limits: typed model/publication/original-reader Wine checks, ordinary reachability, the neighbor archive, indirect/global domains and Linux/USA/native Windows remain open. No performance measurements.
+
+### TARGET-MORE-20261117-D
+
+- Outcome: completed
+- Verified criteria: Transferred 47 reviewed archived historical executable copies to the external volume, reclaiming 434958336 allocated bytes. Every payload was checksum-verified, with a separately verified identical archive retained locally.
+- Evidence: `target/external-offload-small-20261117-d/reviewed-plan.json`, `result.json`, `reviewed-plan-2.json`, and `result-2.json`; local cold catalog retains external references.
+- Limits: External volume is needed to restore moved paths; active/suspended scopes, private inputs, named baselines and shared Wine were excluded. Three host process records were unreadable; global inactivity is not claimed.
+
+### TARGET-MORE-20261117-E
+
+- Outcome: completed
+- Verified criteria: Offloaded 28 completed historical executable archives with verified identical local copies and one completed no-ROM localization Wine prefix. Checksum verification preceded local retirement; 596901888 allocated bytes reclaimed.
+- Evidence: `target/external-offload-small-20261117-e/reviewed-plan.json` and `result.json`; `target/menu-i18n-en-it/external-offload-review-20261117.json`; individual cold catalog entries.
+- Limits: Localization's full historical suite included one documented pre-existing failure, excluded from its subsequent 104-pass run; no tests were rerun. Three process records were unreadable. Active/suspended work and private data remain excluded; external volume is required for restoration.
+
+### ROMDATA-01-INDEXED-DIRECT-3AE5A4-SOURCE — completed scoped EUR source audit
+
+- Verified: EUR/E165 audit zy8p2uxf authenticates caller 08023cb2, literal 08023d10 and wrapper 0800537c. Archive 3ae5a4..3aed7c has 41 programs, 2,008 source bytes, 96 dictionary-prefix bytes and 2,624 decoded bytes; neither source span overlaps an E165 owner.
+- Evidence: docs/changes/2026-11-17-classify-european-adjacent-indexed-archive.json; docs/rom_data_indexed_graphics.md#adjacent-direct-european-archive-at-3ae5a4.
+- Limits: typed integration, original-reader Wine, ordinary reachability, Linux/USA/native Windows remain open under ROMDATA-01-INDEXED-DIRECT-3AE5A4. No performance measurement.
+
+### ROMDATA-03-INDEXED-DIRECT-3AE484 — completed scoped EUR/Wine integration
+
+- Verified: Windows GNU build 3pwtuzan and Wine qk3xqc4z PASS e165-d164 publication/reuse, 107 prior resources unchanged, all 292 typed source bytes under ROM poisoning, selected mixed-width boundaries and invalid-model rejection. The original caller and decoder match raw/managed full states and guest clocks with interpreter and generated instruction dispatch; Wine server drained. Generated blocks may fall back to interpretation.
+- Evidence: docs/changes/2026-11-17-integrate-european-direct-indexed-archive.json; docs/rom_data_indexed_graphics.md#direct-european-archive-at-3ae484.
+- Limits: ordinary reachability, other consumers, adjacent archive integration and Linux/USA/native Windows remain open under ROMDATA-01-INDEXED-DIRECT-3AE484. No performance measurement.
+
+### ROMDATA-04-INDEXED-DIRECT-3AE484-CLI — completed scoped EUR/Wine
+
+- Verified: Windows GNU production build s4nnw7v2 and Wine e87ug9pq PASS CLI create/reuse/verify for all 109 files matching the tested e165 generation. The 11-frame world-map window leaves the generation unchanged and reads no new archive bytes; Wine server drained.
+- Evidence: docs/changes/2026-11-17-integrate-european-direct-indexed-archive.json; docs/rom_data_indexed_graphics.md#direct-european-archive-at-3ae484.
+- Limits: the bounded zero-read window does not establish ordinary use. Other consumers and Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE42C-E166-OWNERSHIP — completed scoped EUR source audit
+
+- Verified: protected audit a1j2lsxv checks original readers and all 256 byte inputs against the E166 manifest. Of 261 physical pairs, 256 are assigned, including 217 now served by the two indexed archives. Five pairs remain unowned at 3ae472..3ae474 and 3ae47c..3ae484; the latter includes an independently documented callback pointer.
+- Evidence: docs/changes/2026-11-17-audit-european-language-index-e166-ownership.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: out-of-range input reachability, remaining source meanings, other writers and Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-03-INDEXED-DIRECT-3AE5A4 — completed scoped EUR/Wine integration
+
+- Verified: Windows GNU build mm5f3nw5 and Wine puxz2kz7 PASS e166-d165 publication/reuse, all 108 prior resources unchanged, 2,012 typed source bytes under ROM poisoning, mixed-width boundaries including the preceding owner, and invalid-model rejection. The original caller and decoder match raw/managed full states and guest clocks through interpreter and generated instruction dispatch; Wine server drained. Generated blocks may fall back to interpretation.
+- Evidence: docs/changes/2026-11-17-integrate-european-adjacent-indexed-archive.json; docs/rom_data_indexed_graphics.md#adjacent-direct-european-archive-at-3ae5a4.
+- Limits: earlier archive test updated to E166 after this build and not rerun; ordinary reachability, other consumers and Linux/USA/native Windows remain open under ROMDATA-01-INDEXED-DIRECT-3AE5A4. No performance measurement.
+
+### ROMDATA-04-INDEXED-DIRECT-3AE5A4-CLI — completed scoped EUR/Wine
+
+- Verified: Windows GNU production build 7q7silsc and Wine ozq4vcii PASS CLI create/reuse/verify for all 110 files matching the tested E166 generation. The 11-frame world-map window leaves the generation unchanged and reads no new archive bytes; Wine server drained.
+- Evidence: docs/changes/2026-11-17-integrate-european-adjacent-indexed-archive.json; docs/rom_data_indexed_graphics.md#adjacent-direct-european-archive-at-3ae5a4.
+- Limits: the bounded zero-read window does not establish ordinary use. Other consumers and Linux/USA/native Windows remain open. No performance measurement.
+
+### TARGET-MORE-20261117-F
+
+- Outcome: completed
+- Verified criteria: Offloaded 24 archived unit-local Windows executable copies from accepted historical Windows/Wine checks, reclaiming 139550720 allocated bytes; identical verified archives remain local. Original proofs and pending platform criteria remain unchanged.
+- Evidence: `target/external-offload-small-20261117-f/reviewed-plan-2.json`, `result-2.json`, `reviewed-plan-3.json`, `result-3.json`, `reviewed-plan-4.json` and `result-4.json`.
+- Limits: Text-catalog scope was skipped when process 200538 matched its path; local archive remains intact with no external partial. Linux/USA criteria remain pending; three host process records were unreadable.
+
+### ROMDATA-01-CONTEXT-CALLBACK-3AE47C-SOURCE — completed scoped EUR source audit
+
+- Verified: protected E166 audit 7hcgos9q authenticates original constructor 08144dfc, literal 08144e38, dispatcher 08144d24, callback and eight-byte row 3ae47c..3ae484 with no prior owner overlap. The descriptor contains a Thumb callback pointer, signed delay, flags and one opaque byte; the unrelated zero halfword 3ae472..3ae474 remains unclassified.
+- Evidence: docs/changes/2026-11-17-audit-european-context-callback-descriptor.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141. Sol /root/sol_context_callback requested gpt-6.1-sol/xhigh for unknown reader/fixture; effective settings unconfirmed. It identified dispatcher reads and the bounded state-4 full-return fixture.
+- Limits: typed publication, original controlled dispatch, ordinary reachability and Linux/USA/native Windows remain open under ROMDATA-01-CONTEXT-CALLBACK-3AE47C. No performance measurement.
+
+### ROMDATA-01-CONTEXT-3AE42C-E167-OWNERSHIP — completed scoped EUR source audit
+
+- Verified: protected audit 60xqqy83 checks both original readers and all 256 byte inputs against E167 ownership. Of 261 physical pairs, 260 are assigned; the remaining pair is 3ae472..3ae474. The separate callback descriptor accounts for four newly owned pairs.
+- Evidence: docs/changes/2026-11-17-audit-european-language-index-e167-ownership.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: ordinary out-of-range reachability, the gap's meaning, other writers and Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-03-CONTEXT-CALLBACK-3AE47C — completed scoped EUR/Wine integration
+
+- Verified: Windows GNU retry build y6rnv8p4 and Wine md0zxb9k PASS E167-d166 publication/reuse, all 109 prior resources unchanged, 12 typed source bytes under ROM poisoning, mixed-width boundary composition and invalid-model rejection. The original state-4 dispatcher reaches the callback with checked arguments and LR, updates status and matches full raw/managed state and guest clock in interpreter and generated dispatch. The opaque byte is checked separately and not read on this path; Wine server drained.
+- Diagnostic: first Wine yxtwldmj failed the host's intermediate call-PC observation after guest return; its server drained. Sol /root/sol_context_callback, requested gpt-6.1-sol/xhigh with effective settings unconfirmed, identified generated block chaining. The retry checks callback entry instead; generated blocks may still fall back to interpretation.
+- Evidence: docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: ordinary invocation, unrelated halfword 3ae472..3ae474 and Linux/USA/native Windows remain open under ROMDATA-01-CONTEXT-CALLBACK-3AE47C. No performance measurement.
+
+### ROMDATA-04-CONTEXT-CALLBACK-3AE47C-CLI — completed scoped EUR/Wine
+
+- Verified: Windows GNU production build _1k8nv0d and Wine 555lr8qm PASS CLI create/reuse/verify for all 111 files matching the tested E167 generation. The 11-frame world-map window leaves the generation unchanged and reads no callback bytes; Wine server drained.
+- Evidence: docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: the bounded zero-read window does not establish ordinary invocation. Other consumers and Linux/USA/native Windows remain open. No performance measurement.
+
+### TARGET-SPACE-AUDIT-G
+
+- Outcome: completed
+- Verified criteria: Four superseded successful EUR datasets were archived exactly in local cold storage, reclaiming 2001346560 allocated bytes. E166 and E165 stayed hot; an offline local archive verification passed with the USB mount deliberately unavailable. E159's differing text catalog was preserved rather than replaced.
+- Evidence: `target/resource-supersession-20261117-g/review.json`, individual plans and `batch-result.json`; local cold catalog.
+- Limits: Failed consumers and current/previous datasets were excluded; 3 host process records unreadable. User authorized local compression of failed output as separate task FAILED-EXEC-PRESERVE-H.
+
+### FAILED-EXEC-PRESERVE-H
+
+- Outcome: completed
+- Verified criteria: 28 reviewed failed-unit executable copies archived and verified locally; 5,436,370,944 bytes recovered after archive allocation. All original FAIL receipts and 98 checked private sibling files remain in place. The user explicitly chose local compression of failed diagnostics.
+- Evidence: `target/failed-exe-preservation-20261117-h-all/{reviewed-plan,effective-plan,result}.json`; offline verification of `dbg2-trigger-actions-live-0l38y8jv/work/session/recomp.exe` passed. Synthetic roundtrip unit `failed-preservation-synthetic-fixed-ca05vzlf` passed; privacy-guard synthetic failure `failed-preservation-synthetic-__b39x2p` retained.
+- Limits: only exact executables were selected; active, leased, interrupted, referenced and uncertain scopes were excluded. Host check reported unreadable process details; it is not proof of global inactivity. Historical executables need local restore before direct use; no USB needed for these archives.
+
+### FAILED-DATA-PRESERVE-I
+
+- Outcome: completed
+- Verified criteria: ten explicitly reviewed failed-unit paths (eight historical EUR dataset copies and two isolated build caches) archived and verified locally; 5,369,831,424 bytes recovered after archive allocation. Original FAIL receipts and private siblings remained in place. The user explicitly chose local compression of failed diagnostics.
+- Evidence: `target/failed-data-preservation-20261117-i/{reviewed-plan,result}.json`; `target/failed-e127-preservation-20261117-i/{reviewed-plan,result}.json`. Offline verification of `rvr15-table-graphics-e127-retry2-iri_b8pe/work/runtime/offline dataset` passed. E166 and the previous current dataset were not selected.
+- Limits: E134 was excluded because its revision appears in the active handoff; other active, leased or unreviewed output was not selected. Host checks reported unreadable process details and do not prove global inactivity. Archived historical paths need local restore before direct use; no USB is needed for these archives.
+
+### ROMDATA-04-INDEXED-DIRECT-ORDINARY-BOOK-LOCATOR — completed bounded negative EUR/Wine
+
+- Verified: static candidate census m5katm09/bckq9lmb and source join p0qt7o6q identify script opcode 0x49 in program 1 between the recorded cursor positions of two genuine ordinary checkpoints. Windows GNU build xzij0tdd and Wine dh34xwul follow 6,000 recorded frames from the earlier checkpoint; both direct archive counters remain zero. No raw/managed scene pair ran; Wine server drained.
+- Evidence: docs/changes/2026-11-17-investigate-european-direct-indexed-ordinary-use.json; docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead. An initial static-audit launch was refused by the shared cold-storage lease before unit creation; the unmodified retry passed.
+- Limits: a cursor interval does not prove command execution, the original flag gate or other-scene reachability. Do not repeat the same negative window without new evidence. Linux/USA/native Windows remain open; no performance measurement.
+
+### FAILED-EXEC-PRESERVE-J
+
+- Outcome: completed
+- Verified criteria: eight additional exact executable copies from retained failed units archived locally with verified contents; 995,467,264 bytes recovered after archive allocation. Original FAIL receipts and all checked private siblings remained in place.
+- Evidence: `target/failed-exe-preservation-20261117-j/{reviewed-plan,result}.json`. Prior synthetic local restore and offline checks are in FAILED-EXEC-PRESERVE-H and FAILED-DATA-PRESERVE-I.
+- Limits: active/suspended handoff scopes, leases, unfinished dependents and unreviewed output remain outside this selection; unreadable process details limit the host activity check. Archived paths require local restoration before direct use.
+
+### ROMDATA-04-INDEXED-DIRECT-ORDINARY-DIAGNOSIS — completed scoped source diagnosis
+
+- Verified: after dh34xwul found no archive reads in the source-guided window, Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh, effective settings unconfirmed. Original getter tests bit 0 at 02001f78; both retained window endpoints have that bit clear, but its value at the proposed command is not proved. A separate program-2 command 0x17 operand 13 can request a dispatcher branch leading unconditionally to loader 08023c98; keys 3/4 select that program.
+- Evidence: docs/changes/2026-11-17-investigate-european-direct-indexed-ordinary-use.json; docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead; retained e128 Link flag analysis.
+- Limits: no program-2 ordinary execution established, no guest replay in diagnosis. The existing book continuation is a different candidate window, not proof. Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-04-INDEXED-DIRECT-ORDINARY-DIAGNOSIS-CORRECTION — completed source correction
+
+- Verified: dispatcher 08125558 subtracts one from the request; its 0812557c table entry 11 (at 081255a8) is 08125638 and invokes loader 08023c98, while entry 12 (at 081255ac) is 081255b0. Request 12, not 13, selects the loader path. The earlier DIAGNOSIS claim that program-2 command 17/13 directly selects that path is incorrect and superseded; the flag and negative-window observations remain valid.
+- Evidence: authenticated ROM disassembly in target/validation/units/e175-indexed-program2-source-lead-lt7b6kiv/evidence/disassembly.txt. That unit did not assert the jump-table index; its PASS does not validate the route.
+- Limits: no ordinary execution or request-12 producer is established by this correction. No additional replay or performance measurement. Linux/USA/native Windows remain open.
+
+### ROMDATA-04-INDEXED-DIRECT-REQUEST12-SOURCE — completed static source association
+
+- Verified: guarded static audit eduynil3 authenticates request 12 selecting loader 08023c98 and request 13 selecting a different branch. Four command 17/12 instructions appear in programs 146, 148, 150 and 160, referenced by event keys 154, 156, 158 and 170 respectively.
+- Evidence: target/validation/units/e175-request12-source-audit-eduynil3/evidence/result.json; docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead.
+- Limits: source references do not establish ordinary event or loader execution; other producers and platforms remain open. No performance measurement or guest replay.
+
+### ROMDATA-04-INDEXED-DIRECT-PROGRAM2 — rejected source lead
+
+- Outcome: the proposed program-2 request-13 loader route is contradicted by the original dispatch table; no replay was run. Request 12 is the relevant branch (eduynil3).
+- Evidence: docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead; ROMDATA-04-INDEXED-DIRECT-ORDINARY-DIAGNOSIS-CORRECTION. Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh; effective settings unconfirmed.
+- Limits: the bounded earlier program-1 negative remains valid; ordinary use remains open.
+
+### ROMDATA-01-LANGUAGE-GAP-SOURCE — completed bounded source audit
+
+- Verified: protected EUR audit s82earyr checks the sole unowned pair at 3ae472..3ae474 and the two adjacent independently owned OBJ lists. Original readers address the pair at inputs 35 and 30; a full-ROM search finds no exact embedded word for its address in regions 08..0d.
+- Evidence: target/validation/units/e176-language-gap-source-audit-s82earyr/evidence/result.json; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: zero bytes and alignment do not prove padding; computed/indirect references and ordinary inputs 30/35 remain unproved. No guest replay or performance measurement.
+
+### ROMDATA-04-INDEXED-CALLER2 — completed bounded source association
+
+- Verified: protected EUR audit 0ivxkuzk follows registration of mode slot 2 through state-zero callback 08025114, 080251e4 and loader call 080252e8; eight immediate request-2 BL candidates are syntactic. A genuine recorded cold-input checkpoint at frame 9000 has selector 2 and the registered slot pointer.
+- Evidence: target/validation/units/e177-indexed-mode2-source-audit-0ivxkuzk/evidence/result.json; docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead.
+- Limits: selection and source structure do not prove execution, archive use or complete callers; no guest replay. Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-04-INDEXED-COLD-ANCHOR — completed offline source preparation
+
+- Verified: protected static inspection acjbv2hh decodes the retained normal EUR preselection at frame 180 and verifies neutral keys through that point in the separate recorded cold input. It retains a time-shifted copy of the input for a bounded archive locator. No guest instruction was executed.
+- Evidence: target/validation/units/e178-indexed-cold-anchor-acjbv2hh/{unit-result.json,evidence/result.json,work/shifted.input}; source and state hashes are in the evidence.
+- Limits: exact snapshot equivalence with the original input prefix has not been independently demonstrated; mode 2 does not prove loader execution. Wine, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-01-LANGUAGE-GAP-CONTROLLED — completed EUR/Wine bounded integration
+
+- Verified: E168-d167 publishes an independent two-byte opaque source with no overlap. Windows test build 0pp9li2q and Wine mncnsstk pass creation/reuse/verification, preservation of all 110 E167 resources, altered-pair/partial-overlap rejection, mixed-width neighboring-owner reads and two original seeded reader prefixes with matching complete states/clocks and altered source bytes. The Wine server drained.
+- Evidence: target/validation/units/e176-language-pair-wine-mncnsstk/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-conditional-language-pair.json. First build o9msltyw failed due to three budget test calls; corrected in retry. Sol /root/sol_indexed_ordinary was requested gpt-6.1-sol/xhigh, effective settings unconfirmed.
+- Limits: indices 30/35, source meaning, production CLI, other consumers/writers, Linux/USA/native Windows and full TODO remain open; no performance measurement.
+
+### ROMDATA-01-LANGUAGE-E168-OWNERSHIP — completed bounded EUR source inventory
+
+- Verified: protected E168 manifest audit 4ami2zcc accounts for all 261 physical pairs and 512 logical reads addressed by the two original readers across byte inputs. The former unowned pair belongs to the separately modeled opaque source; neighboring independent ownership is unchanged.
+- Evidence: target/validation/units/e179-language-index-owner-e168-4ami2zcc/{unit-result.json,evidence/result.json,evidence/ownership.json}; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: this does not establish ordinary inputs beyond 0–4, one common source meaning, other writers, production CLI or global reachability. Linux/USA/native Windows remain open; no guest replay or performance measurement.
+
+### ROMDATA-04-CALLBACK-ORDINARY-SOURCE — completed bounded EUR evidence join
+
+- Verified: protected static audit 1rjf486k authenticates the earlier ordinary Wine trace at 08144b3c, with r2=081449fd and r3=083ae47c, and its mid-frame snapshot at 08144b3e. The live object points to the one-row descriptor and retains callback state 1.
+- Evidence: target/validation/units/e180-callback-ordinary-source-1rjf486k/{unit-result.json,evidence/result.json}; docs/rom_data_obj.md#conditional-language-position-pairs-e141.
+- Limits: the prior trace and original dispatcher support an invocation, but do not demonstrate a later typed read or raw/managed continuation. Linux/USA/native Windows remain open; no new guest replay or performance measurement.
+
+### ROMDATA-04-LANGUAGE-GAP-CLI — completed bounded EUR/Wine production CLI
+
+- Verified: production Windows build 5029lc9q and Wine wklf6sch create, reuse and verify E168-d167. All 112 files match the controlled test generation; reuse and the three-frame continuation leave it unchanged. Wine drained and protected inputs remained unchanged.
+- Evidence: target/validation/units/e179-language-pair-cli-wine-wklf6sch/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-conditional-language-pair.json.
+- Limits: ordinary inputs 30/35, source meaning and other writers remain unproved; Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-04-CALLBACK-ORDINARY-CLI — completed bounded EUR/Wine continuation
+
+- Verified: Wine wklf6sch continues authenticated cold-origin mid-frame checkpoint 1rjf486k, reads 14 managed descriptor bytes and matches raw/managed framebuffer and OAM hashes for three frames and final serialized state and framebuffer hashes. Wine drained.
+- Evidence: target/validation/units/e179-language-pair-cli-wine-wklf6sch/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-context-callback-descriptor.json.
+- Limits: audio and source-poisoned scene comparison were not made; separate controlled test covers poisoned descriptor. Native dispatch can fall back to interpretation. Other paths, Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-04-INDEXED-COLD — completed bounded EUR/Wine ordinary continuation
+
+- Verified: Wine abz4lk0q continues the authenticated frame-180 cold-origin state with shifted recorded keys. At relative frame 967 it observes source use; the full locator reads 302 and 3,292 managed bytes from the two direct archives. Eleven raw/managed frames match complete state, guest clock, central/wide framebuffer, OAM and nonempty audio with managed ROM copies of the archives and caller literals altered. Wine drained, protected inputs unchanged.
+- Evidence: target/validation/units/e178-indexed-ordinary-cold-wine-abz4lk0q/{unit-result.json,evidence/result.json}; docs/rom_data_indexed_graphics.md#source-guided-ordinary-use-lead. Initial c_g_r34l was refused before Wine by another lease owner.
+- Limits: generated dispatch can fall back to interpretation; the input prefix and independent checkpoint were not proven identical. Empty recorded ancestry does not establish the full prior history. Other scenes/consumers, request-12 execution, Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-04-SUBSTITUTION-HOME-SOURCE — completed bounded source join
+
+- Verified: protected static audit gk6kl05w authenticates the cold-origin home checkpoint and key2/program1 cursor b95902, and joins upcoming opcode 0f instructions to E168 English text bank1. The first candidate range 85..95 contains no opcode25; conditional message119 at bb3428 contains opcode25 operand0 and can be selected by two later instructions if their actor-derived offsets and control flow permit. No guest instruction was executed.
+- Evidence: target/validation/units/e180-substitution-home-source-audit-retry-gk6kl05w/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-locate-european-substitution-candidate.json. Initial 6e5zt_ek failed on a mistyped expected hash; corrected retry passed. Sol /root/sol_context_callback requested gpt-6.1-sol/xhigh, effective settings unconfirmed.
+- Limits: actual execution, message selection and callback use are unproved; prior lineage records no RAM/save patch but full history not independently reconstructed. Linux/USA/native Windows deferred; no performance measurement.
+
+### ROMDATA-04-SUBSTITUTION-HOME-WINE — completed bounded EUR/Wine negative
+
+- Verified: Wine zonc4h0q follows the authenticated home checkpoint and recorded input for 1,800 frames with E168. Seven managed script-text programs are read, while substitution callback bytes remain zero. No paired scene or source poisoning ran. Wine drained and protected inputs remained unchanged.
+- Evidence: target/validation/units/e180-substitution-home-locator-wine-zonc4h0q/{unit-result.json,evidence/result.json}; docs/rom_data_text.md#european-text-substitution-callback-candidates.
+- Limits: this excludes only the bounded window, not other scenes or callback inputs; the conditional bb3428 candidate was not observed. Linux/USA/native Windows deferred; no performance measurement.
+
+### ROMDATA-01-TEXT-READER-REGISTRY-SOURCE — completed bounded EUR source audit
+
+- Verified: protected audit mj5buj5x authenticates 27 callback words at 371068..3710d4 and original literals 0191a0/019448. Slots 0/3/5 are null, slot11 is 08016c01 and the following byte belongs to the indexed-archive context. No source overlaps E168. The original byte-index load precedes later case guards, so the 0..26 projection is not a guest limit.
+- Evidence: target/validation/units/e181-text-reader-registry-source-audit-mj5buj5x/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-audit-european-text-reader-registry.json.
+- Limits: model, managed runtime and ordinary use remain open; no guest execution or performance measurement. Linux/USA/native Windows deferred.
+
+### ROMDATA-01-TEXT-READER-REGISTRY-CONTROLLED — completed bounded EUR/Wine integration
+
+- Verified: E169-d168 publishes 27 conditional reader words and two literals without overlap. Windows test build 5ec8jzgg and Wine j15jcf44 pass creation/reuse/verification, preservation of all 111 E168 resources, edited callback/partial-overlap rejection, mixed-width boundaries and 12 controlled original interpreter prefixes matching full state and guest clock with managed ROM sources altered. Index27 reads the adjacent existing owner. Wine drained. CLI build 1sppxxpd passes.
+- Evidence: target/validation/units/e181-text-reader-registry-wine-j15jcf44/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-text-reader-registry.json. Initial build 45i6ch28 failed on a missing test trait import; corrected.
+- Limits: no ordinary or translated-prefix attribution established; byte-index guest behavior remains uncapped. Production CLI, other consumers, Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-04-TEXT-READER-REGISTRY-CLI — completed bounded EUR/Wine CLI and ordinary scene
+
+- Verified: Windows production CLI build 1sppxxpd and Wine mr5vn2od create, reuse and verify E169; all 113 files match the tested generation and reuse/scene leave it unchanged. A retained cold-origin home continuation reads 28 managed registry callback bytes; 1,800 framebuffer/OAM hashes and final serialized-state/framebuffer hashes match raw and managed runs. Wine drained and protected inputs unchanged.
+- Evidence: target/validation/units/e181-text-reader-registry-cli-wine-mr5vn2od/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-text-reader-registry.json.
+- Limits: aggregate counters do not identify slots, source poisoning and audio were not compared in this scene; controlled j15jcf44 covers poisoned reads. Native dispatch may fall back to interpretation. Other scenes/consumers, Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-01-TEXT-READER-FULL-BYTE-OWNERSHIP — completed bounded EUR source inventory
+
+- Verified: protected E169 audit nw66w3v6 checks all 256 words addressed conditionally by the two original byte-truncating readers. It finds 158 assigned and 98 unowned words, no mixed or multiply owned words; all missing words are in 371158..37140c, with 93 zero and five Thumb-ROM-like values.
+- Evidence: target/validation/units/e182-text-reader-byte-ownership-audit-nw66w3v6/{unit-result.json,evidence/result.json,evidence/ownership.json}; docs/changes/2026-11-17-audit-european-text-reader-byte-ownership.json.
+- Limits: values do not establish semantic ownership, ordinary indices or global reachability; further source contract needed. No guest replay or performance measurement. Linux/USA/native Windows deferred.
+
+### ROMDATA-01-SUBSTITUTION-COMPLEMENT-SOURCE — completed bounded EUR source audit
+
+- Verified: protected audit xf27x8sa authenticates original byte-truncating dispatcher 08019e94, literal 019eb4 and 98 words as the exact complement to the 75 earlier substitution candidates within 371158..37140c. The 396 source bytes have no E169 overlap. Sol /root/sol_indexed_ordinary was requested as gpt-6.1-sol/xhigh; effective settings unconfirmed.
+- Evidence: target/validation/units/e182-substitution-complement-source-audit-xf27x8sa/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-audit-european-substitution-complement.json.
+- Limits: zero values are not classified as padding; callback safety, ordinary indices and managed integration remain open. No guest replay or performance measurement; Linux/USA/native Windows deferred.
+
+### ROMDATA-01-SUBSTITUTION-REMAINING-CONTROLLED — completed bounded EUR/Wine integration
+
+- Verified: E170-d169 adds 98 conditional words and the dispatcher literal with explicit text.catalogs dependency. Windows test build mnjuuqps and Wine sjojlovh create/reuse/verify, preserve all 112 E169 resources, reject duplicate indices, modified words and partial overlap, and serve all 396 source bytes with ROM copies altered. Mixed-width reads preserve earlier owners; 66 original interpreter/generated prefixes match complete state and guest clock. Wine drained.
+- Evidence: target/validation/units/e182-substitution-words-wine-sjojlovh/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json. Sol /root/sol_indexed_ordinary was requested gpt-6.1-sol/xhigh, effective settings unconfirmed. Preliminary build n9zcsqnu preceded the added dependency.
+- Limits: prefixes stop before callback invocation; safety, ordinary indices and native-block attribution are unproved. Production CLI, Linux/USA/native Windows remain open; no performance measurement.
+
+### ROMDATA-01-TEXT-READER-E170-OWNERSHIP — completed bounded EUR source inventory
+
+- Verified: protected E170 audit thuu27et assigns all 256 words conditionally addressed by the two original byte-indexed registry readers. The new conditional owner supplies 98 and the prior 158 owners are unchanged; no unowned, mixed or multiply owned words remain.
+- Evidence: target/validation/units/e183-text-reader-byte-ownership-e170-thuu27et/{unit-result.json,evidence/result.json,evidence/ownership.json}; docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json.
+- Limits: physical ownership does not prove ordinary indices, callback behavior or other dispatchers' complete domains. No guest replay or performance measurement; Linux/USA/native Windows deferred.
+
+### ROMDATA-04-SUBSTITUTION-REMAINING-CLI — completed bounded EUR/Wine CLI
+
+- Verified: Windows production CLI build gchhbcjn and Wine alfjrf8b create, reuse and verify E170; all 114 files match the controlled generation and the three-frame continuation leaves it unchanged. Raw/managed framebuffer and OAM hashes match for each frame, as do final serialized-state and framebuffer hashes. The new conditional resource records zero bytes in that scene. Wine drained and protected inputs unchanged.
+- Evidence: target/validation/units/e182-substitution-words-cli-wine-alfjrf8b/{unit-result.json,evidence/result.json}; docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json. The prior interrupted launch left a cold lease; its marker and host/catalog review were preserved at target/rom-data-e170-substitution-words/lease-recovery-20261118/.
+- Limits: no ordinary use or callback behavior is proved by this zero-read window. Audio and source-poisoned scene comparison were not made; controlled sjojlovh covers poisoned reads. Linux/USA/native Windows deferred; no performance measurement.
+
+### DBG2-22
+
+- Outcome: completed
+- Verified criteria: within documented EUR interpreter/Wine scenarios, all seven selected entries have bounded before/after and persistence or side-effect observations; other EUR groups are categorized as unverified, and the missing CH-0329 note and forced-victory provenance remain explicit. DBG2-21 was accepted. The task atlas matches the checklist.
+- Evidence: `docs/changes/2026-11-18-complete-advanced-cheat-comparison-audit.json`, `docs/changes/2026-11-18-compare-european-mastery-record-boundary.json`, `docs/cheats.md`, `docs/development/DEBUG_TOOLS_V2_TODO.md`; receipts `fiwjrgz3`, `ta7vkuk8`, `kxaq5zm3`, `zprjyv6n`, `2rzyo45b`, `e1z6mjej`, `vo7icw1l` PASS with Wine drained.
+- Limits: CH-0329 mission-clear outcome, unmastered AP, red cards, rule enforcement, actual level-up, CH-0341 final victory, other cases and original device behavior remain unverified; native Windows and physical input remain DBG2-27.
+
+### ROMDATA-04-SPECIAL-GEOMETRY-ORDINARY
+
+- Outcome: completed
+- Verified criteria: Existing EUR/Wine E169 home continuation consumed 56 managed geometry bytes across two aggregate groups and 48 managed special-pose index bytes. The raw/managed pair matches 1,800 framebuffer/OAM frames, final serialized state and image.
+- Evidence: Wine `e181-text-reader-registry-cli-wine-mr5vn2od`; read-only receipt, source-hash and log audit `e169-special-geometry-existing-evidence-db6l43_0`; `docs/changes/2026-11-18-verify-european-special-geometry-ordinary-use.json`.
+- Limits: Counters identify neither geometry groups nor index slots; sequence/OBJ/pixel reads were zero. No scene audio, altered ROM, guest clock or per-frame full-state comparison; checkpoint lineage not independently reconstructed end-to-end. Other EUR contexts, Linux, USA and native Windows remain open; no performance measurements.

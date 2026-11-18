@@ -131,6 +131,159 @@ class ColdStorageTests(unittest.TestCase):
             self.assertFalse(self.source.exists())
             self.assertTrue((entry / 'payload.tar.zst').exists())
 
+    def external_fixture(self, store):
+        self.pack(store)
+        entry, data = store.entries()[0]
+        result = self.source.parent / 'result.json'
+        result.write_text('{"status":"PASS"}')
+        data['proof'].update(scope='target/completed', completion=[{
+            'path': 'target/completed/result.json', 'sha256': cold.digest(result)}])
+        cold.save(entry / 'entry.json', data)
+        mount = self.root / 'external'; (mount / 'archives').mkdir(parents=True)
+        return entry, data, mount
+
+    def test_external_offload_roundtrip_and_unavailable_or_corrupt_volume(self):
+        expected = cold.logical(cold.scan(self.source))
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            def volume(path, expected_uuid=None):
+                self.assertEqual(Path(path), mount)
+                self.assertIn(expected_uuid, (None, 'test-uuid'))
+                return mount, 'test-uuid'
+            with mock.patch.object(cold, 'external_mount', side_effect=volume), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                data = store.offload(entry, data, mount, 'archives')
+                payload = mount / data['external_payload']['path']
+                self.assertFalse((entry / 'payload.tar.zst').exists())
+                self.assertTrue(payload.exists())
+                self.assertEqual(store.entries()[0][1]['external_payload'], data['external_payload'])
+                store.restore(entry, data)
+                self.assertEqual(cold.logical(cold.scan(self.source)), expected)
+                store.retire(entry, data)
+                with payload.open('ab') as f: f.write(b'corrupt')
+                with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                    store.restore(entry, data)
+            with mock.patch.object(cold, 'external_mount', side_effect=ValueError('volume unavailable')):
+                with self.assertRaisesRegex(ValueError, 'volume unavailable'):
+                    store.restore(entry, data)
+            self.assertFalse(self.source.exists())
+            self.assertTrue(payload.exists())
+
+    def test_external_offload_failure_preserves_original_and_never_overwrites(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            destination = mount / 'archives' / (entry.name + '.tar.zst')
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                destination.write_bytes(b'existing file')
+                with self.assertRaises(FileExistsError):
+                    store.offload(entry, data, mount, 'archives')
+                self.assertEqual(destination.read_bytes(), b'existing file')
+                self.assertTrue((entry / 'payload.tar.zst').exists())
+                destination.unlink()
+                with mock.patch.object(cold.shutil, 'copyfileobj', side_effect=OSError('interrupted')):
+                    with self.assertRaisesRegex(OSError, 'interrupted'):
+                        store.offload(entry, data, mount, 'archives')
+                self.assertTrue((entry / 'payload.tar.zst').exists())
+                self.assertNotIn('external_payload', json.loads((entry / 'entry.json').read_text()))
+
+    def test_external_offload_accepts_existing_zero_exit_list(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            result = self.source.parent / 'result.json'
+            result.write_text(json.dumps([{'exit': 0, 'filter': 'first'}, {'exit': 0, 'filter': 'second'}]))
+            data['proof']['completion'][0]['sha256'] = cold.digest(result)
+            original = json.loads(json.dumps(data['proof']))
+            cold.save(entry / 'entry.json', data)
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                published = store.offload(entry, data, mount, 'archives')
+                self.assertEqual(published['proof'], original)
+                self.assertEqual(published['offload_review']['basis'], 'archive proof')
+                store.restore(entry, published)
+                self.assertTrue((self.source / 'data.bin').exists())
+
+    def test_external_offload_can_add_reviewed_evidence_without_rewriting_history(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            result = self.source.parent / 'result.json'
+            result.write_text(json.dumps({'exit': 0, 'protected_unchanged': True, 'test_result': True}))
+            data['proof'].update(basis='idle-history', completion=[], outcome_guards=[{
+                'name': 'result.json', 'sha256': cold.digest(result)}])
+            original = json.loads(json.dumps(data['proof']))
+            cold.save(entry / 'entry.json', data)
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                published = store.offload(entry, data, mount, 'archives',
+                                          completion_paths=['target/completed/result.json'])
+                self.assertEqual(published['proof'], original)
+                self.assertEqual(published['offload_review']['basis'], 'explicit')
+                self.assertEqual(published['offload_review']['completion'][0]['sha256'], cold.digest(result))
+                store.restore(entry, published)
+                self.assertTrue((self.source / 'data.bin').exists())
+
+    def test_external_offload_refuses_failed_outside_or_changed_evidence(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            result = self.source.parent / 'result.json'
+            data['proof'].update(basis='idle-history', completion=[], outcome_guards=[{
+                'name': 'result.json', 'sha256': cold.digest(result)}])
+            cold.save(entry / 'entry.json', data)
+            outside = self.root / 'outside.json'; outside.write_text('{"status":"PASS"}')
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                with self.assertRaisesRegex(ValueError, 'within the scope'):
+                    store.offload(entry, data, mount, 'archives', completion_paths=[outside])
+                result.write_text('{"exit":0,"test_result":false}')
+                with self.assertRaisesRegex(ValueError, 'completed/PASS'):
+                    store.offload(entry, data, mount, 'archives', completion_paths=[result])
+                result.write_text('{"exit":0,"test_result":true}')
+                with self.assertRaisesRegex(ValueError, 'Historical outcome evidence changed'):
+                    store.offload(entry, data, mount, 'archives', completion_paths=[result])
+            self.assertTrue((entry / 'payload.tar.zst').exists())
+            self.assertNotIn('external_payload', json.loads((entry / 'entry.json').read_text()))
+
+    def test_external_mount_refuses_wrong_or_missing_uuid(self):
+        result = mock.Mock(stdout=json.dumps({'filesystems': [{'target': str(self.root), 'uuid': 'actual'}]}))
+        with mock.patch.object(cold.subprocess, 'run', return_value=result):
+            with self.assertRaisesRegex(ValueError, 'UUID'):
+                cold.external_mount(self.root, 'different')
+            result.stdout = json.dumps({'filesystems': [{'target': str(self.root), 'uuid': None}]})
+            with self.assertRaisesRegex(ValueError, 'UUID'):
+                cold.external_mount(self.root)
+
+    def test_external_offload_changed_completion_retains_local_copy(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            copy = cold.shutil.copyfileobj
+            def changed_completion(src, dst, length):
+                copy(src, dst, length)
+                (self.source.parent / 'result.json').write_text('{"status":"FAIL"}')
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                 mock.patch.object(cold, 'host_activity', return_value={}), \
+                 mock.patch.object(cold.shutil, 'copyfileobj', side_effect=changed_completion):
+                with self.assertRaisesRegex(ValueError, 'completed/PASS'):
+                    store.offload(entry, data, mount, 'archives')
+            self.assertTrue((entry / 'payload.tar.zst').exists())
+            self.assertNotIn('external_payload', json.loads((entry / 'entry.json').read_text()))
+
+    def test_external_offload_disconnect_after_publication_keeps_local_copy(self):
+        with cold.Store(self.root) as store:
+            entry, data, mount = self.external_fixture(store)
+            calls = 0
+            def volume(path, expected_uuid=None):
+                nonlocal calls
+                calls += 1
+                if calls == 3:
+                    raise ValueError('volume unavailable')
+                return mount, 'test-uuid'
+            with mock.patch.object(cold, 'external_mount', side_effect=volume), \
+                 mock.patch.object(cold, 'host_activity', return_value={}):
+                with self.assertRaisesRegex(ValueError, 'volume unavailable'):
+                    store.offload(entry, data, mount, 'archives')
+            self.assertTrue((entry / 'payload.tar.zst').exists())
+            self.assertIn('external_payload', json.loads((entry / 'entry.json').read_text()))
+
     def test_destination_conflict_and_modified_restored_input_are_preserved(self):
         with cold.Store(self.root) as store:
             self.pack(store)

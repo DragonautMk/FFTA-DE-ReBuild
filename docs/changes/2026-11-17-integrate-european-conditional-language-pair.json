@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-conditional-language-pair",
+  "title": "Preserve the conditional European language-reader pair",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an E168-d167 opaque source resource for the two bytes conditionally addressed by both original language-position readers without extending the five-language tables or assigning a meaning."
+  ],
+  "validation": [
+    "Static audit s82earyr authenticates the reader arithmetic and adjacent nonoverlapping sources. First Windows build o9msltyw found three test budget calls missing the new parameter; Windows build retry 0pp9li2q passes after correction.",
+    "Wine mncnsstk creates, reuses and verifies E168 while preserving all 110 E167 resources; seeded original reader prefixes match full state and clock with altered source bytes. Mixed-width adjacent-owner reads, altered-pair rejection and partial-overlap rejection pass; Wine server drained.",
+    "Protected E168 manifest audit 4ami2zcc assigns all 261 physical address pairs across both byte-indexed readers; it does not establish that indices beyond the five language choices occur.",
+    "Windows GNU production CLI build 5029lc9q and Wine wklf6sch pass E168 create/reuse/verify; all 112 files match the tested generation and reuse and the three-frame continuation leave it unchanged. Wine server drained."
+  ],
+  "limitations": [
+    "Ordinary input values 30 and 35, the source meaning, other writers, Linux, USA and native Windows remain unproved. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/conditional_language_pair.rs",
+    "crates/gba-core/src/rom_data/runtime/conditional_language_pair.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/conditional_language_pair_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-language-index-e167-ownership.json"
+  ]
+}

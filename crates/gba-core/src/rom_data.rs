@@ -53,6 +53,12 @@ pub mod event_records12;
 pub mod parameter_records27;
 pub mod world_records38;
 pub mod indexed_graphics;
+pub mod direct_indexed_graphics;
+pub mod direct_indexed_dictionary;
+pub mod context_callback_descriptor;
+pub mod conditional_language_pair;
+pub mod text_reader_registry;
+pub mod conditional_substitution_words;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -100,6 +106,7 @@ pub mod unit_obj_script_override;
 pub mod unit_obj_script_registry_special;
 pub mod unit_obj_script_registry_generic;
 pub mod script39_registry_poses;
+pub mod script39_special_poses;
 pub mod unit_obj_property_words;
 pub mod unit_obj_ffff_reader_fields;
 pub mod slot_job_lookup;
@@ -117,8 +124,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 163;
-pub const DECODER_REV: u32 = 162;
+pub const EXTRACTOR_REV: u32 = 170;
+pub const DECODER_REV: u32 = 169;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -391,6 +398,10 @@ pub const SCRIPT39_REGISTRY_POSES_ID: &str = "graphics.script39-registry-poses";
 pub const SCRIPT39_REGISTRY_POSES_FILE: &str = "script39-registry-poses.json";
 pub const SCRIPT39_REGISTRY_POSES_FORMAT: &str = "script39-registry-poses-v1-json";
 pub const MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES: u64 = 32 * 1024 * 1024;
+pub const SCRIPT39_SPECIAL_POSES_ID: &str = "graphics.script39-special-poses";
+pub const SCRIPT39_SPECIAL_POSES_FILE: &str = "script39-special-poses.json";
+pub const SCRIPT39_SPECIAL_POSES_FORMAT: &str = "script39-special-poses-v1-json";
+pub const MAX_SCRIPT39_SPECIAL_POSES_FILE_BYTES: u64 = 32 * 1024 * 1024;
 pub const AUDIO_EXTENDED_DISPATCH_ID: &str = "audio.m4a-extended-dispatch";
 pub const AUDIO_EXTENDED_DISPATCH_FILE: &str = "audio-extended-dispatch.json";
 pub const AUDIO_EXTENDED_DISPATCH_FORMAT: &str = "audio-extended-dispatch-v1-json";
@@ -403,6 +414,30 @@ pub const INDEXED_GRAPHICS_ID: &str = "graphics.indexed-archives";
 pub const INDEXED_GRAPHICS_FILE: &str = "indexed-graphics.json";
 pub const INDEXED_GRAPHICS_FORMAT: &str = "indexed-graphics-v1-json";
 pub const MAX_INDEXED_GRAPHICS_FILE_BYTES: u64 = 64 * 1024 * 1024;
+pub const DIRECT_INDEXED_GRAPHICS_ID: &str = "graphics.direct-indexed-archive";
+pub const DIRECT_INDEXED_GRAPHICS_FILE: &str = "direct-indexed-archive.json";
+pub const DIRECT_INDEXED_GRAPHICS_FORMAT: &str = "direct-indexed-archive-v1-json";
+pub const MAX_DIRECT_INDEXED_GRAPHICS_FILE_BYTES: u64 = 2 * 1024 * 1024;
+pub const DIRECT_INDEXED_DICTIONARY_ID: &str = "graphics.direct-indexed-dictionary-archive";
+pub const DIRECT_INDEXED_DICTIONARY_FILE: &str = "direct-indexed-dictionary-archive.json";
+pub const DIRECT_INDEXED_DICTIONARY_FORMAT: &str = "direct-indexed-dictionary-archive-v1-json";
+pub const MAX_DIRECT_INDEXED_DICTIONARY_FILE_BYTES: u64 = 4 * 1024 * 1024;
+pub const CONTEXT_CALLBACK_DESCRIPTOR_ID: &str = "engine.context-callback-descriptor";
+pub const CONTEXT_CALLBACK_DESCRIPTOR_FILE: &str = "context-callback-descriptor.json";
+pub const CONTEXT_CALLBACK_DESCRIPTOR_FORMAT: &str = "context-callback-descriptor-v1-json";
+pub const MAX_CONTEXT_CALLBACK_DESCRIPTOR_FILE_BYTES: u64 = 1024 * 1024;
+pub const CONDITIONAL_LANGUAGE_PAIR_ID: &str = "engine.conditional-language-index-opaque";
+pub const CONDITIONAL_LANGUAGE_PAIR_FILE: &str = "conditional-language-index-opaque.json";
+pub const CONDITIONAL_LANGUAGE_PAIR_FORMAT: &str = "conditional-language-index-opaque-v1-json";
+pub const MAX_CONDITIONAL_LANGUAGE_PAIR_FILE_BYTES: u64 = 1024 * 1024;
+pub const TEXT_READER_REGISTRY_ID: &str = "engine.text-reader-registry";
+pub const TEXT_READER_REGISTRY_FILE: &str = "text-reader-registry.json";
+pub const TEXT_READER_REGISTRY_FORMAT: &str = "text-reader-registry-v1-json";
+pub const MAX_TEXT_READER_REGISTRY_FILE_BYTES: u64 = 1024 * 1024;
+pub const CONDITIONAL_SUBSTITUTION_WORDS_ID: &str = "text.conditional-substitution-words";
+pub const CONDITIONAL_SUBSTITUTION_WORDS_FILE: &str = "conditional-substitution-words.json";
+pub const CONDITIONAL_SUBSTITUTION_WORDS_FORMAT: &str = "conditional-substitution-words-v1-json";
+pub const MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -745,6 +780,13 @@ pub struct Extraction {
     pub range_lookup: Option<range_lookup::Catalog>,
     pub tilemap_geometry: Option<tilemap_geometry::Catalog>,
     pub script39_registry_poses: Option<script39_registry_poses::Catalog>,
+    pub script39_special_poses: Option<script39_special_poses::Catalog>,
+    pub direct_indexed_graphics: Option<direct_indexed_graphics::Catalog>,
+    pub direct_indexed_dictionary: Option<direct_indexed_dictionary::Catalog>,
+    pub context_callback_descriptor: Option<context_callback_descriptor::Catalog>,
+    pub conditional_language_pair: Option<conditional_language_pair::Catalog>,
+    pub text_reader_registry: Option<text_reader_registry::Catalog>,
+    pub conditional_substitution_words: Option<conditional_substitution_words::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -857,6 +899,13 @@ pub struct BaseFiles<'a> {
     pub range_lookup: Option<(&'a range_lookup::RangeLookup, &'a [u8])>,
     pub tilemap_geometry: Option<(&'a tilemap_geometry::TilemapGeometry, &'a [u8])>,
     pub script39_registry_poses: Option<(&'a script39_registry_poses::Script39RegistryPoses, &'a [u8])>,
+    pub script39_special_poses: Option<(&'a script39_special_poses::Script39SpecialPoses, &'a [u8])>,
+    pub direct_indexed_graphics: Option<(&'a direct_indexed_graphics::DirectIndexedGraphics, &'a [u8])>,
+    pub direct_indexed_dictionary: Option<(&'a direct_indexed_dictionary::DirectIndexedDictionary, &'a [u8])>,
+    pub context_callback_descriptor: Option<(&'a context_callback_descriptor::ContextCallbackDescriptor, &'a [u8])>,
+    pub conditional_language_pair: Option<(&'a conditional_language_pair::ConditionalLanguagePair, &'a [u8])>,
+    pub text_reader_registry: Option<(&'a text_reader_registry::TextReaderRegistry, &'a [u8])>,
+    pub conditional_substitution_words: Option<(&'a conditional_substitution_words::ConditionalSubstitutionWords, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1558,6 +1607,71 @@ impl Extraction {
                     UNIT_OBJ_SCRIPT_REGISTRY_GENERIC_ID.into()], sources: metadata.sources.clone(),
             });
             result.script39_registry_poses = Some(metadata);
+            let metadata = script39_special_poses::Catalog::from_rom(
+                rom, &result.manifest.resources,
+                &result.script_archive.as_ref().ok_or("Missing opcode-39 script archive")?.decoded,
+                &result.metadata14.as_ref().ok_or("Missing opcode-39 special-unit metadata")?.decoded,
+            )?;
+            result.manifest.coverage.push(SCRIPT39_SPECIAL_POSES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SCRIPT39_SPECIAL_POSES_ID.into(), path: SCRIPT39_SPECIAL_POSES_FILE.into(),
+                format: SCRIPT39_SPECIAL_POSES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![METADATA14_ID.into(), SCRIPT_ARCHIVE_ID.into(),
+                    UNIT_OBJ_INITIAL_POSE_ID.into(), UNIT_OBJ_EQUIPMENT_ID.into(),
+                    UNIT_OBJ_NORMAL_BATTLE_ID.into(), UNIT_OBJ_ALTERNATE_BATTLE_ID.into(),
+                    UNIT_OBJ_SCRIPT_SPECIAL_NORMAL_ID.into(), UNIT_OBJ_SCRIPT_SPECIAL_ALTERNATE_ID.into(),
+                    UNIT_OBJ_SCRIPT_REGISTRY_SPECIAL_ID.into(), SCRIPT39_REGISTRY_POSES_ID.into()],
+                sources: metadata.sources.clone(),
+            });
+            result.script39_special_poses = Some(metadata);
+            let metadata = direct_indexed_graphics::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(DIRECT_INDEXED_GRAPHICS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: DIRECT_INDEXED_GRAPHICS_ID.into(), path: DIRECT_INDEXED_GRAPHICS_FILE.into(),
+                format: DIRECT_INDEXED_GRAPHICS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.direct_indexed_graphics = Some(metadata);
+            let metadata = direct_indexed_dictionary::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(DIRECT_INDEXED_DICTIONARY_ID.into());
+            result.manifest.resources.push(Resource {
+                id: DIRECT_INDEXED_DICTIONARY_ID.into(), path: DIRECT_INDEXED_DICTIONARY_FILE.into(),
+                format: DIRECT_INDEXED_DICTIONARY_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.direct_indexed_dictionary = Some(metadata);
+            let metadata = context_callback_descriptor::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(CONTEXT_CALLBACK_DESCRIPTOR_ID.into());
+            result.manifest.resources.push(Resource {
+                id: CONTEXT_CALLBACK_DESCRIPTOR_ID.into(), path: CONTEXT_CALLBACK_DESCRIPTOR_FILE.into(),
+                format: CONTEXT_CALLBACK_DESCRIPTOR_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.context_callback_descriptor = Some(metadata);
+            let metadata = conditional_language_pair::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(CONDITIONAL_LANGUAGE_PAIR_ID.into());
+            result.manifest.resources.push(Resource {
+                id: CONDITIONAL_LANGUAGE_PAIR_ID.into(), path: CONDITIONAL_LANGUAGE_PAIR_FILE.into(),
+                format: CONDITIONAL_LANGUAGE_PAIR_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.conditional_language_pair = Some(metadata);
+            let metadata = text_reader_registry::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(TEXT_READER_REGISTRY_ID.into());
+            result.manifest.resources.push(Resource {
+                id: TEXT_READER_REGISTRY_ID.into(), path: TEXT_READER_REGISTRY_FILE.into(),
+                format: TEXT_READER_REGISTRY_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.text_reader_registry = Some(metadata);
+            let metadata = conditional_substitution_words::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(CONDITIONAL_SUBSTITUTION_WORDS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: CONDITIONAL_SUBSTITUTION_WORDS_ID.into(), path: CONDITIONAL_SUBSTITUTION_WORDS_FILE.into(),
+                format: CONDITIONAL_SUBSTITUTION_WORDS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![TEXT_CATALOGS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.conditional_substitution_words = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1698,6 +1812,13 @@ impl Extraction {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1839,6 +1960,13 @@ impl Extraction {
             || self.conditional_item_parameters.is_some() != self.range_lookup.is_some()
             || self.range_lookup.is_some() != self.tilemap_geometry.is_some()
             || self.tilemap_geometry.is_some() != self.script39_registry_poses.is_some()
+            || self.script39_registry_poses.is_some() != self.script39_special_poses.is_some()
+            || self.script39_special_poses.is_some() != self.direct_indexed_graphics.is_some()
+            || self.direct_indexed_graphics.is_some() != self.direct_indexed_dictionary.is_some()
+            || self.direct_indexed_dictionary.is_some() != self.context_callback_descriptor.is_some()
+            || self.context_callback_descriptor.is_some() != self.conditional_language_pair.is_some()
+            || self.conditional_language_pair.is_some() != self.text_reader_registry.is_some()
+            || self.text_reader_registry.is_some() != self.conditional_substitution_words.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2650,6 +2778,69 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected script39_registry_poses".into()),
         }
+        match (&self.script39_special_poses, files.script39_special_poses) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SCRIPT39_SPECIAL_POSES_FILE_BYTES { return Err("Opcode-39 special pose file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[106].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected script39_special_poses".into()),
+        }
+        match (&self.direct_indexed_graphics, files.direct_indexed_graphics) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_DIRECT_INDEXED_GRAPHICS_FILE_BYTES { return Err("Direct indexed graphics file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[107].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected direct_indexed_graphics".into()),
+        }
+        match (&self.direct_indexed_dictionary, files.direct_indexed_dictionary) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_DIRECT_INDEXED_DICTIONARY_FILE_BYTES { return Err("Direct indexed dictionary file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[108].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected direct_indexed_dictionary".into()),
+        }
+        match (&self.context_callback_descriptor, files.context_callback_descriptor) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_CONTEXT_CALLBACK_DESCRIPTOR_FILE_BYTES { return Err("Context callback descriptor file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[109].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected context_callback_descriptor".into()),
+        }
+        match (&self.conditional_language_pair, files.conditional_language_pair) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_CONDITIONAL_LANGUAGE_PAIR_FILE_BYTES { return Err("Conditional language pair file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[110].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected conditional_language_pair".into()),
+        }
+        match (&self.text_reader_registry, files.text_reader_registry) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_TEXT_READER_REGISTRY_FILE_BYTES { return Err("Text-reader registry file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[111].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected text_reader_registry".into()),
+        }
+        match (&self.conditional_substitution_words, files.conditional_substitution_words) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES { return Err("Conditional substitution words file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[112].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected conditional_substitution_words".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3176,6 +3367,34 @@ impl Extraction {
             decoded.validate_producers(files.script_archive.ok_or("Missing opcode-39 script archive dependency")?.0)?;
             if decoded != &expected.decoded { return Err("Decoded script39_registry_poses differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.script39_special_poses, files.script39_special_poses) {
+            decoded.validate_producers(files.script_archive.ok_or("Missing opcode-39 script archive dependency")?.0)?;
+            if decoded != &expected.decoded { return Err("Decoded script39_special_poses differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.direct_indexed_graphics, files.direct_indexed_graphics) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded direct_indexed_graphics differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.direct_indexed_dictionary, files.direct_indexed_dictionary) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded direct_indexed_dictionary differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.context_callback_descriptor, files.context_callback_descriptor) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded context_callback_descriptor differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.conditional_language_pair, files.conditional_language_pair) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded conditional_language_pair differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.text_reader_registry, files.text_reader_registry) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded text_reader_registry differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.conditional_substitution_words, files.conditional_substitution_words) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded conditional_substitution_words differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3293,6 +3512,13 @@ impl Extraction {
             + usize::from(self.range_lookup.is_some())
             + usize::from(self.tilemap_geometry.is_some())
             + usize::from(self.script39_registry_poses.is_some())
+            + usize::from(self.script39_special_poses.is_some())
+            + usize::from(self.direct_indexed_graphics.is_some())
+            + usize::from(self.direct_indexed_dictionary.is_some())
+            + usize::from(self.context_callback_descriptor.is_some())
+            + usize::from(self.conditional_language_pair.is_some())
+            + usize::from(self.text_reader_registry.is_some())
+            + usize::from(self.conditional_substitution_words.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3453,6 +3679,13 @@ mod tests {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3566,6 +3799,13 @@ mod tests {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3689,6 +3929,13 @@ mod tests {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3801,6 +4048,13 @@ mod tests {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

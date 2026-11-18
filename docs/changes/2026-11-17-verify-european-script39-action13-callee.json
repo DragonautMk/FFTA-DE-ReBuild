@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "verify-european-script39-action13-callee",
+  "title": "Verify the European opcode 39 action 13 callee continuation",
+  "kind": "added",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Add a controlled action-13 callee continuation after the original task prefix, seeding identical reusable objects in raw and managed machines after task cleanup."
+  ],
+  "validation": [
+    "Sol gpt-6.1-sol/xhigh identified the fixture and the need to seed after cleanup; effective settings are unconfirmed. Static helper disassembly rf09d5pm, Windows GNU test build v05dmvpw and Wine _mvdi9t3 pass. Two seeded original callee continuations return with equal raw/managed full states and guest clocks; selected index ROM bytes were altered and typed property, body and equipment reads were observed. Wine server drained."
+  ],
+  "limitations": [
+    "The controlled fixture does not prove an uninterrupted allocator path, alternate-sprite behavior, actor overrides or ordinary reachability. Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script39_action13_callee_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": ["docs/changes/2026-11-17-verify-european-script39-action13-branch.json"]
+}

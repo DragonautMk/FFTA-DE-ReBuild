@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "compare-european-ap-transition-cheat",
+  "title": "Compare an AP cheat during a European ending transition",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Document a matched CH-0330 application and possible scene side effect in a cheat-derived EUR ending transition.",
+    "Document a separate ordinary dispatch-result comparison with matching visible AP.",
+    "Compare the dispatched unit skill screen and bounded candidate progress bytes after the ordinary result."
+  ],
+  "validation": [
+    "A protected no-cheat preflight and controlled dialogue reached condition 1 at frame 48216. The successful retry reproduced the complete state and clock of the retained diagnostic; the earlier diagnostic hit the graphical-report limit and its work was retained (dbg22-ap-victory-preflight-k6sjege4, dbg22-ap-victory-dialogue-4fgbt7jy, dbg22-ap-victory-dialogue-retry-b1_fktbo).",
+    "A protected same-seed Wine pair matched full state, frame and clock before application; one CH-0330 application wrote the sampled target 0 to 5,000 versus control 0. Candidate clocks differed by three cycles one frame later. After disarm the target stayed 5,000 through 600 frames; control was 0 at 60 and 62,808 at 120, 300 and 600. Final captures at matching frame and clock show a new control scene and a black candidate screen (dbg22-ap-transition-pair-pzzwclhk).",
+    "A protected ordinary EUR dispatch-result control reached the 50 AP reward with two confirmations. A same-input CH-0330 pair matched full state, frame and clock before the second confirmation; after 36 maintained frames and disarm, the candidate target was 5,000 versus 5 in the control, persisting at matching frames and clocks for 120 further frames. Both reward captures displayed 50 AP (dbg22-ap-dispatch-preflight-p82ji7lc, dbg22-ap-dispatch-navigation-lrqa46x5, dbg22-ap-dispatch-pair-mg42vqys).",
+    "A protected same-input EUR/Wine pair continued through the recorded return and recruitment prompt to Sigmund: all four sampled frame/clock pairs matched, the candidate target stayed 5,000 versus 5, and 142 candidate progress bytes matched at initial, reward, map and skill-screen boundaries. Reward and Sigmund skill image hashes matched; the visible Throw entry was MASTER. Candidate recorded 36 applications and 36 writes before disarm (dbg22-ap-dispatch-progress-pair-ta7vkuk8)."
+  ],
+  "limitations": [
+    "This cheat-derived final transition does not establish the target field meaning, an AP award, the full cause of the visual divergence, all side effects, native Windows or original device-hook equivalence.",
+    "The ordinary result screenshot does not establish later value consumption or ability progress; the displayed value may already have been rendered.",
+    "The 142-byte span is a candidate, not a proven complete progress domain; only Sigmund and an already mastered visible ability were checked. Effects on unmastered abilities remain open."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

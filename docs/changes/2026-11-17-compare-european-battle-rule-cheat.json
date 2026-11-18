@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "compare-european-battle-rule-cheat",
+  "title": "Compare a battle-rule cheat on an isolated EUR checkpoint",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Record a same-seed CH-0338 memory and persistence comparison in EUR DS-05."
+  ],
+  "validation": [
+    "Protected Wine/Xvfb candidate and control: one-frame candidate application recorded eight writes and changed the first target 4 to 0; control remained 4, and values persisted over 120 neutral frames after disarm. Screens appeared alike; both runs closed normally and Wine drained (dbg22-laws-paired-4x_rxqeo).",
+    "A protected same-seed EUR/Wine pair followed the verified deployment and battle route to System → Laws: the control displayed Cavalleria forbidden and Carica recommended; the candidate showed empty rows after one application and disarm. The target stayed zero versus 4 at the same final frame; clocks differed by one cycle (dbg22-laws-view-paired-kxaq5zm3)."
+  ],
+  "limitations": [
+    "This observes displayed rule and recommendation changes in one scene, not actual rule enforcement, all side effects, native Windows or original hardware."
+  ],
+  "files": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "audit-european-text-reader-byte-ownership",
+  "title": "Audit European text-reader byte-index ownership",
+  "kind": "changed",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Map the physical source owners reached conditionally by the full byte indices of both original text-reader registry loads."
+  ],
+  "validation": [
+    "Protected static audit nw66w3v6 checks all 256 word addresses against the accepted E169 manifest. It finds 158 owned and 98 unowned words, with no mixed or multiply owned words. All 98 are in 371158..37140c: 93 are zero and five resemble Thumb ROM pointers. No guest execution occurred."
+  ],
+  "limitations": [
+    "This is physical address accounting, not proof of ordinary index values, callback semantics or unowned-source extent. Independently authenticate the substitution source and consumers before integrating. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-text-reader-registry.json"
+  ]
+}

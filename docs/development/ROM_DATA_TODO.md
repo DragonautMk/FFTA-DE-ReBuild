@@ -110,16 +110,35 @@ catalogs of other families remain to be identified and verified.
 **ROMDATA-01-CONTEXT-3AE42C ordinary return to English (2026-11-17):**
 After French was selected, the title route returns to English and publishes
 language ID 0. The E161 raw/managed interpreter pair passes on Wine with both
-position spans altered (`1riwnrce`). Other writers, global index/value domains,
-native dispatch, Linux, USA and native Windows remain open.
+position spans altered (`1riwnrce`). E164 static ownership audit covers both
+readers' full byte-index address range: 39 physical pairs already belong to
+declared resources and 222 do not (`s7fuvptv`). An E166 recheck finds 256
+owned and five unowned pairs after integrating two separate graphics archives
+(`a1j2lsxv`). Four of those pairs form an independently rooted callback
+descriptor: its source audit (`7hcgos9q`), E167 controlled Wine dispatch
+(`md0zxb9k`) and production CLI (`555lr8qm`) pass. E167 ownership recheck
+(`60xqqy83`) leaves one physical pair unowned.
+Values above 4 are not proved reachable or a single position table. The final
+two-byte gap's meaning, other writers, native dispatch, Linux, USA and native
+Windows remain open. E168-d167 publishes that gap as an opaque conditional
+projection; two controlled original-reader checks and dataset preservation pass
+on Wine (`mncnsstk`). The E168 ownership recheck assigns all 261 conditional
+physical pairs (`4ami2zcc`), without proving values beyond 0–4 occur. The E168
+production Wine CLI passes creation, reuse and verification (`wklf6sch`). Its
+three-frame continuation reads the callback descriptor ordinarily and matches
+raw/managed framebuffer, OAM and final state; audio and source poisoning are
+not compared in that scene. Ordinary inputs 30 and 35 remain open.
 [Evidence](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
 
 **ROMDATA-01-ADJACENT-371464 scoped EUR integration (2026-11-17):**
 e162-d161 publishes six rooted four-halfword tilemap geometry projections.
 Wine verifies 48 altered source bytes, 24 original-reader state/clock cases and
 all 104 previous resource files (`5zpi8vam`); the production CLI passes
-(`j4r9sopl`). Its bounded scene reads no geometry bytes. Ordinary use, other
-readers/index domains, Linux, USA and native Windows remain open.
+(`j4r9sopl`). Its bounded scene reads no geometry bytes. A later recorded Wine
+home continuation reads 56 managed bytes across two aggregate groups and
+matches 1,800 framebuffer/OAM frames and final state (`mr5vn2od`, audit
+`db6l43_0`). Group identities, other readers/index domains, audio and altered
+source comparison in that scene, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_runtime.md#european-tilemap-geometry-projections).
 
 **ROMDATA-01-RANGE-37140C scoped EUR integration (2026-11-17):** e161-d160
@@ -310,12 +329,50 @@ original opcode selector and completes the handler in a controlled task context
 Windows remain open.
 [Evidence](../rom_data_text.md#european-text-substitution-callback-candidates).
 
-**ROMDATA-01-SCRIPT39-REGISTRY-POSES scoped EUR source model (2026-11-17):**
+**ROMDATA-01-TEXT-READER-REGISTRY-371068 scoped EUR integration (2026-11-17):**
+E169-d168 publishes 27 conditional reader words and two literals. Wine
+`j15jcf44` preserves all 111 prior resources and passes 12 controlled original
+interpreter prefix comparisons and boundary checks with sources altered. The
+original byte index remains uncapped. Production Wine CLI `mr5vn2od` passes
+create/reuse/verify; a recorded home continuation reads 28 managed callback
+bytes and matches 1,800 framebuffer/OAM frames and final state. Audio and
+poisoned-ROM scene comparison, other scenes, translated-prefix attribution,
+Linux, USA and native Windows remain open. A full byte-index ownership audit
+(`nw66w3v6`) finds 158 owned and 98 unowned physical words in E169. E170
+separately publishes those 98 words and their dispatcher literal; Wine
+`sjojlovh` verifies all 396 bytes and 66 controlled interpreter/generated
+prefixes. E170 ownership recheck `thuu27et` assigns all 256 conditional
+physical words with prior owners unchanged. Production Wine CLI `alfjrf8b`
+passes create/reuse/verify; its three-frame scene reads no new words. Ordinary
+indices remain unproved.
+[Evidence](../rom_data_text.md#conditional-european-text-reader-registry).
+
+**ROMDATA-01-SCRIPT39-REGISTRY-POSES scoped EUR integration (2026-11-17):**
 the conditional high-registry/direct-job projection reconstructs 6,960 new
 index words, 410 sequences and 161 pixel blocks after prior-owner subtraction.
 Wine validates the typed model and a controlled original unit-to-actor join
-(`z2eftm1l`). Dataset publication, runtime consumers, ordinary use, Linux and
-USA remain open. [Evidence](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
+(`z2eftm1l`). E163 publication, typed reads and controlled reader comparisons
+also pass (`ga87pps5`); the production CLI passes (`vgo1cewu`) with no positive
+ordinary read in its bounded window. Ordinary use, other consumers, Linux and USA
+remain open. [Evidence](../rom_data_unit_obj.md#opcode-39-registry-pose-inventory).
+
+**ROMDATA-01-SCRIPT39-SPECIAL-POSES scoped EUR integration (2026-11-17):**
+the low-selector projection reconstructs 964 new index cells, 109 sequences,
+seven OBJ lists and 87 pixel blocks after E163 owner subtraction. Wine checks
+the typed model and a controlled original unit-to-actor join (`aysnyiei`).
+E164 publication, typed reads and six controlled reader comparisons pass
+(`jrp5fb0y`), as does the production CLI (`72_aby76`) without an ordinary
+positive read in its bounded scene. A later Wine home continuation reads 48
+managed index bytes but no sequence, OBJ or pixel bytes, and matches 1,800
+framebuffer/OAM frames and final state (`mr5vn2od`, audit `db6l43_0`). The
+slots and full animation remain unproved. The two excluded action-13 branches
+have conditional index and downstream sources already owned (`wnmiows2`,
+`4p7yr_3v`); original task
+branch selection passes in three controlled Wine comparisons (`uto86fc6`). Two
+explicitly seeded callee continuations pass to return (`_mvdi9t3`). An
+uninterrupted allocator path, alternate sprites, actor overrides, action-13
+ordinary reachability, other scenes, Linux and USA remain open.
+[Evidence](../rom_data_unit_obj.md#low-selector-special-unit-pose-projection).
 
 **ROMDATA-01-TEXT-SHORT-STRINGS / ROMDATA-02-TEXT-SHORT-DATA completed for the
 declared EUR catalog:** five original tables of 107 entries, 535 distinct strings
@@ -5633,6 +5690,22 @@ classified. No build-Wine-game-fixture/old proof/metric repeated; schema 1/e90-d
 unchanged. Model/Wine oracle/runtime/CLI/ordinary/full ABI/indirect/Linux-USA-native
 Windows/new 32:9/full TODO open; sparse 27 ordinary partial.
 [Contract and limits](../rom_data_indexed_graphics.md).
+
+**ROMDATA-01-INDEXED-DIRECT-3AE484 scoped EUR source audit (2026-11-17).**
+Original caller `08023c98` passes the independently rooted `3ae484` archive
+to `0800537c`. Four literal programs produce 256 bytes from 288 archive bytes;
+the caller literal and archive are disjoint from E164 owners (`j80q8jx4`).
+E165-d164 publication and the controlled original-reader comparison pass on
+Wine (`qk3xqc4z`), preserving all 107 prior resources. Production CLI create,
+reuse and verification pass (`e87ug9pq`); ordinary use remains open. The
+adjacent `3ae5a4` archive has a separate source audit (`zy8p2uxf`) and E166
+controlled reader Wine proof (`puxz2kz7`): 41 programs, 2,008 source bytes,
+2,624 decoded bytes and no E165 owner overlap. Its production CLI also passes
+on Wine (`ozq4vcii`). An earlier source-guided Wine window yields zero reads
+(`dh34xwul`); cold-origin continuation `abz4lk0q` reads both archives and
+passes an 11-frame raw/managed state, clock, video, OAM and audio comparison
+with managed ROM sources altered. Other scenes and consumers remain open.
+[Evidence](../rom_data_indexed_graphics.md#direct-european-archive-at-3ae484).
 
 **ROMDATA-01-CONTEXT-3710D4 scoped EUR integration (2026-11-16).** E159-d158
 adds 33 four-byte contexts to the indexed-graphics resource. Wine publication,

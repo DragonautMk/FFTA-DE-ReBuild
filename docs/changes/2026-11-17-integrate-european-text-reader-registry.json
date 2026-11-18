@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-text-reader-registry",
+  "title": "Integrate the European text reader callback registry",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an E169-d168 typed resource for the conditional 27-word text-reader callback registry and its two original literals, preserving guest dispatch and out-of-projection reads."
+  ],
+  "validation": [
+    "Protected static source audit mj5buj5x and Windows test build 5ec8jzgg pass. First build 45i6ch28 failed on a missing Bus trait import in the test; it was corrected.",
+    "Wine j15jcf44 creates/reuses/verifies E169, preserves all 111 E168 resources, rejects modified callback and partial overlap, and checks mixed-width adjacent-owner reads with source ROM bytes altered. Twelve controlled original interpreter prefixes match complete state and guest clock, including out-of-projection index 27. Wine server drained.",
+    "Windows GNU production CLI build 1sppxxpd and Wine mr5vn2od pass create/reuse/verify with all 113 files matching the tested E169 generation. A recorded 1800-frame home continuation reads 28 managed registry callback bytes and matches raw/managed framebuffer and OAM each frame plus final state and framebuffer hashes. Wine drained."
+  ],
+  "limitations": [
+    "The scene compares no audio and does not poison source ROM; the controlled test covers altered source bytes. Registry counters are aggregate, and native dispatch can fall back to interpretation. Other scenes, translated-prefix attribution, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/text_reader_registry.rs",
+    "crates/gba-core/src/rom_data/runtime/text_reader_registry.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/text_reader_registry_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-text-reader-registry.json"
+  ]
+}

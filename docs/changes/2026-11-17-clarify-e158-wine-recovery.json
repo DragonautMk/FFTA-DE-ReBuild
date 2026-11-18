@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "clarify-e158-wine-recovery",
+  "title": "Clarify the E158 Wine recovery chronology",
+  "kind": "changed",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Clarify that the first E158 sparse-reader follow-up did not execute, while the subsequent Wine result in the same section did execute and pass."
+  ],
+  "validation": [
+    "Rechecked the existing guard and recovery record, the retained failed E158 receipt, and the later htdztv4y PASS receipt with completed server drain. The E158 lease had already been recovered; no lease was removed during this review."
+  ],
+  "limitations": [
+    "The sandbox does not grant access to the Wine runtime directory or sockets; approval-review availability remains external. Other scenes, native dispatch, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": ["docs/rom_data_obj.md"],
+  "references": ["docs/changes/2026-11-13-guard-wine-runtime-before-prefix-lease.json"]
+}

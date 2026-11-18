@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "recover-interrupted-e170-cold-lease",
+  "title": "Recover the interrupted E170 cold-storage lease",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Preserve the exact interrupted cold-storage lease marker after reviewing its owner, host state and catalog so the pending E170 Wine validation can resume."
+  ],
+  "validation": [
+    "The marker was created during the E170 CLI launch, whose session was interrupted before a validation unit was created. The bounded session audit found no other recorded relevant launch in that interval. The host rebooted afterward and the recorded PID no longer existed.",
+    "Read-only review found 1736 archived and two restored catalog entries, no staging or retiring entries, no catalog entry modified during the launch and no matches among the selected protected inputs. The old marker was moved intact to target/rom-data-e170-substitution-words/lease-recovery-20261118/interrupted-lease; its preimage and review are recorded alongside it."
+  ],
+  "limitations": [
+    "The launch-to-marker attribution is based on the recorded timing and bounded session audit. Unrelated system process descriptors were not all readable; all original descendants predated the host reboot. No archive or input was deleted. Wine sandbox restrictions and approval availability remain separate, and no performance measurement was made."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json"
+  ]
+}

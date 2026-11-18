@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-direct-indexed-archive",
+  "title": "Integrate a directly rooted European indexed archive",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add the E165-d164 typed source resource for the four-program indexed archive and its original caller literal, preserving existing source ownership and the guest decoder."
+  ],
+  "validation": [
+    "Static source audit j80q8jx4 and Windows GNU test build 3pwtuzan pass. Wine qk3xqc4z creates/reuses E165-d164 and preserves all 107 previous resources; all 292 typed source bytes, mixed-width boundaries and a malformed decoded word are checked with the ROM sources altered.",
+    "The controlled original caller and decoder match raw and managed full states and guest clocks in interpreter and generated instruction dispatch; Wine server drained.",
+    "Windows GNU production build s4nnw7v2 and Wine CLI e87ug9pq pass create/reuse/verify for 109 files matching the tested generation. An 11-frame world-map window reads no new archive bytes and leaves the dataset unchanged; Wine server drained.",
+    "Wine ordinary-input continuation abz4lk0q observes both managed direct archives and passes an 11-frame raw/managed state, guest clock, video, OAM and nonempty audio comparison with managed ROM sources altered; Wine server drained."
+  ],
+  "limitations": [
+    "Generated blocks may fall back to interpretation. Other scenes, other consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/direct_indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/direct_indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/direct_indexed_graphics_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-classify-european-direct-indexed-archive.json"
+  ]
+}

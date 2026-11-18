@@ -70,6 +70,13 @@ use gba_core::rom_data::{
     range_lookup::RangeLookup, RANGE_LOOKUP_ID, RANGE_LOOKUP_FILE, MAX_RANGE_LOOKUP_FILE_BYTES,
     tilemap_geometry::TilemapGeometry, TILEMAP_GEOMETRY_ID, TILEMAP_GEOMETRY_FILE, MAX_TILEMAP_GEOMETRY_FILE_BYTES,
     script39_registry_poses::Script39RegistryPoses, SCRIPT39_REGISTRY_POSES_ID, SCRIPT39_REGISTRY_POSES_FILE, MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES,
+    script39_special_poses::Script39SpecialPoses, SCRIPT39_SPECIAL_POSES_ID, SCRIPT39_SPECIAL_POSES_FILE, MAX_SCRIPT39_SPECIAL_POSES_FILE_BYTES,
+    direct_indexed_graphics::DirectIndexedGraphics, DIRECT_INDEXED_GRAPHICS_ID, DIRECT_INDEXED_GRAPHICS_FILE, MAX_DIRECT_INDEXED_GRAPHICS_FILE_BYTES,
+    direct_indexed_dictionary::DirectIndexedDictionary, DIRECT_INDEXED_DICTIONARY_ID, DIRECT_INDEXED_DICTIONARY_FILE, MAX_DIRECT_INDEXED_DICTIONARY_FILE_BYTES,
+    context_callback_descriptor::ContextCallbackDescriptor, CONTEXT_CALLBACK_DESCRIPTOR_ID, CONTEXT_CALLBACK_DESCRIPTOR_FILE, MAX_CONTEXT_CALLBACK_DESCRIPTOR_FILE_BYTES,
+    conditional_language_pair::ConditionalLanguagePair, CONDITIONAL_LANGUAGE_PAIR_ID, CONDITIONAL_LANGUAGE_PAIR_FILE, MAX_CONDITIONAL_LANGUAGE_PAIR_FILE_BYTES,
+    text_reader_registry::TextReaderRegistry, TEXT_READER_REGISTRY_ID, TEXT_READER_REGISTRY_FILE, MAX_TEXT_READER_REGISTRY_FILE_BYTES,
+    conditional_substitution_words::ConditionalSubstitutionWords, CONDITIONAL_SUBSTITUTION_WORDS_ID, CONDITIONAL_SUBSTITUTION_WORDS_FILE, MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -579,7 +586,29 @@ mod tilemap_geometry_tests;
 #[cfg(test)]
 mod script39_registry_poses_tests;
 #[cfg(test)]
+mod script39_special_poses_tests;
+#[cfg(test)]
 mod script39_registry_runtime_tests;
+#[cfg(test)]
+mod script39_special_runtime_tests;
+#[cfg(test)]
+mod script39_action13_tests;
+#[cfg(test)]
+mod script39_action13_callee_tests;
+#[cfg(test)]
+mod direct_indexed_graphics_tests;
+#[cfg(test)]
+mod direct_indexed_dictionary_tests;
+#[cfg(test)]
+mod context_callback_descriptor_tests;
+#[cfg(test)]
+mod conditional_language_pair_tests;
+#[cfg(test)]
+mod text_reader_registry_tests;
+#[cfg(test)]
+mod conditional_substitution_words_tests;
+#[cfg(test)]
+mod direct_indexed_ordinary_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod e162_scene_matrix_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
@@ -1034,6 +1063,13 @@ fn parse_conditional_item_parameters(bytes: &[u8]) -> Result<ConditionalItemPara
 fn parse_range_lookup(bytes: &[u8]) -> Result<RangeLookup, String> { let value: RangeLookup = serde_json::from_slice(bytes).map_err(|e| format!("Invalid range_lookup: {e}"))?; value.validate()?; Ok(value) }
 fn parse_tilemap_geometry(bytes: &[u8]) -> Result<TilemapGeometry, String> { let value: TilemapGeometry = serde_json::from_slice(bytes).map_err(|e| format!("Invalid tilemap_geometry: {e}"))?; value.validate()?; Ok(value) }
 fn parse_script39_registry_poses(bytes: &[u8]) -> Result<Script39RegistryPoses, String> { let value: Script39RegistryPoses = serde_json::from_slice(bytes).map_err(|e| format!("Invalid script39_registry_poses: {e}"))?; value.validate()?; Ok(value) }
+fn parse_script39_special_poses(bytes: &[u8]) -> Result<Script39SpecialPoses, String> { let value: Script39SpecialPoses = serde_json::from_slice(bytes).map_err(|e| format!("Invalid script39_special_poses: {e}"))?; value.validate()?; Ok(value) }
+fn parse_direct_indexed_graphics(bytes: &[u8]) -> Result<DirectIndexedGraphics, String> { let value: DirectIndexedGraphics = serde_json::from_slice(bytes).map_err(|e| format!("Invalid direct_indexed_graphics: {e}"))?; value.validate()?; Ok(value) }
+fn parse_direct_indexed_dictionary(bytes: &[u8]) -> Result<DirectIndexedDictionary, String> { let value: DirectIndexedDictionary = serde_json::from_slice(bytes).map_err(|e| format!("Invalid direct_indexed_dictionary: {e}"))?; value.validate()?; Ok(value) }
+fn parse_context_callback_descriptor(bytes: &[u8]) -> Result<ContextCallbackDescriptor, String> { let value: ContextCallbackDescriptor = serde_json::from_slice(bytes).map_err(|e| format!("Invalid context_callback_descriptor: {e}"))?; value.validate()?; Ok(value) }
+fn parse_conditional_language_pair(bytes: &[u8]) -> Result<ConditionalLanguagePair, String> { let value: ConditionalLanguagePair = serde_json::from_slice(bytes).map_err(|e| format!("Invalid conditional_language_pair: {e}"))?; value.validate()?; Ok(value) }
+fn parse_text_reader_registry(bytes: &[u8]) -> Result<TextReaderRegistry, String> { let value: TextReaderRegistry = serde_json::from_slice(bytes).map_err(|e| format!("Invalid text_reader_registry: {e}"))?; value.validate()?; Ok(value) }
+fn parse_conditional_substitution_words(bytes: &[u8]) -> Result<ConditionalSubstitutionWords, String> { let value: ConditionalSubstitutionWords = serde_json::from_slice(bytes).map_err(|e| format!("Invalid conditional_substitution_words: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1051,6 +1087,13 @@ fn encode_conditional_item_parameters(value: &ConditionalItemParameters) -> Resu
 fn encode_range_lookup(value: &RangeLookup) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode range_lookup: {e}")) }
 fn encode_tilemap_geometry(value: &TilemapGeometry) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode tilemap_geometry: {e}")) }
 fn encode_script39_registry_poses(value: &Script39RegistryPoses) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode script39_registry_poses: {e}")) }
+fn encode_script39_special_poses(value: &Script39SpecialPoses) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode script39_special_poses: {e}")) }
+fn encode_direct_indexed_graphics(value: &DirectIndexedGraphics) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode direct_indexed_graphics: {e}")) }
+fn encode_direct_indexed_dictionary(value: &DirectIndexedDictionary) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode direct_indexed_dictionary: {e}")) }
+fn encode_context_callback_descriptor(value: &ContextCallbackDescriptor) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode context_callback_descriptor: {e}")) }
+fn encode_conditional_language_pair(value: &ConditionalLanguagePair) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode conditional_language_pair: {e}")) }
+fn encode_text_reader_registry(value: &TextReaderRegistry) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode text_reader_registry: {e}")) }
+fn encode_conditional_substitution_words(value: &ConditionalSubstitutionWords) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode conditional_substitution_words: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1328,6 +1371,13 @@ struct Dataset {
     range_lookup: Option<RangeLookup>,
     tilemap_geometry: Option<TilemapGeometry>,
     script39_registry_poses: Option<Script39RegistryPoses>,
+    script39_special_poses: Option<Script39SpecialPoses>,
+    direct_indexed_graphics: Option<DirectIndexedGraphics>,
+    direct_indexed_dictionary: Option<DirectIndexedDictionary>,
+    context_callback_descriptor: Option<ContextCallbackDescriptor>,
+    conditional_language_pair: Option<ConditionalLanguagePair>,
+    text_reader_registry: Option<TextReaderRegistry>,
+    conditional_substitution_words: Option<ConditionalSubstitutionWords>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1416,6 +1466,13 @@ struct Dataset {
     range_lookup_bytes: Option<Vec<u8>>,
     tilemap_geometry_bytes: Option<Vec<u8>>,
     script39_registry_poses_bytes: Option<Vec<u8>>,
+    script39_special_poses_bytes: Option<Vec<u8>>,
+    direct_indexed_graphics_bytes: Option<Vec<u8>>,
+    direct_indexed_dictionary_bytes: Option<Vec<u8>>,
+    context_callback_descriptor_bytes: Option<Vec<u8>>,
+    conditional_language_pair_bytes: Option<Vec<u8>>,
+    text_reader_registry_bytes: Option<Vec<u8>>,
+    conditional_substitution_words_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1530,6 +1587,13 @@ impl Dataset {
             range_lookup: self.range_lookup.as_ref().zip(self.range_lookup_bytes.as_deref()),
             tilemap_geometry: self.tilemap_geometry.as_ref().zip(self.tilemap_geometry_bytes.as_deref()),
             script39_registry_poses: self.script39_registry_poses.as_ref().zip(self.script39_registry_poses_bytes.as_deref()),
+            script39_special_poses: self.script39_special_poses.as_ref().zip(self.script39_special_poses_bytes.as_deref()),
+            direct_indexed_graphics: self.direct_indexed_graphics.as_ref().zip(self.direct_indexed_graphics_bytes.as_deref()),
+            direct_indexed_dictionary: self.direct_indexed_dictionary.as_ref().zip(self.direct_indexed_dictionary_bytes.as_deref()),
+            context_callback_descriptor: self.context_callback_descriptor.as_ref().zip(self.context_callback_descriptor_bytes.as_deref()),
+            conditional_language_pair: self.conditional_language_pair.as_ref().zip(self.conditional_language_pair_bytes.as_deref()),
+            text_reader_registry: self.text_reader_registry.as_ref().zip(self.text_reader_registry_bytes.as_deref()),
+            conditional_substitution_words: self.conditional_substitution_words.as_ref().zip(self.conditional_substitution_words_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -1712,6 +1776,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let range_lookup_bytes=manifest.coverage.iter().any(|id|id==RANGE_LOOKUP_ID).then(||read_bounded(&path.join(RANGE_LOOKUP_FILE),MAX_RANGE_LOOKUP_FILE_BYTES)).transpose()?;
     let tilemap_geometry_bytes=manifest.coverage.iter().any(|id|id==TILEMAP_GEOMETRY_ID).then(||read_bounded(&path.join(TILEMAP_GEOMETRY_FILE),MAX_TILEMAP_GEOMETRY_FILE_BYTES)).transpose()?;
     let script39_registry_poses_bytes=manifest.coverage.iter().any(|id|id==SCRIPT39_REGISTRY_POSES_ID).then(||read_bounded(&path.join(SCRIPT39_REGISTRY_POSES_FILE),MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES)).transpose()?;
+    let script39_special_poses_bytes=manifest.coverage.iter().any(|id|id==SCRIPT39_SPECIAL_POSES_ID).then(||read_bounded(&path.join(SCRIPT39_SPECIAL_POSES_FILE),MAX_SCRIPT39_SPECIAL_POSES_FILE_BYTES)).transpose()?;
+    let direct_indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==DIRECT_INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(DIRECT_INDEXED_GRAPHICS_FILE),MAX_DIRECT_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
+    let direct_indexed_dictionary_bytes=manifest.coverage.iter().any(|id|id==DIRECT_INDEXED_DICTIONARY_ID).then(||read_bounded(&path.join(DIRECT_INDEXED_DICTIONARY_FILE),MAX_DIRECT_INDEXED_DICTIONARY_FILE_BYTES)).transpose()?;
+    let context_callback_descriptor_bytes=manifest.coverage.iter().any(|id|id==CONTEXT_CALLBACK_DESCRIPTOR_ID).then(||read_bounded(&path.join(CONTEXT_CALLBACK_DESCRIPTOR_FILE),MAX_CONTEXT_CALLBACK_DESCRIPTOR_FILE_BYTES)).transpose()?;
+    let conditional_language_pair_bytes=manifest.coverage.iter().any(|id|id==CONDITIONAL_LANGUAGE_PAIR_ID).then(||read_bounded(&path.join(CONDITIONAL_LANGUAGE_PAIR_FILE),MAX_CONDITIONAL_LANGUAGE_PAIR_FILE_BYTES)).transpose()?;
+    let text_reader_registry_bytes=manifest.coverage.iter().any(|id|id==TEXT_READER_REGISTRY_ID).then(||read_bounded(&path.join(TEXT_READER_REGISTRY_FILE),MAX_TEXT_READER_REGISTRY_FILE_BYTES)).transpose()?;
+    let conditional_substitution_words_bytes=manifest.coverage.iter().any(|id|id==CONDITIONAL_SUBSTITUTION_WORDS_ID).then(||read_bounded(&path.join(CONDITIONAL_SUBSTITUTION_WORDS_FILE),MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -1843,6 +1914,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         range_lookup_bytes.as_ref().map_or(0, Vec::len),
         tilemap_geometry_bytes.as_ref().map_or(0, Vec::len),
         script39_registry_poses_bytes.as_ref().map_or(0, Vec::len),
+        script39_special_poses_bytes.as_ref().map_or(0, Vec::len),
+        direct_indexed_graphics_bytes.as_ref().map_or(0, Vec::len),
+        direct_indexed_dictionary_bytes.as_ref().map_or(0, Vec::len),
+        context_callback_descriptor_bytes.as_ref().map_or(0, Vec::len),
+        conditional_language_pair_bytes.as_ref().map_or(0, Vec::len),
+        text_reader_registry_bytes.as_ref().map_or(0, Vec::len),
+        conditional_substitution_words_bytes.as_ref().map_or(0, Vec::len),
         map_raster_palettes_bytes.as_ref().map_or(0, Vec::len),
         auxiliary_commands_bytes.as_ref().map_or(0, Vec::len),
         auxiliary_archive_bytes.as_ref().map_or(0, Vec::len),
@@ -1935,6 +2013,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let range_lookup=range_lookup_bytes.as_deref().map(parse_range_lookup).transpose()?;
     let tilemap_geometry=tilemap_geometry_bytes.as_deref().map(parse_tilemap_geometry).transpose()?;
     let script39_registry_poses=script39_registry_poses_bytes.as_deref().map(parse_script39_registry_poses).transpose()?;
+    let script39_special_poses=script39_special_poses_bytes.as_deref().map(parse_script39_special_poses).transpose()?;
+    let direct_indexed_graphics=direct_indexed_graphics_bytes.as_deref().map(parse_direct_indexed_graphics).transpose()?;
+    let direct_indexed_dictionary=direct_indexed_dictionary_bytes.as_deref().map(parse_direct_indexed_dictionary).transpose()?;
+    let context_callback_descriptor=context_callback_descriptor_bytes.as_deref().map(parse_context_callback_descriptor).transpose()?;
+    let conditional_language_pair=conditional_language_pair_bytes.as_deref().map(parse_conditional_language_pair).transpose()?;
+    let text_reader_registry=text_reader_registry_bytes.as_deref().map(parse_text_reader_registry).transpose()?;
+    let conditional_substitution_words=conditional_substitution_words_bytes.as_deref().map(parse_conditional_substitution_words).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2074,6 +2159,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         range_lookup,
         tilemap_geometry,
         script39_registry_poses,
+        script39_special_poses,
+        direct_indexed_graphics,
+        direct_indexed_dictionary,
+        context_callback_descriptor,
+        conditional_language_pair,
+        text_reader_registry,
+        conditional_substitution_words,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2162,6 +2254,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         range_lookup_bytes,
         tilemap_geometry_bytes,
         script39_registry_poses_bytes,
+        script39_special_poses_bytes,
+        direct_indexed_graphics_bytes,
+        direct_indexed_dictionary_bytes,
+        context_callback_descriptor_bytes,
+        conditional_language_pair_bytes,
+        text_reader_registry_bytes,
+        conditional_substitution_words_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2275,6 +2374,13 @@ fn check_dataset_budget(
     range_lookup: usize,
     tilemap_geometry: usize,
     script39_registry_poses: usize,
+    script39_special_poses: usize,
+    direct_indexed_graphics: usize,
+    direct_indexed_dictionary: usize,
+    context_callback_descriptor: usize,
+    conditional_language_pair: usize,
+    text_reader_registry: usize,
+    conditional_substitution_words: usize,
     map_raster_palettes: usize,
     auxiliary_commands: usize,
     auxiliary_archive: usize,
@@ -2382,6 +2488,13 @@ fn check_dataset_budget(
         || range_lookup as u64 > MAX_RANGE_LOOKUP_FILE_BYTES
         || tilemap_geometry as u64 > MAX_TILEMAP_GEOMETRY_FILE_BYTES
         || script39_registry_poses as u64 > MAX_SCRIPT39_REGISTRY_POSES_FILE_BYTES
+        || script39_special_poses as u64 > MAX_SCRIPT39_SPECIAL_POSES_FILE_BYTES
+        || direct_indexed_graphics as u64 > MAX_DIRECT_INDEXED_GRAPHICS_FILE_BYTES
+        || direct_indexed_dictionary as u64 > MAX_DIRECT_INDEXED_DICTIONARY_FILE_BYTES
+        || context_callback_descriptor as u64 > MAX_CONTEXT_CALLBACK_DESCRIPTOR_FILE_BYTES
+        || conditional_language_pair as u64 > MAX_CONDITIONAL_LANGUAGE_PAIR_FILE_BYTES
+        || text_reader_registry as u64 > MAX_TEXT_READER_REGISTRY_FILE_BYTES
+        || conditional_substitution_words as u64 > MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -2492,6 +2605,13 @@ fn check_dataset_budget(
         .saturating_add(range_lookup)
         .saturating_add(tilemap_geometry)
         .saturating_add(script39_registry_poses)
+        .saturating_add(script39_special_poses)
+        .saturating_add(direct_indexed_graphics)
+        .saturating_add(direct_indexed_dictionary)
+        .saturating_add(context_callback_descriptor)
+        .saturating_add(conditional_language_pair)
+        .saturating_add(text_reader_registry)
+        .saturating_add(conditional_substitution_words)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -2694,6 +2814,13 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.range_lookup {eprintln!("ROM_DATA runtime=decoded resource={RANGE_LOOKUP_ID} file={} records={}",dataset.manifest.resources[103].sha256,data.records.len());}
     if let Some(_data)=&dataset.tilemap_geometry {eprintln!("ROM_DATA runtime=decoded resource={TILEMAP_GEOMETRY_ID} file={} groups={}",dataset.manifest.resources[104].sha256,6);}
     if let Some(data)=&dataset.script39_registry_poses {eprintln!("ROM_DATA runtime=decoded resource={SCRIPT39_REGISTRY_POSES_ID} file={} index_cells={}",dataset.manifest.resources[105].sha256,data.cells.len());}
+    if let Some(data)=&dataset.script39_special_poses {eprintln!("ROM_DATA runtime=decoded resource={SCRIPT39_SPECIAL_POSES_ID} file={} index_cells={}",dataset.manifest.resources[106].sha256,data.cells.len());}
+    if let Some(data)=&dataset.direct_indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={DIRECT_INDEXED_GRAPHICS_ID} file={} programs={}",dataset.manifest.resources[107].sha256,data.archive.programs.len());}
+    if let Some(data)=&dataset.direct_indexed_dictionary {eprintln!("ROM_DATA runtime=decoded resource={DIRECT_INDEXED_DICTIONARY_ID} file={} programs={}",dataset.manifest.resources[108].sha256,data.archive.programs.len());}
+    if let Some(data)=&dataset.context_callback_descriptor {eprintln!("ROM_DATA runtime=decoded resource={CONTEXT_CALLBACK_DESCRIPTOR_ID} file={} callback={:08x}",dataset.manifest.resources[109].sha256,data.callback_thumb_pointer);}
+    if let Some(data)=&dataset.conditional_language_pair {eprintln!("ROM_DATA runtime=decoded resource={CONDITIONAL_LANGUAGE_PAIR_ID} file={} bytes={}",dataset.manifest.resources[110].sha256,data.opaque_bytes.len());}
+    if let Some(data)=&dataset.text_reader_registry {eprintln!("ROM_DATA runtime=decoded resource={TEXT_READER_REGISTRY_ID} file={} callbacks={}",dataset.manifest.resources[111].sha256,data.callbacks.len());}
+    if let Some(data)=&dataset.conditional_substitution_words {eprintln!("ROM_DATA runtime=decoded resource={CONDITIONAL_SUBSTITUTION_WORDS_ID} file={} words={}",dataset.manifest.resources[112].sha256,data.words.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -2851,6 +2978,13 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.range_lookup_stats() {eprintln!("ROM_DATA_USE resource={RANGE_LOOKUP_ID} dataset={} bus_reads={} source_bytes={} records_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.records_used);}
         if let Some(i)=resources.tilemap_geometry_stats() {eprintln!("ROM_DATA_USE resource={TILEMAP_GEOMETRY_ID} dataset={} bus_reads={} source_bytes={} groups_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.groups_used);}
         if let Some(i)=resources.script39_registry_pose_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT39_REGISTRY_POSES_ID} dataset={} bus_reads={} source_bytes={} index_bytes={} sequence_bytes={} pixel_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.index_bytes,i.sequence_bytes,i.pixel_bytes);}
+        if let Some(i)=resources.script39_special_pose_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT39_SPECIAL_POSES_ID} dataset={} bus_reads={} source_bytes={} index_bytes={} sequence_bytes={} object_bytes={} pixel_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.index_bytes,i.sequence_bytes,i.object_bytes,i.pixel_bytes);}
+        if let Some(i)=resources.direct_indexed_graphics_stats() {eprintln!("ROM_DATA_USE resource={DIRECT_INDEXED_GRAPHICS_ID} dataset={} bus_reads={} source_bytes={} literal_bytes={} header_bytes={} index_bytes={} token_bytes={} decoded_payload_bytes={} dictionary_header_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_bytes,i.header_bytes,i.index_bytes,i.token_bytes,i.decoded_payload_bytes,i.dictionary_header_bytes);}
+        if let Some(i)=resources.direct_indexed_dictionary_stats() {eprintln!("ROM_DATA_USE resource={DIRECT_INDEXED_DICTIONARY_ID} dataset={} bus_reads={} source_bytes={} literal_pointer_bytes={} header_bytes={} index_bytes={} token_bytes={} payload_bytes={} dictionary_header_bytes={} dictionary_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_pointer_bytes,i.header_bytes,i.index_bytes,i.token_bytes,i.payload_bytes,i.dictionary_header_bytes,i.dictionary_bytes);}
+        if let Some(i)=resources.context_callback_descriptor_stats() {eprintln!("ROM_DATA_USE resource={CONTEXT_CALLBACK_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} constructor_literal_bytes={} callback_bytes={} delay_bytes={} flags_bytes={} opaque_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.constructor_literal_bytes,i.callback_bytes,i.delay_bytes,i.flags_bytes,i.opaque_bytes);}
+        if let Some(i)=resources.conditional_language_pair_stats() {eprintln!("ROM_DATA_USE resource={CONDITIONAL_LANGUAGE_PAIR_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.text_reader_registry_stats() {eprintln!("ROM_DATA_USE resource={TEXT_READER_REGISTRY_ID} dataset={} bus_reads={} source_bytes={} literal_bytes={} callback_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_bytes,i.callback_bytes);}
+        if let Some(i)=resources.conditional_substitution_words_stats() {eprintln!("ROM_DATA_USE resource={CONDITIONAL_SUBSTITUTION_WORDS_ID} dataset={} bus_reads={} source_bytes={} literal_bytes={} word_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_bytes,i.word_bytes);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3236,6 +3370,13 @@ fn write_dataset(
     let range_lookup_data=source.range_lookup.as_ref().map(|c|encode_range_lookup(&c.decoded)).transpose()?;
     let tilemap_geometry_data=source.tilemap_geometry.as_ref().map(|c|encode_tilemap_geometry(&c.decoded)).transpose()?;
     let script39_registry_poses_data=source.script39_registry_poses.as_ref().map(|c|encode_script39_registry_poses(&c.decoded)).transpose()?;
+    let script39_special_poses_data=source.script39_special_poses.as_ref().map(|c|encode_script39_special_poses(&c.decoded)).transpose()?;
+    let direct_indexed_graphics_data=source.direct_indexed_graphics.as_ref().map(|c|encode_direct_indexed_graphics(&c.decoded)).transpose()?;
+    let direct_indexed_dictionary_data=source.direct_indexed_dictionary.as_ref().map(|c|encode_direct_indexed_dictionary(&c.decoded)).transpose()?;
+    let context_callback_descriptor_data=source.context_callback_descriptor.as_ref().map(|c|encode_context_callback_descriptor(&c.decoded)).transpose()?;
+    let conditional_language_pair_data=source.conditional_language_pair.as_ref().map(|c|encode_conditional_language_pair(&c.decoded)).transpose()?;
+    let text_reader_registry_data=source.text_reader_registry.as_ref().map(|c|encode_text_reader_registry(&c.decoded)).transpose()?;
+    let conditional_substitution_words_data=source.conditional_substitution_words.as_ref().map(|c|encode_conditional_substitution_words(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -3356,6 +3497,13 @@ fn write_dataset(
     if let Some(bytes)=&range_lookup_data {files.push(bytes);}
     if let Some(bytes)=&tilemap_geometry_data {files.push(bytes);}
     if let Some(bytes)=&script39_registry_poses_data {files.push(bytes);}
+    if let Some(bytes)=&script39_special_poses_data {files.push(bytes);}
+    if let Some(bytes)=&direct_indexed_graphics_data {files.push(bytes);}
+    if let Some(bytes)=&direct_indexed_dictionary_data {files.push(bytes);}
+    if let Some(bytes)=&context_callback_descriptor_data {files.push(bytes);}
+    if let Some(bytes)=&conditional_language_pair_data {files.push(bytes);}
+    if let Some(bytes)=&text_reader_registry_data {files.push(bytes);}
+    if let Some(bytes)=&conditional_substitution_words_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -3464,6 +3612,13 @@ fn write_dataset(
         range_lookup_data.as_ref().map_or(0, Vec::len),
         tilemap_geometry_data.as_ref().map_or(0, Vec::len),
         script39_registry_poses_data.as_ref().map_or(0, Vec::len),
+        script39_special_poses_data.as_ref().map_or(0, Vec::len),
+        direct_indexed_graphics_data.as_ref().map_or(0, Vec::len),
+        direct_indexed_dictionary_data.as_ref().map_or(0, Vec::len),
+        context_callback_descriptor_data.as_ref().map_or(0, Vec::len),
+        conditional_language_pair_data.as_ref().map_or(0, Vec::len),
+        text_reader_registry_data.as_ref().map_or(0, Vec::len),
+        conditional_substitution_words_data.as_ref().map_or(0, Vec::len),
         map_raster_palettes_data.as_ref().map_or(0, Vec::len),
         auxiliary_commands_data.as_ref().map_or(0, Vec::len),
         auxiliary_archive_data.as_ref().map_or(0, Vec::len),
@@ -3571,6 +3726,13 @@ fn write_dataset(
     if let Some(bytes)=&range_lookup_data {write(&path.join(RANGE_LOOKUP_FILE),bytes)?;}
     if let Some(bytes)=&tilemap_geometry_data {write(&path.join(TILEMAP_GEOMETRY_FILE),bytes)?;}
     if let Some(bytes)=&script39_registry_poses_data {write(&path.join(SCRIPT39_REGISTRY_POSES_FILE),bytes)?;}
+    if let Some(bytes)=&script39_special_poses_data {write(&path.join(SCRIPT39_SPECIAL_POSES_FILE),bytes)?;}
+    if let Some(bytes)=&direct_indexed_graphics_data {write(&path.join(DIRECT_INDEXED_GRAPHICS_FILE),bytes)?;}
+    if let Some(bytes)=&direct_indexed_dictionary_data {write(&path.join(DIRECT_INDEXED_DICTIONARY_FILE),bytes)?;}
+    if let Some(bytes)=&context_callback_descriptor_data {write(&path.join(CONTEXT_CALLBACK_DESCRIPTOR_FILE),bytes)?;}
+    if let Some(bytes)=&conditional_language_pair_data {write(&path.join(CONDITIONAL_LANGUAGE_PAIR_FILE),bytes)?;}
+    if let Some(bytes)=&text_reader_registry_data {write(&path.join(TEXT_READER_REGISTRY_FILE),bytes)?;}
+    if let Some(bytes)=&conditional_substitution_words_data {write(&path.join(CONDITIONAL_SUBSTITUTION_WORDS_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -3901,6 +4063,13 @@ mod tests {
             range_lookup: None,
             tilemap_geometry: None,
             script39_registry_poses: None,
+            script39_special_poses: None,
+            direct_indexed_graphics: None,
+            direct_indexed_dictionary: None,
+            context_callback_descriptor: None,
+            conditional_language_pair: None,
+            text_reader_registry: None,
+            conditional_substitution_words: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4228,8 +4397,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

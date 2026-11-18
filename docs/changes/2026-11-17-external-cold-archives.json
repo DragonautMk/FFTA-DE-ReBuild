@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "external-cold-archives",
+  "title": "Keep completed cold archives on external volumes",
+  "kind": "added",
+  "platforms": [
+    "Linux native tools and external mounted storage"
+  ],
+  "changes": [
+    "Allow individually reviewed completed cold archives to be offloaded to a mounted filesystem, retaining their catalog, manifest and evidence locally. Restore, verify and declared-input consumers resolve the archive through the recorded volume UUID.",
+    "Hold store and scope leases, check completion and host activity, verify and synchronize the copied payload, publish its location and only then retire the local copy. Refuse missing or mismatched volumes, overwritten destinations and changed sources or completion evidence.",
+    "Allow separately reviewed in-scope completion evidence for older idle-history archives and accept verified zero-exit result lists, retaining the original archival proof and rechecking historical outcome guards."
+  ],
+  "validation": [
+    "28 cold-storage tests passed in managed validation unit cold-external-evidence-9utymyyl, including external restoration, missing or corrupted volumes, interrupted copies, changed evidence and explicit historical completion review.",
+    "Transferred six previously archived completed scopes to an external NTFS volume, reclaiming 2225405952 locally allocated bytes. One external archive passed full cold-storage verify; all six copied payloads passed catalog checksum verification before retirement.",
+    "Transferred three additional completed historical archives to the external volume, reclaiming 1123049472 allocated bytes. Each external payload passed checksum verification before its local copy was removed; original archival proofs were retained."
+  ],
+  "limitations": [
+    "External archives require the recorded volume to be mounted; native Windows and the Docker wrapper were not validated for external volumes. Historical evidence with ambiguous or conflicting outcomes is refused.",
+    "Three host process records were inaccessible during activity inspection; no claim of global host inactivity is made. Existing active and suspended work, private inputs and the shared Wine prefix were excluded."
+  ],
+  "files": [
+    "scripts/cold_storage.py",
+    "scripts/tests/test_cold_storage.py",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

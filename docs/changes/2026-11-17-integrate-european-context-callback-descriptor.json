@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-context-callback-descriptor",
+  "title": "Integrate the European context callback descriptor",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an E167-d166 typed source resource for the one-row context callback descriptor and its constructor literal, preserving original guest dispatch and the opaque final byte."
+  ],
+  "validation": [
+    "Protected source audit 7hcgos9q and Windows GNU test build yu3p1awd pass. Initial Wine yxtwldmj failed an intermediate call-PC observation after the guest returned; the server drained, and final state comparison was not reached in the failing iteration.",
+    "Sol /root/sol_context_callback was consulted again as gpt-6.1-sol/xhigh (effective settings unconfirmed): generated block chaining can hide the intermediate PC. Windows retry build y6rnv8p4 and Wine md0zxb9k pass callback-entry argument and link checks, 12 typed bytes under ROM poisoning, boundary composition, 109 prior resources preserved and two full state/guest-clock comparisons; Wine server drained. The opaque byte is checked separately and is not read by the controlled dispatch.",
+    "Windows GNU production build _1k8nv0d and Wine CLI 555lr8qm pass create/reuse/verify for all 111 files matching the tested E167 generation. An 11-frame world-map window reads no callback bytes and leaves the dataset unchanged; Wine server drained.",
+    "Protected static join 1rjf486k authenticates a previously recorded ordinary startup callback trace and its live object/descriptor checkpoint. Wine wklf6sch continues this checkpoint for three frames, reading 14 managed descriptor bytes; framebuffer and OAM hashes match each frame, and final serialized state and framebuffer hashes match. Wine server drained."
+  ],
+  "limitations": [
+    "Generated blocks may fall back to interpretation. Audio and source-poisoned scene comparisons, other ordinary paths, the neighboring pair’s meaning, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/context_callback_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/context_callback_descriptor.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/context_callback_descriptor_tests.rs",
+    "crates/recomp/src/rom_data/direct_indexed_graphics_tests.rs",
+    "crates/recomp/src/rom_data/direct_indexed_dictionary_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-17-audit-european-context-callback-descriptor.json"
+  ]
+}

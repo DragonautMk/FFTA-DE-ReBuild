@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "slug": "integrate-european-script39-registry-poses",
+  "title": "Integrate European opcode 39 registry poses",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the conditional opcode-39 registry pose model in e163-d162 and serve its newly owned index, sequence and decoded pixel bytes through typed runtime reads while retaining prior owners."
+  ],
+  "validation": [
+    "Windows GNU test build 3ecrjj2q and Wine ga87pps5 passed dataset creation/reuse, preservation of 105 previous resources, all 91,712 typed source bytes with the original bytes altered, selected mixed boundaries and the prior sprite-42 root owner.",
+    "Wine ga87pps5 compared six controlled original reset cases through managed interpreter and generated instruction blocks against raw interpreter; all 12 full states and guest clocks matched. Generated blocks may fall back to interpretation.",
+    "Windows GNU production build 84354hhl and Wine vgo1cewu passed CLI create/reuse/verify for 107 files matching the tested e163 generation. Its 11-frame world-map window read zero opcode-39 pose bytes and did not change the generation."
+  ],
+  "limitations": [
+    "Ordinary use, other producer domains, broader Wine regressions, Linux, USA and native Windows remain open. The bounded CLI window is not evidence of global absence. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script39_registry_poses.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/script39_registry_runtime_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_geometry_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

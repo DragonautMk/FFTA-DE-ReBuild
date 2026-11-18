@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "complete-advanced-cheat-comparison-audit",
+  "title": "Complete the bounded advanced cheat comparison audit",
+  "kind": "docs",
+  "platforms": [
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Accept DBG2-22 within the documented EUR interpreter/Wine scenarios, retain each unverified outcome and list the remaining EUR catalog groups as unverified.",
+    "Synchronize the debug task atlas with the accepted scope and current evidence."
+  ],
+  "validation": [
+    "Rechecked the selected CH-0320/0330/0340, CH-0338/0339 and CH-0329/0341 comparisons, linked receipts and side-effect limits. Protected EUR/Wine pair receipts for mastery, AP, laws, yellow card, mission transition and phase-three runs report PASS and Wine drained. DBG2-21 is marked accepted.",
+    "Reviewed remaining EUR catalog entries by title and categorized their unverified status; did not run or infer effects for those entries. The Clear Mission source note is still missing."
+  ],
+  "limitations": [
+    "Acceptance is limited to the documented scenarios, fields and observations; unmastered AP, red cards, rule enforcement, an actual level-up, CH-0329 mission clear, CH-0341 final victory, other side effects and original device behavior remain unverified. Native Windows and physical input are part of the integration matrix."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/cheats.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}
