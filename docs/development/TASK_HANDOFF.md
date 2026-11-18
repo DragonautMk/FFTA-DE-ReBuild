@@ -68,6 +68,14 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Incomplete tasks and open criteria
 
+### RELEASE-1-1-1
+
+- State: active
+- Outcome: partial
+- Verified: Android 26, matching signer, 29 tests; desktop caches and archives PASS. Assets staged and checksummed.
+- Missing: commit, publish and verify remote v1.1.1.
+- Resume: publish staged release after checks.
+
 ### ANDROID-MENU-PARITY
 
 - State: active
@@ -178,9 +186,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: DOCKER-WINDOWS-EXPORT-ANDROID-BASH completed.
-- Last verified result: Windows x64 ZIP exported at 21:43 with 972 tests passed and zero Rust warnings. Android Bash exported the verified APK.
-- Remaining work: none for this request.
-- Errors or blockers: Wine prints an optional 32-bit prefix initialization diagnostic.
-- Next action: await a new selection.
-- References: docs/changes/2026-11-18-repair-windows-export-and-add-android-bash-launcher.json, hrakras6, 5nh1nh7o, qbg89r6b.
+- Task: RELEASE-1-1-1.
+- Last verified result: three staged packages and checksums pass.
+- Remaining work: publish and verify GitHub release.
+- Errors or blockers: none.
+- Next action: commit release sources and publish.
+- References: docs/changes/2026-11-18-prepare-release-1-1-1.json.

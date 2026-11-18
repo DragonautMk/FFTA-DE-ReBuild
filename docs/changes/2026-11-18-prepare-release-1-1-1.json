@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "prepare-release-1-1-1",
+  "title": "Prepare the 1.1.1 Android feature-parity preview",
+  "kind": "changed",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Set the maintained Android preview version to 1.1.1 with version code 26 and prepare release notes covering the initial parity work and remaining limitations."
+  ],
+  "validation": [
+    "Android Docker build and 29 Kotlin tests passed in release-111-android-38o2tleu. APK manifest and SHA-256 were verified, and the signing certificate matches the previous local and published previews.",
+    "Cached Linux and Windows Docker exports were matched against their successful test gates and validated in release-111-desktop-npuz9nuc. Archive manifests, executable headers, private-file exclusions and the staged Android source digest passed in release-111-package-validation-owiiffg3.",
+    "All eight release payload and notes checksums match SHA256SUMS.txt in the staged publication directory."
+  ],
+  "limitations": [
+    "Android real-game state transfer, undo and backup restore remain unverified on a phone. Android remains a debug-signed preview with incomplete desktop feature parity. Windows test gates use Wine."
+  ],
+  "files": [
+    "AndroidPort/android/app/build.gradle.kts",
+    "docs/releases/v1.1.1.md"
+  ],
+  "references": [
+    "docs/releases/v1.1.1.md"
+  ]
+}

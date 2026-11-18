@@ -680,6 +680,28 @@ Documentation: [2026-11-17-integrate-european-conditional-substitution-words.jso
 
 [Change record](docs/changes/2026-11-18-recover-interrupted-e170-cold-lease.json)
 
+## 2026-11-18 — Prepare the 1.1.1 Android feature-parity preview
+
+Type: changed. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Set the maintained Android preview version to 1.1.1 with version code 26 and prepare release notes covering the initial parity work and remaining limitations.
+
+**Validation**
+
+- Android Docker build and 29 Kotlin tests passed in release-111-android-38o2tleu. APK manifest and SHA-256 were verified, and the signing certificate matches the previous local and published previews.
+- Cached Linux and Windows Docker exports were matched against their successful test gates and validated in release-111-desktop-npuz9nuc. Archive manifests, executable headers, private-file exclusions and the staged Android source digest passed in release-111-package-validation-owiiffg3.
+- All eight release payload and notes checksums match SHA256SUMS.txt in the staged publication directory.
+
+**Limitations**
+
+- Android real-game state transfer, undo and backup restore remain unverified on a phone. Android remains a debug-signed preview with incomplete desktop feature parity. Windows test gates use Wine.
+
+Documentation: [v1.1.1.md](docs/releases/v1.1.1.md).
+
+[Change record](docs/changes/2026-11-18-prepare-release-1-1-1.json)
+
 ## 2026-11-18 — Observe the ordinary special pose task chain
 
 Type: changed. Platforms: EUR / Wine.
