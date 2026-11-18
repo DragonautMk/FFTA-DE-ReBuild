@@ -23879,3 +23879,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: executable Linux Android launcher, terminal acknowledgement, APK hash and 36 launcher/driver checks passed. The 21:05 Windows build failed before packaging. The repaired Wine collector test and full gated export passed with zero Rust warnings, 972 passing tests and 463 ignored. The Windows ZIP passed CRC, SHA-256 and PE x64 inspection.
 - Evidence: docs/changes/2026-11-18-repair-windows-export-and-add-android-bash-launcher.json, hrakras6, 5nh1nh7o, qbg89r6b. Sol consultation /root/sol_windows_mailbox requested gpt-6.1-sol at xhigh: transient atomic mailbox replacement, existing outbox retries and a finite test worker. Effective model/effort unconfirmed.
 - Limits: Wine 64-bit initialization logs an unavailable optional 32-bit rundll32 component. Native Windows and Android device gameplay were not exercised. Initial supplementary host check tch12mu5 lacked ALSA metadata and was superseded using the existing sysroot.
+
+### RELEASE-1-1-1
+
+- Outcome: completed
+- Verified criteria: public GitHub latest v1.1.1, tag d89bb7949c3f6596f31efcd84623c9ec87078780, nine uploaded asset digests and sizes match; remote main and decomp reached the tag. Android version code 26 uses the previous signing certificate. Staged Linux, Windows and Android packages passed integrity, source and private-file checks.
+- Evidence: docs/changes/2026-11-18-prepare-release-1-1-1.json and docs/changes/2026-11-18-publish-release-1-1-1.json; release-111-android-38o2tleu, release-111-desktop-npuz9nuc, release-111-package-validation-owiiffg3.
+- Limits: Android remains a debug-signed preview with partial parity; real-game state transfer, undo and cartridge-backup restore on a phone are unverified. Windows gate ran under Wine.

@@ -68,14 +68,6 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Incomplete tasks and open criteria
 
-### RELEASE-1-1-1
-
-- State: active
-- Outcome: partial
-- Verified: Android 26, matching signer, 29 tests; desktop caches and archives PASS. Assets staged and checksummed.
-- Missing: commit, publish and verify remote v1.1.1.
-- Resume: publish staged release after checks.
-
 ### ANDROID-MENU-PARITY
 
 - State: active
@@ -186,9 +178,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: RELEASE-1-1-1.
-- Last verified result: three staged packages and checksums pass.
-- Remaining work: publish and verify GitHub release.
+- Task: RELEASE-1-1-1 completed.
+- Last verified result: v1.1.1 is public and latest with nine verified assets.
+- Remaining work: none for this release.
 - Errors or blockers: none.
-- Next action: commit release sources and publish.
-- References: docs/changes/2026-11-18-prepare-release-1-1-1.json.
+- Next action: await a new selection.
+- References: docs/changes/2026-11-18-publish-release-1-1-1.json.

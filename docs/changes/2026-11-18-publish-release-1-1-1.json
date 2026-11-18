@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "publish-release-1-1-1",
+  "title": "Publish FFTA DE-ReBuild 1.1.1",
+  "kind": "docs",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Publish release 1.1.1 with notes describing the initial Android feature-parity work, validation and remaining limitations."
+  ],
+  "validation": [
+    "GitHub reports v1.1.1 as public and latest, with tag d89bb7949c3f6596f31efcd84623c9ec87078780. All nine uploaded assets matched staged sizes and SHA-256 digests.",
+    "Remote main and decomp were fast-forwarded to the release source commit. Android version code 26 was built with the existing preview signing certificate."
+  ],
+  "limitations": [
+    "Android remains a debug-signed preview. Real-game state transfer, undo and cartridge backup restoration on a phone remain unverified. Windows validation used Wine."
+  ],
+  "files": [
+    "docs/releases/v1.1.1.md"
+  ],
+  "references": [
+    "docs/releases/v1.1.1.md"
+  ]
+}

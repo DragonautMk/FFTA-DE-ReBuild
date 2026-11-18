@@ -680,6 +680,27 @@ Documentation: [2026-11-17-integrate-european-conditional-substitution-words.jso
 
 [Change record](docs/changes/2026-11-18-recover-interrupted-e170-cold-lease.json)
 
+## 2026-11-18 — Publish FFTA DE-ReBuild 1.1.1
+
+Type: docs. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Publish release 1.1.1 with notes describing the initial Android feature-parity work, validation and remaining limitations.
+
+**Validation**
+
+- GitHub reports v1.1.1 as public and latest, with tag d89bb7949c3f6596f31efcd84623c9ec87078780. All nine uploaded assets matched staged sizes and SHA-256 digests.
+- Remote main and decomp were fast-forwarded to the release source commit. Android version code 26 was built with the existing preview signing certificate.
+
+**Limitations**
+
+- Android remains a debug-signed preview. Real-game state transfer, undo and cartridge backup restoration on a phone remain unverified. Windows validation used Wine.
+
+Documentation: [v1.1.1.md](docs/releases/v1.1.1.md).
+
+[Change record](docs/changes/2026-11-18-publish-release-1-1-1.json)
+
 ## 2026-11-18 — Prepare the 1.1.1 Android feature-parity preview
 
 Type: changed. Platforms: Android, Linux, Windows.
