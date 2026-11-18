@@ -2900,6 +2900,22 @@ enum NativeDispatch {
     Hook = 3,
 }
 
+#[cfg(test)]
+thread_local! {
+    static TEST_NATIVE_API: std::cell::Cell<Option<&'static gba_core::capi::RtApi>> = const { std::cell::Cell::new(None) };
+}
+
+#[cfg(test)]
+fn with_test_native_api<T>(api: &'static gba_core::capi::RtApi, run: impl FnOnce() -> T) -> T {
+    struct Restore(Option<&'static gba_core::capi::RtApi>);
+    impl Drop for Restore {
+        fn drop(&mut self) { TEST_NATIVE_API.with(|current| current.set(self.0)); }
+    }
+    let previous = TEST_NATIVE_API.with(|current| current.replace(Some(api)));
+    let _restore = Restore(previous);
+    run()
+}
+
 /// The cost census observes the same dispatch sequence as normal execution.
 /// The no-op specialization removes observation work from the release hot path.
 fn run_frame_native_observed(
@@ -3004,7 +3020,11 @@ fn run_frame_native_traced(
                 if trace_iwram && key >> 24 == 3 {
                     IWRAM_HITS.with(|h| *h.borrow_mut().entry(key).or_insert(0u64) += 1);
                 }
-                f(&RT_API, mptr);
+                #[cfg(test)]
+                let api = TEST_NATIVE_API.with(|current| current.get()).unwrap_or(&RT_API);
+                #[cfg(not(test))]
+                let api = &RT_API;
+                f(api, mptr);
                 native += 1;
                 fb_prev_end = u32::MAX;
                 NativeDispatch::Native

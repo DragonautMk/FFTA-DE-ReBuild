@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "android-backup-permission-denied",
+  "title": "Fix Android backup publication permissions",
+  "kind": "fixed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Replace hard-link publication of new cartridge backups on Android and Linux with atomic renameat2 no-replace; preserve the existing backup if the name already exists."
+  ],
+  "validation": [
+    "On the connected moto g34 5G, isolated app-owned scratch rejected a hard link with Permission denied; a separate ARM64 probe run as the app verified renameat2 publication and collision refusal. Probe files were removed.",
+    "Serial host Rust tests passed 36 with 2 ignored in android-backup-noclobber-tests-s898l_es; ARM64 Docker build and Kotlin unit tests passed in android-backup-permission-fix-apk-hjq6ah6k; APK installed with adb install -r.",
+    "The user confirmed that Play opens the game on the phone after installation."
+  ],
+  "limitations": [
+    "The real Play flow was confirmed by the user rather than independently observed; devices lacking renameat2 no-replace safely report an error instead of overwriting a backup."
+  ],
+  "files": [
+    "AndroidPort/crates/gba-android/Cargo.toml",
+    "AndroidPort/crates/gba-android/src/save_backups.rs",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/android/README.md"
+  ]
+}

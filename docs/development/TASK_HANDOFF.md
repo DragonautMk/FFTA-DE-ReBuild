@@ -34,7 +34,7 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti` and pair `3s1xbvpx` PASS. User prioritizes closure. Missing batch wrapper `080ce18c`; prepare controlled full calls from real state and authenticated header, including bounds and occupied slots. Native attribution/consumers open; locator `l4i2lrcu` FAIL retained.
+- Selection: ROMDATA-04-METADATA14-ID1-ALIAS partial; converter `_hfk7lti`, batch `g2cugem4`, dispatch trace `049hqes5` PASS. User prioritizes closure. Missing direct native API attribution; instrument test-only API callbacks on the recorded route and compare row reads, retaining guest-PC limitations. Other routes/consumers open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -73,7 +73,7 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - Outcome: partial
 - Verified: brightness, screen profiles, FPS and menu transparency; ARM64/Kotlin, serial Rust and Mesa PASS. `docs/changes/2026-11-18-android-screen-profiles-fps.json`.
 - Missing: response, full video equivalence, save states, debug and device checks.
-- Resume: backups installed (`7ttxwbla`); physical restore, menu parity and readability remain open. Cancelled pre-fix build `clv6vvl1` retained.
+- Resume: user confirms Play works after backup fix (`hjq6ah6k`); full Android menu parity and device readability remain open.
 
 
 ### CHEAT-DISTRIBUTION
@@ -178,8 +178,8 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 ## Final handover
 
 - Task: ROM data validation; user prioritizes completing existing TODO tasks.
-- Last verified result: Wine `_hfk7lti` matches one complete `080ccf9c` converter call and its typed alias read, with poisoned row; protected inputs pass, scratch removed, Wine drained.
-- Remaining work: batch importer wrapper, other consumers/scenes/native attribution, broader equivalence and deferred platforms remain open.
+- Last verified result: Wine `049hqes5` finds all five typed alias reads during generated dispatch with no interpreter scope; 240-frame state/video/OAM/audio pair passes.
+- Remaining work: ordinary batch-wrapper reachability, other headers/consumers/scenes/native attribution, broader equivalence and deferred platforms remain open.
 - Errors or blockers: `kitubxih` and `wamu6k3z` remain FAIL. Preserve concurrent work and protected inputs.
-- Next action: inspect live batch build `g8sp7nqz` (exec 98007), then run its Wine test if PASS.
-- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-verify-complete-descriptor-converter.json`.
+- Next action: inspect live direct-native build `60m29opn` (exec 79588); if PASS run protected Wine attribution test.
+- References: `docs/rom_data_runtime.md#european-bounded-range-lookup`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json`.

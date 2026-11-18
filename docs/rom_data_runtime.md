@@ -2117,6 +2117,18 @@ the source row is altered, and raw/managed interpreter state, clock, video,
 OAM and mixed audio match at return. This covers one call, not the `080ce18c`
 batch wrapper, all consumers or per-read native attribution. [Details](rom_data_gameplay.md#special-encounter-descriptor-aliases-the-packed-lookup).
 
+Controlled E170 Wine batch test `g2cugem4` executes `080ce18c` through return
+for an authenticated two-unit header and verifies limits 0–3, a skipped
+occupied destination, typed alias reads and raw/managed state, clock, video,
+OAM and mixed-audio equality. Occupancy is synthetic and input is fixed;
+ordinary batch reachability and other headers or consumers are not established.
+
+On the recorded 240-frame route, E170 Wine `049hqes5` observes all five typed
+row requests inside generated dispatches, without interpreter instruction
+scope. This does not identify the guest PC of an unscoped access or exclude
+every nested non-interpreter helper; exact per-instruction attribution and
+other routes remain open.
+
 
 ## Conditional descriptor banks managed projection
 

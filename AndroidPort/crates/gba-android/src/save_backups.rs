@@ -82,9 +82,43 @@ fn atomic_write(path:&Path,bytes:&[u8],replace:bool)->Result<(),String>{
         let mut file=OpenOptions::new().write(true).create_new(true).open(&temporary).map_err(|e|e.to_string())?;
         file.write_all(bytes).map_err(|e|e.to_string())?;file.sync_all().map_err(|e|e.to_string())?;drop(file);
         if replace {fs::rename(&temporary,path).map_err(|e|e.to_string())?;}
-        else {fs::hard_link(&temporary,path).map_err(|e|e.to_string())?;}
+        else {publish_noclobber(&temporary,path).map_err(|e|format!("Cannot publish save backup: {e}"))?;}
         Ok(())
     })();
     let _=fs::remove_file(&temporary);
     result
+}
+
+// Android may deny hard links even inside the app's own data directory.
+// renameat2 publishes the completed file atomically without replacing a
+// concurrently created backup; if unsupported, fail rather than clobber it.
+#[cfg(any(target_os="android",target_os="linux"))]
+fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
+    use std::{ffi::CString,os::unix::ffi::OsStrExt};
+    let source=CString::new(source.as_os_str().as_bytes()).map_err(|_|std::io::Error::new(std::io::ErrorKind::InvalidInput,"Invalid backup path"))?;
+    let destination=CString::new(destination.as_os_str().as_bytes()).map_err(|_|std::io::Error::new(std::io::ErrorKind::InvalidInput,"Invalid backup path"))?;
+    let result=unsafe {libc::syscall(libc::SYS_renameat2,libc::AT_FDCWD,source.as_ptr(),libc::AT_FDCWD,destination.as_ptr(),libc::RENAME_NOREPLACE)};
+    if result==0 {Ok(())} else {Err(std::io::Error::last_os_error())}
+}
+
+#[cfg(not(any(target_os="android",target_os="linux")))]
+fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
+    fs::hard_link(source,destination)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn publication_is_atomic_and_never_replaces_an_existing_backup() {
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(PathBuf::from).unwrap_or_else(std::env::temp_dir)
+            .join(format!("android-backup-publish-{}",std::process::id()));
+        fs::create_dir(&root).unwrap();
+        let target=root.join("backup.sav");
+        atomic_write(&target,b"first",false).unwrap();
+        assert!(atomic_write(&target,b"second",false).is_err());
+        assert_eq!(fs::read(&target).unwrap(),b"first");
+        assert_eq!(fs::read_dir(&root).unwrap().count(),1);
+        fs::remove_dir_all(root).unwrap();
+    }
 }

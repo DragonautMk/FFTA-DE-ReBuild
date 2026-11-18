@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "cache-android-sdk-platform-tools",
+  "title": "Cache Android platform-tools in Docker toolchain",
+  "kind": "changed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Install Android platform-tools in their own cached BuildKit toolchain layer, so application source changes no longer trigger a Gradle download. Record their installed revision in BUILD-INFO.txt."
+  ],
+  "validation": [
+    "Two ARM64 Docker builds and Kotlin tests passed in android-sdk-cache-v9w2gki7; after a disposable source change, the platform-tools layer was cached and Gradle did not download it. Installed platform-tools revision 37.0.1.",
+    "Seven Android Docker launcher tests passed in android-sdk-launcher-qtg8r9k_."
+  ],
+  "limitations": [
+    "A fresh builder or removal of the BuildKit cache requires the SDK packages to be downloaded again; no Windows Docker Desktop run was performed."
+  ],
+  "files": [
+    "AndroidPort/Dockerfile.android",
+    "AndroidPort/README.md",
+    "docs/android_docker.md"
+  ],
+  "references": [
+    "docs/android_docker.md"
+  ]
+}

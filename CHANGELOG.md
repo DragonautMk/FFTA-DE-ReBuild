@@ -435,6 +435,26 @@ Documentation: [2026-11-18-verify-e170-range-adjacent-owner-boundaries.json](doc
 
 [Change record](docs/changes/2026-11-18-verify-e170-all-source-boundaries.json)
 
+## 2026-11-18 — Verify controlled descriptor batch importer calls
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Exercise the original encounter batch importer from entry through return using an authenticated two-unit descriptor-1 header and a retained ordinary-state context.
+
+**Validation**
+
+- Windows GNU build g8sp7nqz and Wine g2cugem4 passed five cases: limits 0, 1, 2 and 3 yielded 0, 1, 2 and 2 imported units; a separate limit-2 case skipped and preserved an occupied slot. Every expected row read was typed, raw and unclassified row reads were absent, and raw/managed state, clock, video, OAM and mixed audio matched at return. Inputs passed protection checks, scratch was removed and Wine drained.
+
+**Limitations**
+
+- Calls use synthetic destination occupancy and fixed input; ordinary batch-wrapper reachability, other headers and callers, per-read native attribution and other platforms remain open. Audio equality does not require nonempty audio.
+
+Documentation: [2026-11-18-verify-complete-descriptor-converter.json](docs/changes/2026-11-18-verify-complete-descriptor-converter.json).
+
+[Change record](docs/changes/2026-11-18-verify-descriptor-batch-importer.json)
+
 ## 2026-11-18 — Verify current Windows ROM-data synthetic regressions
 
 Type: changed. Platforms: Windows GNU under Wine.
@@ -542,6 +562,27 @@ Type: changed. Platforms: EUR / Wine.
 Documentation: [2026-11-16-observe-special-encounter-packed-alias.json](docs/changes/2026-11-16-observe-special-encounter-packed-alias.json).
 
 [Change record](docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json)
+
+## 2026-11-18 — Trace descriptor alias reads during native dispatch
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a native-dispatch-only trace mode to the recorded descriptor-alias battle comparison while retaining the complete unfiltered regression.
+
+**Validation**
+
+- Windows GNU build ow46xo2j and Wine 049hqes5 passed the 240-frame raw/managed pair: all five typed row requests occurred during generated dispatch without interpreter instruction scope; no traced raw, unclassified or dropped requests. State, clock, video, OAM and five nonempty audio streams matched each frame.
+- The shared unfiltered 240-frame regression t8kj9i3n passed with the same five typed requests. Both Wine units protected inputs, removed scratch and drained Wine.
+
+**Limitations**
+
+- An unscoped read during generated dispatch does not by itself identify a guest PC or exclude every nested non-interpreter helper. Exact per-instruction attribution, other routes, ordinary batch reachability and other platforms remain open.
+
+Documentation: [2026-11-18-verify-battle-descriptor-alias-translated.json](docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json).
+
+[Change record](docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json)
 
 ## 2026-11-18 — Recover the interrupted E170 cold-storage lease
 
@@ -768,6 +809,27 @@ Type: changed. Platforms: EUR.
 Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json), [2026-11-17-integrate-european-conditional-substitution-words.json](docs/changes/2026-11-17-integrate-european-conditional-substitution-words.json).
 
 [Change record](docs/changes/2026-11-18-close-text-reader-physical-ownership-audit.json)
+
+## 2026-11-18 — Cache Android platform-tools in Docker toolchain
+
+Type: changed. Platforms: Android.
+
+**Changes**
+
+- Install Android platform-tools in their own cached BuildKit toolchain layer, so application source changes no longer trigger a Gradle download. Record their installed revision in BUILD-INFO.txt.
+
+**Validation**
+
+- Two ARM64 Docker builds and Kotlin tests passed in android-sdk-cache-v9w2gki7; after a disposable source change, the platform-tools layer was cached and Gradle did not download it. Installed platform-tools revision 37.0.1.
+- Seven Android Docker launcher tests passed in android-sdk-launcher-qtg8r9k_.
+
+**Limitations**
+
+- A fresh builder or removal of the BuildKit cache requires the SDK packages to be downloaded again; no Windows Docker Desktop run was performed.
+
+Documentation: [android_docker.md](docs/android_docker.md).
+
+[Change record](docs/changes/2026-11-18-cache-android-sdk-platform-tools.json)
 
 ## 2026-11-18 — Audit unaligned range-source pointers
 
@@ -1001,6 +1063,28 @@ Type: added. Platforms: Android.
 Documentation: [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-18-android-cartridge-save-backups.json)
+
+## 2026-11-18 — Fix Android backup publication permissions
+
+Type: fixed. Platforms: Android.
+
+**Changes**
+
+- Replace hard-link publication of new cartridge backups on Android and Linux with atomic renameat2 no-replace; preserve the existing backup if the name already exists.
+
+**Validation**
+
+- On the connected moto g34 5G, isolated app-owned scratch rejected a hard link with Permission denied; a separate ARM64 probe run as the app verified renameat2 publication and collision refusal. Probe files were removed.
+- Serial host Rust tests passed 36 with 2 ignored in android-backup-noclobber-tests-s898l_es; ARM64 Docker build and Kotlin unit tests passed in android-backup-permission-fix-apk-hjq6ah6k; APK installed with adb install -r.
+- The user confirmed that Play opens the game on the phone after installation.
+
+**Limitations**
+
+- The real Play flow was confirmed by the user rather than independently observed; devices lacking renameat2 no-replace safely report an error instead of overwriting a backup.
+
+Documentation: [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-18-android-backup-permission-denied.json)
 
 ## 2026-11-17 — Verify European text copy callbacks
 

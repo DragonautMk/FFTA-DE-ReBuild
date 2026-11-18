@@ -68,6 +68,10 @@ NDK 28.2.13676358 and the project's Gradle 9.5.0 wrapper. The native target is
 `aarch64-linux-android`, with minimum API 24. The Android command-line tools
 and TinyCC source are verified by SHA256; the wrapper verifies its Gradle
 download. Tool versions and source/APK hashes are recorded in the exported files.
+Platform-tools are installed in a separate cached Docker toolchain layer, so
+changing application sources does not make Gradle download them again. Their
+installed revision is recorded in `BUILD-INFO.txt`. The first build or a build
+after Docker's cache has been removed may download them again.
 
 The first build downloads images and dependencies. BuildKit caches retain
 Cargo, Gradle, compilation outputs and the **debug key generated inside Docker**.

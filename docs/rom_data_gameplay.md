@@ -6415,6 +6415,31 @@ inputs passed, scratch was removed and Wine drained. Initial Wine unit
 `l4i2lrcu` sought the batch wrapper and did not find a matching call; it is
 retained as a failure, not evidence against the converter.
 
+Wine `alias-native-attribution-wine-049hqes5` repeats the recorded 240-frame
+translated pair with row tracing enabled only inside generated dispatches.
+All five typed row requests occur during such dispatches and have no recorded
+interpreter instruction scope. Full state, clock, central/wide video, OAM and
+five nonempty audio streams match on every frame with the managed row altered.
+The trace does not identify the guest PC for those unscoped accesses or exclude
+every nested non-interpreter helper, so it is not per-instruction attribution.
+The shared unfiltered test also passes (`t8kj9i3n`). Both units protect inputs,
+remove successful scratch and drain Wine; other routes and native Windows remain
+open.
+
+Wine `alias-batch-importer-wine-g2cugem4` calls the complete `080ce18c`
+batch wrapper in a controlled state derived from the retained ordinary route.
+It uses authenticated encounter header 3, whose two unit templates both use
+descriptor 1, and compares raw and managed execution with the row ROM bytes
+altered. Limits 0, 1, 2 and 3 return 0, 1, 2 and 2 respectively; a second
+limit-2 case skips an occupied first destination slot without changing it.
+Each case matches full serialized state, clock, framebuffer, wide framebuffer,
+OAM and mixed audio at return. The expected original reader issues one typed
+row request per imported unit, with no raw or unclassified row requests.
+The destination occupancy is synthetic and input is fixed during each call;
+ordinary batch-wrapper reachability, other headers and callers, native read
+attribution and other platforms remain open. Inputs passed protection checks,
+successful scratch was removed and Wine drained.
+
 
 ## Conditional packed lookup production CLI
 

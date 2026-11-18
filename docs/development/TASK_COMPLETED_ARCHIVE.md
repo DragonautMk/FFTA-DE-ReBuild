@@ -23819,3 +23819,29 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: automatic two-copy backup and confirmed transactional restore implemented; synthetic integrity, isolation and failure tests pass; APK installed.
 - Evidence: `docs/changes/2026-11-18-android-cartridge-save-backups.json`; `lhvx0kvw`, `7ttxwbla`.
 - Limits: no real device restore or visual test; shared primary save cannot prove source ROM; remaining Android parity stays open.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-CONTROLLED-BATCH
+
+- Outcome: completed for five controlled `080ce18c` batch calls using authenticated two-unit header 3.
+- Evidence: build `g8sp7nqz` and Wine `g2cugem4` PASS; limits 0/1/2/3 yield 0/1/2/2 units, occupied first slot skipped/preserved, typed alias reads and raw/managed full state/clock/video/OAM/mixed audio match. Protected inputs pass, scratch removed, Wine drained. See `docs/changes/2026-11-18-verify-descriptor-batch-importer.json`.
+- Limits: synthetic occupancy and fixed input; ordinary batch reachability, other headers/callers, native attribution and deferred platforms remain open. Audio equality does not require nonempty audio. Parent remains partial.
+
+### ANDROID-DOCKER-SDK-CACHE
+
+- Outcome: completed
+- Verified criteria: platform-tools cached in the Docker toolchain; two source builds passed and the second reused the layer without another download.
+- Evidence: `docs/changes/2026-11-18-cache-android-sdk-platform-tools.json`; `v9w2gki7`, `qtg8r9k_`.
+- Limits: fresh/pruned builders require downloads; Docker Desktop on Windows untested.
+
+### ROMDATA-04-METADATA14-ID1-ALIAS-NATIVE-DISPATCH-TRACE
+
+- Outcome: completed for dispatch-scope observation on the retained 240-frame EUR route.
+- Evidence: build `ow46xo2j`, Wine `049hqes5` and unfiltered regression `t8kj9i3n` PASS. Five typed row requests occurred in generated dispatch without interpreter instruction scope; raw/managed state, clock, video, OAM and five nonempty audio streams matched every frame. Inputs protected, scratch removed, Wine drained. See `docs/changes/2026-11-18-trace-descriptor-native-dispatch-reads.json`.
+- Limits: no exact guest PC for unscoped reads and nested non-interpreter helpers not excluded; other routes and ordinary batch reachability remain open. Parent remains partial.
+
+### ANDROID-BACKUP-PERMISSION-DENIED
+
+- Outcome: completed
+- Verified criteria: user confirms game opens after fix; isolated device probe and no-clobber host tests pass; fixed APK installed.
+- Evidence: `docs/changes/2026-11-18-android-backup-permission-denied.json`; `s898l_es`, `hjq6ah6k`.
+- Limits: unsupported renameat2 safely fails; other Android menu parity remains open.

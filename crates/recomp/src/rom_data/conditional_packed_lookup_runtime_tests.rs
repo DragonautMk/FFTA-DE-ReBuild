@@ -5,6 +5,49 @@ use gba_core::rom_data::conditional_packed_lookup::SOURCE_OFFSET;
 use recomp_core::analyze::{Analysis, Block, View};
 use std::collections::BTreeSet;
 
+#[cfg(feature = "rom-data-read-audit")]
+thread_local! {
+    // Requests, typed bytes and requests nested inside interp_one, for the selected row only.
+    static DIRECT_ROW_READS: std::cell::Cell<(u64, u64, u64)> = const { std::cell::Cell::new((0, 0, 0)) };
+    static DIRECT_INTERP_DEPTH: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn counted_native_read(m: *mut std::ffi::c_void, address: u32, width: u32, read: extern "C" fn(*mut std::ffi::c_void, u32) -> u32) -> u32 {
+    let at = address & 0x01ff_ffff;
+    if !(0x08..=0x0d).contains(&(address >> 24)) || at >= 0x6e6f6c || at.saturating_add(width) <= 0x6e6f5e {
+        return read(m, address);
+    }
+    // The native runtime passes the live Machine pointer; do not retain it.
+    let packed = || unsafe { (&*(m as *const Machine)).bus.rom_resources().and_then(|r| r.conditional_packed_lookup_stats()).map_or(0, |s| s.source_bytes) };
+    let before = packed();
+    let value = read(m, address);
+    let bytes = packed().saturating_sub(before);
+    let nested = DIRECT_INTERP_DEPTH.with(|depth| u64::from(depth.get() > 0));
+    DIRECT_ROW_READS.with(|counts| { let (requests, typed, in_interp) = counts.get(); counts.set((requests + 1, typed + bytes, in_interp + nested)); });
+    value
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn counted_native_read8(m: *mut std::ffi::c_void, address: u32) -> u32 { counted_native_read(m, address, 1, RT_API.read8) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn counted_native_read16(m: *mut std::ffi::c_void, address: u32) -> u32 { counted_native_read(m, address, 2, RT_API.read16) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn counted_native_read32(m: *mut std::ffi::c_void, address: u32) -> u32 { counted_native_read(m, address, 4, RT_API.read32) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn counted_interp_one(m: *mut std::ffi::c_void) -> u32 {
+    DIRECT_INTERP_DEPTH.with(|depth| depth.set(depth.get() + 1));
+    let result = (RT_API.interp_one)(m);
+    DIRECT_INTERP_DEPTH.with(|depth| depth.set(depth.get() - 1));
+    result
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+static COUNTED_NATIVE_API: gba_core::capi::RtApi = gba_core::capi::RtApi {
+    read8: counted_native_read8, read16: counted_native_read16, read32: counted_native_read32,
+    interp_one: counted_interp_one, ..RT_API
+};
+
 #[test]
 #[ignore = "private EUR ROM and TinyCC; Wine only, Linux/USA pending"]
 fn european_conditional_packed_managed_native_reads() {
@@ -255,6 +298,18 @@ fn european_encounter_special_descriptor_ordinary_observation() {
 #[test]
 #[ignore = "authenticated EUR battle state/input, current dataset and native library; Wine only"]
 fn european_descriptor_alias_battle_translated_pair() {
+    descriptor_alias_battle_translated_pair(false);
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR battle state/input, current dataset and native library; Wine only"]
+fn european_descriptor_alias_battle_native_dispatch_reads() {
+    descriptor_alias_battle_translated_pair(true);
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn descriptor_alias_battle_translated_pair(native_dispatch_only: bool) {
     use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
     crate::configure_headless_widescreen();
     const ROW: usize = 0x6e6f5e;
@@ -316,15 +371,24 @@ fn european_descriptor_alias_battle_translated_pair() {
     let start = raw.bus.frames;
     let mut audio = [0u64; 5];
     let mut dispatch = (0u64, 0u64);
+    DIRECT_ROW_READS.with(|counts| counts.set((0, 0, 0)));
     for frame in 0..240u64 {
         managed.bus.rom[ROW..ROW + 14].fill(0xa7);
         let mut counts = [(0, 0); 2];
         for (arm, m) in [&mut raw, &mut managed].into_iter().enumerate() {
             m.bus.keys = input.keys_at(frame);
             input.apply_mouse(&mut m.bus, frame).unwrap();
-            trace.frame(if arm == 1 { Some(m.bus.frames) } else { None });
             let ptr = m as *mut Machine as *mut std::ffi::c_void;
-            counts[arm] = crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD);
+            if arm == 1 && native_dispatch_only {
+                counts[arm] = crate::with_test_native_api(&COUNTED_NATIVE_API, || crate::run_frame_native_traced(
+                    m, &table, ptr, crate::FRAME_STEP_GUARD,
+                    |machine, kind| trace.frame(if kind == crate::NativeDispatch::Native { Some(machine.bus.frames) } else { None }),
+                    |_, _, _| trace.frame(None),
+                ));
+            } else {
+                trace.frame(if arm == 1 { Some(m.bus.frames) } else { None });
+                counts[arm] = crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD);
+            }
             assert_eq!(m.bus.frames, start + frame + 1);
         }
         trace.frame(None);
@@ -393,14 +457,19 @@ fn european_descriptor_alias_battle_translated_pair() {
         .unwrap()
         .source_bytes
         - before;
-    assert!(
-        typed > 0 && bytes > 0,
-        "ordinary alias row must be consumed"
-    );
+    assert!(bytes > 0, "ordinary alias row must be consumed");
+    if !native_dispatch_only { assert!(typed > 0, "ordinary alias trace must be positive"); }
     assert_eq!((raw_reads, unclassified), (0, 0));
     assert!(audio.iter().all(|&v| v > 0));
     assert!(dispatch.0 > 0);
-    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","scope":"240-frame recorded EUR battle-entry raw/managed translated pair","revision":[170,169],"frames":240,"row_typed_requests":typed,"row_raw_requests":raw_reads,"row_unclassified_requests":unclassified,"packed_bytes_all":bytes,"trace_dropped":trace.dropped_requests,"source_row_poisoned":true,"full_state_clock_video_oam_audio_equal_each_frame":true,"audio_sample_counts":audio,"generated_dispatches":dispatch.0,"fallback_dispatches":dispatch.1,"limits":"Generated blocks may fall back to interpretation; row attribution is aggregate and full importer/other routes remain open.","performance_measurements":false})).unwrap()).unwrap();
+    let unscoped: u64 = trace.events.iter().filter(|e| e.key.service == Service::Typed && e.key.instruction.is_none()).map(|e| e.requests).sum();
+    let interpreted: u64 = trace.events.iter().filter(|e| e.key.service == Service::Typed && e.key.instruction.is_some()).map(|e| e.requests).sum();
+    let (direct_requests, direct_typed_bytes, direct_nested_interp) = DIRECT_ROW_READS.with(|counts| counts.get());
+    if native_dispatch_only {
+        assert!(direct_requests > 0, "no direct generated API row reads");
+        assert_eq!((direct_requests, direct_typed_bytes, direct_nested_interp), (unscoped, bytes, 0), "direct native row attribution");
+    }
+    fs::write(root.join("result.json"),serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","scope":"240-frame recorded EUR battle-entry raw/managed translated pair","revision":[170,169],"frames":240,"trace_native_dispatch_only":native_dispatch_only,"row_typed_requests":typed,"typed_without_interpreter_scope":unscoped,"typed_with_interpreter_scope":interpreted,"direct_native_api_row_requests":direct_requests,"direct_native_api_typed_bytes":direct_typed_bytes,"direct_native_api_nested_interp_requests":direct_nested_interp,"row_raw_requests":raw_reads,"row_unclassified_requests":unclassified,"packed_bytes_all":bytes,"trace_dropped":trace.dropped_requests,"source_row_poisoned":true,"full_state_clock_video_oam_audio_equal_each_frame":true,"audio_sample_counts":audio,"generated_dispatches":dispatch.0,"fallback_dispatches":dispatch.1,"limits":"Test-only API wrappers identify direct generated-code API reads, not the exact guest instruction PC. Other routes and full importer remain open.","performance_measurements":false})).unwrap()).unwrap();
 }
 
 #[cfg(feature = "rom-data-read-audit")]

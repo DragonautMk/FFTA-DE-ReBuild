@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "verify-descriptor-batch-importer",
+  "title": "Verify controlled descriptor batch importer calls",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Exercise the original encounter batch importer from entry through return using an authenticated two-unit descriptor-1 header and a retained ordinary-state context."
+  ],
+  "validation": [
+    "Windows GNU build g8sp7nqz and Wine g2cugem4 passed five cases: limits 0, 1, 2 and 3 yielded 0, 1, 2 and 2 imported units; a separate limit-2 case skipped and preserved an occupied slot. Every expected row read was typed, raw and unclassified row reads were absent, and raw/managed state, clock, video, OAM and mixed audio matched at return. Inputs passed protection checks, scratch was removed and Wine drained."
+  ],
+  "limitations": [
+    "Calls use synthetic destination occupancy and fixed input; ordinary batch-wrapper reachability, other headers and callers, per-read native attribution and other platforms remain open. Audio equality does not require nonempty audio."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-complete-descriptor-converter.json"
+  ]
+}

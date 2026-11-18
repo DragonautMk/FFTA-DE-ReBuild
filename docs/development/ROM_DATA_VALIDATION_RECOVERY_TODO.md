@@ -384,7 +384,13 @@ current evidence before running another check.
   Wine `_hfk7lti` now compares one complete ordinary `080ccf9c` converter
   invocation through return, with the actual alias read typed and the row
   altered; state, clock, video, OAM and mixed audio match. The batch wrapper
-  `080ce18c`, per-read native attribution, other calls and scenes remain open.
+  `080ce18c` now passes five controlled E170 Wine cases (`g2cugem4`) through
+  return, including bounds and an occupied destination slot, using an
+  authenticated two-unit header. Ordinary batch reachability, other headers,
+  Wine `049hqes5` observes all five ordinary row requests during generated
+  dispatches without interpreter instruction scope. Their exact guest PCs and
+  any nested non-interpreter helper remain unattributed. Other calls and scenes
+  remain open.
 - [ ] **ROMDATA-01-CONTEXT-3710D4:** verify additional ordinary contexts,
   remaining consumers and full reader ABI. EUR e159 Wine publication, original
   reader cases and one ordinary context-3 window pass (`8dbsgppp`); production

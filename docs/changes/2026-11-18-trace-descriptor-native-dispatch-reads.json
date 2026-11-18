@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-18",
+  "slug": "trace-descriptor-native-dispatch-reads",
+  "title": "Trace descriptor alias reads during native dispatch",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a native-dispatch-only trace mode to the recorded descriptor-alias battle comparison while retaining the complete unfiltered regression."
+  ],
+  "validation": [
+    "Windows GNU build ow46xo2j and Wine 049hqes5 passed the 240-frame raw/managed pair: all five typed row requests occurred during generated dispatch without interpreter instruction scope; no traced raw, unclassified or dropped requests. State, clock, video, OAM and five nonempty audio streams matched each frame.",
+    "The shared unfiltered 240-frame regression t8kj9i3n passed with the same five typed requests. Both Wine units protected inputs, removed scratch and drained Wine."
+  ],
+  "limitations": [
+    "An unscoped read during generated dispatch does not by itself identify a guest PC or exclude every nested non-interpreter helper. Exact per-instruction attribution, other routes, ordinary batch reachability and other platforms remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/conditional_packed_lookup_runtime_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-18-verify-battle-descriptor-alias-translated.json"
+  ]
+}

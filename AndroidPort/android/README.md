@@ -64,6 +64,8 @@ timers, DMA, interrupts, backup media, and C recompiler.
   to the app and are not save states. The existing Android cartridge-save file
   is shared when switching ROMs; backups are grouped by the ROM being loaded,
   so a backup cannot establish which ROM originally created that shared file.
+  Backups are published with an atomic no-replace rename, which works on
+  Android devices that reject hard links in app storage.
 
 The Android interface and native status messages currently use English; this
 port has no interface-language selector. They do not change the language of

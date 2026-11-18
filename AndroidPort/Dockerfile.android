@@ -28,6 +28,9 @@ RUN curl --fail --location --retry 3 \
     && rm -rf /tmp/android-tools /tmp/android-tools.zip
 RUN yes | sdkmanager --licenses >/dev/null \
     && sdkmanager 'platforms;android-35' 'build-tools;35.0.0' 'ndk;28.2.13676358'
+# Gradle needs platform-tools even for assemble/test. Install it in its own
+# cached toolchain layer, rather than letting each source build download it.
+RUN sdkmanager 'platform-tools' && test -x "$ANDROID_HOME/platform-tools/adb"
 
 FROM toolchain AS build
 WORKDIR /workspace
@@ -48,6 +51,7 @@ RUN --mount=type=cache,id=ffta-android-cargo-registry,target=/usr/local/cargo/re
     && python3 /opt/ffta/export_android.py "$APK_PATH" /artifacts \
     && { rustc --version; cargo --version; java -version 2>&1; \
          printf '\nSDK35 / build-tools35.0.0 / NDK28.2.13676358 / ARM64 / API24\n'; \
+         cat "$ANDROID_HOME/platform-tools/source.properties"; \
        } >> /artifacts/BUILD-INFO.txt
 
 FROM scratch AS export
