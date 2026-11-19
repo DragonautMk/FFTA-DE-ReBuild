@@ -1,5 +1,6 @@
 //! Keep serial emulation on performance cores when Android exposes capacity.
 //! No frequency/thermal changes, root, model names or fixed CPU numbers.
+#[cfg(any(target_os="android", test))]
 fn performance_cpus(capacities:&[(usize,u32)])->Vec<usize>{
     let Some(minimum)=capacities.iter().map(|(_,capacity)|*capacity).min() else{return Vec::new();};
     // Include both performance and prime clusters. A homogeneous or restricted

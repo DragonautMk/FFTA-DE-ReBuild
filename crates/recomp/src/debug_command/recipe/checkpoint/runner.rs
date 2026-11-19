@@ -35,7 +35,17 @@ fn result(checkpoint:&Checkpoint,outcome:&str,message:&str)->Value{
     json!({"schema":1,"kind":"ffta-debug-command-recipe-run","ok":ok,"outcome":outcome,"message":message,"error":if ok{None}else{Some(message)},"checkpoint":checkpoint})
 }
 fn cancelled_in_flight(root:&Path,id:&str,checkpoint:&Checkpoint,query:bool)->Value{
-    let saved=cancel_command(root,id);
+    // A separate canceller can have created the marker while still holding
+    // the transition lock to write and sync it. Wait briefly for that writer
+    // instead of treating a normal lock collision as an unknown outcome.
+    let deadline=std::time::Instant::now()+std::time::Duration::from_secs(1);
+    let saved=loop {
+        let saved=cancel_command(root,id);
+        if saved["ok"]==true || saved["error"]!="Recipe run is busy" {break saved;}
+        let remaining=deadline.saturating_duration_since(std::time::Instant::now());
+        if remaining.is_zero(){break saved;}
+        std::thread::sleep(remaining.min(std::time::Duration::from_millis(10)));
+    };
     if saved["ok"]!=true{return result(checkpoint,"unconfirmed","The client stopped waiting but could not persist cancellation; inspect the pending request.");}
     if query {result(checkpoint,"cancelled","Cancellation recorded; an observation may still complete, but no later action was sent.")}
     else {result(checkpoint,"cancellation-pending","Cancellation recorded; the reserved action may still execute. Its outcome is unconfirmed.")}
@@ -325,7 +335,13 @@ pub(super) fn recover_command(root:&Path,id:&str)->Value{
 pub(super) fn cancel_command(root:&Path,id:&str)->Value{
     let result=(||->Result<(),String>{
         let dir=run_dir(root,id)?;let _gate=lock(&dir,".transition.lock")?;let _=inspect(root,id)?;
-        let path=dir.join("cancel.json");if path.exists(){crate::debug_session::regular(&path)?;return Ok(());}
+        let path=dir.join("cancel.json");if path.exists(){
+            let metadata=crate::debug_session::regular(&path)?;
+            if !metadata.is_file() || metadata.len()>1024 {return Err("Invalid cancellation marker".into());}
+            let marker:Value=serde_json::from_slice(&fs::read(&path).map_err(|e|e.to_string())?).map_err(|_|"Invalid cancellation marker")?;
+            if marker["cancel"]!=true {return Err("Invalid cancellation marker".into());}
+            return Ok(());
+        }
         let mut f=OpenOptions::new().write(true).create_new(true).open(path).map_err(|e|e.to_string())?;
         f.write_all(b"{\"cancel\":true}\n").and_then(|_|f.sync_all()).map_err(|e|e.to_string())?;Ok(())
     })();
@@ -686,7 +702,27 @@ mod tests {
         let mut server=crate::debug_control::Server::new(t.path()).unwrap();recover(t.path(),&id).unwrap();let (sent,received)=std::sync::mpsc::channel();let (release,done)=std::sync::mpsc::channel();
         let worker=thread::spawn(move||{loop{if let Ok(Some(request))=server.poll_query(){assert!(request.expected_boundary.is_some());sent.send(()).unwrap();let _=done.recv_timeout(Duration::from_secs(5));break;}thread::sleep(Duration::from_millis(2));}});
         let root=t.path().to_owned();let run_id=id.clone();let runner=thread::spawn(move||drive(&root,&run_id,true).unwrap());received.recv_timeout(Duration::from_secs(5)).unwrap();assert_eq!(cancel_command(t.path(),&id)["ok"],true);
-        let result=runner.join().unwrap();assert_eq!(result["outcome"],"cancelled");assert_eq!(result["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(result["checkpoint"]["steps"][0]["wait_polls"],2);assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");release.send(()).unwrap();worker.join().unwrap();
+        let result=runner.join().unwrap();assert_eq!(result["outcome"],"cancelled","{result}");assert_eq!(result["checkpoint"]["steps"][0]["state"],"waiting");assert_eq!(result["checkpoint"]["steps"][0]["wait_polls"],2);assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");release.send(()).unwrap();worker.join().unwrap();
+    }
+    #[test]
+    fn in_flight_cancellation_waits_for_the_transition_writer_and_is_bounded(){
+        let (t,_server,id)=fixture(&["status","step 1"]);
+        let dir=run_dir(t.path(),&id).unwrap();let (checkpoint,_)=inspect(t.path(),&id).unwrap();
+        let gate=lock(&dir,".transition.lock").unwrap();
+        fs::write(dir.join("cancel.json"),b"{\"cancel\":true}\n").unwrap();
+        let (sent,received)=std::sync::mpsc::channel();let root=t.path().to_owned();let run_id=id.clone();let snapshot=checkpoint.clone();
+        let worker=thread::spawn(move||sent.send(cancelled_in_flight(&root,&run_id,&snapshot,true)).unwrap());
+        assert!(received.recv_timeout(Duration::from_millis(50)).is_err());
+        drop(gate);
+        let result=received.recv_timeout(Duration::from_secs(2)).unwrap();worker.join().unwrap();
+        assert_eq!(result["outcome"],"cancelled","{result}");
+        assert_eq!(result["checkpoint"]["steps"][1]["state"],"planned");
+        let gate=lock(&dir,".transition.lock").unwrap();let start=std::time::Instant::now();
+        let result=cancelled_in_flight(t.path(),&id,&checkpoint,true);
+        let elapsed=start.elapsed();assert_eq!(result["outcome"],"unconfirmed");
+        assert!(elapsed>=Duration::from_millis(900) && elapsed<Duration::from_secs(3),"elapsed={elapsed:?}");drop(gate);
+        fs::write(dir.join("cancel.json"),b"{\"cancel\":").unwrap();
+        assert_eq!(cancelled_in_flight(t.path(),&id,&checkpoint,true)["outcome"],"unconfirmed");
     }
     #[test]
     fn ordinary_wait_remains_cancellable_during_slow_observation(){

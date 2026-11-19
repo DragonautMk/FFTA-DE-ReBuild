@@ -102,6 +102,10 @@ pub struct DialogueState {
     pub town_layout: bool,
     pub shop_layout: bool,
     pub site_layout: bool,
+    /// Host-only subtype of the centered Notice layer; recomputed each frame.
+    /// Skipped so existing snapshot layouts stay compatible.
+    #[serde(skip)]
+    pub laws_layout: bool,
     pub extra: Panel,
     pub pixels: Vec<UiPixel>,
     pub(crate) anchor_bounds: Option<(usize, usize)>,
@@ -140,6 +144,15 @@ pub(crate) fn continuation(attrs: [u16; 3]) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn laws_host_subtype_does_not_change_snapshot_bytes() {
+        let mut machine = crate::Machine::new(vec![0; 192]);
+        let original = machine.save_state().unwrap();
+        machine.bus.ffta_dialogue.laws_layout = true;
+        assert_eq!(machine.save_state().unwrap(), original);
+        machine.load_state(&original).unwrap();
+        assert!(!machine.bus.ffta_dialogue.laws_layout);
+    }
     #[test]
     fn anchors_keep_native_size_on_screen_at_every_zoom() {
         for ey in [0, 10, 33, 80, 176] {
@@ -356,6 +369,16 @@ pub(crate) fn notice_cursor(attrs:[u16;3],x:i32,y:i32,bounds:Option<[i32;4]>) ->
     attrs[0]&0xff00==0 && attrs[1]&0xfe00==0
         && (0x124..=0x127).contains(&(attrs[2]&1023)) && attrs[2]&0xfc00==0
         && x>=l && x+8<=r && y>=t && y+8<=b
+}
+
+/// Verified laws selector (8x16) and HELP continuation marker. These belong
+/// to the centered modal, not the portrait or the world beneath it.
+pub(crate) fn laws_cursor(attrs: [u16; 3], x: i32, y: i32, bounds: Option<[i32; 4]>) -> bool {
+    let Some([l, t, r, b]) = bounds else { return false; };
+    attrs[1] & 0xfe00 == 0 && x >= l && x + 8 <= r && y >= t && y + 16 <= b
+        && ((attrs[0] & 0xff00 == 0x8000 && (attrs[2] == 0x02dc
+            || (attrs[2] == 0x037c && matches!([l,t,r,b], [16,48,232,88] | [16,16,232,88]))))
+            || continuation(attrs))
 }
 
 /// Extend only the backing at its outer edge; translate foreground rigidly inward.

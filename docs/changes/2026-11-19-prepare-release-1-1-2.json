@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "prepare-release-1-1-2",
+  "title": "Prepare warning-free platform builds and acknowledge concurrent cancellation",
+  "kind": "fixed",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Use the pinned official Android CLI without metrics, Android Gradle Plugin 9.3, Kotlin 2.2.10, NDK 28 and reusable SDK/compiler caches; publish Android preview version 1.1.2 code 27.",
+    "Eliminate Android Rust dead-code warnings by limiting test-only helpers to tests while retaining the snapshot serialization contract.",
+    "Wait up to one second for a concurrent transition writer when confirming an in-flight debug recipe cancellation; reject malformed cancellation markers."
+  ],
+  "validation": [
+    "Android host checks and 42 bridge tests passed with two ignored; AGP 9.3 clean rerun passed 29 Kotlin tests without Gradle warnings (release-112-android-agp93-clean-o4iqj4aq).",
+    "Final Android Docker APK and 29 Kotlin tests passed without reported build warnings (release-112-android-final-x9f1zpib); installed version 27 on moto g34 with six save and snapshot files unchanged.",
+    "Three focused Linux Docker cancellation tests passed (release-112-linux-cancel-docker-retry-3ya54iw2). An earlier forced Linux suite failed a cancellation test, prompting the fix.",
+    "An earlier forced Windows build and Wine tests passed; its validation unit failed only at an incorrect launcher-name assertion, later corrected for the final build.",
+    "Final forced Linux Docker build and test gate passed 972 tests with 463 ignored, including the earlier failing test and the new concurrency regression (release-112-linux-final-earnsthb); the packaged recomp --help passed (release-112-linux-portable-smoke-retry-ibrq6n4k).",
+    "Final forced Windows Docker build and Wine gate passed 973 tests with 463 ignored, including the cancellation regression; ZIP integrity, expected launcher, private-file exclusion and SHA-256 passed (release-112-windows-final-5gez81aw).",
+    "The Android cached export reproduced the tested APK byte-for-byte and retained all eight matching Kotlin test reports (release-112-android-cached-export-_zsf9gjs). Linux, Windows and Android dist artifacts were updated from the verified outputs.",
+    "The first Linux portable smoke assertion expected help on stdout but the successful executable writes it on stderr; the corrected check passed. An extra host Wine smoke was not run because the shared Wine prefix has an existing lease (release-112-windows-portable-smoke-oel7xv5k)."
+  ],
+  "limitations": [
+    "Native Windows execution, other Android laws layouts and USA ROMs remain unverified.",
+    "The Android SDK migration reused cached packages; a complete cold installation of all SDK packages was not exercised.",
+    "The packaged Windows command-line smoke on the host was deferred because the shared Wine prefix was leased; the container Wine test gate and ZIP checks passed."
+  ],
+  "files": [
+    "AndroidPort/Dockerfile.android",
+    "AndroidPort/android/app/build.gradle.kts",
+    "AndroidPort/android/build.gradle.kts",
+    "AndroidPort/android/gradle.properties",
+    "AndroidPort/android/gradle/libs.versions.toml",
+    "AndroidPort/crates/gba-android/src/cheat_provenance.rs",
+    "AndroidPort/crates/gba-android/src/color.rs",
+    "AndroidPort/crates/gba-android/src/lut.rs",
+    "AndroidPort/crates/gba-android/src/profile.rs",
+    "AndroidPort/crates/gba-android/src/save_states.rs",
+    "AndroidPort/crates/gba-android/src/scheduling.rs",
+    "crates/recomp/src/debug_command/recipe/checkpoint/runner.rs"
+  ],
+  "references": [
+    "docs/android_docker.md",
+    "docs/debug_control.md",
+    "docs/releases/v1.1.2.md"
+  ]
+}

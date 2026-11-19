@@ -50,6 +50,51 @@ the original native positions the portrait can overlap this compact table;
 those overlap pixels have a different layer order after independent relocation.
 The native hardware framebuffer and guest memories remain unchanged.
 
+## Android port
+
+Android recognizes the two previously measured laws layouts and their HELP
+windows, and a further multirow HELP layout observed on the user's phone. It
+captures each recognized table and HELP panel in the existing centered Notice
+layer, independently of the portrait/HUD.
+The recognition flag is host-only, recomputed each frame and excluded from save
+states; existing snapshots keep the same format. Android's optimized and
+parallel rendering paths continue to use its existing compositor.
+
+The Android core suite passed 172 tests, with four ignored. Four previously
+captured EUR scenes (laws, HELP, deployment laws and deployment HELP) were
+rendered at zoom 1 and 2: all eight cases matched the reference extractor and
+serial/parallel zoom, retained the expected Notice bounds, and reconstructed
+the native image with either original layer order. The deployment cases retain
+the 44 known portrait overlap pixels described above. The first local probe
+checked native reconstruction before generating zoom rows and failed at zoom 2;
+the corrected probe generates those rows first. The Docker APK and 29 Kotlin
+unit tests passed, and the APK was installed on a moto g34. Interactive on-device
+inspection of the first APK showed that another laws layout still split. The
+user confirmed that the exit confirmation dialog appears and that confirming it
+closes the app directly.
+
+The user's slot 3 captured the unrecognized multirow layout: WIN0 spans
+[24,32,232,104], and WIN1 displays HELP at [16,16,224,64]. HELP covers the
+upper portion of the laws window; two intact rows and the bottom frame remain
+visible. Android now checks the two windows and their controls, HELP corners,
+both row boundaries and the footer, and captures them as the centered Notice
+[16,16,232,104]. Corrupted signatures are rejected. This additional recognizer
+is limited to the observed HELP variant; other row counts remain unverified.
+
+The exact private slot was decoded and rendered locally: the old build produced
+the split Actions fallback; the corrected core produced the expected Notice,
+retained both columns and HELP, matched its reference extractor and preserved
+the native framebuffer, IO, VRAM and OAM. Focused core tests and a separate
+Android UI export/centering test passed. The final serial host suites passed
+173 core tests (four ignored) and 42 Android bridge tests (two ignored). The
+corrected Docker APK and 29 Kotlin
+tests passed, and the APK was installed on the moto g34 with all four cartridge
+and snapshot files verified unchanged. Interactive verification of the updated
+laws panel was confirmed by the user on the phone; the Cancel action has not
+been verified separately. Slot 2 was
+also inspected: it is a battle view before the laws window is open, so it is
+not evidence for this multirow window without HELP.
+
 ## Validation, 2026-10-21
 
 - Native release core suite: 183 passed, 5 optional ignored; runtime: 67 passed,

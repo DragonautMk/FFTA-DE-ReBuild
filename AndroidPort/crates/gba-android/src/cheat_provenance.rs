@@ -1,6 +1,8 @@
 //! Conservative cheat ancestry and separately bounded observed application history.
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::Value;
+#[cfg(test)]
+use serde_json::json;
 
 const MAX_EVENTS: usize = 64;
 const MAX_EXACT_EVENTS: usize = 4096;
@@ -28,12 +30,15 @@ pub(crate) struct ExactHistory {
     variants: Vec<Value>,
     applications: Vec<ExactEvent>,
     truncated: bool,
+    #[cfg(test)]
     #[serde(skip)]
     reserved_bytes: usize,
 }
 
 impl ExactHistory {
+    #[cfg(test)]
     fn new()->Self {Self{schema:1,origin:"unknown-before-observed-suffix".into(),variants:Vec::new(),applications:Vec::new(),truncated:false,reserved_bytes:256}}
+    #[cfg(test)]
     fn record(&mut self,kind:&str,identity:&Value,frame:u64,clock:u64,writes:usize){
         if self.truncated{return;}
         if self.reserved_bytes==0 {self.reserved_bytes=serde_json::to_vec(self).map_or(MAX_EXACT_BYTES+1,|bytes|bytes.len()+512);}
@@ -80,6 +85,7 @@ impl Default for History {
 impl History {
     pub(crate) fn is_empty(&self) -> bool { self.events.is_empty() && !self.truncated }
 
+    #[cfg(test)]
     fn exact_summary(&self)->Option<Value> {
         self.exact.as_ref().map(|history|{
             let bytes=serde_json::to_vec(history).expect("Exact cheat history JSON");
@@ -89,6 +95,7 @@ impl History {
 
     /// Small report metadata for a restored starting state. The full private
     /// history is pinned separately and is never treated as a replay action.
+    #[cfg(test)]
     pub(crate) fn recording_summary(&self)->Value {
         fn collect(value:&Value,ids:&mut Vec<String>){
             if ids.len()>=8{return;}
@@ -104,11 +111,13 @@ impl History {
 
     /// Keep the existing conservative status shape bounded independently of
     /// the full exact suffix stored in a private snapshot.
+    #[cfg(test)]
     pub(crate) fn status(&self)->Value {
         json!({"history":{"schema":1,"events":self.events,"truncated":self.truncated},"exact_suffix":self.exact_summary(),"scope":"Conservative observed ancestry; not an exact replay timeline"})
     }
 
     /// Retain only identities/hashes, never raw third-party codes or plans.
+    #[cfg(test)]
     pub(crate) fn record(&mut self, kind: &str, identity: Value, frame: u64, clock: u64, writes: usize) {
         if matches!(kind,"once"|"maintained") {
             self.exact.get_or_insert_with(ExactHistory::new).record(kind,&identity,frame,clock,writes);

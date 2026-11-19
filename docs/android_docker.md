@@ -80,11 +80,12 @@ The default output is then `dist/docker-android/` inside the port.
 ## Toolchain, caches and signing
 
 `AndroidPort/Dockerfile.android` uses digest-pinned Rust 1.94.0 and
-Eclipse Temurin Java 25 images, Android SDK 35, build-tools 35.0.0,
+Eclipse Temurin Java 25 images, Android SDK 35, build-tools 36.0.0,
 NDK 28.2.13676358 and the project's Gradle 9.5.0 wrapper. The native target is
 `aarch64-linux-android`, with minimum API 24. The Android command-line tools
 and TinyCC source are verified by SHA256; the wrapper verifies its Gradle
-download. Tool versions and source/APK hashes are recorded in the exported files.
+download. The pinned Android CLI installs SDK packages with metrics disabled.
+Tool versions and source/APK hashes are recorded in the exported files.
 The standard Docker Engine/Desktop builder keeps the SDK, NDK, platform-tools,
 Rust and Java in a local `ffta-toolchain-android` image tagged by toolchain
 recipe hash. A source edit reuses that image. Container and remote Buildx

@@ -3,6 +3,66 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-19 — Prepare warning-free platform builds and acknowledge concurrent cancellation
+
+Type: fixed. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Use the pinned official Android CLI without metrics, Android Gradle Plugin 9.3, Kotlin 2.2.10, NDK 28 and reusable SDK/compiler caches; publish Android preview version 1.1.2 code 27.
+- Eliminate Android Rust dead-code warnings by limiting test-only helpers to tests while retaining the snapshot serialization contract.
+- Wait up to one second for a concurrent transition writer when confirming an in-flight debug recipe cancellation; reject malformed cancellation markers.
+
+**Validation**
+
+- Android host checks and 42 bridge tests passed with two ignored; AGP 9.3 clean rerun passed 29 Kotlin tests without Gradle warnings (release-112-android-agp93-clean-o4iqj4aq).
+- Final Android Docker APK and 29 Kotlin tests passed without reported build warnings (release-112-android-final-x9f1zpib); installed version 27 on moto g34 with six save and snapshot files unchanged.
+- Three focused Linux Docker cancellation tests passed (release-112-linux-cancel-docker-retry-3ya54iw2). An earlier forced Linux suite failed a cancellation test, prompting the fix.
+- An earlier forced Windows build and Wine tests passed; its validation unit failed only at an incorrect launcher-name assertion, later corrected for the final build.
+- Final forced Linux Docker build and test gate passed 972 tests with 463 ignored, including the earlier failing test and the new concurrency regression (release-112-linux-final-earnsthb); the packaged recomp --help passed (release-112-linux-portable-smoke-retry-ibrq6n4k).
+- Final forced Windows Docker build and Wine gate passed 973 tests with 463 ignored, including the cancellation regression; ZIP integrity, expected launcher, private-file exclusion and SHA-256 passed (release-112-windows-final-5gez81aw).
+- The Android cached export reproduced the tested APK byte-for-byte and retained all eight matching Kotlin test reports (release-112-android-cached-export-_zsf9gjs). Linux, Windows and Android dist artifacts were updated from the verified outputs.
+- The first Linux portable smoke assertion expected help on stdout but the successful executable writes it on stderr; the corrected check passed. An extra host Wine smoke was not run because the shared Wine prefix has an existing lease (release-112-windows-portable-smoke-oel7xv5k).
+
+**Limitations**
+
+- Native Windows execution, other Android laws layouts and USA ROMs remain unverified.
+- The Android SDK migration reused cached packages; a complete cold installation of all SDK packages was not exercised.
+- The packaged Windows command-line smoke on the host was deferred because the shared Wine prefix was leased; the container Wine test gate and ZIP checks passed.
+
+Documentation: [android_docker.md](docs/android_docker.md), [debug_control.md](docs/debug_control.md), [v1.1.2.md](docs/releases/v1.1.2.md).
+
+[Change record](docs/changes/2026-11-19-prepare-release-1-1-2.json)
+
+## 2026-11-19 — Fix Android battle laws and confirm app exit
+
+Type: fixed. Platforms: Android.
+
+**Changes**
+
+- Port the desktop battle and deployment laws recognition to the Android core, including HELP, selector and continuation ownership, while preserving Android rendering optimizations and save-state compatibility.
+- Ask for confirmation before Exit Game; write the cartridge save and close the Android task, keeping the paused menu open with an error if saving fails.
+- Recognize the observed taller multirow laws/HELP window as one centered Notice instead of the Actions split, using its window controls, row markers and footer.
+
+**Validation**
+
+- Android core suite with parallel PPU: 172 passed and four ignored (android-laws-core-ous9glr3). Four retained EUR laws and HELP scenes at zoom 1 and 2 matched reference extraction and serial/parallel zoom, with native pixels accounted for and the known 44-pixel deployment layer overlap (android-laws-real-scenes-corrected-u3flgbeg).
+- Docker ARM64 APK and 29 Kotlin unit tests passed (android-laws-exit-build-g4unp2ng). The APK SHA-256 was verified after installation on a moto g34; three private save files matched before and after installation, and the app opened to the gameplay overlay.
+- A reviewed, rebuildable incremental cache was retired to meet the build space floor; the existing executable hash remained unchanged (local-artifact-cleanup-android-space-098ff9a7).
+- The user-reported slot 3 reproduced the old Actions split (android-laws-slot3-diagnosis-16cm3yie); after the fix its extracted laws/HELP pixels matched the reference and preserved the native framebuffer, IO, VRAM and OAM (android-laws-multirow-real-scene-24mzrh7x).
+- Final Android host suites passed 173 core tests with four ignored and 42 bridge tests with two ignored (android-laws-multirow-full-tests-s41dv_7v); the separate centered Notice export test also passed (android-laws-ui-export-0w68g9vt).
+- The corrected Docker ARM64 APK and 29 Kotlin tests passed (android-laws-multirow-build-fy12lmk0); its installed hash matched on the moto g34 and all four cartridge/snapshot files were unchanged after installation.
+- The user confirmed that slot 3 now displays the complete centered laws panel on the phone, and that confirming Exit closes the app rather than returning to ROM selection.
+
+**Limitations**
+
+- Other multirow layouts and USA ROMs remain unverified; the user has not separately tested the Cancel action in the exit dialog.
+- The initial real-scene probe failed at zoom 2 because it checked native recomposition before generating zoom rows; the corrected probe generated those rows first and passed all eight cases.
+
+Documentation: [README.md](AndroidPort/android/README.md), [ffta_laws_layout.md](docs/ffta_laws_layout.md).
+
+[Change record](docs/changes/2026-11-19-android-laws-exit-confirmation.json)
+
 ## 2026-11-18 — Verify indexed context on generated-dispatch world map
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.

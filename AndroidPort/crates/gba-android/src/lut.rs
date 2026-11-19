@@ -126,6 +126,7 @@ impl ColorLut {
     }
 
     /// Map one raw frame into an RGBA8 buffer (no temporal processing).
+    #[cfg(test)]
     pub fn map_frame(&self, src: &[u16], dst: &mut [[u8; 4]]) {
         for (d, &s) in dst.iter_mut().zip(src) {
             *d = self.table[(s & 0x7FFF) as usize];

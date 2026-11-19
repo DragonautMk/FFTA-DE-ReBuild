@@ -3274,7 +3274,10 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   and Windows/Wine suites, 72 private EUR reconstruction cases, 24 synthetic
   GPU/CPU modal cases and inspected frontend checks pass. Other layouts/USA,
   native Windows and exact original tutorial coverage remain open. See
-  [laws layout](../ffta_laws_layout.md).
+  [laws layout](../ffta_laws_layout.md). Android additionally recognizes the
+  user's multirow HELP snapshot; an exact local render and UI export pass, and
+  the user confirms corrected phone rendering and direct exit after confirming
+  the dialog. The separate Cancel action remains unverified interactively.
 
 - Native UI capture skips per-pixel sorting/blending when no admitted UI BG or
   portrait can reach the texture, retaining a default destination write to clear

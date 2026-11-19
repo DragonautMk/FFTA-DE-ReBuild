@@ -36,6 +36,7 @@ pub const SRGB: Primaries = Primaries {
 };
 
 /// Display P3 (DCI primaries, D65 white, sRGB transfer).
+#[cfg(test)]
 pub const DISPLAY_P3: Primaries = Primaries {
     red: Xy { x: 0.680, y: 0.320 },
     green: Xy { x: 0.265, y: 0.690 },
@@ -46,6 +47,7 @@ pub const DISPLAY_P3: Primaries = Primaries {
 /// Area of the primary triangle in the CIE xy plane — a cheap, monotone
 /// proxy for gamut size (sRGB ≈ 0.112, Display P3 ≈ 0.152). Used to tell a
 /// wide-gamut panel from an sRGB one without a full volume computation.
+#[cfg(test)]
 pub fn gamut_area(p: &Primaries) -> f64 {
     let (r, g, b) = (p.red, p.green, p.blue);
     0.5 * ((g.x - r.x) * (b.y - r.y) - (b.x - r.x) * (g.y - r.y)).abs()
@@ -56,6 +58,7 @@ pub fn gamut_area(p: &Primaries) -> f64 {
 pub struct Mat3(pub [[f64; 3]; 3]);
 
 impl Mat3 {
+    #[cfg(test)]
     pub const IDENTITY: Mat3 = Mat3([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]);
 
     pub fn mul(&self, rhs: &Mat3) -> Mat3 {

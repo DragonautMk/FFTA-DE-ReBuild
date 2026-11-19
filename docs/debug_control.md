@@ -540,6 +540,9 @@ and `cancelled` only after reaching a boundary. `resume` explicitly clears the
 cancellation marker and continues within the original deadline. Cancellation
 does not roll back effects already applied. Checkpoint files
 are synced and atomically replaced, but power-loss durability is not claimed.
+If another client is writing the cancellation marker, an interrupted runner
+waits up to one second for the transition lock before validating that marker.
+It reports `unconfirmed` if the lock remains busy or the marker is invalid.
 
 In production, planned fingerprints use the guard-aware request encoder; the
 unguarded convenience adapter is compiled only for tests.

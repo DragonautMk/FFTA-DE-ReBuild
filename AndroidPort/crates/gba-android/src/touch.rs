@@ -57,6 +57,31 @@ mod tests {
         assert_eq!(engine.machine.bus.keys,keys);
         assert!(!engine.machine.bus.ffta_battle_mouse.enabled);
     }
+    #[test]
+    fn multirow_notice_exports_both_columns_at_the_center_of_the_screen(){
+        use gba_core::ffta_dialogue::{PanelKind,UiPixel,LAYER_WIDTH,LAYER_INSET};
+        let mut engine=crate::engine::Engine::new(vec![0;192]);
+        engine.ui_window=(1600,720);engine.ui_base=356.;
+        let state=&mut engine.machine.bus.ffta_dialogue;
+        state.separate=true;state.extra.kind=PanelKind::Notice;
+        state.extra.bounds=Some([16,16,232,104]);
+        state.extra.pixels=vec![UiPixel::default();LAYER_WIDTH*160];
+        let at=|x:usize,y:usize|y*LAYER_WIDTH+x+LAYER_INSET as usize;
+        state.extra.pixels[at(32,80)]=UiPixel::opaque(0x001f);
+        state.extra.pixels[at(200,80)]=UiPixel::opaque(0x03e0);
+        let mut packed=vec![0u8;480*160*4*2];let mut params=[0f32;18];
+        engine.export_ui(&mut packed,&mut params,&mut []);
+        let rect=&params[9..13];
+        let left=rect[0]+(16.+LAYER_INSET as f32)*rect[2]/480.;
+        let right=rect[0]+(232.+LAYER_INSET as f32)*rect[2]/480.;
+        assert!(((left+right)*0.5-800.).abs()<1.);
+        let offset=480*160*4;
+        for (x,color) in [(32,0x001f),(200,0x03e0)] {
+            let i=offset+at(x,80)*4;
+            assert_eq!(&packed[i..i+4],&UiPixel::opaque(color).packed());
+        }
+        assert_eq!(params[17],0.); // Notice uses the world, not Stats backing.
+    }
 }
 impl Engine {
     pub fn configure_touch(&mut self,enabled:bool,base:f32,size:f32,length:f32){

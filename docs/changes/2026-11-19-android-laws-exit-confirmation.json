@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "android-laws-exit-confirmation",
+  "title": "Fix Android battle laws and confirm app exit",
+  "kind": "fixed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Port the desktop battle and deployment laws recognition to the Android core, including HELP, selector and continuation ownership, while preserving Android rendering optimizations and save-state compatibility.",
+    "Ask for confirmation before Exit Game; write the cartridge save and close the Android task, keeping the paused menu open with an error if saving fails.",
+    "Recognize the observed taller multirow laws/HELP window as one centered Notice instead of the Actions split, using its window controls, row markers and footer."
+  ],
+  "validation": [
+    "Android core suite with parallel PPU: 172 passed and four ignored (android-laws-core-ous9glr3). Four retained EUR laws and HELP scenes at zoom 1 and 2 matched reference extraction and serial/parallel zoom, with native pixels accounted for and the known 44-pixel deployment layer overlap (android-laws-real-scenes-corrected-u3flgbeg).",
+    "Docker ARM64 APK and 29 Kotlin unit tests passed (android-laws-exit-build-g4unp2ng). The APK SHA-256 was verified after installation on a moto g34; three private save files matched before and after installation, and the app opened to the gameplay overlay.",
+    "A reviewed, rebuildable incremental cache was retired to meet the build space floor; the existing executable hash remained unchanged (local-artifact-cleanup-android-space-098ff9a7).",
+    "The user-reported slot 3 reproduced the old Actions split (android-laws-slot3-diagnosis-16cm3yie); after the fix its extracted laws/HELP pixels matched the reference and preserved the native framebuffer, IO, VRAM and OAM (android-laws-multirow-real-scene-24mzrh7x).",
+    "Final Android host suites passed 173 core tests with four ignored and 42 bridge tests with two ignored (android-laws-multirow-full-tests-s41dv_7v); the separate centered Notice export test also passed (android-laws-ui-export-0w68g9vt).",
+    "The corrected Docker ARM64 APK and 29 Kotlin tests passed (android-laws-multirow-build-fy12lmk0); its installed hash matched on the moto g34 and all four cartridge/snapshot files were unchanged after installation.",
+    "The user confirmed that slot 3 now displays the complete centered laws panel on the phone, and that confirming Exit closes the app rather than returning to ROM selection."
+  ],
+  "limitations": [
+    "Other multirow layouts and USA ROMs remain unverified; the user has not separately tested the Cancel action in the exit dialog.",
+    "The initial real-scene probe failed at zoom 2 because it checked native recomposition before generating zoom rows; the corrected probe generated those rows first and passed all eight cases."
+  ],
+  "files": [
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/crates/gba-core/src/ffta_dialogue.rs",
+    "AndroidPort/crates/gba-core/src/ppu.rs",
+    "AndroidPort/android/README.md",
+    "docs/ffta_laws_layout.md",
+    "docs/development/PROJECT_STATE.md",
+    "AndroidPort/crates/gba-android/src/touch.rs"
+  ],
+  "references": [
+    "AndroidPort/android/README.md",
+    "docs/ffta_laws_layout.md"
+  ]
+}

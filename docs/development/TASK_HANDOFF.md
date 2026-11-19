@@ -68,6 +68,15 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Incomplete tasks and open criteria
 
+### RELEASE-1112
+
+- State: active
+- Outcome: partial
+- Selection: build, test and publish 1.1.2.
+- Verified: Linux, Windows/Wine and Android build gates PASS; APK installed.
+- Missing: release publication and asset verification.
+- Resume: publish verified 1.1.2 assets.
+
 ### ANDROID-MENU-PARITY
 
 - State: active
@@ -178,9 +187,9 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ## Final handover
 
-- Task: RELEASE-1-1-1 completed.
-- Last verified result: v1.1.1 is public and latest with nine verified assets.
-- Remaining work: none for this release.
-- Errors or blockers: none.
-- Next action: await a new selection.
-- References: docs/changes/2026-11-18-publish-release-1-1-1.json.
+- Task: RELEASE-1112.
+- Last verified result: all three builds and tests PASS.
+- Remaining work: publish and verify 1.1.2 assets.
+- Errors or blockers: native Windows untested.
+- Next action: publish the prepared release.
+- References: docs/releases/v1.1.2.md.

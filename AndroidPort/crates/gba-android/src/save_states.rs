@@ -246,6 +246,8 @@ mod tests {
         assert_eq!(decoded.events, older.events);
         let mut newer = History::default();
         newer.record("once", serde_json::json!({"id":"B"}), 3, 4, 1);
+        assert_eq!(newer.status()["history"]["events"].as_array().unwrap().len(), 1);
+        assert_eq!(newer.recording_summary()["observed_variants"], serde_json::json!(["B"]));
         let sl3 = encode(&machine, &newer).unwrap();
         assert!(sl3.starts_with(b"FFTA-SL3"));
         slots.import(&machine, 1, &sl3, false).unwrap();

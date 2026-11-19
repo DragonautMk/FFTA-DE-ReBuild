@@ -555,6 +555,88 @@ fn action_banner_bounds(mem:&MemMap)->Option<[i32;4]> {
     if !(l+8..r-8).step_by(8).all(|x|entry(x,t)==0xb033 && entry(x,b-8)==0xb833){return None;}
     Some([l as i32,t as i32,r as i32,b as i32])
 }
+// The laws table shares the action BG registers but is one centered modal,
+// not the left HUD/right action list. Match its frame, never translated text.
+// Deployment has one law row at WIN0, with optional HELP at WIN1. Its
+// complete frame can overlap the left portrait; keep its own modal ownership.
+fn deployment_laws_bounds(mem: &MemMap) -> Option<[i32; 4]> {
+    let windows = io16(mem, 0) & 0xe000;
+    if !matches!(windows, 0x2000 | 0x6000)
+        || io16(mem, 0x40) != 0x18e8 || io16(mem, 0x44) != 0x3058
+        || io16(mem, 0x48) & 63 != 31 || io16(mem, 0x4a) & 63 != 63 {
+        return None;
+    }
+    let base = ((io16(mem, 14) >> 8) & 31) as usize * 0x800;
+    let tile = |x: usize, y: usize| {
+        let off = base + (y * 32 + x) * 2;
+        u16::from_le_bytes([mem.vram[off], mem.vram[off + 1]])
+    };
+    if tile(3, 10) != 0x70ee || tile(28, 10) != 0x74ee
+        || !(4..28).all(|x| tile(x, 10) == 0x70ef)
+        || [(3,8,0x70f3),(15,8,0x70fe),(27,8,0x80f5),
+            (3,9,0x70f6),(15,9,0x70ff),(27,9,0x80f8)]
+            .into_iter().any(|(x,y,value)| tile(x,y) != value) {
+        return None;
+    }
+    let help = windows == 0x6000;
+    if help {
+        if io16(mem, 0x42) != 0x10e0 || io16(mem, 0x46) != 0x1040
+            || (io16(mem, 0x48) >> 8) & 63 != 31
+            || [(2,2,0xb00d),(27,2,0xb00e),(2,7,0xb00f),(27,7,0xb010)]
+                .into_iter().any(|(x,y,value)| tile(x,y) != value) {
+            return None;
+        }
+    } else if tile(3,6) != 0x70e1 || tile(28,6) != 0x74e1
+        || !(4..28).all(|x| tile(x,6) == 0x70e2) {
+        return None;
+    }
+    // The selector protrudes left of WIN0. HELP replaces the upper frame,
+    // so validate its corners plus the still-visible law row/footer instead.
+    Some([16, if help {16} else {48}, 232, 88])
+}
+// A larger laws window can contain multiple rows. In the observed variant,
+// HELP replaces the upper frame and first row, leaving two rows and a footer.
+fn multirow_laws_help_bounds(mem: &MemMap) -> Option<[i32; 4]> {
+    if io16(mem,0)&0xe000!=0x6000 || io16(mem,0x40)!=0x18e8 || io16(mem,0x44)!=0x2068
+        || io16(mem,0x42)!=0x10e0 || io16(mem,0x46)!=0x1040
+        || io16(mem,0x48)&0x3f3f!=0x1f1f || io16(mem,0x4a)&63!=63 {return None;}
+    let base=((io16(mem,14)>>8)&31) as usize*0x800;
+    let tile=|x:usize,y:usize|{
+        let off=base+(y*32+x)*2;
+        u16::from_le_bytes([mem.vram[off],mem.vram[off+1]])
+    };
+    if [(2,2,0xb00d),(27,2,0xb00e),(2,7,0xb00f),(27,7,0xb010),
+        (3,12,0x70ee),(28,12,0x74ee)].into_iter().any(|(x,y,v)|tile(x,y)!=v)
+        || !(4..28).all(|x|tile(x,12)==0x70ef)
+        || ![8,10].into_iter().all(|y| {
+            [(3,y,0x70f3),(15,y,0x70fe),(27,y,0x80f5),
+                (3,y+1,0x70f6),(15,y+1,0x70ff),(27,y+1,0x80f8)]
+                .into_iter().all(|(x,row,v)|tile(x,row)==v)
+        }) {return None;}
+    Some([16,16,232,104])
+}
+fn laws_bounds(mem: &MemMap) -> Option<[i32; 4]> {
+    if let Some(bounds) = deployment_laws_bounds(mem) { return Some(bounds); }
+    if let Some(bounds) = multirow_laws_help_bounds(mem) { return Some(bounds); }
+    if io16(mem, 0) & 0xe000 != 0 { return None; }
+    let base = ((io16(mem, 14) >> 8) & 31) as usize * 0x800;
+    let tile = |x: usize, y: usize| {
+        let off = base + (y * 32 + x) * 2;
+        u16::from_le_bytes([mem.vram[off], mem.vram[off + 1]])
+    };
+    if tile(1, 9) != 0x70e1 || tile(26, 9) != 0x74e1
+        || tile(1, 15) != 0x70ee || tile(26, 15) != 0x74ee
+        || !(2..26).all(|x| tile(x, 9) == 0x70e2 && tile(x, 15) == 0x70ef)
+        || ![11, 13].into_iter().all(|y| {
+            tile(1, y) == 0x70f3 && tile(13, y) == 0x70fe && tile(25, y) == 0x80f5
+                && tile(1, y + 1) == 0x70f6 && tile(13, y + 1) == 0x70ff && tile(25, y + 1) == 0x80f8
+        }) { return None; }
+    // Include the arrow's one-tile left overhang. Select opens HELP above the
+    // table without enabling WIN0, unlike the ordinary Notice recognizer.
+    let help = [(2, 2, 0xb00d), (27, 2, 0xb00e), (2, 7, 0xb00f), (27, 7, 0xb010)]
+        .into_iter().all(|(x, y, value)| tile(x, y) == value);
+    Some(if help { [0, 16, 224, 128] } else { [0, 72, 216, 128] })
+}
 fn notice_bounds(mem:&MemMap)->Option<[i32;4]> {
     if io16(mem,0)&0x6000!=0x2000 || io16(mem,0x48)&63!=31 || io16(mem,0x4a)&32==0 {return None;}
     let h=io16(mem,0x40);let v=io16(mem,0x44);
@@ -578,6 +660,7 @@ fn begin_dialogue_frame(mem: &mut MemMap) {
     mem.ffta_dialogue.town_layout=false;
     mem.ffta_dialogue.shop_layout=false;
     mem.ffta_dialogue.site_layout=false;
+    mem.ffta_dialogue.laws_layout=false;
     mem.ffta_dialogue.extra.kind=crate::ffta_dialogue::PanelKind::None;
     mem.ffta_dialogue.extra.bounds=None;
     let shared_menus=if mem.ffta_dialogue.separate && !mem.ffta_dialogue.reference_frame {
@@ -644,7 +727,9 @@ fn begin_dialogue_frame(mem: &mut MemMap) {
     }
     if action {mem.ffta_dialogue.action_banner=action_banner_bounds(mem);}
     if action {
-        if let Some(bounds)=notice_bounds(mem) {
+        let laws = laws_bounds(mem);
+        mem.ffta_dialogue.laws_layout = laws.is_some();
+        if let Some(bounds)=laws.or_else(||notice_bounds(mem)) {
             mem.ffta_dialogue.extra.kind=crate::ffta_dialogue::PanelKind::Notice;
             mem.ffta_dialogue.extra.bounds=Some(bounds);
         }
@@ -1274,6 +1359,265 @@ mod dialogue_layout_tests {
         m.io[0x40..0x42].copy_from_slice(&0xa0f0u16.to_le_bytes());
         assert!(notice_bounds(&m).is_none()); // narrow action confirmation remains unchanged
         crate::mem::set_extra(0);crate::mem::set_extra_y(0);
+    }
+    fn laws_scene(help: bool, hud: bool) -> MemMap {
+        let mut m = scene(false);
+        m.ffta_dialogue.separate = true;
+        for (off, value) in [(12, 0x5c08u16), (14, 0x4a09)] {
+            m.io[off..off+2].copy_from_slice(&value.to_le_bytes());
+        }
+        m.vram[0x5000..0x5800].fill(0);
+        let mut tile = |x: usize, y: usize, value: u16| {
+            let off = 0x5000 + (y * 32 + x) * 2;
+            m.vram[off..off+2].copy_from_slice(&value.to_le_bytes());
+        };
+        for x in 2..26 { tile(x, 9, 0x70e2); tile(x, 15, 0x70ef); }
+        for (x, y, value) in [(1,9,0x70e1), (26,9,0x74e1), (1,15,0x70ee), (26,15,0x74ee)] { tile(x,y,value); }
+        for y in [11, 13] {
+            for x in 2..25 { tile(x,y,0x70f4); tile(x,y+1,0x70f7); }
+            for (x,dy,value) in [(1,0,0x70f3), (13,0,0x70fe), (25,0,0x80f5),
+                (1,1,0x70f6), (13,1,0x70ff), (25,1,0x80f8)] { tile(x,y+dy,value); }
+        }
+        if help {
+            for y in 2..8 { for x in 2..28 { tile(x,y,0xb003); } }
+            for (x,y,value) in [(2,2,0xb00d),(27,2,0xb00e),(2,7,0xb00f),(27,7,0xb010)] { tile(x,y,value); }
+        }
+        if hud { for x in 0..8 { tile(x,17,1); } }
+        for index in [1usize,3,13,14,15,16,0xe1,0xe2,0xee,0xef,0xf3,0xf4,0xf5,0xf6,0xf7,0xf8,0xfe,0xff] {
+            m.vram[0x8000+index*32..0x8000+(index+1)*32].fill(0x11);
+        }
+        for bank in [7usize,8,11] { m.palette[(bank*16+1)*2..(bank*16+1)*2+2].copy_from_slice(&0x3defu16.to_le_bytes()); }
+        // Distinct source text on both sides of the former action split.
+        for (x,y) in [(2,11),(23,11),(3,4),(24,5)] {
+            if help || y == 11 { let off=0xe000+(y*32+x)*2; m.vram[off..off+2].copy_from_slice(&1u16.to_le_bytes()); }
+        }
+        m.oam.fill(0);
+        for obj in m.oam.chunks_exact_mut(8) { obj[..2].copy_from_slice(&0x200u16.to_le_bytes()); }
+        for (off,value) in [(0,0x8058u16),(2,2),(4,0x2dc)] { m.oam[off..off+2].copy_from_slice(&value.to_le_bytes()); }
+        m.vram[0x10000+0x2dc*32..0x10000+0x2de*32].fill(0x11);
+        m.palette[0x202..0x204].copy_from_slice(&0x03e0u16.to_le_bytes());
+        if help {
+            for (off,value) in [(8,0x8035u16),(10,116),(12,0x2122)] { m.oam[off..off+2].copy_from_slice(&value.to_le_bytes()); }
+            m.vram[0x10000+0x122*32..0x10000+0x124*32].fill(0x11);
+            m.palette[0x242..0x244].copy_from_slice(&0x7c00u16.to_le_bytes());
+        }
+        m
+    }
+    fn deployment_laws_scene(help: bool, hud: bool) -> MemMap {
+        let mut m = laws_scene(false, hud);
+        for y in 0..16 { m.vram[0x5000+y*64..0x5000+(y+1)*64].fill(0); }
+        let mut tile = |x: usize, y: usize, value: u16| {
+            let off = 0x5000 + (y*32+x)*2;
+            m.vram[off..off+2].copy_from_slice(&value.to_le_bytes());
+        };
+        for x in 4..28 { tile(x,6,0x70e2); tile(x,10,0x70ef); }
+        for (x,y,value) in [(3,6,0x70e1),(28,6,0x74e1),(3,10,0x70ee),(28,10,0x74ee)] { tile(x,y,value); }
+        for x in 3..29 { tile(x,7,0xb003); }
+        for x in 4..28 { tile(x,8,0x70f4); tile(x,9,0x70f7); }
+        for (x,y,value) in [(3,8,0x70f3),(15,8,0x70fe),(27,8,0x80f5),
+            (3,9,0x70f6),(15,9,0x70ff),(27,9,0x80f8)] { tile(x,y,value); }
+        if help {
+            for y in 2..8 { for x in 2..28 { tile(x,y,0xb003); } }
+            for (x,y,value) in [(2,2,0xb00d),(27,2,0xb00e),(2,7,0xb00f),(27,7,0xb010)] { tile(x,y,value); }
+        }
+        for (off,value) in [(0,if help {0x7f40u16}else{0x3f40}), (0x40,0x18e8),
+            (0x44,0x3058),(0x48,if help {0x1f1f}else{0x1f}),(0x4a,0x3f),
+            (0x42,if help {0x10e0}else{0}),(0x46,if help {0x1040}else{0})] {
+            m.io[off..off+2].copy_from_slice(&value.to_le_bytes());
+        }
+        for (x,y) in [(4,8),(25,8)] {
+            let off=0xe000+(y*32+x)*2;
+            m.vram[off..off+2].copy_from_slice(&1u16.to_le_bytes());
+        }
+        for (off,value) in [(0,0x8040u16),(2,20),(4,0x37c)] { m.oam[off..off+2].copy_from_slice(&value.to_le_bytes()); }
+        m.vram[0x10000+0x37c*32..0x10000+0x37e*32].fill(0x11);
+        if help {
+            for (off,value) in [(8,0x8035u16),(10,116),(12,0x2122)] { m.oam[off..off+2].copy_from_slice(&value.to_le_bytes()); }
+            m.vram[0x10000+0x122*32..0x10000+0x124*32].fill(0x11);
+            m.palette[0x242..0x244].copy_from_slice(&0x7c00u16.to_le_bytes());
+        }
+        m
+    }
+
+    fn multirow_laws_help_scene() -> MemMap {
+        let mut m = deployment_laws_scene(true, true);
+        // The observed larger window has two rows still visible below HELP;
+        // HELP covers its upper border and the preceding row.
+        m.io[0x44..0x46].copy_from_slice(&0x2068u16.to_le_bytes());
+        for y in [8usize, 10] {
+            for x in 4..28 {
+                for (row, tile) in [(y,0x70f4u16),(y+1,0x70f7)] {
+                    let off=0x5000+(row*32+x)*2;
+                    m.vram[off..off+2].copy_from_slice(&tile.to_le_bytes());
+                }
+            }
+            for (x,dy,tile) in [(3,0,0x70f3u16),(15,0,0x70fe),(27,0,0x80f5),
+                (3,1,0x70f6),(15,1,0x70ff),(27,1,0x80f8)] {
+                let off=0x5000+((y+dy)*32+x)*2;
+                m.vram[off..off+2].copy_from_slice(&tile.to_le_bytes());
+            }
+            for x in [4usize,25] {
+                let off=0xe000+(y*32+x)*2;
+                m.vram[off..off+2].copy_from_slice(&1u16.to_le_bytes());
+            }
+        }
+        for x in 3..29 {
+            let tile=if x==3 {0x70eeu16} else if x==28 {0x74ee} else {0x70ef};
+            let off=0x5000+(12*32+x)*2;
+            m.vram[off..off+2].copy_from_slice(&tile.to_le_bytes());
+        }
+        m
+    }
+
+    #[test]
+    fn multirow_laws_help_keeps_the_complete_window_in_one_panel() {
+        use crate::ffta_dialogue::{LAYER_WIDTH,LAYER_INSET,PanelKind};
+        for ex in [22usize,58,164] {
+            crate::mem::set_extra(ex); crate::mem::set_extra_y(0);
+            let mut m=multirow_laws_help_scene();
+            assert_eq!(laws_bounds(&m),Some([16,16,232,104]));
+            m.ffta_dialogue.separate=false;
+            for y in 0..160 {render_scanline(&mut m,y);}
+            let hardware=m.framebuffer.clone();let io=m.io.clone();let vram=m.vram.clone();let oam=m.oam.clone();
+            m.ffta_dialogue.separate=true;
+            for y in 0..160 {render_scanline(&mut m,y);}
+            assert!(m.ffta_dialogue.laws_layout);
+            assert_eq!(m.ffta_dialogue.extra.kind,PanelKind::Notice);
+            assert_eq!(m.ffta_dialogue.extra.bounds,Some([16,16,232,104]));
+            let idx=|x,y|y*LAYER_WIDTH+x+LAYER_INSET as usize;
+            for (x,y) in [(32,32),(200,32),(32,64),(200,64),(32,80),(200,80)] {
+                assert!(m.ffta_dialogue.extra.pixels[idx(x,y)].visible(),"x={x} y={y}");
+                assert!(!m.ffta_dialogue.pixels[idx(x,y)].visible(),"x={x} y={y}");
+            }
+            assert_eq!(m.framebuffer,hardware);assert_eq!(m.io,io);assert_eq!(m.vram,vram);assert_eq!(m.oam,oam);
+            for (x,y) in [(3,8),(15,10),(28,12),(2,2)] {
+                let off=0x5000+(y*32+x)*2;let original=[m.vram[off],m.vram[off+1]];
+                m.vram[off..off+2].fill(0);
+                assert!(laws_bounds(&m).is_none(),"incomplete frame at {x},{y}");
+                m.vram[off..off+2].copy_from_slice(&original);
+            }
+        }
+        crate::mem::set_extra(0);crate::mem::set_extra_y(0);
+    }
+
+    #[test]
+    fn laws_optimized_extraction_matches_reference_and_parallel_zoom() {
+        crate::mem::set_extra(164);
+        crate::mem::set_extra_y(64);
+        for deployment in [false, true] {
+            for help in [false, true] {
+                for hud in [false, true] {
+                    let scene = || {
+                        if deployment {
+                            deployment_laws_scene(help, hud)
+                        } else {
+                            laws_scene(help, hud)
+                        }
+                    };
+                    let mut reference = scene();
+                    reference.ffta_dialogue.reference_capture = true;
+                    reference.ffta_dialogue.reference_frame = true;
+                    reference.ffta_dialogue.reference_dialogue = true;
+                    let mut optimized = scene();
+                    for line in 0..160 {
+                        render_scanline(&mut reference, line);
+                        render_scanline(&mut optimized, line);
+                    }
+                    assert!(optimized.ffta_dialogue.laws_layout);
+                    assert_eq!(optimized.ffta_dialogue.extra.kind, reference.ffta_dialogue.extra.kind);
+                    assert_eq!(optimized.ffta_dialogue.extra.bounds, reference.ffta_dialogue.extra.bounds);
+                    assert_eq!(optimized.ffta_dialogue.pixels, reference.ffta_dialogue.pixels);
+                    assert_eq!(optimized.ffta_dialogue.backing, reference.ffta_dialogue.backing);
+                    assert_eq!(optimized.ffta_dialogue.extra.pixels, reference.ffta_dialogue.extra.pixels);
+                    assert_eq!(optimized.ffta_dialogue.extra.backing, reference.ffta_dialogue.extra.backing);
+                    assert_eq!(optimized.framebuffer, reference.framebuffer);
+                    assert_eq!(optimized.wide_framebuffer, reference.wide_framebuffer);
+                    assert_eq!(optimized.io, reference.io);
+                    assert_eq!(optimized.vram, reference.vram);
+                    assert_eq!(optimized.oam, reference.oam);
+                    set_parallel_zoom(false);
+                    render_ffta_zoom_rows(&mut reference);
+                    set_parallel_zoom(true);
+                    render_ffta_zoom_rows(&mut optimized);
+                    assert_eq!(optimized.wide_framebuffer, reference.wide_framebuffer);
+                    assert_eq!(optimized.framebuffer, reference.framebuffer);
+                }
+            }
+        }
+        set_parallel_zoom(false);
+        crate::mem::set_extra(0);
+        crate::mem::set_extra_y(0);
+    }
+
+    #[test]
+    fn deployment_laws_window_and_help_keep_both_columns_and_selector_together() {
+        use crate::ffta_dialogue::{LAYER_WIDTH,LAYER_INSET,PanelKind};
+        for ex in [22usize,164,448] { for help in [false,true] { for hud in [false,true] {
+            crate::mem::set_extra(ex); crate::mem::set_extra_y(0);
+            let mut m=deployment_laws_scene(help,hud);
+            m.ffta_dialogue.separate=false;
+            for y in 0..160 { render_scanline(&mut m,y); }
+            let hardware=m.framebuffer.clone(); let oam=m.oam.clone(); let vram=m.vram.clone(); let io=m.io.clone();
+            m.ffta_dialogue.separate=true;
+            for y in 0..160 { render_scanline(&mut m,y); }
+            assert!(m.ffta_dialogue.laws_layout);
+            assert_eq!(m.ffta_dialogue.extra.kind,PanelKind::Notice);
+            assert_eq!(m.ffta_dialogue.extra.bounds,Some([16,if help {16}else{48},232,88]));
+            let idx=|x,y|y*LAYER_WIDTH+x+LAYER_INSET as usize;
+            for (x,y) in [(32,64),(200,64),(20,64)] {
+                assert!(m.ffta_dialogue.extra.pixels[idx(x,y)].visible(),"help={help} x={x} y={y}");
+                assert!(!m.ffta_dialogue.pixels[idx(x,y)].visible());
+            }
+            if help { assert!(m.ffta_dialogue.extra.pixels[idx(116,53)].visible()); }
+            if hud { assert!(m.ffta_dialogue.pixels[idx(0,136)].visible()); }
+            for y in 0..160 { for x in 0..240 {
+                let world=m.wide_framebuffer[y*(240+2*ex)+x+ex];
+                let restored=m.ffta_dialogue.extra.pixels[idx(x,y)].resolve(m.ffta_dialogue.pixels[idx(x,y)].resolve(world));
+                assert_eq!(restored,hardware[y*240+x],"help={help} hud={hud} x={x} y={y}");
+            }}
+            assert_eq!(m.framebuffer,hardware); assert_eq!(m.oam,oam); assert_eq!(m.vram,vram); assert_eq!(m.io,io);
+            m.io[0x44..0x46].copy_from_slice(&0x3050u16.to_le_bytes());
+            assert!(laws_bounds(&m).is_none());
+            for y in 0..160 { render_scanline(&mut m,y); }
+            assert!(!m.ffta_dialogue.laws_layout);
+        }}}
+        crate::mem::set_extra(0); crate::mem::set_extra_y(0);
+    }
+
+    #[test]
+    fn laws_table_and_help_remain_one_modal_with_or_without_hud() {
+        use crate::ffta_dialogue::{LAYER_WIDTH,LAYER_INSET,PanelKind};
+        for ex in [22,164,448] { for help in [false,true] { for hud in [false,true] {
+            crate::mem::set_extra(ex); crate::mem::set_extra_y(0);
+            let mut m=laws_scene(help,hud);
+            m.ffta_dialogue.separate=false;
+            for y in 0..160 { render_scanline(&mut m,y); }
+            let hardware=m.framebuffer.clone(); let oam=m.oam.clone(); let vram=m.vram.clone();
+            m.ffta_dialogue.separate=true;
+            for y in 0..160 { render_scanline(&mut m,y); }
+            assert!(m.ffta_dialogue.laws_layout);
+            assert_eq!(m.ffta_dialogue.extra.kind,PanelKind::Notice);
+            assert_eq!(m.ffta_dialogue.extra.bounds,Some(if help {[0,16,224,128]}else{[0,72,216,128]}));
+            let idx=|x,y| y*LAYER_WIDTH+x+LAYER_INSET as usize;
+            for (x,y) in [(16,88),(184,88),(2,88)] {
+                assert!(m.ffta_dialogue.extra.pixels[idx(x,y)].visible());
+                assert!(!m.ffta_dialogue.pixels[idx(x,y)].visible());
+            }
+            if help { assert!(m.ffta_dialogue.extra.pixels[idx(116,53)].visible()); }
+            if hud { assert!(m.ffta_dialogue.pixels[idx(0,136)].visible()); }
+            for y in 0..160 { for x in 0..240 {
+                let world=m.wide_framebuffer[y*(240+2*ex)+x+ex];
+                let restored=m.ffta_dialogue.extra.pixels[idx(x,y)].resolve(m.ffta_dialogue.pixels[idx(x,y)].resolve(world));
+                assert_eq!(restored,hardware[y*240+x],"help={help} hud={hud} ex={ex} x={x} y={y}");
+            }}
+            assert_eq!(m.framebuffer,hardware); assert_eq!(m.oam,oam); assert_eq!(m.vram,vram);
+            // Reject incomplete frames and clear the subtype on the next frame.
+            m.vram[0x5000+(9*32+1)*2]=0;
+            assert!(laws_bounds(&m).is_none());
+            for y in 0..160 { render_scanline(&mut m,y); }
+            assert!(!m.ffta_dialogue.laws_layout);
+        }}}
+        crate::mem::set_extra(0); crate::mem::set_extra_y(0);
     }
     #[test]
     fn long_ear_pieces_join_action_portrait_without_changing_hardware_pixels() {
@@ -2848,7 +3192,8 @@ fn render_sprites_extent(
             && (line < y || line >= y + bh) {continue;}
         let bounded=(-64..240).contains(&x) && (-64..160).contains(&y);
         let notice_object=mem.ffta_dialogue.extra.kind==crate::ffta_dialogue::PanelKind::Notice
-            && crate::ffta_dialogue::notice_cursor([a0,a1,a2],x,y,mem.ffta_dialogue.extra.bounds);
+            && (crate::ffta_dialogue::notice_cursor([a0,a1,a2],x,y,mem.ffta_dialogue.extra.bounds)
+                || (mem.ffta_dialogue.laws_layout && crate::ffta_dialogue::laws_cursor([a0,a1,a2],x,y,mem.ffta_dialogue.extra.bounds)));
         let detached_cursor=mem.ffta_dialogue.town_layout && mem.ffta_dialogue.extra.kind==crate::ffta_dialogue::PanelKind::Actions
             && crate::ffta_dialogue::notice_cursor([a0,a1,a2],x,y,mem.ffta_dialogue.extra.bounds);
         let main_object=bounded && !notice_object && !detached_cursor && if mem.ffta_dialogue.action_layout {

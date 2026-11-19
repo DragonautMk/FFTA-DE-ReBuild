@@ -77,6 +77,7 @@ impl ScreenKind {
     ];
 
     /// Config-file token and canonical name.
+    #[cfg(test)]
     pub fn name(self) -> &'static str {
         match self {
             ScreenKind::Raw => "raw",
@@ -87,6 +88,7 @@ impl ScreenKind {
         }
     }
 
+    #[cfg(test)]
     pub fn by_name(name: &str) -> Option<ScreenKind> {
         Self::ALL.into_iter().find(|k| k.name() == name)
     }
@@ -119,6 +121,7 @@ pub fn effective_gamma(darken: f64) -> f64 {
 impl ScreenKind {
     /// Default pixel-grid strength: the grid IS the physical screen for
     /// the device models; Raw/Classic are pure color modes, default flat.
+    #[cfg(test)]
     pub fn default_grid_strength(self) -> f32 {
         match self {
             ScreenKind::Raw | ScreenKind::Classic => 0.0,
@@ -170,6 +173,7 @@ impl ScreenKind {
 /// platforms without compositor color management we assume the SDR standard
 /// (sRGB); `DisplayP3` is the manual override for an unmanaged wide-gamut
 /// monitor, where we target the panel's primaries ourselves.
+#[cfg(test)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum DisplayTarget {
     Auto,
@@ -177,6 +181,7 @@ pub enum DisplayTarget {
     DisplayP3,
 }
 
+#[cfg(test)]
 impl DisplayTarget {
     pub const ALL: [DisplayTarget; 3] = [
         DisplayTarget::Auto,
@@ -220,7 +225,10 @@ mod tests {
         }
         for t in DisplayTarget::ALL {
             assert_eq!(DisplayTarget::by_name(t.name()), Some(t));
+            assert!(crate::color::gamut_area(&t.primaries()) > 0.1);
         }
+        assert_eq!(ScreenKind::Raw.default_grid_strength(), 0.0);
+        assert_eq!(ScreenKind::Frontlit.default_grid_strength(), 1.0);
     }
 
     #[test]

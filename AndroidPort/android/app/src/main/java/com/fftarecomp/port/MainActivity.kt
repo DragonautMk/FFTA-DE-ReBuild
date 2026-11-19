@@ -334,7 +334,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
     if(loading) {
         LoadingScreen()
     } else if(playing&&!switchingRom) {
-        GameScreen(settings,input,onExit={playing=false;switchingRom=false},onSwitchRom={
+        GameScreen(settings,input,onSwitchRom={
             if(NativeBridge.gbaSave()!=1) {
                 false
             } else {
@@ -404,7 +404,7 @@ private fun LoadingScreen() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onSwitchRom:()->Boolean) {
+private fun GameScreen(settings:GameSettings,input:GameInput,onSwitchRom:()->Boolean) {
     val context=LocalContext.current
     val scope=rememberCoroutineScope()
     val activity=context as AppCompatActivity
@@ -417,6 +417,8 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
     var failure by remember {mutableStateOf<String?>(null)}
     var switchRomError by remember {mutableStateOf<String?>(null)}
     var restartError by remember {mutableStateOf<String?>(null)}
+    var exitError by remember {mutableStateOf<String?>(null)}
+    var confirmExit by remember {mutableStateOf(false)}
     var backupError by remember {mutableStateOf<String?>(null)}
     var backupChoices by remember {mutableStateOf<List<SaveBackupChoice>>(emptyList())}
     var selectedBackup by remember {mutableStateOf<SaveBackupChoice?>(null)}
@@ -529,6 +531,8 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
             return@BackHandler
         } else if(editingTouch){
             settings.touch.layout.restore(originalTouch);settings.touch.vibration=originalVibration;editingTouch=false
+        }else if(confirmExit) {
+            confirmExit=false
         }else paused=!paused
         input.clear();settings.pad.clear();settings.holdFast=false
     }
@@ -645,7 +649,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                                 switchRomError=null
                                 if(!onSwitchRom()) switchRomError=NativeBridge.gbaStatus()
                             }
-                            MenuButton("Exit Game"){onExit()}
+                            MenuButton("Exit Game",!restarting){exitError=null;confirmExit=true}
                         }
                         "restart"->{
                             Text("Restart the game? Progress not saved in the game will be lost.")
@@ -842,6 +846,39 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onExit:()->Unit,onS
                     if(page!="main")MenuButton("Back",!restarting){settings.save();page=when(page){"touchscreen","gamepad"->"input";"restore backup"->"backups";"state slot"->"states";"overwrite state","load state","import state"->"state slot";else->"main"}}
                 }
             }
+        }
+        if(confirmExit) {
+            AlertDialog(
+                onDismissRequest={if(!restarting)confirmExit=false},
+                title={Text("Exit game?")},
+                text={
+                    Column {
+                        Text("The current cartridge save will be written before the app closes.")
+                        exitError?.let{Text("Could not save: $it",color=Color(0xFF9B2929))}
+                    }
+                },
+                confirmButton={
+                    TextButton(enabled=!restarting,onClick={
+                        restarting=true;exitError=null
+                        surface?.gamePaused=true
+                        input.clear();settings.pad.clear();settings.holdFast=false
+                        surface?.clearPendingTouches()
+                        scope.launch {
+                            val result=runCatching {
+                                val gameSurface=checkNotNull(surface){"Game display is unavailable"}
+                                withTimeout(5000){while(!gameSurface.pauseAcknowledged)delay(10)}
+                                withContext(Dispatchers.IO) {
+                                    check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
+                                }
+                            }
+                            restarting=false
+                            result.onSuccess{activity.finishAndRemoveTask()}
+                                .onFailure{exitError=it.message ?: it.toString()}
+                        }
+                    }) {Text(if(restarting)"Saving..." else "Exit")}
+                },
+                dismissButton={TextButton(enabled=!restarting,onClick={confirmExit=false}){Text("Cancel")}}
+            )
         }
     }
 }

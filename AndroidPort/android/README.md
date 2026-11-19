@@ -57,6 +57,9 @@ timers, DMA, interrupts, backup media, and C recompiler.
 - Pause > Restart ROM asks for confirmation, writes the current cartridge save,
   then restarts from boot. Progress not saved inside the game is lost. If the
   cartridge save cannot be written, the game remains paused and is not reset.
+- Pause > Exit Game asks for confirmation, writes the current cartridge save,
+  and closes the app instead of returning to ROM selection. Cancel returns to
+  the pause menu; if saving fails, an error is shown and the app stays open.
 - Pause > Save states offers nine ROM-specific slots. Select a slot to save or
   load; replacing an occupied slot and loading a state both require confirmation.
   A successful save or load returns directly to the game. Undo reverses the most
@@ -96,8 +99,8 @@ as well as device, square and 19:9 modes; mobile zoom is capped at level 6.
 
 ## Build on Windows
 
-Requires Rust with `aarch64-linux-android`, Android SDK 35 and NDK
-28.2.13676358, Java compatible with Gradle 9.5, Python, and a host gcc/clang
+Requires Rust with `aarch64-linux-android`, Android SDK 35, build-tools 36.0.0
+and NDK 28.2.13676358, Java compatible with Gradle 9.5, Python, and a host gcc/clang
 for TinyCC's small build-time header generator. The Gradle wrapper and build
 scripts are included. Specify your actual SDK and Java paths:
 
