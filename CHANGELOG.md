@@ -3,6 +3,29 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-19 — Publish FFTA DE-ReBuild 1.1.2
+
+Type: docs. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Publish release 1.1.2 with the Android laws and exit fixes, warning-free platform builds and the desktop cancellation fix.
+
+**Validation**
+
+- GitHub reports v1.1.2 as public and latest; all nine assets matched local sizes and SHA-256 digests after upload.
+- The annotated tag resolves to source commit 2cb0f457191f064cf4868edd51995ff259dfe870; remote main and decomp were fast-forwarded to that source commit.
+- Linux, Windows/Wine and Android build/test gates passed; the final Android APK was installed on the moto g34 with six save and snapshot files unchanged.
+
+**Limitations**
+
+- Windows was tested under Wine, not native Windows. The optional host Wine smoke could not start because the shared prefix was leased.
+- Android remains a debug-signed preview; a full cold installation of every SDK package was not exercised.
+
+Documentation: [v1.1.2.md](docs/releases/v1.1.2.md).
+
+[Change record](docs/changes/2026-11-19-publish-release-1-1-2.json)
+
 ## 2026-11-19 — Prepare warning-free platform builds and acknowledge concurrent cancellation
 
 Type: fixed. Platforms: Android, Linux, Windows.

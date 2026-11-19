@@ -23886,3 +23886,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: public GitHub latest v1.1.1, tag d89bb7949c3f6596f31efcd84623c9ec87078780, nine uploaded asset digests and sizes match; remote main and decomp reached the tag. Android version code 26 uses the previous signing certificate. Staged Linux, Windows and Android packages passed integrity, source and private-file checks.
 - Evidence: docs/changes/2026-11-18-prepare-release-1-1-1.json and docs/changes/2026-11-18-publish-release-1-1-1.json; release-111-android-38o2tleu, release-111-desktop-npuz9nuc, release-111-package-validation-owiiffg3.
 - Limits: Android remains a debug-signed preview with partial parity; real-game state transfer, undo and cartridge-backup restore on a phone are unverified. Windows gate ran under Wine.
+
+### RELEASE-1112
+
+- Outcome: completed
+- Verified criteria: Linux, Windows/Wine and Android Docker builds/tests passed without warnings; Android APK installed with six save files unchanged; v1.1.2 public and latest with nine verified assets.
+- Evidence: docs/changes/2026-11-19-prepare-release-1-1-2.json; docs/changes/2026-11-19-publish-release-1-1-2.json; units earnsthb, 5gez81aw, x9f1zpib; source 2cb0f457.
+- Limits: native Windows and complete cold Android SDK installation untested; optional host Wine smoke deferred due to an existing shared-prefix lease.
