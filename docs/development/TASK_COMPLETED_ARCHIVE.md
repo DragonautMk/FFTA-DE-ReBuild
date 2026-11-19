@@ -24054,3 +24054,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: 38 original-interpreter versus translated updater/draw cases match complete state and guest clock after managed source spans are altered. Every selected list and duration matches the model; all 19 lists used in the sequence are covered.
 - Evidence: `target/validation/units/e134-full-sequence-wine-b6uugr9g/{unit-result.json,evidence/result.json,command.log}`; build `e134-full-sequence-build-hhzdrm13`; `docs/changes/2026-11-19-validate-e134-complete-first-sequence.json`. Inputs guarded, Wine drained and successful scratch removed.
 - Limits: independent controlled calls do not prove continuous ordinary animation, the other two bank lists or production-cache coverage. Generated instructions may fall back to interpretation; other consumers, native Windows, Linux and USA remain open.
+
+### GIT-MAIN-DECOMP
+
+- Outcome: completed
+- Verified criteria: Merged main 51d3e1f4 into decomp as c3368cda and published it; GitHub reported decomp six commits ahead and zero behind. Local decomp matched its remote without changing existing worktree files.
+- Evidence: Merge prepared without file conflicts; FUNDING.yml matches main; project-memory checks against both parent tips, task handoff and git diff checks passed. docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json covers the pre-existing test.
+- Limits: Development changes remain on decomp; no runtime or ROM tests were restarted for this Git synchronization.

@@ -72,7 +72,7 @@ Archive completed tasks; don't reopen closed children or stop other work.
 - Outcome: partial
 - Verified: previous rounds recovered 13.24 GiB. The local batch reported PASS for 32/32 files.
 - Missing: independent offline restore and net total.
-- Resume: on request, use the receipt in Final handover. Skip U31.
+- Resume: on request, target/storage-historical-20261119-tcl2umci/progress.json and STORAGE_CHECKLIST.md; skip U31.
 
 ## Incomplete tasks and open criteria
 
@@ -186,9 +186,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: TARGET-ARCHIVE-HISTORY suspended at user request.
-- Last verified result: the local compression process exited 0 with 32/32 files recorded as PASS.
-- Remaining work: independent offline restore and final space accounting. U31 and native Windows remain deferred.
-- Errors or blockers: none reported by this batch.
-- Next action: resume only on request from the receipt below.
-- References: target/storage-historical-20261119-tcl2umci/progress.json and STORAGE_CHECKLIST.md.
+- Task: GIT-MAIN-DECOMP completed.
+- Last verified result: main merged into decomp; local and remote decomp match.
+- Remaining work: none for this merge.
+- Errors or blockers: none.
+- Next action: await a new selection.
+- References: c3368cda, 51d3e1f4.
