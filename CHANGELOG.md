@@ -110,6 +110,28 @@ Documentation: [README.md](AndroidPort/android/README.md), [ffta_laws_layout.md]
 
 [Change record](docs/changes/2026-11-19-android-laws-exit-confirmation.json)
 
+## 2026-11-19 — Add GitHub bug and feature request forms
+
+Type: added. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Add a bug report form for ROM region, platform, device or PC specifications, bug description, reproduction steps and optional screenshots, cartridge saves and save-state snapshots.
+- Add a shorter feature request form and link the issue chooser from the README. Public attachment guidance asks reporters not to share ROM or BIOS files.
+
+**Validation**
+
+- Parsed both YAML forms and checked required fields, ROM and platform choices, optional attachment areas, unique field identifiers and existing GitHub labels.
+- Checked the form and attachment syntax against GitHub documentation and ran git diff --check.
+
+**Limitations**
+
+- GitHub only displays the forms after they are added to the repository default branch; browser rendering has not yet been verified.
+
+Documentation: [bug_report.yml](.github/ISSUE_TEMPLATE/bug_report.yml), [feature_request.yml](.github/ISSUE_TEMPLATE/feature_request.yml), [README.md](README.md).
+
+[Change record](docs/changes/2026-11-19-add-github-issue-forms.json)
+
 ## 2026-11-18 — Verify indexed context on generated-dispatch world map
 
 Type: changed. Platforms: EUR / Windows GNU under Wine.
