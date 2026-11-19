@@ -23887,9 +23887,71 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Evidence: docs/changes/2026-11-18-prepare-release-1-1-1.json and docs/changes/2026-11-18-publish-release-1-1-1.json; release-111-android-38o2tleu, release-111-desktop-npuz9nuc, release-111-package-validation-owiiffg3.
 - Limits: Android remains a debug-signed preview with partial parity; real-game state transfer, undo and cartridge-backup restore on a phone are unverified. Windows gate ran under Wine.
 
+### ROMDATA-04-METADATA14-ID1-ALIAS-EVENT-SOURCE-AUDIT
+
+- Outcome: completed bounded source and retained-state audit; ordinary execution remains unproved.
+- Evidence: `7xxd2a4i` links key161/program151/opcode74 to batch; `dlkjby8u` finds no direct key161 among 256 E170 event records, identifies special key74 row22 referenced by mission22; `3xgls5b2` finds no selected RAM value161 in 279 valid guarded retained states. See `docs/changes/2026-11-19-trace-descriptor-batch-key161.json`.
+- Limits: dynamic values can change; the special event and batch route were not executed. Outside-record and other producers, ordinary reachability and the parent task remain open.
+
+### ANDROID-ADVANCED-TRANSFER
+
+- Outcome: completed
+- Verified criteria: user-supplied EUR phase-two snapshot matches the phone ROM, passes Android import and state load without gameplay, and was atomically copied into previously empty phone slot 2. Device SHA-256 matches the source; slot 1 and cartridge save remained unchanged. User cartridge save and slot 1 were backed up privately.
+- Evidence: android-user-state-ready-sh56ht9u and android-advanced-save-transfer-atomic-nrqluchl; backup target/android-save-transfer-backups/before-phase-two-4za76g9g/.
+- Limits: the scene label is user-reported and the state retains cheat ancestry. Real-phone loading and subsequent gameplay remain unverified. Loading may update the cartridge save through later autosaves.
+
+### CLEANUP-20261119
+
+- Outcome: completed
+- Verified criteria: recovered 3,341,176,832 bytes of file blocks: 2,030,714,880 from an idle canonical Rust incremental cache and 1,310,461,952 by offloading 124 optional previously archived completed-test executable copies. Canonical executables and the existing Cargo lock were retained. No failed diagnostic archive was offloaded.
+- Evidence: `target/local-artifact-cleanup-20261119-efcb635c/receipt.json`; `target/external-completed-executables-20261119/{plan,result}.json`; completed-only preview `target/cold-storage-batches/20261119-083446-0a80024d/batch.json`. External `dbg2-cjk-font-gui-jqogyz5h/work/session/recomp.exe` and local failed `dbg2-trigger-actions-live-0l38y8jv/work/session/recomp.exe` archives verified; the latter with the USB mount overridden to a nonexistent path.
+- Limits: recovery excludes 48,865,280 externally hard-linked bytes retained by other paths. The host activity check reported unreadable process details; no global inactivity is claimed. Current, suspended, leased, private and unreviewed paths were excluded. Restoring these optional moved archives requires volume UUID 5868399B68397938; the root target and canonical builds remain local. The preview had explicit exclusions and does not imply all target data is compressed.
+
+### ANDROID-LAWS-EXIT
+
+- Outcome: completed
+- Verified criteria: Android laws/HELP now use complete centered layouts, including the user's multirow slot3; the user confirmed the screen and that confirming Exit closes the app directly. Four save files were preserved across the final install.
+- Evidence: 173 core/42 bridge host tests PASS (s41dv_7v); exact slot3 render PASS (24mzrh7x); UI export PASS (0w68g9vt); Docker APK/29 Kotlin tests and install PASS (fy12lmk0, before-multirow-laws-zle1z1wc); docs/changes/2026-11-19-android-laws-exit-confirmation.json.
+- Limits: other multirow layouts and USA remain unverified; Cancel was not separately exercised. The earlier initial phone build did not cover slot3; its failure and subsequent fix are recorded in docs/ffta_laws_layout.md.
+
+### CLEANUP-20261119-B-RECOVERED
+
+- Outcome: completed
+- Verified criteria: recovered 1,652,072,448 allocated bytes: exact local archives of E71 failed-attempt dataset and intermediate, E70 failed-attempt resources, and one failed executable; 41 optional previously archived completed-test executables moved to USB after explicit PASS receipts. Original failed outcomes and private siblings were preserved; project target and canonical builds remain local.
+- Evidence: `target/e71-failed-dataset-preservation-20261119-b/{plan,result}.json`; `target/e71-failed-intermediate-preservation-20261119-b/{plan,result}.json`; `target/e70-failed-copy-preservation-20261119-b/{plan,result}.json`; `target/failed-exe-preservation-20261119-b/{plan,result}.json`; `target/external-verified-legacy-20261119-c/{plan,result}.json`; `target/external-completed-executables-20261119-c/{plan,result}.json`. E71 and intermediate local archives verified with a nonexistent USB mount override; one USB executable archive verified. Completed-only previews at 8 and 64 MiB selected zero paths under their documented exclusions.
+- Limits: other active, leased, named comparison and unreviewed data remain; host activity inspection had unreadable process details. Optional moved test executables require USB volume UUID 5868399B68397938 for restore. Auto-review rejected E42 compression due to mixed outcomes and an active goal; the original remains, plan `target/e42-partial-dataset-preservation-20261119-b/plan.json`, awaiting explicit user approval.
+
+### CLEANUP-20261119-B
+
+- Outcome: completed
+- Verified criteria: following the user's continuation after the E42 mixed-outcome clarification, archived its exact E42 offline dataset, one intermediate and three E41/E42 historical resource generations locally, recovering 931,213,312 bytes of allocated blocks. The original mixed test exits 0/101/0 and evidence remain unchanged. Together with CLEANUP-20261119-B-RECOVERED, this selection reclaimed 2,583,285,760 bytes; 41 optional completed-test executable archives were moved externally in the earlier substep.
+- Evidence: `target/e42-partial-dataset-preservation-20261119-b/{plan,result}.json`; `target/e42-mixed-intermediate-preservation-20261119/{plan,result}.json`; `target/e42-mixed-resources-preservation-20261119/{plan,result}.json`. Local E42 dataset and historical resources verified with the USB mount overridden to a nonexistent path. Previous completed outcomes and receipts are in CLEANUP-20261119-B-RECOVERED.
+- Limits: archives retain actual mixed outcomes and require local restore before direct use; the current E170 dataset was not selected. Other active, leased, comparison and unreviewed artifacts remain outside this selection. Host activity checks reported unreadable process details and do not prove global inactivity. Optional previously offloaded executables require USB volume UUID 5868399B68397938.
+
+### CLEANUP-20261119-C
+
+- Outcome: completed
+- Verified criteria: locally archived exact datasets from the first dynamic-raw Wine attempt (exit 101) and the failed E167 validation unit (exit 101), reclaiming 998,563,840 allocated bytes after archive overhead. The separately successful dynamic-raw retry and the current E170 dataset remain available. E167 and E170 share ROM/profile, E170 covers the former declared domains, and no other unit receipt references the E167 scope. Original failure receipts remained unchanged.
+- Evidence: `target/dynamic-raw-failed-preservation-20261119-c/{plan,result}.json`; `target/e167-failed-dataset-preservation-20261119-c/{plan,result}.json`. Both local archives verified while overriding the USB mount to a nonexistent path.
+- Limits: the original outcomes remain FAIL; exact older data is retained and requires local restore before direct use. A large bounded-range unit and several replay units have nested activity markers or unfinished consumers and were not touched. Host activity checks reported unreadable process details; no global inactivity is claimed. Current, leased, comparison and unreviewed paths remain outside this selection.
+
+### CLEANUP-20261119-D
+
+- Outcome: completed
+- Verified criteria: locally archived three exact E127 failed-test intermediate snapshots, three isolated Linux executable copies and one failed-test diagnostic log; recovered 677,523,456 allocated bytes after archive overhead. Original FAIL receipts and checked private siblings remain in place. The original user choice explicitly covered local compression of failed/interrupted test output and preservation of intermediate snapshots.
+- Evidence: `target/e127-failed-intermediates-preservation-20261119-d/{plan,result}.json`; `target/failed-linux-preservation-20261119-d/{plan,result}.json`. One E127 intermediate and one Linux executable archive verified with the USB mount overridden to a nonexistent path; the existing archive publisher verified every member before retirement.
+- Limits: remaining E134 data is tied to current work; bounded-range/replay scopes have activity markers or unfinished consumers; other unreviewed data remains. Host activity checks reported unreadable process details and do not prove global inactivity. Compressed historical paths require local restore before direct use; no USB is needed for these new archives.
+
 ### RELEASE-1112
 
 - Outcome: completed
 - Verified criteria: Linux, Windows/Wine and Android Docker builds/tests passed without warnings; Android APK installed with six save files unchanged; v1.1.2 public and latest with nine verified assets.
 - Evidence: docs/changes/2026-11-19-prepare-release-1-1-2.json; docs/changes/2026-11-19-publish-release-1-1-2.json; units earnsthb, 5gez81aw, x9f1zpib; source 2cb0f457.
 - Limits: native Windows and complete cold Android SDK installation untested; optional host Wine smoke deferred due to an existing shared-prefix lease.
+
+### GIT-DECOMP-SYNC
+
+- Outcome: completed
+- Verified criteria: Fast-forwarded local decomp from 039a19fd to 0df21e17, matching GitHub and origin/decomp with zero commits ahead or behind; no staged changes were lost.
+- Evidence: Compared 31 affected worktree paths before and after; all file hashes and modes were unchanged. Project memory, handoff and Git diff checks passed.
+- Limits: Independent uncommitted documentation and its new change record remain in the worktree for their existing task.

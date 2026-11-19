@@ -2,11 +2,11 @@
 
 ## Operational status
 
-English-first; Italian optional. Accepted report/guide/export scopes remain recorded; cross-tree audit open.
+English-first; cross-tree audit open.
 
-Read only relevant sections; do not preload archives, CHANGELOG, PROJECT_STATE or large TODOs. Retired artifacts do not invalidate accepted evidence. Rules: [MEMORY_WORKFLOW](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Read relevant sections only; retired artifacts do not invalidate acceptance. [Resume rules](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Archive completed tasks; open parents do not reopen closed children. Do not stop other work.
+Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Running or suspended tasks
 
@@ -29,13 +29,13 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- ROMDATA-05 source-byte regression: E170 Wine `ffhtpvms` PASS for all 10,948,338 distinct declared bytes and aligned covered words; raw control confirms inverted backing. Parent equivalence remains partial. `8oo4pd4m` failed an invalid counter assumption; retained.
+- Selection: ROMDATA-05 partial; E170 bytes `ffhtpvms`, E50 8,476-frame pair PASS. Current build `cswvlp2e` PASS; E170 scene `k3j9esc3` live (exec 48803). Inspect receipt; preserve inputs and concurrent work. `8oo4pd4m` FAIL retained.
 - Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
-- Selection: user paused ROMDATA-04-METADATA14-ID1-ALIAS. Converter `_hfk7lti`, batch `g2cugem4`, native `1gs1xgeu` PASS. Source `7xxd2a4i` links key161/opcode74 to batch; `yzy24ob_` found no key161 in 279 states, `n18roaxx` no immediate queue lead. On explicit resume inspect PASS receipt `nz5ytza5`.
+- ROMDATA-04-METADATA14-ID1-ALIAS partial: batch `g2cugem4` PASS; event22/key161 ordinary path open. `6d1p8x1c` excludes operand161 in 191 declared writer instructions. Source `o9iv4u54` conditionally finds queue initialization selects zero slot1; later writes/IWRAM body and other producers remain open.
 - Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
@@ -73,8 +73,8 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 - State: active
 - Outcome: partial
 - Verified: brightness, profiles, FPS, transparency; slots/undo and PC/Android snapshot transfer including SL2/SL3 ancestry; synthetic bridge/replay, builds and moto g34 install PASS. `docs/changes/2026-11-18-android-desktop-snapshot-compatibility.json`.
-- Missing: real-game phone transfer/undo; previews, response, video parity and debug. Cross-core timer state differed after synthetic replay despite matching CPU/RAM/video/audio.
-- Resume: installed and verified final APK checksum on moto g34; await user real-game transfer/undo test. Preserve personal saves and concurrent work.
+- Missing: real-game phone load/undo; previews, response, video parity and debug. Cross-core timer state differed after synthetic replay despite matching CPU/RAM/video/audio.
+- Resume: user phase-two state copied to phone slot 2, Android core load PASS (sh56ht9u); await real-phone load/undo. Preserve backup target/android-save-transfer-backups/before-phase-two-4za76g9g/.
 
 
 ### CHEAT-DISTRIBUTION
@@ -171,16 +171,16 @@ Archive completed tasks; open parents do not reopen closed children. Do not stop
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
-- Async work and shared resources: checkout, memory, canonical targets, Wine, display, datasets and fixtures may be in use elsewhere. Sandbox process visibility cannot establish host inactivity. Check ownership, handles and outputs before resuming; do not stop others' jobs or clean live/failed units. No response or lost handle does not establish failure. Historical cleanup receipts do not authorize further cleanup.
-- Memory: publish through the shared lock and both preimage hashes; merge conflicts. Do not remove another writer's lock or process. See MEMORY_WORKFLOW.
-- Complete history: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration metadata: TASK_HANDOFF_MIGRATION.json. Open tasks remain here.
-- Godot: planned assessment complete, implementation deferred, not a current dependency. AndroidPort is separate; originals/ROM/BIOS/private catalogs/saves/recordings stay out of commits/packages.
+- Shared resources may be in use: host-check ownership, handles and outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles and old receipts do not prove inactivity or authorize cleanup.
+- Memory: use the shared lock and both preimage hashes; merge conflicts and preserve others' locks/processes. See MEMORY_WORKFLOW.
+- History: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration: TASK_HANDOFF_MIGRATION.json.
+- Godot assessment complete, implementation deferred. AndroidPort is separate; exclude ROM/BIOS, private catalogs, saves and recordings from commits/packages.
 
 ## Final handover
 
-- Task: RELEASE-1112 completed.
-- Last verified result: v1.1.2 public and latest; nine assets match SHA-256.
-- Remaining work: none for this release.
-- Errors or blockers: Windows tested under Wine; native Windows untested.
+- Task: GIT-DECOMP-SYNC completed.
+- Last verified result: local and remote decomp match at 0df21e17; local work preserved.
+- Remaining work: none for this synchronization.
+- Errors or blockers: none.
 - Next action: await a new selection.
-- References: docs/changes/2026-11-19-publish-release-1-1-2.json.
+- References: GIT-DECOMP-SYNC archive outcome.

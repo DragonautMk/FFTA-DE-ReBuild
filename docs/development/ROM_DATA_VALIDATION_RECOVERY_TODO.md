@@ -386,11 +386,26 @@ current evidence before running another check.
   altered; state, clock, video, OAM and mixed audio match. The batch wrapper
   `080ce18c` now passes five controlled E170 Wine cases (`g2cugem4`) through
   return, including bounds and an occupied destination slot, using an
-  authenticated two-unit header. Ordinary batch reachability, other headers,
-  Wine `049hqes5` observes all five ordinary row requests during generated
+  authenticated two-unit header. Wine `049hqes5` observes all five ordinary
+  row requests during generated
   dispatches without interpreter instruction scope. Wine `1gs1xgeu` confirms
   all five requests directly invoke the generated-code memory API and none is
-  nested in `interp_one`. Exact guest PCs and other calls and scenes remain open.
+  nested in `interp_one`. Static join `7xxd2a4i` connects script key 161,
+  program 151 and opcode 74 to the batch wrapper. E170 event audit `dlkjby8u`
+  finds no direct key-161 row; event row 22 is the sole special key-74 row and
+  mission record 22 references it. The selected RAM table value is not 161 in
+  279 valid retained states (`3xgls5b2`); this does not establish the value
+  during event execution. The event-index byte is also not 22 in the same
+  retained states (`_13erapb`); that byte can be stale and is not a complete
+  mission-entry indicator. Source audit `6d1p8x1c` pins two operand-based
+  selector-table writers and finds no 161 operand among their 46 main and
+  145 auxiliary declared script instances; other writers, aliases and
+  dynamic streams remain open. Conditional source audit `o9iv4u54` finds the
+  queue initializer clears four slots, sets selector 1 and writes slot 0;
+  without intervening writes the special event reads zero from slot 1. The
+  copied IWRAM body and absence of later mutations are assumptions, not live
+  observations. Ordinary batch reachability, other headers, exact
+  guest PCs, other calls and scenes remain open.
 - [x] **ROMDATA-04-METADATA14-ID1-ALIAS-NATIVE-READS scoped:** attribute all
   five row requests on the recorded EUR battle route to direct generated-code
   memory API calls while preserving the 240-frame raw/managed comparison.

@@ -3,6 +3,30 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-19 — Trace the descriptor batch event source
+
+Type: docs. Platforms: EUR source and retained snapshots.
+
+**Changes**
+
+- Document the authenticated connection from event key 161 through script opcode 74 to the descriptor batch importer, and constrain the event-row and saved-state leads without claiming ordinary execution.
+
+**Validation**
+
+- Source join 7xxd2a4i identifies program 151 as the only declared archive program with opcode 74, at key 161. Event audit dlkjby8u finds no direct key-161 event row and identifies special key-74 row 22 referenced by mission record 22.
+- Protected retained-state audit 3xgls5b2 inspects the live-selector byte and selected table halfword in 279 valid authenticated EUR snapshots; none selects 161. Two unsupported or invalid snapshots were excluded, protected inputs passed and scratch was removed.
+- Guarded audit _13erapb finds no event-index byte 22 in the same 279 valid retained states; the field may be stale and is not a complete mission-entry indicator.
+- Pinned E170 source audit 6d1p8x1c identifies main opcode 28 and auxiliary opcode 5 as operand-based selector-table writers; none of their 46 and 145 declared archive instances directly encodes 161. Other writers, selector timing, aliasing and dynamic streams remain open.
+- Source audit o9iv4u54 pins the nonzero-key queue initializer, copied-IWRAM zero-clear helper and special-event read: conditional on the body matching ROM and no later writes, the initializer clears four slots, selects slot 1 and stores the key in slot 0, leaving the selected slot zero.
+
+**Limitations**
+
+- A saved-state negative does not exclude later changes or prove the special event runs; outside-record or dynamic sources, other producers and ordinary batch reachability remain open. No gameplay or performance test was performed.
+
+Documentation: [2026-11-18-verify-descriptor-batch-importer.json](docs/changes/2026-11-18-verify-descriptor-batch-importer.json).
+
+[Change record](docs/changes/2026-11-19-trace-descriptor-batch-key161.json)
+
 ## 2026-11-19 — Publish FFTA DE-ReBuild 1.1.2
 
 Type: docs. Platforms: Android, Linux, Windows.

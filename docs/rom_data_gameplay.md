@@ -6449,6 +6449,42 @@ ordinary batch-wrapper reachability, other headers and callers, native read
 attribution and other platforms remain open. Inputs passed protection checks,
 successful scratch was removed and Wine drained.
 
+An authenticated E170 source join `alias-batch-script-route-7xxd2a4i`
+connects event key 161 to script program 151, whose opcode 74 conditionally
+calls the batch wrapper. In the declared archive it is the only program
+containing that opcode. The event/mission audit `alias-batch-event-key-dlkjby8u`
+finds no direct key-161 event among 256 rows. Row 22 instead uses the special
+key 74, which selects a halfword from live RAM; mission record 22 references
+that row. In 279 valid retained snapshots, the selected halfword is never 161
+(`alias-batch-selector-states-3xgls5b2`). These are bounded source and saved
+state observations, not evidence that the event runs, that its future RAM
+value cannot change, or that other dynamically supplied event sources cannot
+reach the wrapper. Ordinary batch execution remains unproved.
+The same retained-state collection contains no value 22 in the event-index
+byte at `02003c2a` (`alias-batch-event22-states-_13erapb`). That byte can be
+stale and is written on a specific event callback path, so this is not a
+census of all mission-entry states or a proof that mission 22 is unreachable.
+
+Source audit `alias-key161-selector-script-writers-6d1p8x1c` pins two
+operand-based writers of the selector table: main script opcode 28 and
+auxiliary script opcode 5. Both increment the selector byte and store their
+little-endian operand at `02002194 + 2 * old_selector`. Among the declared
+E170 archives, all 46 main and 145 auxiliary instances of those opcodes have
+operands other than 161. This bounds those source instances and writers:
+the selected index can change, addresses can alias, RAM may be modified by
+other code, and guest-generated or out-of-archive streams remain possible.
+No bound on the original selector or ordinary reachability is inferred.
+
+Source audit `alias-key161-queue-init-source-o9iv4u54` also connects the
+nonzero-key queue initializer at `08009be8` to the existing copied-IWRAM
+zero-clear helper through the original `BX r2` trampoline. Conditionally on
+that IWRAM body matching its ROM source, the initializer clears the eight
+bytes at `02002194`, sets the selector byte at `0200219c` to 1 and writes
+the queued key to slot 0. With no intervening write, the special event
+selector reads slot 1 and obtains zero. This is a source-level ordering result,
+not a live execution observation or a restriction on later selector changes,
+other writers, aliases or generated inputs.
+
 
 ## Conditional packed lookup production CLI
 
