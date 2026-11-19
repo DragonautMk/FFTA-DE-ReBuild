@@ -205,6 +205,27 @@ Documentation: [android_docker.md](docs/android_docker.md), [debug_control.md](d
 
 [Change record](docs/changes/2026-11-19-prepare-release-1-1-2.json)
 
+## 2026-11-19 — Document the E134 ordinary sequence regression test
+
+Type: docs. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Document the existing guarded 420-frame E134 startup comparison and its later explicit context-progression assertions.
+
+**Validation**
+
+- The earlier Wine unit e134-ordinary-context-wine-euh4ed6s passed 420 raw/managed frames with all 38 selector and duration fields read, selector first reads in source order, matching state/clock/video/OAM/dispatch/audio and altered backing spans.
+- The earlier trace recorded 177 updater observations using one context, ending at duration 27. The protected-source build e134-ordinary-complete-selectors-build-3c5_nc7i passed and its source hash matches the current test.
+
+**Limitations**
+
+- The earlier trace alone does not prove a single animation instance. The newer context-progression assertions were built but have not been executed; exact native load PCs and other scenes remain unverified.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [2026-11-19-validate-e134-complete-first-sequence.json](docs/changes/2026-11-19-validate-e134-complete-first-sequence.json).
+
+[Change record](docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json)
+
 ## 2026-11-19 — Recover local storage from duplicate archives and closed Wine diagnostics
 
 Type: changed. Platforms: Linux POSIX host, root validation and storage tooling.

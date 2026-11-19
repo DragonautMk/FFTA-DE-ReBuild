@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "document-e134-ordinary-sequence-test",
+  "title": "Document the E134 ordinary sequence regression test",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Document the existing guarded 420-frame E134 startup comparison and its later explicit context-progression assertions."
+  ],
+  "validation": [
+    "The earlier Wine unit e134-ordinary-context-wine-euh4ed6s passed 420 raw/managed frames with all 38 selector and duration fields read, selector first reads in source order, matching state/clock/video/OAM/dispatch/audio and altered backing spans.",
+    "The earlier trace recorded 177 updater observations using one context, ending at duration 27. The protected-source build e134-ordinary-complete-selectors-build-3c5_nc7i passed and its source hash matches the current test."
+  ],
+  "limitations": [
+    "The earlier trace alone does not prove a single animation instance. The newer context-progression assertions were built but have not been executed; exact native load PCs and other scenes remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/changes/2026-11-19-validate-e134-complete-first-sequence.json"
+  ]
+}

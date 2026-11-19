@@ -3330,6 +3330,17 @@ sequence are exercised, with managed source reads after state reload. Input
 guards pass, Wine drains and successful scratch is removed. Generated instructions
 may fall back to interpretation. This does not follow the continuous animation
 in ordinary play or cover the other two lists in the bank.
+A separate guarded EUR/Wine test follows a neutral startup continuation for 420
+frames. The earlier run `e134-ordinary-context-wine-euh4ed6s` read all 38
+selector and duration fields, with selector reads first seen in source order,
+and matched raw/managed state, clock, video, OAM, dispatch and audio with the
+bank spans altered. Its 177 updater observations used one context, but the
+trace alone does not prove a single animation instance; the last observed
+duration was 27. The current test adds explicit context-progression assertions.
+Its protected-source build
+`e134-ordinary-complete-selectors-build-3c5_nc7i` passed, but those newer
+assertions have not been run. Exact native load PCs and other scenes remain
+unverified.
 A later ordinary EUR Wine startup, from the protected pre-queue state on the
 same caller, reaches the original updater and reads this bank. In three-frame
 raw/managed pairs, the interpreter and the normal native-dispatch engine each
