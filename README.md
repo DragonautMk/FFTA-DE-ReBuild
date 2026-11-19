@@ -243,6 +243,9 @@ shared tools stay directly in `scripts/`.
 
 - 👻 In the first level, some sprite silhouettes may appear on screen for 1 to 3 seconds. They don't show up again for the rest of the game.
 
+To report a problem or suggest an improvement, use the
+[GitHub issue forms](https://github.com/DragonautMk/FFTA-DE-ReBuild/issues/new/choose).
+
 ## ⚠️ Good to know
 
 - 🚧 This is a work in progress.

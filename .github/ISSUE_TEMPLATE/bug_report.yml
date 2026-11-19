@@ -1,0 +1,85 @@
+name: Bug report
+description: Report a problem with the game or application.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues and attachments are public. Share saves and snapshots only if
+        you are comfortable making them public. Do not upload a ROM or BIOS.
+
+  - type: dropdown
+    id: rom-region
+    attributes:
+      label: ROM region
+      options:
+        - USA
+        - Europe (EU)
+        - Japan (JAP)
+        - Other or unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Linux
+        - Windows
+        - Android
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Application version
+      placeholder: "For example: 1.1.2"
+
+  - type: textarea
+    id: device
+    attributes:
+      label: Device or computer specifications
+      description: Include your operating system version and device model, or your PC's CPU, GPU and RAM.
+      placeholder: "For example: Windows 11, Ryzen 5 5600, RTX 3060, 16 GB RAM"
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug description
+      description: Describe what happened and what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: If you can reproduce the issue, list the steps.
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. The problem appears ...
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or video
+      description: Drag and drop images or a video here, if available.
+
+  - type: textarea
+    id: save-data
+    attributes:
+      label: Save data
+      description: If available, attach the cartridge save (.sav) in a ZIP file or provide a link.
+
+  - type: textarea
+    id: snapshot
+    attributes:
+      label: Snapshot of the bug
+      description: If available, attach a save-state snapshot (.ffstate) in a ZIP file or provide a link.
+      placeholder: Include the slot number or describe where the snapshot was taken.

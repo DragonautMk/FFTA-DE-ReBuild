@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "add-github-issue-forms",
+  "title": "Add GitHub bug and feature request forms",
+  "kind": "added",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Add a bug report form for ROM region, platform, device or PC specifications, bug description, reproduction steps and optional screenshots, cartridge saves and save-state snapshots.",
+    "Add a shorter feature request form and link the issue chooser from the README. Public attachment guidance asks reporters not to share ROM or BIOS files."
+  ],
+  "validation": [
+    "Parsed both YAML forms and checked required fields, ROM and platform choices, optional attachment areas, unique field identifiers and existing GitHub labels.",
+    "Checked the form and attachment syntax against GitHub documentation and ran git diff --check."
+  ],
+  "limitations": [
+    "GitHub only displays the forms after they are added to the repository default branch; browser rendering has not yet been verified."
+  ],
+  "files": [
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/feature_request.yml",
+    "README.md"
+  ],
+  "references": [
+    ".github/ISSUE_TEMPLATE/bug_report.yml",
+    ".github/ISSUE_TEMPLATE/feature_request.yml",
+    "README.md"
+  ]
+}
