@@ -94,15 +94,17 @@ Type: added. Platforms: Android, Linux, Windows.
 
 - Add a bug report form for ROM region, platform, device or PC specifications, bug description, reproduction steps and optional screenshots, cartridge saves and save-state snapshots.
 - Add a shorter feature request form and link the issue chooser from the README. Public attachment guidance asks reporters not to share ROM or BIOS files.
+- Default ROM region and platform to Other or unknown to avoid silently reporting USA or Linux when no selection is made.
 
 **Validation**
 
 - Parsed both YAML forms and checked required fields, ROM and platform choices, optional attachment areas, unique field identifiers and existing GitHub labels.
 - Checked the form and attachment syntax against GitHub documentation and ran git diff --check.
+- The live GitHub chooser displayed both forms; the bug form showed the requested fields and attachment controls, and the feature form applied the enhancement label. GitHub initially preselected USA and Linux, so explicit unknown defaults were added.
 
 **Limitations**
 
-- GitHub only displays the forms after they are added to the repository default branch; browser rendering has not yet been verified.
+- Reporters who cannot identify their ROM region or platform may select Other or unknown.
 
 Documentation: [bug_report.yml](.github/ISSUE_TEMPLATE/bug_report.yml), [feature_request.yml](.github/ISSUE_TEMPLATE/feature_request.yml), [README.md](README.md).
 
