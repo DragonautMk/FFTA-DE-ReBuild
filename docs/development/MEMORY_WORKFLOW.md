@@ -42,19 +42,31 @@ At session start, after compaction, and on automatic goal continuation:
 4. Check recorded async handles, owner, source/input pins and current artifacts
    before restarting anything. A timeout, lost handle or no immediate result
    does not prove failure. Sandbox ps does not prove host inactivity. Record
-   the observation time and visibility limit; leave other agents' processes,
-   prefixes, displays, locks and canonical binaries intact. Do not signal or
-   terminate others' jobs without authorization.
-5. Before the first mutation/expensive command, update the selected task/final
-   handover with a checkpoint: latest request, stable ID, existing outcome and
-   evidence, missing deliverable and next action. Use the publication protocol
-   below. If already implemented, validate its existing evidence and close the
-   selection instead of duplicating code or records.
-6. Before an expensive repeat, record what changed/failed, the invalidated
-   prior result and the smallest affected check. Valid reasons: implementation,
-   input or toolchain change, actual failure, contradictory new evidence,
-   uncovered requirement or explicit request. Context loss, unavailable retired
-   payloads, an open parent or desire for identical calibration are not reasons.
+   the observation time and visibility limit. Obtain authorization to resume a
+   paused task, restart an interrupted process, modify shared Wine resources,
+   change another agent's selected goal or signal its jobs. Preserve other
+   agents' displays, locks and canonical binaries.
+5. Before the first mutation or expensive command for each selected unit,
+   publish a checkpoint in the selected task or final handover. Include the
+   latest request, stable ID, existing outcome and evidence, exact deliverable,
+   required evidence and scope, correctness and safety risks, stopping condition
+   and next action. Distinguish the unit's acceptance from family or parent
+   criteria. If the deliverable already exists, verify its evidence and close
+   the selection if it meets the stated criteria.
+6. Reuse accepted evidence while its implementation (including relevant
+   dependencies), inputs and assumptions still support the claim. Before an
+   expensive repeat, record what changed or failed, which proof is invalid or
+   missing, and the smallest sufficient set of affected checks. Reserve broader
+   suites for relevant integration milestones, regressions that warrant wider
+   coverage or explicit requests. Context loss, unavailable retired payloads,
+   an open parent and documentation standardization do not justify reruns.
+7. Stop when the selected evidence passes, unless a concrete correctness risk
+   requires a focused follow-up for that deliverable. Keep mismatches visible
+   and resolve them before accepting the affected claim. If essential evidence
+   is unavailable, record the exact missing proof and its prerequisite and stop
+   that investigation. Record what passed, what remains partial, what is blocked
+   and what is deferred. ROM data and recovery follow the
+   [ROM-data selection rules](ROM_DATA_TODO.md#progress-rules).
 
 ### Operational structure and task states
 

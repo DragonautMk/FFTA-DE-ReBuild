@@ -13,6 +13,11 @@ parents do not reopen accepted children. The [memory workflow](MEMORY_WORKFLOW.m
 defines explicit task states, pause/async handling and locked preimage-checked
 publication; `scripts/task_handoff.py check` enforces structure and preservation.
 
+ROM-data work and recovery use a [bounded selection](ROM_DATA_TODO.md#progress-rules)
+and [risk-based validation](ROM_DATA_VALIDATION.md#risk-based-validation-for-new-work).
+Each unit has its own required proof and stopping condition. Family coverage
+and normal enablement retain their existing acceptance gates.
+
 ## Architecture and current scope
 
 - FFTA DE-ReBuild is the visible name of the independently maintained fork

@@ -151,6 +151,28 @@ Documentation: [2026-11-18-verify-descriptor-batch-importer.json](docs/changes/2
 
 [Change record](docs/changes/2026-11-19-trace-descriptor-batch-key161.json)
 
+## 2026-11-19 — Scope ROM-data validation to the selected deliverable and its risks
+
+Type: docs. Platforms: project-wide.
+
+**Changes**
+
+- Require a selection checkpoint with a defined deliverable, required evidence, risks and stopping condition. Prioritize removing original-ROM dependencies, connecting extracted resources to runtime consumption and unblocking representative gameplay.
+- Reuse accepted proof while its inputs, implementation and assumptions remain valid. Run affected regressions when evidence is invalidated and retain stronger checks for correctness-critical behavior and existing acceptance gates.
+- Stop after scoped acceptance or record an essential missing proof and its prerequisite. Keep optional leads in the backlog and preserve original task IDs, historical evidence, paused work and shared-resource ownership.
+
+**Validation**
+
+- Checked all 15 changed local links and verified byte-for-byte preservation of the operational queue and existing validation and recovery evidence. The ROM-data checklist, handoff structure and legacy archive checks passed.
+
+**Limitations**
+
+- Workflow guidance and project memory only. Runtime validation and operational task states were outside this unit.
+
+Documentation: [MEMORY_WORKFLOW.md](docs/development/MEMORY_WORKFLOW.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-19-scope-rom-data-validation-work.json)
+
 ## 2026-11-19 — Publish FFTA DE-ReBuild 1.1.2
 
 Type: docs. Platforms: Android, Linux, Windows.

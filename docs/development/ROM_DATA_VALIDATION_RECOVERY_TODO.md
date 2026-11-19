@@ -15,6 +15,30 @@ An unchecked regression item means the updated revision expectations have not
 been verified by a recorded rerun. Earlier accepted versions remain accepted.
 The evidence does not attribute every unchecked item to lack of disk space.
 
+## Selecting a recovery
+
+Use the [ROM-data progress rules](ROM_DATA_TODO.md#progress-rules) to choose
+one authorized criterion. Before a build, replay or other expensive step,
+record the deliverable, exact required evidence, risks and stopping condition.
+Name the tested revision, path or filter and any missing prerequisite.
+
+Check linked terminal results and protected inputs first. Reuse accepted proof
+where the implementation, dependencies, inputs and assumptions still support
+the selected claim. If a change invalidates that proof, run the smallest
+sufficient affected regression set under the
+[validation protocol](ROM_DATA_VALIDATION.md#risk-based-validation-for-new-work).
+Keep the stated filter, ordinary-use, equivalence and lifecycle gates for each
+selected item. Preserve known mismatches and resolve them before accepting the
+affected criterion, regardless of the planned budget.
+
+Stop when the selected criterion passes. Follow up on a concrete correctness
+risk to that criterion or record an unavailable proof and its prerequisite.
+Keep unproved broader coverage open and record optional leads in the
+[optional investigation backlog](ROM_DATA_TODO.md#optional-investigation-backlog).
+Honor existing pauses and ownership. Obtain authorization before resuming a
+paused task, restarting interrupted work, changing shared Wine resources or
+changing another agent's selected goal.
+
 ## Recovered items
 
 - [x] **ROMDATA-04-LOOP-AUDIT-BUILD-ENOSPC:** complete the audit CLI compilation

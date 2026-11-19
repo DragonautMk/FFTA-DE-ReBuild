@@ -18,6 +18,42 @@ measure all always-present migration overhead against a historical binary.
 The broader implementation goal and old startup/RSS/storage/optimization queues
 remain paused or deferred. The results below retain their original scope.
 
+## Risk-based validation for new work
+
+Before an expensive check, record the exact deliverable, required proof, risks
+and stopping condition in the [selection checkpoint](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Name the relevant source revision, region, execution mode and path or scene for
+each claim. Use the smallest set of checks that meets the selected criterion
+and covers affected dependencies. The [ROMDATA-05 gates](ROM_DATA_TODO.md#romdata-05--equivalence-saves-and-performance)
+still apply to family coverage and normal enablement.
+
+- For a source model or decoder, authenticate inputs and check the affected
+  ranges, values, aliases and boundaries against the source. Check the format,
+  compatibility and failure behavior when a change touches them.
+- For runtime consumption, show positive, attributable reads of the selected
+  extracted resource on the claimed path. Use guarded copies with altered ROM
+  backing where needed to distinguish managed reads from raw fallback. A startup
+  with zero selected reads can establish startup behavior. An ordinary-use claim
+  needs a source-backed trigger through the actual runtime path.
+- For native execution, pointers, callbacks and DMA, exercise the affected
+  dispatch and access paths, including the relevant ABI, bounds, aliases,
+  widths, mirrors, mixed managed/raw reads and side effects. Prove native
+  execution and resource use directly when claiming native coverage and record
+  any interpreter fallback. Use original/interpreter comparisons where required.
+- For state changes, timing, saves and other correctness-critical behavior, use
+  deterministic, same-input reference/candidate checks with the required state,
+  RNG, guest clock, video/OAM, dispatch and audio comparisons for the affected
+  path. Check save compatibility and transactional failure, Load, Undo, backup
+  restore or restart when the affected lifecycle requires them. Keep the
+  established exact comparisons and protect the actual test inputs.
+
+Reuse accepted results for claims their inputs, implementation, dependencies
+and assumptions still support. Run affected regressions when prior evidence is
+invalidated. Use broader suites when a relevant integration milestone, regression
+or explicit request calls for them. Keep every known mismatch in the record and
+resolve it before accepting the affected claim, even if it exceeds the planned
+validation budget. Report local passes and coverage limits with their provenance.
+
 ## Current Linux release sample, 22 October 2026
 
 The current Docker Linux archive was reused without rebuilding or recording

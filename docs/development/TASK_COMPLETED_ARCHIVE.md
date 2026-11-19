@@ -24061,3 +24061,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Merged main 51d3e1f4 into decomp as c3368cda and published it; GitHub reported decomp six commits ahead and zero behind. Local decomp matched its remote without changing existing worktree files.
 - Evidence: Merge prepared without file conflicts; FUNDING.yml matches main; project-memory checks against both parent tips, task handoff and git diff checks passed. docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json covers the pre-existing test.
 - Limits: Development changes remain on decomp; no runtime or ROM tests were restarted for this Git synchronization.
+
+### ROM-DATA-RISK-BASED-WORKFLOW
+
+- Outcome: completed
+- Verified criteria: Future ROM-data work and validation recovery have scoped deliverables, risk-based evidence and stopping rules. Selection prioritizes retiring ROM dependencies, connecting extracted data to runtime consumers and enabling representative gameplay. Existing acceptance gates and ownership rules apply.
+- Evidence: docs/changes/2026-11-19-scope-rom-data-validation-work.json. Changed local links, git diff, project-memory and task-handoff checks passed.
+- Limits: Documentation and project memory only. The operational queue and prior evidence are preserved. No paused, interrupted or pending runtime work was resumed.

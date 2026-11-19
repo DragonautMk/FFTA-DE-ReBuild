@@ -34,10 +34,12 @@ fixture creation merely to reconstruct context. Follow the repeat/reopen rules
 in [the memory workflow](docs/development/MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 Reconcile the latest user request before following an older queue or compacted
 summary. A workflow-only request does not require resuming unrelated runtime work.
-Before the first mutation or expensive command after resumption, record a
-selection checkpoint in the handoff: latest request, task ID, existing outcome,
-missing deliverable and next action. Completed/rejected work requires a concrete
-reopening reason. Validate already implemented requests rather than redo them.
+For each selected unit, record a checkpoint in the handoff before the first
+mutation or expensive command. Include the latest request, task ID, existing
+outcome and evidence, exact deliverable, required evidence, risks, stopping
+condition and next action. State which family or parent criteria remain outside
+the selected unit. Completed/rejected work requires a concrete reopening reason.
+Verify already implemented requests against their evidence.
 Check linked terminal results before trusting an old next-action line. Close a
 completed/rejected selection immediately, before choosing the next unit.
 Update the handoff before ending a work unit or a known context handoff.
@@ -55,7 +57,18 @@ Do not overwrite another agent's newer update or remove its lock/process.
 Pause/interruption never selects new work or authorizes ROM exploration.
 Check associated handles, outputs and ownership before touching asynchronous
 work; a lost handle/timeout is not failure. Sandbox-only process visibility
-does not establish host inactivity. Keep other agents' jobs intact.
+does not establish host inactivity. Obtain authorization before resuming paused
+work, restarting interrupted processes, modifying shared Wine resources or
+changing another agent's selected goal.
+
+For ROM data and validation recovery, prioritize removing a concrete original-ROM
+dependency, making the runtime consume extracted resources or unblocking
+representative gameplay. Apply the [ROM-data selection rules](docs/development/ROM_DATA_TODO.md#progress-rules)
+and [risk-based validation protocol](docs/development/ROM_DATA_VALIDATION.md#risk-based-validation-for-new-work).
+Use valid prior evidence and the smallest sufficient set of affected checks.
+Stop when the selected evidence passes, unless a concrete correctness risk
+requires follow-up. If an essential proof is blocked, record its prerequisite
+and stop that investigation. Preserve the existing correctness and safety gates.
 
 ## Local skills
 

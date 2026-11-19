@@ -10,7 +10,7 @@ an additional check. `AndroidPort/` requires separate work.
 The [validation recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md) tracks
 skipped current-revision reruns, unproved scene/lifecycle criteria, recovered
 storage failures and explicitly deferred platform checks. Use it to select a
-bounded recovery without reopening accepted evidence.
+bounded recovery under the [progress rules](#progress-rules).
 
 The [Godot frontend](GODOT_FRONTEND_TODO.md) is only an assessment with its TODO
 deferred until agreed extraction is complete. It is not a new execution step
@@ -50,6 +50,13 @@ files alone may help comparison, but does not complete reading decoded data.
 Files can be loaded at startup or before use, with an in-memory cache: “reading
 from files” does not require disk access per pixel, audio sample or instruction.
 Speed improvements remain to be measured.
+
+### Optional investigation backlog
+
+Record optional leads here with the affected task ID, supporting evidence and
+the risk or prerequisite that would make them worth selecting. This backlog
+confers no execution authority. Required but unproved criteria stay with their
+original tasks and recovery entries.
 
 <a id="punto-di-partenza-verificato-e-vincoli"></a>
 
@@ -1912,11 +1919,25 @@ compatibility; unsupported changes are declared.
 
 ## Progress rules
 
-Select a subphase in [TASK_HANDOFF.md](TASK_HANDOFF.md), recording results and
-missing criteria by family. Do not close the parent while its criteria remain
-open or reopen completed children without new evidence. Follow
-[MEMORY_WORKFLOW.md](MEMORY_WORKFLOW.md) for documentation, records and checks;
-keep ROM, extracted resources and personal evidence out of Git.
+- Within the authorized scope and dependency order, prefer a unit that removes
+  a concrete original-ROM data dependency, connects an extracted resource to
+  actual runtime consumption, or unblocks a representative gameplay sequence.
+  Prioritize inventory and source tracing when they unlock one of those results
+  or address a concrete correctness risk.
+- Select one exact deliverable in [TASK_HANDOFF.md](TASK_HANDOFF.md) before
+  expensive work. Record its evidence, risks, stopping condition and the family
+  or parent criteria still outside its scope. The [validation protocol](ROM_DATA_VALIDATION.md#risk-based-validation-for-new-work)
+  guides the choice of checks and reuse of accepted evidence.
+- Stop when the selected proof passes. Expand to further consumers, scenes,
+  selectors or edge cases only to address a concrete correctness risk for the
+  selected deliverable. If essential evidence is unavailable, record the missing
+  proof and the prerequisite for obtaining it. Put optional leads in the
+  [optional investigation backlog](#optional-investigation-backlog).
+- Record the precise passes, partial scope, blockers and deferred work. Close
+  only the verified criterion. Preserve original task IDs, source provenance,
+  historical evidence and the parent criteria. Follow the
+  [memory workflow](MEMORY_WORKFLOW.md#resume-and-repeat-decisions) for reopening
+  rules and keep ROMs, extracted resources and personal evidence out of Git.
 
 
 **ROMDATA-01-AUDIO-TYPED-CATALOG-ROOTS completed for the initial EUR roots:**

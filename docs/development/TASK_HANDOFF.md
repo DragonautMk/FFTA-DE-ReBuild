@@ -186,9 +186,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: GIT-MAIN-DECOMP completed.
-- Last verified result: main merged into decomp; local and remote decomp match.
-- Remaining work: none for this merge.
+- Task: ROM-DATA-RISK-BASED-WORKFLOW completed.
+- Last verified result: Selection and validation guidance updated. Documentation and memory checks pass.
+- Remaining work: none for this workflow change.
 - Errors or blockers: none.
-- Next action: await a new selection.
-- References: c3368cda, 51d3e1f4.
+- Next action: Await an authorized selection.
+- References: MEMORY_WORKFLOW.md, ROM_DATA_VALIDATION.md, ROM_DATA_VALIDATION_RECOVERY_TODO.md.
