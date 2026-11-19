@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-gui-load-undo",
+  "title": "Validate E170 GUI load and undo",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify actual GUI Load, Undo and reload with the current E170 base dataset against an isolated raw-ROM session on the recorded Bank route."
+  ],
+  "validation": [
+    "Wine/Xvfb e170-gui-load-undo-post-o9pxy5_a passes: the same 120-frame input runs before and after actual menu Load/Undo/reload, and raw and managed complete-state hashes and clocks match at all six endpoints. The managed range counter records 46 bytes across both passes; the otherwise equivalent single-pass GUI unit w0cdul_b records 23. Copied slots and protected inputs remain unchanged, both GUI sessions exit normally, Wine drains and successful scratch is removed."
+  ],
+  "limitations": [
+    "The counter is aggregate, not per-phase attribution; state and clock are compared at endpoints, not video/audio each frame. Generated dispatch may fall back to interpretation; this does not use a personal save or prove native Windows, other scenes, backup restore or mod behavior.",
+    "Initial unit 2myj8gap stopped before Load because its driver looked for an obsolete submenu. The current Main menu has direct Load and Undo actions. Wine logged transient debug-control access-denied messages and a D-Bus assertion during the passing run; controls and exits succeeded. The debugging workflow requested Terra xhigh as primary, but the effective primary model and effort were not independently confirmed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-validate-e170-base-save-identity.json"
+  ]
+}

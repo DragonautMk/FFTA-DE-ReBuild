@@ -14,6 +14,146 @@ fn clear_audio(m: &mut Machine) {
 }
 
 #[test]
+#[ignore = "retained cold-origin EUR input and historical endpoint; Wine only"]
+fn ordinary_direct_indexed_route_historical_endpoint() {
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_DIRECT_ORDINARY_ROOT").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "4db5a60bb293bb319e685fb317b9a31a85df8d0d872d859bcedb07c0ecc4ea22");
+    let historical = fs::read(std::env::var_os("FFTA_DIRECT_HISTORICAL_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&historical), "6b48c830e5da559da1233c8a41ed41f9ae1c5c67b09da28e1100c8da97b43d86");
+    let input_path = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_INPUT").unwrap());
+    assert_eq!(gba_core::ffta_rom::digest(&fs::read(&input_path).unwrap()), "802ec824a4d039a7721b682fd4543091b383793b1ced66812ecff4f92d1fee0b");
+    let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let (_library, table) = crate::load_native(&PathBuf::from(std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let mut replay = crate::make_machine(rom.clone(), None);
+    replay.load_state(&state).unwrap();
+    crate::arm_audio_hle(&mut replay, None);
+    replay.bus.tap_channels = true;
+    clear_audio(&mut replay);
+    assert_eq!(replay.bus.frames, 180);
+    for frame in 0..8_820u64 {
+        replay.bus.keys = input.keys_at(frame);
+        input.apply_mouse(&mut replay.bus, frame).unwrap();
+        let pointer = &mut replay as *mut Machine as *mut std::ffi::c_void;
+        crate::run_frame_native(&mut replay, &table, pointer, crate::FRAME_STEP_GUARD);
+        assert_eq!(replay.bus.frames, frame + 181);
+        clear_audio(&mut replay);
+        if (frame + 1) % 1_000 == 0 { println!("INDEXED_ENDPOINT frames={}/8820", frame + 1); }
+    }
+    let mut original = crate::make_machine(rom, None);
+    original.load_state(&historical).unwrap();
+    assert_eq!(original.bus.frames, 9_000);
+    // The historical capture did not arm host-side audio shadows or taps.
+    // Remove those observation-only fields from both copies before comparing.
+    for machine in [&mut replay, &mut original] {
+        clear_audio(machine);
+        machine.bus.tap_channels = false;
+        machine.bus.mp2k = None; machine.bus.gax = None; machine.bus.rdrv = None;
+    }
+    let actual = replay.save_state().unwrap();
+    let expected = original.save_state().unwrap();
+    let equal = actual == expected;
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":if equal { "PASS" } else { "FAIL" }, "frames":8_820, "endpoint_frame":9_000,
+        "normalized_complete_states_equal":equal,
+        "replayed_sha256":gba_core::ffta_rom::digest(&actual), "historical_sha256":gba_core::ffta_rom::digest(&expected),
+        "normalized_fields":"output audio, tap flag and host-side MP2K/GAX/RDRV shadows",
+        "limits":"One recorded route, normalized audio observation fields; not equality of the original undrained snapshots or other scenes.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+    if !equal {
+        fs::write(root.join("replayed-normalized.ffstate"), actual).unwrap();
+        fs::write(root.join("historical-normalized.ffstate"), expected).unwrap();
+    }
+    assert!(equal, "historical frame-9000 normalized state differs");
+}
+
+#[test]
+#[ignore = "retained cold-origin EUR input, E170 dataset and translation; Wine only"]
+fn ordinary_direct_indexed_archives_full_recorded_route() {
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_DIRECT_ORDINARY_ROOT").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_STATE_TEST_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "4db5a60bb293bb319e685fb317b9a31a85df8d0d872d859bcedb07c0ecc4ea22");
+    let input_path = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_INPUT").unwrap());
+    let input_bytes = fs::read(&input_path).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&input_bytes), "802ec824a4d039a7721b682fd4543091b383793b1ced66812ecff4f92d1fee0b");
+    let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let dataset = PathBuf::from(std::env::var_os("FFTA_STATE_TEST_DATASET").unwrap());
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision, manifest.resources.len()), (170, 169, 113));
+    let (_library, table) = crate::load_native(&PathBuf::from(std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    for machine in [&mut raw, &mut managed] {
+        machine.load_state(&state).unwrap();
+        crate::arm_audio_hle(machine, None);
+        machine.bus.tap_channels = true;
+        clear_audio(machine);
+    }
+    assert_eq!(raw.bus.frames, 180);
+    assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+    let spans = [
+        (direct_indexed_graphics::CALLER_LITERAL as usize, 4usize),
+        (direct_indexed_graphics::ARCHIVE_OFFSET as usize, direct_indexed_graphics::ARCHIVE_LENGTH),
+        (direct_indexed_dictionary::CALLER_LITERAL as usize, 4usize),
+        (direct_indexed_dictionary::ARCHIVE_OFFSET as usize, direct_indexed_dictionary::ARCHIVE_LENGTH),
+    ];
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let mut samples = [0u64; 5];
+    let mut dispatch_total = (0u64, 0u64);
+    const FRAMES: u64 = 8_820;
+    for frame in 0..FRAMES {
+        for (at, len) in spans {
+            for (target, &original) in managed.bus.rom[at..at + len].iter_mut().zip(&rom[at..at + len]) { *target = original ^ 0xff; }
+        }
+        let mut dispatch = [(0u64, 0u64); 2];
+        for (arm, machine) in [&mut raw, &mut managed].into_iter().enumerate() {
+            machine.bus.keys = input.keys_at(frame);
+            input.apply_mouse(&mut machine.bus, frame).unwrap();
+            let pointer = machine as *mut Machine as *mut std::ffi::c_void;
+            dispatch[arm] = crate::run_frame_native(machine, &table, pointer, crate::FRAME_STEP_GUARD);
+            assert_eq!(machine.bus.frames, 181 + frame);
+        }
+        assert_eq!(dispatch[0], dispatch[1], "dispatch frame {frame}");
+        dispatch_total.0 += dispatch[0].0; dispatch_total.1 += dispatch[0].1;
+        assert_eq!(raw.bus.clock, managed.bus.clock, "clock frame {frame}");
+        assert_eq!(raw.bus.framebuffer, managed.bus.framebuffer, "framebuffer frame {frame}");
+        assert_eq!(raw.bus.wide_framebuffer, managed.bus.wide_framebuffer, "wide framebuffer frame {frame}");
+        assert_eq!(raw.bus.oam, managed.bus.oam, "OAM frame {frame}");
+        assert_eq!(raw.bus.audio_buf, managed.bus.audio_buf, "mixed audio frame {frame}");
+        assert_eq!(raw.bus.psg_tap, managed.bus.psg_tap, "PSG frame {frame}");
+        assert_eq!(raw.bus.fifo_tap, managed.bus.fifo_tap, "FIFO frame {frame}");
+        assert!(raw.bus.hle_tap.iter().map(|x| x.to_bits()).eq(managed.bus.hle_tap.iter().map(|x| x.to_bits())), "HLE frame {frame}");
+        for (count, n) in samples.iter_mut().zip([managed.bus.audio_buf.len(), managed.bus.psg_tap.len(), managed.bus.fifo_tap[0].len(), managed.bus.fifo_tap[1].len(), managed.bus.hle_tap.len()]) { *count += n as u64; }
+        for (at, len) in spans { managed.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]); }
+        assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap(), "full state frame {frame}");
+        clear_audio(&mut raw); clear_audio(&mut managed);
+        if (frame + 1) % 500 == 0 { println!("INDEXED_FULL_ROUTE frames={}/{}", frame + 1, FRAMES); }
+    }
+    let first = owner.direct_indexed_graphics_stats().unwrap();
+    let second = owner.direct_indexed_dictionary_stats().unwrap();
+    assert!(first.source_bytes > 0 && second.source_bytes > 0, "both archives must be read during the route");
+    assert!(samples[0] > 0 && dispatch_total.0 > 0);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"recorded EUR cold-origin input from frame 180 through frame 9000",
+        "revision":[170,169], "frames":FRAMES, "first_frame":180, "last_frame":raw.bus.frames,
+        "first_archive_source_bytes":first.source_bytes, "second_archive_source_bytes":second.source_bytes,
+        "selected_source_spans_inverted_during_guest_execution":true,
+        "full_state_clock_video_oam_dispatch_five_audio_streams_equal_each_frame":true,
+        "audio_sample_counts":samples, "native_dispatches":dispatch_total.0, "fallback_dispatches":dispatch_total.1,
+        "limits":"One recorded route; generated dispatch may fall back. Does not prove original historical endpoint bytes, per-read native attribution, all scenes or consumers, or other platforms.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
 #[ignore = "retained genuine EUR state/input, E167 and native library; Wine only"]
 fn ordinary_direct_indexed_archives_source_and_equivalence() {
     crate::configure_headless_widescreen();

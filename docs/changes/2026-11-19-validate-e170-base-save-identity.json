@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-base-save-identity",
+  "title": "Validate EUR base save identity compatibility",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Verify snapshot and synthetic cartridge-save interchange in both directions between raw ROM mode and the unmodified E170 decoded base dataset, including transactional identity failures."
+  ],
+  "validation": [
+    "Windows GNU build e170-save-identity-build-ztowooij and Wine e170-save-identity-wine-_mjaz8sl pass. Snapshot bytes match between modes, each mode loads the other snapshot, and synthetic cartridge saves move in both directions via restart persistence. Invalid magic, version, ROM/BIOS identity, checksum and payload leave machines unchanged; wrong-ROM dataset attachment is rejected, and invalid boot state leaves the existing synthetic save untouched. Owner status persists, protected inputs pass, Wine drains and successful scratch is removed."
+  ],
+  "limitations": [
+    "Direct APIs and synthetic saves cover the unmodified EUR E170 base, not GUI behavior, game-specific save semantics, mods or deferred platforms. Cartridge saves remain raw game-format bytes without an added dataset identity header; arbitrary wrong-game saves are not authenticated by this test."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/base_save_identity_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/save_states.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-validate-e170-all-resource-save-lifecycle.json"
+  ]
+}

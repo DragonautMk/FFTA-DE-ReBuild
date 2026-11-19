@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "verify-indexed-direct-cold-prefix",
+  "title": "Verify indexed archive cold input prefix",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine; offline snapshot inspection"
+  ],
+  "changes": [
+    "Join the previously accepted indexed-archive ordinary continuation to its original cold input at frame 180 after the continuation’s existing audio-output drain."
+  ],
+  "validation": [
+    "Original authenticated capture helper and neutral input replay to frame 180 under Wine; offline proof v89740hr checks valid snapshots, the exact shifted event sequence and equality of all payload bytes after removing only 131,072 silent output samples. Existing 11-frame raw/managed archive pair remains accepted. Inputs protected and Wine drained."
+  ],
+  "limitations": [
+    "Raw snapshots differ in the output queue; initial exact-byte comparison snmplz7o is retained as FAIL. This does not prove the complete 9000-frame capture, other scenes, consumers or platforms. Sol xhigh was requested for diagnosis; effective Sol and primary model/effort were not independently confirmed."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

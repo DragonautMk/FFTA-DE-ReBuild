@@ -10,6 +10,51 @@ const STACK: u32 = 0x0300_7c00;
 const RETURN: u32 = 0x0800_0300;
 const BUFFER: u32 = 0x0203_0010;
 
+#[test]
+#[ignore = "EUR ordinary startup checkpoint; Windows executable under Wine"]
+fn european_context_bank_ordinary_final_hold_lifecycle() {
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_CONTEXT_ORDINARY_ROOT").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_CONTEXT_ORDINARY_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "ca90c12b4564c21fd8cea20e65bcc2c017d0d3a1ee61e89623920dd1f9a00305");
+    let mut machine = crate::make_machine(rom, None);
+    machine.load_state(&state).unwrap();
+    crate::arm_audio_hle(&mut machine, None);
+    const OBSERVED: u32 = 0x0200_f3dc;
+    let mut events = Vec::new();
+    let mut terminal = false;
+    for frame in 0..150u64 {
+        machine.bus.keys = 0x3ff;
+        machine.bus.frame_ready = false;
+        for _ in 0..5_000_000 {
+            if machine.bus.frame_ready { break; }
+            let pc = machine.cpu.regs[15];
+            let context = if matches!(pc, 0x0814_49fc | 0x080a_ccf4) { machine.cpu.regs[0] } else { machine.cpu.regs[7] };
+            if context == OBSERVED && matches!(pc, 0x0814_49fc | 0x0814_4c16 | 0x0814_4cca | 0x0814_4d10 | 0x080a_ccf4) {
+                let offset = (context - 0x0200_0000) as usize;
+                let bytes = &machine.bus.ewram[offset..offset + 0x2aa];
+                let half = |at| u16::from_le_bytes(bytes[at..at + 2].try_into().unwrap());
+                let word = |at| u32::from_le_bytes(bytes[at..at + 4].try_into().unwrap());
+                events.push(serde_json::json!({"frame":frame,"pc":format!("{pc:08x}"),
+                    "argument_low":machine.cpu.regs[1] & 255,"state":half(0x2a8),"timer":half(0x2a4),
+                    "handle":word(0x2a0),"copy_index":bytes[0x29c] as i8,"index":half(0x0e),
+                    "duration":half(0x10),"active":bytes[0x1d]}));
+                if pc == 0x0814_4d10 { terminal = true; }
+            }
+            machine.step();
+            if terminal { break; }
+        }
+        if terminal { break; }
+        assert!(machine.bus.frame_ready, "frame {frame} exceeded instruction guard");
+    }
+    assert!(terminal, "selected caller did not reach its terminal branch");
+    let result = serde_json::json!({"status":"PASS", "scope":"raw EUR interpreter; neutral ordinary startup checkpoint through terminal branch", "events":events,
+        "limits":"One recorded startup instance only; does not establish a complete final hold or other callers and inputs."});
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&result).unwrap()).unwrap();
+}
+
 fn call(machine: &mut Machine, pc: u32) {
     machine.cpu.regs[13] = STACK;
     machine.cpu.regs[14] = RETURN | 1;

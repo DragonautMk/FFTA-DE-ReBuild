@@ -438,7 +438,7 @@ replacement for the completed negative window. Offline audit `acjbv2hh` also
 verified that an independently retained cold-origin preselection is at frame
 180 with neutral input; a time-shifted copy of the recording is retained for a
 bounded continuation. It did not independently prove that the two recordings
-have identical states at frame 180.
+have identical states at frame 180 at that point in the investigation.
 
 Wine locator `e178-indexed-ordinary-cold-wine-abz4lk0q` continues that cold-origin
 checkpoint with the shifted recorded keys. It first observes managed source
@@ -448,11 +448,42 @@ raw/managed comparison through this use with the managed ROM copies of both
 archives and caller literals altered. Each frame matches complete state and
 guest clock, central and wide framebuffers, OAM and audio; audio is nonempty.
 Generated dispatch can fall back to interpretation. The Wine server drained
-and protected inputs remained unchanged. The checkpoint has no recorded cheat
-ancestry, which does not establish its full prior history; the separate input
-prefix and checkpoint were not independently proven identical. This establishes
-one bounded ordinary-input continuation, not all scenes, archive consumers or
-request-12 execution. Linux, USA and native Windows remain unverified.
+and protected inputs remained unchanged.
+
+The original authenticated acquisition helper and input were subsequently
+replayed from cold for 180 frames under Wine
+(`e178-cold-prefix-identity-snmplz7o`). The raw snapshots differ: the original
+helper drains its audio output each frame, while the retained checkpoint has
+131,072 silent output samples. Their headers and checksums are valid; every
+other payload byte matches. Loading both snapshots with the same retained
+decoder and draining only the audio output yields identical complete serialized
+states (`e178-prefix-audio-normalized-5i77hh79`). The accepted archive test
+already drains that output immediately after loading, before guest execution.
+Independent verification also confirms the recorded input is neutral before
+frame 180 and the shifted events exactly match the original continuation
+(`e178-prefix-join-proof-v89740hr`). The initial exact-byte assertion therefore
+failed for the explained output-queue difference, not a demonstrated guest-state
+divergence. This establishes the tested cold-origin join after the existing
+audio drain; it does not prove the entire 9,000-frame capture, all scenes,
+archive consumers or request-12 execution. Linux, USA and native Windows
+remain unverified. Protected inputs passed and Wine drained; the mismatch unit
+and its diagnostic state remain retained. A Sol consultation was requested as
+GPT-6.1 Sol at xhigh; effective settings and the primary model/effort were not
+independently confirmed.
+
+EUR/Wine `indexed-full-route-wine-klmjn8sv` now compares the complete remaining
+8,820 frames of that recorded input, from frame 180 through frame 9,000, with
+the E170 dataset. The two archive spans and their caller literals are inverted
+in the managed ROM during guest execution. Both archives are read: counters
+record 302 and 3,292 source bytes respectively. At every frame raw and managed
+states, guest clocks, central/wide images, OAM, dispatch and five nonempty
+audio streams match. Source bytes are restored only to serialize the managed
+state for comparison. Inputs were protected, Wine drained and successful
+scratch was removed. Wine logged a D-Bus assertion, but the test completed.
+The explicitly selected translation uses generated dispatch with interpreter
+fallback. The result does not compare the endpoint to the original historical
+capture or attribute individual reads to native PCs; other routes, consumers,
+Linux, USA and native Windows remain open.
 
 A retained EUR DS-20 checkpoint contains program 160 before its request-12
 instruction. Its flag `0244` is clear, so the original conditional can route

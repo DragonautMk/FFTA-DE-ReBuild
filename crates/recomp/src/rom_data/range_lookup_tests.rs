@@ -1332,6 +1332,65 @@ fn european_e170_all_source_bytes_read_consistency() {
 
 #[test]
 #[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_e170_all_unaligned_source_reads() {
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision, manifest.resources.len()), (170, 169, 113));
+    let mut covered = vec![false; rom.len()];
+    let mut spans = 0usize;
+    for resource in &manifest.resources {
+        for source in &resource.sources {
+            let start = source.offset as usize;
+            let end = start.checked_add(source.length as usize).unwrap();
+            assert!(start < end && end <= rom.len());
+            covered[start..end].fill(true);
+            spans += 1;
+        }
+    }
+    assert_eq!((spans, covered.iter().filter(|&&v| v).count()), (54_792, 10_948_338));
+    assert!(!(0xc4..0xca).any(|i| covered[i]), "GPIO is not ordinary ROM");
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    for byte in &mut managed.bus.rom { *byte ^= 0xff; }
+    let pointer = &mut managed as *mut Machine as *mut std::ffi::c_void;
+    let mut halfword_offsets = 0u64;
+    let mut word_offsets = [0u64; 4];
+    for at in 0..rom.len() {
+        if at + 2 <= rom.len() && at % 2 == 1 && covered[at..at+2].iter().all(|&v| v) {
+            let expected = u16::from_le_bytes(rom[at..at+2].try_into().unwrap());
+            for mirror in [0x0800_0000u32, 0x0a00_0000, 0x0c00_0000] {
+                let address = mirror + at as u32;
+                assert_eq!(managed.bus.read16(address), expected, "bus halfword {at:x} {mirror:x}");
+                assert_eq!((RT_API.read16)(pointer, address), u32::from(expected), "API halfword {at:x} {mirror:x}");
+            }
+            halfword_offsets += 1;
+        }
+        if at + 4 <= rom.len() && at % 4 != 0 && covered[at..at+4].iter().all(|&v| v) {
+            let expected = u32::from_le_bytes(rom[at..at+4].try_into().unwrap());
+            for mirror in [0x0800_0000u32, 0x0a00_0000, 0x0c00_0000] {
+                let address = mirror + at as u32;
+                assert_eq!(managed.bus.read32(address), expected, "bus word {at:x} {mirror:x}");
+                assert_eq!((RT_API.read32)(pointer, address), expected, "API word {at:x} {mirror:x}");
+            }
+            word_offsets[at % 4] += 1;
+        }
+    }
+    assert!(halfword_offsets > 0 && word_offsets[1..].iter().all(|&n| n > 0));
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "resources":manifest.resources.len(), "source_spans":spans,
+        "unique_source_bytes":10_948_338, "unaligned_halfword_offsets":halfword_offsets,
+        "unaligned_word_offsets_mod_4":word_offsets, "mirrors":["08","0a","0c"],
+        "bus_and_native_api_match_original_rom":true, "all_rom_backing_bytes_xor_ff":true,
+        "limits":"Fully covered unaligned data reads only; no guest CPU instruction, timing, execution, scene or other-platform claim. Source coverage is manifest union, not owner attribution.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
 fn european_e170_all_source_bytes_survive_save_lifecycle() {
     use std::sync::Arc;
 

@@ -3,6 +3,24 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-19 — Verify indexed archive cold input prefix
+
+Type: changed. Platforms: EUR / Windows GNU under Wine; offline snapshot inspection.
+
+**Changes**
+
+- Join the previously accepted indexed-archive ordinary continuation to its original cold input at frame 180 after the continuation’s existing audio-output drain.
+
+**Validation**
+
+- Original authenticated capture helper and neutral input replay to frame 180 under Wine; offline proof v89740hr checks valid snapshots, the exact shifted event sequence and equality of all payload bytes after removing only 131,072 silent output samples. Existing 11-frame raw/managed archive pair remains accepted. Inputs protected and Wine drained.
+
+**Limitations**
+
+- Raw snapshots differ in the output queue; initial exact-byte comparison snmplz7o is retained as FAIL. This does not prove the complete 9000-frame capture, other scenes, consumers or platforms. Sol xhigh was requested for diagnosis; effective Sol and primary model/effort were not independently confirmed.
+
+[Change record](docs/changes/2026-11-19-verify-indexed-direct-cold-prefix.json)
+
 ## 2026-11-19 — Validate native title language selections
 
 Type: added. Platforms: Windows.
@@ -45,6 +63,44 @@ Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
 
 [Change record](docs/changes/2026-11-19-validate-native-context-language-position-pairs.json)
 
+## 2026-11-19 — Validate complete indexed archive recorded route
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Extend the indexed-archive raw/managed comparison across the entire 8,820-frame recorded continuation from the authenticated cold origin.
+
+**Validation**
+
+- Wine klmjn8sv PASS on E170: complete state, clock, central/wide image, OAM, dispatch and five nonempty audio streams match every frame; both archives and caller literals inverted during guest execution, with 302 and 3,292 source bytes served. Inputs protected, Wine drained, scratch removed.
+
+**Limitations**
+
+- One recorded route; historical endpoint identity, individual native read attribution, all scenes and consumers and deferred platforms remain open. Translation may fall back to interpreter; Wine logged a D-Bus assertion despite the passing test.
+
+Documentation: [2026-11-19-verify-indexed-direct-cold-prefix.json](docs/changes/2026-11-19-verify-indexed-direct-cold-prefix.json).
+
+[Change record](docs/changes/2026-11-19-validate-indexed-direct-full-recorded-route.json)
+
+## 2026-11-19 — Validate E170 unaligned source reads
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a full-manifest-union regression for unaligned halfword and word reads with altered in-memory ROM backing.
+
+**Validation**
+
+- Windows cross-build _l4hwj3q and Wine 8_1wpiix PASS: 5,459,217 halfword and 8,159,411 word offsets match original bytes via bus and native API on three mirrors, totaling 81,711,768 comparisons. Inputs protected, Wine drained and scratch removed.
+
+**Limitations**
+
+- Fully covered offsets only; mixed covered/uncovered reads beyond sampled boundaries, guest CPU instructions, timing, scenes, per-owner attribution and deferred platforms remain open. No performance measurements.
+
+[Change record](docs/changes/2026-11-19-validate-e170-unaligned-source-reads.json)
+
 ## 2026-11-19 — Validate E170 suspend-to-battle scene
 
 Type: docs. Platforms: Windows.
@@ -66,6 +122,67 @@ Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
 
 [Change record](docs/changes/2026-11-19-validate-e170-suspend-battle-scene.json)
 
+## 2026-11-19 — Validate E170 GUI load and undo
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Verify actual GUI Load, Undo and reload with the current E170 base dataset against an isolated raw-ROM session on the recorded Bank route.
+
+**Validation**
+
+- Wine/Xvfb e170-gui-load-undo-post-o9pxy5_a passes: the same 120-frame input runs before and after actual menu Load/Undo/reload, and raw and managed complete-state hashes and clocks match at all six endpoints. The managed range counter records 46 bytes across both passes; the otherwise equivalent single-pass GUI unit w0cdul_b records 23. Copied slots and protected inputs remain unchanged, both GUI sessions exit normally, Wine drains and successful scratch is removed.
+
+**Limitations**
+
+- The counter is aggregate, not per-phase attribution; state and clock are compared at endpoints, not video/audio each frame. Generated dispatch may fall back to interpretation; this does not use a personal save or prove native Windows, other scenes, backup restore or mod behavior.
+- Initial unit 2myj8gap stopped before Load because its driver looked for an obsolete submenu. The current Main menu has direct Load and Undo actions. Wine logged transient debug-control access-denied messages and a D-Bus assertion during the passing run; controls and exits succeeded. The debugging workflow requested Terra xhigh as primary, but the effective primary model and effort were not independently confirmed.
+
+Documentation: [2026-11-19-validate-e170-base-save-identity.json](docs/changes/2026-11-19-validate-e170-base-save-identity.json).
+
+[Change record](docs/changes/2026-11-19-validate-e170-gui-load-undo.json)
+
+## 2026-11-19 — Validate E170 GUI backup restore
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Document the actual E170 GUI backup restore over different synthetic save bytes, followed by Bank slot load and replay in isolated raw and managed sessions.
+
+**Validation**
+
+- Wine/Xvfb xssda1xe PASS: five equal state and clock endpoints, backup and copied slot unchanged, 46 aggregate managed range bytes, guarded inputs, normal GUI exits, Wine drained and scratch removed.
+
+**Limitations**
+
+- Sentinel checked before paused menu navigation; endpoint comparisons only, no per-frame video/audio, real-time play, personal save, native Windows, other scenes or mods. Native dispatch may fall back. Wine logged transient access-denied and D-Bus assertion; earlier 49yki2lw and caqte4ns stopped on driver assumptions.
+
+Documentation: [2026-11-19-validate-e170-gui-load-undo.json](docs/changes/2026-11-19-validate-e170-gui-load-undo.json).
+
+[Change record](docs/changes/2026-11-19-validate-e170-gui-backup-restore.json)
+
+## 2026-11-19 — Validate EUR base save identity compatibility
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Verify snapshot and synthetic cartridge-save interchange in both directions between raw ROM mode and the unmodified E170 decoded base dataset, including transactional identity failures.
+
+**Validation**
+
+- Windows GNU build e170-save-identity-build-ztowooij and Wine e170-save-identity-wine-_mjaz8sl pass. Snapshot bytes match between modes, each mode loads the other snapshot, and synthetic cartridge saves move in both directions via restart persistence. Invalid magic, version, ROM/BIOS identity, checksum and payload leave machines unchanged; wrong-ROM dataset attachment is rejected, and invalid boot state leaves the existing synthetic save untouched. Owner status persists, protected inputs pass, Wine drains and successful scratch is removed.
+
+**Limitations**
+
+- Direct APIs and synthetic saves cover the unmodified EUR E170 base, not GUI behavior, game-specific save semantics, mods or deferred platforms. Cartridge saves remain raw game-format bytes without an added dataset identity header; arbitrary wrong-game saves are not authenticated by this test.
+
+Documentation: [2026-11-19-validate-e170-all-resource-save-lifecycle.json](docs/changes/2026-11-19-validate-e170-all-resource-save-lifecycle.json).
+
+[Change record](docs/changes/2026-11-19-validate-e170-base-save-identity.json)
+
 ## 2026-11-19 — Validate E170 source reads through save lifecycle
 
 Type: added. Platforms: Windows.
@@ -85,6 +202,47 @@ Type: added. Platforms: Windows.
 Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
 
 [Change record](docs/changes/2026-11-19-validate-e170-all-resource-save-lifecycle.json)
+
+## 2026-11-19 — Validate E134 ordinary sequence selections
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Run the strengthened ordinary E134 sequence regression, requiring all 38 selector and duration fields and one updater context with the modeled countdown progression.
+
+**Validation**
+
+- Protected-source Windows GNU build e134-ordinary-complete-selectors-build-3c5_nc7i and Wine e134-ordinary-complete-selectors-wine-jusromci pass. Across 420 neutral continuation frames, full state, clock, central and wide video, OAM, dispatch and five nonempty audio streams match; all bank spans are altered in the managed machine. All 38 selector and duration fields are typed, with 16143 typed requests, no raw or unclassified requests and no dropped trace requests. The 177 updater observations match the model in one context. Inputs were guarded, Wine drained and successful scratch was removed.
+
+**Limitations**
+
+- The last observed updater entry is in the final hold at duration 27; full final-hold completion, exact native load PCs, ordinary translated drawing, other scenes and consumers remain unproved. The explicitly labeled generated translation may fall back to interpretation; first-read frames do not order accesses within a single frame. Linux, USA and native Windows remain deferred.
+
+Documentation: [2026-11-19-document-e134-ordinary-sequence-test.json](docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json), [2026-11-19-validate-e134-complete-first-sequence.json](docs/changes/2026-11-19-validate-e134-complete-first-sequence.json).
+
+[Change record](docs/changes/2026-11-19-validate-e134-ordinary-sequence-selectors.json)
+
+## 2026-11-19 — Validate ordinary E134 translated drawing
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Exercise the retained ordinary E134 startup draw with the sprite patch explicitly disabled after checkpoint loading, supplementing observed draw entries and instrumenting direct generated-API reads.
+
+**Validation**
+
+- Windows GNU build e134-ordinary-native-draw-retry-build-uqwxsqrp and Wine e134-ordinary-native-draw-retry-wine-an9unydr pass. All 19 sequence-selected headers receive 133 direct generated-API reads during translated draw dispatch; 16143 bank requests are typed with zero raw, unclassified or dropped requests. Across 160 raw/managed frames, complete state, clock, video, OAM, dispatch and five nonempty audio streams match with bank source spans altered. The interpreter scout observes 212 draw instructions; nine missing entries are temporarily supplemented. Protected inputs pass, Wine drains and successful scratch is removed.
+
+**Limitations**
+
+- This configuration disables the sprite patch after loading a checkpoint created with it enabled and uses an explicitly labeled translation with nine supplemented entries. It does not prove default-hook or default production-cache behavior, exact native load PCs, full final hold or other consumers. Linux, USA and native Windows remain deferred.
+- Initial unit oq_fqrl_ stopped before the comparison because checkpoint loading restored the enabled sprite patch; the corrected test disables it after loading in both arms.
+
+Documentation: [2026-11-19-validate-e134-ordinary-sequence-selectors.json](docs/changes/2026-11-19-validate-e134-ordinary-sequence-selectors.json).
+
+[Change record](docs/changes/2026-11-19-validate-e134-ordinary-native-draw.json)
 
 ## 2026-11-19 — Validate the complete E134 first sequence
 
@@ -226,6 +384,26 @@ Type: fixed. Platforms: Android, Linux, Windows.
 Documentation: [android_docker.md](docs/android_docker.md), [debug_control.md](docs/debug_control.md), [v1.1.2.md](docs/releases/v1.1.2.md).
 
 [Change record](docs/changes/2026-11-19-prepare-release-1-1-2.json)
+
+## 2026-11-19 — Observe E134 ordinary animation cutoff
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Add a bounded interpreter observer and document why the recorded startup instance stops updating its final E134 animation hold.
+
+**Validation**
+
+- Cross-build lmoq2bph and Wine n455br6k PASS: all 177 updater entries match the prior native-dispatch record; state-3 transition at frame 146 leaves 26 active ticks, and the state-4 return branch is reached at frame 147. Inputs protected, Wine drained and successful scratch removed.
+
+**Limitations**
+
+- The test observes one neutral startup instance and branch entry; subsequent dispatcher behavior, a full ordinary final hold, other callers and platforms remain unproved. Initial build jixiuhed used an invalid relative driver path. Sol xhigh requested for diagnosis; effective model and primary settings were not independently confirmed.
+
+Documentation: [2026-11-19-validate-e134-ordinary-sequence-selectors.json](docs/changes/2026-11-19-validate-e134-ordinary-sequence-selectors.json).
+
+[Change record](docs/changes/2026-11-19-observe-e134-ordinary-hold-cutoff.json)
 
 ## 2026-11-19 — Document the E134 ordinary sequence regression test
 

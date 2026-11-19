@@ -254,6 +254,35 @@ checks pass, and the record names the tested revision and precise scope.
 These are unproved integration criteria, rather than known space failures.
 Reuse older lifecycle evidence where its implementation and inputs still apply.
 
+- [x] **ROMDATA-05-E170-BASE-SAVE-IDENTITY:** E170 EUR/Wine `_mjaz8sl`
+  verifies equal snapshot bytes and bidirectional snapshot/cartridge-save
+  interchange with and without the unmodified base dataset. Invalid snapshot
+  identity, version, checksum or payload and a wrong-ROM dataset are rejected
+  transactionally; invalid restart boot state cannot overwrite a synthetic
+  save. Cartridge files remain raw game-format data without a dataset-identity
+  header. GUI, game-save semantics, mods and deferred platforms remain open.
+  [Evidence](../rom_data_runtime.md#identity-snapshots-and-diagnostics).
+- [x] **ROMDATA-05-E170-GUI-LOAD-UNDO:** Wine/Xvfb `o9pxy5_a` exercises actual
+  Load, Undo and reload on the Bank route in isolated raw/managed sessions.
+  Complete-state hashes and clocks match at all six endpoints, including the
+  repeated 120-frame route after reload; the managed range counter totals 46
+  bytes versus 23 in the single-pass run. This uses aggregate counters and
+  endpoint checks, not per-frame video/audio or native Windows evidence.
+  [Evidence](../rom_data_runtime.md#european-bounded-range-lookup).
+- [x] **ROMDATA-05-E170-GUI-BACKUP-RESTORE:** Wine/Xvfb `xssda1xe` restores a
+  synthetic backup over a different test save using the actual menu, loads the
+  Bank slot and repeats its 120-frame input. Raw and managed state hashes and
+  clocks match at five endpoints; 46 range bytes are counted across both
+  passes. Other scenes, real saves, per-frame audio/video, native Windows,
+  mods and the broader lifecycle criteria remain open.
+  [Evidence](../rom_data_runtime.md#european-bounded-range-lookup).
+- [x] **ROMDATA-05-E170-UNALIGNED-SOURCE-READS:** EUR/Wine `8_1wpiix` checks
+  5,459,217 odd halfword and 8,159,411 non-word-aligned word offsets fully
+  covered by the E170 source union. Bus and native API match original bytes
+  across three mirrors with inverted backing ROM. Mixed covered/uncovered
+  accesses beyond sampled boundaries, guest instructions, scenes and other
+  platforms remain open. [Evidence](../rom_data_runtime.md).
+
 - [x] **RVR-19 / ROMDATA-03/05 — Failed catalog replacement:** the e127
   EUR/Wine disk reload test rejects both a missing catalog and a structurally
   valid edit with an updated manifest hash. The active owner and complete
@@ -389,9 +418,11 @@ current evidence before running another check.
 - [ ] **ROMDATA-04-INDEXED-DIRECT-ORDINARY:** extend ordinary coverage of both
   independently rooted archives. Wine `abz4lk0q` reads both in a cold-origin
   continuation and compares 11 frames of state, clock, video, OAM and nonempty
-  audio with managed ROM sources altered. Its independently recorded input
-  prefix is not proven identical to the checkpoint; prior cheat ancestry is
-  not independently established. Other scenes and consumers remain open.
+  audio with managed ROM sources altered. The original cold input prefix now
+  joins the checkpoint after the test's existing audio-output drain
+  (`v89740hr`); raw snapshots differ in that silent output queue. The full
+  8,820-frame recorded continuation now passes on E170 (`klmjn8sv`). Other
+  scenes and consumers remain open.
   The source-guided program-1 checkpoint
   (`p0qt7o6q`) yields zero archive reads in 6,000 recorded Wine frames
   (`dh34xwul`); no scene pair ran. Determine whether the command or flag gate
@@ -404,9 +435,24 @@ current evidence before running another check.
   A separate source audit `0ivxkuzk` associates the loader with mode slot 2 and
   an existing cold-input checkpoint, without proving the call occurred there.
   Offline audit `acjbv2hh` authenticates the frame-180 preselection and retains
-  shifted input; exact prefix state equivalence is unproved. Use the DS-20
+  shifted input; `v89740hr` verifies the cold prefix join after draining the
+  differing output queue. Use the DS-20
   diagnostic only for a distinct missing route, since its legacy ancestry is
   unknown. Linux and USA remain deferred.
+- [x] **ROMDATA-04-INDEXED-DIRECT-COLD-PREFIX:** the original acquisition helper
+  replays the authenticated neutral input from cold to frame 180 under Wine;
+  `v89740hr` verifies the retained checkpoint matches after draining only its
+  131,072 silent output samples, exactly as the accepted continuation already
+  does. The shifted input matches the original events. Other routes and the
+  full recorded acquisition remain outside this result.
+  [Evidence](../rom_data_indexed_graphics.md).
+- [x] **ROMDATA-04-INDEXED-DIRECT-FULL-RECORDED-ROUTE:** E170 Wine `klmjn8sv`
+  compares all 8,820 frames from the authenticated frame-180 origin through
+  the recorded frame-9,000 endpoint. With both archive spans and caller literals
+  inverted during execution, the archives serve 302 and 3,292 bytes; full state,
+  clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+  Historical endpoint identity, other scenes, consumers and platforms remain
+  open. [Evidence](../rom_data_indexed_graphics.md).
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
@@ -621,6 +667,24 @@ current evidence before running another check.
   19 lists used by the sequence. Continuous ordinary animation, the other two
   lists, production-cache coverage and other consumers remain open.
   [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
+- [x] **E134-ORDINARY-FIRST-SEQUENCE-SELECTIONS:** the retained EUR startup
+  route reads all 38 selector/duration pairs, and one original updater context
+  follows the modeled index/countdown sequence. E170 Wine `jusromci` matches
+  state, clock, video, OAM, dispatch and five audio streams for 420 frames with
+  bank backing altered. A separate raw interpreter observation `n455br6k`
+  follows the caller into state 4 with 26 ticks still active, explaining why
+  this startup instance does not complete its final hold. An ordinary instance
+  that completes it, default-hook/default-cache translated drawing and other
+  consumers remain open.
+  [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
+- [x] **E134-ORDINARY-TRANSLATED-DRAW-PATCH-OFF:** on the recorded EUR startup
+  continuation, Wine `an9unydr` attributes 133 direct generated-API header
+  reads to the draw dispatch for all 19 sequence-selected lists. The 160-frame
+  raw/managed pair matches state, clock, video, OAM, dispatch and audio with
+  bank backing altered. This disables the sprite patch after checkpoint load
+  and supplements nine observed draw entries; default production-cache and
+  default-hook attribution, the final hold and other consumers remain open.
+  [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
 - [ ] **ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES:** resolve the live
   source domain, save-load behavior and aliases beyond the observed 59 rows.
 - [ ] **ROMDATA-01-SCRIPT39-REGISTRY-POSES:** authenticate and model the
@@ -717,8 +781,9 @@ current evidence before running another check.
   E170 Wine `ffhtpvms` additionally scans all 10,948,338 distinct declared
   source bytes through three mirrors and the native API and compares aligned,
   fully covered words with byte composition against inverted backing ROM.
-  Both are read regressions, not guest execution, arbitrary unaligned interior
-  reads or full equivalence. The separate E170 Wine `9b1qo9ie` test matches all
+  E170 Wine `8_1wpiix` additionally checks all fully covered unaligned
+  halfword/word offsets through bus and native API. These are read regressions,
+  not guest execution or full equivalence. The separate E170 Wine `9b1qo9ie` test matches all
   8,476 frames of one retained EUR suspend-to-battle route, including complete
   state, clock, video, OAM, dispatch and five audio streams; 42 script-command
   bytes from seven commands are read. ROM sources were not altered, and this

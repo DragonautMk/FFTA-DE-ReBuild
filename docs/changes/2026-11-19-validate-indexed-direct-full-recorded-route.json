@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-indexed-direct-full-recorded-route",
+  "title": "Validate complete indexed archive recorded route",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Extend the indexed-archive raw/managed comparison across the entire 8,820-frame recorded continuation from the authenticated cold origin."
+  ],
+  "validation": [
+    "Wine klmjn8sv PASS on E170: complete state, clock, central/wide image, OAM, dispatch and five nonempty audio streams match every frame; both archives and caller literals inverted during guest execution, with 302 and 3,292 source bytes served. Inputs protected, Wine drained, scratch removed."
+  ],
+  "limitations": [
+    "One recorded route; historical endpoint identity, individual native read attribution, all scenes and consumers and deferred platforms remain open. Translation may fall back to interpreter; Wine logged a D-Bus assertion despite the passing test."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/direct_indexed_ordinary_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-verify-indexed-direct-cold-prefix.json"
+  ]
+}

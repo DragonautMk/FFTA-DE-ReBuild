@@ -31,6 +31,18 @@ not attribute individual reads to resource owners. This does not cover guest
 execution, arbitrary unaligned interior reads, timing or other platforms.
 Protected inputs passed, successful scratch was removed and Wine drained.
 
+EUR/Wine `e170-unaligned-source-wine-8_1wpiix` checks every odd halfword
+and every non-word-aligned word whose bytes are all inside the union of the
+E170 manifest's source spans. With the complete backing ROM inverted, 5,459,217
+halfword offsets and 8,159,411 word offsets match the original ROM bytes
+through both the bus and generated-code API in mirrors 08/0a/0c: 81,711,768
+read comparisons. This includes fully covered accesses crossing adjacent
+source spans. Protected inputs passed, Wine drained and scratch was removed.
+The union defines coverage, not individual resource attribution. Mixed
+covered/uncovered accesses beyond the earlier boundary samples, guest CPU
+instruction behavior, timing, scenes and other platforms remain outside this
+check.
+
 EUR/Wine `e170-all-resource-lifecycle-wine-i73r4f54` checks all 10,948,338
 distinct source bytes of the 113-resource E170 manifest after each of five
 synthetic operations: failed attachment from a missing replacement path,
@@ -767,6 +779,25 @@ clones the selected resources into its prepared clean-boot machine before
 loading the boot state or replacing the save. A running session needs no file
 access after activation; a new activation with missing files fails rather than
 falling back. Managed startup can regenerate those files from the source ROM.
+
+For the unmodified E170 EUR base, Wine `e170-save-identity-wine-_mjaz8sl`
+checks compatibility in both directions using synthetic machine and cartridge
+data. Identical raw and managed machine states produce identical snapshot bytes;
+each mode loads the other's snapshot, retaining its own resource-owner status.
+The normal restart persistence path writes synthetic cartridge bytes in each
+mode and the other mode reads them unchanged. Invalid snapshot magic, version,
+ROM/BIOS identities, checksum and payload are rejected without changing the
+machine; a different ROM cannot attach the EUR dataset. An invalid boot state
+also leaves both the machine and the existing synthetic `.sav` unchanged.
+Inputs were protected, Wine drained and successful scratch was removed.
+
+The cartridge `.sav` remains the original raw game-format backup data: this
+check does not add a dataset identity header or establish that arbitrary saves
+belong to the selected game. The result covers direct APIs and the unmodified
+EUR base, not GUI operations, actual game-save semantics, mod compatibility or
+deferred platforms. Future data modifications that change guest state or save
+semantics require an explicit compatibility identity and rejection policy before
+activation or save writes.
 
 Activation prints `ROM_DATA runtime=decoded` with resource/source/dataset/file
 identities and resident bytes. Shutdown/headless completion prints
@@ -2673,6 +2704,45 @@ contains a debug-control access-denied diagnostic and the raw log a D-Bus
 assertion; the requested controls and both closes nevertheless succeeded. Raw
 source bytes were unaltered and video/audio were not compared per frame;
 native dispatch may fall back to interpretation.
+
+Wine/Xvfb `e170-gui-load-undo-post-o9pxy5_a` follows the same Bank input in
+isolated raw and E170 managed GUI sessions, using native dispatch and paused
+debug-control steps. The actual menu performs Load, Undo and Load again; at
+each operation both sessions have equal complete-state hashes and guest clocks,
+and Undo restores the pre-load state. Repeating the same 120-frame Bank input
+after the second Load reaches the original stepped state in both sessions.
+The managed run reports 46 range-source bytes across the two passes; the
+otherwise equivalent single-pass GUI run `w0cdul_b` reports 23. The copied
+slot and protected inputs remain unchanged, both windows close normally, Wine
+drains and successful scratch is removed. This is endpoint and aggregate-use
+evidence, not per-frame video/audio comparison or exact per-phase attribution;
+generated dispatch may fall back to interpretation. Wine logged transient
+debug-control access-denied messages and a D-Bus assertion while both sessions
+and all requested controls nevertheless completed. The earlier `2myj8gap`
+attempt stopped before Load because its driver looked for an obsolete submenu.
+
+Wine/Xvfb `e170-gui-backup-different-xssda1xe` exercises the actual backup
+menu in isolated raw and E170 managed Bank sessions. Each starts with a
+synthetic 65,536-byte save and its backup; after the first 120 controlled
+frames, the driver replaces the current test save with different synthetic
+bytes and verifies the difference before navigating the paused menu. The
+confirmation defaults to Back; Restore and restart restores the backup bytes,
+leaves the backup unchanged and resets the session to frame zero. Loading the
+copied Bank slot and repeating the same 120-frame input reaches the previous
+stepped state. Complete-state hashes and guest clocks match between raw and
+managed at all five endpoints. The managed counter reports 46 range bytes for
+both passes together; the earlier single-pass GUI run reports 23. This is an
+aggregate count, not direct attribution to either phase.
+
+The copied slot and protected inputs are unchanged, both windows close, Wine
+drains and successful scratch is removed. This checks endpoint state and a
+synthetic save, not per-frame video/audio, real-time gameplay, a personal save,
+native Windows, other scenes or mods; generated dispatch may fall back to
+interpretation. The sentinel was checked before menu navigation, not immediately
+before confirmation. Wine logged transient debug-control access-denied messages
+and a D-Bus assertion despite successful controls and clean exits. Earlier
+attempts `49yki2lw` and `caqte4ns` stopped on driver assumptions about the
+backup directory and the page shown after restoration, respectively.
 
 Wine/Xvfb `bounded-range-bank-gui-fast-traced-wine-a6u0qv7x` follows the Bank
 input with 12 neutral frames in the managed GUI. The UI trace records the Fast

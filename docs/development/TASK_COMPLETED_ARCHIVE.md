@@ -24068,3 +24068,79 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Future ROM-data work and validation recovery have scoped deliverables, risk-based evidence and stopping rules. Selection prioritizes retiring ROM dependencies, connecting extracted data to runtime consumers and enabling representative gameplay. Existing acceptance gates and ownership rules apply.
 - Evidence: docs/changes/2026-11-19-scope-rom-data-validation-work.json. Changed local links, git diff, project-memory and task-handoff checks passed.
 - Limits: Documentation and project memory only. The operational queue and prior evidence are preserved. No paused, interrupted or pending runtime work was resumed.
+
+### E134-ORDINARY-FIRST-SEQUENCE-SELECTIONS
+
+- Outcome: completed for all 38 sequence selections on one EUR/Wine ordinary startup continuation; the broader updater and animation criteria remain open.
+- Verified criteria: 420 raw/managed frames match full state, clock, video, OAM, dispatch and five nonempty audio streams. All 38 selector and duration fields are served by typed resources with bank backing spans altered; 16,143 typed requests, no raw/unclassified requests or dropped trace events. The 177 observed updater calls use one context and match the model's index/countdown progression.
+- Evidence: `target/validation/units/e134-ordinary-complete-selectors-wine-jusromci/{unit-result.json,evidence/result.json,evidence/trace-report.json}`; build `e134-ordinary-complete-selectors-build-3c5_nc7i`; `docs/changes/2026-11-19-validate-e134-ordinary-sequence-selectors.json`. Inputs guarded, Wine drained and successful scratch removed.
+- Limits: the last observed entry has duration 27, leaving the final hold incomplete. First eight fields are first read in the same frame; exact within-frame load order and native load PCs are not established. Explicitly labeled translation may use interpreter fallback; ordinary translated draw, other consumers and deferred platforms remain open.
+
+### E134-ORDINARY-TRANSLATED-DRAW-PATCH-OFF
+
+- Outcome: completed for all 19 sequence-selected lists on one EUR/Wine startup continuation with the sprite patch disabled after checkpoint loading; broader E134 criteria remain open.
+- Verified criteria: 133 direct generated-API header reads occur during translated draw dispatch, with 16,143 typed selected-bank requests and no raw/unclassified requests or trace drops. All 160 raw/managed frames match full state, clock, video, OAM, dispatch and five nonempty audio streams with the bank backing altered. An interpreter scout captured 212 draw instructions; the temporary translation supplements nine missing entries.
+- Evidence: `target/validation/units/e134-ordinary-native-draw-retry-wine-an9unydr/{unit-result.json,evidence/result.json,evidence/trace-report.json}`; build `e134-ordinary-native-draw-retry-build-uqwxsqrp`; `docs/changes/2026-11-19-validate-e134-ordinary-native-draw.json`. Inputs guarded, Wine drained and successful scratch removed.
+- Limits: checkpoint was created with the patch enabled, then switched off in both arms; explicit labels and supplemented entries do not establish default-hook/default-cache behavior or exact native load PCs. Final hold, other consumers and deferred platforms remain open. Initial `oq_fqrl_` stopped before comparison because loading restored the patch flag.
+
+### ROMDATA-05-E170-BASE-SAVE-IDENTITY
+
+- Outcome: completed for unmodified EUR E170 base snapshot and synthetic cartridge-save compatibility under Wine; broader ROMDATA-05, GUI, other profiles and mods remain open.
+- Verified criteria: raw and managed machines produce identical snapshot bytes and load one another's snapshots; synthetic cartridge saves pass in both directions through restart persistence. Invalid magic/version/ROM/BIOS/checksum/payload and mismatched-ROM dataset attachment are rejected without machine mutation; invalid boot state does not overwrite the synthetic save. Owner status remains correct.
+- Evidence: `target/validation/units/e170-save-identity-wine-_mjaz8sl/{unit-result.json,evidence/result.json,command.log}`; build `e170-save-identity-build-ztowooij`; `docs/changes/2026-11-19-validate-e170-base-save-identity.json`. Inputs protected, Wine drained and successful scratch removed.
+- Limits: direct APIs and synthetic saves; cartridge `.sav` remains raw game data with no dataset-identity header and arbitrary wrong-game saves are not authenticated. GUI, game-save semantics, mods and deferred platforms are not covered.
+
+### ROMDATA-05-E170-GUI-LOAD-UNDO
+
+- Outcome: completed for the recorded EUR E170 Bank route in isolated Wine GUI raw/managed sessions; broader lifecycle and platform criteria remain open.
+- Verified criteria: actual menu Load, Undo and reload restore the expected complete-state hashes and guest clocks. Raw/managed states match at six endpoints including an identical 120-frame Bank replay after reload; 46 managed range bytes occur across both passes versus 23 in the single-pass GUI proof. Copied slots and protected inputs stay unchanged; both windows close and Wine drains.
+- Evidence: `target/validation/units/e170-gui-load-undo-post-o9pxy5_a/{unit-result.json,evidence/result.json,evidence/driver.py,evidence/raw.log,evidence/managed.log}`; single-pass `e170-gui-load-undo-retry-w0cdul_b`; `docs/changes/2026-11-19-validate-e170-gui-load-undo.json`. Successful scratch removed.
+- Limits: range count is aggregate, and comparison is at endpoints, not video/audio every frame. Explicitly guarded native cache may fall back to interpretation. No personal save, backup restore, native Windows, other scenes or mods covered. Initial `2myj8gap` failed before Load due an obsolete submenu assumption; corrected from menu source. Transient debug-control access-denied and a D-Bus assertion appeared during the passing run, but controls and clean exits succeeded. Primary debugging model/effort not independently confirmed.
+
+### ROMDATA-05-E170-GUI-BACKUP-RESTORE
+
+- Outcome: completed for the EUR E170 Bank route and synthetic save under Wine GUI; broader lifecycle and other platforms remain open.
+- Verified criteria: in isolated raw and managed sessions a synthetic backup was made, the current save replaced with different synthetic bytes and checked before paused menu navigation, then the actual Restore and restart restored the backup. The default confirmation was Back; backup and copied slot remained unchanged. Five complete-state hashes and clocks match across both sessions, including frame zero after restore, slot load and the same 120-frame Bank replay. Managed range counter is 46 bytes across both passes versus 23 in the earlier single-pass proof.
+- Evidence: `target/validation/units/e170-gui-backup-different-xssda1xe/{unit-result.json,evidence/result.json,evidence/driver.py,evidence/raw.log,evidence/managed.log}` and `docs/changes/2026-11-19-validate-e170-gui-backup-restore.json`. Protected inputs passed, both windows closed, Wine drained and successful scratch removed.
+- Limits: sentinel checked before menu navigation, rather than immediately before confirmation. Counts aggregate both passes; endpoint checks do not compare per-frame video/audio. No real-time gameplay, personal save, native Windows, other scenes or mods; generated dispatch may fall back to interpretation. Wine logged transient access-denied and a D-Bus assertion despite successful controls. Earlier `49yki2lw` and `caqte4ns` stopped on directory filtering and menu-return driver assumptions.
+
+### E170-GUI-BACKUP-FAILED-DATASET-CLEANUP
+
+- Outcome: completed for the managed dataset copies in closed driver failures `49yki2lw` and `caqte4ns`; original FAIL receipts and other diagnostic files retained.
+- Verified criteria: each copy had 114 files and 536,716,572 logical bytes matching the current E170 generation by SHA-256. Exact scope reviews found no nested leases or matched host consumers; Wine was drained. Both locally archived copies passed `cold_storage.py verify`. Their allocated source blocks totaled 1,073,963,008 bytes; archive payloads totaled 50,700,288 allocated bytes, approximately 976 MiB net saved before metadata.
+- Evidence: `target/validation/units/e170-gui-backup-restore-49yki2lw/cold-review.json` and `target/validation/units/e170-gui-backup-restore-retry-caqte4ns/cold-review.json`; cold catalog and original `unit-result.json` receipts.
+- Limits: host inspection could not read details of three processes and does not prove global inactivity; original results remain FAIL. Separate `2myj8gap` cleanup remains blocked by its nested lease and is not changed. A concurrent catalog review briefly conflicted on its lease, then succeeded sequentially.
+
+### E134-ORDINARY-HOLD-CUTOFF-DIAGNOSIS
+
+- Outcome: completed diagnosis of why the recorded neutral startup instance did not complete its final hold; the broader ordinary final-hold criterion remains open.
+- Verified criteria: raw interpreter observation `n455br6k` records 177 updater entries matching the previously accepted native-dispatch frame/index/countdown sequence. At frame 146 the original caller reaches its state-3-to-4 write with index 38, duration 26 and active flag set; frame 147 enters state 4 and reaches its return-zero branch with duration 26. All 147 observed caller arguments have low byte zero. Original disassembly identifies the branch instruction; the test stops after entering the branch and does not prove subsequent dispatcher handling.
+- Evidence: `target/validation/units/e134-final-hold-observer-wine-n455br6k/{unit-result.json,evidence/result.json,command.log}`; build `e134-final-hold-observer-build-lmoq2bph`; prior `e134-ordinary-complete-selectors-wine-jusromci`; `docs/changes/2026-11-19-observe-e134-ordinary-hold-cutoff.json`. Protected inputs passed, Wine drained and scratch removed.
+- Limits: one neutral startup instance and raw interpreter observation, no proof that other ordinary callers or inputs cannot complete the hold. Initial build `jixiuhed` failed before compilation on a relative driver path. Sol `/root/sol_e134_hold` was requested as GPT-6.1 Sol xhigh for unclear cause; effective settings and primary model/effort were not independently confirmed. No default-hook draw, native Windows, Linux, USA or performance claim.
+
+### ROMDATA-05-E170-UNALIGNED-SOURCE-READS
+
+- Outcome: completed fully covered unaligned halfword/word read regression for the E170 EUR manifest union under Wine; broader equivalence remains open.
+- Verified criteria: 5,459,217 odd halfword offsets and 8,159,411 non-word-aligned word offsets, with every byte in the union of 54,792 spans/10,948,338 distinct bytes, match original ROM bytes through bus and generated-code API on mirrors 08/0a/0c with all backing ROM inverted. This is 81,711,768 comparisons. It supplements accepted aligned-byte/word and boundary evidence.
+- Evidence: `target/validation/units/e170-unaligned-source-wine-8_1wpiix/{unit-result.json,evidence/result.json,command.log}`; build `e170-unaligned-source-build-_l4hwj3q`; `docs/changes/2026-11-19-validate-e170-unaligned-source-reads.json`. Inputs protected, Wine drained and successful scratch removed.
+- Limits: fully covered addresses only, manifest union does not attribute reads to specific owners. Mixed covered/uncovered accesses beyond sampled boundaries, guest CPU instruction semantics, execution, scenes, timing and other platforms remain unproved. No performance measurements.
+
+### ROMDATA-04-INDEXED-DIRECT-COLD-PREFIX
+
+- Outcome: completed the frame-180 cold-prefix join for the previously accepted EUR/Wine indexed-archive ordinary continuation; broader scenes and consumers remain open.
+- Verified criteria: original authenticated acquisition helper and input run from cold to frame 180 under Wine. Raw snapshot bytes differ because that helper drains output audio each frame while the independent checkpoint retains 131,072 silent samples. Both headers and payload checksums pass, and all other serialized payload bytes match. After draining that output, same-decoder complete serialized states match exactly; the accepted continuation already drains output before any guest execution. The shifted input matches the original event sequence.
+- Evidence: original mismatch `target/validation/units/e178-cold-prefix-identity-snmplz7o/{unit-result.json,work/result.json,work/capture.log,work/replayed.ffstate}`; offline normalized comparison `e178-prefix-audio-normalized-5i77hh79`; byte and input proof `e178-prefix-join-proof-v89740hr`; prior 11-frame pair `e178-indexed-ordinary-cold-wine-abz4lk0q`; `docs/changes/2026-11-19-verify-indexed-direct-cold-prefix.json`. Inputs protected, Wine drained; successful inspection scratch removed.
+- Limits: raw exact-byte test remains FAIL with its diagnostic state; no claim of identical undrained output, the whole 9,000-frame route, other scenes, all consumers or deferred platforms. Sol `/root/sol_prefix_mismatch` was requested as GPT-6.1 Sol xhigh for the mismatch; effective settings and primary model/effort were not independently confirmed.
+
+### INDEXED-COLD-PREFIX-RESTORED-HELPER-CLEANUP
+
+- Outcome: completed retirement of the restored historical `target/rom-data-event-ordinary/capture.exe` after the closed prefix investigation; archive remains local and restorable.
+- Verified criteria: the failing Wine unit `snmplz7o` drained Wine and released leases; helper SHA-256 matched its original capture receipt. Host activity check found no selected users and no nested unit lease; `cold_storage.py verify` and `retire` passed. The restored file was 3,249,131 logical bytes; compressed catalog payload was already present.
+- Limits: three host processes had unreadable details; host check does not prove global inactivity. The failed diagnostic snapshot and its result remain available; no other cleanup or historical batch was selected.
+
+### ROMDATA-04-INDEXED-DIRECT-FULL-RECORDED-ROUTE
+
+- Outcome: completed EUR/Wine E170 comparison of the entire 8,820-frame recorded continuation from frame 180 through frame 9,000; broader archive consumers and scenes remain open.
+- Verified criteria: with both archive spans and caller literals inverted in managed ROM during guest execution, the two owners report 302 and 3,292 source bytes. Raw/managed complete state, clock, central/wide images, OAM, dispatch and five nonempty audio streams match every frame. The source spans are restored only for state serialization. The cold prefix join is `v89740hr`.
+- Evidence: `target/validation/units/indexed-full-route-wine-klmjn8sv/{unit-result.json,evidence/result.json,command.log}`; build `indexed-full-route-build-g_g_2lye`; `docs/changes/2026-11-19-validate-indexed-direct-full-recorded-route.json`. Inputs protected, Wine drained and successful scratch removed.
+- Limits: one recorded input path; original historical endpoint bytes are not compared, per-read native PCs, other scenes/consumers and deferred platforms remain unproved. Generated dispatch may fall back to interpretation. Wine logged a D-Bus assertion despite successful completion.

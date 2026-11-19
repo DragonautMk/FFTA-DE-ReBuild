@@ -3330,17 +3330,50 @@ sequence are exercised, with managed source reads after state reload. Input
 guards pass, Wine drains and successful scratch is removed. Generated instructions
 may fall back to interpretation. This does not follow the continuous animation
 in ordinary play or cover the other two lists in the bank.
-A separate guarded EUR/Wine test follows a neutral startup continuation for 420
-frames. The earlier run `e134-ordinary-context-wine-euh4ed6s` read all 38
-selector and duration fields, with selector reads first seen in source order,
-and matched raw/managed state, clock, video, OAM, dispatch and audio with the
-bank spans altered. Its 177 updater observations used one context, but the
-trace alone does not prove a single animation instance; the last observed
-duration was 27. The current test adds explicit context-progression assertions.
-Its protected-source build
-`e134-ordinary-complete-selectors-build-3c5_nc7i` passed, but those newer
-assertions have not been run. Exact native load PCs and other scenes remain
-unverified.
+A guarded E170 EUR/Wine test follows the neutral startup continuation for 420
+frames (`e134-ordinary-complete-selectors-wine-jusromci`). It reads every one
+of the 38 selector and duration fields through typed resources, with first-read
+frames in source order; the first eight share a guest frame. The updater is
+observed 177 times on one context, with indices and countdowns matching the
+model through all 38 selections. Complete raw/managed state, clock, video, OAM,
+dispatch and five nonempty audio streams match on every frame with bank spans
+altered; no raw or unclassified bank requests or dropped trace requests occur.
+The last observed updater entry still has 27 duration ticks, so completion of
+the final hold is not established. This explicitly labeled translation may
+fall back to interpretation; exact native load PCs, ordinary translated drawing,
+other scenes and remaining consumers remain unverified. Inputs were protected,
+Wine drained, and successful scratch was removed.
+The selected neutral startup instance ends before that final hold completes.
+In a separate raw interpreter observation under Wine
+(`e134-final-hold-observer-wine-n455br6k`), all 177 recorded updater entries
+match the earlier native-dispatch record's frame, index and countdown. The
+caller is invoked with a zero low argument byte on all 147 recorded entries.
+At relative frame 146 it reaches the state-3 transition write with index 38,
+countdown 26 and the active byte still set; on frame 147 it enters state 4
+and reaches the original return-zero branch with those values unchanged. The
+test records the branch entry; the retained caller disassembly identifies its
+return instruction. Inputs were protected, Wine drained and scratch was removed.
+This explains why the accepted neutral continuation did not establish the full
+final hold. It does not prove the dispatcher's subsequent handling, that other
+instances or inputs terminate the same way, or that the full ordinary final
+hold is unreachable elsewhere.
+The earlier `jixiuhed` build attempt stopped before compilation because its
+driver path was relative to the validation scratch directory.
+The ordinary translated draw is also exercised in EUR/Wine with the sprite
+patch explicitly disabled after loading the same checkpoint
+(`e134-ordinary-native-draw-retry-wine-an9unydr`). An interpreter scout first
+records 212 draw instructions on the 160-frame neutral continuation; nine
+missing entries are added to an explicitly labeled translation for the pair.
+During translated draw dispatch, all 19 sequence-selected list headers receive
+133 direct generated-API reads outside nested interpreter calls. With all bank
+spans altered in the managed arm, 16,143 selected-bank requests are typed and
+none are raw or unclassified. Both arms match complete state, clock, video,
+OAM, dispatch and five nonempty audio streams on every frame. The sprite patch
+is switched off after loading a checkpoint created with it enabled; the test
+does not establish default-hook or default production-cache coverage, exact
+native load PCs, the final animation hold or other consumers. Inputs were
+protected, Wine drained and successful scratch was removed. Initial attempt
+`oq_fqrl_` stopped before execution because loading restored the patch flag.
 A later ordinary EUR Wine startup, from the protected pre-queue state on the
 same caller, reaches the original updater and reads this bank. In three-frame
 raw/managed pairs, the interpreter and the normal native-dispatch engine each

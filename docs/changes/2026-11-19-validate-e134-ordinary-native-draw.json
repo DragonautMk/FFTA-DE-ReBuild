@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e134-ordinary-native-draw",
+  "title": "Validate ordinary E134 translated drawing",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Exercise the retained ordinary E134 startup draw with the sprite patch explicitly disabled after checkpoint loading, supplementing observed draw entries and instrumenting direct generated-API reads."
+  ],
+  "validation": [
+    "Windows GNU build e134-ordinary-native-draw-retry-build-uqwxsqrp and Wine e134-ordinary-native-draw-retry-wine-an9unydr pass. All 19 sequence-selected headers receive 133 direct generated-API reads during translated draw dispatch; 16143 bank requests are typed with zero raw, unclassified or dropped requests. Across 160 raw/managed frames, complete state, clock, video, OAM, dispatch and five nonempty audio streams match with bank source spans altered. The interpreter scout observes 212 draw instructions; nine missing entries are temporarily supplemented. Protected inputs pass, Wine drains and successful scratch is removed."
+  ],
+  "limitations": [
+    "This configuration disables the sprite patch after loading a checkpoint created with it enabled and uses an explicitly labeled translation with nine supplemented entries. It does not prove default-hook or default production-cache behavior, exact native load PCs, full final hold or other consumers. Linux, USA and native Windows remain deferred.",
+    "Initial unit oq_fqrl_ stopped before the comparison because checkpoint loading restored the enabled sprite patch; the corrected test disables it after loading in both arms."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_context_ordinary_native_draw_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-validate-e134-ordinary-sequence-selectors.json"
+  ]
+}

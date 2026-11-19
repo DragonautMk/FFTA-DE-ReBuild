@@ -172,6 +172,10 @@ mod obj_branch_native_tests;
 #[cfg(test)]
 mod obj_context_bank_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
+mod obj_context_ordinary_native_draw_tests;
+#[cfg(test)]
+mod base_save_identity_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod context_obj_selector_tests;
 #[cfg(test)]
 mod battle_obj_list_tests;

@@ -109,6 +109,11 @@ Bad/truncated previews, damaged state data, wrong ROM/BIOS and incompatible
 versions are rejected before changing the live machine. A valid thumbnail alone
 does not establish that its machine data can be loaded.
 
+The unmodified EUR E170 decoded base dataset preserves the same snapshot bytes
+as running from the original ROM, so snapshots can be exchanged between those
+two modes. Cartridge saves remain the game's raw `.sav` data and do not carry a
+separate decoded-dataset identity. See the [compatibility evidence](rom_data_runtime.md#identity-snapshots-and-diagnostics).
+
 Desktop save/load operations use the history-aware slot APIs; no-history
 convenience adapters are compiled only for tests.
 

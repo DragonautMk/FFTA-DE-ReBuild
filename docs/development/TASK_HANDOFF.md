@@ -31,15 +31,16 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 - State: active
 - Outcome: partial
-- Selection: E134 ordinary animation paused by user. 420-frame pair `euh4ed6s` PASS, 38 indices/one context; final duration stops at 27. Assertion build `3c5_nc7i` live at pause (exec session 43719); resume only on request: inspect handle/receipt before `/tmp/ffta-e134-ordinary-selectors.py`.
-- Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`). E170 full-scene Wine PASS (`9b1qo9ie`), scoped acceptance archived. E170 all-source synthetic lifecycle PASS (`i73r4f54`).
+- Selection: paused INDEXED endpoint; `klmjn8sv` PASS, `tagk77bt` FAIL: normalized frame-9000 states differ. Diagnostics retained; resume on request.
+- E170-GUI-FAILED-DATASET-CLEANUP partial: nested raw lease blocks 114 duplicates; Wine drained, 3 host processes unreadable. Preserve lease. `e170-gui-load-undo-2myj8gap/cleanup-observation.json`.
+- Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
 - ROMDATA-04-METADATA14-ID1-ALIAS partial: batch `g2cugem4` PASS; event22/key161 ordinary path open. `6d1p8x1c` excludes operand161 in 191 declared writer instructions. Source `o9iv4u54` conditionally finds queue initialization selects zero slot1; later writes/IWRAM body and other producers remain open.
 - Title bank: `ntggzh1c` full six-phase default-hook sequence/flag PASS; `8j504dl0` patch-off pair PASS, five direct native headers. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: five ordinary values/both tables direct native PASS (`arfmrs12`); title routes/cursor `4yp7q7yd`. E168 owns 261/261 pairs. Other readers/writers/value domain open.
-- E134: controlled 38 frames (b6uugr9g), native updater (yw62he9p), default interpreter (botzl4b6), GUI cache (p7tuq7iz) PASS; translated draw open.
+- E134: controlled (b6uugr9g), ordinary selections (jusromci), patch-off draw (an9unydr) PASS; neutral instance exits with 26 ticks (n455br6k). Full ordinary hold/default draw open; GUI cache (p7tuq7iz).
 - CONTEXT-3710D4: E170 world-map pair and four direct native reads (`ax_5va8t`), controlled byte-domain/33-record fields (`9l5p79sq`) PASS; other callers/contexts/ABI open. e160 SUBSTITUTION-371158 and e161 RANGE-37140C pass; consumers open.
 - ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home `lby31j3d` identifies state-width/height groups, 56 bytes and 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
@@ -50,7 +51,7 @@ Archive completed tasks; don't reopen closed children or stop other work.
 - SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76), action13 (uto86fc6/_mvdi9t3); home `s4quofvj`/`1zjiaoiz` link opcode39 to task/null parts; `lwnzoodb` body index/sequence/OBJ/pixel reads and 1,800-frame altered-source pair PASS. Full animation/other paths open.
 - INDEXED-DIRECT-3AE484/3AE5A4: e165 qk3xqc4z/e87ug9pq, e166 puxz2kz7/ozq4vcii PASS; other scenes/consumers/Linux/USA open.
 - CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary Wine `hf5czvkg` reads 14 bytes with altered sources; three-frame state/clock/video/OAM/nonempty audio pair PASS. Other paths/Linux/USA/native Windows open.
-- INDEXED-DIRECT-ORDINARY: cold-origin abz4lk0q reads both; 11-frame state/clock/video/OAM/audio pair PASS with altered sources. Other scenes/consumers open.
+- INDEXED-DIRECT-ORDINARY: cold prefix `v89740hr`, full 8,820-frame pair `klmjn8sv` PASS. Historical endpoint, other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 build 4q2i907e PASS. Lower priority; rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
 - Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
@@ -186,9 +187,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: ROM-DATA-RISK-BASED-WORKFLOW completed.
-- Last verified result: Selection and validation guidance updated. Documentation and memory checks pass.
-- Remaining work: none for this workflow change.
-- Errors or blockers: none.
-- Next action: Await an authorized selection.
-- References: MEMORY_WORKFLOW.md, ROM_DATA_VALIDATION.md, ROM_DATA_VALIDATION_RECOVERY_TODO.md.
+- Task: GIT-DECOMP-INTO-MAIN, partial.
+- Last verified result: local main and decomp match ac36973b; committed range and memory checks passed.
+- Remaining work: fast-forward origin/main from 51d3e1f4 and verify both remote tips.
+- Errors or blockers: automatic review requires explicit user authorization to push to GitHub main.
+- Next action: await push authorization, then recheck remote ancestry and push without force.
+- References: Git refs and project-memory check.

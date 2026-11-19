@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-gui-backup-restore",
+  "title": "Validate E170 GUI backup restore",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Document the actual E170 GUI backup restore over different synthetic save bytes, followed by Bank slot load and replay in isolated raw and managed sessions."
+  ],
+  "validation": [
+    "Wine/Xvfb xssda1xe PASS: five equal state and clock endpoints, backup and copied slot unchanged, 46 aggregate managed range bytes, guarded inputs, normal GUI exits, Wine drained and scratch removed."
+  ],
+  "limitations": [
+    "Sentinel checked before paused menu navigation; endpoint comparisons only, no per-frame video/audio, real-time play, personal save, native Windows, other scenes or mods. Native dispatch may fall back. Wine logged transient access-denied and D-Bus assertion; earlier 49yki2lw and caqte4ns stopped on driver assumptions."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-validate-e170-gui-load-undo.json"
+  ]
+}

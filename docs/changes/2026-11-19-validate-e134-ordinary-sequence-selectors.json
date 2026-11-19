@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e134-ordinary-sequence-selectors",
+  "title": "Validate E134 ordinary sequence selections",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Run the strengthened ordinary E134 sequence regression, requiring all 38 selector and duration fields and one updater context with the modeled countdown progression."
+  ],
+  "validation": [
+    "Protected-source Windows GNU build e134-ordinary-complete-selectors-build-3c5_nc7i and Wine e134-ordinary-complete-selectors-wine-jusromci pass. Across 420 neutral continuation frames, full state, clock, central and wide video, OAM, dispatch and five nonempty audio streams match; all bank spans are altered in the managed machine. All 38 selector and duration fields are typed, with 16143 typed requests, no raw or unclassified requests and no dropped trace requests. The 177 updater observations match the model in one context. Inputs were guarded, Wine drained and successful scratch was removed."
+  ],
+  "limitations": [
+    "The last observed updater entry is in the final hold at duration 27; full final-hold completion, exact native load PCs, ordinary translated drawing, other scenes and consumers remain unproved. The explicitly labeled generated translation may fall back to interpretation; first-read frames do not order accesses within a single frame. Linux, USA and native Windows remain deferred."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_bank_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json",
+    "docs/changes/2026-11-19-validate-e134-complete-first-sequence.json"
+  ]
+}

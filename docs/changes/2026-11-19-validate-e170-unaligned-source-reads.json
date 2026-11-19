@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-unaligned-source-reads",
+  "title": "Validate E170 unaligned source reads",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Add a full-manifest-union regression for unaligned halfword and word reads with altered in-memory ROM backing."
+  ],
+  "validation": [
+    "Windows cross-build _l4hwj3q and Wine 8_1wpiix PASS: 5,459,217 halfword and 8,159,411 word offsets match original bytes via bus and native API on three mirrors, totaling 81,711,768 comparisons. Inputs protected, Wine drained and scratch removed."
+  ],
+  "limitations": [
+    "Fully covered offsets only; mixed covered/uncovered reads beyond sampled boundaries, guest CPU instructions, timing, scenes, per-owner attribution and deferred platforms remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}
