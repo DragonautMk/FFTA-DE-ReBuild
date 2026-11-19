@@ -82,6 +82,10 @@ integrity/order checks, safe confirmation, and no rotation during restoration.
 
 Use targeted behavioral checks. Shared display globals require serial core
 tests. Use the Windows validation skill when building or packaging Windows.
+For repeated local runs, use the current dataset, installed toolchain and
+canonical build cache. Declare peak growth in the validation runner. If space
+admission fails, use the [storage checklist](../../../docs/development/STORAGE_CHECKLIST.md)
+before downloading dependencies or building another isolated copy.
 Finish with the project-memory skill, recording only observed results and
 preserving unresolved limitations.
 

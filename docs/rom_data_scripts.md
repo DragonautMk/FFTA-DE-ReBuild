@@ -133,6 +133,15 @@ Private results include `windows-build.json`, `windows-cli-summary.json`,
 `windows-scene-result.json` and `windows-battle-entry-script-full-state-audio.log`.
 Original data, prior generations and316hash-mtime guards remain unchanged.
 
+The same retained EUR route was also validated against the later E170 dataset
+under Wine on 2026-11-19. All 8,476 raw/managed frame pairs matched in complete
+state, clock, video, OAM, dispatch and all five nonempty audio streams; the
+script-command guard recorded 42 bytes from seven commands. The protected ROM,
+save, input, dataset, executable and source files remained unchanged. Local
+receipts are in `target/validation/units/e170-suspend-fullscene-wine-9b1qo9ie/`.
+This check did not alter ROM sources or establish per-read attribution, other
+scenes, native Windows behavior or coverage of the remaining commands.
+
 The producer audit confirms1265cc←125b6a in manager125ac8, dynamically assigned
 through literals125ed4/125f10. Producer125e8c resolves the relative script archive
 atB946EC using an event key returned by08009aa0 (sourceD68C2C). The complete archive

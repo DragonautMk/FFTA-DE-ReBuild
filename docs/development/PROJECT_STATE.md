@@ -110,7 +110,11 @@ publication; `scripts/task_handoff.py check` enforces structure and preservation
   at their original paths under a coordinated lease and retired after PASS;
   `scripts/cold_storage.py` also wraps legacy consumers and exposes explicit
   inspection/recovery. Historical packing requires reviewed completion and host
-  activity evidence. `cold_storage.py batch --apply` discovers remaining eligible
+  activity evidence. Verified duplicate compressed payloads can share disk
+  blocks locally at publication, during explicit compaction and at the initial
+  low-space admission check. The [storage checklist](STORAGE_CHECKLIST.md)
+  keeps current toolchains/dependencies available and failed diagnostics local.
+  `cold_storage.py batch --apply` discovers remaining eligible
   completed artifacts automatically, records exclusions/progress and skips
   cataloged paths on reruns; it does not rerun validation commands. Current,
   private, failed/suspended and explicitly hot scopes remain available.

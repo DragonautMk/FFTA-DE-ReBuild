@@ -65,6 +65,9 @@ JSON results and protect actual input paths. Successful scratch is automatically
 retired after evidence/preservation checks. Keep one reusable current dataset
 per ROM/profile, plus a named comparison baseline only while needed. Reuse
 canonical Cargo artifacts; avoid per-version prefix and executable copies.
+Keep the installed Windows toolchain and the shared Wine prefix ready locally.
+On low space follow the [storage checklist](../../../docs/development/STORAGE_CHECKLIST.md).
+The host runner checks for duplicate local archives before refusing a launch.
 `--keep-work` needs a concrete consumer/reason and later retirement. Failures and
 interruptions retain work; inspect timeout descendants before lease recovery.
 For legacy successful units use `scripts/local_artifacts.py complete` as before;

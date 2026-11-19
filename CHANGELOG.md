@@ -3,6 +3,130 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-19 — Validate native title language selections
+
+Type: added. Platforms: Windows.
+
+**Changes**
+
+- Add EUR/Wine raw/managed mixed-dispatch checks for each ordinary title language change and direct generated title-cursor reads.
+
+**Validation**
+
+- Wine 4yp7q7yd passes the retained routes for IDs 1, 2, 3, 4 and return to 0, with selected global values observed at frames 9, 17, 25, 9 and 103. Both selected cursor coordinates are read through generated APIs in every route; the monitored source spans have no raw requests.
+- All 168 paired frames match complete state, clock, video, OAM, dispatch and audio, with five nonempty streams across the runs and altered managed source spans. Input guards passed, Wine drained and successful scratch was removed; Windows GNU test build sdei3198 passed.
+
+**Limitations**
+
+- Generated API wrappers identify title-cursor reads but not exact guest instruction PCs or direct native reads of the separate 3ae42c context-position bank. Other language writers, the global value domain, scenes, native Windows, Linux and USA remain open.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-validate-native-title-language-publications.json)
+
+## 2026-11-19 — Validate native context language position pairs
+
+Type: added. Platforms: Windows.
+
+**Changes**
+
+- Add EUR/Wine ordinary startup checks for direct generated reads of both context-language position tables across all five observed language choices.
+
+**Validation**
+
+- Wine arfmrs12 passes five raw/managed routes totaling 2120 frames; both bytes of both selected position pairs are read by generated APIs for every language, with altered backing sources and zero raw requests. Complete state, clock, video, OAM, dispatch and five nonempty audio streams match per frame.
+- Windows GNU test build tmmpkgkh passed; protected ROM, dataset, checkpoint, source and cache inputs remained unchanged. Wine drained and successful scratch was removed.
+
+**Limitations**
+
+- The wrapper establishes direct generated API requests, not exact guest load PCs. The result covers one startup route and language values 0–4, not other readers, writers, values, scenes, native Windows, Linux or USA.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-validate-native-context-language-position-pairs.json)
+
+## 2026-11-19 — Validate E170 suspend-to-battle scene
+
+Type: docs. Platforms: Windows.
+
+**Changes**
+
+- Record the complete EUR E170 raw/managed comparison for the retained suspend-to-battle route.
+
+**Validation**
+
+- Wine unit 9b1qo9ie passed all 8476 frames with equal full state, clock, video, OAM, dispatch and five nonempty audio streams; the guard recorded 42 script-command bytes from seven commands. Protected inputs were unchanged and successful scratch was removed.
+- Windows GNU test executable build tg_hslxv passed; four reviewed duplicate artifacts were compressed and verified with approximately 436 MiB of payload savings.
+
+**Limitations**
+
+- One retained EUR route under Wine; ROM sources were not altered, per-read attribution and other scenes or consumers were not established, and native Windows, Linux and USA remain unvalidated by this check.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-validate-e170-suspend-battle-scene.json)
+
+## 2026-11-19 — Validate E170 source reads through save lifecycle
+
+Type: added. Platforms: Windows.
+
+**Changes**
+
+- Add an ignored EUR/Wine integration test for every declared E170 source byte after failed replacement, slot Load, Undo, backup restore and restart using synthetic saves.
+
+**Validation**
+
+- Windows GNU test build siostytu and Wine unit i73r4f54 passed: 113 resources, 54792 declared spans and 10948338 distinct source bytes in each of five phases, with backing ROM inverted; range and conditional-word owners served reads, expected states and owner persisted, protected inputs remained unchanged and scratch was removed.
+
+**Limitations**
+
+- The test uses direct APIs and a missing replacement path without moving the active dataset; GUI, Fast, guest execution, individual resource attribution, native Windows, Linux and USA remain outside its scope.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-validate-e170-all-resource-save-lifecycle.json)
+
+## 2026-11-19 — Validate the complete E134 first sequence
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Extend the controlled original and translated E134 updater/draw comparisons from three frames to every frame of the 38-frame first sequence on E170.
+
+**Validation**
+
+- Windows GNU build e134-full-sequence-build-hhzdrm13 and Wine e134-full-sequence-wine-b6uugr9g pass 38 independently initialized original/translated updater and draw comparisons. The selected list and duration match the model for every frame, covering all 19 lists selected by the sequence; complete state and guest clock match with managed backing spans altered. Input guards pass, Wine drains and successful scratch is removed.
+
+**Limitations**
+
+- Independent controlled calls do not establish a continuous ordinary animation, the other two lists in the bank, or production-cache availability. Generated instructions may fall back to interpretation. Other consumers, Linux, USA and native Windows remain open.
+
+Documentation: [2026-11-10-add-context-updater-obj-bank.json](docs/changes/2026-11-10-add-context-updater-obj-bank.json), [2026-11-11-validate-ordinary-context-obj-bank-wine.json](docs/changes/2026-11-11-validate-ordinary-context-obj-bank-wine.json).
+
+[Change record](docs/changes/2026-11-19-validate-e134-complete-first-sequence.json)
+
+## 2026-11-19 — Validate the complete text registry reader domain
+
+Type: changed. Platforms: EUR / Windows GNU under Wine.
+
+**Changes**
+
+- Compare both original text-registry reader prefixes for every byte index and its 0x100 alias, with interpreter and generated instruction dispatch and all table backing bytes inverted.
+
+**Validation**
+
+- Windows GNU build text-registry-complete-domain-build-mgpb_l51 and Wine text-registry-complete-domain-wine-u43_buss pass 2048 complete-state and guest-clock comparisons. Every selected four-byte word is served exactly once from typed resources; the trace drops no requests. Input guards pass, Wine drains and successful scratch is removed.
+
+**Limitations**
+
+- The prefixes stop before callback invocation. Conditional indices do not establish ordinary reachability or callback safety; generated blocks may fall back to interpretation. Other consumers, native Windows, Linux, USA and performance remain open.
+- The initial build launch rdk_ywcu used an invalid relative script path, and Wine launch bi3m_6lq could not access its runtime directory in the sandbox. Both ended before executing the test; the succeeding run used the absolute path and host Wine access.
+
+Documentation: [2026-11-17-audit-european-text-reader-e170-ownership.json](docs/changes/2026-11-17-audit-european-text-reader-e170-ownership.json).
+
+[Change record](docs/changes/2026-11-19-validate-complete-text-registry-reader-domain.json)
+
 ## 2026-11-19 — Trace the descriptor batch event source
 
 Type: docs. Platforms: EUR source and retained snapshots.
@@ -80,6 +204,78 @@ Type: fixed. Platforms: Android, Linux, Windows.
 Documentation: [android_docker.md](docs/android_docker.md), [debug_control.md](docs/debug_control.md), [v1.1.2.md](docs/releases/v1.1.2.md).
 
 [Change record](docs/changes/2026-11-19-prepare-release-1-1-2.json)
+
+## 2026-11-19 — Recover local storage from duplicate archives and closed Wine diagnostics
+
+Type: changed. Platforms: Linux POSIX host, root validation and storage tooling.
+
+**Changes**
+
+- Share verified identical local tar.zst payloads at publication and through cold_storage.py compact. Each entry retains its own catalog, access constraints and independent restore. Existing archives remain usable offline.
+- On insufficient launch space, the validation runner checks the existing local archive store under its lease, deduplicates up to the shortfall, and measures free space again. Healthy launches keep the existing fast path and the final admission guard.
+- Add exact local FAIL and MIXED diagnostic reviews. Bind closed outcome receipts and inventories, check nested leases and host activity again before retirement, and exclude these diagnostic entries from external offload.
+- Publish the storage checklist and align the cleanup, development and Windows validation skills on shared toolchains, dependency downloads, current datasets, active work and offline recovery.
+
+**Validation**
+
+- 34 cold storage tests and 29 validation runner tests passed on Linux with the host socket runtime available for the runner suite. Coverage includes independent writable restores, duplicate publication, future offload of a peer, refused external aliases, corruption, diagnostic classification, held leases and admission remeasurement.
+- 175 duplicate archives released 2416574464 allocated bytes. Three closed U31 Wine prefixes and one mixed migration GUI prefix released 3609329664 more after archive metadata. All four archives verified locally. The mixed prefix restored and retired through the normal input runner with an unavailable external mount. The pinned sibling inventory and historical receipts matched.
+- Net recovery after maintenance receipts was 6025879552 bytes (5.61 GiB). A second physical inode count confirmed compacted bytes. The final compact preview found zero further eligible duplicate payloads. Local receipts are under target/storage-maintenance-20261119-gzbhv8ds/.
+
+**Limitations**
+
+- Archive block sharing requires suitable POSIX hard links and extended-attribute inspection. Native Windows verification remains deferred. Free-space admission is an observation and concurrent writers may change it.
+- The host check found no matching process in its visible evidence. Three process details were inaccessible. Live or leased scopes, shared prefixes, named baselines and the suspended U31 isolated build are retained.
+
+Documentation: [STORAGE_CHECKLIST.md](docs/development/STORAGE_CHECKLIST.md), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md).
+
+[Change record](docs/changes/2026-11-19-automate-local-archive-space-recovery.json)
+
+## 2026-11-19 — Attribute native indexed context reads on the world map
+
+Type: added. Platforms: Windows.
+
+**Changes**
+
+- Add an opt-in test observer that attributes generated API reads of the indexed-graphics context owner on the retained ordinary world-map route.
+
+**Validation**
+
+- Wine ax_5va8t passes the 41-frame E170 raw/managed pair with equal full state, clock, video, OAM, dispatch and five nonempty audio streams. All four traced context-3 requests and four typed bytes are direct generated API calls, with no raw or unclassified context reads and all 132 backing source bytes altered.
+- Windows GNU build 8n1s8g8b passed; inputs were protected, Wine drained and successful scratch was removed.
+
+**Limitations**
+
+- The wrapper identifies direct generated API calls, not exact guest load PCs. Other contexts, callers, the full reader ABI, native Windows, Linux and USA remain open.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-attribute-native-indexed-context-reads.json)
+
+## 2026-11-19 — Validate European title bank reads and complete animation
+
+Type: added. Platforms: Windows.
+
+**Changes**
+
+- Add a guarded EUR/Wine opening comparison that records title-bank source readers and exact-header native API requests alongside frame state, video and audio in the default and patch-disabled configurations.
+- Add an ordinary-opening test for every phase of the main-title bank sequence, including exclusive per-frame header observations and the original animator completion flag.
+
+**Validation**
+
+- Wine vbye2pnv passes 180 raw/managed frames with 92 typed requests across all five nonempty headers, zero raw requests and five nonempty equal audio streams; all header requests carry interpreter site 0800153c while 4614628 other native API reads were wrapped and no direct header reads were observed.
+- The initial 3a3oqsyf launch lacked TinyCC; an63hanh failed an unsupported direct-read assertion. A focused Sol 6.1 xhigh consultation identified the forced sprite interpreter hook and the final retained trace reports actual readers; successful scratch was removed.
+- Wine 8j504dl0 uses the protected save and retained boot input with FFTA_PATCH_SPR=0: 3885 raw/managed frames match complete state, clock, video, OAM, dispatch and five audio streams; five headers have 7/5/7/9/1 direct generated API requests, all typed, with source bytes altered and zero raw requests. Input guards passed and scratch was removed.
+- The earlier rdi7_s7u attempt used only neutral input and did not reach the title lists; the corrected run replays the retained two-frame Start input after 900 frames. The successful receipt calls its route neutral in its limits text; test result metadata was corrected afterward without changing the comparison logic.
+- Wine ntggzh1c passes 180 raw/managed frames with equal complete state, clock, video, OAM, dispatch and five nonempty audio streams. The six exclusive list phases 1/4/2/3/5/3 last 7/9/5/7/2/33 frames, and the source-rooted animator completion flag rises only after the final phase; poisoned list sources yield zero raw requests. Protected inputs passed, Wine drained and successful scratch was removed.
+
+**Limitations**
+
+- The default route remains interpreter-scoped for these reads; the patch-disabled cold boot establishes direct native headers for one EUR opening, not exact guest load PCs. Complete animation is established for the main-title sequence in that opening only; other banks, producers and scenes remain open. Native Windows, Linux and USA remain unverified.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-19-attribute-european-title-bank-reads.json)
 
 ## 2026-11-19 — Fix Android battle laws and confirm app exit
 

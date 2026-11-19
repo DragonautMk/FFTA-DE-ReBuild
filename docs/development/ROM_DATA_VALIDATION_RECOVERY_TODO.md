@@ -312,8 +312,9 @@ current evidence before running another check.
   ordinary publication witnesses; confirming already-active ID 0 takes the
   unchanged branch (`9k_mye2m`). Returning from French and publishing ID 0
   now passes an ordinary EUR/Wine interpreter pair (`1riwnrce`). Other writers,
-  native dispatch, the global value domain, Linux, USA and native Windows
-  remain open. The E164 conditional full-byte index audit (`s7fuvptv`) found
+  native attribution beyond the observed choices, the global value domain,
+  Linux, USA and native Windows remain open. The E164 conditional full-byte
+  index audit (`s7fuvptv`) found
   39 already-owned and 222 unbound physical pairs. E166 recheck (`a1j2lsxv`)
   found 256 owned and five unowned pairs after the two archives were added.
   E167 recheck `60xqqy83` finds 260 owned; the final two-byte gap at
@@ -325,6 +326,20 @@ current evidence before running another check.
   without establishing their live input domain. Production Wine CLI creation,
   reuse and verification pass (`wklf6sch`); ordinary reachability of inputs
   30/35, Linux, USA and native Windows remain pending.
+- [x] **ROMDATA-01-CONTEXT-3AE42C-NATIVE-LANGUAGES scoped:** E170 Wine
+  `4yp7q7yd` follows ordinary selections 1–4 and return to 0 with generated
+  dispatch. Each value changes as expected, both selected title-cursor
+  coordinates receive direct generated API reads, and full state, clock,
+  video, OAM, dispatch and audio match per frame. Direct native reads of the
+  separate `3ae42c` bank were not covered by that check; the global writer/value
+  domain remains open.
+  [Evidence](../rom_data_obj.md).
+- [x] **ROMDATA-01-CONTEXT-3AE42C-DIRECT-NATIVE scoped:** E170 Wine `arfmrs12`
+  follows five ordinary startup selections and attributes both bytes of each
+  position pair to direct generated API reads. All 2,120 raw/managed frames
+  match state, clock, video, OAM, dispatch and audio with source bytes altered.
+  Other readers, values, scenes and platforms remain open.
+  [Evidence](../rom_data_obj.md).
 - [ ] **ROMDATA-01-CONTEXT-CALLBACK-3AE47C:** validate the drafted E167
   independently rooted callback descriptor. The controlled original
   dispatcher state-4 Wine retry `md0zxb9k` and production CLI `555lr8qm`
@@ -371,7 +386,22 @@ current evidence before running another check.
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
-  witness; first-bank sequence zero and the global producer domain remain open.
+  witness. E170 Wine `vbye2pnv` passes a 180-frame mixed-dispatch state/video/
+  audio pair and records all five headers at interpreter site `0800153c`, with
+  no direct native API header reads. First-bank sequence zero, other scenes and
+  configurations, and the global producer domain remain open.
+- [x] **ROMDATA-04-TITLE-MAIN-BANK-NATIVE scoped:** E170 Wine `8j504dl0`
+  starts from a protected EUR save with `FFTA_PATCH_SPR=0`, follows the retained
+  boot input and compares 3,885 raw/managed frames. All five nonempty headers
+  are read through the generated API with their sources altered; full state,
+  clock, video, OAM, dispatch and audio match. The default hook route remains
+  separately interpreter-scoped. [Evidence](../rom_data_obj.md).
+- [x] **ROMDATA-04-TITLE-MAIN-BANK-COMPLETE-ANIMATION scoped:** E170 Wine
+  `ntggzh1c` verifies all six original sequence phases and their 63 consecutive
+  exclusive header frames, then the animator completion flag. A 180-frame
+  raw/managed pair matches state, clock, video, OAM, dispatch and nonempty
+  audio with altered list sources. Other banks, producers and scenes remain
+  open. [Evidence](../rom_data_obj.md).
 - [ ] **ROMDATA-04-BATTLE-40D300-OTHER:** establish source-backed ordinary use
   of the remaining directory-selected battle lists; index 56 has a scoped
   Wine witness, not full-directory ordinary coverage.
@@ -419,9 +449,15 @@ current evidence before running another check.
   controlled Wine `9l5p79sq` additionally compares all 256 getter byte values
   and their 0x100 aliases plus three field loads across all 33 records, using
   interpreter and generated instruction dispatch. Other callers, ordinary
-  reachability, per-read native attribution and broader private-ROM regressions
-  remain pending. Current Wine `cpyhx1cy` passes all 31 non-ignored synthetic
-  ROM-data tests; 451 ignored tests were not run.
+  reachability, native attribution beyond the observed context and broader
+  private-ROM regressions remain pending. Current Wine `cpyhx1cy` passes all
+  31 non-ignored synthetic ROM-data tests; 451 ignored tests were not run.
+- [x] **ROMDATA-01-CONTEXT-3710D4-DIRECT-NATIVE scoped:** Wine `ax_5va8t`
+  attributes all four context-3 requests and four typed bytes on the recorded
+  world-map route to direct generated API calls. The 41-frame raw/managed pair
+  matches state, clock, video, OAM, dispatch and audio with altered source bytes.
+  Other contexts, callers and the full reader ABI remain open.
+  [Evidence](../rom_data_indexed_graphics.md).
 - [ ] **ROMDATA-01-SUBSTITUTION-371158:** establish remaining callback behavior,
   other parser-to-callback paths, ordinary text use and unselected consumers. EUR e160
   typed candidate slots and dispatcher prefixes pass under Wine (`2bltt60c`);
@@ -448,8 +484,15 @@ current evidence before running another check.
   all 1,800 frames of full state, clock, video, OAM and nonempty audio with 116
   source bytes altered. Seven typed table reads address only null slot 3; no
   callback invocation is established. Kind 11 conditionally selects `08016c00`,
-  but its ordinary use remains unproved. Other scenes, translated prefixes,
+  but its ordinary use remains unproved. Other scenes, direct native attribution,
   Linux, USA and native Windows remain open.
+- [x] **ROMDATA-01-TEXT-READER-COMPLETE-PREFIX-DOMAIN:** both original reader
+  prefixes match raw state and clock over all 256 byte indices and `0x100`
+  aliases in interpreter and generated instruction dispatch: 2,048 E170 Wine
+  cases, each word served exactly once from typed resources with all table
+  backing bytes inverted (`u43_buss`). Prefixes stop before callback invocation;
+  ordinary indices, callback semantics and other consumers remain open, and
+  generated blocks may fall back to interpretation. [Evidence](../rom_data_text.md).
 - [x] **ROMDATA-01-TEXT-READER-FULL-BYTE-DOMAIN:** audit physical ownership
   for the original registry readers' full byte-index address range against
   E169, preserving independently rooted neighboring data and distinguishing
@@ -547,6 +590,13 @@ current evidence before running another check.
   presenter. The old artifact's failed
   comparison (`ve41xbr3`) is not explained; its later IRQ comparison crossed
   the reference frame boundary (`jui0l9oq`).
+- [x] **E134-COMPLETE-FIRST-SEQUENCE-CONTROLLED:** for all 38 frames of the
+  original first sequence, compare independent original and translated
+  updater/draw calls and verify the selected list and duration. E170 Wine
+  `b6uugr9g` passes full state/clock with altered managed backing, covering all
+  19 lists used by the sequence. Continuous ordinary animation, the other two
+  lists, production-cache coverage and other consumers remain open.
+  [Evidence](../rom_data_obj.md#conditional-context-updater-obj-bank-e134).
 - [ ] **ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES:** resolve the live
   source domain, save-load behavior and aliases beyond the observed 59 rows.
 - [ ] **ROMDATA-01-SCRIPT39-REGISTRY-POSES:** authenticate and model the
@@ -628,6 +678,12 @@ current evidence before running another check.
   One dynamic-base store cannot overlap variable 80 under a successful,
   intact in-pool allocation, including EWRAM mirrors (`q9cpd9yg`); actual
   allocation state, outside rows, other writers and restoration remain open.
+- [x] **ROMDATA-05-E170-ALL-RESOURCE-LIFECYCLE scoped:** synthetic EUR/Wine
+  `i73r4f54` verifies all 10,948,338 declared source bytes with inverted ROM
+  backing after failed replacement, Load, Undo, backup restore and restart.
+  The owner and expected states persist; individual resource attribution, GUI,
+  Fast, guest execution and other platforms remain outside this result.
+  [Evidence](../rom_data_runtime.md).
 - [ ] **ROMDATA-05:** complete required equivalence, saves, audio and rendering
   checks for each remaining migrated family and preserve guest timing and
   side effects; the four short E162 scene windows and cold boot do not establish
@@ -638,7 +694,11 @@ current evidence before running another check.
   source bytes through three mirrors and the native API and compares aligned,
   fully covered words with byte composition against inverted backing ROM.
   Both are read regressions, not guest execution, arbitrary unaligned interior
-  reads or full equivalence.
+  reads or full equivalence. The separate E170 Wine `9b1qo9ie` test matches all
+  8,476 frames of one retained EUR suspend-to-battle route, including complete
+  state, clock, video, OAM, dispatch and five audio streams; 42 script-command
+  bytes from seven commands are read. ROM sources were not altered, and this
+  one route does not close all-family or all-consumer equivalence.
 
 ## 5. Resolve prerequisites before selecting further proofs
 

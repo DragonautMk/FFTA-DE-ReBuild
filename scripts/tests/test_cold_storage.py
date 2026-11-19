@@ -142,6 +142,140 @@ class ColdStorageTests(unittest.TestCase):
         mount = self.root / 'external'; (mount / 'archives').mkdir(parents=True)
         return entry, data, mount
 
+    def matching_file(self, name):
+        copy = self.source.parent / name
+        shutil.copy2(self.source / 'data.bin', copy)
+        return copy
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(os, 'listxattr'), 'POSIX archive sharing')
+    def test_compact_legacy_entries_offline_and_preserve_proof_and_independent_restores(self):
+        one, two = self.matching_file('one'), self.matching_file('two')
+        expected = one.read_bytes()
+        with cold.Store(self.root) as store:
+            with mock.patch.object(cold, 'compact_local_payloads', return_value={'shared': 0}):
+                self.pack(store, one)
+                store.pack(two, reason='Keep failed diagnostics locally', proof={'status': 'FAIL'})
+            entries = store.entries()
+            payloads = [e / 'payload.tar.zst' for e, _ in entries]
+            before = [(e / 'entry.json').read_bytes() for e, _ in entries]
+            preview = cold.compact_local_payloads(store, entries)
+            self.assertEqual(preview['candidates'], 1)
+            self.assertFalse(payloads[0].samefile(payloads[1]))
+            with mock.patch.object(cold, 'external_mount', side_effect=AssertionError('USB accessed')):
+                result = cold.compact_local_payloads(store, entries, apply=True)
+                self.assertEqual(result['released_bytes'], preview['candidate_bytes'])
+                self.assertTrue(payloads[0].samefile(payloads[1]))
+                self.assertFalse(payloads[0].stat().st_mode & 0o222)
+                self.assertEqual(before, [(e / 'entry.json').read_bytes() for e, _ in entries])
+                self.assertEqual(cold.compact_local_payloads(store, entries, apply=True)['shared'], 0)
+                for e, d in entries:
+                    self.assertTrue(store.restore(e, d))
+                one.write_bytes(b'new working copy')
+                self.assertEqual(two.read_bytes(), expected)
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(os, 'listxattr'), 'POSIX archive sharing')
+    def test_new_publication_shares_automatically_and_offload_preserves_its_local_peer(self):
+        # A single-file archive with the same tar member and timestamps.
+        peer = self.matching_file('peer')
+        other = self.matching_file('other')
+        with cold.Store(self.root) as store:
+            self.pack(store, peer)
+            result = self.pack(store, other)
+            self.assertEqual(result['archive_added_bytes'], 0)
+            entry, data = store.matching([other])[0]
+            result_path = other.parent / 'result.json'
+            result_path.write_text('{"status":"PASS"}')
+            data['proof']['scope'] = 'target/completed'
+            cold.save(entry / 'entry.json', data)
+            mount = self.root / 'external'
+            (mount / 'archives').mkdir(parents=True)
+            with mock.patch.object(cold, 'external_mount', return_value=(mount, 'test-uuid')), \
+                    mock.patch.object(cold, 'host_activity', return_value={}):
+                store.offload(entry, data, mount, 'archives', completion_paths=[result_path])
+            with mock.patch.object(cold, 'external_mount', side_effect=AssertionError('USB accessed')):
+                e, d = store.matching([peer])[0]
+                self.assertTrue(store.restore(e, d))
+                self.assertEqual(peer.read_bytes(), (self.source / 'data.bin').read_bytes())
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(os, 'listxattr'), 'POSIX archive permissions')
+    def test_sharing_excludes_different_access_and_links_outside_catalog(self):
+        one, two = self.matching_file('one'), self.matching_file('two')
+        with cold.Store(self.root) as store:
+            with mock.patch.object(cold, 'compact_local_payloads', return_value={'shared': 0}):
+                self.pack(store, one)
+                self.pack(store, two)
+            entries = store.entries()
+            first, second = [e / 'payload.tar.zst' for e, _ in entries]
+            first.chmod(0o400)
+            second.chmod(0o444)
+            self.assertEqual(cold.compact_local_payloads(store, entries, apply=True)['candidates'], 0)
+            second.chmod(0o400)
+            os.link(first, self.root / 'outside.zst')
+            self.assertEqual(cold.compact_local_payloads(store, entries, apply=True)['candidates'], 0)
+            self.assertFalse(first.samefile(second))
+
+    @unittest.skipUnless(os.name == 'posix' and hasattr(os, 'listxattr'), 'POSIX archive sharing')
+    def test_corrupt_peer_keeps_new_source_and_link_failure_keeps_separate_archives(self):
+        peer, copy = self.matching_file('peer'), self.matching_file('copy')
+        with cold.Store(self.root) as store:
+            self.pack(store, peer)
+            with mock.patch.object(cold.os, 'link', side_effect=PermissionError(cold.errno.EPERM, 'links disabled')):
+                self.pack(store, copy)
+            entries = store.entries()
+            payloads = [e / 'payload.tar.zst' for e, _ in entries]
+            self.assertFalse(payloads[0].samefile(payloads[1]))
+            candidate = self.matching_file('candidate')
+            with payloads[0].open('rb') as f:
+                corrupt = bytearray(f.read())
+            sealed_mode = payloads[0].stat().st_mode & 0o555
+            corrupt[-1] ^= 1
+            payloads[0].chmod(0o600)
+            payloads[0].write_bytes(corrupt)
+            payloads[0].chmod(sealed_mode)
+            with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                self.pack(store, candidate)
+            self.assertEqual(candidate.read_bytes(), (self.source / 'data.bin').read_bytes())
+
+    def test_reviewed_local_diagnostic_preserves_negative_outcome_and_rejects_offload(self):
+        scope = self.source.parent
+        first, last = scope / 'first.json', scope / 'final.json'
+        first.write_text('{"closed": true, "verify_exit": 1}')
+        last.write_text('{"closed": true, "status": "PASS"}')
+        with cold.Store(self.root) as store, mock.patch.object(cold, 'host_activity', return_value={'checked': True}):
+            review = cold.prepare_review(store, self.source, [first, last], scope, local_diagnostic='MIXED')
+            cold.apply_review(store, review, 'Keep both diagnostic runs offline')
+            entry, data = store.entries()[0]
+            self.assertEqual(data['proof']['status'], 'MIXED')
+            self.assertEqual(data['proof']['original_outcome'], 'MIXED')
+            self.assertNotIn('completion', data['proof'])
+            with self.assertRaisesRegex(ValueError, 'internal disk'):
+                store.offload(entry, data, self.root / 'missing-volume', 'archives', completion_paths=[last])
+            store.restore(entry, data)
+            self.assertTrue((self.source / 'data.bin').is_file())
+
+    def test_diagnostic_review_checks_scope_lease_and_outcomes_again_before_retirement(self):
+        scope = self.source.parent
+        result = scope / 'failure.json'
+        result.write_text('{"status": "running", "closed": true}')
+        with cold.Store(self.root) as store, mock.patch.object(cold, 'host_activity', return_value={'checked': True}):
+            with self.assertRaisesRegex(ValueError, 'Closed diagnostic receipt'):
+                cold.prepare_review(store, self.source, [result], scope, local_diagnostic='FAIL')
+            result.write_text('{"status": "FAIL"}')
+            guard = scope / 'sibling' / NAME
+            guard.mkdir(parents=True)
+            with self.assertRaisesRegex(ValueError, 'Existing activity lease'):
+                cold.prepare_review(store, self.source, [result], scope, local_diagnostic='FAIL')
+            guard.rmdir()
+            review = cold.prepare_review(store, self.source, [result], scope, local_diagnostic='FAIL')
+            original = cold.read_archive
+            def change_evidence(*args):
+                original(*args)
+                result.write_text('{"status": "FAIL", "changed": true}')
+            with mock.patch.object(cold, 'read_archive', side_effect=change_evidence):
+                with self.assertRaisesRegex(ValueError, 'evidence changed'):
+                    cold.apply_review(store, review, 'Preserve changed diagnostic')
+            self.assertTrue((self.source / 'data.bin').is_file())
+
     def test_external_offload_roundtrip_and_unavailable_or_corrupt_volume(self):
         expected = cold.logical(cold.scan(self.source))
         with cold.Store(self.root) as store:

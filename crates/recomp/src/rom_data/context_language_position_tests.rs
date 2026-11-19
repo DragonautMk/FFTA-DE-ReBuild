@@ -2,6 +2,151 @@
 use super::*;
 use gba_core::{rom_data::layered_obj_animations::{CONTEXT_LANGUAGE_POSITION_A, CONTEXT_LANGUAGE_POSITION_B}, Bus, Machine};
 
+#[cfg(feature = "rom-data-read-audit")]
+thread_local! {
+    static CONTEXT_LANGUAGE_DIRECT: std::cell::Cell<[u64; 20]> = const { std::cell::Cell::new([0; 20]) };
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn count_context_language_read(pointer: *mut std::ffi::c_void, address: u32, read: extern "C" fn(*mut std::ffi::c_void, u32) -> u32) -> u32 {
+    let offset = address & 0x01ff_ffff;
+    if (0x08..=0x0d).contains(&(address >> 24)) && (CONTEXT_LANGUAGE_POSITION_A..CONTEXT_LANGUAGE_POSITION_B + 10).contains(&offset) {
+        CONTEXT_LANGUAGE_DIRECT.with(|counts| {
+            let mut values = counts.get();
+            values[(offset - CONTEXT_LANGUAGE_POSITION_A) as usize] += 1;
+            counts.set(values);
+        });
+    }
+    read(pointer, address)
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_language_read8(pointer: *mut std::ffi::c_void, address: u32) -> u32 {
+    count_context_language_read(pointer, address, gba_core::capi::RT_API.read8)
+}
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_language_read16(pointer: *mut std::ffi::c_void, address: u32) -> u32 {
+    count_context_language_read(pointer, address, gba_core::capi::RT_API.read16)
+}
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_language_read32(pointer: *mut std::ffi::c_void, address: u32) -> u32 {
+    count_context_language_read(pointer, address, gba_core::capi::RT_API.read32)
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+static CONTEXT_LANGUAGE_API: gba_core::capi::RtApi = gba_core::capi::RtApi {
+    read8: context_language_read8, read16: context_language_read16, read32: context_language_read32,
+    ..gba_core::capi::RT_API
+};
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "EUR pre-selection checkpoint, E170 dataset and native library; Wine only"]
+fn european_language_positions_all_direct_native_pairs() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+    use std::collections::BTreeSet;
+
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_LANGUAGE_POSITION_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_LANGUAGE_POSITION_DATASET").unwrap());
+    let state = fs::read(std::env::var_os("FFTA_LANGUAGE_PRESELECTION_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "4db5a60bb293bb319e685fb317b9a31a85df8d0d872d859bcedb07c0ecc4ea22");
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    assert_eq!(CONTEXT_LANGUAGE_POSITION_B, CONTEXT_LANGUAGE_POSITION_A + 10);
+    let (_library, table) = crate::load_native(Path::new(&std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let mut observations = Vec::new();
+    let mut audio_totals = [0u64; 5];
+    for language in 0u8..=4 {
+        let mut raw = crate::make_machine(rom.clone(), None);
+        let mut managed = crate::make_machine(rom.clone(), None);
+        attach_from_directory(&mut managed, &dataset).unwrap();
+        for machine in [&mut raw, &mut managed] {
+            machine.load_state(&state).unwrap();
+            crate::arm_audio_hle(machine, None);
+            machine.bus.tap_channels = true;
+            machine.bus.audio_buf.clear(); machine.bus.psg_tap.clear();
+            machine.bus.fifo_tap[0].clear(); machine.bus.fifo_tap[1].clear(); machine.bus.hle_tap.clear();
+        }
+        assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+        let start = raw.bus.frames;
+        let confirm = 4 * u32::from(language);
+        let selected = [2 * usize::from(language), 2 * usize::from(language) + 1,
+            10 + 2 * usize::from(language), 11 + 2 * usize::from(language)];
+        CONTEXT_LANGUAGE_DIRECT.with(|counts| counts.set([0; 20]));
+        let trace = TraceCapture::start(TraceFilter { readers: vec![], ranges: vec![(CONTEXT_LANGUAGE_POSITION_A, CONTEXT_LANGUAGE_POSITION_B + 10)] }, 20_000).unwrap();
+        let mut dispatch = (0u64, 0u64);
+        let mut completed = None;
+        for frame in 0..1000u32 {
+            let keys = if frame < confirm && frame % 4 < 2 { 0x37f }
+                else if (confirm..confirm + 2).contains(&frame) { 0x3fe } else { 0x3ff };
+            raw.bus.keys = keys;
+            trace.frame(None);
+            let raw_pointer = &mut raw as *mut Machine as *mut std::ffi::c_void;
+            let raw_counts = crate::run_frame_native(&mut raw, &table, raw_pointer, crate::FRAME_STEP_GUARD);
+            for at in CONTEXT_LANGUAGE_POSITION_A..CONTEXT_LANGUAGE_POSITION_B + 10 { managed.bus.rom[at as usize] = 0xcd; }
+            managed.bus.keys = keys;
+            trace.frame(Some(managed.bus.frames));
+            let managed_pointer = &mut managed as *mut Machine as *mut std::ffi::c_void;
+            let managed_counts = crate::with_test_native_api(&CONTEXT_LANGUAGE_API, || crate::run_frame_native(&mut managed, &table, managed_pointer, crate::FRAME_STEP_GUARD));
+            trace.frame(None);
+            assert_eq!(raw_counts, managed_counts, "language {language}, dispatch frame {frame}");
+            assert_eq!((raw.bus.frames, managed.bus.frames), (start + u64::from(frame) + 1, start + u64::from(frame) + 1));
+            dispatch.0 += raw_counts.0; dispatch.1 += raw_counts.1;
+            assert_eq!(raw.bus.clock, managed.bus.clock);
+            assert_eq!(raw.bus.framebuffer, managed.bus.framebuffer);
+            assert_eq!(raw.bus.wide_framebuffer, managed.bus.wide_framebuffer);
+            assert_eq!(raw.bus.oam, managed.bus.oam);
+            assert_eq!(raw.bus.audio_buf, managed.bus.audio_buf);
+            assert_eq!(raw.bus.psg_tap, managed.bus.psg_tap);
+            assert_eq!(raw.bus.fifo_tap, managed.bus.fifo_tap);
+            assert!(raw.bus.hle_tap.iter().map(|v| v.to_bits()).eq(managed.bus.hle_tap.iter().map(|v| v.to_bits())));
+            for (sum, len) in audio_totals.iter_mut().zip([managed.bus.audio_buf.len(), managed.bus.psg_tap.len(), managed.bus.fifo_tap[0].len(), managed.bus.fifo_tap[1].len(), managed.bus.hle_tap.len()]) { *sum += len as u64; }
+            for at in CONTEXT_LANGUAGE_POSITION_A..CONTEXT_LANGUAGE_POSITION_B + 10 { managed.bus.rom[at as usize] = rom[at as usize]; }
+            assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap(), "language {language}, state frame {frame}");
+            for machine in [&mut raw, &mut managed] {
+                machine.bus.audio_buf.clear(); machine.bus.psg_tap.clear();
+                machine.bus.fifo_tap[0].clear(); machine.bus.fifo_tap[1].clear(); machine.bus.hle_tap.clear();
+            }
+            let direct = CONTEXT_LANGUAGE_DIRECT.with(|counts| counts.get());
+            if frame >= confirm && raw.bus.ewram[0x1f6e] == language && selected.iter().all(|&index| direct[index] > 0) {
+                completed = Some(frame);
+                break;
+            }
+        }
+        let frame = completed.expect("ordinary selection and direct reads of both position pairs not observed");
+        let report = trace.finish();
+        assert!(!report.truncated && report.dropped_requests == 0);
+        let mut typed_offsets = BTreeSet::new();
+        let mut raw_requests = 0u64;
+        let mut unclassified = 0u64;
+        for event in &report.events {
+            match event.key.service {
+                Service::Typed => { typed_offsets.insert(event.key.read.physical_offset); }
+                Service::Raw => raw_requests += event.requests,
+                Service::Unclassified => unclassified += event.requests,
+            }
+        }
+        for &index in &selected { assert!(typed_offsets.contains(&(CONTEXT_LANGUAGE_POSITION_A + index as u32))); }
+        assert_eq!((raw_requests, unclassified), (0, 0));
+        assert!(dispatch.0 > 0);
+        let direct = CONTEXT_LANGUAGE_DIRECT.with(|counts| counts.get());
+        observations.push(serde_json::json!({"language":language, "last_frame":frame,
+            "direct_selected_byte_requests":selected.map(|index| direct[index]),
+            "native_dispatches":dispatch.0, "fallback_dispatches":dispatch.1, "raw_requests":raw_requests}));
+    }
+    assert!(audio_totals.iter().all(|&samples| samples > 0));
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "scope":"EUR startup preselection, five ordinary languages and both position tables",
+        "observations":observations, "audio_sample_counts":audio_totals, "source_rom_poisoned":true,
+        "full_state_clock_video_oam_dispatch_audio_equal_each_frame":true,
+        "limits":"Direct generated API requests identify selected bytes, not exact guest instruction PCs; this covers one startup route, not other writers, byte values, scenes or platforms.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
 fn original_pair(machine: &mut Machine, first: bool, language: u8) -> (u32, u32) {
     machine.bus.write8(0x0200_1f6e, language);
     machine.cpu.regs[1] = 0x0200_1f6e;

@@ -197,6 +197,31 @@ class ValidationUnitTests(unittest.TestCase):
         self.assertEqual(self.receipt()['status'], 'FAIL')
         self.assertFalse((self.units()[0] / NAME).exists())
 
+    @unittest.skipUnless(os.name == 'posix', 'Local archive sharing requires POSIX')
+    def test_low_space_compacts_only_existing_store_then_remeasures(self):
+        catalog = self.root / 'target/cold-storage'
+        catalog.mkdir(parents=True)
+        free = argparse.Namespace(free=7 * validation.GIB)
+        self.space.side_effect = [argparse.Namespace(free=5 * validation.GIB), free, free]
+        with mock.patch.object(validation.cold_storage, 'compact_local_payloads',
+                               return_value={'released_bytes': validation.GIB}) as compact:
+            validation.run_unit(self.args(), root=self.root)
+        self.assertEqual(compact.call_count, 1)
+        self.assertEqual(compact.call_args.kwargs, {'apply': True, 'goal_bytes': validation.GIB})
+        self.assertEqual(self.receipt()['admission']['local_compaction']['released_bytes'], validation.GIB)
+        self.assertIsNone(self.receipt()['space_check']['local_compaction'])
+
+    @unittest.skipUnless(os.name == 'posix', 'Local archive sharing requires POSIX')
+    def test_low_space_preserves_other_store_lease_and_does_not_launch(self):
+        catalog = self.root / 'target/cold-storage'
+        catalog.mkdir(parents=True)
+        self.space.return_value.free = 5 * validation.GIB
+        with Lease(catalog, 'other-reader') as owner, mock.patch.object(validation.subprocess, 'run') as launch:
+            with self.assertRaisesRegex(ValueError, 'Insufficient free space'):
+                validation.run_unit(self.args(), root=self.root)
+            owner.check()
+            launch.assert_not_called()
+
     def test_space_budgets_and_recorded_small_check_exception(self):
         for changes in [{'min_free_gib': -1}, {'reserve_gib': float('nan')},
                         {'reserve_gib': float('inf')}, {'reserve_gib': 1e308}, {'reserve_gib': 0.1},

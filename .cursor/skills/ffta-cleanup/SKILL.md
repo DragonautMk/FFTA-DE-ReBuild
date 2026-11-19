@@ -1,6 +1,6 @@
 ---
 name: ffta-cleanup
-description: Compresses FFTARecomp artifacts into target/cold-storage and removes obsolete generated files. Use when asked to clean the project or target, reclaim disk space, compress test output, or repeat storage maintenance.
+description: Reclaims project disk space by sharing verified duplicate archives, compressing closed test output and retaining reusable inputs locally. Use for large target directories, insufficient validation space and repeat maintenance.
 ---
 
 # Clean project artifacts
@@ -13,6 +13,14 @@ Run commands from the repository root. This skill covers the root workspace;
 do not extend a sweep into `AndroidPort/`, other worktrees or host caches.
 
 ## Select the work cheaply
+
+Follow the [storage checklist](../../../docs/development/STORAGE_CHECKLIST.md).
+Start with the allocated size of `target` and the duplicate-archive preview.
+For an authorized cleanup, run `python3 scripts/cold_storage.py compact --apply`
+and record its released bytes. Repeat the preview to measure the remainder.
+This only shares checksummed, read-only compressed payloads in the local catalog.
+It works offline and leaves working copies independently writable. New archives
+already use this path automatically on supported POSIX filesystems.
 
 - Read `AGENTS.md`, the current `docs/development/TASK_HANDOFF.md` including its
   final handover, and `git status --short`. Record the selection checkpoint
@@ -29,6 +37,16 @@ do not extend a sweep into `AndroidPort/`, other worktrees or host caches.
   tracked files, current applications, canonical executables and shared Wine
   prefixes. Untracked or old does not mean disposable. Do not follow symlinks
   into other locations or reclaim another process's lease.
+- Keep dependency downloads, toolchains, canonical Cargo outputs, the shared
+  Wine prefix and the current dataset for each ROM/profile available locally.
+  Use the existing copy for repeat work. Historical failed or mixed diagnostics,
+  including intermediate snapshots, belong on the internal disk. For a closed
+  negative reproduction, review the exact payload and original outcome, lease
+  and host-check the scope, then use `plan --local-diagnostic FAIL` or `MIXED`
+  with the closed outcome receipts and the ordinary reviewed `pack` command.
+  Check other test drivers for actual prefix or dataset references, including
+  historical scripts outside the producer and command paths in unit receipts.
+  An external volume is only for explicitly optional completed history.
 
 Proceed within the user's cleanup authorization after reviewing the concrete
 inventory; do not ask again for each eligible archive or generated scratch

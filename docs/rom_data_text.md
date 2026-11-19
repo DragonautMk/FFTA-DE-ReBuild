@@ -135,7 +135,7 @@ Three reduced Wine checks pass after a warning-free Windows release test build:
   glyph486and variable/fixed metrics. All33581raw source ranges are altered
   after activation;90calls match complete serialized states and clocks after
   every call. Compiled read APIs consume60pointer-table,81string,30index,
- 30header,396encoded-control,434decoded-program,1892glyph and18metric bytes.
+  30header,396encoded-control,434decoded-program,1892glyph and18metric bytes.
   Original30840instructions/3093native dispatches are coverage counts only.
   The explicit valid nullable-context index1fixture is retained; this is not
   ordinary gameplay scene coverage or a repeat of the300-case offline oracle.
@@ -414,7 +414,6 @@ check also passes. This is a controlled scene fixture, not ordinary name entry.
 No performance, startup/RSS or space measurements were taken; AndroidPort is
 unchanged.
 
-
 ## Script-selected localized text source contract
 
 The five further EUR archives at `BB064C`, `C076F0`, `C5FBF0`, `CB7C48` and
@@ -481,7 +480,6 @@ acceptance remain pending. EUR stays e51-d50 and USA e8-d7. New Linux/USA/native
 checks remain pending; no performance or space campaign, fixtures, navigation,
 save/RAM/payload edits or Android changes.
 
-
 ## Typed script-selected text model and reduced Wine source oracle
 
 `rom_data::script_text` models all five ranges with typed top targets and variant
@@ -532,7 +530,6 @@ sections cover managed publication, direct runtime and production CLI; ordinary
 acceptance is recorded separately. New Linux/USA/native Windows verification
 remains pending; USA stays e8-d7. No performance or space measurements, new gameplay fixtures,
 navigation, edits to retained checkpoint/save/input files or Android changes.
-
 
 ## Managed script text and direct typed reads
 
@@ -758,6 +755,16 @@ back to interpretation; other scenes and consumers, translated-prefix
 attribution, Linux, USA and native Windows remain open. A D-Bus assertion was
 logged by Wine while the test continued and passed. No performance measurement
 was made.
+
+E170 Wine `text-registry-complete-domain-wine-u43_buss` compares both original
+reader prefixes for every byte index 0–255 and its `0x100` alias, using
+interpreter and generated instruction dispatch. Across 2,048 controlled cases,
+the complete machine state and guest clock match the raw-ROM reader. All 1,024
+conditional table bytes are inverted in the managed machine; each selected
+four-byte word is read exactly once from typed resources, with no dropped audit
+events. Guarded inputs pass, Wine drains and successful scratch is removed.
+The prefixes stop before callback invocation; conditional inputs do not prove
+ordinary reachability, and generated blocks may fall back to interpretation.
 
 The E169 conditional byte-index ownership audit `nw66w3v6` examines all 256
 word addresses conditionally addressed by the two original byte-truncating readers. It finds

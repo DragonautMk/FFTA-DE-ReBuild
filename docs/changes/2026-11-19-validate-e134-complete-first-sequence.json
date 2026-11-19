@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e134-complete-first-sequence",
+  "title": "Validate the complete E134 first sequence",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Windows GNU under Wine"
+  ],
+  "changes": [
+    "Extend the controlled original and translated E134 updater/draw comparisons from three frames to every frame of the 38-frame first sequence on E170."
+  ],
+  "validation": [
+    "Windows GNU build e134-full-sequence-build-hhzdrm13 and Wine e134-full-sequence-wine-b6uugr9g pass 38 independently initialized original/translated updater and draw comparisons. The selected list and duration match the model for every frame, covering all 19 lists selected by the sequence; complete state and guest clock match with managed backing spans altered. Input guards pass, Wine drains and successful scratch is removed."
+  ],
+  "limitations": [
+    "Independent controlled calls do not establish a continuous ordinary animation, the other two lists in the bank, or production-cache availability. Generated instructions may fall back to interpretation. Other consumers, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/obj_context_native_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-10-add-context-updater-obj-bank.json",
+    "docs/changes/2026-11-11-validate-ordinary-context-obj-bank-wine.json"
+  ]
+}

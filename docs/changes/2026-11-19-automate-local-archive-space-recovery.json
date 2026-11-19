@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "automate-local-archive-space-recovery",
+  "title": "Recover local storage from duplicate archives and closed Wine diagnostics",
+  "kind": "changed",
+  "platforms": [
+    "Linux POSIX host, root validation and storage tooling"
+  ],
+  "changes": [
+    "Share verified identical local tar.zst payloads at publication and through cold_storage.py compact. Each entry retains its own catalog, access constraints and independent restore. Existing archives remain usable offline.",
+    "On insufficient launch space, the validation runner checks the existing local archive store under its lease, deduplicates up to the shortfall, and measures free space again. Healthy launches keep the existing fast path and the final admission guard.",
+    "Add exact local FAIL and MIXED diagnostic reviews. Bind closed outcome receipts and inventories, check nested leases and host activity again before retirement, and exclude these diagnostic entries from external offload.",
+    "Publish the storage checklist and align the cleanup, development and Windows validation skills on shared toolchains, dependency downloads, current datasets, active work and offline recovery."
+  ],
+  "validation": [
+    "34 cold storage tests and 29 validation runner tests passed on Linux with the host socket runtime available for the runner suite. Coverage includes independent writable restores, duplicate publication, future offload of a peer, refused external aliases, corruption, diagnostic classification, held leases and admission remeasurement.",
+    "175 duplicate archives released 2416574464 allocated bytes. Three closed U31 Wine prefixes and one mixed migration GUI prefix released 3609329664 more after archive metadata. All four archives verified locally. The mixed prefix restored and retired through the normal input runner with an unavailable external mount. The pinned sibling inventory and historical receipts matched.",
+    "Net recovery after maintenance receipts was 6025879552 bytes (5.61 GiB). A second physical inode count confirmed compacted bytes. The final compact preview found zero further eligible duplicate payloads. Local receipts are under target/storage-maintenance-20261119-gzbhv8ds/."
+  ],
+  "limitations": [
+    "Archive block sharing requires suitable POSIX hard links and extended-attribute inspection. Native Windows verification remains deferred. Free-space admission is an observation and concurrent writers may change it.",
+    "The host check found no matching process in its visible evidence. Three process details were inaccessible. Live or leased scopes, shared prefixes, named baselines and the suspended U31 isolated build are retained."
+  ],
+  "files": [
+    "AGENTS.md",
+    ".cursor/skills/ffta-cleanup/SKILL.md",
+    ".cursor/skills/ffta-development/SKILL.md",
+    ".cursor/skills/ffta-windows-validation/SKILL.md",
+    "scripts/cold_storage.py",
+    "scripts/cold_storage_batch.py",
+    "scripts/validation_unit.py",
+    "scripts/tests/test_cold_storage.py",
+    "scripts/tests/test_validation_unit.py",
+    "scripts/README.md",
+    "docs/development/STORAGE_CHECKLIST.md",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/STORAGE_CHECKLIST.md",
+    "docs/development/LOCAL_ARTIFACTS.md"
+  ]
+}

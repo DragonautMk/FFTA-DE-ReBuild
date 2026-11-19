@@ -4,6 +4,50 @@ use gba_core::{Bus, Machine, capi::RT_API};
 use gba_core::rom_data::indexed_graphics::{CONTEXT_RECORDS, CONTEXT_SHA256, CONTEXT_SOURCE};
 use recomp_core::analyze::{Analysis, Block, View};
 
+#[cfg(feature = "rom-data-read-audit")]
+thread_local! {
+    static CONTEXT_DIRECT_READS: std::cell::Cell<(u64, u64, u64)> = const { std::cell::Cell::new((0, 0, 0)) };
+    static CONTEXT_INTERP_DEPTH: std::cell::Cell<u32> = const { std::cell::Cell::new(0) };
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn count_context_native_read(pointer: *mut std::ffi::c_void, address: u32, width: u32, read: extern "C" fn(*mut std::ffi::c_void, u32) -> u32) -> u32 {
+    let offset = address & 0x01ff_ffff;
+    if !(0x08..=0x0d).contains(&(address >> 24)) || offset >= CONTEXT_SOURCE + (CONTEXT_RECORDS * 4) as u32 || offset.saturating_add(width) <= CONTEXT_SOURCE {
+        return read(pointer, address);
+    }
+    let served = || unsafe { (&*(pointer as *const Machine)).bus.rom_resources().and_then(|owner| owner.indexed_graphics_stats()).map_or(0, |stats| stats.context_bytes) };
+    let before = served();
+    let value = read(pointer, address);
+    let bytes = served().saturating_sub(before);
+    let nested = CONTEXT_INTERP_DEPTH.with(|depth| u64::from(depth.get() > 0));
+    CONTEXT_DIRECT_READS.with(|counts| {
+        let (requests, typed_bytes, inside_interp) = counts.get();
+        counts.set((requests + 1, typed_bytes + bytes, inside_interp + nested));
+    });
+    value
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_read8(pointer: *mut std::ffi::c_void, address: u32) -> u32 { count_context_native_read(pointer, address, 1, RT_API.read8) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_read16(pointer: *mut std::ffi::c_void, address: u32) -> u32 { count_context_native_read(pointer, address, 2, RT_API.read16) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_read32(pointer: *mut std::ffi::c_void, address: u32) -> u32 { count_context_native_read(pointer, address, 4, RT_API.read32) }
+#[cfg(feature = "rom-data-read-audit")]
+extern "C" fn context_interp_one(pointer: *mut std::ffi::c_void) -> u32 {
+    CONTEXT_INTERP_DEPTH.with(|depth| depth.set(depth.get() + 1));
+    let result = (RT_API.interp_one)(pointer);
+    CONTEXT_INTERP_DEPTH.with(|depth| depth.set(depth.get() - 1));
+    result
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+static CONTEXT_NATIVE_API: gba_core::capi::RtApi = gba_core::capi::RtApi {
+    read8: context_read8, read16: context_read16, read32: context_read32,
+    interp_one: context_interp_one, ..RT_API
+};
+
 #[test]
 #[cfg(feature = "rom-data-read-audit")]
 #[ignore = "exact EUR ROM, E158 dataset and TinyCC; Wine only, Linux/USA pending"]
@@ -343,6 +387,7 @@ fn european_indexed_context_world_map_translated_pair() {
         "f8cbb37acf523ca0d1b2317bc1017b219ee0be0811d2ccfbb09ee32a8ec749ab"
     );
     let input = crate::InputScript::load(input_path.to_str().unwrap()).unwrap();
+    let require_direct = std::env::var_os("FFTA_INDEXED_CONTEXT_REQUIRE_DIRECT").is_some();
     let manifest: Manifest =
         toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
     assert_eq!(
@@ -380,6 +425,7 @@ fn european_indexed_context_world_map_translated_pair() {
     let start = raw.bus.frames;
     let mut audio = [0u64; 5];
     let mut dispatch = (0u64, 0u64);
+    CONTEXT_DIRECT_READS.with(|counts| counts.set((0, 0, 0)));
     for frame in 0..41u64 {
         managed.bus.rom[ROW..ROW + LEN].fill(0xa7);
         let mut counts = [(0, 0); 2];
@@ -388,7 +434,11 @@ fn european_indexed_context_world_map_translated_pair() {
             input.apply_mouse(&mut m.bus, frame).unwrap();
             trace.frame(if arm == 1 { Some(m.bus.frames) } else { None });
             let ptr = m as *mut Machine as *mut std::ffi::c_void;
-            counts[arm] = crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD);
+            counts[arm] = if arm == 1 && require_direct {
+                crate::with_test_native_api(&CONTEXT_NATIVE_API, || crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD))
+            } else {
+                crate::run_frame_native(m, &table, ptr, crate::FRAME_STEP_GUARD)
+            };
             assert_eq!(m.bus.frames, start + frame + 1);
         }
         trace.frame(None);
@@ -471,6 +521,11 @@ fn european_indexed_context_world_map_translated_pair() {
     assert_eq!((raw_reads, unclassified), (0, 0));
     assert!(audio.iter().all(|&v| v > 0), "audio counts: {audio:?}");
     assert!(dispatch.0 > 0);
+    let direct = CONTEXT_DIRECT_READS.with(|counts| counts.get());
+    if require_direct {
+        assert!(direct.0 > 0, "no direct generated context reads");
+        assert_eq!(direct, (typed, bytes, 0), "direct generated requests/typed bytes versus trace");
+    }
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
         "status":"PASS", "scope":"41-frame recorded EUR world-map raw/managed translated pair",
         "revision":[170,169], "frames":41, "context_typed_requests":typed,
@@ -478,7 +533,10 @@ fn european_indexed_context_world_map_translated_pair() {
         "context_records_touched":records, "context_bytes":bytes, "trace_dropped":trace.dropped_requests,
         "all_context_sources_poisoned":true, "full_state_clock_video_oam_audio_equal_each_frame":true,
         "audio_sample_counts":audio, "generated_dispatches":dispatch.0, "fallback_dispatches":dispatch.1,
-        "limits":"Generated blocks may fall back to interpretation; read attribution is aggregate and other contexts and the full reader ABI remain open.",
+        "direct_generated_context_requests":if require_direct { Some(direct.0) } else { None },
+        "direct_generated_context_bytes":if require_direct { Some(direct.1) } else { None },
+        "direct_calls_nested_in_interp":if require_direct { Some(direct.2) } else { None },
+        "limits":if require_direct { "Direct API counts cover this route, not exact guest instruction PCs; other contexts and the full reader ABI remain open." } else { "Generated blocks may fall back to interpretation; read attribution is aggregate and other contexts and the full reader ABI remain open." },
         "performance_measurements":false
     })).unwrap()).unwrap();
 }

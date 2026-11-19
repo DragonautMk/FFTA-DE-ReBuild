@@ -122,7 +122,7 @@ def snapshot(path, *, hashes=False, disposable=False, read_only=False,
     return result
 
 
-def check_space(root, args):
+def check_space(root, args, *, compact=False):
     """Admission check, not a reservation or a quota on a running child."""
     floor = args.min_free_gib
     reserve = args.reserve_gib
@@ -137,13 +137,22 @@ def check_space(root, args):
     ordinary(location, directory=True)
     free = shutil.disk_usage(location).free
     required = math.ceil((floor + reserve) * GIB)
+    maintenance = None
+    if free < required and compact and os.name == 'posix' and (target / 'cold-storage').is_dir():
+        try:
+            with cold_storage.Store(root) as store:
+                maintenance = cold_storage.compact_local_payloads(
+                    store, store.entries(), apply=True, goal_bytes=required - free)
+        except (OSError, ValueError) as error:
+            maintenance = {'error': str(error)}
+        print(f'Local archive compaction: {json.dumps(maintenance)}', flush=True)
+        free = shutil.disk_usage(location).free
     if free < required:
         raise ValueError(f'Insufficient free space: {free / GIB:.2f} GiB available; '
                          f'{required / GIB:.2f} GiB required '
-                         '(free-space floor plus expected growth). Review retained artifacts '
-                         'or declare a justified smaller budget; no cleanup was attempted')
+                         '(free-space floor plus expected growth). Review the storage checklist.')
     return {'free_bytes': free, 'required_bytes': required, 'min_free_gib': floor,
-            'reserve_gib': reserve, 'exception_reason': reason or None}
+            'reserve_gib': reserve, 'exception_reason': reason or None, 'local_compaction': maintenance}
 
 
 def inventory_bytes(inventory, keep_paths=None):
@@ -209,7 +218,7 @@ def managed_prefix(base):
 
 def run_unit(args, *, root=ROOT):
     root = root.resolve()
-    check_space(root, args)
+    admission = check_space(root, args, compact=True)
     keep_hot = getattr(args, 'keep_hot', None)
     if keep_hot is not None and not keep_hot.strip():
         raise ValueError('--keep-hot requires a concrete reason')
@@ -221,7 +230,7 @@ def run_unit(args, *, root=ROOT):
     unit = None
     try:
         inputs.open()
-        unit = _run_unit(args, root=root, inputs=inputs)
+        unit = _run_unit(args, root=root, inputs=inputs, admission=admission)
         inputs.close(success=True)
         receipt = unit / 'unit-result.json'
         report = json.loads(receipt.read_text())
@@ -240,7 +249,7 @@ def run_unit(args, *, root=ROOT):
         raise
 
 
-def _run_unit(args, *, root, inputs):
+def _run_unit(args, *, root, inputs, admission):
     root = root.resolve()
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{0,95}', args.name):
         raise ValueError('Unit name must be a short filename, starting with a letter or digit')
@@ -280,7 +289,7 @@ def _run_unit(args, *, root, inputs):
     work.mkdir()
     receipt_path = unit / 'unit-result.json'
     report = {'schema': 1, 'kind': 'ffta-validation-unit', 'status': 'running',
-              'work': str(work), 'cleanup': 'not_started', 'errors': [],
+              'work': str(work), 'cleanup': 'not_started', 'errors': [], 'admission': admission,
               'protected': list(before), 'evidence': [],
               'keep_reason': args.keep_work or args.keep_reason,
               'retention_mode': 'all' if args.keep_work else 'selected' if keep_paths else 'none',

@@ -299,6 +299,8 @@ def run(store, args):
             report['completed'].append({k: data[k] for k in (
                 'source', 'state', 'source_allocated_bytes', 'archive_allocated_bytes', 'archive_sha256')})
             report['completed'][-1]['metadata_allocated_bytes'] = metadata
+            report['completed'][-1]['archive_added_bytes'] = data.get('archive_added_bytes',
+                                                                      data['archive_allocated_bytes'])
         except (OSError, ValueError, cold.tarfile.TarError, cold.subprocess.SubprocessError) as error:
             report['errors'].append({'source': item['source'], 'reason': str(error)})
             print(f'Retained: {error}', flush=True)
@@ -310,7 +312,7 @@ def run(store, args):
                 return 1
         cold.save(report_path, report)
     report['status'] = 'PASS' if not report['errors'] else 'PARTIAL'
-    report['reclaimed_file_bytes'] = sum(d['source_allocated_bytes'] - d['archive_allocated_bytes']
+    report['reclaimed_file_bytes'] = sum(d['source_allocated_bytes'] - d['archive_added_bytes']
                                        - d['metadata_allocated_bytes'] for d in report['completed'])
     cold.save(report_path, report)
     print(f'{report["status"]}: {len(report["completed"])} archived; '

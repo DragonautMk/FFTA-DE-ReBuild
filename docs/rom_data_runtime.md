@@ -31,6 +31,18 @@ not attribute individual reads to resource owners. This does not cover guest
 execution, arbitrary unaligned interior reads, timing or other platforms.
 Protected inputs passed, successful scratch was removed and Wine drained.
 
+EUR/Wine `e170-all-resource-lifecycle-wine-i73r4f54` checks all 10,948,338
+distinct source bytes of the 113-resource E170 manifest after each of five
+synthetic operations: failed attachment from a missing replacement path,
+slot Load, Undo, backup restoration and restart. Each pass returns the original
+bytes with the in-memory backing ROM inverted; the range and conditional-word
+owners both record reads in every pass. The same owner and expected complete
+machine state survive each operation, and the protected dataset and ROM remain
+unchanged. This checks direct APIs with synthetic saves; it does not remove the
+active dataset, exercise GUI or Fast, execute guest code, or attribute every
+individual read to a particular resource. Native Windows, Linux and USA are
+outside the result. Successful scratch was removed and Wine drained.
+
 EUR e88-d87 adds [event records](rom_data_gameplay.md#managed-event-records-and-typed-runtime-reads):
 81files/80resources, one3072-byte span/no dependency, all79 previous records/
 payloads exact. The shared row225 view retains the same owner; original script/

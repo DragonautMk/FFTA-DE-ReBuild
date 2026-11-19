@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-suspend-battle-scene",
+  "title": "Validate E170 suspend-to-battle scene",
+  "kind": "docs",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Record the complete EUR E170 raw/managed comparison for the retained suspend-to-battle route."
+  ],
+  "validation": [
+    "Wine unit 9b1qo9ie passed all 8476 frames with equal full state, clock, video, OAM, dispatch and five nonempty audio streams; the guard recorded 42 script-command bytes from seven commands. Protected inputs were unchanged and successful scratch was removed.",
+    "Windows GNU test executable build tg_hslxv passed; four reviewed duplicate artifacts were compressed and verified with approximately 436 MiB of payload savings."
+  ],
+  "limitations": [
+    "One retained EUR route under Wine; ROM sources were not altered, per-read attribution and other scenes or consumers were not established, and native Windows, Linux and USA remain unvalidated by this check."
+  ],
+  "files": [
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

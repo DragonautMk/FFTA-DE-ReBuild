@@ -31,20 +31,20 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 - State: active
 - Outcome: partial
-- Selection: ROMDATA-05 partial; E170 bytes `ffhtpvms`, E50 8,476-frame pair PASS. Current build `cswvlp2e` PASS; E170 scene `k3j9esc3` live (exec 48803). Inspect receipt; preserve inputs and concurrent work. `8oo4pd4m` FAIL retained.
-- Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`).
+- Selection: E134 ordinary animation paused by user. 420-frame pair `euh4ed6s` PASS, 38 indices/one context; final duration stops at 27. Assertion build `3c5_nc7i` live at pause (exec session 43719); resume only on request: inspect handle/receipt before `/tmp/ffta-e134-ordinary-selectors.py`.
+- Verified: E158 reader/opening/CLI Wine PASS (`b8vylqkk`, `tucnagm9`). E170 full-scene Wine PASS (`9b1qo9ie`), scoped acceptance archived. E170 all-source synthetic lifecycle PASS (`i73r4f54`).
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
 - ROMDATA-04-METADATA14-ID1-ALIAS partial: batch `g2cugem4` PASS; event22/key161 ordinary path open. `6d1p8x1c` excludes operand161 in 191 declared writer instructions. Source `o9iv4u54` conditionally finds queue initialization selects zero slot1; later writes/IWRAM body and other producers remain open.
-- Title bank: five lists Wine PASS (hhh7a8lg); other scenes/native and FIRSTBANK-ZERO open (f4_b2apw).
+- Title bank: `ntggzh1c` full six-phase default-hook sequence/flag PASS; `8j504dl0` patch-off pair PASS, five direct native headers. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
-- CONTEXT-3AE42C: IDs 1–4/return 0 Wine PASS; E168 owns 261/261 pairs (4ami2zcc); meaning/writers/domain/native open.
-- E134 updater: native PASS (yw62he9p), default interpreter (botzl4b6); GUI loads default object (p7tuq7iz); translated draw open.
-- CONTEXT-3710D4: e159, E170 world-map pair (5eyv63je) and controlled byte-domain/33-record fields (9l5p79sq) PASS; other callers/ordinary contexts/ABI open. e160 SUBSTITUTION-371158 (2bltt60c/mgaon9d6), e161 RANGE-37140C (t2mh2ei8/emoffrjv) PASS; consumers open.
+- CONTEXT-3AE42C: five ordinary values/both tables direct native PASS (`arfmrs12`); title routes/cursor `4yp7q7yd`. E168 owns 261/261 pairs. Other readers/writers/value domain open.
+- E134: controlled 38 frames (b6uugr9g), native updater (yw62he9p), default interpreter (botzl4b6), GUI cache (p7tuq7iz) PASS; translated draw open.
+- CONTEXT-3710D4: E170 world-map pair and four direct native reads (`ax_5va8t`), controlled byte-domain/33-record fields (`9l5p79sq`) PASS; other callers/contexts/ABI open. e160 SUBSTITUTION-371158 and e161 RANGE-37140C pass; consumers open.
 - ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home `lby31j3d` identifies state-width/height groups, 56 bytes and 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
 - SUBSTITUTION-ORDINARY: Sol /root/sol_context_callback xhigh unconfirmed; home source gk6kl05w conditional; Wine zonc4h0q reads seven programs, zero callbacks. Other scenes open.
-- TEXT-READER-REGISTRY-371068: E170 Wine `8672kdim` 1,800-frame state/clock/video/OAM/audio altered-source pair PASS; 28 bytes, seven typed reads of null slot 3. Callback execution/other slots/scenes/Linux/USA open.
+- TEXT-READER-REGISTRY-371068: home pair `8672kdim`, complete byte-domain prefixes `u43_buss` PASS; callbacks, ordinary indices/scenes/platforms open.
 - SUBSTITUTION-REMAINING: E170 Wine sjojlovh/alfjrf8b PASS; CLI scene zero new reads. Ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
 - SCRIPT39-REGISTRY-POSES: e163 runtime/12 readers/CLI PASS (ga87pps5/vgo1cewu); ordinary/domains/Linux/USA open.
 - SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76), action13 (uto86fc6/_mvdi9t3); home `s4quofvj`/`1zjiaoiz` link opcode39 to task/null parts; `lwnzoodb` body index/sequence/OBJ/pixel reads and 1,800-frame altered-source pair PASS. Full animation/other paths open.
@@ -65,6 +65,14 @@ Archive completed tasks; don't reopen closed children or stop other work.
   - UI context e109: selector/copy catalog and templates 5/2 paired Wine scenes accepted; full UI extent/consumers/all 11 records unproved. docs/rom_data_ui.md. Do not repeat pairs.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 accepted. Full29-root/selector/animation/consumer coverage open; counters aggregate banks. Leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 paired Wine scenes PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
+
+### TARGET-ARCHIVE-HISTORY
+
+- State: suspended
+- Outcome: partial
+- Verified: previous rounds recovered 13.24 GiB. The local batch reported PASS for 32/32 files.
+- Missing: independent offline restore and net total.
+- Resume: on request, use the receipt in Final handover. Skip U31.
 
 ## Incomplete tasks and open criteria
 
@@ -178,9 +186,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: ISSUE-TEMPLATES completed.
-- Last verified result: GitHub displays both forms with the requested fields and unknown defaults.
-- Remaining work: none for issue templates.
-- Errors or blockers: none.
-- Next action: await a new selection.
-- References: docs/changes/2026-11-19-add-github-issue-forms.json.
+- Task: TARGET-ARCHIVE-HISTORY suspended at user request.
+- Last verified result: the local compression process exited 0 with 32/32 files recorded as PASS.
+- Remaining work: independent offline restore and final space accounting. U31 and native Windows remain deferred.
+- Errors or blockers: none reported by this batch.
+- Next action: resume only on request from the receipt below.
+- References: target/storage-historical-20261119-tcl2umci/progress.json and STORAGE_CHECKLIST.md.

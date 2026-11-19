@@ -148,16 +148,21 @@ explicitly needed comparison inputs rather than full copies per build.
 Use `--keep-path REL --keep-reason 'consumer and retirement condition'` to retain
 only selected outputs in place. Declare expected peak growth with `--reserve-gib`;
 launch requires a 5 GiB free-space floor plus this budget (1 GiB by default).
-Lower budgets require an explicit `--space-exception` reason. The check is not a
-filesystem quota and never removes historical artifacts to make space.
+Lower budgets require an explicit `--space-exception` reason. On low space
+the initial check tries verified sharing of existing local archive files, then
+measures free space again. Use `python3 scripts/cold_storage.py compact` to
+preview the same operation, or append `--apply` to recover duplicate blocks.
+See the [storage checklist](../docs/development/STORAGE_CHECKLIST.md).
 Eligible retained outputs now become verified `.tar.zst` archives by default;
 use `--keep-hot REASON` for current/frequently used datasets. Install the `zstd`
 CLI on the host. Declared `--protect` inputs restore automatically under a shared
 activity lease and retire after successful read-only use. Legacy commands can
 use `python3 scripts/cold_storage.py run --input PATH -- COMMAND`; `list`,
 `restore`, `verify`, `retire` and `recover` support explicit inspection/recovery.
-Historical `plan`/`pack` require completion evidence, an exact inventory and host
-process visibility. A missing archived path is recoverable, not a failed test.
+Historical `plan`/`pack` require outcome evidence, an exact inventory and host
+process visibility. For an individually reviewed closed failure use
+`plan --local-diagnostic FAIL --evidence PATH`. Use `MIXED` for a closed
+scope with both negative and passing evidence. These archives stay local.
 Use `python3 scripts/cold_storage.py batch --apply` to automatically discover
 and compress remaining eligible completed artifacts. Omit `--apply` for a
 preview; add `--exclude 'target/GLOB'` for further exclusions. The default

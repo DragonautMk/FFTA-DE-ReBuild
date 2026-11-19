@@ -6,7 +6,9 @@ to clean one unit. The root workspace and AndroidPort remain separate.
 
 For repeatable agent maintenance, use the project skill
 [`ffta-cleanup`](../../.cursor/skills/ffta-cleanup/SKILL.md), explicitly or by
-asking to clean/compress `target`. It uses `batch --apply --completed-only`,
+asking to clean/compress `target`. Start with the
+[storage checklist](STORAGE_CHECKLIST.md) and `cold_storage.py compact`.
+The skill then uses `batch --apply --completed-only`,
 adds exclusions from current work, reviews superseded hot datasets and retires
 only verified disposable copies/caches. A zero-candidate batch is followed by
 review of its exclusions; it does not prove that no compressible data remains.
@@ -182,7 +184,13 @@ before launching the child. Defaults require **6 GiB free**: a **5 GiB floor**
 plus **1 GiB expected peak growth**. Set `--reserve-gib N` for the actual new
 build outputs, dataset copies, logs and evidence expected at peak. Reusing a
 canonical build or current dataset can make that budget much smaller than a
-fresh isolated build. A refusal starts no child and deletes nothing.
+fresh isolated build. If the first measurement falls below budget on a supported
+POSIX host, the runner takes the existing cold catalog lease and shares verified
+duplicates until it covers the shortfall or runs out of candidates. It measures
+free space again. A busy store keeps its lease. The second admission check
+immediately before child launch only measures space. An insufficient budget
+keeps the child from starting. The unit receipt retains the initial admission
+and any compaction totals.
 
 `--min-free-gib N` adjusts the floor. Reducing either default requires a concrete
 `--space-exception REASON`, recorded in a successful launch's receipt with the
@@ -226,6 +234,37 @@ artifacts. Existing completed scopes still use the reviewed cleanup procedures
 below; failed/interrupted work is never selected merely to meet a disk quota.
 
 ### Verified cold archives and on-demand restoration
+
+On POSIX filesystems supporting hard links and attribute inspection, publication
+can share identical local `payload.tar.zst` files. The catalog keeps a separate
+manifest, source path, evidence and restore operation for each entry. The store
+compares SHA-256 checksums, device, ownership and permissions, skips payloads
+with extended attributes, and atomically replaces a duplicate with a read-only
+hard link under its exclusive lease. Restoring makes a separate writable tree
+with its recorded modes. Offloading one optional entry unlinks only its own name.
+Use `python3 scripts/cold_storage.py compact` for an allocated-block estimate
+on existing archives or append `--apply` for measured recovery. Unsupported
+filesystems keep independent archives. Reported bytes count allocated file
+blocks. Open handles, filesystem snapshots and concurrent writes can affect
+free disk space, which the runner measures separately.
+
+For a closed diagnostic use the original outcome receipts inside the unit and
+outside the selected payload. For example, after checking consumers and any
+retained baselines, review and archive the exact historical prefix:
+
+```sh
+python3 scripts/cold_storage.py plan target/example/wine \
+  --scope target/example --local-diagnostic MIXED \
+  --evidence target/example/failed-close.json --evidence target/example/final-close.json \
+  --output target/example/local-review.json
+python3 scripts/cold_storage.py pack target/example/wine \
+  --review target/example/local-review.json --reason 'Keep both closed GUI attempts locally'
+```
+
+The review binds the original result bytes and source inventory. Packing
+rechecks the receipts, nested activity leases and host processes immediately
+before retirement. A diagnostic retains its `FAIL` or `MIXED` classification
+and the offload command keeps it on the internal disk.
 
 Eligible retained outputs from successful new units now become `.tar.zst`
 archives under `target/cold-storage/` by default. Install the **zstd CLI** on the

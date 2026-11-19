@@ -400,6 +400,151 @@ fn european_range_lookup_indirect_registry_reader_domain() {
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "authenticated EUR ROM, E170 dataset and TinyCC; Wine only"]
+fn european_text_registry_complete_byte_reader_domain() {
+    use gba_core::rom_data::read_audit::{Reader, Service, TraceCapture, TraceFilter};
+
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(
+        gba_core::ffta_rom::digest(&rom),
+        gba_core::ffta_rom::EUROPE_SHA256
+    );
+    let manifest: Manifest =
+        toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (170, 169)
+    );
+
+    const REGISTRY: usize = 0x371068;
+    const LENGTH: usize = 256 * 4;
+    let view = View {
+        rom: &rom,
+        ewram: None,
+        iwram: None,
+        bios: None,
+    };
+    let blocks = [(0x0801_9172, 0x0801_9182), (0x0801_9424, 0x0801_9430)]
+        .into_iter()
+        .flat_map(|(start, end)| (start..end).step_by(2))
+        .map(|addr| Block {
+            addr,
+            thumb: true,
+            instrs: vec![armv4t::decode_thumb(view.read16(addr), addr)],
+        })
+        .collect();
+    let object = root.join("complete-registry-readers.o");
+    recomp_core::tcc_memory::build(
+        &Analysis { blocks },
+        &view,
+        &recomp_core::tcc_memory::library_path().unwrap(),
+        &object,
+        &mut |_| {},
+    )
+    .unwrap();
+    let (_library, table) = crate::load_native(&object).unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let initial = raw.save_state().unwrap();
+    let mut cases = 0;
+    for native in [false, true] {
+        for kind in [0u8, 1] {
+            for high in [0u32, 0x100] {
+                for index in 0u32..=255 {
+                    for m in [&mut raw, &mut managed] {
+                        m.load_state(&initial).unwrap();
+                        m.bus.ffta_sprites.enabled = false;
+                        configure(m, kind, high | index);
+                    }
+                    for i in REGISTRY..REGISTRY + LENGTH {
+                        managed.bus.rom[i] = rom[i] ^ 0xff;
+                    }
+                    let stop = if kind == 0 { 0x0801_9182 } else { 0x0801_9430 };
+                    for _ in 0..32 {
+                        if raw.cpu.regs[15] == stop {
+                            break;
+                        }
+                        raw.bus.frame_ready = false;
+                        raw.step();
+                    }
+                    assert_eq!(raw.cpu.regs[15], stop);
+                    let trace = TraceCapture::start(
+                        TraceFilter {
+                            readers: vec![Reader::Bus],
+                            ranges: vec![(REGISTRY as u32, (REGISTRY + LENGTH) as u32)],
+                        },
+                        16,
+                    )
+                    .unwrap();
+                    trace.frame(Some(0));
+                    for _ in 0..32 {
+                        if managed.cpu.regs[15] == stop {
+                            break;
+                        }
+                        managed.bus.frame_ready = false;
+                        if native {
+                            table.get(managed.cpu.regs[15] | 1).unwrap()(
+                                &RT_API,
+                                &mut managed as *mut Machine as *mut std::ffi::c_void,
+                            );
+                        } else {
+                            managed.step();
+                        }
+                    }
+                    assert_eq!(managed.cpu.regs[15], stop);
+                    let trace = trace.finish();
+                    assert_eq!(trace.dropped_requests, 0);
+                    assert!(
+                        !trace.events.is_empty(),
+                        "no table read: kind {kind}, index {index}, native {native}"
+                    );
+                    let expected = REGISTRY as u32 + 4 * index;
+                    let mut byte_counts = [0u64; 4];
+                    for event in trace.events {
+                        assert_eq!(event.key.service, Service::Typed);
+                        let offset = event.key.read.physical_offset;
+                        for byte in offset..offset + event.key.read.length as u32 {
+                            assert!(
+                                (expected..expected + 4).contains(&byte),
+                                "unexpected read {byte:x}"
+                            );
+                            byte_counts[(byte - expected) as usize] += event.requests;
+                        }
+                    }
+                    assert_eq!(
+                        byte_counts, [1; 4],
+                        "kind {kind}, index {index}, native {native}"
+                    );
+                    managed.bus.rom[REGISTRY..REGISTRY + LENGTH]
+                        .copy_from_slice(&rom[REGISTRY..REGISTRY + LENGTH]);
+                    assert_eq!(
+                        raw.save_state().unwrap(),
+                        managed.save_state().unwrap(),
+                        "kind {kind}, index {}, native {native}",
+                        high | index
+                    );
+                    cases += 1;
+                }
+            }
+        }
+    }
+    assert_eq!(cases, 2048);
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"two original registry reader prefixes over the entire byte index domain",
+        "revision":[170,169], "indices":[0,255], "high_alias":256, "controlled_cases":cases,
+        "full_state_clock_equal":true, "all_1024_table_bytes_inverted":true,
+        "each_selected_word_typed_once":true, "trace_dropped_requests":0,
+        "interpreter_and_generated_block_dispatch":true,
+        "limits":"Prefixes stop before callback invocation. Values are conditional inputs, not ordinary reachability; generated blocks may fall back to interpretation.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
 #[cfg(feature = "rom-data-read-audit")]
 #[test]
 #[ignore = "authenticated EUR ROM, E170 dataset and TinyCC; Wine only"]

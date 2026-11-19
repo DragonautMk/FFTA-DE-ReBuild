@@ -8,7 +8,9 @@ exclusive, including while an archived input is consumed.
 """
 import argparse
 import base64
+from collections import Counter
 import contextlib
+import errno
 import hashlib
 import json
 import os
@@ -20,6 +22,7 @@ import sys
 import tarfile
 import tempfile
 import time
+import uuid
 
 from artifact_coordinator import Lease, NAME, ordinary
 from local_artifacts import ensure_untracked
@@ -98,6 +101,107 @@ def external_mount(mount, expected_uuid=None):
 
 def exists(path):
     return os.path.lexists(path)
+
+
+def shareable_payload_groups(entries, new_entry):
+    by_hash = {}
+    for entry, data in entries:
+        sealed = data['state'] == 'archived' or (entry == new_entry and data['state'] == 'restored')
+        if sealed and not data.get('external_payload'):
+            by_hash.setdefault(data['archive_sha256'], []).append((entry, data))
+    # On low-space admission, check groups with the largest potential return first.
+    groups = sorted(by_hash.values(), key=lambda g: (len(g) - 1) * g[0][1]['archive_bytes'], reverse=True)
+    for matches in groups:
+        if len(matches) < 2:
+            break
+        compatible = {}
+        for entry, data in matches:
+            path = entry / 'payload.tar.zst'
+            st = ordinary(path, allow_hardlinks=True)
+            mode = stat.S_IMODE(st.st_mode)
+            try:
+                attributes = os.listxattr(path, follow_symlinks=False)
+            except OSError as error:
+                if error.errno in (errno.EOPNOTSUPP, errno.ENOSYS):
+                    continue
+                raise
+            if (st.st_size != data['archive_bytes'] or st.st_uid != os.getuid()
+                    or mode & 0o7000 or attributes or (st.st_nlink > 1 and mode & 0o222)):
+                continue
+            key = (st.st_dev, st.st_uid, st.st_gid, mode & ~0o222)
+            compatible.setdefault(key, []).append((entry, data, st))
+        for group in compatible.values():
+            names = Counter((st.st_dev, st.st_ino) for _, _, st in group)
+            owned = [item for item in group if item[2].st_nlink == names[item[2].st_dev, item[2].st_ino]]
+            if len(owned) < 2:
+                continue
+            owned.sort(key=lambda item: (item[0] == new_entry, -item[2].st_nlink, item[0]))
+            # Only replacing a singleton releases its allocated blocks.
+            copies = [item for item in owned[1:] if item[2].st_nlink == 1
+                      and (new_entry is None or item[0] == new_entry)]
+            if copies:
+                yield owned[0], copies
+
+
+def link_verified_payload(keeper, keep_stat, path, expected):
+    current = ordinary(path)
+    kept = ordinary(keeper, allow_hardlinks=True)
+    if (not os.path.samestat(current, expected) or current.st_ctime_ns != expected.st_ctime_ns
+            or not os.path.samestat(kept, keep_stat) or kept.st_ctime_ns != keep_stat.st_ctime_ns):
+        raise ValueError('Local archive changed during compaction')
+    if kept.st_mode & 0o222:
+        ordinary(keeper)
+        with keeper.open('rb') as f:
+            os.fchmod(f.fileno(), stat.S_IMODE(kept.st_mode) & ~0o222)
+            os.fsync(f.fileno())
+    pending = path.with_name('.payload-link-' + uuid.uuid4().hex)
+    try:
+        os.link(keeper, pending)
+    except OSError as error:
+        if error.errno in (errno.EOPNOTSUPP, errno.EXDEV, errno.EMLINK, errno.EPERM, errno.ENOSYS):
+            return False
+        raise
+    try:
+        os.replace(pending, path)
+        sync_dir(path.parent)
+    finally:
+        pending.unlink(missing_ok=True)
+    return True
+
+
+def compact_local_payloads(store, entries, *, apply=False, new_entry=None, goal_bytes=None):
+    """Share sealed local archives under the catalog lease, preserving independent restores."""
+    store.check()
+    report = {'mode': 'apply' if apply else 'preview', 'supported': os.name == 'posix' and hasattr(os, 'listxattr'),
+              'candidates': 0, 'candidate_bytes': 0, 'shared': 0, 'released_bytes': 0, 'errors': []}
+    if not report['supported']:
+        return report
+    for (keeper, keep_data, keep_stat), copies in shareable_payload_groups(entries, new_entry):
+        keep_path = keeper / 'payload.tar.zst'
+        checking = keep_data
+        try:
+            if apply:
+                store.load(keeper, keep_data)
+            for entry, checking, st in copies:
+                amount = st.st_blocks * 512
+                report['candidates'] += 1
+                report['candidate_bytes'] += amount
+                if not apply:
+                    continue
+                store.load(entry, checking)
+                store.check()
+                if link_verified_payload(keep_path, keep_stat, entry / 'payload.tar.zst', st):
+                    report['shared'] += 1
+                    report['released_bytes'] += amount
+                    if goal_bytes is not None and report['released_bytes'] >= goal_bytes:
+                        return report
+                keep_stat = keep_path.stat()
+        except (OSError, ValueError) as error:
+            store.check()
+            if new_entry is not None:
+                raise  # The new publication still has its original working input.
+            report['errors'].append({'source': checking['source'], 'error': str(error)})
+    return report
 
 
 def scan(source, *, hashes=True, private=False):
@@ -395,7 +499,10 @@ class Store:
         if data['state'] == 'preparing':
             raise ValueError(f'Incomplete archive retained for review: {entry}')
         manifest, payload = entry / 'manifest.json', self.payload(entry, data)
-        ordinary(manifest); ordinary(payload)
+        ordinary(manifest)
+        payload_stat = ordinary(payload, allow_hardlinks=not data.get('external_payload'))
+        if payload_stat.st_nlink > 1 and payload_stat.st_mode & 0o222:
+            raise ValueError('Shared local archive must be read-only')
         if digest(manifest) != data['manifest_sha256'] or digest(payload) != data['archive_sha256']:
             raise ValueError('Cold archive/catalog checksum mismatch')
         rows = json.loads(manifest.read_text())
@@ -420,6 +527,10 @@ class Store:
         if data.get('state') != 'archived' or data.get('external_payload'):
             raise ValueError('Only local, fully archived entries can be moved externally')
         proof = data.get('proof', {})
+        local_outcomes = ('FAIL', 'MIXED', 'INTERRUPTED')
+        if (proof.get('kind') == 'failed-diagnostic-preservation'
+                or proof.get('original_outcome') in local_outcomes or proof.get('status') in local_outcomes):
+            raise ValueError('Failed or mixed diagnostic archives stay on the internal disk')
         if not proof.get('scope'):
             raise ValueError('External offload requires an explicit completion scope')
         scope = self.root / relative(proof['scope'])
@@ -461,7 +572,7 @@ class Store:
         with Lease(scope, 'cold-storage-external-offload'):
             host_activity(scope, root=self.root)
             self.load(entry, data)
-            initial = ordinary(local)
+            initial = ordinary(local, allow_hardlinks=True)
             with local.open('rb') as src, destination.open('xb') as dst:
                 shutil.copyfileobj(src, dst, BLOCK)
                 dst.flush(); os.fsync(dst.fileno())
@@ -475,7 +586,7 @@ class Store:
             check_evidence()
             if exists(source):
                 raise ValueError('Archived source appeared during offload; both copies retained')
-            current = ordinary(local)
+            current = ordinary(local, allow_hardlinks=True)
             if ((current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns)
                     != (initial.st_dev, initial.st_ino, initial.st_size, initial.st_mtime_ns)
                     or digest(local) != data['archive_sha256']):
@@ -503,7 +614,8 @@ class Store:
         source, rel = self.source(path)
         if not reason.strip() or not proof:
             raise ValueError('Archiving needs a reason and completion/ownership evidence')
-        for _, data in self.entries():
+        existing = self.entries()
+        for _, data in existing:
             other = self.root / data['source']
             if source == other or source in other.parents or other in source.parents:
                 raise ValueError(f'Already cataloged or overlapping archive: {data["source"]}')
@@ -546,6 +658,11 @@ class Store:
                     archive_allocated_bytes=(entry / 'payload.tar.zst').stat().st_blocks * 512
                     if hasattr((entry / 'payload.tar.zst').stat(), 'st_blocks') else 0)
         save(entry / 'entry.json', data)
+        peers = [(e, d) for e, d in existing if d.get('archive_sha256') == data['archive_sha256']]
+        if peers:
+            shared = compact_local_payloads(self, [*peers, (entry, data)], apply=True, new_entry=entry)
+            if shared['shared']:
+                data['archive_added_bytes'] = 0
         if before_retire:
             data['idle_recheck'] = before_retire()
             save(entry / 'entry.json', data)
@@ -753,7 +870,36 @@ def offload_completion(path):
     return digest(path)
 
 
-def prepare_review(store, path, completions, scope):
+def diagnostic_evidence(path):
+    ordinary(path)
+    with path.open('rb') as f:
+        content = f.read(2 * BLOCK + 1)
+    if len(content) > 2 * BLOCK:
+        raise ValueError(f'Oversized diagnostic receipt: {path}')
+    value = json.loads(content)
+    if (not isinstance(value, dict) or value.get('leases_retained')
+            or str(value.get('status', '')).upper() in ('ACTIVE', 'RUNNING', 'SUSPENDED', 'WAITING')):
+        raise ValueError(f'Closed diagnostic receipt required: {path}')
+    if not (
+            value.get('closed') is True or value.get('status') == 'FAIL'
+            or (type(value.get('session_exit')) is int and type(value.get('verify_exit')) is int)):
+        raise ValueError(f'Closed diagnostic receipt required: {path}')
+    return hashlib.sha256(content).hexdigest()
+
+
+def check_diagnostic_scope(scope, *, held=None):
+    if held:
+        held.check(scope)
+    def onerror(error):
+        raise error
+    for parent, dirs, files in os.walk(scope, onerror=onerror, followlinks=False):
+        if NAME in dirs or NAME in files:
+            mark = Path(parent) / NAME
+            if not held or mark != held.path:
+                raise ValueError(f'Existing activity lease inside diagnostic scope: {mark}')
+
+
+def prepare_review(store, path, completions, scope, *, local_diagnostic=None):
     source, rel = store.source(path)
     scope = Path(os.path.abspath(scope))
     if source == scope or scope not in source.parents or not scope.is_relative_to(store.root / 'target'):
@@ -761,39 +907,60 @@ def prepare_review(store, path, completions, scope):
     ordinary(scope, directory=True)
     if (scope / NAME).exists():
         raise ValueError('Activity scope already leased')
+    if local_diagnostic:
+        if local_diagnostic not in ('FAIL', 'MIXED'):
+            raise ValueError('Expected an explicitly reviewed FAIL or MIXED outcome')
+        check_diagnostic_scope(scope)
     ensure_untracked(source, store.root)
     evidence = []
     for p in completions:
         p = Path(os.path.abspath(p))
         if p == source or source in p.parents:
             raise ValueError('Completion evidence must remain readable outside the archive')
-        evidence.append({'path': p.relative_to(store.root).as_posix(), 'sha256': completion(p)})
+        if local_diagnostic and scope not in p.parents:
+            raise ValueError('Diagnostic evidence must belong to the selected scope')
+        sha = diagnostic_evidence(p) if local_diagnostic else completion(p)
+        evidence.append({'path': p.relative_to(store.root).as_posix(), 'sha256': sha})
     if not evidence:
         raise ValueError('Completion evidence is required')
     rows = scan(source)
-    return {'status': 'PASS', 'source': rel, 'scope': scope.relative_to(store.root).as_posix(),
+    review = {'source': rel, 'scope': scope.relative_to(store.root).as_posix(),
             'inventory_sha256': inventory_digest(rows), 'logical_bytes': size(rows),
-            'allocated_bytes': size(rows, 'allocated'), 'completion': evidence,
-            'idle': host_activity(scope, root=store.root)}
+            'allocated_bytes': size(rows, 'allocated'), 'idle': host_activity(scope, root=store.root)}
+    if local_diagnostic:
+        return dict(review, kind='failed-diagnostic-preservation', status=local_diagnostic,
+                    original_outcome=local_diagnostic, outcome_evidence=evidence)
+    return dict(review, status='PASS', completion=evidence)
 
 
 def apply_review(store, review, reason):
     source, rel = store.source(review['source'])
-    if review.get('status') != 'PASS' or not review.get('inventory_sha256') or not review.get('idle'):
+    diagnostic = review.get('kind') == 'failed-diagnostic-preservation'
+    valid = (review.get('status') in ('FAIL', 'MIXED') and review['status'] == review.get('original_outcome')
+             if diagnostic else review.get('status') == 'PASS')
+    if not valid or not review.get('inventory_sha256') or not review.get('idle'):
         raise ValueError('Reviewed inventory, completion and host activity evidence required')
     scope = store.root / relative(review['scope'])
     if source == scope or scope not in source.parents or not scope.is_relative_to(store.root / 'target'):
         raise ValueError('Invalid archive activity scope')
-    if not review.get('completion'):
-        raise ValueError('Missing completion evidence')
-    for evidence in review['completion']:
-        p = store.root / relative(evidence['path'])
-        if p == source or source in p.parents or completion(p) != evidence['sha256']:
-            raise ValueError('Completion evidence changed or would be archived')
-    with Lease(scope, 'cold-storage-historical-source'):
-        idle = host_activity(scope, root=store.root)
+    records = review.get('outcome_evidence' if diagnostic else 'completion')
+    if not records:
+        raise ValueError('Missing outcome evidence')
+    with Lease(scope, 'cold-storage-historical-source') as lease:
+        def recheck():
+            if diagnostic:
+                check_diagnostic_scope(scope, held=lease)
+            for evidence in records:
+                p = store.root / relative(evidence['path'])
+                if p == source or source in p.parents or (diagnostic and scope not in p.parents):
+                    raise ValueError('Evidence lies within the payload or outside the diagnostic scope')
+                sha = diagnostic_evidence(p) if diagnostic else completion(p)
+                if sha != evidence['sha256']:
+                    raise ValueError('Completion evidence changed or would be archived')
+            return host_activity(scope, root=store.root)
+        idle = recheck()
         proof = dict(review, idle=idle)
-        return store.pack(source, reason=reason, proof=proof, before_retire=lambda: host_activity(scope, root=store.root))
+        return store.pack(source, reason=reason, proof=proof, before_retire=recheck)
 
 
 class Inputs:
@@ -864,6 +1031,8 @@ def main():
     parser.add_argument('--root', type=Path, default=ROOT)
     sub = parser.add_subparsers(dest='action', required=True)
     sub.add_parser('list')
+    compact = sub.add_parser('compact', help='share byte-identical local archive payloads')
+    compact.add_argument('--apply', action='store_true', help='apply verified sharing (default: preview)')
     batch = sub.add_parser('batch', help='discover and compress completed historical artifacts automatically')
     batch.add_argument('--apply', action='store_true', help='compress eligible paths; default is a preview')
     batch.add_argument('--completed-only', action='store_true', help='require recognized successful receipts; skip idle-history fallback')
@@ -878,7 +1047,9 @@ def main():
                          help='reviewed completed result within the scope (repeatable)')
     plan = sub.add_parser('plan')
     plan.add_argument('path'); plan.add_argument('--scope', required=True, type=Path)
-    plan.add_argument('--completion', action='append', type=Path, required=True)
+    plan.add_argument('--completion', '--evidence', action='append', type=Path, required=True)
+    plan.add_argument('--local-diagnostic', choices=('FAIL', 'MIXED'),
+                      help='preserve an explicitly reviewed closed diagnostic with its original outcome locally')
     plan.add_argument('--output', type=Path, required=True)
     run = sub.add_parser('run')
     run.add_argument('--input', action='append', type=Path, required=True)
@@ -906,6 +1077,10 @@ def main():
                 inputs.close(success=False)
                 raise
         with Store(args.root) as store:
+            if args.action == 'compact':
+                report = compact_local_payloads(store, store.entries(), apply=args.apply)
+                print(json.dumps(report, indent=2))
+                return 1 if report['errors'] else 0
             if args.action == 'batch':
                 import cold_storage_batch
                 return cold_storage_batch.run(store, args)
@@ -915,7 +1090,7 @@ def main():
                                   for _, d in store.entries()], indent=2)); return 0
             source, rel = store.source(args.path)
             if args.action == 'plan':
-                review = prepare_review(store, source, args.completion, args.scope)
+                review = prepare_review(store, source, args.completion, args.scope, local_diagnostic=args.local_diagnostic)
                 output = args.output.absolute()
                 if output == source or source in output.parents:
                     raise ValueError('Review output must stay outside the payload')

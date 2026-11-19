@@ -23962,3 +23962,95 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Published bug and feature forms on GitHub; bug fields cover ROM region, platform, device, description, screenshots, saves and snapshots; feature form is shorter.
 - Evidence: YAML/field checks passed; GitHub UI displayed both forms and Other or unknown defaults. Local decomp matched remote after preserving worktree files. docs/changes/2026-11-19-add-github-issue-forms.json.
 - Limits: Attachments are optional and public. No test issue was submitted.
+
+### ROMDATA-05-E170-SUSPEND-BATTLE-SCENE
+
+- Outcome: completed for one EUR/Wine route; parent ROM-DATA-FULL-EUR remains partial.
+- Verified criteria: E170 raw/managed 8,476-frame pair matched full state, clock, video, OAM, dispatch and five audio streams; 42 script-command bytes from seven commands. Input guards passed and successful scratch was removed.
+- Evidence: `target/validation/units/e170-suspend-fullscene-wine-9b1qo9ie/{unit-result.json,evidence/result.json,evidence/scene.log}`; build `e170-fullscene-build-tg_hslxv`; `docs/changes/2026-11-19-validate-e170-suspend-battle-scene.json`.
+- Limits: One retained route, unaltered ROM sources; no per-read attribution, all-scene/consumer or native Windows/Linux/USA claim. Previous unit `k3j9esc3` interrupted after 6,500 frames; owner and prefix users absent on host, own shared-prefix lease manually recovered with receipt, diagnostics and unit lease retained.
+- Cleanup: four reviewed superseded duplicate artifacts archived and verified via the cold-storage catalog, saving 457,768,960 payload bytes; two DBG2-23 executables and two noncurrent E74 files remain restorable. Current datasets, saves, recordings and failure evidence retained. Host checks had unreadable processes and do not prove global inactivity.
+
+### ROMDATA-05-E170-ALL-RESOURCE-LIFECYCLE
+
+- Outcome: completed for the stated synthetic EUR/Wine source-read lifecycle; parent ROMDATA-05 remains open.
+- Verified criteria: after a failed replacement-path attach, slot Load, Undo, backup restore and restart, all 10,948,338 distinct declared source bytes across 113 resources return original values with backing ROM inverted. The owner and expected states persist; range and conditional-word owners each record reads per phase. Inputs were protected, Wine drained and successful scratch removed.
+- Evidence: `target/validation/units/e170-all-resource-lifecycle-wine-i73r4f54/{unit-result.json,evidence/result.json,command.log}`; build `e170-all-resource-lifecycle-build-siostytu`; `docs/changes/2026-11-19-validate-e170-all-resource-save-lifecycle.json`.
+- Limits: Synthetic direct APIs and a missing replacement path, without moving the active dataset. GUI, Fast, guest execution, individual resource attribution and other platforms remain unproved.
+
+### TARGET-SPACE-AUTOMATION
+
+- Outcome: completed
+- Verified criteria: The project storage checklist, three project skills and validation workflow preserve reusable local inputs. New publications and low-space admission can share verified local archive copies. Reviewed closed failures and mixed runs are restorable internally. 175 redundant files and four isolated Wine prefixes yielded 6025879552 net allocated bytes after archive metadata and receipts. All four archives verified, and the mixed GUI prefix restored and retired at its original path offline. The pinned sibling and historic outcomes matched. All 34 storage and 29 runner tests passed.
+- Evidence: docs/development/STORAGE_CHECKLIST.md, docs/changes/2026-11-19-automate-local-archive-space-recovery.json and target/storage-maintenance-20261119-gzbhv8ds/result.json.
+- Limits: Host-visible activity checks had three unreadable process details. Shared toolchains, canonical outputs, named baselines and leased/suspended work stay available. Native Windows is deferred. The full project memory check flagged a separate in-progress ROM test without a matching change record.
+
+### ROMDATA-04-TITLE-MAIN-BANK-MIXED-ATTRIBUTION
+
+- Outcome: completed for one bounded EUR/Wine opening; title-bank direct native and FIRSTBANK-ZERO criteria remain open.
+- Verified criteria: 180 raw/managed mixed-dispatch frames matched complete state, clock, video, OAM, dispatch and five nonempty audio streams. Five headers had 92 typed and zero raw requests from altered sources; all header events carried interpreter site 0800153c, while the instrumented generated API saw no exact-header request among 4,614,628 calls.
+- Evidence: `target/validation/units/title-main-bank-native-wine-vbye2pnv/{unit-result.json,evidence/result.json,evidence/trace-report.json}`; `docs/changes/2026-11-19-attribute-european-title-bank-reads.json`. Inputs protected and scratch removed.
+- Limits: Site scopes can include inherited host/HLE work and do not establish each exact guest load. No direct native header coverage, global producer/domain or other platform claim. `3a3oqsyf` lacked TinyCC; `an63hanh` failed the unsupported direct-read assertion. Sol `/root/sol_title_native_diagnosis` requested GPT-6.1 Sol/xhigh; effective settings and primary model/effort were not independently confirmed.
+
+### TARGET-SPACE-FOLLOWUP
+
+- Outcome: completed
+- Verified criteria: 14 isolated Cargo dependency caches, seven historical datasets and five intermediate render sets were archived and fully verified on the internal disk. Local file blocks released after catalog and receipts totaled 4,356,788,224 bytes. Combined with the preceding cleanup this is 9.67 GiB. An additional CLI check verified a completed archive and an interrupted one. The final duplicate preview found no candidates.
+- Evidence: docs/development/STORAGE_CHECKLIST.md and the ignored target/storage-followup-20261119-a/result.json with its exact inventory, per-archive receipt and final host observation.
+- Limits: all 248 intermediate images, original failure and interruption receipts and retained executables were preserved. The first cross-mount rename stopped with the original intact and was explicitly recovered. Final direct host inspection found no matching activity in the 21 scopes and could not inspect three processes. The current dataset and suspended U31 isolated build were excluded. Native Windows remains deferred.
+
+### ROMDATA-04-TITLE-MAIN-BANK-NATIVE
+
+- Outcome: completed for one EUR/Wine cold-boot route with the documented `FFTA_PATCH_SPR=0` configuration; broader title-bank/FIRSTBANK-ZERO criteria remain open.
+- Verified criteria: 3,885 raw/managed frames matched complete state, clock, video, OAM, dispatch and five nonempty audio streams. With list sources altered, the five nonempty headers received 7/5/7/9/1 direct generated-API typed requests and zero raw requests; protected inputs unchanged, Wine drained, successful scratch removed.
+- Evidence: `target/validation/units/title-native-cold-wine-8j504dl0/{unit-result.json,evidence/result.json,evidence/trace-report.json}`; build `title-native-cold-input-build-wklli6bc`; `docs/changes/2026-11-19-attribute-european-title-bank-reads.json`.
+- Limits: This is not default-hook native attribution or exact guest load-PC proof; other scenes/producers, full animation, native Windows, Linux and USA remain open. The retained `rdi7_s7u` attempt used neutral input and missed the title; the accepted route uses 900 neutral frames, two Start frames, then neutral. Its original result limits text says neutral; test metadata was corrected after the run without changing comparison logic. The primary model/effort were not independently confirmed during the input diagnosis.
+
+### ROMDATA-04-TITLE-MAIN-BANK-COMPLETE-ANIMATION
+
+- Outcome: completed for the main-title sequence in one EUR/Wine opening; other banks, producers, scenes and platforms remain open.
+- Verified criteria: all six phases appeared in order for 7/9/5/7/2/33 consecutive frames, with only the expected list header observed per frame. The original animator completion flag stayed zero until the final frame and became one; 180 raw/managed frames matched full state, clock, video, OAM, dispatch and five nonempty audio streams with list sources altered and no raw requests.
+- Evidence: `target/validation/units/title-animation-completion-wine-ntggzh1c/{unit-result.json,evidence/result.json,command.log}`; build `title-animation-completion-build-3_qr8b0k`; `docs/changes/2026-11-19-attribute-european-title-bank-reads.json`. Inputs protected, Wine drained and scratch removed. Earlier `xhssncnc` and `7k5n6pil` verified successively stronger phase-presence and exclusivity checks.
+- Limits: No complete-animation claim for other banks or scenes; default route is interpreter-scoped for these headers, while patch-off direct native headers are separately accepted (`8j504dl0`). Native Windows, Linux and USA were not tested.
+
+### ROMDATA-01-CONTEXT-3AE42C-NATIVE-LANGUAGES
+
+- Outcome: completed for five EUR/Wine title language changes and direct title-cursor reads; parent context-bank and global-domain criteria remain open.
+- Verified criteria: ordinary retained routes changed the language byte to IDs 1–4 and back to 0 under generated dispatch. Both selected cursor coordinates were served by direct generated APIs for each route; monitored sources had zero raw requests with backing bytes altered. All 168 paired frames matched complete state, clock, video, OAM, dispatch and audio; all five audio streams were nonempty across the runs.
+- Evidence: `target/validation/units/title-all-language-native-wine-4yp7q7yd/{unit-result.json,evidence/result.json,command.log}`; build `title-all-language-native-build-sdei3198`; `docs/changes/2026-11-19-validate-native-title-language-publications.json`. Input guards passed, Wine drained and scratch was removed.
+- Limits: Observed global byte changes do not identify the writer instruction; direct API counts concern the title-cursor positions, not the separate 3ae42c bank. Other writers, global value domain, scenes and platforms remain open.
+
+### TARGET-SPACE-NON-U31
+
+- Outcome: completed
+- Verified criteria: 65 verified local archives covered two closed Wine prefixes, 22 isolated compiler outputs, 40 duplicate GUI caches and one failed E134 dataset. The original outcomes and the retained executables, current dataset and GUI reference copy matched their recorded hashes. After catalog and receipts this released 3,831,791,616 allocated file bytes. Cumulative recovery reached 13.24 GiB.
+- Evidence: docs/development/STORAGE_CHECKLIST.md and the ignored target/storage-independent-20261119-3px405qb/result.json, plan, progress and host observations. The normal input runner restored one GUI cache offline, compared it byte for byte and retired it. The final duplicate preview had zero candidates.
+- Limits: the user deferred U31. The current datasets, shared Wine prefixes, dependency downloads and named comparison binaries remain local. Native Windows is deferred. Final host inspection saw no matching activity across 39 scopes and could not inspect three processes.
+
+### ROMDATA-01-CONTEXT-3AE42C-DIRECT-NATIVE
+
+- Outcome: completed for both position tables and five observed EUR/Wine startup choices; parent context/global-domain criteria remain open.
+- Verified criteria: each selected pair byte in both tables was read through generated APIs and served as typed data with ROM backing altered and zero raw requests. All 2,120 raw/managed frames matched complete state, clock, video, OAM, dispatch and five nonempty audio streams; input guards passed, Wine drained and scratch removed.
+- Evidence: `target/validation/units/context-language-direct-wine-arfmrs12/{unit-result.json,evidence/result.json,command.log}`; build `context-language-direct-build-tmmpkgkh`; `docs/changes/2026-11-19-validate-native-context-language-position-pairs.json`.
+- Limits: One startup route, values 0–4; wrapper attribution is not exact guest load-PC evidence. Other readers, writers, values, scenes, native Windows, Linux and USA remain open.
+
+### ROMDATA-01-CONTEXT-3710D4-DIRECT-NATIVE
+
+- Outcome: completed for context 3 on one recorded EUR/Wine world-map route; broader context, caller and ABI criteria remain open.
+- Verified criteria: all four traced requests and four typed context bytes came directly through generated APIs, with zero raw/unclassified context requests and 132 backing bytes altered. All 41 raw/managed frames matched complete state, clock, video, OAM, dispatch and five nonempty audio streams.
+- Evidence: `target/validation/units/indexed-context-direct-wine-ax_5va8t/{unit-result.json,evidence/result.json,command.log}`; build `indexed-context-direct-build-8n1s8g8b`; `docs/changes/2026-11-19-attribute-native-indexed-context-reads.json`. Input guards passed, Wine drained and scratch removed.
+- Limits: Direct API attribution does not identify exact guest load PCs; other contexts, callers, full reader ABI, native Windows, Linux and USA remain open.
+
+### ROMDATA-01-TEXT-READER-COMPLETE-PREFIX-DOMAIN
+
+- Outcome: completed for the full conditional byte domain of both EUR reader prefixes; the parent registry task remains partial.
+- Verified criteria: 2,048 raw/managed complete-state and guest-clock cases cover all 256 indices and their 0x100 aliases with interpreter and generated instruction dispatch. All 1,024 table backing bytes were inverted; every selected word was served exactly once from typed resources without dropped trace requests.
+- Evidence: `target/validation/units/text-registry-complete-domain-wine-u43_buss/{unit-result.json,evidence/result.json,command.log}`; build `text-registry-complete-domain-build-mgpb_l51`; `docs/changes/2026-11-19-validate-complete-text-registry-reader-domain.json`. Inputs protected, Wine drained and successful scratch removed.
+- Limits: prefixes stop before callback invocation; conditional inputs do not prove ordinary reachability or callback safety. Generated blocks may fall back to interpretation. Other scenes/consumers, native Windows, Linux and USA remain open. Initial build `rdk_ywcu` used an invalid relative path; Wine launch `bi3m_6lq` lacked sandbox runtime-directory access; both stopped before testing and retain only small diagnostics.
+
+### E134-COMPLETE-FIRST-SEQUENCE-CONTROLLED
+
+- Outcome: completed for all 38 frames of the first EUR sequence under controlled updater/draw calls; ordinary updater/draw criteria remain open.
+- Verified criteria: 38 original-interpreter versus translated updater/draw cases match complete state and guest clock after managed source spans are altered. Every selected list and duration matches the model; all 19 lists used in the sequence are covered.
+- Evidence: `target/validation/units/e134-full-sequence-wine-b6uugr9g/{unit-result.json,evidence/result.json,command.log}`; build `e134-full-sequence-build-hhzdrm13`; `docs/changes/2026-11-19-validate-e134-complete-first-sequence.json`. Inputs guarded, Wine drained and successful scratch removed.
+- Limits: independent controlled calls do not prove continuous ordinary animation, the other two bank lists or production-cache coverage. Generated instructions may fall back to interpretation; other consumers, native Windows, Linux and USA remain open.

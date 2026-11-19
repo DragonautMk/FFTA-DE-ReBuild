@@ -105,6 +105,12 @@ The CI workflow runs the same check; it does not invent change descriptions.
 ## Keep local validation output bounded
 
 Follow [local artifact retention](docs/development/LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation).
+Use the [storage checklist](docs/development/STORAGE_CHECKLIST.md) on disk pressure.
+Keep toolchains, downloaded dependencies, canonical builds, the shared Wine
+prefix and current datasets on the internal disk. The validation runner can
+recover space from byte-identical local archives before launch. Closed failed
+diagnostics and intermediate snapshots stay locally restorable. External storage
+is reserved for explicitly optional completed history.
 For new local validation use `scripts/validation_unit.py`: put generated test
 copies under its owned `work`, protect actual inputs and require PASS results.
 It retains evidence and automatically removes successful scratch; failed/live

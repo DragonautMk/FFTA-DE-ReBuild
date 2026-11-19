@@ -1329,3 +1329,114 @@ fn european_e170_all_source_bytes_read_consistency() {
         "performance_measurements":false
     })).unwrap()).unwrap();
 }
+
+#[test]
+#[ignore = "authenticated EUR ROM and E170 dataset; Wine only"]
+fn european_e170_all_source_bytes_survive_save_lifecycle() {
+    use std::sync::Arc;
+
+    let root = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_RANGE_LOOKUP_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision, manifest.resources.len()), (170, 169, 113));
+    let mut covered = vec![false; rom.len()];
+    let mut spans = 0usize;
+    for resource in &manifest.resources {
+        for source in &resource.sources {
+            let start = source.offset as usize;
+            let end = start.checked_add(source.length as usize).unwrap();
+            assert!(start < end && end <= rom.len());
+            covered[start..end].fill(true);
+            spans += 1;
+        }
+    }
+    let unique_bytes = covered.iter().filter(|&&value| value).count();
+    assert_eq!((spans, unique_bytes), (54_792, 10_948_338));
+    assert!(!(0xc4..0xca).any(|at| covered[at]));
+
+    let mut machine = crate::make_machine(rom.clone(), None);
+    let boot = machine.save_state().unwrap();
+    attach_from_directory(&mut machine, &dataset).unwrap();
+    let owner = machine.bus.rom_resources().unwrap().clone();
+    let check_sources = |machine: &mut Machine, phase: &str| {
+        assert!(Arc::ptr_eq(machine.bus.rom_resources().unwrap(), &owner), "owner at {phase}");
+        let state = machine.save_state().unwrap();
+        let range_before = owner.range_lookup_stats().unwrap().source_bytes;
+        let words_before = owner.conditional_substitution_words_stats().unwrap().source_bytes;
+        for byte in &mut machine.bus.rom { *byte ^= 0xff; }
+        let mut checked = 0usize;
+        for (at, &is_covered) in covered.iter().enumerate() {
+            if is_covered {
+                assert_eq!(machine.bus.read8(0x0800_0000 + at as u32), rom[at], "{phase} at {at:x}");
+                checked += 1;
+            }
+        }
+        assert_eq!(checked, unique_bytes);
+        assert!(owner.range_lookup_stats().unwrap().source_bytes > range_before);
+        assert!(owner.conditional_substitution_words_stats().unwrap().source_bytes > words_before);
+        for byte in &mut machine.bus.rom { *byte ^= 0xff; }
+        assert_eq!(machine.save_state().unwrap(), state, "state at {phase}");
+        println!("E170_LIFECYCLE phase={phase} source_bytes={checked}");
+    };
+
+    let initial = machine.save_state().unwrap();
+    let missing = root.join("missing-dataset");
+    assert!(!missing.exists());
+    assert!(attach_from_directory(&mut machine, &missing).is_err());
+    assert_eq!(machine.save_state().unwrap(), initial);
+    check_sources(&mut machine, "failed-attach");
+
+    let slots_dir = root.join("synthetic-slots");
+    fs::create_dir(&slots_dir).unwrap();
+    let mut slots = crate::save_state::Slots::new(&slots_dir.join("test.sav"), &rom);
+    slots.save(&machine, 1, &vec![[0; 4]; 240 * 160], false).unwrap();
+    machine.cpu.regs[4] = 123;
+    let changed_state = machine.save_state().unwrap();
+    slots.load(&mut machine, 1).unwrap();
+    assert_eq!(machine.save_state().unwrap(), initial);
+    check_sources(&mut machine, "load");
+    slots.undo(&mut machine).unwrap();
+    assert_eq!(machine.save_state().unwrap(), changed_state);
+    check_sources(&mut machine, "undo");
+
+    let save_dir = root.join("synthetic-saves");
+    fs::create_dir(&save_dir).unwrap();
+    let save = save_dir.join("test.sav");
+    let len = machine.bus.save_data().unwrap().len();
+    assert!(len > 0);
+    fs::write(&save, vec![7; len]).unwrap();
+    let backups = crate::save_backups::Backups::new(&save);
+    backups.capture_startup().unwrap();
+    machine.bus.load_save_data(&vec![3; len]);
+    backups.restore(backups.choices(len)[0].generation.unwrap(), &mut machine, &boot).unwrap();
+    let mut expected = crate::make_machine(rom.clone(), None);
+    expected.load_state(&boot).unwrap();
+    expected.bus.load_save_data(&vec![7; len]);
+    assert_eq!(fs::read(&save).unwrap(), vec![7; len]);
+    assert_eq!(machine.save_state().unwrap(), expected.save_state().unwrap());
+    check_sources(&mut machine, "backup-restore");
+
+    machine.bus.load_save_data(&vec![9; len]);
+    machine.cpu.regs[4] = 456;
+    crate::save_backups::restart(&mut machine, &boot, &save).unwrap();
+    expected.load_state(&boot).unwrap();
+    expected.bus.load_save_data(&vec![9; len]);
+    assert_eq!(fs::read(&save).unwrap(), vec![9; len]);
+    assert_eq!(machine.save_state().unwrap(), expected.save_state().unwrap());
+    check_sources(&mut machine, "restart");
+    drop(slots);
+    fs::remove_dir_all(&slots_dir).unwrap();
+    fs::remove_dir_all(&save_dir).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":[170,169], "resources":manifest.resources.len(),
+        "source_spans":spans, "unique_source_bytes_per_phase":unique_bytes,
+        "phases":["failed-attach", "load", "undo", "backup-restore", "restart"],
+        "all_source_bytes_match_original_with_inverted_backing":true,
+        "range_and_conditional_word_owners_read_in_each_phase":true,
+        "owner_and_expected_states_preserved":true,
+        "limits":"Synthetic direct APIs and a missing replacement path; no file removal of the active dataset, GUI, Fast, guest execution, per-resource ownership attribution or other platforms.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}

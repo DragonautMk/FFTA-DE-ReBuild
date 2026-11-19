@@ -2909,6 +2909,17 @@ states and clocks, with eight typed reads, zero raw reads and poisoned source
 spans (`e141-languages-234-wine-xn8l5k88`). Thus each of the five declared
 choices has one ordinary route for both tables.
 
+E170 Wine `context-language-direct-wine-arfmrs12` follows those five startup
+choices from the retained pre-selection checkpoint with generated dispatch.
+For each language, both bytes from each of the two position tables are read
+through the generated API and served as typed data while their backing ROM
+bytes are altered; no raw source requests occur. Across 2,120 raw/managed
+frames, complete state, clock, video, OAM, dispatch and five nonempty audio
+streams match at every frame. The wrappers establish direct API requests, not
+the exact guest load PCs. This covers the five observed values on one startup
+route; other readers, writers, values, scenes and platforms remain open.
+Inputs were protected, successful scratch removed and Wine drained.
+
 An isolated Wine backend lifecycle test verifies all 20 language-position
 bytes and their separate counters after failed reattachment, slot load, undo,
 backup restoration and restart. The copied dataset is unavailable, the same
@@ -2916,8 +2927,9 @@ owner remains attached, and the source ROM spans are poisoned during the
 checks (`e141-language-lifecycle-wine-_o_4hw_y`). The frontend UI is not
 exercised by this test.
 
-Global language writers/index extent, other scenes, per-read native
-attribution, frontend save/load, Linux, USA and native Windows remain open.
+Global language writers/index extent, other scenes, native attribution beyond
+the five observed values, frontend save/load, Linux, USA and native Windows
+remain open.
 No performance measurement was made.
 
 Static E164 ownership audit `e169-language-index-owner-audit-s7fuvptv`
@@ -3309,6 +3321,15 @@ and draw cases for full state and clock, preserving the E133 dataset
 (`target/validation/units/e134-obj-context-wine-retry-4hbc5mu3/`). The same
 three cases pass translated-original updater/draw comparisons after machine-state
 reload (`target/validation/units/e134-obj-context-native-wine-mc1ztvqg/`).
+E170 Wine `e134-full-sequence-wine-b6uugr9g` extends that controlled comparison
+to all 38 frames in the first sequence. For each independently initialized
+frame, the original updater selects the model's list and duration; original
+and translated updater/draw calls match complete state and guest clock with the
+managed bank's backing spans altered. All 19 distinct lists selected by this
+sequence are exercised, with managed source reads after state reload. Input
+guards pass, Wine drains and successful scratch is removed. Generated instructions
+may fall back to interpretation. This does not follow the continuous animation
+in ordinary play or cover the other two lists in the bank.
 A later ordinary EUR Wine startup, from the protected pre-queue state on the
 same caller, reaches the original updater and reads this bank. In three-frame
 raw/managed pairs, the interpreter and the normal native-dispatch engine each
@@ -3552,6 +3573,19 @@ that Up uses `0813aa52`. The corrected test passed. This is one ordinary title
 route, not a global writer/value or native-dispatch claim. Linux, USA and native
 Windows remain pending; no performance was measured.
 
+E170 Wine `title-all-language-native-wine-4yp7q7yd` separately follows the
+retained ordinary title routes with generated dispatch enabled: selections
+1–4 and the return from French to English each change the language byte to the
+expected value. Both title-cursor coordinates for every selection are served
+through direct generated API reads with their ROM sources altered; the trace
+records no raw requests for the monitored cursor and context-position spans.
+The raw/managed pairs match complete state, clock, video, OAM, dispatch and
+five nonempty audio streams at every frame. This proves the observed changes
+and cursor reads, not the exact writer instruction or direct native reads of
+the separate `3ae42c` position bank. Other writers, values, scenes and platforms
+remain open. Inputs were protected, successful scratch was removed and Wine
+drained.
+
 
 ## Title language cursor and animation source contract
 
@@ -3709,6 +3743,51 @@ frame for each observed list matches the original complete state and clock.
 Index 0 is an empty list and is not used by the extracted sequence; other
 scenes, producers, native dispatch, Linux, USA and native Windows remain
 open. No performance measurement.
+
+E170 Wine `title-main-bank-native-wine-vbye2pnv` compares 180 frames of the
+same neutral opening with generated dispatch enabled. Raw and managed runs
+match full state, clock, video, OAM, dispatch and five nonempty audio streams
+at every frame. The five nonempty headers receive 7, 5, 69, 9 and 2 typed
+requests, respectively, with their backing source bytes altered and no raw
+requests. The trace records all five header reads on the bus under interpreter
+site `0800153c`; no exact-header read appears in the overridden generated API,
+even though that API handles other reads. The default sprite hook can route
+this reader through the interpreter before native lookup. The trace site may
+include inherited host or HLE work and is not, by itself, proof of each guest
+instruction. This route therefore establishes a mixed-dispatch comparison and
+observed interpreter-scoped header reads, not direct native header coverage.
+Other scenes, producers and platforms remain open. The preceding
+`an63hanh` run failed its unsupported direct-read assertion; `3a3oqsyf` stopped
+earlier because its launcher omitted TinyCC. Both diagnostics remain local.
+
+The separate documented `FFTA_PATCH_SPR=0` configuration starts from a clean
+machine and the protected EUR save, using the retained boot input: 900 neutral
+frames, two frames with Start, then neutral input. Wine
+`title-native-cold-wine-8j504dl0` passes 3,885 raw/managed frames through the
+opening. Full state, clock, video, OAM, dispatch and all five nonempty audio
+streams match at every frame. With the five list sources altered, direct
+generated API calls read their typed headers 7, 5, 7, 9 and 1 times; no raw
+source requests occur. This validates direct native header reads in this
+specific nondefault configuration, independently of the default-hook result.
+The wrapper does not identify exact guest load PCs; other scenes, producers,
+the complete animation and other platforms remain open. A prior all-neutral
+attempt `rdi7_s7u` never reached the lists and failed its positive-use guard.
+The successful local `result.json` calls the route neutral in its limits text;
+the recorded two-frame Start above corrects that description, and the test's
+future result metadata now reports the input explicitly.
+
+Wine `title-animation-completion-wine-ntggzh1c` verifies the entire six-phase
+`b8ed28/b8ecb4` opening sequence with the default sprite hook. For 63
+consecutive frames the only observed list header follows indices
+`1, 4, 2, 3, 5, 3` for `7, 9, 5, 7, 2, 33` frames respectively. Those counts
+match the original updater's comparison against each stored duration. The
+source-rooted animator's completion flag remains zero until the last frame and
+then becomes one. The surrounding 180-frame raw/managed runs match full state,
+clock, video, OAM, dispatch and five nonempty audio streams at every frame;
+list sources are altered in the managed ROM and no raw requests occur. Inputs
+are protected, successful scratch is removed and Wine drains. This completes
+the observed sequence in one EUR opening; other banks, producers, scenes and
+platforms remain open.
 
 ## EUR neutral-opening OBJ pointer directory
 

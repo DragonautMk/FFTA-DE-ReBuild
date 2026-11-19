@@ -72,9 +72,14 @@ fn european_context_bank_translated_update_and_draw() {
     let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
     let manifest: Manifest =
         toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    let full_sequence = std::env::var_os("FFTA_CONTEXT_NATIVE_FULL_SEQUENCE").is_some();
     assert_eq!(
         (manifest.extractor_revision, manifest.decoder_revision),
-        (134, 133)
+        if full_sequence {
+            (170, 169)
+        } else {
+            (134, 133)
+        }
     );
     let entry = manifest
         .resources
@@ -92,7 +97,12 @@ fn european_context_bank_translated_update_and_draw() {
     let mut trace = crate::make_machine(rom.clone(), None);
     let initial = trace.save_state().unwrap();
     let mut visited = BTreeSet::new();
-    for frame in [0, 32, 37] {
+    let frames: Vec<usize> = if full_sequence {
+        (0..38).collect()
+    } else {
+        vec![0, 32, 37]
+    };
+    for &frame in &frames {
         trace.load_state(&initial).unwrap();
         setup_update(&mut trace, frame);
         original(&mut trace, 0x080a_ccf4, &mut visited);
@@ -141,7 +151,8 @@ fn european_context_bank_translated_update_and_draw() {
     let mut native = crate::make_machine(rom.clone(), None);
     attach_from_directory(&mut native, &dataset).unwrap();
     let owner = native.bus.rom_resources().unwrap().clone();
-    for frame in [0, 32, 37] {
+    let mut selected_lists = BTreeSet::new();
+    for &frame in &frames {
         raw.load_state(&initial).unwrap();
         native.load_state(&initial).unwrap();
         for &(at, len, _) in &spans {
@@ -158,6 +169,12 @@ fn european_context_bank_translated_update_and_draw() {
             raw.bus.read32(CONTEXT + 0x14),
             native.bus.read32(CONTEXT + 0x14)
         );
+        let selected = &bank.sequences[0].frames[frame];
+        let expected_ptr =
+            0x0800_0000 + OBJECT_ROOT + bank.object_offsets[usize::from(selected.object_list)];
+        assert_eq!(raw.bus.read32(CONTEXT + 0x14), expected_ptr);
+        assert_eq!(raw.bus.read16(CONTEXT + 0x10), selected.duration);
+        selected_lists.insert(selected.object_list);
         setup_draw(&mut raw);
         setup_draw(&mut native);
         let before_draw = owner.obj_animation_stats().unwrap().source_bytes;
@@ -174,5 +191,15 @@ fn european_context_bank_translated_update_and_draw() {
             "full state and clock frame {frame}"
         );
     }
-    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS", "revision":[134,133], "translated_update_draw_full_state_clock_cases":3, "managed_source_after_state_reload":true, "ordinary_scene":"pending", "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false})).unwrap()).unwrap();
+    if full_sequence {
+        assert_eq!(selected_lists.len(), 19);
+    }
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "revision":if full_sequence { [170,169] } else { [134,133] },
+        "translated_update_draw_full_state_clock_cases":frames.len(), "distinct_selected_lists":selected_lists.len(),
+        "all_original_sequence_frames":full_sequence, "selected_list_and_duration_match_model":true,
+        "managed_source_after_state_reload":true,
+        "limits":"Independent controlled updater and draw calls, not continuous ordinary animation; generated instructions may use interpreter fallback.",
+        "ordinary_scene":"pending", "Linux":"pending", "USA":"pending", "native_windows":"pending", "performance_measurements":false
+    })).unwrap()).unwrap();
 }

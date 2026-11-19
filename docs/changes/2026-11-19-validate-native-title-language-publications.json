@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-native-title-language-publications",
+  "title": "Validate native title language selections",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add EUR/Wine raw/managed mixed-dispatch checks for each ordinary title language change and direct generated title-cursor reads."
+  ],
+  "validation": [
+    "Wine 4yp7q7yd passes the retained routes for IDs 1, 2, 3, 4 and return to 0, with selected global values observed at frames 9, 17, 25, 9 and 103. Both selected cursor coordinates are read through generated APIs in every route; the monitored source spans have no raw requests.",
+    "All 168 paired frames match complete state, clock, video, OAM, dispatch and audio, with five nonempty streams across the runs and altered managed source spans. Input guards passed, Wine drained and successful scratch was removed; Windows GNU test build sdei3198 passed."
+  ],
+  "limitations": [
+    "Generated API wrappers identify title-cursor reads but not exact guest instruction PCs or direct native reads of the separate 3ae42c context-position bank. Other language writers, the global value domain, scenes, native Windows, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_language_publisher_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

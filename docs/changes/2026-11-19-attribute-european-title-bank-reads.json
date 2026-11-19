@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "attribute-european-title-bank-reads",
+  "title": "Validate European title bank reads and complete animation",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add a guarded EUR/Wine opening comparison that records title-bank source readers and exact-header native API requests alongside frame state, video and audio in the default and patch-disabled configurations.",
+    "Add an ordinary-opening test for every phase of the main-title bank sequence, including exclusive per-frame header observations and the original animator completion flag."
+  ],
+  "validation": [
+    "Wine vbye2pnv passes 180 raw/managed frames with 92 typed requests across all five nonempty headers, zero raw requests and five nonempty equal audio streams; all header requests carry interpreter site 0800153c while 4614628 other native API reads were wrapped and no direct header reads were observed.",
+    "The initial 3a3oqsyf launch lacked TinyCC; an63hanh failed an unsupported direct-read assertion. A focused Sol 6.1 xhigh consultation identified the forced sprite interpreter hook and the final retained trace reports actual readers; successful scratch was removed.",
+    "Wine 8j504dl0 uses the protected save and retained boot input with FFTA_PATCH_SPR=0: 3885 raw/managed frames match complete state, clock, video, OAM, dispatch and five audio streams; five headers have 7/5/7/9/1 direct generated API requests, all typed, with source bytes altered and zero raw requests. Input guards passed and scratch was removed.",
+    "The earlier rdi7_s7u attempt used only neutral input and did not reach the title lists; the corrected run replays the retained two-frame Start input after 900 frames. The successful receipt calls its route neutral in its limits text; test result metadata was corrected afterward without changing the comparison logic.",
+    "Wine ntggzh1c passes 180 raw/managed frames with equal complete state, clock, video, OAM, dispatch and five nonempty audio streams. The six exclusive list phases 1/4/2/3/5/3 last 7/9/5/7/2/33 frames, and the source-rooted animator completion flag rises only after the final phase; poisoned list sources yield zero raw requests. Protected inputs passed, Wine drained and successful scratch was removed."
+  ],
+  "limitations": [
+    "The default route remains interpreter-scoped for these reads; the patch-disabled cold boot establishes direct native headers for one EUR opening, not exact guest load PCs. Complete animation is established for the main-title sequence in that opening only; other banks, producers and scenes remain open. Native Windows, Linux and USA remain unverified."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/title_main_bank_draw_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

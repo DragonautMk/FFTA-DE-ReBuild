@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "validate-e170-all-resource-save-lifecycle",
+  "title": "Validate E170 source reads through save lifecycle",
+  "kind": "added",
+  "platforms": [
+    "Windows"
+  ],
+  "changes": [
+    "Add an ignored EUR/Wine integration test for every declared E170 source byte after failed replacement, slot Load, Undo, backup restore and restart using synthetic saves."
+  ],
+  "validation": [
+    "Windows GNU test build siostytu and Wine unit i73r4f54 passed: 113 resources, 54792 declared spans and 10948338 distinct source bytes in each of five phases, with backing ROM inverted; range and conditional-word owners served reads, expected states and owner persisted, protected inputs remained unchanged and scratch was removed."
+  ],
+  "limitations": [
+    "The test uses direct APIs and a missing replacement path without moving the active dataset; GUI, Fast, guest execution, individual resource attribution, native Windows, Linux and USA remain outside its scope."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/range_lookup_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

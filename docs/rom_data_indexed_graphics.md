@@ -290,6 +290,16 @@ were observed. There were 205,083 generated and 283,493 fallback dispatches;
 the aggregate trace does not attribute individual reads to native instructions.
 Other contexts and the full reader ABI are not covered by this input.
 
+Wine `indexed-context-direct-wine-ax_5va8t` repeats that same recorded route
+with a test-only generated-API observer to resolve the attribution left open
+above. All four traced context-3 requests, serving four typed bytes, pass
+directly through generated API calls; none is nested inside `interp_one` and
+no raw or unclassified context requests occur. The 41 raw/managed frames again
+match complete state, clock, video, OAM, dispatch and five nonempty audio
+streams with all 132 context-source bytes altered. The wrappers do not identify
+exact guest load PCs. Other contexts, callers, reader ABI and platforms remain
+open. Protected inputs passed, Wine drained and successful scratch was removed.
+
 A separate controlled E170 Wine test (`indexed-context-domain-wine-9l5p79sq`)
 compares getter `01972c` for all 256 byte indices and their `0x100` aliases,
 using both interpreter and generated instruction-block dispatch: 1,024 cases.

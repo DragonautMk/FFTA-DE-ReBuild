@@ -291,6 +291,145 @@ fn european_context_bank_ordinary_pairs() {
 
 #[cfg(feature = "rom-data-read-audit")]
 #[test]
+#[ignore = "ordinary EUR startup checkpoint, E170 dataset and native library; Wine only"]
+fn european_context_bank_ordinary_sequence_pair() {
+    use gba_core::rom_data::read_audit::{Service, TraceCapture, TraceFilter};
+
+    crate::configure_headless_widescreen();
+    let root = PathBuf::from(std::env::var_os("FFTA_CONTEXT_ORDINARY_ROOT").unwrap());
+    let dataset = PathBuf::from(std::env::var_os("FFTA_CONTEXT_ORDINARY_DATASET").unwrap());
+    let rom = fs::read(std::env::var_os("FFTA_STATE_TEST_ROM").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let state = fs::read(std::env::var_os("FFTA_CONTEXT_ORDINARY_STATE").unwrap()).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&state), "ca90c12b4564c21fd8cea20e65bcc2c017d0d3a1ee61e89623920dd1f9a00305");
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join(MANIFEST_FILE)).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (170, 169));
+    let resource = manifest.resources.iter().find(|r| r.id == OBJ_ANIMATION_BANKS_ID).unwrap();
+    let banks = parse_obj_animations(&fs::read(dataset.join(&resource.path)).unwrap()).unwrap();
+    let bank = banks.banks.iter().find(|b| b.object_root == OBJECT_ROOT && b.sequence_root == SEQUENCE_ROOT).unwrap();
+    let sequence = &bank.sequences[0];
+    assert_eq!((sequence.source_offset, sequence.frames.len(), bank.spans().len()), (SEQUENCE, 38, 24));
+    let spans = bank.spans();
+    let ranges: Vec<_> = spans.iter().map(|&(at, len, _)| (at, at + len as u32)).collect();
+    let (_library, table) = crate::load_native(Path::new(&std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap())).unwrap();
+    let mut raw = crate::make_machine(rom.clone(), None);
+    let mut managed = crate::make_machine(rom.clone(), None);
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    for machine in [&mut raw, &mut managed] {
+        machine.load_state(&state).unwrap();
+        crate::arm_audio_hle(machine, None);
+        machine.bus.tap_channels = true;
+        machine.bus.audio_buf.clear(); machine.bus.psg_tap.clear();
+        machine.bus.fifo_tap[0].clear(); machine.bus.fifo_tap[1].clear(); machine.bus.hle_tap.clear();
+    }
+    assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap());
+    assert_eq!(raw.cpu.regs[15], 0x0814_4aa2);
+    let trace = TraceCapture::start(TraceFilter { readers: vec![], ranges: ranges.clone() }, 50_000).unwrap();
+    let start = raw.bus.frames;
+    let mut dispatch = (0u64, 0u64);
+    let mut audio = [0u64; 5];
+    let mut updater_entries: Vec<(u64, u32, u16, u16)> = Vec::new();
+    const FRAMES: u64 = 420;
+    for frame in 0..FRAMES {
+        for &(lo, hi) in &ranges { managed.bus.rom[lo as usize..hi as usize].fill(0xcd); }
+        raw.bus.keys = 0x3ff;
+        trace.frame(None);
+        let raw_pointer = &mut raw as *mut Machine as *mut std::ffi::c_void;
+        let raw_dispatch = crate::run_frame_native(&mut raw, &table, raw_pointer, crate::FRAME_STEP_GUARD);
+        managed.bus.keys = 0x3ff;
+        trace.frame(Some(managed.bus.frames));
+        let managed_pointer = &mut managed as *mut Machine as *mut std::ffi::c_void;
+        let managed_dispatch = crate::run_frame_native_traced(&mut managed, &table, managed_pointer, crate::FRAME_STEP_GUARD,
+            |machine, _| {
+                if machine.cpu.regs[15] != 0x080a_ccf4 { return; }
+                let context = machine.cpu.regs[0];
+                let Some(offset) = context.checked_sub(0x0200_0000).map(|v| v as usize) else { return; };
+                let Some(bytes) = machine.bus.ewram.get(offset..offset + 0x1c) else { return; };
+                let word = |at| u32::from_le_bytes(bytes[at..at + 4].try_into().unwrap());
+                let half = |at| u16::from_le_bytes(bytes[at..at + 2].try_into().unwrap());
+                if word(0) == 0x0800_0000 + OBJECT_ROOT && word(0x18) == 0x0800_0000 + SEQUENCE {
+                    updater_entries.push((frame, context, half(0x0e), half(0x10)));
+                }
+            }, |_, _, _| {});
+        trace.frame(None);
+        assert_eq!(raw_dispatch, managed_dispatch, "dispatch frame {frame}");
+        assert_eq!((raw.bus.frames, managed.bus.frames), (start + frame + 1, start + frame + 1));
+        dispatch.0 += raw_dispatch.0; dispatch.1 += raw_dispatch.1;
+        assert_eq!(raw.bus.clock, managed.bus.clock);
+        assert_eq!(raw.bus.framebuffer, managed.bus.framebuffer);
+        assert_eq!(raw.bus.wide_framebuffer, managed.bus.wide_framebuffer);
+        assert_eq!(raw.bus.oam, managed.bus.oam);
+        assert_eq!(raw.bus.audio_buf, managed.bus.audio_buf);
+        assert_eq!(raw.bus.psg_tap, managed.bus.psg_tap);
+        assert_eq!(raw.bus.fifo_tap, managed.bus.fifo_tap);
+        assert!(raw.bus.hle_tap.iter().map(|v| v.to_bits()).eq(managed.bus.hle_tap.iter().map(|v| v.to_bits())));
+        for (sum, len) in audio.iter_mut().zip([managed.bus.audio_buf.len(), managed.bus.psg_tap.len(), managed.bus.fifo_tap[0].len(), managed.bus.fifo_tap[1].len(), managed.bus.hle_tap.len()]) { *sum += len as u64; }
+        for &(lo, hi) in &ranges { managed.bus.rom[lo as usize..hi as usize].copy_from_slice(&rom[lo as usize..hi as usize]); }
+        assert_eq!(raw.save_state().unwrap(), managed.save_state().unwrap(), "state frame {frame}");
+        for machine in [&mut raw, &mut managed] {
+            machine.bus.audio_buf.clear(); machine.bus.psg_tap.clear();
+            machine.bus.fifo_tap[0].clear(); machine.bus.fifo_tap[1].clear(); machine.bus.hle_tap.clear();
+        }
+        if (frame + 1) % 100 == 0 { println!("E134_SEQUENCE frames={}/{}", frame + 1, FRAMES); }
+    }
+    let report = trace.finish();
+    assert_eq!(report.dropped_requests, 0);
+    let mut typed = 0u64;
+    let mut raw_requests = 0u64;
+    let mut unclassified = 0u64;
+    let mut fields = vec![[None::<u64>; 2]; sequence.frames.len()];
+    for event in &report.events {
+        match event.key.service {
+            Service::Typed => typed += event.requests,
+            Service::Raw => raw_requests += event.requests,
+            Service::Unclassified => unclassified += event.requests,
+        }
+        if event.key.service == Service::Typed {
+            let lo = event.key.read.physical_offset;
+            let hi = lo + event.key.read.length as u32;
+            for (index, pair) in fields.iter_mut().enumerate() {
+                for (part, first) in pair.iter_mut().enumerate() {
+                    let address = SEQUENCE + 2 + index as u32 * 4 + part as u32 * 2;
+                    if lo <= address && hi >= address + 2 {
+                        *first = Some(first.map_or(event.first_guest_frame - start, |f| f.min(event.first_guest_frame - start)));
+                    }
+                }
+            }
+        }
+    }
+    assert!(typed > 0 && dispatch.0 > 0 && audio.iter().all(|&v| v > 0));
+    assert_eq!((raw_requests, unclassified), (0, 0));
+    let complete = fields.iter().all(|f| f.iter().all(Option::is_some));
+    let ordered = complete && fields.windows(2).all(|w| w[0][0] <= w[1][0]);
+    assert!(complete && ordered, "all sequence fields must be read in source-frame order");
+    let contexts: std::collections::BTreeSet<_> = updater_entries.iter().map(|entry| entry.1).collect();
+    assert_eq!(contexts.len(), 1, "the observed sequence must use one updater context");
+    let mut expected_entries = vec![(0u16, 0u16)];
+    for (index, sequence_frame) in sequence.frames.iter().enumerate() {
+        let last_observed_duration = if index == 37 { 27 } else { 1 };
+        for duration in (last_observed_duration..=sequence_frame.duration).rev() {
+            expected_entries.push(((index + 1) as u16, duration));
+        }
+    }
+    assert_eq!(updater_entries.iter().map(|entry| (entry.2, entry.3)).collect::<Vec<_>>(), expected_entries,
+        "updater context progression differs from the model");
+    fs::write(root.join("trace-report.json"), serde_json::to_vec_pretty(&report).unwrap()).unwrap();
+    fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
+        "status":"PASS", "scope":"ordinary no-input EUR startup checkpoint continuation",
+        "revision":[170,169], "frames":FRAMES, "first_sequence_field_frames":fields,
+        "all_38_selector_and_duration_fields_seen":complete, "selector_first_frames_in_source_order":ordered,
+        "typed_requests":typed, "raw_requests":raw_requests, "unclassified_requests":unclassified,
+        "trace_dropped_requests":report.dropped_requests, "all_bank_spans_altered":true,
+        "matching_updater_entries":updater_entries, "one_context_matches_sequence_progression":true,
+        "full_state_clock_video_oam_dispatch_audio_equal_each_frame":true, "audio_sample_counts":audio,
+        "native_dispatches":dispatch.0, "fallback_dispatches":dispatch.1,
+        "limits":"Recorded neutral route ends the observed updater calls during the last duration, at an entry value of 27. Exact native load PCs, full final duration and other consumers remain unproved. Generated blocks may fall back to interpretation.",
+        "performance_measurements":false
+    })).unwrap()).unwrap();
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
 #[ignore = "ordinary EUR checkpoint, E139 dataset and TinyCC; Windows executable under Wine"]
 fn european_context_bank_ordinary_augmented_updater() {
     use gba_core::rom_data::read_audit::{Reader, Service, TraceCapture, TraceFilter, TraceReport};
