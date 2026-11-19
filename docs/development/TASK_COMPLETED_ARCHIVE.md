@@ -23955,3 +23955,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Fast-forwarded local decomp from 039a19fd to 0df21e17, matching GitHub and origin/decomp with zero commits ahead or behind; no staged changes were lost.
 - Evidence: Compared 31 affected worktree paths before and after; all file hashes and modes were unchanged. Project memory, handoff and Git diff checks passed.
 - Limits: Independent uncommitted documentation and its new change record remain in the worktree for their existing task.
+
+### ISSUE-TEMPLATES
+
+- Outcome: completed
+- Verified criteria: Published bug and feature forms on GitHub; bug fields cover ROM region, platform, device, description, screenshots, saves and snapshots; feature form is shorter.
+- Evidence: YAML/field checks passed; GitHub UI displayed both forms and Other or unknown defaults. Local decomp matched remote after preserving worktree files. docs/changes/2026-11-19-add-github-issue-forms.json.
+- Limits: Attachments are optional and public. No test issue was submitted.

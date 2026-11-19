@@ -178,9 +178,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: GIT-DECOMP-SYNC completed.
-- Last verified result: local and remote decomp match at 0df21e17; local work preserved.
-- Remaining work: none for this synchronization.
+- Task: ISSUE-TEMPLATES completed.
+- Last verified result: GitHub displays both forms with the requested fields and unknown defaults.
+- Remaining work: none for issue templates.
 - Errors or blockers: none.
 - Next action: await a new selection.
-- References: GIT-DECOMP-SYNC archive outcome.
+- References: docs/changes/2026-11-19-add-github-issue-forms.json.
