@@ -74,14 +74,21 @@ pub enum Undo {
     Load { snapshot: Vec<u8>, exact: Option<ExactHistory> },
 }
 
-pub struct Slots { directory: PathBuf }
+pub struct Slots { directory: PathBuf, prefix: Option<String>, rom_key: String }
 impl Slots {
     pub fn new(save_path: &Path, rom_key: &str) -> Result<Self, String> {
-        Ok(Self { directory: save_path.parent().ok_or("Save directory missing")?.join("SaveStates").join(rom_key) })
+        Ok(Self { directory: save_path.parent().ok_or("Save directory missing")?.join("SaveStates").join(rom_key),
+            prefix:None,rom_key:rom_key.to_owned() })
+    }
+    pub fn beside_rom(save_path:&Path,rom_key:&str)->Result<Self,String> {
+        let directory=save_path.parent().ok_or("Save directory missing")?.to_owned();
+        let prefix=save_path.file_stem().and_then(|s|s.to_str()).filter(|s|!s.is_empty()).ok_or("Invalid save name")?.to_owned();
+        Ok(Self{directory,prefix:Some(prefix),rom_key:rom_key.to_owned()})
     }
     fn path(&self, slot: u8) -> Result<PathBuf, String> {
         if !(1..=9).contains(&slot) { return Err("Invalid save-state slot".into()); }
-        Ok(self.directory.join(format!("slot-{slot}.ffstate")))
+        let name=match &self.prefix {Some(prefix)=>format!("{prefix}.slot-{slot}.ffstate"),None=>format!("slot-{slot}.ffstate")};
+        Ok(self.directory.join(name))
     }
     fn read(&self, slot: u8) -> Result<Option<Vec<u8>>, String> {
         let mut file = match fs::File::open(self.path(slot)?) {
@@ -143,7 +150,8 @@ impl Slots {
         fs::create_dir_all(&self.directory).map_err(|e| e.to_string())?;
         if let Some(old)=&previous {
             // Keep a durable recovery copy even if the app exits before Undo.
-            let backups=self.directory.join("ImportBackups");
+            let backups=if self.prefix.is_some() {self.directory.join("SaveStateImportBackups").join(&self.rom_key)}
+                else {self.directory.join("ImportBackups")};
             fs::create_dir_all(&backups).map_err(|e|e.to_string())?;
             let backup=backups.join(format!("slot-{slot}-{}.ffstate",gba_core::ffta_rom::digest(old)));
             if backup.exists() {

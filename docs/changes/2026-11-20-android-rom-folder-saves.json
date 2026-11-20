@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "android-rom-folder-saves",
+  "title": "Store Android saves beside the selected ROM",
+  "kind": "added",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Allow the user to select the local folder containing the verified ROM and grant all-files access; store cartridge saves and nine state slots beside the ROM with ROM-specific names.",
+    "Copy existing cartridge saves, states and backups through verified no-clobber publication while retaining originals; require an explicit choice when destination files differ and detect externally changed cartridge saves.",
+    "Keep compiled native objects in app-private storage and surface save failures; retain the existing private-save option and advance the signed preview to build 33."
+  ],
+  "validation": [
+    "The Android native core passed 46 tests with three fixture-dependent tests ignored, including adjacent state paths, external-change refusal and atomic no-replace publication (android-rom-folder-native-final-tests-u4cau39c).",
+    "Build 33 and 38 Kotlin tests passed; APK version, all-files permission, signer identity and private-data exclusion passed (android-rom-folder-build33-v9sz7y9i; android-rom-folder-build33-audit-4v8fpja0).",
+    "On a moto g34, the user selected the ROM folder and the cartridge save and three states matched their original private copies; build 33 installation preserved six folder files, private saves, ROM identities and folder preference (android-rom-folder-build33-device-update-mfnax6s4).",
+    "After updating, the user confirmed the selected folder and existing slots, then created slot 4. Its state file appeared beside the ROM and slots 1–3 matched the private pre-update backup (android-rom-folder-device-write-check-ile0jili).",
+    "On the phone, the active cartridge-save file modification time advanced while the game was running (android-rom-folder-cartridge-autosave-check-0ni3ulbp)."
+  ],
+  "limitations": [
+    "Direct folder access requires Android 11 or newer, a local storage provider and the user-granted broad all-files permission; Android blocks selection of the Download root and certain protected folders.",
+    "Original private files remain as snapshots, not a live synchronization. Do not concurrently edit the same shared save from another app; detected changes are refused, but filesystem checks cannot provide an interprocess compare-and-swap."
+  ],
+  "files": [
+    "AndroidPort/android/README.md",
+    "AndroidPort/android/app/build.gradle.kts",
+    "AndroidPort/android/app/src/main/AndroidManifest.xml",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/GameSurface.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/MainActivity.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/NativeBridge.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/RomFolderFiles.kt",
+    "AndroidPort/android/app/src/main/java/com/fftarecomp/port/RomFolderLocation.kt",
+    "AndroidPort/android/app/src/test/java/com/fftarecomp/port/RomFolderFilesTest.kt",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/crates/gba-android/src/jni.rs",
+    "AndroidPort/crates/gba-android/src/save_backups.rs",
+    "AndroidPort/crates/gba-android/src/save_states.rs"
+  ],
+  "references": [
+    "AndroidPort/android/README.md",
+    "docs/releases/v1.2.0.md"
+  ]
+}

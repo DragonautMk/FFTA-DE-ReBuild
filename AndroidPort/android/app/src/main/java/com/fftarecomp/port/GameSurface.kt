@@ -187,7 +187,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                     taps.clear()
                     normalOutput.active=false
                     if (!wasPaused) {
-                        NativeBridge.gbaSave()
+                        check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
                         buttons.set(0)
                         track?.pause(); track?.flush()
                         queuedCount = 0
@@ -271,7 +271,7 @@ class GameSurface(context: Context, val onError: (String) -> Unit) : GLSurfaceVi
                         count * 1e9 / elapsed, simulationNanos / 1e6 / count / multiplier,
                         multiplier, track?.underrunCount ?: 0)
                     val saveStart=if(benchmark!=null)System.nanoTime() else 0L
-                    NativeBridge.gbaSave()
+                    check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
                     val saveEnd=if(benchmark!=null)System.nanoTime() else 0L
                     saveTime=saveEnd-saveStart
                     if(BuildConfig.DEBUG && benchmark!=null) {

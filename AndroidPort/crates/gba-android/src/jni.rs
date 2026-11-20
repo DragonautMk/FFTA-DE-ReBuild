@@ -53,7 +53,7 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaScreenLut
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
-    env: *mut JNIEnv, _: jobject, bytes: jbyteArray, save_path: jstring,
+    env: *mut JNIEnv, _: jobject, bytes: jbyteArray, save_path: jstring, cache_path:jstring, saves_beside_rom:jboolean,
 ) -> jint {
     guarded(|| {
         if bytes.is_null() { return Err("No ROM bytes".into()); }
@@ -70,10 +70,12 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
             let backups=crate::save_backups::Backups::new(&save,&gba_core::ffta_rom::digest(&loaded.machine.bus.rom));
             if let Some(bytes)=backups.capture_startup(expected)? {
                 loaded.machine.bus.load_save_data(&bytes);
+                *loaded.save_expected.lock().map_err(|_|"Save check mutex poisoned")?=Some(gba_core::ffta_rom::digest(&bytes));
             }
         }
         loaded.save_path = Some(save);
-        loaded.cache_dir = loaded.save_path.as_ref().and_then(|path|path.parent()).map(|path|path.join("compiled"));
+        loaded.saves_beside_rom=saves_beside_rom!=0;
+        loaded.cache_dir = Some(PathBuf::from(string(env,cache_path)?));
         *ENGINE.lock().map_err(|_|"Engine mutex poisoned")? = Some(loaded);
         KEYS.store(0x3ff,Ordering::Relaxed);
         engine::status("ROM verified and loaded; ready to compile");
@@ -192,6 +194,20 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaTap(_: *mut JNIE
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaSave(_: *mut JNIEnv, _: jobject) -> jint {
     guarded(|| {
         if let Some(engine) = ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_ref() { engine.save()?; }
+        Ok(1)
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaPublishSaveCopy(env:*mut JNIEnv,_:jobject,source:jstring,destination:jstring)->jint {
+    guarded(|| {
+        let source=PathBuf::from(string(env,source)?);let destination=PathBuf::from(string(env,destination)?);
+        if source.parent()!=destination.parent() ||
+            !source.file_name().and_then(|s|s.to_str()).is_some_and(|s|s.starts_with(".ffta-migrate-")) ||
+            !destination.extension().and_then(|s|s.to_str()).is_some_and(|s|s=="sav" || s=="ffstate") {
+            return Err("Invalid save-copy paths".into());
+        }
+        crate::save_backups::publish_noclobber(&source,&destination).map_err(|e|format!("Cannot publish save copy: {e}"))?;
         Ok(1)
     })
 }

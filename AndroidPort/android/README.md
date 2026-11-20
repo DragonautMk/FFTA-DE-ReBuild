@@ -52,8 +52,26 @@ timers, DMA, interrupts, backup media, and C recompiler.
 - Audio is real GBA stereo PCM continuously resampled from 65536 to 48000 Hz.
   Fast-forward offers Normal, Fast audio and Silent modes; gamepad bindings
   can be remapped as described below.
-- Saves are stored privately as `files/ffta.sav`, written on pause, exit and
-  periodically while playing. Preparing code never advances the user's game.
+- By default saves are stored privately as `files/ffta.sav`, written on pause,
+  exit and periodically while playing. Preparing code never advances the game.
+- On Android 11 or newer, **Use ROM folder for saves** selects a local folder
+  containing the same verified ROM. Android asks for its broad all-files access
+  permission so the native core can read and write files directly; cloud and
+  virtual folders are not supported. For `My Game.gba`, the active cartridge
+  file is `My Game.sav` and the nine slots are `My Game.slot-1.ffstate` through
+  `My Game.slot-9.ffstate`, beside the ROM. Cartridge backups and replaced
+  state imports are under that folder's `SaveBackups` and
+  `SaveStateImportBackups` subdirectories. Compiled native objects remain in
+  the app's private storage and are never loaded from the shared folder.
+- Choosing a folder copies existing saves and backups without deleting the
+  originals. Different files already in that folder are never replaced during
+  the copy; the user may cancel or explicitly use the folder's existing files.
+  Switching back to the original private saves can expose older progress and
+  does not delete the ROM-folder files. Losing the all-files permission blocks
+  access rather than silently switching storage. If another app changes the
+  cartridge save while the game is running, a detected change stops saving;
+  do not edit the same saves concurrently from another app. If the ROM file is
+  renamed, select its folder again to copy the existing saves to the new names.
 - The app opens on the ROM-selection screen, including when a ROM was selected
   earlier. After its identity has been verified, **Import previous saves** opens
   Android's file picker for a cartridge `.sav` or an individual `.ffstate`.
@@ -61,7 +79,7 @@ timers, DMA, interrupts, backup media, and C recompiler.
   BIOS; cartridge saves have no game identity, so only their size is checked.
   Existing files require confirmation before replacement. A cartridge save is
   backed up in the normal backup list; a replaced state is retained under its
-  ROM-specific `SaveStates/<ROM hash>/ImportBackups` directory and can also be
+  ROM-specific import-backup directory and can also be
   undone during the session. State import does not load the state automatically.
 - Pause > Restart ROM asks for confirmation, writes the current cartridge save,
   then restarts from boot. Progress not saved inside the game is lost. If the
@@ -91,8 +109,9 @@ timers, DMA, interrupts, backup media, and C recompiler.
   lists them and asks for confirmation before restoring one and restarting.
   Damaged, stale or incorrectly sized backups are refused. Backups are private
   to the app and are not save states. The existing Android cartridge-save file
-  is shared when switching ROMs; backups are grouped by the ROM being loaded,
-  so a backup cannot establish which ROM originally created that shared file.
+  is shared when switching ROMs in private-storage mode; backups are grouped by
+  the ROM being loaded, so a backup cannot establish which ROM originally
+  created that shared private file. ROM-folder saves use the ROM filename.
   Backups are published with an atomic no-replace rename, which works on
   Android devices that reject hard links in app storage.
 

@@ -24480,3 +24480,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: main and decomp synchronized to source commit `1750b8c0`; the unpublished 1.2 draft targets that commit and all 12 asset sizes and SHA-256 hashes match the local package. Android source manifest matches the commit and GitHub Project memory CI passed.
 - Evidence: draft 452599943; `android-initial-menu-import-build31-f8l2g21t`, `android-initial-menu-import-audit31-p0iwwu0g`; GitHub run 44751737774.
 - Limits: the release remains a draft; Android app-only legacy access and native Windows/Windows ADB remain unverified. Later memory-only commits do not alter the build sources.
+
+### ANDROID-ROM-FOLDER-SAVES
+
+- Outcome: completed
+- Verified criteria: Android build 33 uses user-authorized local ROM-folder cartridge and state paths; existing private data were retained and differing destinations require an explicit choice. On the phone, the migrated saves matched, the selected folder survived the update, the user confirmed slots 1–3 and wrote slot 4, and the cartridge autosave modification time advanced.
+- Evidence: `docs/changes/2026-11-20-android-rom-folder-saves.json`; `android-rom-folder-native-final-tests-u4cau39c`, `android-rom-folder-build33-v9sz7y9i`, `android-rom-folder-build33-audit-4v8fpja0`, `android-rom-folder-build33-device-update-mfnax6s4`, `android-rom-folder-device-write-check-ile0jili`, `android-rom-folder-cartridge-autosave-check-0ni3ulbp`.
+- Limits: Android 11+ with all-files access and a local selectable folder are required; existing private copies are not synchronized. Concurrent external writers cannot be made fully atomic by a preimage check. Full gameplay was not validated.

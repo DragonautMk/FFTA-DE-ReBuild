@@ -110,7 +110,7 @@ pub(crate) fn atomic_write(path:&Path,bytes:&[u8],replace:bool)->Result<(),Strin
 // renameat2 publishes the completed file atomically without replacing a
 // concurrently created backup; if unsupported, fail rather than clobber it.
 #[cfg(any(target_os="android",target_os="linux"))]
-fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
+pub(crate) fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
     use std::{ffi::CString,os::unix::ffi::OsStrExt};
     let source=CString::new(source.as_os_str().as_bytes()).map_err(|_|std::io::Error::new(std::io::ErrorKind::InvalidInput,"Invalid backup path"))?;
     let destination=CString::new(destination.as_os_str().as_bytes()).map_err(|_|std::io::Error::new(std::io::ErrorKind::InvalidInput,"Invalid backup path"))?;
@@ -119,7 +119,7 @@ fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
 }
 
 #[cfg(not(any(target_os="android",target_os="linux")))]
-fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
+pub(crate) fn publish_noclobber(source:&Path,destination:&Path)->std::io::Result<()> {
     fs::hard_link(source,destination)
 }
 

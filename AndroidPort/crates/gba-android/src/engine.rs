@@ -28,6 +28,8 @@ pub struct Engine {
     pub frame_ns: u64,
     pub prepare_ms: u64,
     pub save_path: Option<PathBuf>,
+    pub saves_beside_rom: bool,
+    pub save_expected: Mutex<Option<String>>,
     pub cache_dir: Option<PathBuf>,
     pub cache_hit: bool,
     rom_cache_key: String,
@@ -49,7 +51,8 @@ impl Engine {
         Self { mouse,touch_enabled:false,ui_base:240.,ui_export_ns:0,ui_window:(240,160),world_rect:[0.,0.,240.,160.],machine: Box::new(Machine::new(rom)), code: None, extensions: Vec::new(), pending: None,
             missed: BTreeSet::new(), adaptive: cfg!(target_os="android"), pixels: Vec::new(),
             audio: Vec::with_capacity(4096), pcm: crate::audio::Audio::default(), native_blocks: 0,
-            fallback_steps: 0, frame_ns: 0, prepare_ms: 0, save_path: None, cache_dir: None, cache_hit: false,
+            fallback_steps: 0, frame_ns: 0, prepare_ms: 0, save_path: None, saves_beside_rom:false,
+            save_expected:Mutex::new(None),cache_dir: None, cache_hit: false,
             rom_cache_key, state_undo: None, state_history: Default::default() }
     }
     pub fn prepare(&mut self) -> Result<(), String> {
@@ -219,10 +222,41 @@ impl Engine {
     }
     pub fn save(&self) -> Result<(), String> {
         if let (Some(path), Some(data)) = (&self.save_path, self.machine.bus.save_data()) {
-            let temp = path.with_extension("sav.tmp");
-            std::fs::write(&temp, data).map_err(|e| e.to_string())?;
-            std::fs::rename(temp, path).map_err(|e| e.to_string())?;
+            if self.saves_beside_rom {
+                let mut expected=self.save_expected.lock().map_err(|_|"Save check mutex poisoned")?;
+                let current=Self::shared_save_digest(path)?;
+                if current!=*expected {return Err("The ROM-folder save changed outside this app; save refused".into());}
+                crate::save_backups::atomic_write(path,data,current.is_some())?;
+                *expected=Some(gba_core::ffta_rom::digest(data));
+            } else {
+                let temp = path.with_extension("sav.tmp");
+                std::fs::write(&temp, data).map_err(|e| e.to_string())?;
+                std::fs::rename(temp, path).map_err(|e| e.to_string())?;
+            }
         }
+        Ok(())
+    }
+    fn shared_save_digest(path:&std::path::Path)->Result<Option<String>,String> {
+        use std::io::Read;
+        let file=match std::fs::File::open(path) {
+            Ok(file)=>file,Err(e) if e.kind()==std::io::ErrorKind::NotFound=>return Ok(None),
+            Err(e)=>return Err(format!("Cannot check the ROM-folder save: {e}")),
+        };
+        let mut bytes=Vec::new();file.take(128*1024+1).read_to_end(&mut bytes).map_err(|e|e.to_string())?;
+        if bytes.len()>128*1024{return Err("ROM-folder save exceeds 128 KiB".into());}
+        Ok(Some(gba_core::ffta_rom::digest(&bytes)))
+    }
+    fn check_shared_save(&self)->Result<(),String> {
+        if self.saves_beside_rom {
+            let expected=self.save_expected.lock().map_err(|_|"Save check mutex poisoned")?;
+            if Self::shared_save_digest(self.save_path.as_deref().ok_or("No save path")?)?!=*expected {
+                return Err("The ROM-folder save changed outside this app; operation refused".into());
+            }
+        }
+        Ok(())
+    }
+    fn note_shared_save(&self,bytes:&[u8])->Result<(),String> {
+        if self.saves_beside_rom {*self.save_expected.lock().map_err(|_|"Save check mutex poisoned")?=Some(gba_core::ffta_rom::digest(bytes));}
         Ok(())
     }
     /// Reboot only after the current cartridge save has been published.
@@ -253,7 +287,9 @@ impl Engine {
         KEYS.store(0x3ff, Ordering::Relaxed);
     }
     fn state_slots(&self) -> Result<crate::save_states::Slots, String> {
-        crate::save_states::Slots::new(self.save_path.as_deref().ok_or("No save path is available")?, &self.rom_cache_key)
+        let path=self.save_path.as_deref().ok_or("No save path is available")?;
+        if self.saves_beside_rom {crate::save_states::Slots::beside_rom(path,&self.rom_cache_key)}
+        else {crate::save_states::Slots::new(path,&self.rom_cache_key)}
     }
     pub fn state_occupied(&self) -> Result<i32, String> { self.state_slots()?.occupied() }
     pub fn state_export(&self, slot: u8) -> Result<Vec<u8>, String> { self.state_slots()?.export(slot) }
@@ -290,17 +326,20 @@ impl Engine {
         self.backups()?.choices(size)
     }
     pub fn restore_backup(&mut self,id:&str)->Result<(),String> {
+        self.check_shared_save()?;
         let size=self.machine.bus.save_data().ok_or("This cartridge has no save memory")?.len();
         let backups=self.backups()?;
         let bytes=backups.read_choice(id,size)?;
         let mut fresh=Box::new(Machine::new(self.machine.bus.rom.clone()));
         fresh.bus.load_save_data(&bytes);
         backups.replace_save(&bytes).map_err(|e|format!("Cannot restore cartridge save: {e}"))?;
+        self.note_shared_save(&bytes)?;
         self.replace_machine(fresh);
         Ok(())
     }
     /// Validate and publish the cartridge before replacing the in-memory machine.
     pub fn import_cartridge(&mut self,bytes:&[u8],overwrite:bool)->Result<(),String> {
+        self.check_shared_save()?;
         let size=self.machine.bus.save_data().ok_or("This cartridge has no save memory")?.len();
         if bytes.len()!=size {return Err("Cartridge save has an incompatible size".into());}
         let mut fresh=Box::new(if self.machine.bus.real_bios {
@@ -308,6 +347,7 @@ impl Engine {
         } else {Machine::new(self.machine.bus.rom.clone())});
         fresh.bus.load_save_data(bytes);
         self.backups()?.import_save(bytes,size,overwrite)?;
+        self.note_shared_save(bytes)?;
         self.replace_machine(fresh);
         Ok(())
     }
@@ -352,6 +392,26 @@ mod tests {
         rom[..4].copy_from_slice(&0xeafffffeu32.to_le_bytes());
         rom[256..262].copy_from_slice(b"SRAM_V");
         Engine::new(rom)
+    }
+    #[test]
+    fn rom_folder_states_are_adjacent_and_external_save_changes_are_refused() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from)
+            .unwrap_or_else(std::env::temp_dir).join(format!("rom-folder-saves-{}",std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let mut engine=restart_test_engine();engine.save_path=Some(root.join("My Game.sav"));engine.saves_beside_rom=true;
+        let size=engine.machine.bus.save_data().unwrap().len();let first=vec![0x31;size];
+        engine.machine.bus.load_save_data(&first);engine.save().unwrap();
+        engine.state_save(3,false).unwrap();
+        assert!(root.join("My Game.slot-3.ffstate").is_file());
+        assert!(!root.join("SaveStates").exists());
+        engine.machine.bus.load_save_data(&vec![0x42;size]);engine.save().unwrap();
+        let external=vec![0x53;size];std::fs::write(root.join("My Game.sav"),&external).unwrap();
+        assert!(engine.save().unwrap_err().contains("changed outside"));
+        assert_eq!(std::fs::read(root.join("My Game.sav")).unwrap(),external);
+        assert!(engine.import_cartridge(&first,true).is_err());
+        assert_eq!(std::fs::read(root.join("My Game.sav")).unwrap(),external);
+        std::fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn cartridge_import_requires_confirmation_and_preserves_previous_save() {

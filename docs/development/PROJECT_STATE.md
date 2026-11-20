@@ -28,7 +28,9 @@ and normal enablement retain their existing acceptance gates.
   so it can coexist with the differently signed 1.1.2 app. Its ROM-selection
   screen imports user-selected cartridge saves and save states, with explicit
   replacement confirmation and recovery copies; Android does not expose the
-  older app's private files directly to the picker.
+  older app's private files directly to the picker. Optionally, on Android 11+
+  and with all-files access, the core uses saves beside a verified local ROM;
+  compiled native objects remain in private storage.
 
 - The [English-first policy](ENGLISH_FIRST.md) applies to maintained documentation,
   comments and default product/tooling text in both source trees. Optional locale

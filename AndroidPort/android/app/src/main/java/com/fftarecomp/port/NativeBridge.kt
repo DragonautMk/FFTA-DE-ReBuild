@@ -62,7 +62,7 @@ object NativeBridge {
         private set
     private var hashes = "Not loaded"
 
-    external fun gbaLoadRom(bytes: ByteArray, savePath: String): Int
+    external fun gbaLoadRom(bytes: ByteArray, savePath: String, cachePath: String, savesBesideRom: Boolean): Int
     external fun gbaScreenLut(profile:Int, darken:Float, output:ByteBuffer):Int
     external fun gbaPrepare(): Int
     external fun gbaFrame(keys: Int, extraX: Int, extraY: Int, frames: Int,
@@ -82,6 +82,7 @@ object NativeBridge {
     external fun gbaParallelZoom(enabled:Boolean)
     external fun gbaCamera():Long
     external fun gbaSave(): Int
+    external fun gbaPublishSaveCopy(source:String, destination:String):Int
     external fun gbaImportCartridge(bytes: ByteArray, overwrite: Boolean): Int
     external fun gbaImportState(slot: Int, bytes: ByteArray, overwrite: Boolean): Int
     external fun gbaExportState(slot: Int): ByteArray?
@@ -103,7 +104,7 @@ object NativeBridge {
         loadError = failure
     }
 
-    fun load(file: File, save: File): Boolean {
+    fun load(file: File, save: File, savesBesideRom:Boolean=false): Boolean {
         check(loadError == null) { loadError ?: "Native core unavailable" }
         romVerified = false
         compiled = false
@@ -121,7 +122,8 @@ object NativeBridge {
         require(usa || europe) {
             "ROM mismatch. Select an unmodified FFTA USA or Europe ROM."
         }
-        check(gbaLoadRom(bytes, save.absolutePath) == 1) { gbaStatus() }
+        val cache=File(checkNotNull(file.parentFile),"compiled")
+        check(gbaLoadRom(bytes, save.absolutePath, cache.absolutePath, savesBesideRom) == 1) { gbaStatus() }
         romVerified = true
         return true
     }

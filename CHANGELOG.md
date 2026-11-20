@@ -545,6 +545,33 @@ Documentation: [README.md](AndroidPort/android/README.md), [v1.2.0.md](docs/rele
 
 [Change record](docs/changes/2026-11-20-android-startup-save-import.json)
 
+## 2026-11-20 — Store Android saves beside the selected ROM
+
+Type: added. Platforms: Android.
+
+**Changes**
+
+- Allow the user to select the local folder containing the verified ROM and grant all-files access; store cartridge saves and nine state slots beside the ROM with ROM-specific names.
+- Copy existing cartridge saves, states and backups through verified no-clobber publication while retaining originals; require an explicit choice when destination files differ and detect externally changed cartridge saves.
+- Keep compiled native objects in app-private storage and surface save failures; retain the existing private-save option and advance the signed preview to build 33.
+
+**Validation**
+
+- The Android native core passed 46 tests with three fixture-dependent tests ignored, including adjacent state paths, external-change refusal and atomic no-replace publication (android-rom-folder-native-final-tests-u4cau39c).
+- Build 33 and 38 Kotlin tests passed; APK version, all-files permission, signer identity and private-data exclusion passed (android-rom-folder-build33-v9sz7y9i; android-rom-folder-build33-audit-4v8fpja0).
+- On a moto g34, the user selected the ROM folder and the cartridge save and three states matched their original private copies; build 33 installation preserved six folder files, private saves, ROM identities and folder preference (android-rom-folder-build33-device-update-mfnax6s4).
+- After updating, the user confirmed the selected folder and existing slots, then created slot 4. Its state file appeared beside the ROM and slots 1–3 matched the private pre-update backup (android-rom-folder-device-write-check-ile0jili).
+- On the phone, the active cartridge-save file modification time advanced while the game was running (android-rom-folder-cartridge-autosave-check-0ni3ulbp).
+
+**Limitations**
+
+- Direct folder access requires Android 11 or newer, a local storage provider and the user-granted broad all-files permission; Android blocks selection of the Download root and certain protected folders.
+- Original private files remain as snapshots, not a live synchronization. Do not concurrently edit the same shared save from another app; detected changes are refused, but filesystem checks cannot provide an interprocess compare-and-swap.
+
+Documentation: [README.md](AndroidPort/android/README.md), [v1.2.0.md](docs/releases/v1.2.0.md).
+
+[Change record](docs/changes/2026-11-20-android-rom-folder-saves.json)
+
 ## 2026-11-20 — Preserve saves when changing the Android preview signing key
 
 Type: changed. Platforms: Android.

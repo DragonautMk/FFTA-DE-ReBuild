@@ -1,9 +1,14 @@
 package com.fftarecomp.port
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.hardware.input.InputManager
+import android.provider.Settings
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -264,7 +269,14 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
     var error by remember { mutableStateOf<String?>(NativeBridge.loadError) }
     var status by remember { mutableStateOf("Select your unmodified FFTA USA or Europe ROM to begin.") }
     val rom=remember { File(context.filesDir,"ffta.gba") }
-    val save=remember { File(context.filesDir,if(GameBenchmark.enabled(context))"benchmark.sav" else "ffta.sav") }
+    val locations=remember { RomFolderLocation(context) }
+    val benchmark=remember { GameBenchmark.enabled(context) }
+    var folderSelected by remember {mutableStateOf(locations.selected && !benchmark)}
+    var activeSave by remember {mutableStateOf(File(context.filesDir,if(benchmark)"benchmark.sav" else "ffta.sav"))}
+    var pendingFolder by rememberSaveable {mutableStateOf<String?>(null)}
+    var folderConflicts by remember {mutableStateOf<List<String>>(emptyList())}
+    fun saveFor(file:File):Pair<File,Boolean> = if(benchmark) File(context.filesDir,"benchmark.sav") to false
+        else locations.layout(file).save to locations.selected
     val startup=remember{StartupState(context)}
     val initialRoute=remember {
         val start=System.nanoTime()
@@ -297,11 +309,14 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
         if(loading) {
             busy=true
             try {
-                withContext(Dispatchers.Default){
-                    if(!NativeBridge.romVerified)NativeBridge.load(rom,save)
+                val loadedSave=withContext(Dispatchers.Default){
+                    val (save,direct)=saveFor(rom)
+                    if(!NativeBridge.romVerified)NativeBridge.load(rom,save,direct)
                     if(!NativeBridge.compiled)NativeBridge.prepare()
                     startup.setReady(true)
+                    save
                 }
+                activeSave=loadedSave
                 playing=true
             }catch(failure:Throwable){
                 withContext(Dispatchers.IO){runCatching{startup.setReady(false)}}
@@ -311,7 +326,12 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
         } else if(available && NativeBridge.loadError==null) {
             busy=true
             try {
-                withContext(Dispatchers.IO) {if(!NativeBridge.romVerified)NativeBridge.load(rom,save)}
+                val loadedSave=withContext(Dispatchers.IO) {
+                    val (save,direct)=saveFor(rom)
+                    if(!NativeBridge.romVerified)NativeBridge.load(rom,save,direct)
+                    save
+                }
+                activeSave=loadedSave
                 status="ROM verified. Ready to play or import saves."
             } catch(failure:Throwable) {error=failure.message}
             finally {busy=false}
@@ -324,7 +344,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
             busy=true;error=null
             scope.launch {
                 try {
-                    withContext(Dispatchers.IO) {
+                    val loadedSave=withContext(Dispatchers.IO) {
                         val temp=File(context.filesDir,"import.gba")
                         try {
                             context.contentResolver.openInputStream(uri)?.use { source ->
@@ -334,13 +354,15 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                                         total+=n;require(total<=32L*1024*1024){"File is larger than a GBA ROM"};target.write(block,0,n) }
                                 }
                             } ?: throw IllegalStateException("Cannot read the selected document")
-                            if(NativeBridge.romVerified)NativeBridge.gbaSave()
-                            NativeBridge.load(temp,save)
+                            if(NativeBridge.romVerified)check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
+                            val (save,direct)=saveFor(temp)
+                            NativeBridge.load(temp,save,direct)
                             temp.copyTo(rom,overwrite=true)
-                            mustSelectRom=false
                             startup.setReady(false)
+                            save
                         } finally { temp.delete() }
                     }
+                    activeSave=loadedSave;mustSelectRom=false
                     available=true;status="ROM verified. Ready to compile on this device."
                 } catch(failure: Throwable) { error=failure.message }
                 finally { busy=false }
@@ -372,6 +394,39 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 }.onFailure {error=it.message ?: it.toString()}
             }
         }
+    }
+    fun selectFolder(uri:Uri,keepExisting:Boolean=false) {
+        busy=true;error=null
+        scope.launch {
+            val result=runCatching {
+                withContext(Dispatchers.IO) {
+                    check(rom.isFile){"Select a ROM first"}
+                    if(NativeBridge.romVerified)check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
+                    val source=locations.sourceLayout(rom)
+                    val (destination,copied)=locations.select(uri,rom,source,keepExisting)
+                    NativeBridge.load(rom,destination.save,true)
+                    destination to copied
+                }
+            }
+            busy=false
+            result.onSuccess {(destination,copied)->
+                folderSelected=true;activeSave=destination.save;pendingFolder=null
+                status="ROM folder selected. $copied save file(s) copied; previous files were kept."
+            }
+                .onFailure {failure ->
+                    folderSelected=locations.selected
+                    if(failure is SaveFolderConflict) {
+                        pendingFolder=uri.toString();folderConflicts=failure.names;importPage="folder_conflict"
+                    } else error=failure.message ?: failure.toString()
+                }
+        }
+    }
+    val folderPicker=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if(uri!=null)selectFolder(uri)
+    }
+    val fileAccessSettings=rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(Build.VERSION.SDK_INT>=30 && Environment.isExternalStorageManager())folderPicker.launch(null)
+        else error="All-files access is needed for direct saves in the ROM folder."
     }
     LaunchedEffect(busy) {
         while(busy) {
@@ -410,6 +465,24 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 Text("Select your own unmodified FFTA USA or Europe ROM. The game is compiled locally; your ROM stays on this device.")
                 Button(onClick={picker.launch(arrayOf("*/*"))},enabled=!busy&&NativeBridge.loadError==null,
                     modifier=Modifier.fillMaxWidth()) { Text(if(available)"Change ROM" else "Select ROM") }
+                OutlinedButton(onClick={
+                    if(Build.VERSION.SDK_INT<30)error="ROM-folder saves require Android 11 or newer."
+                    else if(Environment.isExternalStorageManager())folderPicker.launch(null)
+                    else {
+                        val intent=Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,Uri.parse("package:${context.packageName}"))
+                        runCatching{fileAccessSettings.launch(intent)}.recoverCatching {
+                            fileAccessSettings.launch(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                        }.onFailure {
+                            error="Cannot open Android's all-files access settings."
+                        }
+                    }
+                },enabled=available&&!busy&&NativeBridge.loadError==null&&!benchmark,
+                    modifier=Modifier.fillMaxWidth()){Text(if(folderSelected)"Change ROM save folder" else "Use ROM folder for saves")}
+                if(!folderSelected && !benchmark)Text("Android 11 or newer: select the local ROM folder and allow all-files access for direct saves.",fontSize=12.sp)
+                if(folderSelected) {
+                    Text("Save folder: ${activeSave.parent ?: "unavailable"}",fontSize=12.sp)
+                    TextButton(onClick={importPage="private_saves"},enabled=!busy){Text("Use original private saves")}
+                }
                 OutlinedButton(onClick={importPage="kind"},
                     enabled=available&&!mustSelectRom&&!busy&&NativeBridge.romVerified&&NativeBridge.loadError==null,
                     modifier=Modifier.fillMaxWidth()) {Text("Import previous saves")}
@@ -420,11 +493,14 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                     busy=true;loading=true;error=null
                     scope.launch {
                         try {
-                            withContext(Dispatchers.Default) {
-                                if(!NativeBridge.romVerified)NativeBridge.load(rom,save)
+                            val loadedSave=withContext(Dispatchers.Default) {
+                                val (save,direct)=saveFor(rom)
+                                if(!NativeBridge.romVerified)NativeBridge.load(rom,save,direct)
                                 if(!NativeBridge.compiled)NativeBridge.prepare()
                                 startup.setReady(true)
+                                save
                             }
+                            activeSave=loadedSave
                             playing=true
                             switchingRom=false
                         } catch(failure: Throwable) {
@@ -446,7 +522,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                         Text("Use a save for the selected ROM. Cartridge saves do not identify their game; save states are checked against the ROM.",fontSize=13.sp)
                         OutlinedButton(onClick={
                             importKind="cartridge";importOverwrite=false
-                            if(save.isFile)importPage="confirm_cartridge" else {importPage=null;previousSavePicker.launch(arrayOf("*/*"))}
+                            if(activeSave.isFile)importPage="confirm_cartridge" else {importPage=null;previousSavePicker.launch(arrayOf("*/*"))}
                         },modifier=Modifier.fillMaxWidth()){Text("Cartridge save (.sav)")}
                         OutlinedButton(onClick={
                             val mask=NativeBridge.gbaStateSlots()
@@ -475,6 +551,27 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                     text={Text("The current state will be backed up on this device before replacement. Choose the matching save-state file next.")},
                     confirmButton={TextButton(onClick={importOverwrite=true;importPage=null;previousSavePicker.launch(arrayOf("*/*"))}){Text("Replace and choose file")}},
                     dismissButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
+                "folder_conflict" -> AlertDialog(onDismissRequest={importPage=null;pendingFolder=null},title={Text("Different saves already exist")},
+                    text={Text("The selected folder contains different files: ${folderConflicts.joinToString()}. Use those files? Current saves remain in their original location; missing files will be copied.")},
+                    confirmButton={TextButton(onClick={val uri=pendingFolder;importPage=null;if(uri!=null)selectFolder(Uri.parse(uri),true)}){Text("Use folder saves")}},
+                    dismissButton={TextButton(onClick={importPage=null;pendingFolder=null}){Text("Cancel")}})
+                "private_saves" -> AlertDialog(onDismissRequest={importPage=null},title={Text("Use original private saves?")},
+                    text={Text("This switches to the app's earlier private saves. They may contain older progress; your ROM-folder saves will remain in place.")},
+                    confirmButton={TextButton(onClick={
+                        importPage=null;busy=true;error=null
+                        scope.launch {
+                            val result=runCatching {withContext(Dispatchers.IO) {
+                                if(NativeBridge.romVerified)check(NativeBridge.gbaSave()==1){NativeBridge.gbaStatus()}
+                                check(locations.usePrivate()){ "Cannot change the save location" }
+                                val privateSave=locations.privateLayout(rom).save
+                                NativeBridge.load(rom,privateSave,false)
+                                privateSave
+                            }}
+                            busy=false
+                            folderSelected=locations.selected
+                            result.onSuccess{activeSave=it;status="Using the app's original private saves."}.onFailure{error=it.message ?: it.toString()}
+                        }
+                    }){Text("Use private saves")}},dismissButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
             }
         }
     }

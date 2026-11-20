@@ -73,6 +73,15 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Incomplete tasks and open criteria
 
+### ANDROID-ROM-FOLDER-RELEASE
+
+- State: active
+- Outcome: partial
+- Selection: refresh the 1.2 draft with the completed Android ROM-folder save feature.
+- Verified: build 33, 46 native/38 Kotlin tests, device migration, slot write and cartridge autosave passed; user confirmed the folder and existing slots.
+- Missing: commit, synchronize main/decomp and verify the unpublished draft assets.
+- Resume: review staged paths and build-source identity before updating the draft.
+
 ### ANDROID-AUTO-MIGRATION
 
 - State: waiting
@@ -175,9 +184,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ANDROID-AUTO-MIGRATION.
-- Last verified result: build 31 menu, migrated states and approved cartridge transfer verified; draft 452599943 contains 12 matching assets.
-- Remaining work: silent app-only access, Windows ADB and full gameplay remain unverified.
-- Errors or blockers: Android blocks direct access to the old app's private files.
-- Next action: revisit automatic transfer only when a supported channel is available.
-- References: `docs/changes/2026-11-20-android-startup-save-import.json`; `ANDROID-STARTUP-IMPORT-RELEASE-DRAFT`.
+- Task: ANDROID-ROM-FOLDER-RELEASE.
+- Last verified result: build 33 uses the selected ROM folder; device state write and cartridge autosave passed.
+- Remaining work: synchronize branches and refresh the unpublished 1.2 draft.
+- Errors or blockers: no blocker; full gameplay and native Windows remain unverified.
+- Next action: commit reviewed changes and verify draft assets.
+- References: `docs/changes/2026-11-20-android-rom-folder-saves.json`; `ANDROID-ROM-FOLDER-SAVES`.
