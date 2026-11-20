@@ -357,6 +357,26 @@ Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md)
 
 [Change record](docs/changes/2026-11-20-map-debug-tools-integration-evidence.json)
 
+## 2026-11-20 — Finalize the 1.2.0 release notes
+
+Type: docs. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Finalize the 1.2.0 release notes, downloads and Android migration guidance, and distinguish the desktop workspace component version from the distribution version.
+
+**Validation**
+
+- Verified the prior Windows, Linux and Android build and package receipts, including the Android preview signature and device save checks.
+
+**Limitations**
+
+- Native Windows, Windows ADB and complete Android gameplay remain unverified. The separately signed Android package is a debuggable preview.
+
+Documentation: [v1.2.0.md](docs/releases/v1.2.0.md).
+
+[Change record](docs/changes/2026-11-20-finalize-1-2-release-notes.json)
+
 ## 2026-11-20 — Consume six additional European Red Spring LZ77 streams
 
 Type: changed. Platforms: Windows via Wine; European ROM.

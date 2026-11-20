@@ -73,6 +73,16 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Incomplete tasks and open criteria
 
+### RELEASE-1-2-PUBLICATION
+
+- State: active
+- Outcome: partial
+- Selection: user explicitly requested publication of release 1.2.
+- Verified: draft 452599943 has 12 verified assets; Android build 33/device save checks pass. `ANDROID-ROM-FOLDER-RELEASE`.
+- Missing: check current draft, assets/tag/branches; remove draft-only language; publish and verify release/tag/assets, then record outcome.
+- Risks/stop: exclude personal data and secrets; retain published limitations. Stop on inconsistent assets, tag or failed verification. Native Windows/full gameplay remain outside this unit.
+- Resume: inspect remote and local evidence; prepare release notes before publication.
+
 ### ANDROID-AUTO-MIGRATION
 
 - State: waiting
@@ -175,9 +185,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ANDROID-ROM-FOLDER-SAVES.
-- Last verified result: build 33 writes cartridge saves and states beside the selected ROM; user confirmed the folder and slots. Draft 452599943 has 12 verified assets.
-- Remaining work: full gameplay and native Windows remain unverified.
-- Errors or blockers: direct folder access requires Android 11+ and user-granted all-files access.
-- Next action: no further work in this completed selection.
-- References: `docs/changes/2026-11-20-android-rom-folder-saves.json`; `ANDROID-ROM-FOLDER-RELEASE`.
+- Task: RELEASE-1-2-PUBLICATION.
+- Last verified result: 1.2 draft and 12 assets prepared; Android build 33/device saves pass.
+- Remaining work: finalize notes, publish, verify tag and assets, record outcome.
+- Errors or blockers: native Windows and full gameplay are unverified.
+- Next action: inspect current release, tag and build evidence.
+- References: `docs/releases/v1.2.0.md`; `ANDROID-ROM-FOLDER-RELEASE`.

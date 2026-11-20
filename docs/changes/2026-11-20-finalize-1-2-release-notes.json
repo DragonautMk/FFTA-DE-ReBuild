@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "finalize-1-2-release-notes",
+  "title": "Finalize the 1.2.0 release notes",
+  "kind": "docs",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Finalize the 1.2.0 release notes, downloads and Android migration guidance, and distinguish the desktop workspace component version from the distribution version."
+  ],
+  "validation": [
+    "Verified the prior Windows, Linux and Android build and package receipts, including the Android preview signature and device save checks."
+  ],
+  "limitations": [
+    "Native Windows, Windows ADB and complete Android gameplay remain unverified. The separately signed Android package is a debuggable preview."
+  ],
+  "files": [
+    "docs/releases/v1.2.0.md"
+  ],
+  "references": [
+    "docs/releases/v1.2.0.md"
+  ]
+}
