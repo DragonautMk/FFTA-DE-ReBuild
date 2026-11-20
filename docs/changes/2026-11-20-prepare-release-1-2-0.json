@@ -18,7 +18,8 @@
     "Linux Docker build passed 979 tests; the tarball passed integrity, private Data, x86-64 ELF and executable-mode checks (release-120-linux-m47i0oey).",
     "The packaged Linux command-line executable started successfully (release-120-linux-smoke-_lj__3eo).",
     "Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).",
-    "Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53)."
+    "Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53).",
+    "GitHub main and decomp were synchronized at 78aa6510; the main project-memory CI passed and Pages served the treemap from that commit."
   ],
   "limitations": [
     "The Android signing key used for published 1.1.2 has not yet been recovered; the new APK cannot be installed as an in-place update over it.",

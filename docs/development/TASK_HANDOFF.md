@@ -77,18 +77,10 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: waiting
 - Outcome: partial
-- Selection: user requests treemap, three builds, release 1.2, updated main and changelog.
-- Verified: snapshot `target/release-1.2.0-source-c7ddiima/source` passed audit; Windows `_njed1p3` (980 tests), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), Windows smoke `jpi6mapg` and Linux smoke `_lj__3eo` PASS. Units use `release-120-<platform>-` prefix.
-- Missing: old Android signer (`release-120-android-identity-r4m7wl53`), main and public map. Auto-review rejected direct push of draft commit `304ddd80` due 48 concurrent-scope files; no bypass. Drafts: `dist/release-1.2.0-draft/`.
-- Resume: await user answers on signing-key backup and release scope. Sol `/root/sol_android_signing` (requested `gpt-6.1-sol` xhigh; effective settings unknown) found no applicable key or Timeshift backup. Primary model/effort unconfirmed.
-
-### ROM-COVERAGE-TREEMAP
-
-- State: waiting
-- Outcome: partial
-- Verified: e170 family treemap, filters, details, offset link and narrow layout pass; JSON unchanged. `docs/changes/2026-11-20-add-rom-coverage-family-treemap.json`.
-- Missing: publish on decomp and verify public page; per-function matching is separate.
-- Resume: coordinate commit with release preparation; do not rerun ROM extraction.
+- Selection: user approved the 48-file release scope and requested main update.
+- Verified: local/GitHub main and decomp at `78aa6510`; main project-memory CI passes, public treemap matches decomp. Build inputs match snapshot `target/release-1.2.0-source-c7ddiima/source`. Windows `_njed1p3` (980 tests), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), Windows smoke `jpi6mapg` and Linux smoke `_lj__3eo` PASS; units use `release-120-<platform>-` prefix.
+- Missing: Android signer differs from 1.1.2 (`release-120-android-identity-r4m7wl53`); public release not requested.
+- Resume: await the previous Android signing-key backup; verify its certificate before re-signing the candidate. Sol `/root/sol_android_signing` (requested `gpt-6.1-sol` xhigh; effective settings unknown) found no matching key or Timeshift backup. Primary model/effort unconfirmed.
 
 ### ANDROID-MENU-PARITY
 

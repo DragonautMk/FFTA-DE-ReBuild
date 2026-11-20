@@ -231,6 +231,7 @@ Type: changed. Platforms: Android, Linux, Windows.
 - The packaged Linux command-line executable started successfully (release-120-linux-smoke-_lj__3eo).
 - Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).
 - Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53).
+- GitHub main and decomp were synchronized at 78aa6510; the main project-memory CI passed and Pages served the treemap from that commit.
 
 **Limitations**
 
@@ -529,11 +530,12 @@ Type: added. Platforms: Web.
 - Chrome rendered all 113 families at a 688-pixel viewport without horizontal overflow; desktop and narrow filtered views rendered.
 - Chrome verified combined search and evidence filters, empty results, selected family details and navigation to the original offset map.
 - Normalized rectangle areas matched the existing family interval unions within 0.0005 percent relative error; the embedded report matched coverage.json.
+- GitHub Pages built decomp commit 78aa6510; the public treemap returned HTTP 200 and its HTML matched the committed report.
 
 **Limitations**
 
 - Families may overlap, and bounded ordinary-use evidence does not establish complete use or function decompilation. The snapshot remains e170-d169 from 2026-11-18.
-- GitHub Pages displays the committed decomp branch; the new local presentation requires publication to appear on the public site.
+- GitHub Pages displays the committed decomp branch; future report updates require local regeneration and a push.
 
 Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md).
 

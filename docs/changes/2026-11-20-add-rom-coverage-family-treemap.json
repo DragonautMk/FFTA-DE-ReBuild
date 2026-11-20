@@ -14,11 +14,12 @@
   "validation": [
     "Chrome rendered all 113 families at a 688-pixel viewport without horizontal overflow; desktop and narrow filtered views rendered.",
     "Chrome verified combined search and evidence filters, empty results, selected family details and navigation to the original offset map.",
-    "Normalized rectangle areas matched the existing family interval unions within 0.0005 percent relative error; the embedded report matched coverage.json."
+    "Normalized rectangle areas matched the existing family interval unions within 0.0005 percent relative error; the embedded report matched coverage.json.",
+    "GitHub Pages built decomp commit 78aa6510; the public treemap returned HTTP 200 and its HTML matched the committed report."
   ],
   "limitations": [
     "Families may overlap, and bounded ordinary-use evidence does not establish complete use or function decompilation. The snapshot remains e170-d169 from 2026-11-18.",
-    "GitHub Pages displays the committed decomp branch; the new local presentation requires publication to appear on the public site."
+    "GitHub Pages displays the committed decomp branch; future report updates require local regeneration and a push."
   ],
   "files": [
     "scripts/rom_coverage.html",

@@ -24445,3 +24445,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: EUR E183-d182 extends the observed tilemap resource with two authenticated row-major halfword rectangles (88 bytes, including 86 previously unowned in the E172 sample) and preserves the prior tilemap and 119 other resources. Wine verifies publication, coherent-edit rejection, poisoned mirrors and boundaries, and two original-interpreter/separately compiled width-reader prefixes with equal full state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with both rectangle backings altered; each rectangle has positive use. Wine production CLI creates, reuses and verifies 121 matching files.
 - Evidence: source `e183-rect-source-n257xucg`; Wine trace `e183-source-trace-wine-re5n0s9w`; Wine publication/reader `e183-rect-wine-rxrkgl9k`; scene `e183-rect-scene-wine-qz9v5fto`; CLI `e183-rect-cli-wine-grtrq8pm`. Wine servers drained.
 - Limits: The trace used interpreter fallback; separately compiled coverage stops before the original indirect copy. The scene log includes a D-Bus assertion, but the test continued and passed. The pointer cells, other rectangles, consumers and ROM independence remain open; 3,517 E172-sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### ROM-COVERAGE-TREEMAP
+
+- Outcome: completed
+- Verified criteria: the searchable proportional family treemap and offset navigation passed browser checks; GitHub Pages serves the report from decomp 78aa6510, with HTTP 200 and HTML matching the committed file.
+- Evidence: `docs/changes/2026-11-20-add-rom-coverage-family-treemap.json`; `docs/development/rom-coverage/index.html`.
+- Limits: the EUR snapshot remains e170-d169 from 2026-11-18; data families and bounded evidence are not function-matching or decompilation percentages.
