@@ -831,3 +831,32 @@ passed (`e145-audio-callback-dis-wine-1b9xztet`).
 
 Linux, USA and native Windows remain pending; no performance measurements were
 made.
+
+## E187 Red Spring timed sound schedules
+
+EUR E187-d186 extends `audio.m4a-directory` with two original timed sound
+schedules: two eight-byte rows at `3a4da8` and five at `3a4dc8`, together with
+the literal pointers at `10962c` and `109720`. The guest still schedules the
+rows and handles their channel and sound flags. The resource keeps the unused
+byte and both original sound words, and validates each represented nonzero
+sound ID against the existing directory. The separately rooted intervening
+rows and the compact-record pointer at `109628` remain outside this owner.
+
+Source `e187-sound-source-dybrm98g` authenticates 64 source bytes, including
+57 bytes sampled as unowned in E172. Wine trace
+`e187-tables-trace-wine-t7gxddev` observes both tables at `080e3688` through
+interpreter fallback. Wine `e187-sound-wine-63mjpshl` preserves the earlier
+audio fields and the other 119 resources, rejects coherent file/hash edits,
+checks altered backing bytes and mirrored/mixed boundaries, and compares 21
+original-interpreter and separately compiled reader prefixes with equal full
+state and guest clock.
+
+Wine `e187-sound-scene-wine-vrwrh7f0` compares the recorded 600-frame action
+with all 64 selected backing bytes altered in the managed machine. Full state,
+guest clock, central/wide video, OAM, dispatch and audio match every frame;
+both tables and both pointers are read from the extracted resource. Wine
+`e187-sound-cli-wine-2xep4wwf` creates, reuses and verifies 121 files matching
+the tested generation. Other schedules and consumers, Linux, USA and native
+Windows remain open. Historical audio-directory fixtures are revision-pinned
+and need adaptation before being reused. No performance measurements were
+performed.

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-iwram-obj-callback-words",
+  "title": "Migrate observed IWRAM OBJ callback words",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated static OBJ resource with five observed Thumb callback words into the guest-copied IWRAM code, preserving live code, guest dispatch and original pointer bits.",
+    "The 20 reconstructed source bytes were all observed unowned in the E172 sample; the previous OBJ fields and 119 other resources are preserved."
+  ],
+  "validation": [
+    "Source e188-control-source-rm56pdw9; Wine original-reader traces e188-control-trace-wine-sr60q_xk and e188-control-tail-trace-wine-fo65p2xu; publication, coherent-edit rejection, poisoned mirrors, mixed boundaries and five interpreter/native branch entries e188-control-wine-ryj41yi9.",
+    "Wine e188-control-scene-wine-ch94duvy matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 20 callback backing bytes altered; all five words are used. Wine CLI e188-control-cli-wine-3z2jda18 creates, reuses and verifies 121 matching files."
+  ],
+  "limitations": [
+    "Other callback words, consumers and live IWRAM code paths, Linux, USA and native Windows remain open. Historical OBJ-list fixtures need E188 adaptation. No performance measurements were performed.",
+    "The scene reader traces used interpreter fallback; separately compiled tests cover the selected load-and-branch entries only. The E172 sample still has 3,357 unowned observed bytes outside accepted increments."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/iwram_obj_callbacks_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

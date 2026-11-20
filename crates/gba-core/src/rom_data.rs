@@ -66,6 +66,7 @@ pub mod constructor_template64;
 pub mod observed_tilemap;
 pub mod observed_tilemap_descriptor;
 pub mod observed_tilemap_row;
+pub mod dma_register_directories;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -131,8 +132,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 183;
-pub const DECODER_REV: u32 = 182;
+pub const EXTRACTOR_REV: u32 = 189;
+pub const DECODER_REV: u32 = 188;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -199,7 +200,7 @@ pub const ITEM_EFFECT_PARAMETERS_FORMAT: &str = "item-effect-parameters-v1-json"
 pub const MAX_ITEM_EFFECT_PARAMETERS_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const AUDIO_DIRECTORY_ID: &str = "audio.m4a-directory";
 pub const AUDIO_DIRECTORY_FILE: &str = "audio-directory.json";
-pub const AUDIO_DIRECTORY_FORMAT: &str = "audio-directory-v1-json";
+pub const AUDIO_DIRECTORY_FORMAT: &str = "audio-directory-v2-json";
 pub const MAX_AUDIO_DIRECTORY_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const AUDIO_TONES_ID: &str = "audio.m4a-tones";
 pub const AUDIO_TONES_FILE: &str = "audio-tones.json";
@@ -387,7 +388,7 @@ pub const UI_CONTEXT_TEMPLATES_FORMAT: &str = "ui-context-templates-v1-json";
 pub const MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const COMPACT_OBJ_CATALOG_ID: &str = "graphics.conditional-compact-obj-catalog";
 pub const COMPACT_OBJ_CATALOG_FILE: &str = "compact-obj-catalog.json";
-pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v11-json";
+pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v12-json";
 pub const MAX_COMPACT_OBJ_CATALOG_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const CONDITIONAL_ITEM_PARAMETERS_ID: &str = "gameplay.conditional-item-parameters";
 pub const CONDITIONAL_ITEM_PARAMETERS_FILE: &str = "conditional-item-parameters.json";
@@ -463,7 +464,7 @@ pub const CONSTRUCTOR_TEMPLATE64_FORMAT: &str = "constructor-template64-v1-json"
 pub const MAX_CONSTRUCTOR_TEMPLATE64_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_ID: &str = "graphics.observed-tilemap";
 pub const OBSERVED_TILEMAP_FILE: &str = "observed-tilemap.json";
-pub const OBSERVED_TILEMAP_FORMAT: &str = "observed-tilemap-v2-json";
+pub const OBSERVED_TILEMAP_FORMAT: &str = "observed-tilemap-v3-json";
 pub const MAX_OBSERVED_TILEMAP_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_DESCRIPTOR_ID: &str = "graphics.observed-tilemap-descriptor";
 pub const OBSERVED_TILEMAP_DESCRIPTOR_FILE: &str = "observed-tilemap-descriptor.json";
@@ -471,8 +472,12 @@ pub const OBSERVED_TILEMAP_DESCRIPTOR_FORMAT: &str = "observed-tilemap-descripto
 pub const MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_ROW_ID: &str = "graphics.observed-tilemap-row";
 pub const OBSERVED_TILEMAP_ROW_FILE: &str = "observed-tilemap-row.json";
-pub const OBSERVED_TILEMAP_ROW_FORMAT: &str = "observed-tilemap-row-v3-json";
+pub const OBSERVED_TILEMAP_ROW_FORMAT: &str = "observed-tilemap-row-v4-json";
 pub const MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES: u64 = 1024 * 1024;
+pub const DMA_REGISTER_DIRECTORIES_ID: &str = "engine.dma-register-directories";
+pub const DMA_REGISTER_DIRECTORIES_FILE: &str = "dma-register-directories.json";
+pub const DMA_REGISTER_DIRECTORIES_FORMAT: &str = "dma-register-directories-v1-json";
+pub const MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -567,7 +572,7 @@ pub const OBJ_ANIMATION_BANKS_FORMAT: &str = "obj-animation-banks-v1-json";
 pub const MAX_OBJ_ANIMATION_BANKS_FILE_BYTES: u64 = 4 * 1024 * 1024;
 pub const OBJ_STATIC_LISTS_ID: &str = "graphics.obj-static-lists";
 pub const OBJ_STATIC_LISTS_FILE: &str = "obj-static-lists.json";
-pub const OBJ_STATIC_LISTS_FORMAT: &str = "obj-static-lists-v1-json";
+pub const OBJ_STATIC_LISTS_FORMAT: &str = "obj-static-lists-v2-json";
 pub const MAX_OBJ_STATIC_LISTS_FILE_BYTES: u64 = 4 * 1024 * 1024;
 pub const OBJ_DIMENSIONS_ID: &str = "graphics.obj-dimensions";
 pub const OBJ_DIMENSIONS_FILE: &str = "obj-dimensions.toml";
@@ -831,6 +836,7 @@ pub struct Extraction {
     pub observed_tilemap: Option<observed_tilemap::Catalog>,
     pub observed_tilemap_descriptor: Option<observed_tilemap_descriptor::Catalog>,
     pub observed_tilemap_row: Option<observed_tilemap_row::Catalog>,
+    pub dma_register_directories: Option<dma_register_directories::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -957,6 +963,7 @@ pub struct BaseFiles<'a> {
     pub observed_tilemap: Option<(&'a observed_tilemap::ObservedTilemap, &'a [u8])>,
     pub observed_tilemap_descriptor: Option<(&'a observed_tilemap_descriptor::ObservedTilemapDescriptor, &'a [u8])>,
     pub observed_tilemap_row: Option<(&'a observed_tilemap_row::ObservedTilemapRow, &'a [u8])>,
+    pub dma_register_directories: Option<(&'a dma_register_directories::DmaRegisterDirectories, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1776,9 +1783,17 @@ impl Extraction {
             result.manifest.resources.push(Resource {
                 id: OBSERVED_TILEMAP_ROW_ID.into(), path: OBSERVED_TILEMAP_ROW_FILE.into(),
                 format: OBSERVED_TILEMAP_ROW_FORMAT.into(), sha256: String::new(),
-                dependencies: vec![OBSERVED_TILEMAP_DESCRIPTOR_ID.into()], sources: metadata.sources.clone(),
+                dependencies: vec![OBSERVED_TILEMAP_DESCRIPTOR_ID.into(), OBSERVED_TILEMAP_ID.into()], sources: metadata.sources.clone(),
             });
             result.observed_tilemap_row = Some(metadata);
+            let metadata = dma_register_directories::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(DMA_REGISTER_DIRECTORIES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: DMA_REGISTER_DIRECTORIES_ID.into(), path: DMA_REGISTER_DIRECTORIES_FILE.into(),
+                format: DMA_REGISTER_DIRECTORIES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.dma_register_directories = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1933,6 +1948,7 @@ impl Extraction {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2088,6 +2104,7 @@ impl Extraction {
             || self.constructor_template64.is_some() != self.observed_tilemap.is_some()
             || self.observed_tilemap.is_some() != self.observed_tilemap_descriptor.is_some()
             || self.observed_tilemap_descriptor.is_some() != self.observed_tilemap_row.is_some()
+            || self.observed_tilemap_row.is_some() != self.dma_register_directories.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3025,6 +3042,15 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected observed_tilemap_row".into()),
         }
+        match (&self.dma_register_directories, files.dma_register_directories) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES { return Err("DMA register directories file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[120].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected dma_register_directories".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3608,7 +3634,12 @@ impl Extraction {
         }
         if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap_row, files.observed_tilemap_row) {
             decoded.validate_dependencies(files.observed_tilemap_descriptor.ok_or("Missing tilemap dependency")?.0)?;
+            decoded.validate_tilemap_dependency(files.observed_tilemap.ok_or("Missing rectangle list dependency")?.0)?;
             if decoded != &expected.decoded { return Err("Decoded observed_tilemap_row differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.dma_register_directories, files.dma_register_directories) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded dma_register_directories differs from authenticated source".into()); }
         }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
@@ -3741,6 +3772,7 @@ impl Extraction {
             + usize::from(self.observed_tilemap.is_some())
             + usize::from(self.observed_tilemap_descriptor.is_some())
             + usize::from(self.observed_tilemap_row.is_some())
+            + usize::from(self.dma_register_directories.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3915,6 +3947,7 @@ mod tests {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4042,6 +4075,7 @@ mod tests {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4179,6 +4213,7 @@ mod tests {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4305,6 +4340,7 @@ mod tests {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

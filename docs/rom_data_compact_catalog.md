@@ -948,3 +948,31 @@ E172 inventory, 8,789 unowned observed bytes lie outside this bank increment;
 [E174](rom_data_graphics.md#e174-observed-red-spring-lz77-block) subsequently
 integrates 2,578 of them. Linux, USA and native Windows are pending.
 No performance measurement was performed.
+
+## E186 Red Spring compact-bank records
+
+EUR E186-d185 extends `graphics.conditional-compact-obj-catalog` with three
+24-byte records at `3a4ca0..3a4ce8`. Each points to the E173 compact bank at
+`6c1e78`; the selected bank sequences are 2, 1 and 0. The remaining halfwords
+retain their exact source values without assigning unproved meanings. Source
+`e186-compact-records-source-ae4wgq4a` authenticates all 72 bytes, including
+60 bytes observed unowned in the selected E172 sample. The catalog validates
+each bank/selector link while leaving other record indices to the guest.
+
+Wine `e186-records-trace-wine-2ibf_qi4` observes the original tail reader
+`080d8974` for all three records, while `e186-fields-trace-wine-bldajpbj`
+observes the bank pointer and parameter reads at `080d8b60` and `080d8bac`.
+These traces used interpreter fallback. Wine `e186-records-wine-k6d5krm5`
+preserves the prior catalog fields and other 119 resources, rejects coherent
+edits, checks poisoned mirrors and record boundaries, and compares nine
+original-interpreter/separately compiled reader prefixes with equal complete
+state and guest clock. Wine `e186-records-scene-wine-1zw44c41` matches
+complete state, clock, central/wide video, OAM, dispatch and audio for the
+recorded 600-frame action with all 72 record bytes and 634 previously managed
+bank bytes altered in the managed machine. All three records are used, and
+the bank is read through both the guest bus and typed host sprite lists; no
+raw sprite peeks are observed in the selected spans. Wine production CLI
+`e186-records-cli-wine-y0aiuls6` creates, reuses and verifies 121 files
+matching the tested generation. Other records, banks, selectors, scenes and
+consumers, Linux, USA and native Windows remain open. No performance
+measurement was performed.

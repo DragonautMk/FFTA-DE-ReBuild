@@ -1549,8 +1549,10 @@ recorded below. The ten parameter bytes now have an
 [isolated typed model](rom_data_gameplay.md#isolated-model-for-observed-task-parameter-fragments),
 with27guards/18original prefixes in one Wine filter. Later e73 managed/runtime
 integration serves exactly those ten bytes, as recorded in the parameter notes.
-The16control bytes retain their explicit original ROM/code dependency. The
-lower452new audit bytes remain separate. No resource, owner or revision was
+At that source milestone, the 16 control bytes retained their original ROM/code
+dependency. E188 subsequently integrates those four words and a separately
+observed fifth; see the [scoped runtime proof](#e188-observed-iwram-obj-callback-words).
+The lower452new audit bytes remain separate. No resource, owner or revision was
 introduced by the source milestone. One bounded producer-argument Wine frame was
 needed to identify the64B list readers, with all selected inputs preserved;
 old collectors/Bank/F09 equivalence and ABI oracles were not rerun. Static
@@ -2930,3 +2932,51 @@ aggregate counts do not identify individual instructions. The 536 other
 unmatched lower-ROM bytes, other readers, selector domains, Linux, USA and
 native Windows remain open.
 No performance measurement was made.
+
+## E188 observed IWRAM OBJ callback words
+
+EUR E188-d187 extends `graphics.obj-static-lists` with five observed Thumb
+callback words at `397f80..397f94`. Their addresses point into the original
+block copied to IWRAM, and their Thumb bits are retained. The resource owns only
+the five encoded words; it does not freeze the live executable bytes, restrict
+other guest pointers, or replace the original allocator and dispatch behavior.
+The previously documented IWRAM copy and OBJ draw bridges establish the source
+provenance for this bounded projection.
+
+Source `e188-control-source-rm56pdw9` authenticates the 20 bytes and the
+original copy/reader windows. Wine traces
+`e188-control-trace-wine-sr60q_xk` and
+`e188-control-tail-trace-wine-fo65p2xu` observe all five original readers
+through interpreter fallback. Wine `e188-control-wine-ryj41yi9` preserves the
+previous OBJ fields and 119 other resources, rejects coherent file/hash
+edits, checks poisoned mirrors and mixed boundaries, and compares five original
+interpreter/separately compiled load-and-branch entries, including target PC,
+Thumb state, return register, complete state and guest clock.
+
+Wine `e188-control-scene-wine-ch94duvy` compares the recorded 600-frame
+Red Spring action while all 20 backing ROM bytes are altered in the managed
+machine. All five words are read from the extracted resource, and full state,
+guest clock, central/wide video, OAM, dispatch and audio match every frame.
+Wine `e188-control-cli-wine-3z2jda18` creates, reuses and verifies 121 files
+matching the tested generation. Other callback words, callers and live IWRAM
+code paths remain open, as do Linux, USA and native Windows. Historical
+revision-pinned OBJ fixtures need adaptation before reuse. No performance
+measurements were performed.
+
+## E189 DMA register directories (partial)
+
+A dedicated EUR resource is staged for the two four-word DMA register
+address directories at `370e68..370e88`. The guest still computes indices,
+reads and writes the hardware registers, and performs DMA. Source
+`e189-dma-source-_zu8l44g` authenticates the original directories and reader
+windows. Wine `e189-dma-trace-wine-vgsu5kue` observes both tables during native
+dispatch, without identifying the exact instruction. Wine
+`e189-dma-wine-598qsw1v` passes publication, mixed boundaries, 16 separately
+compiled reader cases and four controlled DMA register writes with matching
+full state and guest clock. The first attempt `e189-dma-wine-gsiv7n3d` failed
+because its test invoked a chained native store twice; the test was corrected.
+
+This work is suspended at the user's request. The altered-source recorded scene
+and production CLI remain unverified, so E189 is not yet accepted. Other DMA
+callers and the separate IWRAM helper vector, Linux, USA and native Windows
+remain open. No performance measurements were performed.

@@ -1,11 +1,13 @@
 //! Authenticated EUR rows, including one selecting the observed tilemap descriptor.
-use super::{observed_tilemap_descriptor, script39_registry_poses::PriorSources, Resource, SourceRange, OBSERVED_TILEMAP_DESCRIPTOR_ID};
+use super::{observed_tilemap, observed_tilemap_descriptor, script39_registry_poses::PriorSources, Resource, SourceRange, OBSERVED_TILEMAP_DESCRIPTOR_ID, OBSERVED_TILEMAP_ID};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 pub const SOURCE_OFFSET: u32 = 0x3a4bec;
 pub const SOURCE_LENGTH: usize = 12;
 pub const SOURCE_SHA256: &str = "493de1159defc6d682a5f8316cfc031421b96f41571004142d7c4ce0a64c93be";
+pub const LIST_ROW_OFFSET: u32 = 0x3a4bb0;
+pub const LIST_ROW_SHA256: &str = "229d2b40cbf45f1609b5b9b08432167f98f24fabf938e1362945b3e5630db80a";
 /// Four observed adjacent rows; their pointed descriptors have a separate owner.
 pub const ADDITIONAL_SPECS: [(u32, u32, &str); 4] = [
     (0x3a4bbc, 0x083a4b18, "65193c653f3482da17830fa6fd78543bfc027487e1e8296e3620a456527dac6e"),
@@ -59,6 +61,7 @@ pub struct ObservedTilemapRow {
     pub field8: u32,
     pub additional_rows: [AdditionalRow; 4],
     pub transfer_rows: [AdditionalRow; 3],
+    pub list_row: AdditionalRow,
 }
 
 impl ObservedTilemapRow {
@@ -71,6 +74,10 @@ impl ObservedTilemapRow {
             if row.source_offset != offset || row.descriptor_pointer != pointer {
                 return Err("Invalid additional observed tilemap row source or pointer".into());
             }
+        }
+        if self.list_row.source_offset != LIST_ROW_OFFSET || self.list_row.field0 != 2
+            || self.list_row.descriptor_pointer != 0x0800_0000 + observed_tilemap::RECTANGLE_CHAIN_OFFSET + 8 {
+            return Err("Invalid observed rectangle list row".into());
         }
         Ok(())
     }
@@ -90,6 +97,15 @@ impl ObservedTilemapRow {
         Ok(())
     }
 
+    pub fn validate_tilemap_dependency(&self, tilemap: &observed_tilemap::ObservedTilemap) -> Result<(), String> {
+        self.validate()?;
+        tilemap.validate()?;
+        if self.list_row.descriptor_pointer != 0x0800_0000 + observed_tilemap::RECTANGLE_CHAIN_OFFSET + 8 {
+            return Err("Observed rectangle list row dependency mismatch".into());
+        }
+        Ok(())
+    }
+
     pub fn source_bytes(&self) -> [u8; SOURCE_LENGTH] {
         row_bytes(self.field0, self.field1, self.field2, self.descriptor_pointer, self.field8)
     }
@@ -102,6 +118,7 @@ impl ObservedTilemapRow {
         for (row, role) in self.transfer_rows.iter().zip(["transfer-row-0", "transfer-row-1", "transfer-row-2"]) {
             spans.push((row.source_offset, row.source_bytes(), role));
         }
+        spans.push((self.list_row.source_offset, self.list_row.source_bytes(), "rectangle-list-row"));
         spans
     }
 }
@@ -117,8 +134,14 @@ impl Catalog {
             return Err("Observed tilemap row requires the exact EUR ROM".into());
         }
         if ffta_rom::digest(&rom[0xdb30a..0xdb326]) != "0ac3d1f008eb9ff01ae13ba635e54c40af5f41ddcc4150750a63c5dd100a7174"
-            || ffta_rom::digest(&rom[0xdb49c..0xdb4b6]) != "e6b4dac3741f0c0927816d86e21bcd54ea1748a18b5e09d4456c0e1494c61192" {
+            || ffta_rom::digest(&rom[0xdb49c..0xdb4b6]) != "e6b4dac3741f0c0927816d86e21bcd54ea1748a18b5e09d4456c0e1494c61192"
+            || ffta_rom::digest(&rom[0xdb374..0xdb3be]) != "0f369afa9549965623a1a8c9a6c58039453416269eedfefc7f325f8a13431992" {
             return Err("Observed tilemap row original reader mismatch".into());
+        }
+        let tilemap = previous.iter().find(|resource| resource.id == OBSERVED_TILEMAP_ID).ok_or("Missing rectangle list dependency")?;
+        if !tilemap.sources.iter().any(|source| source.offset == observed_tilemap::RECTANGLE_CHAIN_OFFSET
+            && source.length as usize == observed_tilemap::RECTANGLE_CHAIN_LENGTH) {
+            return Err("Observed rectangle list source dependency mismatch".into());
         }
         let descriptor = previous.iter().find(|resource| resource.id == OBSERVED_TILEMAP_DESCRIPTOR_ID).ok_or("Missing observed tilemap descriptor dependency")?;
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOURCE_OFFSET && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
@@ -139,6 +162,10 @@ impl Catalog {
                 return Err("Additional observed tilemap row source hash mismatch".into());
             }
         }
+        let list_at = LIST_ROW_OFFSET as usize;
+        if ffta_rom::digest(&rom[list_at..list_at + SOURCE_LENGTH]) != LIST_ROW_SHA256 {
+            return Err("Observed rectangle list row source hash mismatch".into());
+        }
         let read_row = |offset: u32| {
             let at = offset as usize;
             let row = &rom[at..at + SOURCE_LENGTH];
@@ -157,7 +184,7 @@ impl Catalog {
             field2: u16::from_le_bytes(bytes[2..4].try_into().unwrap()),
             descriptor_pointer: u32::from_le_bytes(bytes[4..8].try_into().unwrap()),
             field8: u32::from_le_bytes(bytes[8..12].try_into().unwrap()),
-            additional_rows, transfer_rows,
+            additional_rows, transfer_rows, list_row: read_row(LIST_ROW_OFFSET),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

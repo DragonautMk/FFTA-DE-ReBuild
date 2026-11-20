@@ -1891,8 +1891,38 @@ and normal enablement retain their existing acceptance gates.
   with 42 halfword cells. Source `n257xucg`, Wine trace/reader
   `re5n0s9w`/`rxrkgl9k`, scene `qz9v5fto` and CLI `grtrq8pm` pass. The
   scene log contains a D-Bus assertion but the test completed. This owns 86
-  more sampled bytes; 3,517 remain unowned in that E172 sample. Other pointer
-  cells, consumers, Linux, USA and native Windows remain open.
+  more sampled bytes; 3,517 remained unowned in that E172 sample at E183.
+  Other pointer cells and consumers remain open.
+
+- EUR E184-d183 adds [observed rectangle roots](../rom_data_graphics.md#e184-observed-rectangle-roots)
+  for both E183 rectangles. Source `46yea8p1`, Wine trace/readers
+  `_vvgz2qn`/`5kk84qdw`, scene `kavnisxk` and CLI `vdp3mixx` pass. This owns
+  17 more sampled bytes; 3,500 remained unowned in that E172 sample at E184.
+  Other roots and consumers remain open.
+
+- EUR E185-d184 adds the [observed rectangle list row](../rom_data_graphics.md#e185-observed-rectangle-list-row)
+  and its typed list dependency. Source `a9cjlk1d`, Wine trace/readers
+  `2iw6p25i`/`ho6q2xxd`, scene `xrk2v6ks` and CLI `e42p10cn` pass. This owns
+  six more sampled bytes; 3,494 remained unowned in that E172 sample at E185.
+  Other rows and consumers remain open.
+
+- EUR E186-d185 adds three [Red Spring compact-bank records](../rom_data_compact_catalog.md#e186-red-spring-compact-bank-records).
+  Source `ae4wgq4a`, Wine traces/readers `2ibf_qi4`/`bldajpbj`/`k6d5krm5`,
+  scene `1zw44c41` and CLI `y0aiuls6` pass. This owns 60 more sampled bytes;
+  3,434 remained unowned in that E172 sample at E186. Other records, banks,
+  consumers, Linux, USA and native Windows remain open.
+
+- EUR E187-d186 adds two [Red Spring timed sound schedules](../rom_data_audio.md#e187-red-spring-timed-sound-schedules)
+  and their literal roots to the audio directory. Source `dybrm98g`, Wine trace
+  `t7gxddev`, readers `63mjpshl`, 600-frame scene `vrwrh7f0` and CLI `2xep4wwf`
+  pass. This owns 57 more sampled bytes; 3,377 remained unowned in that E172
+  sample at E187. Other sound schedules, consumers, Linux, USA and native Windows remain open.
+
+- EUR E188-d187 adds five [IWRAM OBJ callback words](../rom_data_runtime.md#e188-observed-iwram-obj-callback-words).
+  Source `rm56pdw9`, Wine traces `sr60q_xk`/`fo65p2xu`, branches `ryj41yi9`,
+  scene `ch94duvy` and CLI `3z2jda18` pass. This owns 20 more sampled bytes;
+  3,357 remain unowned in that E172 sample. Other callbacks, consumers, Linux,
+  USA and native Windows remain open.
 
 - EUR E172-d171 serves the [conditional primary-task compact alias](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278):
   five source bytes with existing task/catalog dependencies. Wine `_5qb5ej3`

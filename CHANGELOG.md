@@ -192,6 +192,27 @@ Documentation: [save_backups.md](docs/save_backups.md), [menu_clan_atlas.md](doc
 
 [Change record](docs/changes/2026-11-20-toggle-automatic-cartridge-backups.json)
 
+## 2026-11-20 — Stage DMA register directories (partial)
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Stage a dedicated authenticated resource and bus overlay for two EUR DMA register address directories while preserving guest indexing and hardware operations; acceptance is suspended pending the remaining Wine checks.
+
+**Validation**
+
+- Source e189-dma-source-_zu8l44g and Wine trace e189-dma-trace-wine-vgsu5kue pass. Wine e189-dma-wine-598qsw1v passes publication, 16 interpreter/native readers, four controlled DMA writes, mixed boundaries and full-state/guest-clock equality.
+- The first Wine attempt e189-dma-wine-gsiv7n3d failed because its test executed a chained native store twice; a focused Sol consultation identified the issue and the corrected retry passed.
+
+**Limitations**
+
+- Paused at user request: the altered-source scene and production CLI remain unverified. Other DMA callers, the IWRAM helper vector, Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-20-stage-dma-register-directories.json)
+
 ## 2026-11-20 — Publish the ROM coverage map on GitHub Pages
 
 Type: docs. Platforms: Web.
@@ -244,6 +265,52 @@ Documentation: [v1.2.0.md](docs/releases/v1.2.0.md).
 
 [Change record](docs/changes/2026-11-20-prepare-release-1-2-0.json)
 
+## 2026-11-20 — Migrate Red Spring timed sound schedules
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated M4A directory with two timed sound schedules and their literal roots; preserve original sound words and let the guest continue scheduling and channel handling.
+- The 64 reconstructed source bytes include 57 previously unowned bytes in the E172 sample; existing audio fields and the other 119 resources are preserved.
+
+**Validation**
+
+- Source e187-sound-source-dybrm98g; Wine trace e187-tables-trace-wine-t7gxddev; publication, coherent-edit rejection, poisoned mirrors, mixed boundaries and 21 interpreter/native reader prefixes e187-sound-wine-63mjpshl.
+- Wine e187-sound-scene-wine-vrwrh7f0 matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames while all 64 backing bytes are altered; both schedules and roots are used. Wine production CLI e187-sound-cli-wine-2xep4wwf creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other schedules, the separately rooted intervening rows and compact-record literal, consumers, Linux, USA and native Windows remain open. Historical audio-directory fixtures need E187 adaptation. No performance measurements were performed.
+- Ordinary traces used interpreter fallback; separately compiled cases cover only the selected reader prefixes. The E172 sample still has 3,377 unowned observed bytes outside the accepted increments.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-20-migrate-red-spring-sound-schedules.json)
+
+## 2026-11-20 — Migrate Red Spring compact bank records
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated compact OBJ catalog with three EUR records linked to the existing Red Spring compact bank, validating the bank and selectors while preserving unclassified source halfwords and guest indexing.
+- The 72 reconstructed source bytes include 60 previously unowned bytes observed in the E172 scene sample; prior catalog fields and 119 other resources are preserved.
+
+**Validation**
+
+- Source e186-compact-records-source-ae4wgq4a; Wine original-reader traces e186-records-trace-wine-2ibf_qi4 and e186-fields-trace-wine-bldajpbj; publication, coherent-edit rejection, poisoned mirrors and boundaries and nine interpreter/native reader prefixes e186-records-wine-k6d5krm5.
+- Wine e186-records-scene-wine-1zw44c41 matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all record bytes and 634 existing bank bytes altered; all three records and typed guest/host bank reads are used. Wine production CLI e186-records-cli-wine-y0aiuls6 creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other records, banks, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still has 3,434 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+- The ordinary reader traces used interpreter fallback; separately compiled cases cover only the selected reader prefixes.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-20-migrate-red-spring-compact-bank-records.json)
+
 ## 2026-11-20 — Migrate observed transfer rows and LZ descriptors
 
 Type: changed. Platforms: Windows via Wine; European ROM.
@@ -290,6 +357,29 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-20-migrate-observed-tilemap-rectangles.json)
 
+## 2026-11-20 — Migrate observed tilemap rectangle roots
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated observed tilemap resource with a one-entry descriptor/list chain and a separate pointer to the two previously migrated EUR rectangles. Preserve unclassified descriptor parameters and list padding, validate both links and leave other guest indexing unchanged.
+- The 20 reconstructed source bytes include 17 previously unowned bytes observed in the E172 scene sample; previous tilemap fields and 119 other resources are preserved.
+
+**Validation**
+
+- Source e184-roots-source-46yea8p1 and Wine original-reader traces e184-roots-trace-wine-_vvgz2qn; publication, coherent-edit rejection, poisoned mirrored and mixed-owner boundary reads and two interpreter/native reader cases e184-roots-wine-5kk84qdw.
+- Wine e184-roots-scene-wine-kavnisxk matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 20 root and 88 rectangle backing bytes altered; both roots and rectangles are used. Production Wine CLI e184-roots-cli-wine-vdp3mixx creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other roots, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The selected E172 sample still has 3,500 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+- Both ordinary reader traces used interpreter fallback; the separately compiled cases cover only the selected readers.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-observed-tilemap-rectangle-roots.json)
+
 ## 2026-11-20 — Migrate observed tilemap descriptors and LZ wrappers
 
 Type: changed. Platforms: Windows via Wine; European ROM.
@@ -311,6 +401,52 @@ Type: changed. Platforms: Windows via Wine; European ROM.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-20-migrate-observed-tilemap-descriptors-and-lz-wrappers.json)
+
+## 2026-11-20 — Migrate observed rectangle list row
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated tilemap row resource with the EUR row selecting the previously migrated rectangle descriptor list, declare the tilemap dependency and preserve guest indexing and unclassified fields.
+- The 12 reconstructed source bytes include six previously unowned bytes observed in the E172 scene sample; prior row fields and 119 other resources are preserved.
+
+**Validation**
+
+- Source e185-row-source-a9cjlk1d and original-reader Wine trace e185-row-trace-wine-2iw6p25i; publication, coherent-edit rejection, poisoned mirrored and adjacent-row boundary reads and two interpreter/native reader cases e185-list-row-wine-ho6q2xxd.
+- Wine e185-list-row-scene-wine-xrk2v6ks matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with the selected row, both root spans and both rectangle backings altered; each is used. Production Wine CLI e185-list-row-cli-wine-e42p10cn creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other rows, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still has 3,494 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+- The ordinary reader trace used interpreter fallback; separately compiled cases cover only the selected reader paths.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-observed-rectangle-list-row.json)
+
+## 2026-11-20 — Migrate observed IWRAM OBJ callback words
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated static OBJ resource with five observed Thumb callback words into the guest-copied IWRAM code, preserving live code, guest dispatch and original pointer bits.
+- The 20 reconstructed source bytes were all observed unowned in the E172 sample; the previous OBJ fields and 119 other resources are preserved.
+
+**Validation**
+
+- Source e188-control-source-rm56pdw9; Wine original-reader traces e188-control-trace-wine-sr60q_xk and e188-control-tail-trace-wine-fo65p2xu; publication, coherent-edit rejection, poisoned mirrors, mixed boundaries and five interpreter/native branch entries e188-control-wine-ryj41yi9.
+- Wine e188-control-scene-wine-ch94duvy matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 20 callback backing bytes altered; all five words are used. Wine CLI e188-control-cli-wine-3z2jda18 creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other callback words, consumers and live IWRAM code paths, Linux, USA and native Windows remain open. Historical OBJ-list fixtures need E188 adaptation. No performance measurements were performed.
+- The scene reader traces used interpreter fallback; separately compiled tests cover the selected load-and-branch entries only. The E172 sample still has 3,357 unowned observed bytes outside accepted increments.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-20-migrate-iwram-obj-callback-words.json)
 
 ## 2026-11-20 — Add menu controls for extracted game data
 

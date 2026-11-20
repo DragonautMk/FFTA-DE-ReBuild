@@ -12,6 +12,10 @@ pub mod conditional_markers;
 pub mod context_selector;
 
 pub const ACTOR_LOOKUP_ROOT: u32 = 0x398df0;
+/// Five observed Thumb callbacks into the guest-copied IWRAM OBJ routines.
+pub const IWRAM_DRAW_CALLBACKS_ROOT: u32 = 0x397f80;
+pub const IWRAM_DRAW_CALLBACKS_COUNT: usize = 5;
+pub const IWRAM_DRAW_CALLBACKS_SHA256: &str = "4673dedee715e28da29fdc9e3db2b9ef233d956e70847774cae8922a13011f60";
 pub const TITLE_OPENING_DIRECTORY_ROOT: u32 = 0x3ade64;
 pub const TITLE_OPENING_DIRECTORY_COUNT: usize = 19;
 pub const BATTLE_DIRECTORY_ROOT: u32 = 0x40d300;
@@ -223,6 +227,9 @@ pub struct Lists {
     /// Absolute ROM pointers copied into the EUR title-opening records.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_opening_directory: Option<Vec<u32>>,
+    /// Encoded guest Thumb pointers; the live IWRAM functions remain guest-owned.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub iwram_draw_callbacks: Option<[u32; IWRAM_DRAW_CALLBACKS_COUNT]>,
 }
 
 impl Lists {
@@ -259,6 +266,16 @@ impl Lists {
             if self.lists.iter().any(|list| list.source_offset < end
                 && TITLE_OPENING_DIRECTORY_ROOT < list.source_offset + list.source_len() as u32) {
                 return Err("Title opening directory overlaps an OBJ list".into());
+            }
+        }
+        if let Some(callbacks) = &self.iwram_draw_callbacks {
+            let start = IWRAM_DRAW_CALLBACKS_ROOT;
+            let end = start + (IWRAM_DRAW_CALLBACKS_COUNT * 4) as u32;
+            if callbacks.iter().any(|&pointer| pointer & 1 == 0
+                || !(0x0300_5f28..0x0300_6d68).contains(&(pointer & !1)))
+                || self.lists.iter().any(|list| list.source_offset < end
+                    && start < list.source_offset + list.source_len() as u32) {
+                return Err("Invalid IWRAM OBJ callback projection".into());
             }
         }
         Ok(())
@@ -492,9 +509,33 @@ impl Catalog {
         }
         sources.push(SourceRange { offset: TITLE_OPENING_DIRECTORY_ROOT, length: raw.len() as u32,
             sha256: ffta_rom::digest(raw), role: "title-opening-obj-directory".into() });
+        for (start, end, expected) in [
+            (0x922d2, 0x92302, "ffab5e2951f4f37e600f1968527d3cb851ad13cad37a0b972b8b5d64fdf04d64"),
+            (0x923f0, 0x923fa, "5204b54a551f7c30d3385f0156abff4193d3a16a23701635e4f7e0b19e5b40bc"),
+            (0x91f58, 0x91f66, "552d4b30fc94e88b8e6f85b8ad6342b54988a538e322b0cdbf973f94a1a8558b"),
+            (0x92098, 0x920ae, "da58ab11e2420411a7273b6c6d6caf3d48761d8fa65b911bb638391b4363b99e"),
+            (0x925c2, 0x925d2, "7d323a5cf42cef8af143484bab817f6b284bea6a736d001b31058e608b903b5c"),
+            (0x924f6, 0x9250c, "d615c45da59229e797580c2430b7f23634ae10a71ccb5341c6f3d9b0f3d4a9b1"),
+            (0x145c08, 0x145c1a, "eebaaebafd19249b618c79b603a2da0a61261ceeae1703b9bf2d9afb3eff31c7"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected {
+                return Err("IWRAM OBJ callback reader or copy mismatch".into());
+            }
+        }
+        let callback_start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
+        let callback_bytes = &rom[callback_start..callback_start + IWRAM_DRAW_CALLBACKS_COUNT * 4];
+        if ffta_rom::digest(callback_bytes) != IWRAM_DRAW_CALLBACKS_SHA256 {
+            return Err("IWRAM OBJ callback source mismatch".into());
+        }
+        let iwram_draw_callbacks = Some(std::array::from_fn(|index| {
+            let at = index * 4;
+            u32::from_le_bytes(callback_bytes[at..at + 4].try_into().unwrap())
+        }));
+        sources.push(SourceRange { offset: IWRAM_DRAW_CALLBACKS_ROOT, length: callback_bytes.len() as u32,
+            sha256: ffta_rom::digest(callback_bytes), role: "iwram-obj-draw-callbacks".into() });
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
-        let decoded = Lists { lists, battle_directory, actor_lookup, title_opening_directory: Some(title_opening_directory) };
+        let decoded = Lists { lists, battle_directory, actor_lookup, title_opening_directory: Some(title_opening_directory), iwram_draw_callbacks };
         decoded.validate()?;
         Ok(Self { decoded, sources })
     }
@@ -531,7 +572,7 @@ mod tests {
         assert!(Lists {
             lists: vec![list.clone(), empty],
             battle_directory: None,
-            actor_lookup: None, title_opening_directory: None,
+            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None,
         }
         .validate()
         .is_err());

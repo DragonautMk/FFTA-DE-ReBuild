@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-red-spring-compact-bank-records",
+  "title": "Migrate Red Spring compact bank records",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated compact OBJ catalog with three EUR records linked to the existing Red Spring compact bank, validating the bank and selectors while preserving unclassified source halfwords and guest indexing.",
+    "The 72 reconstructed source bytes include 60 previously unowned bytes observed in the E172 scene sample; prior catalog fields and 119 other resources are preserved."
+  ],
+  "validation": [
+    "Source e186-compact-records-source-ae4wgq4a; Wine original-reader traces e186-records-trace-wine-2ibf_qi4 and e186-fields-trace-wine-bldajpbj; publication, coherent-edit rejection, poisoned mirrors and boundaries and nine interpreter/native reader prefixes e186-records-wine-k6d5krm5.",
+    "Wine e186-records-scene-wine-1zw44c41 matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all record bytes and 634 existing bank bytes altered; all three records and typed guest/host bank reads are used. Wine production CLI e186-records-cli-wine-y0aiuls6 creates, reuses and verifies 121 matching files."
+  ],
+  "limitations": [
+    "Other records, banks, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still has 3,434 observed unowned bytes outside the accepted increments. No performance measurements were performed.",
+    "The ordinary reader traces used interpreter fallback; separately compiled cases cover only the selected reader prefixes."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_obj_catalog.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/compact_redspring_records_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

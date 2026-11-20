@@ -7,6 +7,10 @@ pub const SOURCE_OFFSET: u32 = 0xaf2718;
 pub const SOURCE_LENGTH: usize = 102;
 pub const SOURCE_SHA256: &str = "f84b800ef7584f5f274fbbb8eb32bf4bb45a323c56ff026d7218b14c17f0709e";
 pub const DECODED_SHA256: &str = "307e945d04b0bffeac6f011e54fdbd455db30da84b08d7d9482d25701311f186";
+pub const RECTANGLE_CHAIN_OFFSET: u32 = 0x3a4b08;
+pub const RECTANGLE_CHAIN_LENGTH: usize = 16;
+pub const RECTANGLE_TABLE_OFFSET: u32 = 0x3a4d3c;
+pub const RECTANGLE_TABLE_LENGTH: usize = 4;
 /// Exact observed rectangles: source, height, width, source hash and pointer cell.
 pub const RECT_SPECS: [(u32, u8, u8, &str, u32); 2] = [
     (0xae78ac, 2, 15, "2ab4fbbaef0dbd47b7c507b0beee844d09fbdec3d6c15043efb28d70d1f6ff32", 0x3a4b08),
@@ -39,6 +43,34 @@ impl Rectangle {
     }
 }
 
+/// One observed descriptor, its one-entry list and a separate table pointer.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RectangleRoots {
+    pub first_rectangle_pointer: u32,
+    pub descriptor_parameters: [u8; 4],
+    pub entry_count: u8,
+    pub list_padding: [u8; 3],
+    pub descriptor_pointer: u32,
+    pub second_rectangle_pointer: u32,
+}
+
+impl RectangleRoots {
+    pub fn chain_bytes(&self) -> [u8; RECTANGLE_CHAIN_LENGTH] {
+        let mut bytes = [0; RECTANGLE_CHAIN_LENGTH];
+        bytes[..4].copy_from_slice(&self.first_rectangle_pointer.to_le_bytes());
+        bytes[4..8].copy_from_slice(&self.descriptor_parameters);
+        bytes[8] = self.entry_count;
+        bytes[9..12].copy_from_slice(&self.list_padding);
+        bytes[12..16].copy_from_slice(&self.descriptor_pointer.to_le_bytes());
+        bytes
+    }
+
+    pub fn table_bytes(&self) -> [u8; RECTANGLE_TABLE_LENGTH] {
+        self.second_rectangle_pointer.to_le_bytes()
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ObservedTilemap {
@@ -50,6 +82,7 @@ pub struct ObservedTilemap {
     pub flags: u8,
     pub runs: [Run; 24],
     pub rectangles: [Rectangle; 2],
+    pub rectangle_roots: RectangleRoots,
 }
 
 impl ObservedTilemap {
@@ -73,6 +106,12 @@ impl ObservedTilemap {
                 return Err("Invalid observed tilemap rectangle geometry".into());
             }
         }
+        if self.rectangle_roots.first_rectangle_pointer != 0x0800_0000 + self.rectangles[0].source_offset
+            || self.rectangle_roots.entry_count != 1
+            || self.rectangle_roots.descriptor_pointer != 0x0800_0000 + RECTANGLE_CHAIN_OFFSET
+            || self.rectangle_roots.second_rectangle_pointer != 0x0800_0000 + self.rectangles[1].source_offset {
+            return Err("Invalid observed tilemap rectangle roots".into());
+        }
         Ok(())
     }
 
@@ -93,6 +132,8 @@ impl ObservedTilemap {
         for (rectangle, role) in self.rectangles.iter().zip(["tilemap-rectangle-0", "tilemap-rectangle-1"]) {
             spans.push((rectangle.source_offset, rectangle.source_bytes(), role));
         }
+        spans.push((RECTANGLE_CHAIN_OFFSET, self.rectangle_roots.chain_bytes().to_vec(), "tilemap-rectangle-chain"));
+        spans.push((RECTANGLE_TABLE_OFFSET, self.rectangle_roots.table_bytes().to_vec(), "tilemap-rectangle-pointer"));
         spans
     }
 
@@ -126,6 +167,8 @@ impl Catalog {
             (0xdb30a, 0xdb326, "0ac3d1f008eb9ff01ae13ba635e54c40af5f41ddcc4150750a63c5dd100a7174"),
             (0xd80e0, 0xd8164, "f802daafd73dab107c4269b328430eec39b7c506f02aaa95abd0f8b0ec6fc883"),
             (0xd816c, 0xd81d4, "f9933c845686c44a098c164f52ba6576b027761e8d42cc17417e7130866b5ae1"),
+            (0xdb374, 0xdb3be, "0f369afa9549965623a1a8c9a6c58039453416269eedfefc7f325f8a13431992"),
+            (0x1094f2, 0x1094fc, "f44f4d84917dc2fb3a0cb21acdf06109ab433aea74f3551f44265d7d5275e712"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != expected {
                 return Err("Observed tilemap original reader mismatch".into());
@@ -153,11 +196,24 @@ impl Catalog {
                 .map(|bytes| u16::from_le_bytes([bytes[0], bytes[1]])).collect();
             Rectangle { source_offset: offset, height, width, cells }
         });
+        let chain = &rom[RECTANGLE_CHAIN_OFFSET as usize..RECTANGLE_CHAIN_OFFSET as usize + RECTANGLE_CHAIN_LENGTH];
+        let table = &rom[RECTANGLE_TABLE_OFFSET as usize..RECTANGLE_TABLE_OFFSET as usize + RECTANGLE_TABLE_LENGTH];
+        if ffta_rom::digest(chain) != "19299b60bbbc6931f613bfe31561ad5a81c3f9e23bd3eb565dd773d2b587a33a"
+            || ffta_rom::digest(table) != "9446ee87a3e39ce1cc71ae499358d20e659a553dd1839fb726e0994294e96eba" {
+            return Err("Observed tilemap rectangle root source mismatch".into());
+        }
+        let rectangle_roots = RectangleRoots {
+            first_rectangle_pointer: u32::from_le_bytes(chain[..4].try_into().unwrap()),
+            descriptor_parameters: chain[4..8].try_into().unwrap(),
+            entry_count: chain[8], list_padding: chain[9..12].try_into().unwrap(),
+            descriptor_pointer: u32::from_le_bytes(chain[12..16].try_into().unwrap()),
+            second_rectangle_pointer: u32::from_le_bytes(table.try_into().unwrap()),
+        };
         let decoded = ObservedTilemap {
             source_offset: SOURCE_OFFSET,
             width: bytes[0], height: bytes[1], opaque_header: half(2), mode: bytes[4], flags: bytes[5],
             runs: std::array::from_fn(|i| Run { control: half(6 + i * 4), value: half(8 + i * 4) }),
-            rectangles,
+            rectangles, rectangle_roots,
         };
         let cells = decoded.decoded_cells()?;
         if decoded.source_bytes() != bytes || ffta_rom::digest(&cells.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<_>>()) != DECODED_SHA256 {

@@ -143,6 +143,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
     let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
     let poison_tilemap_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_RECTANGLES").is_some();
+    let poison_tilemap_roots = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROOTS").is_some();
+    let poison_tilemap_list_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_LIST_ROW").is_some();
+    let poison_compact_records = std::env::var_os("FFTA_STATE_TEST_POISON_COMPACT_RECORDS").is_some();
+    let poison_red_spring_sounds = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_SOUNDS").is_some();
+    let poison_iwram_obj_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_IWRAM_OBJ_CALLBACKS").is_some();
+    let poison_dma_directories = std::env::var_os("FFTA_STATE_TEST_POISON_DMA_DIRECTORIES").is_some();
     let poison_tilemap_descriptor = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_DESCRIPTOR").is_some();
     let poison_extra_tilemap_descriptors = std::env::var_os("FFTA_STATE_TEST_POISON_EXTRA_TILEMAP_DESCRIPTORS").is_some();
     let poison_transfer_records = std::env::var_os("FFTA_STATE_TEST_POISON_TRANSFER_RECORDS").is_some();
@@ -198,6 +204,38 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
                     for at in start..start + length { machine.bus.rom[at] = !rom[at]; }
                 }
+            }
+            if index == 1 && poison_tilemap_roots {
+                use gba_core::rom_data::observed_tilemap::{RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH, RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH};
+                for (offset, length) in [(RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH), (RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH)] {
+                    for at in offset as usize..offset as usize + length { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_tilemap_list_row {
+                use gba_core::rom_data::observed_tilemap_row::{LIST_ROW_OFFSET, SOURCE_LENGTH};
+                for at in LIST_ROW_OFFSET as usize..LIST_ROW_OFFSET as usize + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_compact_records {
+                use gba_core::rom_data::compact_obj_catalog::{RED_SPRING_RECORD_OFFSET, RED_SPRING_RECORD_LENGTH};
+                let start = RED_SPRING_RECORD_OFFSET as usize;
+                for at in start..start + RED_SPRING_RECORD_LENGTH * 3 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_red_spring_sounds {
+                for &(root, source, count) in &gba_core::rom_data::audio_directory::RED_SPRING_SOUND_SPECS {
+                    for (start, len) in [(root as usize, 4), (source as usize, count * 8)] {
+                        for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                    }
+                }
+            }
+            if index == 1 && poison_iwram_obj_callbacks {
+                use gba_core::rom_data::obj_lists::{IWRAM_DRAW_CALLBACKS_COUNT, IWRAM_DRAW_CALLBACKS_ROOT};
+                let start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
+                for at in start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_dma_directories {
+                use gba_core::rom_data::dma_register_directories::{DIRECTORY_LENGTH, WRITE_ROOT};
+                let start = WRITE_ROOT as usize;
+                for at in start..start + DIRECTORY_LENGTH * 2 { machine.bus.rom[at] = !rom[at]; }
             }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -295,6 +333,41 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
                     machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
                 }
+            }
+            if index == 1 && poison_tilemap_roots {
+                use gba_core::rom_data::observed_tilemap::{RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH, RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH};
+                for (offset, length) in [(RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH), (RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH)] {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
+                }
+            }
+            if index == 1 && poison_tilemap_list_row {
+                use gba_core::rom_data::observed_tilemap_row::{LIST_ROW_OFFSET, SOURCE_LENGTH};
+                let start = LIST_ROW_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_compact_records {
+                use gba_core::rom_data::compact_obj_catalog::{RED_SPRING_RECORD_OFFSET, RED_SPRING_RECORD_LENGTH};
+                let start = RED_SPRING_RECORD_OFFSET as usize;
+                machine.bus.rom[start..start + RED_SPRING_RECORD_LENGTH * 3].copy_from_slice(&rom[start..start + RED_SPRING_RECORD_LENGTH * 3]);
+            }
+            if index == 1 && poison_red_spring_sounds {
+                for &(root, source, count) in &gba_core::rom_data::audio_directory::RED_SPRING_SOUND_SPECS {
+                    for (start, len) in [(root as usize, 4), (source as usize, count * 8)] {
+                        machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                    }
+                }
+            }
+            if index == 1 && poison_iwram_obj_callbacks {
+                use gba_core::rom_data::obj_lists::{IWRAM_DRAW_CALLBACKS_COUNT, IWRAM_DRAW_CALLBACKS_ROOT};
+                let start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
+                machine.bus.rom[start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4]
+                    .copy_from_slice(&rom[start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4]);
+            }
+            if index == 1 && poison_dma_directories {
+                use gba_core::rom_data::dma_register_directories::{DIRECTORY_LENGTH, WRITE_ROOT};
+                let start = WRITE_ROOT as usize;
+                machine.bus.rom[start..start + DIRECTORY_LENGTH * 2].copy_from_slice(&rom[start..start + DIRECTORY_LENGTH * 2]);
             }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -420,6 +493,44 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.rectangle_bytes[0] >= 61 && stats.rectangle_bytes[1] >= 25,
             "scene must consume both managed tilemap rectangles");
         eprintln!("ROM_DATA_TILEMAP_RECTANGLES_POISON rectangle_bytes={:?}", stats.rectangle_bytes);
+    }
+    if poison_tilemap_roots {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("observed tilemap owner");
+        assert!(stats.root_bytes[0] >= 13 && stats.root_bytes[1] >= 4,
+            "scene must consume both managed tilemap roots");
+        eprintln!("ROM_DATA_TILEMAP_ROOTS_POISON root_bytes={:?}", stats.root_bytes);
+    }
+    if poison_tilemap_list_row {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_row_stats().expect("observed tilemap row owner");
+        assert!(stats.list_source_bytes >= 6, "scene must consume the managed rectangle list row");
+        eprintln!("ROM_DATA_TILEMAP_LIST_ROW_POISON source_bytes={}", stats.list_source_bytes);
+    }
+    if poison_compact_records {
+        let stats = decoded.bus.rom_resources().unwrap().compact_obj_catalog_stats().expect("compact catalog owner");
+        assert!(stats.red_spring_record_bytes.iter().all(|&bytes| bytes >= 20),
+            "scene must consume each managed Red Spring compact record");
+        eprintln!("ROM_DATA_COMPACT_RECORDS_POISON source_bytes={:?}", stats.red_spring_record_bytes);
+    }
+    if poison_red_spring_sounds {
+        let stats = decoded.bus.rom_resources().unwrap().audio_directory_stats().expect("audio directory owner");
+        assert!(stats.red_spring_sound_bytes[0] >= 14 && stats.red_spring_sound_bytes[1] >= 35,
+            "scene must consume both sound tables");
+        assert!(stats.red_spring_root_bytes.iter().all(|&bytes| bytes >= 4),
+            "scene must consume both sound table pointers");
+        eprintln!("ROM_DATA_RED_SPRING_SOUNDS_POISON table_bytes={:?} root_bytes={:?}",
+            stats.red_spring_sound_bytes, stats.red_spring_root_bytes);
+    }
+    if poison_iwram_obj_callbacks {
+        let stats = decoded.bus.rom_resources().unwrap().obj_list_stats().expect("OBJ list owner");
+        assert!(stats.iwram_callback_bytes.iter().all(|&bytes| bytes >= 4),
+            "scene must consume all five IWRAM callback words");
+        eprintln!("ROM_DATA_IWRAM_OBJ_CALLBACKS_POISON source_bytes={:?}", stats.iwram_callback_bytes);
+    }
+    if poison_dma_directories {
+        let stats = decoded.bus.rom_resources().unwrap().dma_register_directories_stats().expect("DMA directory owner");
+        assert!(stats.directory_bytes.iter().all(|&bytes| bytes >= 12),
+            "scene must consume both DMA directories");
+        eprintln!("ROM_DATA_DMA_DIRECTORIES_POISON source_bytes={:?}", stats.directory_bytes);
     }
     if poison_tilemap_descriptor {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");

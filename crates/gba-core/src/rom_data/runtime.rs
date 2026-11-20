@@ -176,6 +176,9 @@ pub use observed_tilemap_descriptor::ObservedTilemapDescriptorStats;
 mod observed_tilemap_row;
 use observed_tilemap_row::ObservedTilemapRowResources;
 pub use observed_tilemap_row::ObservedTilemapRowStats;
+mod dma_register_directories;
+use dma_register_directories::DmaRegisterDirectoriesResources;
+pub use dma_register_directories::DmaRegisterDirectoriesStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -433,6 +436,7 @@ pub struct RuntimeResources {
     observed_tilemap: Option<Box<ObservedTilemapResources>>,
     observed_tilemap_descriptor: Option<Box<ObservedTilemapDescriptorResources>>,
     observed_tilemap_row: Option<Box<ObservedTilemapRowResources>>,
+    dma_register_directories: Option<Box<DmaRegisterDirectoriesResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -746,6 +750,9 @@ impl RuntimeResources {
         if let Some((data, _)) = files.observed_tilemap_row {
             resources.observed_tilemap_row = Some(Box::new(ObservedTilemapRowResources::new(data.clone(), &source.observed_tilemap_row.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.dma_register_directories {
+            resources.dma_register_directories = Some(Box::new(DmaRegisterDirectoriesResources::new(data.clone(), &source.dma_register_directories.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1013,6 +1020,7 @@ impl RuntimeResources {
             observed_tilemap: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
+            dma_register_directories: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1159,6 +1167,7 @@ impl RuntimeResources {
             + self.observed_tilemap.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap_descriptor.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap_row.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.dma_register_directories.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1330,6 +1339,7 @@ impl RuntimeResources {
     pub fn observed_tilemap_stats(&self) -> Option<ObservedTilemapStats> { self.observed_tilemap.as_ref().map(|m| m.stats()) }
     pub fn observed_tilemap_descriptor_stats(&self) -> Option<ObservedTilemapDescriptorStats> { self.observed_tilemap_descriptor.as_ref().map(|m| m.stats()) }
     pub fn observed_tilemap_row_stats(&self) -> Option<ObservedTilemapRowStats> { self.observed_tilemap_row.as_ref().map(|m| m.stats()) }
+    pub fn dma_register_directories_stats(&self) -> Option<DmaRegisterDirectoriesStats> { self.dma_register_directories.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1662,6 +1672,10 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.observed_tilemap_row {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.dma_register_directories {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -2059,6 +2073,7 @@ impl crate::MemMap {
             || ObservedTilemapResources::source_page(index)
             || ObservedTilemapDescriptorResources::source_page(index)
             || ObservedTilemapRowResources::source_page(index)
+            || DmaRegisterDirectoriesResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

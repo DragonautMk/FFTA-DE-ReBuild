@@ -29,12 +29,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
-- E173 Red Spring `s73gcfva`/`czzprb8z`/`u2r2goyn` PASS; 634 bytes migrated.
-- E181 descriptors/wrappers Wine PASS: `fd2bih7u`/`pdfkq9g5`/`3tjo6qvr`; 3,661 sampled bytes remain unowned.
-- E182 EUR/Wine PASS: `g0ce9o5s`/`fjrrnhsl`/`fx2_p2kt`/`8dilrn0i`; 3,603 E172-sampled bytes remain unowned.
-- E183 rectangles EUR/Wine PASS: `n257xucg`/`rxrkgl9k`/`qz9v5fto`/`grtrq8pm`; 3,517 E172-sampled bytes remain unowned.
+- E173 and E181–E187 EUR/Wine PASS (archive); E188 IWRAM callbacks `rm56pdw9`/`ryj41yi9`/`ch94duvy`/`3z2jda18` PASS. 3,357 E172-sampled bytes remain unowned.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
@@ -70,6 +67,17 @@ Archive completed tasks; preserve closed children and other jobs.
   - UI context e109: selector/copy catalog, templates 5/2 pairs PASS; full extent/consumers/all 11 records open. docs/rom_data_ui.md; no repeat.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
+
+### ROMDATA-01-E189-DMA-DIRECTORIES-370E68
+
+- State: suspended
+- Outcome: partial
+- Request: EUR, Wine only; no performance measurement or space limits.
+- Verified: source `_zu8l44g`, Wine trace `vgsu5kue`, build `ay5k4jkl`, Wine readers/four DMA writes `598qsw1v` PASS; Wine drained. E172 sampled 24 of 32 bytes.
+- Missing: poisoned Wine scene and production CLI, documentation/acceptance; other callers/helper vector, Linux/USA/native Windows open.
+- Consult: `/root/sol_dma_clock_diagnosis` requested `gpt-6.1-sol` xhigh (effective unconfirmed); failure `gsiv7n3d` double-executed a chained store. Retry PASS; build `cbftiwkl` arity error corrected.
+- Risk: preserve DMA effects, guest clock and unbounded behavior.
+- Resume: user paused the goal; only on explicit resumption inspect receipts, run the affected Wine scene and CLI, then close this unit.
 
 ## Incomplete tasks and open criteria
 
@@ -175,9 +183,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: RELEASE-1-2-PUBLICATION.
-- Last verified result: v1.2.0 is published at commit 4fe7ac97; 12 asset digests and public page/download URLs passed.
-- Remaining work: native Windows, Windows ADB and full Android gameplay remain unverified.
-- Errors or blockers: Android preview uses a separate signing identity and app ID.
-- Next action: no further work in this completed selection.
-- References: `docs/releases/v1.2.0.md`; `RELEASE-1-2-PUBLICATION`.
+- Task: ROM-DATA-FULL-EUR / E189, suspended by user.
+- Last verified result: E189 corrected Wine readers and four DMA writes PASS; Wine drained.
+- Remaining work: E189 poisoned scene/CLI, other families/consumers; Linux/USA open.
+- Errors or blockers: earlier test double-executed a chained store; corrected retry PASS.
+- Next action: await explicit resumption; then validate the E189 scene and CLI.
+- References: `docs/rom_data_runtime.md`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.

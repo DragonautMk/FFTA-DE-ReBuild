@@ -10,6 +10,15 @@ pub const DIRECTORY_END: u32 = 0x150940;
 pub const PLAYER_COUNT: usize = 3;
 pub const SONG_COUNT: usize = 640;
 pub const HEADER_COUNT: usize = 455;
+/// Two timed sound schedules observed in the EUR Red Spring action.
+pub const RED_SPRING_SOUND_SPECS: [(u32, u32, usize); 2] = [
+    (0x10962c, 0x3a4da8, 2),
+    (0x109720, 0x3a4dc8, 5),
+];
+pub const RED_SPRING_SOUND_ROLES: [&str; 4] = [
+    "audio/red-spring-sound-root-0", "audio/red-spring-sound-table-0",
+    "audio/red-spring-sound-root-1", "audio/red-spring-sound-table-1",
+];
 const ROM_BASE: u32 = 0x08000000;
 const ROM_END: u32 = 0x09000000;
 
@@ -106,6 +115,37 @@ impl Header {
     }
 }
 
+/// The guest retains sequencing and channel behavior. The unused byte and
+/// encoded sound words are preserved without normalizing their flag bits.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TimedSoundRow {
+    pub tick: u16,
+    pub channel: u8,
+    pub opaque03: u8,
+    pub sound_words: [u16; 2],
+}
+impl TimedSoundRow {
+    pub fn source_bytes(&self) -> [u8; 8] {
+        let mut bytes = [0; 8];
+        bytes[..2].copy_from_slice(&self.tick.to_le_bytes());
+        bytes[2] = self.channel;
+        bytes[3] = self.opaque03;
+        bytes[4..6].copy_from_slice(&self.sound_words[0].to_le_bytes());
+        bytes[6..8].copy_from_slice(&self.sound_words[1].to_le_bytes());
+        bytes
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TimedSoundSchedule {
+    pub root_offset: u32,
+    pub root_pointer: u32,
+    pub source_offset: u32,
+    pub rows: Vec<TimedSoundRow>,
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct AudioDirectory {
@@ -115,6 +155,8 @@ pub struct AudioDirectory {
     pub songs: Vec<Song>,
     /// Ordered by original source offset. Shared headers have one owner.
     pub headers: Vec<Header>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub red_spring_sounds: Option<[TimedSoundSchedule; 2]>,
 }
 impl AudioDirectory {
     pub fn validate(&self) -> Result<(), String> {
@@ -184,6 +226,15 @@ impl AudioDirectory {
                 return Err(bad());
             }
         }
+        for (schedule, (root, source, count)) in self.red_spring_sounds.as_ref()
+            .ok_or_else(bad)?.iter().zip(RED_SPRING_SOUND_SPECS) {
+            if schedule.root_offset != root || schedule.source_offset != source
+                || schedule.root_pointer != ROM_BASE + source || schedule.rows.len() != count
+                || schedule.rows.iter().flat_map(|row| row.sound_words)
+                    .any(|word| word != 0 && usize::from(word & 0x0fff) >= self.songs.len()) {
+                return Err(bad());
+            }
+        }
         Ok(())
     }
     pub fn header(&self, id: u16) -> Option<&Header> {
@@ -215,7 +266,30 @@ impl AudioDirectory {
                 .iter()
                 .map(|h| (h.source_offset, h.source_bytes())),
         );
+        if let Some(schedules) = &self.red_spring_sounds {
+            for schedule in schedules {
+                spans.push((schedule.root_offset, schedule.root_pointer.to_le_bytes().to_vec()));
+                spans.push((schedule.source_offset, schedule.rows.iter().flat_map(TimedSoundRow::source_bytes).collect()));
+            }
+        }
         spans
+    }
+
+    /// Return only source bytes represented by the two observed schedules.
+    pub fn red_spring_sound_byte(&self, at: u32) -> Option<(u8, usize, bool)> {
+        for (index, schedule) in self.red_spring_sounds.as_ref()?.iter().enumerate() {
+            if let Some(relative) = at.checked_sub(schedule.root_offset) {
+                if let Some(byte) = schedule.root_pointer.to_le_bytes().get(relative as usize) {
+                    return Some((*byte, index, true));
+                }
+            }
+            if let Some(relative) = at.checked_sub(schedule.source_offset) {
+                if let Some(row) = schedule.rows.get(relative as usize / 8) {
+                    return Some((row.source_bytes()[relative as usize % 8], index, false));
+                }
+            }
+        }
+        None
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
@@ -234,6 +308,17 @@ impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
         if ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("M4A directory requires exact EUR ROM; USA pending".into());
+        }
+        for (start, end, expected) in [
+            (0x1095f2, 0x10961e, "767d91e72c61c52f7bdcc080860050637042be0e6db4fe082947f699dff110ad"),
+            (0x1096f0, 0x109708, "fa10a227ddb36c6380f9fe5980e427da003cf0e02c360053423e865c5a310ca8"),
+            (0xe3672, 0xe36b6, "56ffd449d04cc2590cc85f32f19280c888474c47ebc09dd74f67ce5d346a4477"),
+            (0x3a4da8, 0x3a4db8, "20d08f808ee42b4f990700351ce014def08a74647e350153fe2aa0f691e0456f"),
+            (0x3a4dc8, 0x3a4df0, "99f315f4bc056b340cca156b21837aceb378f832368efa4029bb92c30ab6aedc"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected {
+                return Err("Red Spring timed sound source or reader mismatch".into());
+            }
         }
         let half = |at: usize| u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
         let word = |at: usize| u32::from_le_bytes(rom[at..at + 4].try_into().unwrap());
@@ -349,12 +434,22 @@ impl Catalog {
                     .collect(),
             });
         }
+        let red_spring_sounds = std::array::from_fn(|index| {
+            let (root, source, count) = RED_SPRING_SOUND_SPECS[index];
+            let rows = (0..count).map(|index| {
+                let at = source as usize + index * 8;
+                TimedSoundRow { tick: half(at), channel: rom[at + 2], opaque03: rom[at + 3],
+                    sound_words: [half(at + 4), half(at + 6)] }
+            }).collect();
+            TimedSoundSchedule { root_offset: root, root_pointer: word(root as usize), source_offset: source, rows }
+        });
         let decoded = AudioDirectory {
             player_source_offset: PLAYER_OFFSET,
             directory_source_offset: DIRECTORY_OFFSET,
             players,
             songs,
             headers,
+            red_spring_sounds: Some(red_spring_sounds),
         };
         decoded.validate()?;
         let sources = decoded
@@ -369,8 +464,10 @@ impl Catalog {
                     "audio/m4a-players".into()
                 } else if i == 1 {
                     "audio/m4a-directory".into()
-                } else {
+                } else if i < 2 + decoded.headers.len() {
                     format!("audio/m4a-header/{}", decoded.headers[i - 2].id)
+                } else {
+                    RED_SPRING_SOUND_ROLES[i - 2 - decoded.headers.len()].into()
                 },
             })
             .collect();

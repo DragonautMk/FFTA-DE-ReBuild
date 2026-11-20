@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-observed-rectangle-list-row",
+  "title": "Migrate observed rectangle list row",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated tilemap row resource with the EUR row selecting the previously migrated rectangle descriptor list, declare the tilemap dependency and preserve guest indexing and unclassified fields.",
+    "The 12 reconstructed source bytes include six previously unowned bytes observed in the E172 scene sample; prior row fields and 119 other resources are preserved."
+  ],
+  "validation": [
+    "Source e185-row-source-a9cjlk1d and original-reader Wine trace e185-row-trace-wine-2iw6p25i; publication, coherent-edit rejection, poisoned mirrored and adjacent-row boundary reads and two interpreter/native reader cases e185-list-row-wine-ho6q2xxd.",
+    "Wine e185-list-row-scene-wine-xrk2v6ks matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with the selected row, both root spans and both rectangle backings altered; each is used. Production Wine CLI e185-list-row-cli-wine-e42p10cn creates, reuses and verifies 121 matching files."
+  ],
+  "limitations": [
+    "Other rows, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still has 3,494 observed unowned bytes outside the accepted increments. No performance measurements were performed.",
+    "The ordinary reader trace used interpreter fallback; separately compiled cases cover only the selected reader paths."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_list_row_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

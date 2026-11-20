@@ -887,6 +887,9 @@ no host timing or residency calls. Evidence:
 
 ## Observed indirect OBJ list sources beyond the direct catalog
 
+The associated five observed IWRAM callback words are later managed in E188;
+see the [bounded control-word proof](rom_data_runtime.md#e188-observed-iwram-obj-callback-words).
+
 The feature-gated bus/host audit identified two ROM ranges not owned by the
 then-current74-list catalog. A separate, single Wine frame from the existing F09
 checkpoint/input used the retained e71 CLI/cache/dataset with producer logging.

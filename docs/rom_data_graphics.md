@@ -2288,8 +2288,8 @@ EUR E183-d182 extends `graphics.observed-tilemap` with a 2×15 rectangle at
 height and width bytes followed by row-major 16-bit cells. Source
 `e183-rect-source-n257xucg` authenticates both headers, 42 cells, exact reader
 windows and the pointer cells at `3a4b08` and `3a4d3c`. Of the 88 source
-bytes, 86 were observed unowned in the E172 sample. The two pointer cells and
-other neighboring data remain separate raw sources; the rectangles' extents
+bytes, 86 were observed unowned in the E172 sample. At E183 the two pointer
+cells and other neighboring data remained raw; the rectangles' extents
 are not global bounds on the original readers.
 
 The typed resource preserves the earlier run-compressed tilemap and
@@ -2309,3 +2309,53 @@ and validation unit completed successfully. Wine production CLI
 `e183-rect-cli-wine-grtrq8pm` creates, reuses and verifies 121 files matching
 the tested generation. Other rectangles and consumers, Linux, USA and native
 Windows remain open. No performance measurement was performed.
+
+## E184 observed rectangle roots
+
+EUR E184-d183 extends `graphics.observed-tilemap` with the two E183 rectangle
+roots. The 16-byte span at `3a4b08..3a4b18` contains the first rectangle's
+descriptor and a one-entry list pointing to it; the four-byte cell at
+`3a4d3c` points to the second rectangle. Unclassified descriptor bytes and list
+padding retain their source values. The model validates the links and list
+count without imposing bounds on other guest tables. Source
+`e184-roots-source-46yea8p1` authenticates the exact 20 bytes, including 17
+bytes observed unowned in the selected E172 sample.
+
+Wine `e184-roots-trace-wine-_vvgz2qn` observes the original list reader at
+`080db392` and pointer reader at `081094fa`; both traces use interpreter
+fallback. Wine `e184-roots-wine-5kk84qdw` preserves the previous tilemap
+fields and other 119 resources, rejects coherent edits, checks poisoned mirrors
+and boundaries including the adjacent separately owned E181 descriptor, and
+compares both original-interpreter and separately compiled reader paths with
+equal complete state and guest clock. Wine
+`e184-roots-scene-wine-kavnisxk` matches state, clock, central/wide video, OAM,
+dispatch and audio for the recorded 600-frame action with all 20 root and 88
+rectangle backing bytes altered in the managed machine. Both roots and both
+rectangles are used. Wine production CLI `e184-roots-cli-wine-vdp3mixx`
+creates, reuses and verifies 121 files matching the tested generation. Other
+roots, selectors, scenes and consumers, Linux, USA and native Windows remain
+open. No performance measurement was performed.
+
+## E185 observed rectangle list row
+
+EUR E185-d184 extends `graphics.observed-tilemap-row` with the 12-byte row at
+`3a4bb0..3a4bbc`, which selects the E184 one-entry rectangle descriptor list.
+Source `e185-row-source-a9cjlk1d` authenticates the row, its exact pointer and
+the existing owned list; six of its bytes were observed unowned in the E172
+sample. The row resource declares both descriptor and tilemap dependencies,
+preserving original indexing and the other row fields without assigning them
+unproved semantics.
+
+Wine `e185-row-trace-wine-2iw6p25i` observes the original row-byte read at
+`080db4ac` via interpreter fallback. Wine `e185-list-row-wine-ho6q2xxd`
+preserves the previous rows and other 119 resources, rejects coherent edits,
+checks poisoned mirrors and the boundary with the adjacent E180 row, and
+compares two original-interpreter/separately compiled reader paths with equal
+complete state and guest clock. Wine `e185-list-row-scene-wine-xrk2v6ks`
+matches state, clock, central/wide video, OAM, dispatch and audio for the
+recorded 600-frame action while the new row, both E184 root spans and both
+E183 rectangles have altered backing bytes. The selected row and all four
+linked spans are used. Wine production CLI `e185-list-row-cli-wine-e42p10cn`
+creates, reuses and verifies 121 files matching the tested generation. Other
+rows, selectors, scenes and consumers, Linux, USA and native Windows remain
+open. No performance measurement was performed.

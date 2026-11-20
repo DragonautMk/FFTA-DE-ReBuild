@@ -24501,3 +24501,38 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: the user authorized publication and GitHub release v1.2.0 (452599943) is public and marked latest, with tag/source commit `4fe7ac97`. All 12 published assets matched local sizes and SHA-256 digests; the release page and three package downloads returned HTTP 200. The matching commit passed project-memory CI; prior Windows/Wine, Linux and Android build/device checks remain valid.
 - Evidence: https://github.com/DragonautMk/FFTA-DE-ReBuild/releases/tag/v1.2.0; `docs/changes/2026-11-20-finalize-1-2-release-notes.json`; GitHub run 44766806047; `release-120-windows-_njed1p3`, `release-120-linux-m47i0oey`, `android-rom-folder-build33-v9sz7y9i`, `android-rom-folder-build33-audit-4v8fpja0`.
 - Limits: native Windows, Windows ADB and full Android gameplay were not verified. The Android build is a separately signed, debuggable preview. Later memory-only commits do not alter the release source.
+
+### ROMDATA-01-E183-RECTANGLE-ROOTS
+
+- Outcome: completed
+- Verified criteria: EUR E184-d183 adds two selected rectangle roots, a one-entry descriptor/list chain and a separate pointer, preserving all earlier tilemap fields and 119 other resources. Of 20 reconstructed source bytes, 17 were previously unowned in the E172 sample. Wine verifies publication, coherent-edit rejection, poisoned mirror and mixed adjacent-owner boundaries, and both original-interpreter and separately compiled reader paths with equal state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with both root spans and both rectangles altered; each is used. Wine production CLI creates, reuses and verifies 121 matching files.
+- Evidence: source `e184-roots-source-46yea8p1`; Wine traces `e184-roots-trace-wine-_vvgz2qn`; publication/readers `e184-roots-wine-5kk84qdw`; scene `e184-roots-scene-wine-kavnisxk`; CLI `e184-roots-cli-wine-vdp3mixx`. Wine servers drained.
+- Limits: Both ordinary traces used interpreter fallback; compiled checks cover only the selected reader paths. Other roots, selectors, consumers, scenes and ROM independence remain open; 3,500 E172-sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### ROMDATA-01-E184-RECTANGLE-LIST-ROW
+
+- Outcome: completed
+- Verified criteria: EUR E185-d184 adds the authenticated row selecting the E184 rectangle descriptor list and declares its typed tilemap dependency, preserving earlier rows and 119 other resources. Of 12 reconstructed source bytes, six were previously unowned in the E172 sample. Wine verifies publication, coherent-edit rejection, poisoned mirror and adjacent-row boundaries, and both original-interpreter and separately compiled reader paths with equal state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with the new row, both root spans and both rectangle backings altered; each is used. Wine production CLI creates, reuses and verifies 121 matching files.
+- Evidence: source `e185-row-source-a9cjlk1d`; Wine trace `e185-row-trace-wine-2iw6p25i`; publication/readers `e185-list-row-wine-ho6q2xxd`; scene `e185-list-row-scene-wine-xrk2v6ks`; CLI `e185-list-row-cli-wine-e42p10cn`. Wine servers drained.
+- Limits: The ordinary trace used interpreter fallback; compiled checks cover only the selected reader paths. Other rows, selectors, consumers, scenes and ROM independence remain open; 3,494 E172-sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### ROMDATA-01-E173-REDSPRING-3A4CA0
+
+- Outcome: completed
+- Verified criteria: EUR E186-d185 adds three authenticated records linked to the existing E173 compact OBJ bank, validates the bank and selectors, and preserves prior catalog fields and 119 other resources. Of 72 reconstructed bytes, 60 were previously unowned in the E172 sample. Wine verifies publication, coherent-edit rejection, poisoned mirrors and record boundaries, and nine original-interpreter/separately compiled reader prefixes with equal state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with all records and 634 existing bank bytes altered; all three records and typed guest/host bank paths are used. Wine production CLI creates, reuses and verifies 121 matching files.
+- Evidence: source `e186-compact-records-source-ae4wgq4a`; Wine traces `e186-records-trace-wine-2ibf_qi4` and `e186-fields-trace-wine-bldajpbj`; publication/readers `e186-records-wine-k6d5krm5`; scene `e186-records-scene-wine-1zw44c41`; CLI `e186-records-cli-wine-y0aiuls6`. Wine servers drained.
+- Limits: Ordinary traces used interpreter fallback; compiled checks cover selected reader prefixes. Other records, banks, selectors, consumers, scenes and ROM independence remain open; 3,434 E172-sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### ROMDATA-01-E187-REDSPRING-SOURCE-TABLES
+
+- Outcome: completed
+- Verified criteria: Two EUR timed sound schedules and their literal roots are authenticated, extracted, linked to the audio directory and consumed from managed data; Wine original-reader/compiled-prefix, altered-source scene and production CLI pass. The 64 source bytes include 57 previously unowned E172 sample bytes.
+- Evidence: `e187-sound-source-dybrm98g`, Wine `e187-tables-trace-wine-t7gxddev`, `e187-sound-wine-63mjpshl`, `e187-sound-scene-wine-vrwrh7f0`, `e187-sound-cli-wine-2xep4wwf`; `docs/rom_data_audio.md#e187-red-spring-timed-sound-schedules`; `docs/changes/2026-11-20-migrate-red-spring-sound-schedules.json`. Initial source `_2avl96w` lacked REPO_ROOT and initial build `82_yq9vl` used the wrong working directory; corrected attempts passed.
+- Limits: Original scene traces used interpreter fallback; compiled validation covers only selected prefixes. Adjacent rows, the E186 record literal, other consumers, Linux, USA and native Windows remain open. Historical audio-directory fixtures need E187 adaptation. No performance measurement.
+
+### ROMDATA-01-E188-IWRAM-CONTROL-397F80
+
+- Outcome: completed
+- Verified criteria: Five EUR IWRAM Thumb callback words are authenticated, extracted, and served by the static OBJ resource; Wine reader/branch-entry ABI, poisoned scene and CLI pass. All 20 bytes were unowned in the E172 sample.
+- Evidence: `e188-control-source-rm56pdw9`, Wine `e188-control-trace-wine-sr60q_xk`, `e188-control-tail-trace-wine-fo65p2xu`, `e188-control-wine-ryj41yi9`, `e188-control-scene-wine-ch94duvy`, `e188-control-cli-wine-3z2jda18`; `docs/rom_data_runtime.md#e188-observed-iwram-obj-callback-words`; `docs/changes/2026-11-20-migrate-iwram-obj-callback-words.json`. Source attempt `kix974wc` used an incorrect placeholder path and was corrected.
+- Limits: Scene traces used interpreter fallback; compiled validation covers the five selected load-and-branch entries only. Other callbacks, live IWRAM code paths and consumers, Linux, USA and native Windows remain open. Historical OBJ fixtures need E188 adaptation. No performance measurement.

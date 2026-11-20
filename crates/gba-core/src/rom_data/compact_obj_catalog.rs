@@ -8,6 +8,34 @@ mod contracts;
 pub use contracts::{BANK_SPECS, SOURCE_SPANS};
 pub mod selector_tables;
 
+pub const RED_SPRING_RECORD_OFFSET: u32 = 0x3a4ca0;
+pub const RED_SPRING_RECORD_LENGTH: usize = 24;
+pub const RED_SPRING_RECORD_HASHES: [&str; 3] = [
+    "136d1fe86b9516ea174e441624542ee6dba018ff18aa4615ffc91e88c8491ccb",
+    "4680d3c3b164751c6c56f30a63878bc37ad0547257e964e7a078acd4b2d8c31b",
+    "63d108fa4b4b0e2cf749c24b1ea1ad5a0f13a3a570c6873c8bec91612bed9c4b",
+];
+
+/// Preserve the observed fields without asserting semantics beyond the bank and selector.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RedSpringRecord {
+    pub source_offset: u32,
+    pub bank_pointer: u32,
+    pub halfwords: [u16; 10],
+}
+
+impl RedSpringRecord {
+    pub fn source_bytes(&self) -> [u8; RED_SPRING_RECORD_LENGTH] {
+        let mut bytes = [0; RED_SPRING_RECORD_LENGTH];
+        bytes[..4].copy_from_slice(&self.bank_pointer.to_le_bytes());
+        for (index, value) in self.halfwords.iter().enumerate() {
+            bytes[4 + index * 2..6 + index * 2].copy_from_slice(&value.to_le_bytes());
+        }
+        bytes
+    }
+}
+
 pub struct BankSpec {
     pub root: u32,
     pub sequence_relative_offset: u16,
@@ -146,6 +174,8 @@ pub struct CompactObjCatalog {
     // Current v11 validation requires all fourteen source-authenticated tables.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub selector_tables: Option<selector_tables::SelectorTables>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub red_spring_records: Option<[RedSpringRecord; 3]>,
 }
 
 impl CompactObjCatalog {
@@ -187,6 +217,13 @@ impl CompactObjCatalog {
                 return Err("Invalid compact catalog source geometry".into());
             }
         }
+        let bank = self.banks.iter().find(|bank| bank.root == 0x6c1e78).ok_or("Missing Red Spring compact bank")?;
+        for (index, record) in self.red_spring_records.as_ref().ok_or("Missing Red Spring compact records")?.iter().enumerate() {
+            if record.source_offset != RED_SPRING_RECORD_OFFSET + (index * RED_SPRING_RECORD_LENGTH) as u32
+                || record.bank_pointer != 0x0800_0000 + bank.root || bank.sequence(record.halfwords[0]).is_none() {
+                return Err("Invalid Red Spring compact record binding".into());
+            }
+        }
         Ok(())
     }
 
@@ -194,6 +231,7 @@ impl CompactObjCatalog {
         self.validate()?;
         let mut pieces: Vec<_> = self.banks.iter().map(Bank::source_pieces).collect::<Result<Vec<_>, _>>()?.into_iter().flatten().collect();
         pieces.extend(self.selector_tables.as_ref().unwrap().source_pieces());
+        pieces.extend(self.red_spring_records.as_ref().unwrap().iter().map(|record| (record.source_offset, record.source_bytes().to_vec())));
         let spans = merge_pieces(pieces)?;
         if spans.len() != SOURCE_SPANS.len() || spans.iter().zip(SOURCE_SPANS).any(|((at, bytes), &(start, end))| *at != start || bytes.len() != (end - start) as usize) {
             return Err("Invalid compact catalog source union".into());
@@ -204,6 +242,9 @@ impl CompactObjCatalog {
     pub fn byte_at(&self, offset: u32) -> Option<u8> {
         self.banks.iter().find_map(|bank| bank.byte_at(offset))
             .or_else(|| self.selector_tables.as_ref().and_then(|tables| tables.byte_at(offset)))
+            .or_else(|| self.red_spring_records.as_ref()?.iter().find_map(|record| {
+                offset.checked_sub(record.source_offset).and_then(|at| record.source_bytes().get(at as usize).copied())
+            }))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
@@ -244,7 +285,27 @@ impl Catalog {
             }
             banks.push(Bank { root: spec.root, flags: half(spec.root), sequence_relative_offset: half(spec.root + 2), lists, sequences });
         }
-        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)) };
+        for (start, end, expected) in [
+            (0xd8968, 0xd897c, "e1db99bf0c51491f7314175ce66b14d5ecdb3c820edfb4a4831c040a3aebdae4"),
+            (0xd8b60, 0xd8b80, "efadd2079800d4a984a4bdd5bd8f8a927547c5f2be71012f4f5e9011865e4b93"),
+            (0xd8baa, 0xd8be2, "60e9949e9ca96ea25f54bbc3b237ae939f10f5f7616448a83d6907f74470e4ad"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected { return Err("Red Spring compact record reader mismatch".into()); }
+        }
+        for (index, expected) in RED_SPRING_RECORD_HASHES.iter().enumerate() {
+            let start = RED_SPRING_RECORD_OFFSET as usize + index * RED_SPRING_RECORD_LENGTH;
+            if ffta_rom::digest(&rom[start..start + RED_SPRING_RECORD_LENGTH]) != *expected {
+                return Err("Red Spring compact record source mismatch".into());
+            }
+        }
+        let red_spring_records = std::array::from_fn(|index| {
+            let offset = RED_SPRING_RECORD_OFFSET + (index * RED_SPRING_RECORD_LENGTH) as u32;
+            let start = offset as usize;
+            RedSpringRecord { source_offset: offset,
+                bank_pointer: u32::from_le_bytes(rom[start..start + 4].try_into().unwrap()),
+                halfwords: std::array::from_fn(|index| half(offset + 4 + index as u32 * 2)), }
+        });
+        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)), red_spring_records: Some(red_spring_records) };
         let sources = decoded.source_spans()?.into_iter().map(|(offset, bytes, role)| SourceRange {
             offset, length: bytes.len() as u32, sha256: ffta_rom::digest(&bytes), role,
         }).collect();

@@ -4,17 +4,17 @@ use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2] }
+pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2], pub root_bytes: [u64; 2] }
 
 pub(super) struct ObservedTilemapResources {
     data: model::ObservedTilemap,
     reads: AtomicU64,
     bytes: AtomicU64,
-    rectangle_bytes: [AtomicU64; 2],
+    selected_bytes: [AtomicU64; 4],
 }
 
 impl ObservedTilemapResources {
-    pub(super) fn source_page(index: usize) -> bool { matches!(index >> 12, 0xae7 | 0xaf2) }
+    pub(super) fn source_page(index: usize) -> bool { matches!(index >> 12, 0x3a4 | 0xae7 | 0xaf2) }
 
     pub(super) fn new(data: model::ObservedTilemap, sources: &[SourceRange]) -> Result<Self, String> {
         data.validate()?;
@@ -23,7 +23,7 @@ impl ObservedTilemapResources {
             source.offset != *offset || source.length as usize != bytes.len()
                 || source.role != *role || source.sha256 != ffta_rom::digest(bytes)
         }) { return Err("Observed tilemap source binding mismatch".into()); }
-        Ok(Self { data, reads: AtomicU64::new(0), bytes: AtomicU64::new(0), rectangle_bytes: std::array::from_fn(|_| AtomicU64::new(0)) })
+        Ok(Self { data, reads: AtomicU64::new(0), bytes: AtomicU64::new(0), selected_bytes: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
 
     fn byte(&self, index: usize) -> Option<(u8, Option<usize>)> {
@@ -47,6 +47,12 @@ impl ObservedTilemapResources {
                 _ => rectangle.cells.get((at - 2) / 2).map(|cell| cell.to_le_bytes()[(at - 2) % 2]),
             }?;
             Some((value, Some(index_in_data)))
+        }).or_else(|| {
+            index.checked_sub(model::RECTANGLE_CHAIN_OFFSET as usize)
+                .and_then(|at| self.data.rectangle_roots.chain_bytes().get(at).copied()).map(|value| (value, Some(2)))
+        }).or_else(|| {
+            index.checked_sub(model::RECTANGLE_TABLE_OFFSET as usize)
+                .and_then(|at| self.data.rectangle_roots.table_bytes().get(at).copied()).map(|value| (value, Some(3)))
         })
     }
 
@@ -55,17 +61,18 @@ impl ObservedTilemapResources {
         let count = cells.iter().filter(|cell| cell.is_some()).count();
         if count == 0 { return prior; }
         let result = std::array::from_fn(|i| cells[i].map(|(value, _)| value).unwrap_or_else(|| prior.as_ref().map_or_else(|| rom[index + i], |v| v[i])));
-        let mut rectangles = [0u64; 2];
-        for (_, index) in cells.iter().flatten() { if let Some(index) = index { rectangles[*index] += 1; } }
+        let mut selected = [0u64; 4];
+        for (_, index) in cells.iter().flatten() { if let Some(index) = index { selected[*index] += 1; } }
         self.reads.fetch_add(1, Ordering::Relaxed);
         self.bytes.fetch_add(count as u64, Ordering::Relaxed);
-        for (counter, count) in self.rectangle_bytes.iter().zip(rectangles) { counter.fetch_add(count, Ordering::Relaxed); }
+        for (counter, count) in self.selected_bytes.iter().zip(selected) { counter.fetch_add(count, Ordering::Relaxed); }
         Some(result)
     }
 
     pub(super) fn stats(&self) -> ObservedTilemapStats {
+        let [rect0, rect1, root0, root1] = self.selected_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
         ObservedTilemapStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: self.bytes.load(Ordering::Relaxed),
-            rectangle_bytes: self.rectangle_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)) }
+            rectangle_bytes: [rect0, rect1], root_bytes: [root0, root1] }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.rectangles.iter().map(|rectangle| rectangle.cells.capacity() * std::mem::size_of::<u16>()).sum::<usize>()

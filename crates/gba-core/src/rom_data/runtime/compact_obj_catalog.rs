@@ -3,11 +3,12 @@ use super::*;
 use crate::rom_data::compact_obj_catalog as model;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64, pub host_reads: u64 }
+pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64, pub host_reads: u64, pub red_spring_record_bytes: [u64; 3] }
 
 pub(super) struct CompactObjCatalogResources {
     data: model::CompactObjCatalog,
     counters: [AtomicU64; 3],
+    red_spring_record_bytes: [AtomicU64; 3],
 }
 impl CompactObjCatalogResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -21,18 +22,26 @@ impl CompactObjCatalogResources {
                 return Err("Compact catalog source binding mismatch".into());
             }
         }
-        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)) })
+        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)), red_spring_record_bytes: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
         if !model::SOURCE_SPANS.iter().any(|&(start, end)| index < end as usize && index.saturating_add(N) > start as usize) { return prior; }
         let mut source_bytes = 0;
+        let mut record_bytes = [0u64; 3];
         let bytes = std::array::from_fn(|i| {
             let at = index + i;
-            if let Some(byte) = self.data.byte_at(at as u32) { source_bytes += 1; byte }
+            if let Some(byte) = self.data.byte_at(at as u32) {
+                source_bytes += 1;
+                if let Some(relative) = at.checked_sub(model::RED_SPRING_RECORD_OFFSET as usize) {
+                    if relative < model::RED_SPRING_RECORD_LENGTH * 3 { record_bytes[relative / model::RED_SPRING_RECORD_LENGTH] += 1; }
+                }
+                byte
+            }
             else { prior.as_ref().map_or_else(|| rom[at], |value| value[i]) }
         });
         self.counters[0].fetch_add(1, Ordering::Relaxed);
         self.counters[1].fetch_add(source_bytes, Ordering::Relaxed);
+        for (counter, count) in self.red_spring_record_bytes.iter().zip(record_bytes) { counter.fetch_add(count, Ordering::Relaxed); }
         Some(bytes)
     }
     pub(super) fn host_list(&self, offset: u32) -> Option<&crate::rom_data::obj_lists::List> {
@@ -42,7 +51,7 @@ impl CompactObjCatalogResources {
         Some(&list.list)
     }
     pub(super) fn stats(&self) -> CompactObjCatalogStats {
-        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed), host_reads: self.counters[2].load(Ordering::Relaxed) }
+        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed), host_reads: self.counters[2].load(Ordering::Relaxed), red_spring_record_bytes: self.red_spring_record_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)) }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>()

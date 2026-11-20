@@ -272,9 +272,14 @@ and E179 owns a 12-byte row pointing to it. E180 adds four adjacent rows
 covering 48 observed bytes. E181 owns four selected descriptors and their
 four LZ wrappers, including 28 further observed bytes. E182 owns three linked
 transfer rows, descriptors and LZ wrappers, including another 58 observed
-bytes. E183 adds two tilemap rectangles covering another 86 observed bytes.
-The altered-source 600-frame actions and CLI checks through E183 pass on Wine;
-3,517 original observed unowned bytes lie outside these eleven increments.
+bytes. E183 adds two tilemap rectangles covering another 86 observed bytes;
+E184 owns their selected roots, including another 17 observed bytes. E185
+owns the row selecting that list, including six observed bytes. E186 owns
+three compact-bank records covering another 60 observed bytes. E187 owns two
+timed sound schedules and their roots, including another 57 observed bytes.
+E188 owns five IWRAM callback words covering another 20 observed bytes. The
+altered-source 600-frame actions and CLI checks through E188 pass on Wine;
+3,357 original observed unowned bytes lie outside these sixteen increments.
 Other readers, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
 

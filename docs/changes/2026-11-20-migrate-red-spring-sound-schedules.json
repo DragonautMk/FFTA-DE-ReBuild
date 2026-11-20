@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-red-spring-sound-schedules",
+  "title": "Migrate Red Spring timed sound schedules",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated M4A directory with two timed sound schedules and their literal roots; preserve original sound words and let the guest continue scheduling and channel handling.",
+    "The 64 reconstructed source bytes include 57 previously unowned bytes in the E172 sample; existing audio fields and the other 119 resources are preserved."
+  ],
+  "validation": [
+    "Source e187-sound-source-dybrm98g; Wine trace e187-tables-trace-wine-t7gxddev; publication, coherent-edit rejection, poisoned mirrors, mixed boundaries and 21 interpreter/native reader prefixes e187-sound-wine-63mjpshl.",
+    "Wine e187-sound-scene-wine-vrwrh7f0 matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames while all 64 backing bytes are altered; both schedules and roots are used. Wine production CLI e187-sound-cli-wine-2xep4wwf creates, reuses and verifies 121 matching files."
+  ],
+  "limitations": [
+    "Other schedules, the separately rooted intervening rows and compact-record literal, consumers, Linux, USA and native Windows remain open. Historical audio-directory fixtures need E187 adaptation. No performance measurements were performed.",
+    "Ordinary traces used interpreter fallback; separately compiled cases cover only the selected reader prefixes. The E172 sample still has 3,377 unowned observed bytes outside the accepted increments."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_directory.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_sound_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

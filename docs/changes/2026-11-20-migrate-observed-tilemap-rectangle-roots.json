@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-observed-tilemap-rectangle-roots",
+  "title": "Migrate observed tilemap rectangle roots",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated observed tilemap resource with a one-entry descriptor/list chain and a separate pointer to the two previously migrated EUR rectangles. Preserve unclassified descriptor parameters and list padding, validate both links and leave other guest indexing unchanged.",
+    "The 20 reconstructed source bytes include 17 previously unowned bytes observed in the E172 scene sample; previous tilemap fields and 119 other resources are preserved."
+  ],
+  "validation": [
+    "Source e184-roots-source-46yea8p1 and Wine original-reader traces e184-roots-trace-wine-_vvgz2qn; publication, coherent-edit rejection, poisoned mirrored and mixed-owner boundary reads and two interpreter/native reader cases e184-roots-wine-5kk84qdw.",
+    "Wine e184-roots-scene-wine-kavnisxk matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 20 root and 88 rectangle backing bytes altered; both roots and rectangles are used. Production Wine CLI e184-roots-cli-wine-vdp3mixx creates, reuses and verifies 121 matching files."
+  ],
+  "limitations": [
+    "Other roots, selectors, scenes and consumers, Linux, USA and native Windows remain pending. The selected E172 sample still has 3,500 observed unowned bytes outside the accepted increments. No performance measurements were performed.",
+    "Both ordinary reader traces used interpreter fallback; the separately compiled cases cover only the selected readers."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_roots_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

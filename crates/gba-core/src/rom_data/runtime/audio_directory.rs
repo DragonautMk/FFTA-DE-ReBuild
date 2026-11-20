@@ -12,6 +12,8 @@ pub struct AudioDirectoryStats {
     pub directory_bytes: u64,
     pub header_bytes: u64,
     pub track_pointer_bytes: u64,
+    pub red_spring_sound_bytes: [u64; 2],
+    pub red_spring_root_bytes: [u64; 2],
     pub player_mask: u64,
     pub song_masks: [u64; 10],
     pub header_masks: [u64; 8],
@@ -25,7 +27,7 @@ struct Span {
 pub(super) struct AudioDirectoryResources {
     data: model::AudioDirectory,
     spans: Vec<Span>,
-    counters: [AtomicU64; 6],
+    counters: [AtomicU64; 10],
     host: [AtomicU64; 2],
     player_mask: AtomicU64,
     song_masks: [AtomicU64; 10],
@@ -33,7 +35,7 @@ pub(super) struct AudioDirectoryResources {
 }
 impl AudioDirectoryResources {
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x14f..=0x150 | 0x338..=0x370)
+        matches!(index >> 12, 0x109 | 0x14f..=0x150 | 0x338..=0x370 | 0x3a4)
     }
     pub(super) fn new(
         data: model::AudioDirectory,
@@ -44,12 +46,14 @@ impl AudioDirectoryResources {
         if sources.len() != decoded.len() {
             return Err("M4A source binding count mismatch".into());
         }
-        let mut spans = Vec::with_capacity(sources.len());
+        let base_count = 2 + data.headers.len();
+        let mut spans = Vec::with_capacity(base_count);
         for (i, (source, (offset, bytes))) in sources.iter().zip(decoded).enumerate() {
             let role = match i {
                 0 => "audio/m4a-players".into(),
                 1 => "audio/m4a-directory".into(),
-                _ => format!("audio/m4a-header/{}", data.headers[i - 2].id),
+                _ if i < base_count => format!("audio/m4a-header/{}", data.headers[i - 2].id),
+                _ => model::RED_SPRING_SOUND_ROLES[i - base_count].into(),
             };
             if source.offset != offset
                 || source.length as usize != bytes.len()
@@ -58,12 +62,14 @@ impl AudioDirectoryResources {
             {
                 return Err("M4A typed source binding mismatch".into());
             }
-            spans.push(Span {
-                start: offset as usize,
-                end: offset as usize + bytes.len(),
-                kind: i.min(2),
-                record: i.saturating_sub(2),
-            });
+            if i < base_count {
+                spans.push(Span {
+                    start: offset as usize,
+                    end: offset as usize + bytes.len(),
+                    kind: i.min(2),
+                    record: i.saturating_sub(2),
+                });
+            }
         }
         Ok(Self {
             data,
@@ -76,6 +82,9 @@ impl AudioDirectoryResources {
         })
     }
     fn byte(&self, at: usize) -> Option<(u8, usize, usize)> {
+        if let Some((byte, schedule, root)) = self.data.red_spring_sound_byte(at as u32) {
+            return Some((byte, if root { 8 + schedule } else { 6 + schedule }, 0));
+        }
         let i = self
             .spans
             .partition_point(|s| s.start <= at)
@@ -109,7 +118,7 @@ impl AudioDirectoryResources {
         if fields.iter().all(Option::is_none) {
             return prior;
         }
-        let mut counts = [0u64; 6];
+        let mut counts = [0u64; 10];
         let mut players = 0;
         let mut songs = [0u64; 10];
         let mut headers = [0u64; 8];
@@ -120,7 +129,8 @@ impl AudioDirectoryResources {
                 match kind {
                     2 => players |= 1 << record,
                     3 => songs[record / 64] |= 1 << (record % 64),
-                    _ => headers[record / 64] |= 1 << (record % 64),
+                    4 | 5 => headers[record / 64] |= 1 << (record % 64),
+                    _ => {}
                 }
                 value
             } else {
@@ -141,7 +151,8 @@ impl AudioDirectoryResources {
         Some(bytes)
     }
     pub(super) fn stats(&self) -> AudioDirectoryStats {
-        let [bus_reads, source_bytes, player_bytes, directory_bytes, header_bytes, track_pointer_bytes] =
+        let [bus_reads, source_bytes, player_bytes, directory_bytes, header_bytes, track_pointer_bytes,
+             sound0, sound1, root0, root1] =
             self.counters.each_ref().map(|v| v.load(Ordering::Relaxed));
         AudioDirectoryStats {
             host_reads: self.host[0].load(Ordering::Relaxed),
@@ -152,6 +163,8 @@ impl AudioDirectoryResources {
             directory_bytes,
             header_bytes,
             track_pointer_bytes,
+            red_spring_sound_bytes: [sound0, sound1],
+            red_spring_root_bytes: [root0, root1],
             player_mask: self.player_mask.load(Ordering::Relaxed),
             song_masks: self
                 .song_masks
@@ -169,6 +182,8 @@ impl AudioDirectoryResources {
             + self.data.players.capacity() * std::mem::size_of::<model::Player>()
             + self.data.songs.capacity() * std::mem::size_of::<model::Song>()
             + self.data.headers.capacity() * std::mem::size_of::<model::Header>()
+            + self.data.red_spring_sounds.as_ref().map_or(0, |schedules| schedules.iter()
+                .map(|schedule| schedule.rows.capacity() * std::mem::size_of::<model::TimedSoundRow>()).sum())
             + self
                 .data
                 .headers

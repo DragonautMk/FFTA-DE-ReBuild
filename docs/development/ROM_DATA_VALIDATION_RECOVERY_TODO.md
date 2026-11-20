@@ -837,12 +837,60 @@ current evidence before running another check.
   `czzprb8z` and production CLI `u2r2goyn` pass. The first reader attempt
   `k2ma7lbz` used an object lacking the selected block and was corrected.
   [Evidence](../rom_data_compact_catalog.md#e173-red-spring-compact-bank-and-host-sprite-lists).
+- [x] **ROMDATA-01-E173-REDSPRING-3A4CA0 scoped EUR/Wine:** E186 owns three
+  records selecting the E173 compact bank. Source `ae4wgq4a`, Wine traces
+  `2ibf_qi4`/`bldajpbj`, readers `k6d5krm5`, 600-frame scene `1zw44c41` and
+  CLI `y0aiuls6` pass.
+  [Evidence](../rom_data_compact_catalog.md#e186-red-spring-compact-bank-records).
+- [ ] **ROMDATA-01-E186-COMPACT-RECORDS-LINUX:** repeat publication, original
+  readers, boundaries, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E186-COMPACT-RECORDS-USA:** locate and authenticate equivalent
+  USA records and validate their consumers; native Windows remains pending too.
+- [x] **ROMDATA-01-E187-REDSPRING-SOURCE-TABLES scoped EUR/Wine:** two timed
+  sound schedules and their literal roots are owned by the audio directory.
+  Source `dybrm98g`, trace `t7gxddev`, readers `63mjpshl`, 600-frame scene
+  `vrwrh7f0` and CLI `2xep4wwf` pass.
+  [Evidence](../rom_data_audio.md#e187-red-spring-timed-sound-schedules).
+- [ ] **ROMDATA-01-E187-SOUND-SCHEDULES-LINUX:** run publication, original
+  readers, mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E187-SOUND-SCHEDULES-USA:** locate and authenticate the
+  corresponding USA tables and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E187-SOUND-SCHEDULES-OTHER:** classify the separately rooted
+  adjacent rows, the E186 record root `109628`, other schedules and consumers.
+- [ ] **ROMDATA-01-E187-AUDIO-DIRECTORY-FIXTURES:** adapt revision-pinned older
+  audio directory oracle/publication fixtures to E187 before rerunning them;
+  keep Linux runs pending until Linux validation is selected.
+- [x] **ROMDATA-01-E188-IWRAM-CONTROL-397F80 scoped EUR/Wine:** five IWRAM
+  callback words are owned by the OBJ-list resource. Source `rm56pdw9`, Wine
+  traces `sr60q_xk`/`fo65p2xu`, branches `ryj41yi9`, scene `ch94duvy` and CLI
+  `3z2jda18` pass.
+  [Evidence](../rom_data_runtime.md#e188-observed-iwram-obj-callback-words).
+- [ ] **ROMDATA-01-E188-IWRAM-CONTROL-LINUX:** run publication, reader/branch,
+  mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E188-IWRAM-CONTROL-USA:** locate and authenticate equivalent
+  USA callback words and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E188-IWRAM-CONTROL-OTHER:** classify other callbacks, including
+  observed words at `397fa4` and `397fb8`, all callers and live IWRAM code paths.
+- [ ] **ROMDATA-01-E188-OBJ-LIST-FIXTURES:** adapt older revision-pinned OBJ
+  list fixtures to E188 before rerunning them; leave Linux runs pending.
+- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-370E68:** source `_zu8l44g`, Wine
+  trace `vgsu5kue` and corrected Wine reader/side-effect proof `598qsw1v` pass.
+  The user paused before the altered-source scene and production CLI; run them
+  only on explicit resumption. Wine `gsiv7n3d` failed because its test executed
+  a chained store twice; Sol diagnosed it and the corrected retry passed.
+- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-LINUX:** validate publication, readers,
+  DMA effects, boundaries, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-USA:** locate and authenticate equivalent
+  USA directories and callers; native Windows remains pending.
+- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-OTHER:** cover other DMA callers and the
+  separate IWRAM helper vector at `370eb0` without restricting guest indices.
 - [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** classify the 8,789 previously
   observed unowned bytes outside the E173 bank increment. E174 migrates 2,578
   and E175 another 2,291. E176 owns another 64, E177 another 100, E178
   another 7, E179 another 12, E180 another 48, E181 another 28, E182
-  another 58 and E183 another 86; the other 3,517 require classification before
-  claiming the action has no remaining raw source. Other scenes,
+  another 58, E183 another 86, E184 another 17, E185 another 6 and E186
+  another 60, E187 another 57 and E188 another 20; the other 3,357 require
+  classification before claiming the action has no remaining raw source. Other scenes,
   consumers, Linux, USA and native Windows remain pending.
 - [x] **ROMDATA-01-E172-REDSPRING-AF271C scoped EUR/Wine:** E177 identifies a 102-byte
   compressed tilemap, including 100 sampled unowned bytes. Source `yiosygyx`,
@@ -886,8 +934,26 @@ current evidence before running another check.
   reader `rxrkgl9k`, 600-frame scene `qz9v5fto` and CLI `grtrq8pm` pass. The
   scene log contains a D-Bus assertion; the test completed and passed.
   [Evidence](../rom_data_graphics.md#e183-observed-tilemap-rectangles).
-- [ ] **ROMDATA-01-E172-REDSPRING-AE789C:** migrate or classify the raw pointer
-  cells at `3a4b08` and `3a4d3c`, and identify other rectangles and consumers.
+- [x] **ROMDATA-01-E183-RECTANGLE-ROOTS scoped EUR/Wine:** E184 owns the
+  selected descriptor/list and second rectangle pointer. Source `46yea8p1`,
+  Wine traces `_vvgz2qn`, readers `5kk84qdw`, 600-frame scene `kavnisxk`
+  and CLI `vdp3mixx` pass.
+  [Evidence](../rom_data_graphics.md#e184-observed-rectangle-roots).
+- [ ] **ROMDATA-01-E172-REDSPRING-AE789C:** identify other roots, rectangles,
+  selectors and consumers outside the selected EUR/Wine evidence.
+- [x] **ROMDATA-01-E184-RECTANGLE-LIST-ROW scoped EUR/Wine:** E185 owns the
+  selected row and validates its E184 list dependency. Source `a9cjlk1d`, Wine
+  trace `2iw6p25i`, readers `ho6q2xxd`, 600-frame scene `xrk2v6ks` and CLI
+  `e42p10cn` pass.
+  [Evidence](../rom_data_graphics.md#e185-observed-rectangle-list-row).
+- [ ] **ROMDATA-01-E185-LIST-ROW-LINUX:** repeat publication, original readers,
+  adjacent boundary, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E185-LIST-ROW-USA:** locate and authenticate an equivalent
+  USA row and validate its consumers; native Windows remains pending too.
+- [ ] **ROMDATA-01-E184-RECTANGLE-ROOTS-LINUX:** repeat publication, original
+  readers, mixed boundaries, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E184-RECTANGLE-ROOTS-USA:** locate and authenticate equivalent
+  USA roots and validate their consumers; native Windows remains pending too.
 - [ ] **ROMDATA-01-E183-RECTANGLES-LINUX:** repeat publication, original reader,
   boundaries, affected scene and CLI on Linux.
 - [ ] **ROMDATA-01-E183-RECTANGLES-USA:** locate and authenticate equivalent USA
