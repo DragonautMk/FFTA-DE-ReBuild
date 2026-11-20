@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "publish-rom-coverage-on-github-pages",
+  "title": "Publish the ROM coverage map on GitHub Pages",
+  "kind": "docs",
+  "platforms": [
+    "Web"
+  ],
+  "changes": [
+    "Enabled GitHub Pages from the public decomp branch /docs folder and linked the existing metadata-only EUR coverage map.",
+    "Documented that report regeneration happens locally and the committed snapshot is republished after a push."
+  ],
+  "validation": [
+    "GitHub Pages built commit 32caaab0; public HTML and JSON returned HTTP 200 with SHA-256 matching the committed report.",
+    "Chrome rendered the e170-d169 snapshot and an offset search selected the expected 64 KiB range."
+  ],
+  "limitations": [
+    "The published report is an EUR snapshot generated on 2026-11-18; it does not measure matching or completed decompilation by function.",
+    "Report regeneration is a local manual step; Pages only republishes committed files. The site root has no landing page."
+  ],
+  "files": [
+    "README.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md"
+  ]
+}

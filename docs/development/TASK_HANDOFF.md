@@ -4,9 +4,9 @@
 
 English-first; cross-tree audit open.
 
-Read relevant sections only; retired artifacts do not invalidate acceptance. [Resume rules](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
+Retired artifacts do not invalidate acceptance. [Resume rules](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Archive completed tasks; don't reopen closed children or stop other work.
+Archive completed tasks; preserve closed children and other jobs.
 
 ## Running or suspended tasks
 
@@ -32,7 +32,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 - State: active
 - Outcome: partial
 - E173 Red Spring `s73gcfva`/`czzprb8z`/`u2r2goyn` PASS; 634 bytes migrated.
-- Selection ROMDATA-01-E180-TILEMAP-DESCRIPTORS-3A4B18: EUR/Wine, no metrics/space cap. E180 rows PASS; four descriptor targets raw. Authenticate sources/readers, extend descriptor owner if proved; Wine reader/scene/CLI. Risk: target assets/aliases; stop on proof/prerequisite. Other families/Linux/USA open.
+- E181 descriptors/wrappers Wine PASS: `fd2bih7u`/`pdfkq9g5`/`3tjo6qvr`; 3,661 sampled bytes remain unowned.
+- E182 EUR/Wine PASS: `g0ce9o5s`/`fjrrnhsl`/`fx2_p2kt`/`8dilrn0i`; 3,603 E172-sampled bytes remain unowned.
+- E183 rectangles EUR/Wine PASS: `n257xucg`/`rxrkgl9k`/`qz9v5fto`/`grtrq8pm`; 3,517 E172-sampled bytes remain unowned.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
@@ -69,16 +71,24 @@ Archive completed tasks; don't reopen closed children or stop other work.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
 
-### TARGET-NON-U31-FOLLOWUP
-
-- State: active
-- Outcome: partial
-- Selection: user requests more cleanup; 18.22 GiB recovered (STORAGE_CHECKLIST.md).
-- Verified: prior four archives pass and restore offline.
-- Missing: identify and archive additional eligible outputs, verify restoration and net space.
-- Resume: inventory, guard consumers and host activity, then pack locally. Stop on completed inventory or ownership uncertainty. U31, active work and current assets are outside scope.
-
 ## Incomplete tasks and open criteria
+
+### RELEASE-1-2-PREP
+
+- State: waiting
+- Outcome: partial
+- Selection: user requests treemap, three builds, release 1.2, updated main and changelog.
+- Verified: snapshot `target/release-1.2.0-source-c7ddiima/source` passed audit; Windows `_njed1p3` (980 tests), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), Windows smoke `jpi6mapg` and Linux smoke `_lj__3eo` PASS. Units use `release-120-<platform>-` prefix.
+- Missing: old Android signer (`release-120-android-identity-r4m7wl53`), main and public map. Auto-review rejected direct push of draft commit `304ddd80` due 48 concurrent-scope files; no bypass. Drafts: `dist/release-1.2.0-draft/`.
+- Resume: await user answers on signing-key backup and release scope. Sol `/root/sol_android_signing` (requested `gpt-6.1-sol` xhigh; effective settings unknown) found no applicable key or Timeshift backup. Primary model/effort unconfirmed.
+
+### ROM-COVERAGE-TREEMAP
+
+- State: waiting
+- Outcome: partial
+- Verified: e170 family treemap, filters, details, offset link and narrow layout pass; JSON unchanged. `docs/changes/2026-11-20-add-rom-coverage-family-treemap.json`.
+- Missing: publish on decomp and verify public page; per-function matching is separate.
+- Resume: coordinate commit with release preparation; do not rerun ROM extraction.
 
 ### ANDROID-MENU-PARITY
 
@@ -167,16 +177,16 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
-- Shared resources may be in use: host-check ownership, handles and outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles and old receipts do not prove inactivity or authorize cleanup.
-- Memory: use the shared lock and both preimage hashes; merge conflicts and preserve others' locks/processes. See MEMORY_WORKFLOW.
+- Host-check owners, handles and outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles or old receipts do not prove inactivity.
+- Memory: shared lock and both preimage hashes; merge conflicts and preserve other locks/processes. See MEMORY_WORKFLOW.
 - History: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration: TASK_HANDOFF_MIGRATION.json.
 - Godot assessment complete, implementation deferred. AndroidPort is separate; exclude ROM/BIOS, private catalogs, saves and recordings from commits/packages.
 
 ## Final handover
 
-- Task: ROMDATA-01-E180-TILEMAP-DESCRIPTORS-3A4B18.
-- Last verified result: E180 rows PASS; four descriptor targets raw.
-- Remaining work: authenticate/migrate descriptors; other families/Linux/USA open.
-- Errors or blockers: none established.
-- Next action: inspect authenticated descriptor sources and trace reader.
-- References: `5w43a4ri`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.
+- Task: ROM-DATA-FULL-EUR.
+- Last verified result: E183 rectangles, Wine scene and CLI PASS.
+- Remaining work: 3,517 sampled bytes, other families and consumers; Linux/USA open.
+- Errors or blockers: completed scene log includes a D-Bus assertion.
+- Next action: select remaining EUR dependency using the progress rules.
+- References: `docs/rom_data_graphics.md`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.

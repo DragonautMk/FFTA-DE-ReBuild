@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-observed-tilemap-descriptors-and-lz-wrappers",
+  "title": "Migrate observed tilemap descriptors and LZ wrappers",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the authenticated descriptor owner with four EUR descriptors and their linked four-byte LZ wrappers; preserve the prior descriptor, the existing compressed stream owners, and original guest readers.",
+    "The 48 source bytes include 28 previously unowned bytes observed in the selected E172 scene sample; the resource declares tilemap and LZ dependencies."
+  ],
+  "validation": [
+    "Source e181-descriptors-source-l3pwspy8 and e181-wrapper-source-e90r8zmw; original-reader Wine trace e181-descriptors-trace-wine-0_8a03d2; publication, controlled original/native readers, poisoned mirrors and mixed owner boundaries e181-descriptors-wine-fd2bih7u.",
+    "Wine e181-descriptors-scene-wine-pdfkq9g5 matches complete state, guest clock, video, OAM, dispatch and audio across 600 frames with descriptor, wrapper and encoded LZ source copies altered; all seven LZ blocks are used. Production Wine CLI e181-descriptors-cli-wine-3tjo6qvr creates, reuses and verifies 121 files."
+  ],
+  "limitations": [
+    "Other scenes and consumers, per-descriptor ordinary attribution, Linux, USA and native Windows remain pending. The E172 sample still contains 3,661 observed unowned bytes outside the accepted increments. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_descriptors_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

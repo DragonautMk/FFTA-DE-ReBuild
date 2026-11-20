@@ -1,4 +1,4 @@
-//! One authenticated EUR tilemap, preserving its original compressed runs.
+//! Authenticated EUR tilemaps, preserving runs and selected halfword rectangles.
 use super::{script39_registry_poses::PriorSources, Resource, SourceRange};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
@@ -7,6 +7,11 @@ pub const SOURCE_OFFSET: u32 = 0xaf2718;
 pub const SOURCE_LENGTH: usize = 102;
 pub const SOURCE_SHA256: &str = "f84b800ef7584f5f274fbbb8eb32bf4bb45a323c56ff026d7218b14c17f0709e";
 pub const DECODED_SHA256: &str = "307e945d04b0bffeac6f011e54fdbd455db30da84b08d7d9482d25701311f186";
+/// Exact observed rectangles: source, height, width, source hash and pointer cell.
+pub const RECT_SPECS: [(u32, u8, u8, &str, u32); 2] = [
+    (0xae78ac, 2, 15, "2ab4fbbaef0dbd47b7c507b0beee844d09fbdec3d6c15043efb28d70d1f6ff32", 0x3a4b08),
+    (0xae78ec, 1, 12, "8e385066f1da1a960099736dfc7b0c051ad08c454ae20320f383745db123a14d", 0x3a4d3c),
+];
 
 /// The high control bits select ascending or repeated 16-bit entries.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -14,6 +19,24 @@ pub const DECODED_SHA256: &str = "307e945d04b0bffeac6f011e54fdbd455db30da84b08d7
 pub struct Run {
     pub control: u16,
     pub value: u16,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Rectangle {
+    pub source_offset: u32,
+    pub height: u8,
+    pub width: u8,
+    pub cells: Vec<u16>,
+}
+
+impl Rectangle {
+    pub fn source_bytes(&self) -> Vec<u8> {
+        let mut bytes = Vec::with_capacity(2 + self.cells.len() * 2);
+        bytes.extend([self.height, self.width]);
+        for cell in &self.cells { bytes.extend(cell.to_le_bytes()); }
+        bytes
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -26,6 +49,7 @@ pub struct ObservedTilemap {
     pub mode: u8,
     pub flags: u8,
     pub runs: [Run; 24],
+    pub rectangles: [Rectangle; 2],
 }
 
 impl ObservedTilemap {
@@ -43,6 +67,12 @@ impl ObservedTilemap {
             if count > 256 { return Err("Observed tilemap run exceeds its authenticated extent".into()); }
         }
         if count != 256 { return Err("Incomplete observed tilemap".into()); }
+        for (rectangle, &(offset, height, width, _, _)) in self.rectangles.iter().zip(&RECT_SPECS) {
+            if (rectangle.source_offset, rectangle.height, rectangle.width) != (offset, height, width)
+                || rectangle.cells.len() != usize::from(height) * usize::from(width) {
+                return Err("Invalid observed tilemap rectangle geometry".into());
+            }
+        }
         Ok(())
     }
 
@@ -56,6 +86,14 @@ impl ObservedTilemap {
             bytes.extend(run.value.to_le_bytes());
         }
         bytes
+    }
+
+    pub fn source_spans(&self) -> Vec<(u32, Vec<u8>, &'static str)> {
+        let mut spans = vec![(self.source_offset, self.source_bytes(), "tilemap-runs")];
+        for (rectangle, role) in self.rectangles.iter().zip(["tilemap-rectangle-0", "tilemap-rectangle-1"]) {
+            spans.push((rectangle.source_offset, rectangle.source_bytes(), role));
+        }
+        spans
     }
 
     pub fn decoded_cells(&self) -> Result<Vec<u16>, String> {
@@ -86,6 +124,8 @@ impl Catalog {
             (0xda14c, 0xda1fe, "24325845d23d8f6262749a416a14a752e68b1e85e21b035266c58229c73e4230"),
             (0xda2a8, 0xda458, "e54a9da79417bbc95a8c57fc84450ba87467c6a5f7053e7f6c6fee18e4fd87ef"),
             (0xdb30a, 0xdb326, "0ac3d1f008eb9ff01ae13ba635e54c40af5f41ddcc4150750a63c5dd100a7174"),
+            (0xd80e0, 0xd8164, "f802daafd73dab107c4269b328430eec39b7c506f02aaa95abd0f8b0ec6fc883"),
+            (0xd816c, 0xd81d4, "f9933c845686c44a098c164f52ba6576b027761e8d42cc17417e7130866b5ae1"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != expected {
                 return Err("Observed tilemap original reader mismatch".into());
@@ -98,22 +138,38 @@ impl Catalog {
         let start = SOURCE_OFFSET as usize;
         let bytes = &rom[start..start + SOURCE_LENGTH];
         if ffta_rom::digest(bytes) != SOURCE_SHA256 { return Err("Observed tilemap source hash mismatch".into()); }
-        if PriorSources::new(previous)?.contains(SOURCE_OFFSET, SOURCE_LENGTH)? {
-            return Err("Observed tilemap source already has an owner".into());
-        }
         let half = |at: usize| u16::from_le_bytes(bytes[at..at + 2].try_into().unwrap());
+        for &(offset, height, width, hash, root) in &RECT_SPECS {
+            let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
+            if rom[start] != height || rom[start + 1] != width || ffta_rom::digest(&rom[start..start + length]) != hash
+                || word(root as usize) != 0x0800_0000 + offset {
+                return Err("Observed tilemap rectangle source mismatch".into());
+            }
+        }
+        let rectangles = std::array::from_fn(|i| {
+            let (offset, height, width, _, _) = RECT_SPECS[i];
+            let start = offset as usize + 2; let length = usize::from(height) * usize::from(width) * 2;
+            let cells = rom[start..start + length].chunks_exact(2)
+                .map(|bytes| u16::from_le_bytes([bytes[0], bytes[1]])).collect();
+            Rectangle { source_offset: offset, height, width, cells }
+        });
         let decoded = ObservedTilemap {
             source_offset: SOURCE_OFFSET,
             width: bytes[0], height: bytes[1], opaque_header: half(2), mode: bytes[4], flags: bytes[5],
             runs: std::array::from_fn(|i| Run { control: half(6 + i * 4), value: half(8 + i * 4) }),
+            rectangles,
         };
         let cells = decoded.decoded_cells()?;
         if decoded.source_bytes() != bytes || ffta_rom::digest(&cells.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<_>>()) != DECODED_SHA256 {
             return Err("Observed tilemap reconstruction mismatch".into());
         }
-        Ok(Self {
-            decoded,
-            sources: vec![SourceRange { offset: SOURCE_OFFSET, length: SOURCE_LENGTH as u32, sha256: ffta_rom::digest(bytes), role: "tilemap-runs".into() }],
-        })
+        let prior = PriorSources::new(previous)?;
+        let mut sources = Vec::new();
+        for (offset, bytes, role) in decoded.source_spans() {
+            if prior.contains(offset, bytes.len())? { return Err("Observed tilemap source already has an owner".into()); }
+            if rom[offset as usize..offset as usize + bytes.len()] != bytes { return Err("Observed tilemap reconstruction mismatch".into()); }
+            sources.push(SourceRange { offset, length: bytes.len() as u32, sha256: ffta_rom::digest(&bytes), role: role.into() });
+        }
+        Ok(Self { decoded, sources })
     }
 }

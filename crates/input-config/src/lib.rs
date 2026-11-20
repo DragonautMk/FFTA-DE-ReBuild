@@ -726,6 +726,10 @@ pub struct AvConfig {
     pub menu_transparency: f32,
     /// Persistently reveal desktop debug menus after the directional sequence.
     pub debug: bool,
+    /// Create automatic cartridge-save backups before loading or replacing a save.
+    pub automatic_save_backups: bool,
+    /// Use verified extracted resources with the ROM on the next normal launch.
+    pub use_extracted_data: bool,
     /// Debug tools: expose 99 snapshot and numbered cartridge-save slots.
     pub debug_extended_saves: bool,
     /// Selected portable cartridge slot; numeric so moving the bundle is safe.
@@ -782,6 +786,8 @@ impl Default for AvConfig {
             menu_language: Language::default(),
             menu_transparency: 0.1,
             debug: false,
+            automatic_save_backups: true,
+            use_extracted_data: false,
             debug_extended_saves: false,
             debug_game_save_slot: 1,
             debug_asset_root: String::new(),
@@ -825,6 +831,10 @@ impl AvConfig {
                     }
                 }
                 "debug" => cfg.debug = v.eq_ignore_ascii_case("true"),
+                "save.automatic_backups" if v.eq_ignore_ascii_case("true") => cfg.automatic_save_backups = true,
+                "save.automatic_backups" if v.eq_ignore_ascii_case("false") => cfg.automatic_save_backups = false,
+                "game.use_extracted_data" if v.eq_ignore_ascii_case("true") => cfg.use_extracted_data = true,
+                "game.use_extracted_data" if v.eq_ignore_ascii_case("false") => cfg.use_extracted_data = false,
                 "debug.extended_saves" => cfg.debug_extended_saves = v.eq_ignore_ascii_case("true"),
                 "debug.game_save_slot" => {
                     if let Ok(slot @ 1..=99) = v.parse::<u8>() { cfg.debug_game_save_slot = slot; }
@@ -891,6 +901,8 @@ impl AvConfig {
              menu.language = {}\n\
              menu.transparency = {}\n\
              debug = {}\n\
+             save.automatic_backups = {}\n\
+             game.use_extracted_data = {}\n\
              debug.extended_saves = {}\n\
              debug.game_save_slot = {}\n\
              debug.asset_root = {}\n\
@@ -916,6 +928,8 @@ impl AvConfig {
             self.menu_language.token(),
             self.menu_transparency,
             self.debug,
+            self.automatic_save_backups,
+            self.use_extracted_data,
             self.debug_extended_saves,
             self.debug_game_save_slot,
             storage::encode_path_value(&self.debug_asset_root),
@@ -1337,6 +1351,26 @@ mod tests {
             cfg,
             "unknown keys keep defaults"
         );
+    }
+
+    #[test]
+    fn extracted_data_choice_defaults_to_rom_and_roundtrips() {
+        assert!(!AvConfig::parse("").use_extracted_data);
+        assert!(!AvConfig::parse("game.use_extracted_data = invalid").use_extracted_data);
+        let cfg = AvConfig::parse("game.use_extracted_data = TRUE");
+        assert!(cfg.use_extracted_data);
+        assert_eq!(AvConfig::parse(&cfg.serialize()), cfg);
+        assert!(!AvConfig::parse("game.use_extracted_data = false").use_extracted_data);
+    }
+
+    #[test]
+    fn automatic_save_backups_default_on_and_roundtrip() {
+        assert!(AvConfig::parse("audio.volume = 0.6\n").automatic_save_backups);
+        assert!(AvConfig::parse("save.automatic_backups = invalid\n").automatic_save_backups);
+        let cfg = AvConfig::parse("save.automatic_backups = FALSE\n");
+        assert!(!cfg.automatic_save_backups);
+        assert_eq!(AvConfig::parse(&cfg.serialize()), cfg);
+        assert!(AvConfig::parse("save.automatic_backups = true\n").automatic_save_backups);
     }
 
     #[test]

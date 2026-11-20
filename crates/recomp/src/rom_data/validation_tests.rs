@@ -142,7 +142,10 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_observed_lz = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_LZ").is_some();
     let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
     let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
+    let poison_tilemap_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_RECTANGLES").is_some();
     let poison_tilemap_descriptor = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_DESCRIPTOR").is_some();
+    let poison_extra_tilemap_descriptors = std::env::var_os("FFTA_STATE_TEST_POISON_EXTRA_TILEMAP_DESCRIPTORS").is_some();
+    let poison_transfer_records = std::env::var_os("FFTA_STATE_TEST_POISON_TRANSFER_RECORDS").is_some();
     let poison_tilemap_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROW").is_some();
     let poison_tilemap_extra_rows = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_EXTRA_ROWS").is_some();
     #[cfg(feature = "rom-data-read-audit")]
@@ -190,10 +193,33 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 let start = SOURCE_OFFSET as usize;
                 for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
             }
+            if index == 1 && poison_tilemap_rectangles {
+                for &(offset, height, width, _, _) in &gba_core::rom_data::observed_tilemap::RECT_SPECS {
+                    let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
+                    for at in start..start + length { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
                 let start = SOURCE_OFFSET as usize;
                 for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_extra_tilemap_descriptors {
+                use gba_core::rom_data::observed_tilemap_descriptor::{ADDITIONAL_SPECS, SOURCE_LENGTH, WRAPPER_LENGTH};
+                for &(offset, _, wrapper, _) in &ADDITIONAL_SPECS {
+                    for at in offset as usize..offset as usize + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                    for at in wrapper as usize..wrapper as usize + WRAPPER_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_transfer_records {
+                use gba_core::rom_data::{observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+                for &(offset, _, wrapper, _) in &descriptor::TRANSFER_SPECS {
+                    for at in offset as usize..offset as usize + descriptor::SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                    for at in wrapper as usize..wrapper as usize + descriptor::WRAPPER_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                }
+                for &(offset, _, _) in &row::TRANSFER_SPECS {
+                    for at in offset as usize..offset as usize + row::SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                }
             }
             if index == 1 && poison_tilemap_row {
                 use gba_core::rom_data::observed_tilemap_row::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -264,10 +290,38 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 let start = SOURCE_OFFSET as usize;
                 machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
             }
+            if index == 1 && poison_tilemap_rectangles {
+                for &(offset, height, width, _, _) in &gba_core::rom_data::observed_tilemap::RECT_SPECS {
+                    let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
+                    machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
+                }
+            }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
                 let start = SOURCE_OFFSET as usize;
                 machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_extra_tilemap_descriptors {
+                use gba_core::rom_data::observed_tilemap_descriptor::{ADDITIONAL_SPECS, SOURCE_LENGTH, WRAPPER_LENGTH};
+                for &(offset, _, wrapper, _) in &ADDITIONAL_SPECS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+                    let start = wrapper as usize;
+                    machine.bus.rom[start..start + WRAPPER_LENGTH].copy_from_slice(&rom[start..start + WRAPPER_LENGTH]);
+                }
+            }
+            if index == 1 && poison_transfer_records {
+                use gba_core::rom_data::{observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+                for &(offset, _, wrapper, _) in &descriptor::TRANSFER_SPECS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + descriptor::SOURCE_LENGTH].copy_from_slice(&rom[start..start + descriptor::SOURCE_LENGTH]);
+                    let start = wrapper as usize;
+                    machine.bus.rom[start..start + descriptor::WRAPPER_LENGTH].copy_from_slice(&rom[start..start + descriptor::WRAPPER_LENGTH]);
+                }
+                for &(offset, _, _) in &row::TRANSFER_SPECS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + row::SOURCE_LENGTH].copy_from_slice(&rom[start..start + row::SOURCE_LENGTH]);
+                }
             }
             if index == 1 && poison_tilemap_row {
                 use gba_core::rom_data::observed_tilemap_row::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -361,10 +415,30 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.source_bytes > 0, "scene must consume the managed tilemap");
         eprintln!("ROM_DATA_OBSERVED_TILEMAP_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
     }
+    if poison_tilemap_rectangles {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("observed tilemap owner");
+        assert!(stats.rectangle_bytes[0] >= 61 && stats.rectangle_bytes[1] >= 25,
+            "scene must consume both managed tilemap rectangles");
+        eprintln!("ROM_DATA_TILEMAP_RECTANGLES_POISON rectangle_bytes={:?}", stats.rectangle_bytes);
+    }
     if poison_tilemap_descriptor {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");
         assert!(stats.source_bytes > 0, "scene must consume the managed tilemap descriptor");
         eprintln!("ROM_DATA_TILEMAP_DESCRIPTOR_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_extra_tilemap_descriptors {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");
+        assert!(stats.descriptor_bytes >= 16 && stats.wrapper_bytes >= 8, "scene must consume the managed descriptors and LZ wrappers");
+        eprintln!("ROM_DATA_EXTRA_TILEMAP_DESCRIPTORS_POISON bus_reads={} descriptor_bytes={} wrapper_bytes={}", stats.bus_reads, stats.descriptor_bytes, stats.wrapper_bytes);
+    }
+    if poison_transfer_records {
+        let resources = decoded.bus.rom_resources().unwrap();
+        let descriptor = resources.observed_tilemap_descriptor_stats().expect("transfer descriptor owner");
+        let row = resources.observed_tilemap_row_stats().expect("transfer row owner");
+        assert!(descriptor.transfer_descriptor_bytes >= 16 && descriptor.transfer_wrapper_bytes >= 6 && row.transfer_source_bytes >= 36,
+            "scene must consume the selected transfer rows, descriptors and wrappers");
+        eprintln!("ROM_DATA_TRANSFER_RECORDS_POISON row_bytes={} descriptor_bytes={} wrapper_bytes={}",
+            row.transfer_source_bytes, descriptor.transfer_descriptor_bytes, descriptor.transfer_wrapper_bytes);
     }
     if poison_tilemap_row {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_row_stats().expect("tilemap row owner");

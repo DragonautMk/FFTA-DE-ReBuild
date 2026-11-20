@@ -12,6 +12,7 @@ pub struct GameSaves {
     base: PathBuf,
     debug_directory: Option<PathBuf>,
     backup_namespace: Option<PathBuf>,
+    automatic_backups: bool,
     pub current: u8,
 }
 
@@ -36,7 +37,7 @@ impl GameSaves {
                 }
             }
         }
-        Self { base, current, debug_directory: None, backup_namespace: None }
+        Self { base, current, debug_directory: None, backup_namespace: None, automatic_backups: true }
     }
 
     /// Keep the first cartridge save in its original location. Numbered
@@ -57,6 +58,8 @@ impl GameSaves {
     }
 
     pub fn base_path(&self) -> &Path { &self.base }
+
+    pub fn set_automatic_backups(&mut self, enabled: bool) { self.automatic_backups = enabled; }
 
     pub fn prepare_backups(&self, save: &Path) -> Result<crate::save_backups::Backups, String> {
         match &self.backup_namespace {
@@ -147,8 +150,12 @@ impl GameSaves {
             boot,
             Some(target.as_deref().unwrap_or(&erased)),
         )?;
-        let protected = self.prepare_backups(&path)?.capture_startup()?;
-        if protected != target {
+        let observed = if self.automatic_backups {
+            self.prepare_backups(&path)?.capture_startup()?
+        } else {
+            read_save(&path, old.len())?
+        };
+        if observed != target {
             return Err("The selected save changed. Select it again.".into());
         }
         super::save_backups::atomic_write(&old_path, old, true)?;
@@ -169,9 +176,11 @@ impl GameSaves {
             if !overwrite {
                 return Err("Game save is occupied. Confirm replacement first.".into());
             }
-            // Protect existing progress before an explicitly confirmed replacement.
+            // Validate the existing save; protect it when automatic backups are enabled.
             read_save(&path, bytes.len())?;
-            self.prepare_backups(&path)?.capture_startup()?;
+            if self.automatic_backups {
+                self.prepare_backups(&path)?.capture_startup()?;
+            }
         }
         super::save_backups::atomic_write(&path, bytes, overwrite)
     }
@@ -385,6 +394,30 @@ mod tests {
             vec![0xff; 65536]
         );
         assert_eq!(m.bus.save_data().unwrap(), vec![2; 65536]);
+    }
+
+    #[test]
+    fn disabling_automatic_backups_keeps_save_switch_and_overwrite_working() {
+        let dir = tempfile::tempdir().unwrap();
+        let base = dir.path().join("ffta.sav");
+        let mut saves = GameSaves::new(&base);
+        let mut m = machine();
+        let boot = m.save_state().unwrap();
+        m.bus.load_save_data(&vec![2; 65536]);
+        let target = saves.path(2).unwrap();
+        std::fs::write(&target, vec![9; 65536]).unwrap();
+        saves.set_automatic_backups(false);
+        saves.switch(&mut m, &boot, 2).unwrap();
+        assert_eq!(m.bus.save_data().unwrap(), vec![9; 65536]);
+        assert!(!super::super::save_backups::Backups::new(&target).has_copies());
+        assert_eq!(std::fs::read(&base).unwrap(), vec![2; 65536]);
+        assert!(saves.copy_current(&m, 1, false).is_err());
+        saves.copy_current(&m, 1, true).unwrap();
+        assert_eq!(std::fs::read(&base).unwrap(), vec![9; 65536]);
+        assert!(!super::super::save_backups::Backups::new(&base).has_copies());
+        saves.set_automatic_backups(true);
+        saves.switch(&mut m, &boot, 1).unwrap();
+        assert!(super::super::save_backups::Backups::new(&base).has_copies());
     }
 
     #[test]

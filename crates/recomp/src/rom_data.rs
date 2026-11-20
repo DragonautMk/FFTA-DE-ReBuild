@@ -447,7 +447,13 @@ mod constructor_template64_tests;
 #[cfg(test)]
 mod observed_tilemap_tests;
 #[cfg(test)]
+mod observed_tilemap_rectangles_tests;
+#[cfg(test)]
 mod observed_tilemap_descriptor_tests;
+#[cfg(test)]
+mod observed_tilemap_descriptors_tests;
+#[cfg(test)]
+mod observed_transfer_records_tests;
 #[cfg(test)]
 mod observed_tilemap_row_tests;
 #[cfg(test)]
@@ -714,7 +720,7 @@ mod lower_rom_read_sites_tests;
 mod bank_rom_read_audit_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod world_location_read_audit_tests;
-pub use preparation::prepare_startup;
+pub use preparation::{prepare_startup, prepare_for_menu, MenuProgress};
 
 fn read_bounded(path: &Path, limit: u64) -> Result<Vec<u8>, String> {
     let metadata = fs::symlink_metadata(path)
@@ -2947,9 +2953,9 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if dataset.compact_primary_alias.is_some() {eprintln!("ROM_DATA runtime=decoded resource={COMPACT_PRIMARY_ALIAS_ID} file={} selectors=1 positions=1",dataset.manifest.resources[114].sha256);}
     if let Some(data)=&dataset.observed_lz {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_LZ_ID} file={} blocks={}",dataset.manifest.resources[115].sha256,1+data.additional_blocks.len());}
     if dataset.constructor_template64.is_some() {eprintln!("ROM_DATA runtime=decoded resource={CONSTRUCTOR_TEMPLATE64_ID} file={} words=16",dataset.manifest.resources[116].sha256);}
-    if dataset.observed_tilemap.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ID} file={} runs=24 cells=256",dataset.manifest.resources[117].sha256);}
-    if dataset.observed_tilemap_descriptor.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} file={} descriptor=1",dataset.manifest.resources[118].sha256);}
-    if dataset.observed_tilemap_row.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ROW_ID} file={} rows=5",dataset.manifest.resources[119].sha256);}
+    if dataset.observed_tilemap.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ID} file={} runs=24 cells=256 rectangles=2",dataset.manifest.resources[117].sha256);}
+    if dataset.observed_tilemap_descriptor.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} file={} descriptors=8 lz_wrappers=7",dataset.manifest.resources[118].sha256);}
+    if dataset.observed_tilemap_row.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ROW_ID} file={} rows=8",dataset.manifest.resources[119].sha256);}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3118,9 +3124,9 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.compact_primary_alias_stats() {eprintln!("ROM_DATA_USE resource={COMPACT_PRIMARY_ALIAS_ID} dataset={} bus_reads={} source_bytes={} selector_bytes={} position_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.selector_bytes,i.position_bytes);}
         if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls);}
         if let Some(i)=resources.constructor_template64_stats() {eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_TEMPLATE64_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
-        if let Some(i)=resources.observed_tilemap_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
-        if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
-        if let Some(i)=resources.observed_tilemap_row_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ROW_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.observed_tilemap_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ID} dataset={} bus_reads={} source_bytes={} rectangle_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.rectangle_bytes);}
+        if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} wrapper_bytes={} transfer_descriptor_bytes={} transfer_wrapper_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.descriptor_bytes,i.wrapper_bytes,i.transfer_descriptor_bytes,i.transfer_wrapper_bytes);}
+        if let Some(i)=resources.observed_tilemap_row_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ROW_ID} dataset={} bus_reads={} source_bytes={} transfer_source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.transfer_source_bytes);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3399,6 +3405,15 @@ fn write_dataset(
     path: &Path,
     source: &mut Extraction,
     write: &mut impl FnMut(&Path, &[u8]) -> Result<(), String>,
+) -> Result<(), String> {
+    write_dataset_inner(path, source, write, true)
+}
+
+fn write_dataset_inner(
+    path: &Path,
+    source: &mut Extraction,
+    write: &mut impl FnMut(&Path, &[u8]) -> Result<(), String>,
+    validate_written_files: bool,
 ) -> Result<(), String> {
     let data = toml::to_string_pretty(&source.dimensions)
         .map_err(|e| format!("Cannot encode dimensions: {e}"))?;
@@ -3901,7 +3916,7 @@ fn write_dataset(
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
     write(&path.join(MANIFEST_FILE), manifest.as_bytes())?;
-    verify(path, source)?;
+    if validate_written_files { verify(path, source)?; }
     Ok(())
 }
 

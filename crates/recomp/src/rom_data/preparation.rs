@@ -295,6 +295,42 @@ pub fn prepare_startup(rom: &[u8], status: bool) -> Result<Prepared, String> {
     Ok(prepared)
 }
 
+/// Progress from source decoding, size calculation and managed publication.
+#[derive(Clone, Debug)]
+pub enum MenuProgress {
+    Decoding,
+    Estimating,
+    Estimated(u64),
+    Stage(Stage),
+}
+
+/// Prepare the current ROM without touching any existing generation until the
+/// managed publisher has validated the replacement. The estimate counts the
+/// exact logical bytes of the encoded files; allocation overhead is separate.
+pub fn prepare_for_menu(
+    rom: &[u8],
+    mut notify: impl FnMut(MenuProgress) -> Result<(), String>,
+) -> Result<Prepared, String> {
+    notify(MenuProgress::Decoding)?;
+    let mut source = Extraction::from_rom(rom)?;
+    notify(MenuProgress::Estimating)?;
+    let mut bytes = 0u64;
+    write_dataset_inner(Path::new(""), &mut source, &mut |_, data| {
+        bytes = bytes.checked_add(data.len() as u64).ok_or("Game data size overflow")?;
+        Ok(())
+    }, false)?;
+    notify(MenuProgress::Estimated(bytes))?;
+    let root = storage_root()?;
+    let mut previous = None;
+    prepare(&root, &mut source, &mut |stage| {
+        if previous != Some(stage) {
+            previous = Some(stage);
+            notify(MenuProgress::Stage(stage))?;
+        }
+        Ok(())
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -315,6 +351,42 @@ mod tests {
                     .is_some_and(|s| s.starts_with(GENERATION_PREFIX))
             })
             .count()
+    }
+
+    #[test]
+    #[ignore = "requires a protected supported ROM and isolated FFTA_RESOURCES_DIR"]
+    fn menu_real_rom_estimate_and_reuse() {
+        let rom = fs::read(std::env::var_os("FFTA_MENU_TEST_ROM").expect("protected ROM path")).unwrap();
+        assert!(std::env::var_os("FFTA_RESOURCES_DIR").is_some());
+        let mut events = Vec::new();
+        let first = prepare_for_menu(&rom, |event| { events.push(event); Ok(()) }).unwrap();
+        let estimate = events.iter().find_map(|event| match event { MenuProgress::Estimated(bytes) => Some(*bytes), _ => None }).unwrap();
+        let bytes: u64 = fs::read_dir(&first.directory).unwrap().map(|entry| entry.unwrap().metadata().unwrap().len()).sum();
+        assert_eq!(estimate, bytes);
+        assert!(matches!(events.first(), Some(MenuProgress::Decoding)));
+        assert!(matches!(events.last(), Some(MenuProgress::Stage(Stage::Ready))));
+        let again = prepare_for_menu(&rom, |_| Ok(())).unwrap();
+        assert_eq!(again.action, "reused");
+        assert_eq!(first.directory, again.directory);
+    }
+
+    #[test]
+    fn estimated_encoded_size_matches_published_files() {
+        let temp = tempfile::tempdir().unwrap();
+        let mut source = fixture();
+        let mut estimated = 0u64;
+        write_dataset_inner(Path::new(""), &mut source, &mut |_, data| {
+            estimated += data.len() as u64;
+            Ok(())
+        }, false).unwrap();
+        let result = prepare(temp.path(), &mut source, &mut |_| Ok(())).unwrap();
+        let actual: u64 = fs::read_dir(&result.directory).unwrap().map(|entry| {
+            entry.unwrap().metadata().unwrap().len()
+        }).sum();
+        assert!(estimated > 0);
+        assert_eq!(estimated, actual);
+        let reused = prepare(temp.path(), &mut source, &mut |_| Ok(())).unwrap();
+        assert_eq!(reused.action, "reused");
     }
 
     #[test]

@@ -131,8 +131,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 180;
-pub const DECODER_REV: u32 = 179;
+pub const EXTRACTOR_REV: u32 = 183;
+pub const DECODER_REV: u32 = 182;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -463,15 +463,15 @@ pub const CONSTRUCTOR_TEMPLATE64_FORMAT: &str = "constructor-template64-v1-json"
 pub const MAX_CONSTRUCTOR_TEMPLATE64_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_ID: &str = "graphics.observed-tilemap";
 pub const OBSERVED_TILEMAP_FILE: &str = "observed-tilemap.json";
-pub const OBSERVED_TILEMAP_FORMAT: &str = "observed-tilemap-v1-json";
+pub const OBSERVED_TILEMAP_FORMAT: &str = "observed-tilemap-v2-json";
 pub const MAX_OBSERVED_TILEMAP_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_DESCRIPTOR_ID: &str = "graphics.observed-tilemap-descriptor";
 pub const OBSERVED_TILEMAP_DESCRIPTOR_FILE: &str = "observed-tilemap-descriptor.json";
-pub const OBSERVED_TILEMAP_DESCRIPTOR_FORMAT: &str = "observed-tilemap-descriptor-v1-json";
+pub const OBSERVED_TILEMAP_DESCRIPTOR_FORMAT: &str = "observed-tilemap-descriptor-v3-json";
 pub const MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_TILEMAP_ROW_ID: &str = "graphics.observed-tilemap-row";
 pub const OBSERVED_TILEMAP_ROW_FILE: &str = "observed-tilemap-row.json";
-pub const OBSERVED_TILEMAP_ROW_FORMAT: &str = "observed-tilemap-row-v2-json";
+pub const OBSERVED_TILEMAP_ROW_FORMAT: &str = "observed-tilemap-row-v3-json";
 pub const MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
@@ -1768,7 +1768,7 @@ impl Extraction {
             result.manifest.resources.push(Resource {
                 id: OBSERVED_TILEMAP_DESCRIPTOR_ID.into(), path: OBSERVED_TILEMAP_DESCRIPTOR_FILE.into(),
                 format: OBSERVED_TILEMAP_DESCRIPTOR_FORMAT.into(), sha256: String::new(),
-                dependencies: vec![OBSERVED_TILEMAP_ID.into()], sources: metadata.sources.clone(),
+                dependencies: vec![OBSERVED_TILEMAP_ID.into(), OBSERVED_LZ_ID.into()], sources: metadata.sources.clone(),
             });
             result.observed_tilemap_descriptor = Some(metadata);
             let metadata = observed_tilemap_row::Catalog::from_rom(rom, &result.manifest.resources)?;
@@ -3603,6 +3603,7 @@ impl Extraction {
         }
         if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap_descriptor, files.observed_tilemap_descriptor) {
             decoded.validate_dependencies(files.observed_tilemap.ok_or("Missing tilemap dependency")?.0)?;
+            decoded.validate_lz_dependencies(files.observed_lz.ok_or("Missing observed LZ dependency")?.0)?;
             if decoded != &expected.decoded { return Err("Decoded observed_tilemap_descriptor differs from authenticated source".into()); }
         }
         if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap_row, files.observed_tilemap_row) {

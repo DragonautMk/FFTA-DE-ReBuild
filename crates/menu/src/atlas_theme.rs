@@ -375,6 +375,16 @@ pub(super) fn draw(
     panel(&mut c, g.body, false);
     panel(&mut c, g.shortcuts, false);
     let hints=menu.control_hints();
+    if menu.page == Page::System && menu.data_progress.is_some() {
+        let (step, message) = menu.data_progress.as_ref().unwrap();
+        c.text((g.shortcuts.x + 10) as f32, (g.shortcuts.y + 5) as f32,
+            message, TEXT, fs * 0.9, false, g.shortcuts.w.saturating_sub(20) as f32);
+        let x = (g.shortcuts.x + 10) as f32;
+        let y = (g.shortcuts.y + (30. * s) as usize) as f32;
+        let width = g.shortcuts.w.saturating_sub(20) as f32;
+        c.rect(x, y, width, 10. * s, 1., BG, BG, EDGE);
+        if *step > 0 { c.rect(x, y, width * f32::from(*step) / 4., 10. * s, 1., BRASS, BRASS, BRASS); }
+    } else {
     c.text(
         (g.shortcuts.x + 10) as f32,
         (g.shortcuts.y + if menu.cheat_active(){2}else{8}) as f32,
@@ -393,6 +403,7 @@ pub(super) fn draw(
         false,
         g.shortcuts.w.saturating_sub(20) as f32,
     );
+    }
     let feedback = [
         menu.state_message.as_str(),
         menu.game_save_message.as_str(),

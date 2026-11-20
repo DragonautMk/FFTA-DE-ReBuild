@@ -72,6 +72,8 @@ pub enum MenuInput {
 pub enum MenuAction {
     /// Toggle the existing session fast-forward latch without changing the preference.
     ToggleFastForward,
+    /// Prepare extracted data for the current ROM.
+    ExtractData,
     /// Close the menu and continue the game.
     Resume,
     /// Reboot the selected cartridge without leaving this process.
@@ -246,6 +248,9 @@ enum Row {
     DebugResume,
     DebugMenu,
     ExtendedSaves,
+    AutomaticSaveBackups,
+    DataSource,
+    ExtractData,
     AssetFolder,
     CompareReplay,
     CaptureReplay,
@@ -478,6 +483,9 @@ impl Row {
             Row::DebugTool(tool) => tool.label(),
             Row::ToolInput(slot) => slot.label(),
             Row::ExtendedSaves => "Extended saves",
+            Row::AutomaticSaveBackups => "Automatic save backups",
+            Row::DataSource => "Data source (next launch)",
+            Row::ExtractData => "Extract game data",
             Row::AssetFolder => "Asset folder",
             Row::CaptureGraphics => "Capture graphics report",
             Row::CreateIssueReport => "Create issue report",
@@ -763,6 +771,7 @@ pub struct Menu {
     backup_selection: Option<(u64,u8)>,
     backup_message: String,
     session_message: String,
+    data_progress: Option<(u8, String)>,
 }
 
 // Keep field access concise inside the renderer/tests while making
@@ -831,6 +840,7 @@ impl Menu {
             backup_selection: None,
             backup_message: String::new(),
             session_message: String::new(),
+            data_progress: None,
         }
     }
 
@@ -1047,11 +1057,12 @@ impl Menu {
     pub fn set_save_backups(&mut self, copies: [BackupInfo;2]) { self.save_backups = copies; }
     pub fn backup_result(&mut self, message: String) { self.backup_message = message; }
     pub fn session_result(&mut self, message: String) { self.session_message = message; }
+    pub fn data_progress(&mut self, step: u8, message: String) { self.data_progress = Some((step.min(4), message)); }
 
     fn rows(&self) -> &'static [Row] {
         if !self.debug_enabled() {
             if debug_unlock::debug_page(self.page){return &[Row::Back];}
-            if self.page==Page::Saves{return &[Row::SaveStatesMenu,Row::SaveBackupsMenu,Row::AssetFolder,Row::Back];}
+            if self.page==Page::Saves{return &[Row::SaveStatesMenu,Row::SaveBackupsMenu,Row::AutomaticSaveBackups,Row::AssetFolder,Row::Back];}
         }
         match self.page {
             Page::Main => clan_atlas::OVERVIEW_ROWS,
@@ -1242,6 +1253,7 @@ impl Menu {
             MenuInput::Confirm => match row {
                 Row::CliReference=>{self.open(Page::CliReference);self.atlas.reference_cursor=0;self.atlas.planned_cursor=0;self.atlas.reference_scroll.set(0);self.atlas.detail_scroll=0;None},
                 Row::FastForwardToggle=>Some(MenuAction::ToggleFastForward),
+                Row::ExtractData=>Some(MenuAction::ExtractData),
                 Row::DebugTool(tool) => Some(MenuAction::OpenDebugTool(tool)),
                 Row::ToolInput(slot) => Some(MenuAction::ChooseToolInput(slot)),
                 Row::ContentPicker => Some(MenuAction::ContentOpen),
@@ -1684,6 +1696,9 @@ fn value_of(
         Row::DebugMenu => ">".into(),
         Row::GameSavesMenu => if av.debug_extended_saves { ">" } else { "DISABLED" }.into(),
         Row::ExtendedSaves => if av.debug_extended_saves { "ON" } else { "OFF" }.into(),
+        Row::AutomaticSaveBackups => if av.automatic_save_backups { "ON" } else { "OFF" }.into(),
+        Row::DataSource => if av.use_extracted_data { "ROM + DATA" } else { "ROM ONLY" }.into(),
+        Row::ExtractData => return None,
         Row::AssetFolder => if av.debug_asset_root.is_empty() { "DEFAULT" } else { "CUSTOM" }.into(),
         Row::ScriptLibraryMenu | Row::DebugToolsMenu | Row::DebugTool(_) | Row::ToolInputsMenu | Row::ToolInput(_) | Row::ContentPicker | Row::DebugCatalog | Row::CheatCatalog | Row::CatalogRegion | Row::CatalogStatus | Row::CatalogKind | Row::CatalogCase | Row::CatalogEntry | Row::CatalogImport | Row::CatalogOpen | Row::CatalogChoose
             | Row::StartRecentEvents | Row::SaveRecentEvents | Row::StartGameplayTrace | Row::SaveGameplayReport | Row::CreateIssueReport | Row::StartCodeTrace | Row::SaveCodeReport | Row::StartAudioCapture | Row::SaveAudioReport | Row::StartUiTrace | Row::SaveUiReport | Row::ToggleEventConsole | Row::OpenCommandConsole | Row::CaptureGraphics | Row::InspectPC | Row::DebugStepOne | Row::DebugStepTen | Row::DebugResume | Row::CompareReplay | Row::CaptureReplay | Row::AuditReplay | Row::ReplayCase | Row::ChooseReplayProfile | Row::CancelReplay | Row::StartInputRecording | Row::StopInputRecording | Row::StartDebugSession | Row::StartInterpreterDebugSession | Row::CloseDebugSession | Row::CopyDiagnosis | Row::GameSaveSlot | Row::UseGameSave | Row::CopyGameSave | Row::ConfirmSwitchGameSave | Row::ConfirmCopyGameSave => return None,
@@ -1776,7 +1791,8 @@ fn setting_options(row: Row) -> Vec<String> {
         Row::Audio | Row::Mute | Row::Vsync | Row::Fullscreen => vec!["OFF".into(),"ON".into()],
         Row::FastForwardAudio => vec!["SILENT".into(),"FAST".into(),"NORMAL".into()],
         Row::FastForward => return FF_SPEEDS.iter().map(|p|format!("{p}%")).collect(),
-        Row::ExtendedSaves => ["OFF", "ON"].iter().map(|s| s.to_string()).collect(),
+        Row::DataSource => ["ROM ONLY", "ROM + DATA"].iter().map(|s| s.to_string()).collect(),
+        Row::ExtendedSaves | Row::AutomaticSaveBackups => ["OFF", "ON"].iter().map(|s| s.to_string()).collect(),
         Row::Screen => ScreenKind::ALL
             .iter()
             .map(|s| s.name().to_uppercase())
@@ -1838,6 +1854,12 @@ fn cycle(row: Row, av: &mut AvConfig, forward: bool) -> Option<Changed> {
             Some(Changed::Overlay)
         },
         Row::MenuTransparency=>step_slider(&mut av.menu_transparency,forward,0,10).then_some(Changed::Overlay),
+        Row::DataSource => { av.use_extracted_data = !av.use_extracted_data; Some(Changed::Overlay) },
+        Row::ExtractData => None,
+        Row::AutomaticSaveBackups => {
+            av.automatic_save_backups = !av.automatic_save_backups;
+            Some(Changed::Debug)
+        },
         Row::ExtendedSaves => {
             av.debug_extended_saves = !av.debug_extended_saves;
             Some(Changed::Debug)
@@ -2271,6 +2293,37 @@ mod tests {
             menu.atlas_section(clan_atlas::Domain::Debug,group);
         }
         menu.selected=menu.rows().iter().position(|r|*r==row).expect("row on this page");
+    }
+
+    #[test]
+    fn game_data_choice_and_extraction_are_available_without_debug() {
+        let mut av = AvConfig::default();
+        let mut menu = Menu::new(true, false);
+        menu.atlas_section(clan_atlas::Domain::Game, 7);
+        at(&mut menu, Row::DataSource);
+        assert_eq!(setting_value(Row::DataSource, &av), "ROM ONLY");
+        assert_eq!(adjust(&mut menu, &mut av, MenuInput::Right), Some(MenuAction::Changed(Changed::Overlay)));
+        assert!(av.use_extracted_data);
+        assert_eq!(AvConfig::parse(&av.serialize()), av);
+        at(&mut menu, Row::ExtractData);
+        assert_eq!(menu.handle(MenuInput::Confirm, &mut av), Some(MenuAction::ExtractData));
+        menu.data_progress(3, "Verifying".into());
+        let mut pixels = vec![[0; 4]; 854 * 480];
+        menu.draw(&av, &keys(), "Tab", "", "", "", &mut pixels, 854, 480);
+    }
+
+    #[test]
+    fn automatic_backups_are_available_without_debug_and_toggle() {
+        let mut av = AvConfig::default();
+        let mut menu = Menu::new(true, false);
+        menu.atlas_section(clan_atlas::Domain::Game, 1);
+        at(&mut menu, Row::AutomaticSaveBackups);
+        assert_eq!(setting_value(Row::AutomaticSaveBackups, &av), "ON");
+        assert_eq!(adjust(&mut menu, &mut av, MenuInput::Left), Some(MenuAction::Changed(Changed::Debug)));
+        assert!(!av.automatic_save_backups);
+        assert_eq!(AvConfig::parse(&av.serialize()), av);
+        assert_eq!(adjust(&mut menu, &mut av, MenuInput::Right), Some(MenuAction::Changed(Changed::Debug)));
+        assert!(av.automatic_save_backups);
     }
 
     #[test]

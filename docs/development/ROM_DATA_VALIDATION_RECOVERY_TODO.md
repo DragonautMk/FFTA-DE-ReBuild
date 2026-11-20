@@ -840,7 +840,8 @@ current evidence before running another check.
 - [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** classify the 8,789 previously
   observed unowned bytes outside the E173 bank increment. E174 migrates 2,578
   and E175 another 2,291. E176 owns another 64, E177 another 100, E178
-  another 7, E179 another 12 and E180 another 48; the other 3,689 require classification before
+  another 7, E179 another 12, E180 another 48, E181 another 28, E182
+  another 58 and E183 another 86; the other 3,517 require classification before
   claiming the action has no remaining raw source. Other scenes,
   consumers, Linux, USA and native Windows remain pending.
 - [x] **ROMDATA-01-E172-REDSPRING-AF271C scoped EUR/Wine:** E177 identifies a 102-byte
@@ -863,8 +864,43 @@ current evidence before running another check.
   `atgqm66z`, original reader/publication `jcmdanqw` and 600-frame scene
   `4nxkgjnp` and production CLI `ilg230s3` pass.
   [Evidence](../rom_data_graphics.md#e180-adjacent-observed-tilemap-rows).
-- [ ] **ROMDATA-01-E180-ROW-TARGETS:** authenticate and migrate the four
-  still-raw descriptor targets at `3a4b18..3a4b38` and their consumers.
+- [x] **ROMDATA-01-E180-ROW-TARGETS scoped EUR/Wine:** E181 migrates the four
+  descriptor targets and linked LZ wrappers. Source `l3pwspy8`/`e90r8zmw`,
+  Wine trace `0_8a03d2`, reader `fd2bih7u`, 600-frame scene `pdfkq9g5` and
+  CLI `3tjo6qvr` pass.
+  [Evidence](../rom_data_graphics.md#e181-observed-tilemap-descriptors-and-lz-wrappers).
+- [ ] **ROMDATA-01-E180-ROW-TARGETS:** identify other consumers, scenes and
+  descriptors outside the selected EUR/Wine evidence; aggregate scene counters
+  do not attribute ordinary use to every migrated descriptor.
+- [x] **ROMDATA-01-E172-REDSPRING-399774 scoped EUR/Wine:** E182 owns three
+  transfer rows, descriptors and linked LZ wrappers. Source `g0ce9o5s`, Wine
+  trace `qu75rzi6`, reader `fjrrnhsl`, 600-frame scene `fx2_p2kt` and CLI
+  `8dilrn0i` pass. The scene log contains a D-Bus assertion; the test completed
+  and passed. Earlier wildcard, protected-source and reader-assertion failures
+  are retained in the evidence.
+  [Evidence](../rom_data_graphics.md#e182-observed-transfer-rows-and-lz-descriptors).
+- [ ] **ROMDATA-01-E172-REDSPRING-399774:** identify other consumers and
+  transfer records outside the selected EUR/Wine evidence.
+- [x] **ROMDATA-01-E172-REDSPRING-AE789C scoped EUR/Wine:** E183 owns two
+  authenticated halfword rectangles. Source `n257xucg`, Wine trace `re5n0s9w`,
+  reader `rxrkgl9k`, 600-frame scene `qz9v5fto` and CLI `grtrq8pm` pass. The
+  scene log contains a D-Bus assertion; the test completed and passed.
+  [Evidence](../rom_data_graphics.md#e183-observed-tilemap-rectangles).
+- [ ] **ROMDATA-01-E172-REDSPRING-AE789C:** migrate or classify the raw pointer
+  cells at `3a4b08` and `3a4d3c`, and identify other rectangles and consumers.
+- [ ] **ROMDATA-01-E183-RECTANGLES-LINUX:** repeat publication, original reader,
+  boundaries, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E183-RECTANGLES-USA:** locate and authenticate equivalent USA
+  rectangles and validate their consumers; native Windows remains pending too.
+- [ ] **ROMDATA-01-E182-TRANSFER-LINUX:** after EUR/Wine acceptance, repeat
+  publication, original readers, mixed boundaries, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E182-TRANSFER-USA:** locate and authenticate equivalent USA
+  sources and validate their consumers; native Windows remains pending too.
+- [ ] **ROMDATA-01-E181-DESCRIPTORS-LINUX:** repeat publication, original
+  readers, mixed wrapper/LZ boundaries, affected scene and CLI on Linux.
+- [ ] **ROMDATA-01-E181-DESCRIPTORS-USA:** locate and authenticate equivalent
+  USA descriptors and wrappers and validate their consumers; native Windows
+  remains pending too.
 - [ ] **ROMDATA-01-E180-ROWS-LINUX:** repeat row publication, readers, scene
   and CLI checks when Linux coverage resumes.
 - [ ] **ROMDATA-01-E180-ROWS-USA:** authenticate any equivalent USA sources

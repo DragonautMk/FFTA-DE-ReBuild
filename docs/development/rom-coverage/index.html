@@ -6,6 +6,12 @@
 <style>
 :root{color-scheme:light dark;--bg:light-dark(#fafaf8,#171918);--fg:light-dark(#202724,#e1e7e3);--muted:light-dark(#59645e,#a4afa7);--line:light-dark(#d6dcd7,#3d4841);--panel:light-dark(#f0f3ef,#242b26);--code:light-dark(#8257a2,#ba98d6);--data:light-dark(#267c72,#70bdb1);--runtime:light-dark(#407b41,#91bc82);--observed:light-dark(#a44460,#ea98b0);--ordinary:light-dark(#316c9b,#8ab7da);--shared:light-dark(#b07322,#d9ac69);--conflict:light-dark(#b34b45,#e19890);--unknown:light-dark(#7f8982,#a9b0aa)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:32px 26px}h1{font-size:24px;font-weight:600;margin:0 0 8px}h2{font-size:18px;margin:30px 0 10px}h3{font-size:16px}p{max-width:100ch}.muted,small{color:var(--muted)}a{color:inherit;text-underline-offset:3px}code{font:13px ui-monospace,monospace;overflow-wrap:anywhere}.stats{display:flex;gap:30px;flex-wrap:wrap;margin:22px 0}.stat strong{display:block;font-size:22px;font-weight:500}.stat span{color:var(--muted);font-size:13px}.notice{padding:12px 16px;background:var(--panel);border-left:3px solid var(--line)}.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px}.dot{display:inline-block;width:10px;height:10px;margin-right:6px}canvas{display:block;width:100%;height:310px;cursor:crosshair;margin-top:12px}button,input,select{font:inherit;background:var(--panel);color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:3px}button{cursor:pointer}input{max-width:180px}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-weight:500;color:var(--muted)}td.number{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.tag{font-size:12px;white-space:nowrap}.detail{background:var(--panel);padding:15px 18px;min-height:160px}details{margin:14px 0}summary{cursor:pointer}li{margin:6px 0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:25px}@media(max-width:700px){main{padding:20px 12px}.twocol{grid-template-columns:1fr}.stats{gap:16px}h1{font-size:21px}}
+.treemap{position:relative;width:100%;height:clamp(260px,44vw,500px);border:1px solid var(--line);overflow:hidden;background:var(--panel)}
+.treemap-cell{position:absolute;display:block;padding:0;border:0;border-radius:0;overflow:hidden;outline:1px solid #ffffff50;outline-offset:-1px;color:#102018;text-align:left;font-size:12px;line-height:1.2;overflow-wrap:anywhere}
+.treemap-label{display:block;padding:4px}
+.treemap-cell:hover,.treemap-cell:focus-visible,.treemap-cell[aria-pressed=true]{outline:3px solid var(--fg);outline-offset:-3px;z-index:1}
+.treemap-cell.positive,.treemap-key.positive{background:#76c496}.treemap-cell.pending,.treemap-key.pending{background:#e4c36a}.treemap-cell.source,.treemap-key.source{background:#a8b1bb}
+.treemap-key{display:inline-block;width:11px;height:11px;margin-right:6px}.treemap-detail{min-height:0;margin-top:12px}.treemap-detail h3{margin:0 0 6px}.treemap-detail p{margin:8px 0}.treemap-search{max-width:320px;flex:1 1 180px}
 </style>
 <main>
 <h1>ROM coverage · FFTA EUR</h1>
@@ -13,6 +19,13 @@
 <p id="freshness" class="notice"></p>
 <div class="notice">Categories overlap. <strong>Available at runtime</strong> identifies ranges served by typed resources. <strong>Positive ordinary use</strong> identifies observed families; it does not mean all bytes in their ranges were read. Code is a static discovery with speculative candidates. The “Typed service in scenes” layer counts only reads marked Typed by collectors.</div>
 <div class="stats" id="stats"></div>
+<h2>Identified data families</h2>
+<p class="muted">Each rectangle represents one family, sized by the union of its identified ROM ranges. Different families can overlap; their areas do not add up to a share of the ROM. Colours show the available evidence, not the percentage of functions decompiled or matched.</p>
+<div class="legend"><span><i class="treemap-key positive"></i>Ordinary use observed (bounded)</span><span><i class="treemap-key pending"></i>Available at runtime; ordinary use not validated</span><span><i class="treemap-key source"></i>Source only</span></div>
+<div class="controls"><label for="treemap-search">Find a family</label><input class="treemap-search" id="treemap-search" type="search" placeholder="e.g. graphics or audio"><label for="treemap-status">Evidence</label><select id="treemap-status"><option value="">All</option><option value="positive">Ordinary use observed</option><option value="pending">Not validated</option><option value="source">Source only</option></select></div>
+<p id="treemap-count" class="muted" role="status"></p>
+<div id="treemap" class="treemap" role="group" aria-label="Identified data families; choose a rectangle for details"></div>
+<section id="treemap-detail" class="detail treemap-detail" aria-live="polite">Select a rectangle to inspect its family and evidence.</section>
 <h2>Observed scenes · DBG-06 audits</h2>
 <p class="muted">Select audits to overlay. Bytes are physically distinct, without multiplying rereads or mirrors. A complete window covers only declared collectors and filters. Outcomes are those reported by the audit; they are not a new validation of the DS case.</p>
 <div class="controls"><button id="audits-all">Select all</button><button id="audits-none">Deselect all</button></div>
@@ -57,6 +70,36 @@ let viewLayers={...R.layers};
 function merged(spans){const out=[];for(const [a,b] of spans.slice().sort((x,y)=>x[0]-y[0]||x[1]-y[1])){const last=out.at(-1);if(last&&a<=last[1])last[1]=Math.max(last[1],b);else out.push([a,b])}return out}
 function overlap(left,right){const out=[];let i=0,j=0;while(i<left.length&&j<right.length){const a=Math.max(left[i][0],right[j][0]),b=Math.min(left[i][1],right[j][1]);if(a<b)out.push([a,b]);if(left[i][1]<right[j][1])i++;else j++}return out}
 function spanBytes(spans){return spans.reduce((s,[a,b])=>s+b-a,0)}
+function familyStatus(r){return !r.runtime_available?'source':r.ordinary_positive?'positive':'pending'}
+const familyStatusLabel={positive:'Ordinary use observed (bounded)',pending:'Available at runtime; ordinary use not validated',source:'Source only'};
+const treemapFamilies=R.resources.map(r=>({resource:r,bytes:spanBytes(merged(r.ranges)),status:familyStatus(r)})).filter(item=>item.bytes>0);
+let treemapSelection='';
+function showTreemapFamily(item){
+ const r=item.resource,detail=$('treemap-detail');treemapSelection=r.id;
+ detail.replaceChildren(text('h3',r.id),text('p',`${n(item.bytes)} identified B · ${familyStatusLabel[item.status]} · ${n(r.ranges.length)} ROM intervals`),text('p',r.note));
+ const evidence=text('p','Evidence: ');if(r.references.length)refs(evidence,r);else evidence.append('No linked evidence in this snapshot.');detail.append(evidence);
+ const inspect=text('button','Inspect on the offset map');inspect.type='button';inspect.onclick=()=>{filter=r.id;$('family').value=filter;select(r.ranges[0][0]);$('map').scrollIntoView({behavior:'smooth',block:'center'})};detail.append(inspect);
+ for(const cell of $('treemap').children)cell.setAttribute('aria-pressed',String(cell.dataset.family===r.id));
+}
+function treemapLayout(items,x,y,w,h,physicalWidth,physicalHeight,out){
+ if(items.length===1){out.push({item:items[0],x,y,w,h});return}
+ const total=items.reduce((sum,item)=>sum+item.bytes,0);let first=0,cut=0;
+ for(let i=0;i<items.length-1;i++){const next=first+items[i].bytes;if(i>0&&Math.abs(first-total/2)<Math.abs(next-total/2))break;first=next;cut=i+1}
+ const share=first/total;
+ if(w*physicalWidth>=h*physicalHeight){treemapLayout(items.slice(0,cut),x,y,w*share,h,physicalWidth,physicalHeight,out);treemapLayout(items.slice(cut),x+w*share,y,w*(1-share),h,physicalWidth,physicalHeight,out)}
+ else{treemapLayout(items.slice(0,cut),x,y,w,h*share,physicalWidth,physicalHeight,out);treemapLayout(items.slice(cut),x,y+h*share,w,h*(1-share),physicalWidth,physicalHeight,out)}
+}
+function renderTreemap(){
+ const query=$('treemap-search').value.trim().toLowerCase(),status=$('treemap-status').value;
+ const items=treemapFamilies.filter(item=>item.resource.id.toLowerCase().includes(query)&&(!status||item.status===status)).sort((a,b)=>b.bytes-a.bytes||a.resource.id.localeCompare(b.resource.id));
+ $('treemap-count').textContent=`${n(items.length)} of ${n(treemapFamilies.length)} families shown. Select a rectangle for details.`;
+ const map=$('treemap');map.replaceChildren();map.hidden=!items.length;
+ if(!items.some(item=>item.resource.id===treemapSelection)){treemapSelection='';$('treemap-detail').textContent=items.length?'Select a rectangle to inspect its family and evidence.':'No families match these filters.'}
+ if(!items.length)return;
+ const rects=[];treemapLayout(items,0,0,1,1,map.clientWidth,map.clientHeight,rects);
+ for(const {item,x,y,w,h} of rects){const r=item.resource,cell=text('button','',`treemap-cell ${item.status}`);if(w*map.clientWidth>100&&h*map.clientHeight>35)cell.append(text('span',r.id,'treemap-label'));cell.type='button';cell.dataset.family=r.id;cell.style.left=100*x+'%';cell.style.top=100*y+'%';cell.style.width=100*w+'%';cell.style.height=100*h+'%';cell.title=`${r.id} · ${n(item.bytes)} identified B · ${familyStatusLabel[item.status]}`;cell.setAttribute('aria-label',cell.title);cell.setAttribute('aria-pressed',String(treemapSelection===r.id));cell.onclick=()=>showTreemapFamily(item);map.append(cell)}
+}
+$('treemap-search').addEventListener('input',renderTreemap);$('treemap-status').addEventListener('change',renderTreemap);
 function activeAudits(){return audits.filter(a=>selectedAudits.has(a.id))}
 function flags(a){return [a.truncated?'TRUNCATED':'',a.partial?'PARTIAL':'',!a.truncated&&!a.partial?'Complete window':''].filter(Boolean).join(' · ')}
 function auditLink(a){const link=text('a',`${a.case} · ${a.run} · ${flags(a)}`);link.href='#audit-'+a.id;return link}
@@ -115,6 +158,6 @@ if(R.comparison){
 }else $('comparison').textContent=R.comparison_note||'First available snapshot. Use --compare / -ComparePath to compare a coverage.json for the same ROM.';
 for(const limit of R.limits)$('limits').append(text('li',limit));
 for(const [key,value] of Object.entries({generated_at:R.generated_at,source_revision:R.source_revision,extractor_generation:R.extractor_generation,reviewed_generation:R.reviewed_generation,evidence_date:R.evidence_date,pending_review:R.pending_review.join(', '),rom_sha256:R.rom_sha256,manifest_sha256:R.manifest_sha256,evidence_sha256:R.evidence_sha256,presentation_translation:R.presentation_translation?JSON.stringify(R.presentation_translation):'none',...R.code})){const p=document.createElement('p');p.append(text('strong',key+': '),text('code',String(value)));$('provenance').append(p)}
-addEventListener('resize',draw);matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);refreshScenes();
+addEventListener('resize',()=>{draw();renderTreemap()});matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);refreshScenes();renderTreemap();
 </script>
 </html>

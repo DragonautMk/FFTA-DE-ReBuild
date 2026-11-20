@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "prepare-release-1-2-0",
+  "title": "Prepare FFTA DE-ReBuild 1.2.0",
+  "kind": "changed",
+  "platforms": [
+    "Android",
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Set the maintained Android preview version to 1.2.0 with version code 28, and prepare release notes covering changes since 1.1.2."
+  ],
+  "validation": [
+    "Windows cross-build passed 978 Wine tests and two host tests; the ZIP passed integrity, private Data and x86-64 PE checks (release-120-windows-_njed1p3).",
+    "The packaged Windows command-line executable started under Wine using the managed prefix (release-120-windows-smoke-jpi6mapg).",
+    "Linux Docker build passed 979 tests; the tarball passed integrity, private Data, x86-64 ELF and executable-mode checks (release-120-linux-m47i0oey).",
+    "The packaged Linux command-line executable started successfully (release-120-linux-smoke-_lj__3eo).",
+    "Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).",
+    "Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53)."
+  ],
+  "limitations": [
+    "The Android signing key used for published 1.1.2 has not yet been recovered; the new APK cannot be installed as an in-place update over it.",
+    "Native Windows and physical Android device execution were not performed. EUR resource coverage is incomplete and USA-specific validation remains separate."
+  ],
+  "files": [
+    "AndroidPort/android/app/build.gradle.kts",
+    "docs/releases/v1.2.0.md"
+  ],
+  "references": [
+    "docs/releases/v1.2.0.md"
+  ]
+}

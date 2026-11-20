@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "toggle-automatic-cartridge-backups",
+  "title": "Allow automatic cartridge-save backups to be disabled",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Add a default-on Automatic save backups setting to Game > Saves, available without Debug and persisted in av.cfg. Apply it to startup, numbered-save selection and confirmed replacement while continuing to load saves and retaining existing backups and restoration."
+  ],
+  "validation": [
+    "Linux/Xvfb GUI with a protected synthetic cartridge verified default-on backup, toggling OFF, persistence across restart without creating a second copy, toggling ON and creation of the second copy on the next restart. The synthetic save remained unchanged and all windows closed normally (save-backup-toggle-gui-fixed-mpsw4zvn). Screenshots reviewed.",
+    "Linux targeted config/menu/runtime cases passed, as did 155 menu tests (one ignored), nine cartridge-backup tests (one ignored), nine numbered-save tests and four language-catalog tests. Units: save-backup-toggle-combined-ykq8cth2, save-backup-menu-suite-ugomfxd6, save-backup-toggle-regressions-9orwpjbr and save-backup-runtime-build-tsqb3sbw.",
+    "The first config harness misclassified an unrelated zero-test integration target despite its one passing unit test; a standalone menu build lacked the host Wayland development package, and the combined project configuration passed. The first GUI runner reached its expected result but retained its synthetic session under the private-input guard; the corrected runner removed only its owned synthetic copy after normal closure and passed."
+  ],
+  "limitations": [
+    "Existing backup migration/recovery is retained independently of the automatic-capture setting. Confirmed replacement does not create a recovery copy while the setting is off. Linux/Xvfb validation used synthetic inputs and simulated keyboard/mouse; native Windows, physical controller, AndroidPort and real user saves were not tested."
+  ],
+  "files": [
+    "crates/input-config/src/lib.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/recomp/src/save_backups.rs",
+    "crates/recomp/src/game_saves.rs",
+    "crates/recomp/src/play.rs",
+    "docs/save_backups.md",
+    "docs/menu_clan_atlas.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/save_backups.md",
+    "docs/menu_clan_atlas.md"
+  ]
+}

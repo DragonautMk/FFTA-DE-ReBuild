@@ -107,3 +107,44 @@ low. Builds and ordinary validation must work with the external disk unplugged.
   receipts, bringing the five rounds to **18.22 GiB**. The internal volume
   had **9.99 GiB** free at verification. U31 and leased test folders remain
   deferred. The local receipt is `target/storage-closed-20261120-27pciska/result.json`.
+- [x] Archived the closed debug-tools migration Wine prefix locally, preserving
+  its mixed test outcomes. An offline restore verified all 1,949 inventory
+  entries and 41 symbolic links before the temporary copy was retired.
+- [x] Reclaimed another **0.84 GiB** after archive and receipt costs. The six
+  rounds recovered **19.06 GiB** in total. At verification, the internal disk had
+  **8.24 GiB** free. The local receipt is
+  `target/storage-migration-wine-20261120-2ylghb1_/result.json`.
+- [x] Archived six identical GUI cache copies from five closed test scopes,
+  including the two copies from a scope with both failed and successful runs.
+  Restored one cache from each outcome offline and matched them to the retained
+  local reference. Recovered another **0.14 GiB** after archive and receipt
+  costs, for **19.20 GiB** across all seven rounds. At verification, the internal
+  disk had **8.38 GiB** free. The local receipt is
+  `target/storage-gui-caches-20261120-hn6aza9j/result.json`.
+- [x] Archived eight more GUI cache copies, including the caches of two failed
+  runs. Offline restorations of a passing and a failed run matched the retained
+  local copy. The additional net recovery was **0.19 GiB**, bringing the eight
+  rounds to **19.39 GiB**. The internal disk had **8.43 GiB** free at verification.
+  The local receipt is `target/storage-legacy-gui-20261120-kpjxnsrq/result.json`.
+- [x] Archived the failed RVR-01 isolated compiler tree after its successful
+  retry. Verified all 2,263 archive entries and compared the test executable
+  directly from the local archive with an identical retained copy. This freed
+  **0.65 GiB** net, bringing the nine rounds to **20.04 GiB**. The receipt is
+  `target/storage-rvr01-20261120-0dlu0z0l/result.json`.
+- [x] Restored the full RVR-01 tree once space became available. All 2,263
+  entries, including 34 internal hard links, matched the archive inventory.
+  The test executable matched the retained copy and the temporary tree was
+  retired. The offline verification receipt is
+  `target/storage-rvr01-20261120-0dlu0z0l/full-restore.json`.
+- [x] Retired ten older Cargo incremental sessions after checking their newer
+  siblings, file links, host activity and Cargo/session locks. The current
+  executables, dependency caches and newer sessions were retained. Accounting
+  for shared links and receipts, this released **1.02 GiB** in file blocks and
+  brought ten rounds to **21.07 GiB**. Free space was **4.88 GiB** at the final
+  measurement. The receipt is
+  `target/local-artifact-cleanup-old-incremental-ie_ssgz7/result.json`.
+- [x] Archived 18 RVR-02 dependency copies that matched the canonical Windows
+  build byte for byte. The two test executables remain available. Restored and
+  compared an `.rlib` and an `.rmeta` without the external volume. This
+  released another **0.28 GiB** net, for **21.35 GiB** across eleven rounds.
+  The receipt is `target/storage-rvr02-deps-20261120-ipn35fk6/result.json`.

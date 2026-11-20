@@ -24347,3 +24347,101 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: current guide, public whitelist and Docker closure; protected remapped Linux candidate, manifest/privacy, moved command/log, understandable empty views, real older frontend incompatibility. DBG2-27 accepted with user waiver.
 - Evidence: `docs/changes/2026-11-20-accept-debug-distribution-guide.json`; `6dili0rp`, `g5denal6`, `l50bh__p`, `1rsjato1`, `ulwuwvn5`.
 - Limits: native Windows not executed; user waived that criterion. Selected cases only; no release published. DBG2-20 suspended and remains open.
+
+### TARGET-NON-U31-FOLLOWUP
+
+- Outcome: completed
+- Verified criteria: archived the isolated debug-tools migration Wine prefix with its original mixed outcome, then restored and verified all 1,949 paths and 41 symbolic links without the external volume. Original result receipts remained unchanged. The temporary restore was retired. Net recovery after catalog and receipts was 902,238,208 bytes, for 20,460,470,272 bytes across six rounds.
+- Evidence: `target/storage-migration-wine-20261120-2ylghb1_/result.json`, inventory/review and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: host inspection identified three partially unreadable authentication processes; no visible consumer used the scope. U31, active jobs, shared Wine and private inputs were outside the selection.
+
+### SAVE-BACKUP-TOGGLE
+
+- Outcome: completed
+- Verified criteria: default-on persisted menu option controls automatic startup, numbered-slot selection and replacement backups; save loading, existing backup restoration and safety checks preserved. Synthetic Linux GUI confirmed off/on persistence across three starts, and focused plus existing menu/save tests passed.
+- Evidence: `docs/changes/2026-11-20-toggle-automatic-cartridge-backups.json`; `save-backup-toggle-gui-fixed-mpsw4zvn`, `save-backup-toggle-combined-ykq8cth2`, `save-backup-toggle-regressions-9orwpjbr`, `save-backup-menu-suite-ugomfxd6`.
+- Limits: Linux/Xvfb synthetic tests; Windows native, physical controller and AndroidPort not tested. Existing backup migration/recovery remains separate; replacement while off creates no recovery copy. Earlier harness failures retained.
+
+### TARGET-GUI-CACHE-NOV20
+
+- Outcome: completed
+- Verified criteria: six duplicate GUI caches from five closed test scopes were inventoried and archived locally with their original outcomes, including two in a mixed scope. Restored one passing and one mixed cache with the external volume unavailable and matched both to the retained local copy. Recovered 155,451,392 bytes after catalog and receipts, bringing seven rounds to 20,615,921,664 bytes.
+- Evidence: `target/storage-gui-caches-20261120-hn6aza9j/result.json`, its plan, progress and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: three partially unreadable host processes were identified as PAM/SSH agents. U31, shared Wine, named benchmark baselines and private inputs remain outside the selection. At verification the internal volume had 8,998,256,640 bytes available.
+
+### TARGET-LEGACY-GUI-CACHE
+
+- Outcome: completed
+- Verified criteria: archived eight duplicate caches from closed GUI runs, preserving the six passing and two failed outcomes. Restored one passing and one failed cache offline, verified both against the retained local file and retired the temporary copies. Recovered 207,273,984 bytes after catalog and receipts. Eight rounds total 20,823,195,648 bytes.
+- Evidence: `target/storage-legacy-gui-20261120-kpjxnsrq/result.json`, exact plan and progress, and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: three partially unreadable host processes were identified as PAM/SSH agents. U31, active work, named benchmark baselines and private inputs were excluded. At verification the internal volume had 9,052,889,088 bytes free.
+
+### ROMDATA-01-E180-TILEMAP-DESCRIPTORS-3A4B18
+
+- Outcome: completed
+- Verified criteria: EUR E181-d180 owns four descriptors and four directly linked LZ wrappers (48 source bytes, including 28 observed in the E172 sample), retaining the previous descriptor and 119 other resources. Wine checks coherent-edit rejection, poisoned mirror/boundary reads including wrapper-to-LZ mixed ownership, and eight original-interpreter/separately compiled reader cases with complete state and guest clock equal. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with all 48 new source bytes and seven existing LZ encoded streams altered; every LZ block is used. Production Wine CLI creates, reuses and verifies 121 files matching the tested dataset.
+- Evidence: source `e181-descriptors-source-l3pwspy8` and `e181-wrapper-source-e90r8zmw`; Wine trace `e181-descriptors-trace-wine-0_8a03d2`; Wine publication/readers `e181-descriptors-wine-fd2bih7u`; scene `e181-descriptors-scene-wine-pdfkq9g5`; CLI `e181-descriptors-cli-wine-3tjo6qvr`. Wine servers drained.
+- Limits: The traced ordinary descriptor read used interpreter fallback; controlled cases separately exercise compiled readers. Aggregate scene counters do not identify ordinary reads for every descriptor. Other consumers, scenes, families and complete ROM independence remain open; 3,661 E172-sampled observed bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### TARGET-ISOLATED-OUTPUTS
+
+- Outcome: completed
+- Verified criteria: the closed failed RVR-01 isolated compiler tree was archived locally after its successful retry. All 2,263 archive entries passed the integrity check; its executable matched the retained local copy by streaming with the external volume unavailable. The original failure evidence and hot copy were unchanged. Net recovery was 699,719,680 bytes after catalog and receipts, for 21,522,915,328 bytes over nine rounds.
+- Evidence: `target/storage-rvr01-20261120-0dlu0z0l/result.json`, reviewed inventory and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: full original-path restoration was deferred below the 5 GiB free-space floor. Three partially unreadable host processes were identified as PAM/SSH agents. U31, active work and current builds remained outside the selection.
+
+### TARGET-OLD-INCREMENTAL
+
+- Outcome: completed
+- Verified criteria: under the existing Cargo profile lock, ten per-session locks and a shared incremental lease, retired ten older canonical Cargo incremental sessions, each with a newer retained sibling. Exact inventories and host ownership were rechecked before each operation. Shared hardlinks and current executable were preserved. Counted 1,096,478,720 net file bytes after receipts, for 22,619,394,048 bytes over ten rounds.
+- Evidence: `target/local-artifact-cleanup-old-incremental-ie_ssgz7/result.json`, exact inventory, progress and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: rebuilds of older incremental states may take longer. Three partially unreadable processes were identified as PAM/SSH agents. Concurrent writes affected free space, which was 5,243,207,680 bytes at receipt time. U31, current sessions and dependencies were excluded.
+
+### TARGET-ONE-INCREMENTAL
+
+- Outcome: rejected
+- Verified criteria: reviewed the rebuildable `recomp-331c9nev3g14k` session. Its Cargo/profile locks were available, but a separate project compilation was active at the first attempt, so no cache path was changed. The compilation then ended and free space rose above 6 GiB. The selected variant remains available to avoid unnecessary recompilation.
+- Evidence: `target/local-artifact-cleanup-single-incremental-5fpwj23w/plan.json` and its inspected source.
+- Limits: no deletion or archive was performed. U31 remained excluded.
+
+### TARGET-RVR01-RESTORE
+
+- Outcome: completed
+- Verified criteria: with the external volume unavailable, restored the full archived RVR-01 compiler tree at its original path and checked all 2,263 entries, including 34 internal hard links. Its executable matched the retained copy byte for byte. The unchanged temporary tree was retired after host and lease checks.
+- Evidence: `target/storage-rvr01-20261120-0dlu0z0l/full-restore.json` and `docs/development/STORAGE_CHECKLIST.md`. Including this verification receipt, cumulative net recovery was 22,619,389,952 bytes.
+- Limits: three partially unreadable host processes were identified as PAM/SSH agents. Other concurrent disk activity accounts for changes in free space.
+
+### ROMDATA-01-E172-REDSPRING-399774
+
+- Outcome: completed
+- Verified criteria: EUR E182-d181 owns three authenticated transfer rows, three linked descriptors and three LZ wrappers (72 bytes including 58 previously observed in the E172 sample). Previous fields and 118 other resources remain unchanged; row-to-descriptor and descriptor-to-LZ dependencies are checked. Wine validates publication, coherent-edit rejection, poisoned mirrors and mixed descriptor/row and wrapper/LZ boundaries, and twelve original-interpreter/separately compiled reader cases with equal state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with all 72 new source bytes and seven existing LZ encoded streams altered; every LZ block is used. Wine production CLI creates, reuses and verifies 121 matching files.
+- Evidence: source `e182-transfer-source-g0ce9o5s`; Wine trace `e182-transfer-trace-wine-qu75rzi6`; Wine readers `e182-transfer-wine-fjrrnhsl`; scene `e182-transfer-scene-wine-fx2_p2kt`; CLI `e182-transfer-cli-wine-8dilrn0i`. Wine servers drained.
+- Limits: The trace used interpreter fallback; controlled cases separately exercise compiled readers. The scene log includes a D-Bus assertion, but the test continued and passed. Failed source `dc19d8tl` used a literal wildcard; build `nguub7yp` had concurrent protected-source edits; test `956pll94` expected four row bytes instead of six. Other scenes, consumers and ROM independence remain open; 3,603 sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.
+
+### TARGET-ISOLATED-DEPS
+
+- Outcome: completed
+- Verified criteria: archived 18 dependency libraries from the closed RVR-02 isolated build after verifying byte identity with canonical copies. The unit's original outcome remains FAIL because its old cleanup guard refused shared Cargo files; the child build passed. Two pinned test executables and all original evidence remained unchanged. Offline restoration of one rlib and one rmeta matched their canonical copies. Recovered 305,610,752 net file bytes after catalog and receipts, bringing the total to 22,925,000,704 bytes.
+- Evidence: `target/storage-rvr02-deps-20261120-ipn35fk6/result.json`, exact plan and progress, and `docs/development/STORAGE_CHECKLIST.md`.
+- Limits: three partially unreadable host processes were identified as PAM/SSH agents. No visible process used the scope at retirement. U31, active sessions and pinned executables were excluded.
+
+### MENU-ROM-DATA-EXTRACTION
+
+- Outcome: completed
+- Verified criteria: System menu starts asynchronous extraction with phased progress and logical size estimate; persistent default-off ROM-plus-resources choice applies next launch, retaining ROM fallback. Linux USA GUI extracted data and launched ROM-only and ROM-plus-resources; protected EUR extraction matched the estimate and reused verified data. Synthetic menu/config/estimate tests and Linux build PASS.
+- Evidence: `menu-rom-data-final-synthetic-retry-1qztx3ew`, `menu-rom-data-runtime-build-final-fxcy9ytt`, `menu-rom-data-real-eur-3w3ze64a`, `menu-rom-data-linux-gui-host-stable-tn5q53a8`; `docs/changes/2026-11-20-menu-extracted-game-data.json`.
+- Limits: ROM coverage is incomplete. EUR debug test took 626.57 seconds; release performance, native Windows, physical controller, Android and worker-termination feedback remain unverified. A sandbox Xvfb failure and two missed-input host GUI attempts were followed by a passing host retry.
+
+### ROM-COVERAGE-GITHUB-PAGES
+
+- Outcome: completed
+- Verified criteria: enabled public GitHub Pages from the committed decomp /docs folder; the existing interactive EUR report is reachable and its offset search selects the expected range. README, coverage guide and project state document the URL and update workflow.
+- Evidence: GitHub Pages build of 32caaab0 succeeded; public HTML and JSON returned HTTP 200 and SHA-256 matched the committed report; Chrome rendered e170-d169 and inspected 0x150940. `docs/changes/2026-11-20-publish-rom-coverage-on-github-pages.json`.
+- Limits: the snapshot was generated 2026-11-18 and must be regenerated locally before a future push republishes it. Candidate code is not function-matching/decompilation progress; a true per-function map needs separate reliable evidence. GitHub Pages site root has no landing page. Project memory metadata check passes; full check currently reports three implementation files from concurrent ROM work without a new record.
+
+### ROMDATA-01-E172-REDSPRING-AE789C
+
+- Outcome: completed
+- Verified criteria: EUR E183-d182 extends the observed tilemap resource with two authenticated row-major halfword rectangles (88 bytes, including 86 previously unowned in the E172 sample) and preserves the prior tilemap and 119 other resources. Wine verifies publication, coherent-edit rejection, poisoned mirrors and boundaries, and two original-interpreter/separately compiled width-reader prefixes with equal full state and guest clock. A 600-frame scene matches state, clock, central/wide video, OAM, dispatch and audio with both rectangle backings altered; each rectangle has positive use. Wine production CLI creates, reuses and verifies 121 matching files.
+- Evidence: source `e183-rect-source-n257xucg`; Wine trace `e183-source-trace-wine-re5n0s9w`; Wine publication/reader `e183-rect-wine-rxrkgl9k`; scene `e183-rect-scene-wine-qz9v5fto`; CLI `e183-rect-cli-wine-grtrq8pm`. Wine servers drained.
+- Limits: The trace used interpreter fallback; separately compiled coverage stops before the original indirect copy. The scene log includes a D-Bus assertion, but the test continued and passed. The pointer cells, other rectangles, consumers and ROM independence remain open; 3,517 E172-sampled bytes remain unowned. Linux, USA and native Windows remain pending; no performance measurements.

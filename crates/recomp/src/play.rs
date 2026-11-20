@@ -549,6 +549,9 @@ struct PlayApp {
     workbench: crate::debug_workbench::Workbench,
     replay_path: Option<std::path::PathBuf>,
     replay_job: Option<crate::debug_replay::Job>,
+    data_job: Option<std::sync::mpsc::Receiver<Result<crate::rom_data::MenuProgress, String>>>,
+    data_estimate: Option<u64>,
+    data_terminal_received: bool,
     replay_terminal: Option<Result<crate::debug_replay::Report,String>>,
     cheat_refresh: Option<crate::debug_cheats::Refresh>,
     cheat_snapshot: Option<crate::debug_cheats::Snapshot>,
@@ -3236,6 +3239,76 @@ impl PlayApp {
         self.menu_dirty = true;
     }
 
+    fn start_data_job(&mut self) {
+        if self.data_job.is_some() { return; }
+        let rom = self.machine.bus.rom.clone();
+        let (send, receive) = std::sync::mpsc::channel();
+        self.data_estimate = None;
+        self.data_terminal_received = false;
+        self.menu.data_progress(0, self.menu_text("Analyzing game data", &[]));
+        self.menu_dirty = true;
+        self.data_job = Some(receive);
+        std::thread::spawn(move || {
+            let result = crate::rom_data::prepare_for_menu(&rom, |progress| {
+                send.send(Ok(progress)).map_err(|_| "Game data preparation stopped".to_owned())
+            });
+            if let Err(error) = result { let _ = send.send(Err(error)); }
+        });
+    }
+
+    fn poll_data_job(&mut self) {
+        use std::sync::mpsc::TryRecvError;
+        let mut events = Vec::new();
+        let mut finished = false;
+        if let Some(receiver) = &self.data_job {
+            loop { match receiver.try_recv() {
+                Ok(event) => events.push(event),
+                Err(TryRecvError::Empty) => break,
+                Err(TryRecvError::Disconnected) => { finished = true; break; },
+            }}
+        }
+        for event in events {
+            let (step, label) = match event {
+                Ok(crate::rom_data::MenuProgress::Decoding) => (0, "Analyzing game data"),
+                Ok(crate::rom_data::MenuProgress::Estimating) => (1, "Calculating data size"),
+                Ok(crate::rom_data::MenuProgress::Estimated(bytes)) => { self.data_estimate = Some(bytes); (1, "Data size calculated") },
+                Ok(crate::rom_data::MenuProgress::Stage(stage)) => {
+                    let step = match stage.percent() { 0 => 1, 20 => 2, 70 | 90 => 3, _ => 4 };
+                    if step == 4 { self.data_terminal_received = true; }
+                    (step, stage.label())
+                },
+                Err(error) => {
+                    self.data_terminal_received = true;
+                    let message = self.menu_text("Game data error: {error}", &[("error", error)]);
+                    self.menu.data_progress(0, message);
+                    self.menu_dirty = true;
+                    continue;
+                },
+            };
+            let mut message = self.menu_text(label, &[]);
+            if let Some(bytes) = self.data_estimate {
+                let size = if bytes < 1024 {
+                    format!("{bytes} B")
+                } else if bytes < 1_048_576 {
+                    format!("{:.1} KiB", bytes as f64 / 1024.0)
+                } else {
+                    format!("{:.1} MiB", bytes as f64 / 1_048_576.0)
+                };
+                message.push_str(" · ");
+                message.push_str(&self.menu_text("Estimated files: {size}", &[("size", size)]));
+            }
+            self.menu.data_progress(step, message);
+            self.menu_dirty = true;
+        }
+        if finished {
+            self.data_job = None;
+            if !self.data_terminal_received {
+                self.menu.data_progress(0, self.menu_text("Game data preparation stopped unexpectedly", &[]));
+                self.menu_dirty = true;
+            }
+        }
+    }
+
     fn restart_rom(&mut self) {
         self.lifecycle_emit(crate::debug_lifecycle::Family::State,"requested",None,serde_json::json!({"operation":"restart"}));
         if self.recording_active() {
@@ -4104,6 +4177,7 @@ impl PlayApp {
     }
 
     fn about_to_wait_observed(&mut self, event_loop: &ActiveEventLoop) {
+        self.poll_data_job();
         self.poll_replay();
         if self.paused&&!self.content_picker.initialized(){let rom=gba_core::ffta_rom::digest(&self.machine.bus.rom);if let Err(e)=self.content_picker.initialize(&mut self.menu,rom){self.menu.diagnosis_result(e);}}
         self.menu_dirty |= self.content_picker.poll(&mut self.menu);
@@ -4494,6 +4568,7 @@ impl PlayApp {
                     menu::MenuAction::StartUiTrace=>{if let Err(e)=self.debug_action(&crate::debug_control::Action::UiStart){self.menu.diagnosis_result(e);self.menu_dirty=true;}},
                     menu::MenuAction::SaveUiReport=>{if let Err(e)=self.debug_action(&crate::debug_control::Action::UiReport){self.menu.diagnosis_result(e);self.menu_dirty=true;}},
                     menu::MenuAction::ToggleFastForward=>{self.ff_latched=!self.ff_latched;self.menu_dirty=true;},
+                    menu::MenuAction::ExtractData=>self.start_data_job(),
                     menu::MenuAction::Resume => {
                         if self.replay_job.is_some() {self.menu.diagnosis_result("Finish or cancel the replay before resuming.".into());}
                         else {self.paused=false;self.lifecycle_emit(crate::debug_lifecycle::Family::Machine,"menu-resume",None,serde_json::json!({"paused":false}));}
@@ -4578,6 +4653,7 @@ impl PlayApp {
                     }
                     menu::MenuAction::Changed(what) => {
                         if what == menu::Changed::Debug {
+                            self.game_saves.set_automatic_backups(self.av.automatic_save_backups);
                             self.refresh_state_slots();
                         }
                         if what == menu::Changed::Fullscreen {
@@ -5099,12 +5175,14 @@ fn cmd_play_inner(args: &[String], session: Option<&crate::debug_session::Sessio
             ));
         }
     }
+    let mut av = input_config::AvConfig::load();
+    // Isolated debug sessions and benchmarks retain their explicitly pinned input.
+    let prepare_rom_data = prepare_rom_data || (session.is_none() && benchmark.is_none() && av.use_extracted_data);
     let prepared_resources = if prepare_rom_data {
         Some(crate::rom_data::prepare_startup(&rom, status)?)
     } else {
         None
     };
-    let mut av = input_config::AvConfig::load();
     let route_session = session.is_none() || !av.debug_asset_root.is_empty();
     let mut debug_root = if benchmark.is_none() && route_session {
         let mut root = input_config::storage::debug_asset_root(&av).ok_or("Cannot locate debug asset root")?.join("debug_saves");
@@ -5132,6 +5210,7 @@ fn cmd_play_inner(args: &[String], session: Option<&crate::debug_session::Sessio
     let mut game_saves = if let Some(root) = &debug_root {
         crate::game_saves::GameSaves::with_debug_root(&initial_save, &rom, root)?
     } else { legacy_saves };
+    game_saves.set_automatic_backups(av.automatic_save_backups);
     if crate::save_path::is_remembered_family(&initial_save) && game_saves.current == 1 {
         game_saves.current = av.debug_game_save_slot;
     }
@@ -5237,9 +5316,13 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
     }
     let save_backups = game_saves.prepare_backups(Path::new(&sav_path))?;
     if benchmark.is_none() {
-        if let Some(sav) = save_backups.capture_startup().map_err(|e| format!("Cannot protect cartridge save: {e}"))? {
+        if let Some(sav) = save_backups.load_startup(av.automatic_save_backups).map_err(|e| format!("Cannot load cartridge save: {e}"))? {
             machine.bus.load_save_data(&sav);
-            eprintln!("loaded {sav_path}; startup backup completed");
+            if av.automatic_save_backups {
+                eprintln!("loaded {sav_path}; startup backup completed");
+            } else {
+                eprintln!("loaded {sav_path}; automatic backups disabled");
+            }
         }
     }
 
@@ -5448,6 +5531,9 @@ Place your own dump as gba_bios.bin next to the executable:\n  {}",
         workbench: Default::default(),
         replay_path,
         replay_job: None,
+        data_job: None,
+        data_estimate: None,
+        data_terminal_received: false,
         replay_terminal: None,
         cheat_refresh: None,
         cheat_snapshot: None,

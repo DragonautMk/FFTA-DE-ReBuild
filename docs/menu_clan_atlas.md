@@ -30,9 +30,29 @@ Dates are explicitly UTC. Missing files or unreadable dates are shown without
 inventing dates.
 
 Saves groups Save states, Extended saves (9/99 slots), numbered cartridge saves
-and backups. Existing forms and handlers preserve previews, confirmations and
-Undo. System groups language, restart, ROM selection and exit. Bindings and the
+and backups. **Automatic save backups** can be turned off or on without Debug;
+existing backup copies remain available for restoration. Existing forms and
+handlers preserve previews, confirmations and Undo. System groups language, restart, ROM selection and exit. Bindings and the
 three input profiles remain in Controls.
+
+**Game > System > Extract game data** prepares the current cartridge's supported
+resources in the background. Its progress bar shows preparation phases, and the
+size is the estimated logical size of the encoded files, excluding filesystem
+allocation overhead and any older retained generations. Extraction verifies and
+publishes a new generation safely; an error is shown in the same panel. The ROM
+is still required because extraction and resource consumption are incomplete.
+
+**Data source (next launch)** chooses **ROM ONLY** (the default) or **ROM + DATA**.
+The choice is stored as `game.use_extracted_data = false|true` in `av.cfg` and
+takes effect when the game process is launched again; the in-game Restart action
+retains the current process's resources. When enabled, startup verifies or
+prepares the matching resources before use. Explicit `--rom-data` continues to
+opt in, while isolated debug sessions and benchmarks retain their pinned inputs.
+If startup cannot prepare the chosen cartridge, set the key to `false` to return
+to ROM-only startup. Extraction may consume substantial disk space and older
+generations are retained for safety. Linux validation exercised the menu and
+both startup choices with a USA ROM, and verified estimated size, publication
+and reuse with a protected EUR ROM; native Windows was not tested.
 
 The menu starts in **English**. **Game > System > Language** offers **English**
 and **Italiano**, applied immediately on confirmation and persisted as

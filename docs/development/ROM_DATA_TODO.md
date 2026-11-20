@@ -269,9 +269,12 @@ E175 extends that owner with six more observed streams totaling 2,291 source
 bytes. E176 additionally owns a 64-byte constructor template, and E177 owns
 100 observed bytes in a tilemap. E178 owns seven observed descriptor bytes,
 and E179 owns a 12-byte row pointing to it. E180 adds four adjacent rows
-covering 48 observed bytes. The altered-source 600-frame actions and CLI checks
-through E180 pass on Wine; 3,689 original observed unowned bytes lie outside
-these eight increments.
+covering 48 observed bytes. E181 owns four selected descriptors and their
+four LZ wrappers, including 28 further observed bytes. E182 owns three linked
+transfer rows, descriptors and LZ wrappers, including another 58 observed
+bytes. E183 adds two tilemap rectangles covering another 86 observed bytes.
+The altered-source 600-frame actions and CLI checks through E183 pass on Wine;
+3,517 original observed unowned bytes lie outside these eleven increments.
 Other readers, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
 

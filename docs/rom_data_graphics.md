@@ -2193,7 +2193,7 @@ No performance measurement was performed.
 Four EUR rows at `3a4bbc..3a4bec` precede the E179 row. All 48 bytes were
 observed by the retained E172 scene inventory with the same field widths;
 their descriptor pointers target `3a4b18`, `3a4b20`, `3a4b28` and `3a4b30`.
-These pointed descriptors are still raw. Source `e180-rows-source-5w43a4ri`
+These pointed descriptors were still raw at E180. Source `e180-rows-source-5w43a4ri`
 authenticates the four rows and preserves their distinct pointers without
 claiming a global array extent. Wine `e180-rows-trace-wine-atgqm66z` observes
 one row's byte read at `080db4ac` via interpreter fallback.
@@ -2212,3 +2212,100 @@ bytes in aggregate across the old and new rows. Wine production CLI
 `e180-rows-cli-wine-ilg230s3` creates, reuses and verifies 121 files matching
 the tested dataset. Other rows, targets, scenes, Linux, USA and native Windows
 remain open. No performance measurement was performed.
+
+## E181 observed tilemap descriptors and LZ wrappers
+
+EUR E181-d180 extends `graphics.observed-tilemap-descriptor` to the four
+descriptors selected by the E180 rows at `3a4b18`, `3a4b20`, `3a4b28` and
+`3a4b30`. Their 32 bytes point respectively to four four-byte wrappers at
+`b0e2b4`, `b0dd58`, `b0df28` and `b0eccc`. Each wrapper precedes an existing
+managed LZ stream. Source `e181-descriptors-source-l3pwspy8` and
+`e181-wrapper-source-e90r8zmw` authenticate the descriptor and wrapper bytes,
+links and original reader windows. Twenty descriptor bytes and eight wrapper
+bytes were observed unowned in the selected E172 inventory; the remaining
+bytes in these structures are retained for exact reconstruction. The
+compressed flag is validated, while the other wrapper fields retain their
+source values without a broader semantic claim.
+
+The resource preserves the earlier descriptor and adds explicit tilemap and
+LZ dependencies. Wine `e181-descriptors-trace-wine-0_8a03d2` observes one
+original descriptor read via interpreter fallback. Wine
+`e181-descriptors-wine-fd2bih7u` preserves the other 119 resources, rejects
+coherent edits, verifies poisoned mirrored and mixed wrapper/LZ boundary
+reads, and matches eight original-interpreter and separately compiled reader
+cases including complete state and guest clock. Wine
+`e181-descriptors-scene-wine-pdfkq9g5` matches complete state, clock,
+central/wide video, OAM, dispatch and audio for the recorded 600-frame action
+with all 48 new descriptor/wrapper bytes and the seven existing LZ streams'
+encoded bytes altered in the managed machine. All seven LZ blocks are used;
+descriptor and wrapper counters are aggregate and do not establish separate
+ordinary reads of each descriptor. Wine production CLI
+`e181-descriptors-cli-wine-3tjo6qvr` creates, reuses and verifies 121 files
+matching the tested generation. Other scenes and consumers, Linux, USA and
+native Windows remain open. No performance measurement was performed.
+
+## E182 observed transfer rows and LZ descriptors
+
+EUR E182-d181 extends the existing row and descriptor resources with three
+12-byte rows at `39978c..3997b0`, three eight-byte descriptors at
+`399774..39978c` and their four-byte LZ wrappers at `b02ea0`, `b030bc` and
+`b151d4`. The rows point to those descriptors, which point to wrappers directly
+before three existing managed LZ streams. The 72 reconstructed bytes include
+58 previously unowned bytes in the selected E172 scene inventory. Source
+`e182-transfer-source-g0ce9o5s` authenticates these exact spans and links. The
+row and descriptor resources retain their earlier fields and enforce the
+corresponding descriptor and LZ dependencies; unproved fields retain their
+original values without a broader interpretation.
+
+Wine `e182-transfer-trace-wine-qu75rzi6` observes the original row reader at
+`080db4ac` via interpreter fallback. Wine `e182-transfer-wine-fjrrnhsl`
+preserves the other 118 resources, rejects coherent edits, checks poisoned
+mirror and boundary reads including descriptor/row and wrapper/LZ ownership
+boundaries, and compares twelve original-interpreter and separately compiled
+reader cases with equal complete state and guest clock. Wine
+`e182-transfer-scene-wine-fx2_p2kt` matches complete state, clock,
+central/wide video, OAM, dispatch and audio for the recorded 600-frame action
+with all 72 new bytes and the seven existing LZ streams' encoded bytes altered
+in the managed machine. All seven LZ blocks are used; row, descriptor and
+wrapper counts are aggregate. The scene log contains a D-Bus assertion but the
+comparison continued and the test and validation unit passed. Wine production
+CLI `e182-transfer-cli-wine-8dilrn0i` creates, reuses and verifies 121 files
+matching the tested generation. Other scenes and consumers, Linux, USA and
+native Windows remain open. No performance measurement was performed.
+
+The first source attempt `e182-transfer-source-dc19d8tl` used a literal
+wildcard as the manifest path. Build `e182-transfer-build-nguub7yp` compiled,
+but the validation unit rejected it because two protected files changed
+concurrently; the protected retry passed. Wine
+`e182-transfer-wine-956pll94` reached the controlled reader check but used an
+incorrect expected row-byte count (four rather than six, including the original
+halfword read); the corrected test passed in `fjrrnhsl`.
+
+## E183 observed tilemap rectangles
+
+EUR E183-d182 extends `graphics.observed-tilemap` with a 2×15 rectangle at
+`ae78ac..ae78ea` and a 1×12 rectangle at `ae78ec..ae7906`. Each begins with
+height and width bytes followed by row-major 16-bit cells. Source
+`e183-rect-source-n257xucg` authenticates both headers, 42 cells, exact reader
+windows and the pointer cells at `3a4b08` and `3a4d3c`. Of the 88 source
+bytes, 86 were observed unowned in the E172 sample. The two pointer cells and
+other neighboring data remain separate raw sources; the rectangles' extents
+are not global bounds on the original readers.
+
+The typed resource preserves the earlier run-compressed tilemap and
+reconstructs both rectangle source views for the guest, which retains its
+original copy and destination behavior. Wine `e183-source-trace-wine-re5n0s9w`
+observes the second rectangle's width read at `080d8136` via interpreter
+fallback. Wine `e183-rect-wine-rxrkgl9k` preserves the other 119 resources,
+rejects coherent edits, verifies poisoned mirror/boundary reads, and compares
+the original interpreter with a separately compiled width-reader prefix for
+both rectangles, including complete state and guest clock. This controlled
+prefix stops before the original indirect copy. Wine
+`e183-rect-scene-wine-qz9v5fto` matches complete state, clock, central/wide
+video, OAM, dispatch and audio for the recorded 600-frame action with all 88
+rectangle backing bytes altered in the managed machine; the two owners serve
+64 and 26 bytes respectively. The log contains a D-Bus assertion but the test
+and validation unit completed successfully. Wine production CLI
+`e183-rect-cli-wine-grtrq8pm` creates, reuses and verifies 121 files matching
+the tested generation. Other rectangles and consumers, Linux, USA and native
+Windows remain open. No performance measurement was performed.

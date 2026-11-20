@@ -421,6 +421,11 @@ and normal enablement retain their existing acceptance gates.
   resource/case/evidence drilldown and dated same-ROM generation comparisons.
   Positive-family extents, actual observed/Typed bytes and collector gaps remain
   distinct; imports never promote new DS acceptance.
+  The [public coverage map](https://dragonautmk.github.io/FFTA-DE-ReBuild/development/rom-coverage/)
+  publishes the committed `decomp` report through GitHub Pages. Its snapshot is
+  regenerated locally; candidate code is not a function-matching metric. A
+  searchable treemap presents data families by identified interval size and
+  bounded evidence status; overlapping families are not ROM partitions.
   DBG-08 adds [trigger captures](../debug_captures.md), CLI debug-capture
   create/run/cancel and menu Capture on trigger, reusing isolated replay workers.
   Feature-gated first-hit observation covers authenticated resource source
@@ -1860,8 +1865,28 @@ and normal enablement retain their existing acceptance gates.
 - EUR E180-d179 extends the [observed tilemap rows](../rom_data_graphics.md#e180-adjacent-observed-tilemap-rows)
   by four rows/48 observed bytes. Wine source/trace/readers `5w43a4ri`,
   `atgqm66z`, `jcmdanqw`, scene `4nxkgjnp` and CLI `ilg230s3` pass. The four
-  descriptor targets remain raw; the E172 sample has 3,689 other observed
-  unowned bytes. Other families, Linux, USA and native Windows remain open.
+  descriptor targets were still raw at E180; the E172 sample then had 3,689
+  other observed unowned bytes. Other families remain open.
+
+- EUR E181-d180 extends the [observed tilemap descriptor](../rom_data_graphics.md#e181-observed-tilemap-descriptors-and-lz-wrappers)
+  with four descriptors and their linked LZ wrappers. Source `l3pwspy8`/
+  `e90r8zmw`, Wine trace/reader `0_8a03d2`/`fd2bih7u`, scene `pdfkq9g5` and
+  CLI `3tjo6qvr` pass. This covers 28 sampled observed bytes; 3,661 remained
+  unowned in that E172 sample at E181. Other consumers remain open.
+
+- EUR E182-d181 extends [observed transfer rows and LZ descriptors](../rom_data_graphics.md#e182-observed-transfer-rows-and-lz-descriptors)
+  by three linked rows, descriptors and wrappers. Source `g0ce9o5s`, Wine
+  trace/reader `qu75rzi6`/`fjrrnhsl`, scene `fx2_p2kt` and CLI `8dilrn0i`
+  pass; the scene log contains a D-Bus assertion but the test completed. This
+  owns 58 more sampled observed bytes; 3,603 remained unowned in that sample
+  at E182. Other consumers remain open.
+
+- EUR E183-d182 adds two [observed tilemap rectangles](../rom_data_graphics.md#e183-observed-tilemap-rectangles)
+  with 42 halfword cells. Source `n257xucg`, Wine trace/reader
+  `re5n0s9w`/`rxrkgl9k`, scene `qz9v5fto` and CLI `grtrq8pm` pass. The
+  scene log contains a D-Bus assertion but the test completed. This owns 86
+  more sampled bytes; 3,517 remain unowned in that E172 sample. Other pointer
+  cells, consumers, Linux, USA and native Windows remain open.
 
 - EUR E172-d171 serves the [conditional primary-task compact alias](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278):
   five source bytes with existing task/catalog dependencies. Wine `_5qb5ej3`
@@ -3311,6 +3336,13 @@ coverage refreshes its archived sources. The host checkout is unaffected.
 
 ## Desktop behavior
 
+- [Game data menu](../menu_clan_atlas.md): the desktop System menu has an
+  asynchronous managed extraction with a phase indicator and logical file-size
+  estimate, plus a default-off, next-launch ROM-plus-resources preference. The
+  ROM remains required. Linux synthetic menu/size tests pass; a protected EUR
+  ROM passes size/publication/reuse and a USA Xvfb run passes menu extraction
+  and both startup modes. Native Windows remains unverified.
+
 - [Fullscreen](../fullscreen.md): Video > Fullscreen (F11) persists default-off
   `video.fullscreen`, sharing startup/menu/shortcut requests and asynchronous
   reported-state reconciliation. Winit/WM restore normal placement/maximization;
@@ -3606,8 +3638,11 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   Deployment laws now recognize the distinct WIN0 compact table and WIN1 HELP
   from user slot3, keeping both columns/selector intact and HUD separate.
 
-- [Cartridge save backups](../save_backups.md): capture the selected `.sav` at
-  desktop startup and retain two raw copies. Primary-save backups stay under
+- [Cartridge save backups](../save_backups.md): the default-on **Automatic save
+  backups** setting in Game > Saves controls new startup, numbered-slot selection
+  and replacement copies; disabling it preserves existing restore copies and
+  still loads the cartridge save. When enabled, two raw startup copies are kept.
+  Primary-save backups stay under
   `SaveBackups/<save-filename>/` beside the save; numbered debug-save backups
   use the private debug root when available. If the primary and local backups
   are missing, earlier private copies are copied locally without deletion;
@@ -3616,7 +3651,8 @@ coverage refreshes its archived sources. The host checkout is unaffected.
   filenames identify order and integrity. Restore prepares a clean boot from
   the session's startup snapshot before atomic file replacement, resets the
   machine and frontend, and clears save-state undo. It preserves both backup
-  copies and the nine state slots. Backup failure aborts before gameplay writes.
+  copies and the nine state slots. With automatic backups enabled, backup failure
+  aborts before gameplay writes.
   Missing remembered/default primary files keep their recovery location when
   recognized backup copies are present, rather than selecting an unrelated save.
 

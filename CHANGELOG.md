@@ -170,6 +170,169 @@ Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](d
 
 [Change record](docs/changes/2026-11-20-update-debug-v2-distribution-guide.json)
 
+## 2026-11-20 — Allow automatic cartridge-save backups to be disabled
+
+Type: added. Platforms: Linux.
+
+**Changes**
+
+- Add a default-on Automatic save backups setting to Game > Saves, available without Debug and persisted in av.cfg. Apply it to startup, numbered-save selection and confirmed replacement while continuing to load saves and retaining existing backups and restoration.
+
+**Validation**
+
+- Linux/Xvfb GUI with a protected synthetic cartridge verified default-on backup, toggling OFF, persistence across restart without creating a second copy, toggling ON and creation of the second copy on the next restart. The synthetic save remained unchanged and all windows closed normally (save-backup-toggle-gui-fixed-mpsw4zvn). Screenshots reviewed.
+- Linux targeted config/menu/runtime cases passed, as did 155 menu tests (one ignored), nine cartridge-backup tests (one ignored), nine numbered-save tests and four language-catalog tests. Units: save-backup-toggle-combined-ykq8cth2, save-backup-menu-suite-ugomfxd6, save-backup-toggle-regressions-9orwpjbr and save-backup-runtime-build-tsqb3sbw.
+- The first config harness misclassified an unrelated zero-test integration target despite its one passing unit test; a standalone menu build lacked the host Wayland development package, and the combined project configuration passed. The first GUI runner reached its expected result but retained its synthetic session under the private-input guard; the corrected runner removed only its owned synthetic copy after normal closure and passed.
+
+**Limitations**
+
+- Existing backup migration/recovery is retained independently of the automatic-capture setting. Confirmed replacement does not create a recovery copy while the setting is off. Linux/Xvfb validation used synthetic inputs and simulated keyboard/mouse; native Windows, physical controller, AndroidPort and real user saves were not tested.
+
+Documentation: [save_backups.md](docs/save_backups.md), [menu_clan_atlas.md](docs/menu_clan_atlas.md).
+
+[Change record](docs/changes/2026-11-20-toggle-automatic-cartridge-backups.json)
+
+## 2026-11-20 — Publish the ROM coverage map on GitHub Pages
+
+Type: docs. Platforms: Web.
+
+**Changes**
+
+- Enabled GitHub Pages from the public decomp branch /docs folder and linked the existing metadata-only EUR coverage map.
+- Documented that report regeneration happens locally and the committed snapshot is republished after a push.
+
+**Validation**
+
+- GitHub Pages built commit 32caaab0; public HTML and JSON returned HTTP 200 with SHA-256 matching the committed report.
+- Chrome rendered the e170-d169 snapshot and an offset search selected the expected 64 KiB range.
+
+**Limitations**
+
+- The published report is an EUR snapshot generated on 2026-11-18; it does not measure matching or completed decompilation by function.
+- Report regeneration is a local manual step; Pages only republishes committed files. The site root has no landing page.
+
+Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md).
+
+[Change record](docs/changes/2026-11-20-publish-rom-coverage-on-github-pages.json)
+
+## 2026-11-20 — Prepare FFTA DE-ReBuild 1.2.0
+
+Type: changed. Platforms: Android, Linux, Windows.
+
+**Changes**
+
+- Set the maintained Android preview version to 1.2.0 with version code 28, and prepare release notes covering changes since 1.1.2.
+
+**Validation**
+
+- Windows cross-build passed 978 Wine tests and two host tests; the ZIP passed integrity, private Data and x86-64 PE checks (release-120-windows-_njed1p3).
+- The packaged Windows command-line executable started under Wine using the managed prefix (release-120-windows-smoke-jpi6mapg).
+- Linux Docker build passed 979 tests; the tarball passed integrity, private Data, x86-64 ELF and executable-mode checks (release-120-linux-m47i0oey).
+- The packaged Linux command-line executable started successfully (release-120-linux-smoke-_lj__3eo).
+- Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).
+- Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53).
+
+**Limitations**
+
+- The Android signing key used for published 1.1.2 has not yet been recovered; the new APK cannot be installed as an in-place update over it.
+- Native Windows and physical Android device execution were not performed. EUR resource coverage is incomplete and USA-specific validation remains separate.
+
+Documentation: [v1.2.0.md](docs/releases/v1.2.0.md).
+
+[Change record](docs/changes/2026-11-20-prepare-release-1-2-0.json)
+
+## 2026-11-20 — Migrate observed transfer rows and LZ descriptors
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the existing authenticated row and descriptor resources with three EUR transfer rows, three linked descriptors and three wrappers before existing LZ streams. Validate all row-to-descriptor and descriptor-to-stream links without changing guest indexing.
+- The 72 source bytes include 58 previously unowned bytes observed in the E172 scene sample; previous fields and 118 other resources are preserved.
+
+**Validation**
+
+- Source e182-transfer-source-g0ce9o5s; Wine original-reader trace e182-transfer-trace-wine-qu75rzi6; publication, twelve interpreter/native reader cases and poisoned mixed-owner boundaries e182-transfer-wine-fjrrnhsl.
+- Wine e182-transfer-scene-wine-fx2_p2kt matches complete state, guest clock, video, OAM, dispatch and audio across 600 frames with the new backing and seven existing encoded LZ streams altered; all seven LZ blocks are used. Wine CLI e182-transfer-cli-wine-8dilrn0i creates, reuses and verifies 121 files.
+
+**Limitations**
+
+- Other scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still contains 3,603 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+- The scene log emitted a D-Bus assertion but the test and unit completed successfully. Source dc19d8tl used a literal wildcard; build nguub7yp had concurrent protected-file edits; reader 956pll94 had an incorrect four-byte expectation corrected to six. Their diagnostics remain retained.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-observed-transfer-rows-and-lz-descriptors.json)
+
+## 2026-11-20 — Migrate observed tilemap rectangles
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated observed tilemap resource with two row-major halfword rectangles while preserving the prior run-compressed tilemap and original guest copy behavior.
+- The 88 reconstructed source bytes include 86 previously unowned bytes observed in the E172 sample; the two root pointer cells remain separate raw dependencies.
+
+**Validation**
+
+- Source e183-rect-source-n257xucg; original-reader Wine trace e183-source-trace-wine-re5n0s9w; publication, poisoned mirrors and boundaries, and two original-interpreter/separately compiled width-reader prefix cases e183-rect-wine-rxrkgl9k.
+- Wine e183-rect-scene-wine-qz9v5fto matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 88 rectangle backing bytes altered and both rectangles used. Production Wine CLI e183-rect-cli-wine-grtrq8pm creates, reuses and verifies 121 matching files.
+
+**Limitations**
+
+- Other pointers, rectangles and consumers, Linux, USA and native Windows remain pending. The selected E172 sample still has 3,517 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+- The scene log emitted a D-Bus assertion but the comparison and validation unit completed successfully; the controlled compiled reader prefix stops before the original indirect copy.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-observed-tilemap-rectangles.json)
+
+## 2026-11-20 — Migrate observed tilemap descriptors and LZ wrappers
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the authenticated descriptor owner with four EUR descriptors and their linked four-byte LZ wrappers; preserve the prior descriptor, the existing compressed stream owners, and original guest readers.
+- The 48 source bytes include 28 previously unowned bytes observed in the selected E172 scene sample; the resource declares tilemap and LZ dependencies.
+
+**Validation**
+
+- Source e181-descriptors-source-l3pwspy8 and e181-wrapper-source-e90r8zmw; original-reader Wine trace e181-descriptors-trace-wine-0_8a03d2; publication, controlled original/native readers, poisoned mirrors and mixed owner boundaries e181-descriptors-wine-fd2bih7u.
+- Wine e181-descriptors-scene-wine-pdfkq9g5 matches complete state, guest clock, video, OAM, dispatch and audio across 600 frames with descriptor, wrapper and encoded LZ source copies altered; all seven LZ blocks are used. Production Wine CLI e181-descriptors-cli-wine-3tjo6qvr creates, reuses and verifies 121 files.
+
+**Limitations**
+
+- Other scenes and consumers, per-descriptor ordinary attribution, Linux, USA and native Windows remain pending. The E172 sample still contains 3,661 observed unowned bytes outside the accepted increments. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-observed-tilemap-descriptors-and-lz-wrappers.json)
+
+## 2026-11-20 — Add menu controls for extracted game data
+
+Type: added. Platforms: Linux.
+
+**Changes**
+
+- Add System menu extraction with background phase progress and a logical encoded-file size estimate, plus a persisted default-off choice between ROM-only and ROM with verified extracted resources on the next normal launch. The ROM remains required.
+- Reuse managed atomic resource publication, storage roots and existing CLI opt-in. Isolated debug sessions and benchmarks retain their pinned inputs.
+
+**Validation**
+
+- Linux targeted config/menu/size tests passed after worker and stage changes (menu-rom-data-final-synthetic-retry-1qztx3ew); the final Linux runtime built successfully (menu-rom-data-runtime-build-final-fxcy9ytt).
+- A protected EUR ROM passed the real extraction test: encoded estimate matched the published files and a second preparation reused the same verified generation; the unit removed its scratch (menu-rom-data-real-eur-3w3ze64a).
+- Linux/Xvfb with a protected USA ROM exercised the System menu, selected ROM + DATA, showed phase progress and a 21.4 MiB estimate, and launched once with ROM only and once using decoded resources (menu-rom-data-linux-gui-host-stable-tn5q53a8); screenshots inspected.
+- Initial Xvfb attempt could not bind a sandbox socket. Two host GUI harness attempts missed menu input under load; the visual-open and mouse-driven retry passed. Earlier standalone test attempts lacked ALSA or Wayland development configuration; the combined dependency configuration passed.
+
+**Limitations**
+
+- Extraction and resource consumption remain partial, so the ROM is required. Logical file bytes exclude filesystem allocation overhead and retained generations. The EUR debug-build test, including preparation and reuse, took 626.57 seconds; release performance was not measured. Native Windows, physical controller and AndroidPort were not tested; unexpected worker termination feedback was not separately exercised.
+
+Documentation: [menu_clan_atlas.md](docs/menu_clan_atlas.md), [portable.md](docs/portable.md).
+
+[Change record](docs/changes/2026-11-20-menu-extracted-game-data.json)
+
 ## 2026-11-20 — Map Debug Tools v2 integration evidence and gaps
 
 Type: docs. Platforms: Linux, Windows GNU and Wine.
@@ -351,6 +514,30 @@ Type: docs. Platforms: Linux.
 Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-20-build-remapped-linux-debug-candidate.json)
+
+## 2026-11-20 — Visualize identified ROM data families as a treemap
+
+Type: added. Platforms: Web.
+
+**Changes**
+
+- Added a searchable, keyboard-accessible treemap sized by each family’s identified ROM intervals, with bounded evidence colors, details and navigation to the offset map.
+- Updated the saved EUR HTML from its existing embedded metadata and retained the unchanged JSON, generation date and analysis provenance.
+
+**Validation**
+
+- Chrome rendered all 113 families at a 688-pixel viewport without horizontal overflow; desktop and narrow filtered views rendered.
+- Chrome verified combined search and evidence filters, empty results, selected family details and navigation to the original offset map.
+- Normalized rectangle areas matched the existing family interval unions within 0.0005 percent relative error; the embedded report matched coverage.json.
+
+**Limitations**
+
+- Families may overlap, and bounded ordinary-use evidence does not establish complete use or function decompilation. The snapshot remains e170-d169 from 2026-11-18.
+- GitHub Pages displays the committed decomp branch; the new local presentation requires publication to appear on the public site.
+
+Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md).
+
+[Change record](docs/changes/2026-11-20-add-rom-coverage-family-treemap.json)
 
 ## 2026-11-20 — Accept the selected debug integration matrix with a Windows waiver
 

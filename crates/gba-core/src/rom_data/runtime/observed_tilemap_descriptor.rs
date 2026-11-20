@@ -1,33 +1,50 @@
-//! Reconstruct one descriptor while the guest retains live task state.
+//! Reconstruct selected descriptors and LZ wrappers while guest task state stays live.
 use super::super::{observed_tilemap_descriptor as model, SourceRange};
 use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct ObservedTilemapDescriptorStats { pub bus_reads: u64, pub source_bytes: u64 }
-pub(super) struct ObservedTilemapDescriptorResources { data: model::ObservedTilemapDescriptor, reads: AtomicU64, bytes: AtomicU64 }
+pub struct ObservedTilemapDescriptorStats { pub bus_reads: u64, pub source_bytes: u64, pub descriptor_bytes: u64, pub wrapper_bytes: u64, pub transfer_descriptor_bytes: u64, pub transfer_wrapper_bytes: u64 }
+pub(super) struct ObservedTilemapDescriptorResources { data: model::ObservedTilemapDescriptor, reads: AtomicU64, bytes: [AtomicU64; 4] }
 
 impl ObservedTilemapDescriptorResources {
-    pub(super) fn source_page(index: usize) -> bool { index >> 12 == 0x3a4 }
+    pub(super) fn source_page(index: usize) -> bool { matches!(index >> 12, 0x399 | 0x3a4 | 0xb02 | 0xb03 | 0xb0d | 0xb0e | 0xb15) }
     pub(super) fn new(data: model::ObservedTilemapDescriptor, sources: &[SourceRange]) -> Result<Self, String> {
         data.validate()?;
-        let bytes = data.source_bytes();
-        if sources.len() != 1 || sources[0].offset != model::SOURCE_OFFSET || sources[0].length as usize != bytes.len()
-            || sources[0].role != "tilemap-descriptor" || sources[0].sha256 != ffta_rom::digest(&bytes) {
-            return Err("Observed tilemap descriptor source binding mismatch".into());
+        let spans = data.source_spans();
+        if sources.len() != spans.len() || spans.iter().zip(sources).any(|((offset, bytes, role), source)| {
+            source.offset != *offset || source.length as usize != bytes.len()
+                || source.role != *role || source.sha256 != ffta_rom::digest(bytes)
+        }) { return Err("Observed tilemap descriptor source binding mismatch".into()); }
+        Ok(Self { data, reads: AtomicU64::new(0), bytes: std::array::from_fn(|_| AtomicU64::new(0)) })
+    }
+    fn byte(&self, index: usize) -> Option<(u8, usize)> {
+        if let Some(value) = index.checked_sub(self.data.source_offset as usize).and_then(|at| self.data.source_bytes().get(at).copied()) {
+            return Some((value, 0));
         }
-        Ok(Self { data, reads: AtomicU64::new(0), bytes: AtomicU64::new(0) })
+        self.data.additional_descriptors.iter().map(|entry| (entry, 0))
+            .chain(self.data.transfer_descriptors.iter().map(|entry| (entry, 2))).find_map(|(entry, kind)| {
+            index.checked_sub(entry.source_offset as usize).and_then(|at| entry.source_bytes().get(at).copied()).map(|value| (value, kind))
+                .or_else(|| index.checked_sub(entry.wrapper.source_offset as usize).and_then(|at| entry.wrapper.source_bytes().get(at).copied()).map(|value| (value, kind + 1)))
+        })
     }
     pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
-        let bytes = self.data.source_bytes();
-        let cells: [_; N] = std::array::from_fn(|i| (index + i).checked_sub(self.data.source_offset as usize).and_then(|offset| bytes.get(offset).copied()));
-        let count = cells.iter().filter(|cell| cell.is_some()).count();
-        if count == 0 { return prior; }
-        let result = std::array::from_fn(|i| cells[i].unwrap_or_else(|| prior.as_ref().map_or_else(|| rom[index + i], |v| v[i])));
+        let cells: [_; N] = std::array::from_fn(|i| self.byte(index + i));
+        if cells.iter().all(Option::is_none) { return prior; }
+        let mut counts = [0u64; 4];
+        let result = std::array::from_fn(|i| match cells[i] {
+            Some((value, kind)) => { counts[kind] += 1; value }
+            None => prior.as_ref().map_or_else(|| rom[index + i], |v| v[i]),
+        });
         self.reads.fetch_add(1, Ordering::Relaxed);
-        self.bytes.fetch_add(count as u64, Ordering::Relaxed);
+        for (counter, count) in self.bytes.iter().zip(counts) { counter.fetch_add(count, Ordering::Relaxed); }
         Some(result)
     }
-    pub(super) fn stats(&self) -> ObservedTilemapDescriptorStats { ObservedTilemapDescriptorStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: self.bytes.load(Ordering::Relaxed) } }
+    pub(super) fn stats(&self) -> ObservedTilemapDescriptorStats {
+        let [old_descriptor, old_wrapper, transfer_descriptor_bytes, transfer_wrapper_bytes] = self.bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
+        let descriptor_bytes = old_descriptor + transfer_descriptor_bytes;
+        let wrapper_bytes = old_wrapper + transfer_wrapper_bytes;
+        ObservedTilemapDescriptorStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: descriptor_bytes + wrapper_bytes, descriptor_bytes, wrapper_bytes, transfer_descriptor_bytes, transfer_wrapper_bytes }
+    }
     pub(super) fn resident_bytes(&self) -> usize { std::mem::size_of::<Self>() }
 }

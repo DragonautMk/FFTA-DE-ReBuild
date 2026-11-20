@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "menu-extracted-game-data",
+  "title": "Add menu controls for extracted game data",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Add System menu extraction with background phase progress and a logical encoded-file size estimate, plus a persisted default-off choice between ROM-only and ROM with verified extracted resources on the next normal launch. The ROM remains required.",
+    "Reuse managed atomic resource publication, storage roots and existing CLI opt-in. Isolated debug sessions and benchmarks retain their pinned inputs."
+  ],
+  "validation": [
+    "Linux targeted config/menu/size tests passed after worker and stage changes (menu-rom-data-final-synthetic-retry-1qztx3ew); the final Linux runtime built successfully (menu-rom-data-runtime-build-final-fxcy9ytt).",
+    "A protected EUR ROM passed the real extraction test: encoded estimate matched the published files and a second preparation reused the same verified generation; the unit removed its scratch (menu-rom-data-real-eur-3w3ze64a).",
+    "Linux/Xvfb with a protected USA ROM exercised the System menu, selected ROM + DATA, showed phase progress and a 21.4 MiB estimate, and launched once with ROM only and once using decoded resources (menu-rom-data-linux-gui-host-stable-tn5q53a8); screenshots inspected.",
+    "Initial Xvfb attempt could not bind a sandbox socket. Two host GUI harness attempts missed menu input under load; the visual-open and mouse-driven retry passed. Earlier standalone test attempts lacked ALSA or Wayland development configuration; the combined dependency configuration passed."
+  ],
+  "limitations": [
+    "Extraction and resource consumption remain partial, so the ROM is required. Logical file bytes exclude filesystem allocation overhead and retained generations. The EUR debug-build test, including preparation and reuse, took 626.57 seconds; release performance was not measured. Native Windows, physical controller and AndroidPort were not tested; unexpected worker termination feedback was not separately exercised."
+  ],
+  "files": [
+    "crates/input-config/src/lib.rs",
+    "crates/input-config/languages/en.json",
+    "crates/input-config/languages/it.json",
+    "crates/menu/src/lib.rs",
+    "crates/menu/src/clan_atlas.rs",
+    "crates/menu/src/atlas_theme.rs",
+    "crates/recomp/src/play.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/debug_operations.rs",
+    "docs/menu_clan_atlas.md",
+    "docs/portable.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/menu_clan_atlas.md",
+    "docs/portable.md"
+  ]
+}

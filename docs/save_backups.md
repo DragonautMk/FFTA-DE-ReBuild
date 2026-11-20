@@ -8,7 +8,16 @@ See [portable storage and migration](portable.md). Installed-mode paths below
 apply when `portable.txt` is absent.
 
 
-Each desktop game launch protects the currently selected **cartridge `.sav`**
+Automatic backups are **on by default**. To change this, open the pause menu
+and choose **Game > Saves > Automatic save backups**, then select **OFF** or
+**ON**. The setting is saved in `av.cfg` as `save.automatic_backups` and
+applies to later startup captures as well as numbered-save selection and
+confirmed replacement. Turning it off does not remove existing copies: they
+remain available under **Save backups**. With automatic backups off, replacing
+a numbered save does not create a recovery copy first. Existing legacy backup
+migration and recovery remain available independently of this setting.
+
+When enabled, each desktop game launch protects the currently selected **cartridge `.sav`**
 before loading it into the machine or allowing gameplay/autosave. The two most
 recent startup copies are retained. The first launch with an existing save
 creates one copy; the next creates the second. Each subsequent launch creates
@@ -77,7 +86,9 @@ so recovery does not silently switch to another `.sav` in the directory.
 `FFTA_SAVE_PATH` and
 the normal save-path resolution still decide which save is protected.
 
-The runtime loads exactly the bytes captured at startup. The new copy is fully
+When automatic backups are enabled, the runtime loads exactly the bytes captured
+at startup. When disabled, it reads the same cartridge save without creating a
+new startup copy; read errors still prevent launch. The new copy is fully
 written and synced before publication, then older recognized backup files are
 removed. Failed backup creation aborts startup before gameplay can save over
 unprotected data. Unrelated filenames are left alone. A crash between publication

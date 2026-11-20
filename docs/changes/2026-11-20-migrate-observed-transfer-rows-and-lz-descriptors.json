@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-observed-transfer-rows-and-lz-descriptors",
+  "title": "Migrate observed transfer rows and LZ descriptors",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the existing authenticated row and descriptor resources with three EUR transfer rows, three linked descriptors and three wrappers before existing LZ streams. Validate all row-to-descriptor and descriptor-to-stream links without changing guest indexing.",
+    "The 72 source bytes include 58 previously unowned bytes observed in the E172 scene sample; previous fields and 118 other resources are preserved."
+  ],
+  "validation": [
+    "Source e182-transfer-source-g0ce9o5s; Wine original-reader trace e182-transfer-trace-wine-qu75rzi6; publication, twelve interpreter/native reader cases and poisoned mixed-owner boundaries e182-transfer-wine-fjrrnhsl.",
+    "Wine e182-transfer-scene-wine-fx2_p2kt matches complete state, guest clock, video, OAM, dispatch and audio across 600 frames with the new backing and seven existing encoded LZ streams altered; all seven LZ blocks are used. Wine CLI e182-transfer-cli-wine-8dilrn0i creates, reuses and verifies 121 files."
+  ],
+  "limitations": [
+    "Other scenes and consumers, Linux, USA and native Windows remain pending. The E172 sample still contains 3,603 observed unowned bytes outside the accepted increments. No performance measurements were performed.",
+    "The scene log emitted a D-Bus assertion but the test and unit completed successfully. Source dc19d8tl used a literal wildcard; build nguub7yp had concurrent protected-file edits; reader 956pll94 had an incorrect four-byte expectation corrected to six. Their diagnostics remain retained."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/observed_transfer_records_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

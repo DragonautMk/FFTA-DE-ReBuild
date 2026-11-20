@@ -328,10 +328,11 @@ pub(super) const SAVES_ROWS: &[Row] = &[
     Row::ExtendedSaves,
     Row::GameSavesMenu,
     Row::SaveBackupsMenu,
+    Row::AutomaticSaveBackups,
     Row::AssetFolder,
     Row::Back,
 ];
-pub(super) const SYSTEM_ROWS: &[Row] = &[Row::Language, Row::RestartRom, Row::SwitchRomMenu, Row::Quit, Row::Back];
+pub(super) const SYSTEM_ROWS: &[Row] = &[Row::Language, Row::DataSource, Row::ExtractData, Row::RestartRom, Row::SwitchRomMenu, Row::Quit, Row::Back];
 pub(super) fn root_page(domain: Domain, section: usize) -> Page {
     if domain == Domain::Debug {
         return Page::Debug;

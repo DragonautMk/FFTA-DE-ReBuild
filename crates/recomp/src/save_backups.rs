@@ -122,6 +122,18 @@ impl Backups {
         self.entries().is_ok_and(|entries| !entries.is_empty())
     }
 
+    /// Load the cartridge save even when automatic copies are disabled.
+    pub fn load_startup(&self, automatic_backups: bool) -> Result<Option<Vec<u8>>, String> {
+        if automatic_backups {
+            return self.capture_startup();
+        }
+        match read(&self.source) {
+            Ok(bytes) => Ok(Some(bytes)),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(e) => Err(format!("Cannot read cartridge save: {e}")),
+        }
+    }
+
     /// Capture exactly the bytes that will be loaded at startup, before gameplay or autosave.
     pub fn capture_startup(&self) -> Result<Option<Vec<u8>>, String> {
         let bytes = match read(&self.source) {
@@ -295,6 +307,27 @@ mod tests {
         assert_eq!(std::fs::read(&save).unwrap(), vec![1; 65536]);
         std::fs::remove_file(&save).unwrap();
         assert!(Backups::at_namespace(&save, &namespace).has_copies());
+    }
+
+    #[test]
+    fn disabled_automatic_backup_loads_save_and_preserves_existing_copies() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("progress.sav");
+        let backups = Backups::new(&path);
+        assert!(backups.load_startup(false).unwrap().is_none());
+        std::fs::write(&path, vec![1; 65536]).unwrap();
+        assert_eq!(backups.load_startup(false).unwrap().unwrap(), vec![1; 65536]);
+        assert!(!backups.directory.exists());
+        backups.load_startup(true).unwrap();
+        let original = backups.entries().unwrap();
+        assert_eq!(original.len(), 1);
+        std::fs::write(&path, vec![2; 65536]).unwrap();
+        assert_eq!(backups.load_startup(false).unwrap().unwrap(), vec![2; 65536]);
+        assert_eq!(backups.entries().unwrap().len(), 1);
+        assert_eq!(read(&original[0].path).unwrap(), vec![1; 65536]);
+        std::fs::write(&path, vec![0; MAX_BYTES + 1]).unwrap();
+        assert!(backups.load_startup(false).is_err());
+        assert_eq!(backups.entries().unwrap().len(), 1);
     }
 
     #[test]
