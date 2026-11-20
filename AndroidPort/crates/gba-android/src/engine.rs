@@ -342,6 +342,62 @@ mod tests {
         Engine::new(rom)
     }
     #[test]
+    fn exported_preview_state_imports_and_restores_cartridge_save() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from)
+            .unwrap_or_else(std::env::temp_dir).join(format!("preview-migration-{}",std::process::id()));
+        let old_dir=root.join("old");let new_dir=root.join("new");
+        std::fs::create_dir_all(&old_dir).unwrap();std::fs::create_dir_all(&new_dir).unwrap();
+        let mut old=restart_test_engine();old.save_path=Some(old_dir.join("ffta.sav"));
+        let size=old.machine.bus.save_data().unwrap().len();
+        let cartridge:Vec<u8>=(0..size).map(|i|(i.wrapping_mul(37) as u8)^0xa5).collect();
+        old.machine.bus.load_save_data(&cartridge);old.machine.cpu.regs[4]=0x1234_5678;
+        old.save().unwrap();old.state_save(3,false).unwrap();
+        let exported=old.state_export(3).unwrap();
+
+        let mut new=restart_test_engine();new.save_path=Some(new_dir.join("ffta.sav"));
+        new.state_import(3,&exported,false).unwrap();new.state_load(3).unwrap();new.save().unwrap();
+        assert_eq!(new.machine.cpu.regs[4],0x1234_5678);
+        assert_eq!(new.machine.bus.save_data().unwrap(),cartridge.as_slice());
+        assert_eq!(std::fs::read(new_dir.join("ffta.sav")).unwrap(),cartridge);
+        assert_eq!(old.state_export(3).unwrap(),exported);
+        assert_eq!(std::fs::read(old_dir.join("ffta.sav")).unwrap(),cartridge);
+
+        let mut incompatible=Engine::new(vec![1;512]);
+        incompatible.save_path=Some(new_dir.join("other.sav"));
+        assert!(incompatible.state_import(1,&exported,false).is_err());
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    #[ignore = "requires an explicitly supplied private legacy-preview fixture"]
+    fn legacy_preview_save_fixture_imports() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let fixture=std::path::PathBuf::from(std::env::var_os("FFTA_LEGACY_PREVIEW_FIXTURE").expect("fixture path"));
+        let output=std::path::PathBuf::from(std::env::var_os("FFTA_VALIDATION_WORK").expect("validation work"))
+            .join("migration-output");
+        std::fs::create_dir_all(&output).unwrap();
+        let rom=std::fs::read(fixture.join("rom.gba")).unwrap();
+        let cartridge=std::fs::read(fixture.join("cartridge.sav")).unwrap();
+        let mut new=Engine::new(rom);new.save_path=Some(output.join("ffta.sav"));
+        assert_eq!(new.machine.bus.save_data().unwrap().len(),cartridge.len());
+        new.machine.bus.load_save_data(&cartridge);new.save().unwrap();
+        assert!(std::fs::read(output.join("ffta.sav")).unwrap()==cartridge);
+        let mut count=0;
+        for slot in 1..=9 {
+            let path=fixture.join(format!("slot-{slot}.ffstate"));
+            if !path.exists(){continue;}
+            let bytes=std::fs::read(path).unwrap();
+            new.state_import(slot,&bytes,false).unwrap();
+            assert!(new.state_export(slot).unwrap()==bytes);
+            new.state_load(slot).unwrap();
+            let restored=new.machine.bus.save_data().unwrap().to_vec();
+            new.save().unwrap();
+            assert!(std::fs::read(output.join("ffta.sav")).unwrap()==restored);
+            count+=1;
+        }
+        assert!(count>0,"fixture has no save states");
+    }
+    #[test]
     fn desktop_cheat_history_bridge() {
         let Ok(work)=std::env::var("FFTA_STATE_BRIDGE_WORK") else {return;};
         let _lock=VIEW_TEST.lock().unwrap();

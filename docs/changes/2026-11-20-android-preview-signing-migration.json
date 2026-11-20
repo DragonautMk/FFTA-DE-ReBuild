@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "android-preview-signing-migration",
+  "title": "Preserve saves when changing the Android preview signing key",
+  "kind": "changed",
+  "platforms": [
+    "Android"
+  ],
+  "changes": [
+    "Use a separate Android preview application ID and a new locally held signing key so version 1.2 can coexist with the differently signed 1.1.2 app.",
+    "Accept the persistent signing files as BuildKit secrets, verify the APK signer and refuse to silently regenerate missing keys; document manual save migration and its limits."
+  ],
+  "validation": [
+    "Android build passed 29 Kotlin tests; manifest, old/new signer, APK integrity, private-data and signing-secret exclusion passed (release-120-android-preview-final-_mg88csd; android-preview-identity-audit-7bum_8x_). The final signing-guard build produced the identical APK (release-120-android-preview-verified-lj2vddwg).",
+    "Synthetic legacy-format state import, load and cartridge-save persistence passed (android-preview-migration-synthetic-1d0yewvk).",
+    "The unchanged 1.1.2 save engine imported and loaded three actual legacy phone states and verified the normal cartridge-save bytes in an isolated host test; phone originals were unchanged and temporary copies removed (android-preview-legacy-phone-save-check-0cd34k7c).",
+    "A moto g34 installed the new preview alongside 1.1.2; the old app and its cartridge save and three states were unchanged. The new app was not launched (android-preview-coinstall-4edvxszk).",
+    "Fourteen Python Android builder, context-filtering, signing-option and path-redaction tests passed.",
+    "A signed build with an incorrect password was rejected without an APK, reused the Gradle cache and redacted private file paths (android-preview-signing-failure-guard-t7en5_b6).",
+    "A default Android Docker build without private signing files also passed its 29 Kotlin tests (android-preview-default-build-1y7_r2cm)."
+  ],
+  "limitations": [
+    "The old signing key was not recovered, so 1.2 cannot update 1.1.2 in place; settings and automatic backup history do not migrate automatically.",
+    "The physical-device migration UI and gameplay were not exercised; users should keep the old app and exported states until they verify their progress.",
+    "Windows Docker Desktop signing-secret mounting was not exercised."
+  ],
+  "files": [
+    "AndroidPort/Dockerfile.android",
+    "AndroidPort/android/app/build.gradle.kts",
+    "AndroidPort/android/app/src/main/res/values/strings.xml",
+    "AndroidPort/crates/gba-android/src/engine.rs",
+    "AndroidPort/scripts/build_android_docker.py",
+    "scripts/tests/test_build_android_docker.py",
+    "AndroidPort/README.md",
+    "AndroidPort/android/README.md"
+  ],
+  "references": [
+    "AndroidPort/README.md",
+    "AndroidPort/android/README.md",
+    "docs/android_docker.md",
+    "docs/releases/v1.2.0.md"
+  ]
+}

@@ -3,13 +3,19 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val previewKeystore = providers.environmentVariable("FFTA_PREVIEW_KEYSTORE").orNull
+val previewPasswordFile = providers.environmentVariable("FFTA_PREVIEW_PASSWORD_FILE").orNull
+require((previewKeystore == null) == (previewPasswordFile == null)) {
+    "Both preview signing files must be provided together"
+}
+
 android {
     namespace = "com.fftarecomp.port"
     compileSdk = 35
     ndkVersion = "28.2.13676358"
 
     defaultConfig {
-        applicationId = "com.fftarecomp.port"
+        applicationId = "com.fftarecomp.port.preview"
         minSdk = 24
         targetSdk = 35
         versionCode = 28
@@ -20,6 +26,18 @@ android {
         multiDexEnabled = true
     }
 
+    if (previewKeystore != null && previewPasswordFile != null) {
+        signingConfigs {
+            create("persistentPreview") {
+                val password = file(previewPasswordFile).readText().trimEnd('\r', '\n')
+                require(password.length >= 6) { "Preview signing password is too short" }
+                storeFile = file(previewKeystore)
+                storePassword = password
+                keyAlias = "ffta-preview"
+                keyPassword = password
+            }
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -30,6 +48,9 @@ android {
         }
         debug {
             isDebuggable = true
+            if (previewKeystore != null) {
+                signingConfig = signingConfigs.getByName("persistentPreview")
+            }
         }
     }
     compileOptions {

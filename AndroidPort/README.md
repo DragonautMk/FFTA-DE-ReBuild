@@ -1,8 +1,9 @@
 # FFTA DE-ReBuild Android
 
 This is a self-contained Android port. You can move or upload **this entire
-folder** without copying anything from the PC project. The app keeps its existing
-package ID and APK filename for compatibility.
+folder** without copying anything from the PC project. The 1.2 preview uses
+the new application ID `com.fftarecomp.port.preview` and can be installed
+alongside the earlier `com.fftarecomp.port` preview. Its APK filename is unchanged.
 The README stays at the top of this folder so GitHub displays it.
 
 - Preview APK: `APK/FFTARecomp-android-arm64-preview.apk`.
@@ -29,8 +30,10 @@ The standard Docker builder keeps the SDK, NDK and platform-tools in a local
 `ffta-toolchain-android` image. Kotlin-only edits reuse the compiled native
 libraries. Successful builds replace the latest log for this tree. Use
 `--keep-failed-context` when a failed build needs its temporary sources.
-The debug signing key is retained in the Docker cache; keys from previous
-builds made outside Docker are not imported.
+By default, debug signing uses a Docker cache and may change if that cache is
+removed. Official preview builds instead pass the persistent local keystore and
+password file as BuildKit secrets; see [the signing guide](android/README.md#preview-migration-and-signing).
+Never commit, package or upload the private signing files.
 
 For a native build, you need Rust with `aarch64-linux-android`, Python 3.9 or
 later, a JDK, Android SDK with NDK 28.2.13676358, and host GCC or Clang on PATH.

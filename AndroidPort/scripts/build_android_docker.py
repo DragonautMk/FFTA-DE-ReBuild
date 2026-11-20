@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import secrets
 import shutil
 import subprocess
 import sys
@@ -78,9 +79,17 @@ def stage(project, context):
 
 
 def stream(command, log):
+    private_paths = []
+    for index, argument in enumerate(command[:-1]):
+        if argument == '--secret':
+            for option in command[index + 1].split(','):
+                if option.startswith('src='):
+                    private_paths.append(option[4:])
     with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                           text=True, encoding='utf-8', errors='replace') as process:
         for line in process.stdout:
+            for path in private_paths:
+                line = line.replace(path, '<local signing file>')
             print(line, end='', flush=True)
             log.write(line)
             log.flush()
@@ -108,6 +117,16 @@ def prepare_toolchain(context, log):
     return ['--build-arg', f'FFTA_TOOLCHAIN={image}']
 
 
+def public_command(command):
+    """Keep local signing-file paths out of durable build logs."""
+    result = list(command)
+    for index, argument in enumerate(result[:-1]):
+        if argument == '--secret':
+            secret_id = result[index + 1].split(',', 1)[0]
+            result[index + 1] = secret_id + ',src=<local signing file>'
+    return result
+
+
 def main(argv=None, *, default_project=None, default_output=None, log_root=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project-dir', type=Path, default=default_project or ROOT,
@@ -117,25 +136,56 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
     parser.add_argument('--dry-run', action='store_true', help='Validate public inputs and show the build command without Docker')
     parser.add_argument('--keep-failed-context', action='store_true',
                         help='Keep a copy of the staged public sources if the APK build fails')
+    parser.add_argument('--signing-keystore', type=Path,
+                        help='Persistent preview keystore (alias: ffta-preview); sent as a BuildKit secret')
+    parser.add_argument('--signing-password-file', type=Path,
+                        help='Private file containing the keystore and key password')
     args = parser.parse_args(argv)
     project = args.project_dir.resolve()
     output = args.output.resolve()
     if any(ch in str(output) for ch in ',"\r\n'):
         parser.error('output must not contain commas, double quotes or newlines (Buildx CSV syntax)')
+    if (args.signing_keystore is None) != (args.signing_password_file is None):
+        parser.error('provide both --signing-keystore and --signing-password-file')
+    signing_args = []
+    if args.signing_keystore is not None:
+        keystore = args.signing_keystore.resolve()
+        password = args.signing_password_file.resolve()
+        if any(any(ch in str(path) for ch in ',"\r\n') for path in (keystore, password)):
+            parser.error('signing file paths must not contain commas, double quotes or newlines')
+        if not keystore.is_file() or not password.is_file():
+            parser.error('both signing files must exist; never regenerate a missing release key automatically')
+        if keystore.is_relative_to(project) or password.is_relative_to(project):
+            parser.error('signing files must be outside the staged Android source tree')
+        if keystore == password or keystore.samefile(password):
+            parser.error('keystore and password must be different files')
+        if keystore.stat().st_size > 1024 * 1024:
+            parser.error('preview keystore is unexpectedly large')
+        signer_input = hashlib.sha256(keystore.read_bytes()).hexdigest()
+        # BuildKit does not include secrets in its cache key. A fresh nonce
+        # re-runs the signing step while preserving its Gradle cache mount.
+        signing_args = ['--build-arg', 'FFTA_PREVIEW_SIGNING=1',
+                        '--build-arg', f'FFTA_PREVIEW_SIGNER_INPUT={signer_input}',
+                        '--build-arg', f'FFTA_PREVIEW_SIGNING_NONCE={secrets.token_hex(16)}',
+                        '--secret', f'id=ffta_preview_keystore,src={keystore}',
+                        '--secret', f'id=ffta_preview_password,src={password}']
     if not args.dry_run and not shutil.which('docker'):
         parser.error('Docker with Buildx is required')
     try:
         with tempfile.TemporaryDirectory(prefix='ffta-android-context-') as temporary:
             context = Path(temporary)
             script, scope, metadata = stage(project, context)
+            if signing_args and scope != 'androidport':
+                raise ValueError('persistent preview signing is supported only for AndroidPort')
             command = ['docker', 'buildx', 'build', '--platform', 'linux/amd64',
                        '--file', str(context / 'Dockerfile'), '--target', 'export',
                        '--build-arg', f'BUILD_SCRIPT={script}',
                        '--build-arg', f'CACHE_SCOPE={scope}', '--output', f'type=local,dest={output}',
                        '--progress', 'plain', str(context)]
+            command[-1:-1] = signing_args
             print(f"Android project: {project}\nPublic source files: {len(metadata['files'])}\nSource SHA256: {metadata['source_sha256']}", flush=True)
             if args.dry_run:
-                print(json.dumps(command, indent=2))
+                print(json.dumps(public_command(command), indent=2))
                 return 0
             output.mkdir(parents=True, exist_ok=True)
             logs = Path(log_root or project / 'target/build-logs')
@@ -145,7 +195,7 @@ def main(argv=None, *, default_project=None, default_output=None, log_root=None)
                                              suffix='.log', dir=logs, delete=False) as log:
                 print(f'Android Docker build log: {log.name}', flush=True)
                 command[3:3] = prepare_toolchain(context, log)
-                log.write(json.dumps({'command': command, 'source': metadata}) + '\n')
+                log.write(json.dumps({'command': public_command(command), 'source': metadata}) + '\n')
                 status = stream(command, log)
                 if status:
                     if args.keep_failed_context:

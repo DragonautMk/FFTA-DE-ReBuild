@@ -148,6 +148,82 @@ class AndroidDockerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Missing public build input'):
             self.driver.stage(project, self.root / 'missing-context')
 
+    def test_preview_signing_requires_separate_existing_files_outside_the_source(self):
+        project, _ = self.project()
+        key = self.root / 'preview.keystore'
+        password = self.root / 'preview-password.txt'
+        key.write_bytes(b'private synthetic key')
+        password.write_text('synthetic password')
+        invalid = [
+            ['--signing-keystore', str(key)],
+            ['--signing-password-file', str(password)],
+            ['--signing-keystore', str(key), '--signing-password-file', str(key)],
+            ['--signing-keystore', str(self.root / 'missing'), '--signing-password-file', str(password)],
+        ]
+        inside = project / 'crates/test/password.txt'
+        inside.parent.mkdir(parents=True)
+        inside.write_text('synthetic password')
+        invalid.append(['--signing-keystore', str(key), '--signing-password-file', str(inside)])
+        for flags in invalid:
+            with self.subTest(flags=flags), contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as error:
+                    self.driver.main(['--project-dir', str(project), '--dry-run', *flags])
+                self.assertEqual(error.exception.code, 2)
+
+    def test_preview_signing_uses_secret_mounts_and_busts_cache_when_key_changes(self):
+        project, _ = self.project()
+        key = self.root / 'private preview.keystore'
+        password = self.root / 'private password.txt'
+        password.write_text('synthetic password')
+        reports = []
+        for content in (b'first synthetic key', b'second synthetic key'):
+            key.write_bytes(content)
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                self.assertEqual(self.driver.main(['--project-dir', str(project), '--dry-run',
+                    '--signing-keystore', str(key), '--signing-password-file', str(password)]), 0)
+            text = output.getvalue()
+            self.assertIn('FFTA_PREVIEW_SIGNING_NONCE=', text)
+            self.assertIn('FFTA_PREVIEW_SIGNING=1', text)
+            self.assertIn('FFTA_PREVIEW_SIGNER_INPUT=' + hashlib.sha256(content).hexdigest(), text)
+            self.assertIn('id=ffta_preview_keystore,src=<local signing file>', text)
+            self.assertIn('id=ffta_preview_password,src=<local signing file>', text)
+            self.assertNotIn(str(key), text)
+            self.assertNotIn(str(password), text)
+            self.assertNotIn('synthetic password', text)
+            reports.append(text)
+        self.assertNotEqual(reports[0], reports[1])
+
+    def test_preview_signing_refuses_the_separate_root_tree(self):
+        project, _ = self.project(root=True)
+        key = self.root / 'preview.keystore'
+        password = self.root / 'preview-password.txt'
+        key.write_bytes(b'private synthetic key')
+        password.write_text('synthetic password')
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(self.driver.main(['--project-dir', str(project), '--dry-run',
+                '--signing-keystore', str(key), '--signing-password-file', str(password)]), 1)
+
+    def test_failed_docker_output_redacts_signing_file_paths(self):
+        key = self.root / 'private key.keystore'
+        password = self.root / 'private password.txt'
+        command = ['docker', '--secret', f'id=key,src={key}',
+                   '--secret', f'id=password,src={password}']
+        process = mock.MagicMock()
+        process.stdout = iter([f'build failed: {key} and {password}\n'])
+        process.wait.return_value = 1
+        context = mock.MagicMock()
+        context.__enter__.return_value = process
+        log = io.StringIO()
+        output = io.StringIO()
+        with mock.patch.object(self.driver.subprocess, 'Popen', return_value=context), \
+             contextlib.redirect_stdout(output):
+            self.assertEqual(self.driver.stream(command, log), 1)
+        for text in (log.getvalue(), output.getvalue()):
+            self.assertNotIn(str(key), text)
+            self.assertNotIn(str(password), text)
+            self.assertEqual(text.count('<local signing file>'), 2)
+
     def test_success_checks_actual_export_checksum(self):
         project, _ = self.project()
         output = self.root / 'export'

@@ -222,7 +222,7 @@ Type: changed. Platforms: Android, Linux, Windows.
 **Changes**
 
 - Set the maintained Android preview version to 1.2.0 with version code 28, and prepare release notes covering changes since 1.1.2.
-- Prepare an unpublished v1.2.0 GitHub draft with verified Windows and Linux artifacts; hold the Android APK pending signing compatibility.
+- Prepare an unpublished v1.2.0 GitHub draft with verified Windows and Linux artifacts; initially hold the Android APK pending signing compatibility.
 
 **Validation**
 
@@ -233,7 +233,7 @@ Type: changed. Platforms: Android, Linux, Windows.
 - Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).
 - Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53).
 - GitHub main and decomp include the tested source 78aa6510; main project-memory CI passed and Pages served the verified treemap.
-- GitHub draft 452599943 targets 919186a7; its eight assets match local sizes and SHA-256 hashes, its notes match, and no Android APK is attached.
+- The initial GitHub draft 452599943 targeted 919186a7; its eight assets matched local sizes and SHA-256 hashes, and its notes matched. The Android APK was initially withheld.
 
 **Limitations**
 
@@ -517,6 +517,35 @@ Type: docs. Platforms: Linux.
 Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-20-build-remapped-linux-debug-candidate.json)
+
+## 2026-11-20 — Preserve saves when changing the Android preview signing key
+
+Type: changed. Platforms: Android.
+
+**Changes**
+
+- Use a separate Android preview application ID and a new locally held signing key so version 1.2 can coexist with the differently signed 1.1.2 app.
+- Accept the persistent signing files as BuildKit secrets, verify the APK signer and refuse to silently regenerate missing keys; document manual save migration and its limits.
+
+**Validation**
+
+- Android build passed 29 Kotlin tests; manifest, old/new signer, APK integrity, private-data and signing-secret exclusion passed (release-120-android-preview-final-_mg88csd; android-preview-identity-audit-7bum_8x_). The final signing-guard build produced the identical APK (release-120-android-preview-verified-lj2vddwg).
+- Synthetic legacy-format state import, load and cartridge-save persistence passed (android-preview-migration-synthetic-1d0yewvk).
+- The unchanged 1.1.2 save engine imported and loaded three actual legacy phone states and verified the normal cartridge-save bytes in an isolated host test; phone originals were unchanged and temporary copies removed (android-preview-legacy-phone-save-check-0cd34k7c).
+- A moto g34 installed the new preview alongside 1.1.2; the old app and its cartridge save and three states were unchanged. The new app was not launched (android-preview-coinstall-4edvxszk).
+- Fourteen Python Android builder, context-filtering, signing-option and path-redaction tests passed.
+- A signed build with an incorrect password was rejected without an APK, reused the Gradle cache and redacted private file paths (android-preview-signing-failure-guard-t7en5_b6).
+- A default Android Docker build without private signing files also passed its 29 Kotlin tests (android-preview-default-build-1y7_r2cm).
+
+**Limitations**
+
+- The old signing key was not recovered, so 1.2 cannot update 1.1.2 in place; settings and automatic backup history do not migrate automatically.
+- The physical-device migration UI and gameplay were not exercised; users should keep the old app and exported states until they verify their progress.
+- Windows Docker Desktop signing-secret mounting was not exercised.
+
+Documentation: [README.md](AndroidPort/README.md), [README.md](AndroidPort/android/README.md), [android_docker.md](docs/android_docker.md), [v1.2.0.md](docs/releases/v1.2.0.md).
+
+[Change record](docs/changes/2026-11-20-android-preview-signing-migration.json)
 
 ## 2026-11-20 — Visualize identified ROM data families as a treemap
 

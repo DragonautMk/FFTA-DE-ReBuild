@@ -23,8 +23,9 @@ and normal enablement retain their existing acceptance gates.
 - FFTA DE-ReBuild is the visible name of the independently maintained fork
   formerly called FFTARecomp. Its new emblem is used by the README, desktop
   installer and package icon, and both Android trees. Existing executable and
-  archive names, Android package IDs and data paths retain FFTARecomp for
-  compatibility; the upstream project keeps its own name.
+  archive names and data paths retain FFTARecomp; the upstream project keeps its
+  own name. The maintained 1.2 Android preview uses a separate application ID
+  so it can coexist with the differently signed 1.1.2 app.
 
 - The [English-first policy](ENGLISH_FIRST.md) applies to maintained documentation,
   comments and default product/tooling text in both source trees. Optional locale
@@ -2356,7 +2357,8 @@ and normal enablement retain their existing acceptance gates.
   maintained AndroidPort; `--project-dir .` explicitly selects root). The port
   keeps its Dockerfile/driver/exporter self-contained. Filtered public contexts,
   separate Cargo/Gradle/signing caches and APK/hash/test export avoid writing
-  build intermediates into either checkout; see [Android Docker](../android_docker.md).
+  build intermediates into either checkout. The distributed preview can use a
+  persistent private signing key via BuildKit secrets; see [Android Docker](../android_docker.md).
 - `crates/recomp/src/play.rs` connects the desktop event loop, input, menu and
   presentation. `crates/menu` owns UI state and rendering; `crates/input-config`
   owns persisted bindings and combo capture/latching. `crates/screen` presents

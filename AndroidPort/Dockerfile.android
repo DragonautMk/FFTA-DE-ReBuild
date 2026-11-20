@@ -69,10 +69,31 @@ FROM native AS build
 COPY project/android/ android/
 COPY project/BUILD-SOURCE.json ./
 COPY export_android.py /opt/ffta/export_android.py
-# Keep the original scope and signing cache so installed APKs can be updated.
+ARG FFTA_PREVIEW_SIGNING=0
+ARG FFTA_PREVIEW_SIGNER_INPUT=none
+ARG FFTA_PREVIEW_SIGNING_NONCE=none
+# A release preview may use a persistent key supplied only as BuildKit secrets.
+# The key hash invalidates this layer when the selected keystore changes.
 RUN --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-gradle,target=/root/.gradle,sharing=locked \
     --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-signing,target=/root/.android,sharing=locked \
-    bash android/gradlew -p android :app:assembleDebug :app:testDebugUnitTest --build-cache --no-daemon --console=plain \
+    --mount=type=secret,id=ffta_preview_keystore \
+    --mount=type=secret,id=ffta_preview_password \
+    if [ "$FFTA_PREVIEW_SIGNING" = 1 ]; then \
+        test "$FFTA_PREVIEW_SIGNING_NONCE" != none \
+        && test -n "$FFTA_PREVIEW_SIGNING_NONCE" \
+        && test -r /run/secrets/ffta_preview_keystore \
+        && test -r /run/secrets/ffta_preview_password \
+        && test "$(sha256sum /run/secrets/ffta_preview_keystore | cut -d ' ' -f 1)" = "$FFTA_PREVIEW_SIGNER_INPUT" \
+        && export FFTA_PREVIEW_KEYSTORE=/run/secrets/ffta_preview_keystore \
+        && export FFTA_PREVIEW_PASSWORD_FILE=/run/secrets/ffta_preview_password; \
+    elif [ "$FFTA_PREVIEW_SIGNING" != 0 ]; then exit 1; fi \
+    && bash android/gradlew -p android :app:assembleDebug :app:testDebugUnitTest --build-cache --no-daemon --console=plain \
+    && if [ "$FFTA_PREVIEW_SIGNING" = 1 ]; then \
+        expected="$(keytool -exportcert -keystore /run/secrets/ffta_preview_keystore -alias ffta-preview \
+            -storepass:file /run/secrets/ffta_preview_password | sha256sum | cut -d ' ' -f 1)" \
+        && report="$("$ANDROID_HOME/build-tools/36.0.0/apksigner" -J-enable-native-access=ALL-UNNAMED verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk)" \
+        && printf '%s\n' "$report" | grep -F "Signer #1 certificate SHA-256 digest: $expected"; \
+    fi \
     && python3 /opt/ffta/export_android.py android/app/build/outputs/apk/debug/app-debug.apk /artifacts \
     && rm -rf android/app/build android/build android/.gradle android/.kotlin \
     && { rustc --version; cargo --version; java -version 2>&1; \
