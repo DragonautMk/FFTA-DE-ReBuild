@@ -46,21 +46,38 @@ impl Backups {
         }
         Ok(bytes)
     }
-    /// Capture and return exactly the saved bytes loaded by the new session.
-    pub fn capture_startup(&self,expected:usize)->Result<Option<Vec<u8>>,String> {
+    fn current(&self,expected:usize)->Result<Option<Vec<u8>>,String> {
         let bytes=match fs::File::open(&self.source) {
             Ok(f)=>{let mut b=Vec::new();f.take((MAX_SAVE+1) as u64).read_to_end(&mut b).map_err(|e|e.to_string())?;b},
             Err(e) if e.kind()==std::io::ErrorKind::NotFound=>return Ok(None),
             Err(e)=>return Err(format!("Cannot read cartridge save for backup: {e}")),
         };
         if bytes.len()!=expected || bytes.len()>MAX_SAVE {return Err("Cartridge save has an incompatible size".into());}
+        Ok(Some(bytes))
+    }
+    fn capture(&self,bytes:&[u8])->Result<(),String> {
         let entries=self.entries()?;
         let next=match entries.first() {Some(e)=>e.id[..20].parse::<u64>().map_err(|e|e.to_string())?.checked_add(1).ok_or("Backup sequence exhausted")?,None=>1};
         let id=format!("{next:020}-{}",gba_core::ffta_rom::digest(&bytes));
         fs::create_dir_all(&self.directory).map_err(|e|e.to_string())?;
-        atomic_write(&self.directory.join(format!("backup-{id}.sav")),&bytes,false)?;
+        atomic_write(&self.directory.join(format!("backup-{id}.sav")),bytes,false)
+    }
+    /// Capture and return exactly the saved bytes loaded by the new session.
+    pub fn capture_startup(&self,expected:usize)->Result<Option<Vec<u8>>,String> {
+        let Some(bytes)=self.current(expected)? else{return Ok(None)};
+        self.capture(&bytes)?;
         for old in self.entries()?.into_iter().skip(2) {fs::remove_file(old.path).map_err(|e|format!("Cannot retire old backup: {e}"))?;}
         Ok(Some(bytes))
+    }
+    /// Preserve the current file before publishing an explicitly approved import.
+    /// Do not prune older backups if publication subsequently fails.
+    pub fn import_save(&self,bytes:&[u8],expected:usize,overwrite:bool)->Result<(),String> {
+        if bytes.len()!=expected || bytes.len()>MAX_SAVE {return Err("Cartridge save has an incompatible size".into());}
+        let previous=self.current(expected)?;
+        if previous.is_some() && !overwrite {return Err("Cartridge save already exists; confirm replacement".into());}
+        if let Some(old)=&previous {self.capture(old)?;}
+        if self.current(expected)?!=previous {return Err("Cartridge save changed during import; try again".into());}
+        atomic_write(&self.source,bytes,previous.is_some())
     }
     pub fn choices(&self,expected:usize)->Result<Vec<(String,bool)>,String> {
         Ok(self.entries()?.into_iter().take(2).map(|e| {

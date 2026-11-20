@@ -19,7 +19,8 @@ LOCK = 'files/.ffta-legacy-migration.lock'
 MARKER = 'files/.ffta-legacy-migration-complete.json'
 MAX_FILE = 65 * 1024 * 1024
 SAVE_PATH = re.compile(
-    r'files/(?:ffta\.sav|SaveStates/[0-9a-f]{64}/slot-[1-9]\.ffstate|'
+    r'files/(?:ffta\.sav|SaveStates/[0-9a-f]{64}/(?:slot-[1-9]\.ffstate|'
+    r'ImportBackups/slot-[1-9]-[0-9a-f]{64}\.ffstate)|'
     r'SaveBackups/[0-9a-f]{64}/ffta\.sav/backup-[0-9]{20}-[0-9a-f]{64}\.sav)\Z'
 )
 
@@ -62,6 +63,10 @@ def snapshot(bridge, package, paths, directory):
             expected = path.rsplit('-', 1)[-1].removesuffix('.sav')
             if digest(data) != expected:
                 raise MigrationError('A cartridge backup does not match its recorded checksum.')
+        if '/ImportBackups/' in path:
+            expected = path.rsplit('-', 1)[-1].removesuffix('.ffstate')
+            if digest(data) != expected:
+                raise MigrationError('A state import backup does not match its recorded checksum.')
         destination = directory / path
         destination.parent.mkdir(parents=True, exist_ok=True)
         fd = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)

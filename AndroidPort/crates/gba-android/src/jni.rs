@@ -243,6 +243,22 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportSta
 }
 
 #[no_mangle]
+pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportCartridge(env: *mut JNIEnv, _: jobject, input: jbyteArray, overwrite: jboolean) -> jint {
+    guarded(|| {
+        if input.is_null() {return Err("Invalid cartridge save".into());}
+        let api=&**env;
+        let len=api.GetArrayLength.unwrap()(env,input);
+        if len<0 || len as usize>128*1024 {return Err("Cartridge save exceeds 128 KiB".into());}
+        let mut bytes=vec![0u8;len as usize];
+        api.GetByteArrayRegion.unwrap()(env,input,0,len,bytes.as_mut_ptr() as *mut _);
+        if api.ExceptionCheck.unwrap()(env)!=0 {return Err("Cannot read cartridge-save bytes".into());}
+        ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.import_cartridge(&bytes,overwrite!=0)?;
+        engine::status("Cartridge save imported");
+        Ok(1)
+    })
+}
+
+#[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaExportState(env: *mut JNIEnv, _: jobject, slot: jint) -> jbyteArray {
     let mut bytes = Vec::new();
     let code = guarded(|| {

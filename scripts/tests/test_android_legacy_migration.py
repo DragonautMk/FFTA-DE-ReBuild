@@ -144,6 +144,22 @@ class LegacyMigrationTests(unittest.TestCase):
         self.assertEqual(self.device.data[M.NEW], before)
         self.assertNotIn((M.NEW, M.LOCK), self.device.dirs)
 
+    def test_import_backups_are_preserved_and_validated(self):
+        content = b'previous imported state'
+        path = (f'files/SaveStates/{self.device.rom_hash}/ImportBackups/'
+                f'slot-1-{M.digest(content)}.ffstate')
+        self.device.data[M.NEW][path] = content
+        result = M.migrate(self.device, self.root)
+        self.assertEqual(self.device.data[M.NEW][path], content)
+        self.assertEqual((Path(result['backup']) / 'new-before' / path).read_bytes(), content)
+
+        other = FakeDevice()
+        other.data[M.OLD][path] = b'damaged'
+        before = dict(other.data[M.NEW])
+        with self.assertRaisesRegex(M.MigrationError, 'recorded checksum'):
+            M.migrate(other, self.root)
+        self.assertEqual(other.data[M.NEW], before)
+
     def test_adb_refuses_symlinked_destination_directories(self):
         bridge = M.Adb('synthetic-device')
         with mock.patch.object(bridge, 'shell', side_effect=[

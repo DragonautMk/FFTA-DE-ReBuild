@@ -75,12 +75,13 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ANDROID-AUTO-MIGRATION
 
-- State: waiting
+- State: active
 - Outcome: partial
-- Selection: user requested automatic legacy saves when opening Android and a visible version/build.
-- Verified: one-time ADB child completed; cartridge, three states and two backups transferred with unchanged originals and private preimage backup (`android-legacy-migration-device-19rmmwgy`). User thinks progress visible. Build 29, signer audit, save-preserving phone update and user-confirmed version label PASS (`android-preview-version-menu-build-usxyshqp`, `android-preview-version-menu-audit-j6374qfe`, `android-preview-build29-device-update-2zjtcug7`). Draft 452599943 includes APK/helper; 12 remote hashes match.
-- Missing: fully automatic app-only import from 1.1.2 cannot access the old app's private storage under Android's sandbox; the original signer/export provider is unavailable. Windows ADB execution remains unverified.
-- Resume: revisit app-only import if a compatible old signing key or a supported user-authorized transfer channel becomes available. The existing ADB/manual paths are one-time, not synchronization; preserve both apps and private backups.
+- Selection: finish the 1.2 draft refresh for the user-requested startup save import.
+- Verified: user confirmed build 31 initial menu and all three migrated states; the approved legacy cartridge save was copied with device and private preimage backups. Originals and other saves remained unchanged. `ANDROID-STARTUP-SAVE-IMPORT` is closed.
+- Missing: synchronize main/decomp and update the unpublished draft with the verified build and notes.
+- Limits: Android blocks silent direct access to the old app's private files; Windows ADB and full gameplay remain unverified.
+- Resume: commit reviewed changes, verify source identity and refresh draft 452599943 without publishing.
 
 ### ANDROID-MENU-PARITY
 
@@ -176,9 +177,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ROM-DATA-FULL-EUR.
-- Last verified result: E183 rectangles, Wine scene and CLI PASS.
-- Remaining work: 3,517 sampled bytes, other families and consumers; Linux/USA open.
-- Errors or blockers: completed scene log includes a D-Bus assertion.
-- Next action: select remaining EUR dependency using the progress rules.
-- References: `docs/rom_data_graphics.md`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.
+- Task: ANDROID-AUTO-MIGRATION, release draft refresh.
+- Last verified result: user confirmed startup menu and three states; legacy cartridge imported with recoverable preimages.
+- Remaining work: synchronize branches and refresh the unpublished 1.2 draft.
+- Errors or blockers: silent access to the old app's private files remains unavailable.
+- Next action: commit reviewed changes and verify the draft assets.
+- References: `docs/changes/2026-11-20-android-startup-save-import.json`; `ANDROID-STARTUP-SAVE-IMPORT`.

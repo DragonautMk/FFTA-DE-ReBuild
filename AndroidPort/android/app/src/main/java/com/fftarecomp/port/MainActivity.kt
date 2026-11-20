@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,6 +51,18 @@ private val Ink = Color(0xFF302519)
 private val Gold = Color(0xFFB68B35)
 private val Forest = Color(0xFF14231C)
 private fun previewBuildLabel() = "${BuildConfig.VERSION_NAME} (build ${BuildConfig.VERSION_CODE})"
+
+private fun readSaveImport(context:Context,uri:android.net.Uri,limit:Int):ByteArray =
+    context.contentResolver.openInputStream(uri)?.use { source ->
+        val output=java.io.ByteArrayOutputStream()
+        val buffer=ByteArray(8192);var total=0
+        while(true) {
+            val count=source.read(buffer);if(count<0)break
+            total+=count;require(total<=limit){"Selected save file is too large"}
+            output.write(buffer,0,count)
+        }
+        output.toByteArray()
+    } ?: error("Cannot open the selected file")
 
 /** Separate sources prevent releasing a touch button from releasing a held controller button. */
 class GameInput {
@@ -257,7 +270,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
         val start=System.nanoTime()
         val ready=startup.ready
         val present=rom.isFile
-        val route=StartupPolicy.route(ready,present,NativeBridge.loadError!=null,startup.recorded)
+        val route=StartupPolicy.route(ready,present,NativeBridge.loadError!=null,startup.recorded,GameBenchmark.enabled(context))
         if(BuildConfig.DEBUG)android.util.Log.d("FFTAStartup","route=$route ready=$ready rom=$present check_ms=${(System.nanoTime()-start)/1e6}")
         route
     }
@@ -265,6 +278,11 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
     var mustSelectRom by remember { mutableStateOf(false) }
     var switchingRom by remember { mutableStateOf(false) }
     var loading by remember {mutableStateOf(initialRoute==StartupRoute.LOADING)}
+    var importPage by rememberSaveable {mutableStateOf<String?>(null)}
+    var importKind by rememberSaveable {mutableStateOf("")}
+    var importSlot by rememberSaveable {mutableIntStateOf(1)}
+    var importMask by rememberSaveable {mutableIntStateOf(0)}
+    var importOverwrite by rememberSaveable {mutableStateOf(false)}
     // Loading and gameplay share one orientation owner. A screen-specific
     // onDispose must not restore portrait between these two compositions.
     val useLandscape=loading || playing
@@ -290,7 +308,14 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 error=failure.message
             }
             finally{busy=false;loading=false}
-        } else if(!available || NativeBridge.loadError!=null) {
+        } else if(available && NativeBridge.loadError==null) {
+            busy=true
+            try {
+                withContext(Dispatchers.IO) {if(!NativeBridge.romVerified)NativeBridge.load(rom,save)}
+                status="ROM verified. Ready to play or import saves."
+            } catch(failure:Throwable) {error=failure.message}
+            finally {busy=false}
+        } else {
             withContext(Dispatchers.IO){runCatching{startup.setReady(false)}}
         }
     }
@@ -319,6 +344,32 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                     available=true;status="ROM verified. Ready to compile on this device."
                 } catch(failure: Throwable) { error=failure.message }
                 finally { busy=false }
+            }
+        }
+    }
+    val previousSavePicker=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if(uri!=null) {
+            val kind=importKind;val slot=importSlot;val overwrite=importOverwrite
+            busy=true;error=null
+            scope.launch {
+                val result=runCatching {
+                    withContext(Dispatchers.IO) {
+                        check(NativeBridge.romVerified){"Select a verified ROM before importing"}
+                        if(kind=="cartridge") {
+                            val bytes=readSaveImport(context,uri,128*1024)
+                            check(NativeBridge.gbaImportCartridge(bytes,overwrite)==1){NativeBridge.gbaStatus()}
+                        } else {
+                            check(kind=="state"){"Choose a save type again"}
+                            val bytes=readSaveImport(context,uri,64*1024*1024+48+240*160*4+36+256*1024)
+                            check(NativeBridge.gbaImportState(slot,bytes,overwrite)==1){NativeBridge.gbaStatus()}
+                        }
+                    }
+                }
+                busy=false
+                result.onSuccess {
+                    status=if(kind=="cartridge")"Cartridge save imported. The previous save was backed up if present."
+                        else "Save state imported into slot $slot. Load it from the game's Save states menu."
+                }.onFailure {error=it.message ?: it.toString()}
             }
         }
     }
@@ -359,6 +410,12 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 Text("Select your own unmodified FFTA USA or Europe ROM. The game is compiled locally; your ROM stays on this device.")
                 Button(onClick={picker.launch(arrayOf("*/*"))},enabled=!busy&&NativeBridge.loadError==null,
                     modifier=Modifier.fillMaxWidth()) { Text(if(available)"Change ROM" else "Select ROM") }
+                OutlinedButton(onClick={importPage="kind"},
+                    enabled=available&&!mustSelectRom&&!busy&&NativeBridge.romVerified&&NativeBridge.loadError==null,
+                    modifier=Modifier.fillMaxWidth()) {Text("Import previous saves")}
+                if(!NativeBridge.romVerified || mustSelectRom) {
+                    Text("Select your ROM first to import a cartridge save or save state.",fontSize=12.sp)
+                }
                 Button(enabled=available&&!mustSelectRom&&!busy&&NativeBridge.loadError==null,onClick={
                     busy=true;loading=true;error=null
                     scope.launch {
@@ -381,6 +438,43 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 Text(status,fontSize=13.sp)
                 error?.let {Text(it,color=Color(0xFF9B2929),fontSize=13.sp)}
                 Text("A project by Jorge Rios",fontSize=12.sp,color=Ink.copy(alpha=0.6f))
+            }
+            when(importPage) {
+                "kind" -> AlertDialog(onDismissRequest={importPage=null},title={Text("Import previous saves")},
+                    text={Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                        Text("Choose a file exported from the previous app or copied to this device. Android cannot read another app's private files directly.")
+                        Text("Use a save for the selected ROM. Cartridge saves do not identify their game; save states are checked against the ROM.",fontSize=13.sp)
+                        OutlinedButton(onClick={
+                            importKind="cartridge";importOverwrite=false
+                            if(save.isFile)importPage="confirm_cartridge" else {importPage=null;previousSavePicker.launch(arrayOf("*/*"))}
+                        },modifier=Modifier.fillMaxWidth()){Text("Cartridge save (.sav)")}
+                        OutlinedButton(onClick={
+                            val mask=NativeBridge.gbaStateSlots()
+                            if(mask<0){error=NativeBridge.gbaStatus();importPage=null}
+                            else {importKind="state";importMask=mask;importPage="slots"}
+                        },modifier=Modifier.fillMaxWidth()){Text("Save state (.ffstate)")}
+                    }},confirmButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
+                "slots" -> AlertDialog(onDismissRequest={importPage=null},title={Text("Choose a save-state slot")},
+                    text={Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        Text("A dot marks an occupied slot. Import one file at a time.")
+                        for(row in 0..2) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                            for(column in 1..3) {
+                                val slot=row*3+column;val occupied=importMask and (1 shl (slot-1))!=0
+                                OutlinedButton(onClick={
+                                    importSlot=slot;importOverwrite=false
+                                    if(occupied)importPage="confirm_state" else {importPage=null;previousSavePicker.launch(arrayOf("*/*"))}
+                                },modifier=Modifier.weight(1f)){Text("$slot${if(occupied)" •" else ""}")}
+                            }
+                        }
+                    }},confirmButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
+                "confirm_cartridge" -> AlertDialog(onDismissRequest={importPage=null},title={Text("Replace cartridge save?")},
+                    text={Text("The current save will be backed up on this device before replacement. Choose the matching .sav file next.")},
+                    confirmButton={TextButton(onClick={importOverwrite=true;importPage=null;previousSavePicker.launch(arrayOf("*/*"))}){Text("Replace and choose file")}},
+                    dismissButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
+                "confirm_state" -> AlertDialog(onDismissRequest={importPage=null},title={Text("Replace slot $importSlot?")},
+                    text={Text("The current state will be backed up on this device before replacement. Choose the matching save-state file next.")},
+                    confirmButton={TextButton(onClick={importOverwrite=true;importPage=null;previousSavePicker.launch(arrayOf("*/*"))}){Text("Replace and choose file")}},
+                    dismissButton={TextButton(onClick={importPage=null}){Text("Cancel")}})
             }
         }
     }

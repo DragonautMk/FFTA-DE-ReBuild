@@ -299,6 +299,18 @@ impl Engine {
         self.replace_machine(fresh);
         Ok(())
     }
+    /// Validate and publish the cartridge before replacing the in-memory machine.
+    pub fn import_cartridge(&mut self,bytes:&[u8],overwrite:bool)->Result<(),String> {
+        let size=self.machine.bus.save_data().ok_or("This cartridge has no save memory")?.len();
+        if bytes.len()!=size {return Err("Cartridge save has an incompatible size".into());}
+        let mut fresh=Box::new(if self.machine.bus.real_bios {
+            Machine::new_with_bios(self.machine.bus.rom.clone(),&self.machine.bus.bios)
+        } else {Machine::new(self.machine.bus.rom.clone())});
+        fresh.bus.load_save_data(bytes);
+        self.backups()?.import_save(bytes,size,overwrite)?;
+        self.replace_machine(fresh);
+        Ok(())
+    }
     pub fn diagnostics(&self) -> String {
         let state=&self.machine.bus.ffta_dialogue;
         let ui_hash=state.layer().map(|(p,_)|p).unwrap_or(&[]).iter()
@@ -340,6 +352,55 @@ mod tests {
         rom[..4].copy_from_slice(&0xeafffffeu32.to_le_bytes());
         rom[256..262].copy_from_slice(b"SRAM_V");
         Engine::new(rom)
+    }
+    #[test]
+    fn cartridge_import_requires_confirmation_and_preserves_previous_save() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from)
+            .unwrap_or_else(std::env::temp_dir).join(format!("cartridge-import-{}",std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let mut engine=restart_test_engine();
+        engine.save_path=Some(root.join("ffta.sav"));
+        let size=engine.machine.bus.save_data().unwrap().len();
+        let old=vec![0x42;size];let replacement=vec![0x73;size];
+        engine.machine.bus.load_save_data(&old);engine.machine.cpu.regs[4]=0x1234;
+        engine.save().unwrap();
+        assert!(engine.import_cartridge(&replacement,false).is_err());
+        assert!(engine.import_cartridge(&replacement[..size-1],true).is_err());
+        assert_eq!(std::fs::read(root.join("ffta.sav")).unwrap(),old);
+        assert_eq!(engine.machine.cpu.regs[4],0x1234);
+        assert!(engine.backup_choices().unwrap().is_empty());
+        engine.import_cartridge(&replacement,true).unwrap();
+        assert_eq!(std::fs::read(root.join("ffta.sav")).unwrap(),replacement);
+        assert_eq!(engine.machine.bus.save_data().unwrap(),replacement.as_slice());
+        assert_ne!(engine.machine.cpu.regs[4],0x1234);
+        let choices=engine.backup_choices().unwrap();
+        assert_eq!(choices.len(),1);assert!(choices[0].1);
+        engine.restore_backup(&choices[0].0).unwrap();
+        assert_eq!(std::fs::read(root.join("ffta.sav")).unwrap(),old);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn state_import_keeps_a_durable_copy_of_the_replaced_slot() {
+        let _lock=VIEW_TEST.lock().unwrap();
+        let root=std::env::var_os("FFTA_VALIDATION_WORK").map(std::path::PathBuf::from)
+            .unwrap_or_else(std::env::temp_dir).join(format!("state-import-backup-{}",std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let mut engine=restart_test_engine();engine.save_path=Some(root.join("ffta.sav"));
+        engine.machine.cpu.regs[4]=1;engine.state_save(1,false).unwrap();
+        let old=engine.state_export(1).unwrap();
+        engine.machine.cpu.regs[4]=2;engine.state_save(2,false).unwrap();
+        let replacement=engine.state_export(2).unwrap();
+        assert!(engine.state_import(1,&replacement,false).is_err());
+        assert!(engine.state_import(1,b"invalid",true).is_err());
+        assert_eq!(engine.state_export(1).unwrap(),old);
+        engine.state_import(1,&replacement,true).unwrap();
+        let backup=root.join("SaveStates").join(&engine.rom_cache_key).join("ImportBackups")
+            .join(format!("slot-1-{}.ffstate",gba_core::ffta_rom::digest(&old)));
+        assert_eq!(std::fs::read(backup).unwrap(),old);
+        assert_eq!(engine.state_export(1).unwrap(),replacement);
+        engine.state_undo().unwrap();assert_eq!(engine.state_export(1).unwrap(),old);
+        std::fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn exported_preview_state_imports_and_restores_cartridge_save() {

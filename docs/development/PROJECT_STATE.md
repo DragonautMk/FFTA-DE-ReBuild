@@ -25,7 +25,10 @@ and normal enablement retain their existing acceptance gates.
   installer and package icon, and both Android trees. Existing executable and
   archive names and data paths retain FFTARecomp; the upstream project keeps its
   own name. The maintained 1.2 Android preview uses a separate application ID
-  so it can coexist with the differently signed 1.1.2 app.
+  so it can coexist with the differently signed 1.1.2 app. Its ROM-selection
+  screen imports user-selected cartridge saves and save states, with explicit
+  replacement confirmation and recovery copies; Android does not expose the
+  older app's private files directly to the picker.
 
 - The [English-first policy](ENGLISH_FIRST.md) applies to maintained documentation,
   comments and default product/tooling text in both source trees. Optional locale

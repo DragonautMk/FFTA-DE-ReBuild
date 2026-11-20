@@ -24466,3 +24466,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: the one-time ADB helper copied the legacy cartridge save, three states and two backups on a moto g34, with original hashes unchanged, the destination preimage privately backed up and repeat execution harmless. Signed Android preview build 29 was installed without changing either app's saves; the user confirmed its version label.
 - Evidence: `android-legacy-migration-device-19rmmwgy`, `android-legacy-migration-release-tests-802apuys`, `android-preview-version-menu-build-usxyshqp`, `android-preview-version-menu-audit-j6374qfe`, `android-preview-build29-device-update-2zjtcug7`; draft 452599943 targeted `b8f3474f` with 12 verified assets.
 - Limits: legacy app-only automatic import is not available across the Android sandbox; the ADB/manual transfer is not ongoing synchronization. Windows ADB and full gameplay remain unverified; public release was not requested.
+
+### ANDROID-STARTUP-SAVE-IMPORT
+
+- Outcome: completed
+- Verified criteria: Android build 31 opens the ROM-selection menu and offers guarded cartridge/state file imports; the user confirmed the initial menu and three states. Three legacy states were copied to empty slots and the legacy cartridge save was imported with approval; existing destination data were backed up and originals preserved.
+- Evidence: `docs/changes/2026-11-20-android-startup-save-import.json`; `android-setup-import-native-tests-hut4irtf`, `android-initial-menu-import-build31-f8l2g21t`, `android-initial-menu-import-audit31-p0iwwu0g`, `android-initial-menu-build31-device-update-dwo8s5d0`, `android-import-previous-states-into-empty-slots-msie2qdw`, `android-import-previous-cartridge-with-backup-fw6zgm0r`.
+- Limits: Android prevents direct app-only access to legacy private files; file import needs an export or computer transfer. Raw saves are size-checked only; full gameplay and Windows ADB remain unverified.

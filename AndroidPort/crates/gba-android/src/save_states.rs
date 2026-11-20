@@ -141,6 +141,21 @@ impl Slots {
         let (state, _) = parts(bytes)?;
         probe.load_state(state)?;
         fs::create_dir_all(&self.directory).map_err(|e| e.to_string())?;
+        if let Some(old)=&previous {
+            // Keep a durable recovery copy even if the app exits before Undo.
+            let backups=self.directory.join("ImportBackups");
+            fs::create_dir_all(&backups).map_err(|e|e.to_string())?;
+            let backup=backups.join(format!("slot-{slot}-{}.ffstate",gba_core::ffta_rom::digest(old)));
+            if backup.exists() {
+                let metadata=fs::metadata(&backup).map_err(|e|e.to_string())?;
+                if metadata.len()!=old.len() as u64 || fs::read(&backup).map_err(|e|e.to_string())?!=*old {
+                    return Err("Existing import backup is damaged".into());
+                }
+            } else {
+                crate::save_backups::atomic_write(&backup,old,false)?;
+            }
+            if self.read(slot)?!=previous {return Err("Save-state slot changed during import; try again".into());}
+        }
         crate::save_backups::atomic_write(&self.path(slot)?, bytes, previous.is_some())?;
         Ok(Undo::Save { slot, previous, digest: gba_core::ffta_rom::digest(bytes) })
     }

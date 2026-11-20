@@ -54,6 +54,15 @@ timers, DMA, interrupts, backup media, and C recompiler.
   can be remapped as described below.
 - Saves are stored privately as `files/ffta.sav`, written on pause, exit and
   periodically while playing. Preparing code never advances the user's game.
+- The app opens on the ROM-selection screen, including when a ROM was selected
+  earlier. After its identity has been verified, **Import previous saves** opens
+  Android's file picker for a cartridge `.sav` or an individual `.ffstate`.
+  Save states must match the selected ROM and
+  BIOS; cartridge saves have no game identity, so only their size is checked.
+  Existing files require confirmation before replacement. A cartridge save is
+  backed up in the normal backup list; a replaced state is retained under its
+  ROM-specific `SaveStates/<ROM hash>/ImportBackups` directory and can also be
+  undone during the session. State import does not load the state automatically.
 - Pause > Restart ROM asks for confirmation, writes the current cartridge save,
   then restarts from boot. Progress not saved inside the game is lost. If the
   cartridge save cannot be written, the game remains paused and is not reset.
@@ -142,8 +151,10 @@ To transfer progress through the apps' document pickers:
    a slot > Export state file. To preserve the current cartridge progress,
    first make a fresh state in an empty slot and export that state too. If all
    slots are occupied, export them before replacing one.
-2. Open the 1.2 preview with the same ROM and BIOS as before. Import each state
-   into the desired slot using Pause > Save states > a slot > Import state file.
+2. Open the 1.2 preview and select the same ROM and BIOS as before. On the ROM
+   selection screen, choose **Import previous saves > Save state (.ffstate)**
+   and import each exported file into its intended slot. Alternatively, use
+   Pause > Save states > a slot > Import state file while the game is running.
 3. Load the freshly created state to restore its cartridge memory, then use
    Pause > Exit Game and confirm. The preview writes that cartridge memory to
    its own normal save. Keep the old app and exported files until the new app's
@@ -152,6 +163,10 @@ To transfer progress through the apps' document pickers:
 Loading a state restores the cartridge memory captured in that state; an older
 state can therefore contain older progress. Settings and automatic cartridge
 backup history are separate and are not copied by this process.
+The previous version does not export a standalone `.sav` from its menu. A raw
+`.sav` copied to the phone separately may instead be selected under **Cartridge
+save (.sav)**. The picker cannot browse the older app's private files: export a
+state or use the computer-assisted transfer before selecting a file.
 
 The distribution keystore must remain outside the source tree, with a protected
 offline backup of both it and its password. To sign the maintained port with

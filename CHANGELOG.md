@@ -518,6 +518,33 @@ Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](d
 
 [Change record](docs/changes/2026-11-20-build-remapped-linux-debug-candidate.json)
 
+## 2026-11-20 — Import previous saves from the Android startup menu
+
+Type: added. Platforms: Android, Linux.
+
+**Changes**
+
+- Show the ROM-selection menu on normal app startup and verify an existing ROM so save import is immediately available; preserve unattended debug benchmark routing.
+- Import a selected cartridge save or ROM-checked save state with explicit replacement confirmation, bounded reads and durable recovery copies; do not load an imported state automatically.
+- Teach the connected-computer migration helper to preserve and verify state-import backups, and advance the signed preview to 1.2.0-android-preview.4, build 31.
+
+**Validation**
+
+- The Android native core passed 45 tests with three fixture-dependent tests ignored, including invalid imports, overwrite refusal, durable state backup and cartridge restoration (android-setup-import-native-tests-hut4irtf).
+- The signed build passed 31 Kotlin tests; version, installed-preview signer, APK integrity and exclusion of private game data passed (android-initial-menu-import-build31-f8l2g21t; android-initial-menu-import-audit31-p0iwwu0g).
+- The Android migration and build helper passed 23 Python tests, including preservation and checksum rejection of state-import backups (android-save-import-helper-tests-cuptnt4u).
+- A moto g34 updated to build 31 with both apps’ existing files unchanged; three previously verified legacy states were copied only into empty new slots, leaving the normal save unchanged (android-initial-menu-build31-device-update-dwo8s5d0; android-import-previous-states-into-empty-slots-msie2qdw).
+- On build 31, the user confirmed the menu appeared at startup and all three transferred save-state slots were visible. The legacy cartridge save was subsequently imported with approval, with the previous destination backed up on the phone and computer; the old app and new state files remained unchanged (android-import-previous-cartridge-with-backup-fw6zgm0r).
+
+**Limitations**
+
+- Android does not allow the new app or its document picker to read the old app’s private files directly; users must export or copy selected files, or use the connected-computer helper.
+- Raw cartridge saves have no embedded game identity and are checked for size only. Automatic backup rotation still applies; Windows ADB execution and full gameplay were not tested.
+
+Documentation: [README.md](AndroidPort/android/README.md), [v1.2.0.md](docs/releases/v1.2.0.md).
+
+[Change record](docs/changes/2026-11-20-android-startup-save-import.json)
+
 ## 2026-11-20 — Preserve saves when changing the Android preview signing key
 
 Type: changed. Platforms: Android.
