@@ -364,10 +364,12 @@ Type: docs. Platforms: Android, Linux, Windows.
 **Changes**
 
 - Finalize the 1.2.0 release notes, downloads and Android migration guidance, and distinguish the desktop workspace component version from the distribution version.
+- Publish FFTA DE-ReBuild v1.2.0 as the latest GitHub release with Windows, Linux and separately signed Android preview packages.
 
 **Validation**
 
 - Verified the prior Windows, Linux and Android build and package receipts, including the Android preview signature and device save checks.
+- Published release 452599943 at tag v1.2.0, commit 4fe7ac97; all twelve asset sizes and SHA-256 digests matched locally verified files, the public release page returned HTTP 200 and all three package download URLs returned HTTP 200.
 
 **Limitations**
 

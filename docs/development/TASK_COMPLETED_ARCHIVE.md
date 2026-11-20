@@ -24494,3 +24494,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: main and decomp synchronized to source commit `3ec5701c`; unpublished 1.2 draft 452599943 targets it, with all 12 asset sizes and SHA-256 hashes matching the local package. The Android source manifest matches that commit and GitHub Project memory CI passed.
 - Evidence: `android-rom-folder-build33-v9sz7y9i`, `android-rom-folder-build33-audit-4v8fpja0`; GitHub run 44760353536; `docs/changes/2026-11-20-android-rom-folder-saves.json`.
 - Limits: the release remains a draft; local ROM-folder mode requires Android 11+ and the selected all-files permission. Later memory-only commits do not alter build sources.
+
+### RELEASE-1-2-PUBLICATION
+
+- Outcome: completed
+- Verified criteria: the user authorized publication and GitHub release v1.2.0 (452599943) is public and marked latest, with tag/source commit `4fe7ac97`. All 12 published assets matched local sizes and SHA-256 digests; the release page and three package downloads returned HTTP 200. The matching commit passed project-memory CI; prior Windows/Wine, Linux and Android build/device checks remain valid.
+- Evidence: https://github.com/DragonautMk/FFTA-DE-ReBuild/releases/tag/v1.2.0; `docs/changes/2026-11-20-finalize-1-2-release-notes.json`; GitHub run 44766806047; `release-120-windows-_njed1p3`, `release-120-linux-m47i0oey`, `android-rom-folder-build33-v9sz7y9i`, `android-rom-folder-build33-audit-4v8fpja0`.
+- Limits: native Windows, Windows ADB and full Android gameplay were not verified. The Android build is a separately signed, debuggable preview. Later memory-only commits do not alter the release source.

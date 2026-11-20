@@ -73,16 +73,6 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Incomplete tasks and open criteria
 
-### RELEASE-1-2-PUBLICATION
-
-- State: active
-- Outcome: partial
-- Selection: user explicitly requested publication of release 1.2.
-- Verified: draft 452599943 has 12 verified assets; Android build 33/device save checks pass. `ANDROID-ROM-FOLDER-RELEASE`.
-- Missing: check current draft, assets/tag/branches; remove draft-only language; publish and verify release/tag/assets, then record outcome.
-- Risks/stop: exclude personal data and secrets; retain published limitations. Stop on inconsistent assets, tag or failed verification. Native Windows/full gameplay remain outside this unit.
-- Resume: inspect remote and local evidence; prepare release notes before publication.
-
 ### ANDROID-AUTO-MIGRATION
 
 - State: waiting
@@ -186,8 +176,8 @@ Archive completed tasks; preserve closed children and other jobs.
 ## Final handover
 
 - Task: RELEASE-1-2-PUBLICATION.
-- Last verified result: 1.2 draft and 12 assets prepared; Android build 33/device saves pass.
-- Remaining work: finalize notes, publish, verify tag and assets, record outcome.
-- Errors or blockers: native Windows and full gameplay are unverified.
-- Next action: inspect current release, tag and build evidence.
-- References: `docs/releases/v1.2.0.md`; `ANDROID-ROM-FOLDER-RELEASE`.
+- Last verified result: v1.2.0 is published at commit 4fe7ac97; 12 asset digests and public page/download URLs passed.
+- Remaining work: native Windows, Windows ADB and full Android gameplay remain unverified.
+- Errors or blockers: Android preview uses a separate signing identity and app ID.
+- Next action: no further work in this completed selection.
+- References: `docs/releases/v1.2.0.md`; `RELEASE-1-2-PUBLICATION`.
