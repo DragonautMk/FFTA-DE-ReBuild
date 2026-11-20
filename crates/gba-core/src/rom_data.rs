@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 mod runtime;
 #[cfg(feature = "rom-data-read-audit")]
 pub mod read_audit;
-pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, PacketRead, PacketStats, PaletteRead, PaletteStats, ResourceStats, RuntimeResources, TransferStats, TextStats, TextCatalogStats, FontKeyboardStats, ObjListStats, ObjAnimationStats};
+pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, ObservedLzRead, ObservedLzStats, PacketRead, PacketStats, PaletteRead, PaletteStats, ResourceStats, RuntimeResources, TransferStats, TextStats, TextCatalogStats, FontKeyboardStats, ObjListStats, ObjAnimationStats};
 pub use runtime::{CompactObjStats, SecondaryCompactObjStats, TertiaryCompactObjStats};
 pub use runtime::{LayeredObjStats, AudioExtendedDispatchStats, ConditionalItemParametersStats};
 pub mod bg_descriptors;
@@ -59,6 +59,13 @@ pub mod context_callback_descriptor;
 pub mod conditional_language_pair;
 pub mod text_reader_registry;
 pub mod conditional_substitution_words;
+pub mod display_control_tables;
+pub mod compact_primary_alias;
+pub mod observed_lz;
+pub mod constructor_template64;
+pub mod observed_tilemap;
+pub mod observed_tilemap_descriptor;
+pub mod observed_tilemap_row;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -124,8 +131,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 170;
-pub const DECODER_REV: u32 = 169;
+pub const EXTRACTOR_REV: u32 = 180;
+pub const DECODER_REV: u32 = 179;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -438,6 +445,34 @@ pub const CONDITIONAL_SUBSTITUTION_WORDS_ID: &str = "text.conditional-substituti
 pub const CONDITIONAL_SUBSTITUTION_WORDS_FILE: &str = "conditional-substitution-words.json";
 pub const CONDITIONAL_SUBSTITUTION_WORDS_FORMAT: &str = "conditional-substitution-words-v1-json";
 pub const MAX_CONDITIONAL_SUBSTITUTION_WORDS_FILE_BYTES: u64 = 1024 * 1024;
+pub const DISPLAY_CONTROL_TABLES_ID: &str = "graphics.display-control-tables";
+pub const DISPLAY_CONTROL_TABLES_FILE: &str = "display-control-tables.json";
+pub const DISPLAY_CONTROL_TABLES_FORMAT: &str = "display-control-tables-v1-json";
+pub const MAX_DISPLAY_CONTROL_TABLES_FILE_BYTES: u64 = 1024 * 1024;
+pub const COMPACT_PRIMARY_ALIAS_ID: &str = "graphics.compact-primary-alias";
+pub const COMPACT_PRIMARY_ALIAS_FILE: &str = "compact-primary-alias.json";
+pub const COMPACT_PRIMARY_ALIAS_FORMAT: &str = "compact-primary-alias-v1-json";
+pub const MAX_COMPACT_PRIMARY_ALIAS_FILE_BYTES: u64 = 1024 * 1024;
+pub const OBSERVED_LZ_ID: &str = "graphics.observed-lz-block";
+pub const OBSERVED_LZ_FILE: &str = "observed-lz-block.json";
+pub const OBSERVED_LZ_FORMAT: &str = "observed-lz-block-v2-json";
+pub const MAX_OBSERVED_LZ_FILE_BYTES: u64 = 1024 * 1024;
+pub const CONSTRUCTOR_TEMPLATE64_ID: &str = "engine.constructor-template64";
+pub const CONSTRUCTOR_TEMPLATE64_FILE: &str = "constructor-template64.json";
+pub const CONSTRUCTOR_TEMPLATE64_FORMAT: &str = "constructor-template64-v1-json";
+pub const MAX_CONSTRUCTOR_TEMPLATE64_FILE_BYTES: u64 = 1024 * 1024;
+pub const OBSERVED_TILEMAP_ID: &str = "graphics.observed-tilemap";
+pub const OBSERVED_TILEMAP_FILE: &str = "observed-tilemap.json";
+pub const OBSERVED_TILEMAP_FORMAT: &str = "observed-tilemap-v1-json";
+pub const MAX_OBSERVED_TILEMAP_FILE_BYTES: u64 = 1024 * 1024;
+pub const OBSERVED_TILEMAP_DESCRIPTOR_ID: &str = "graphics.observed-tilemap-descriptor";
+pub const OBSERVED_TILEMAP_DESCRIPTOR_FILE: &str = "observed-tilemap-descriptor.json";
+pub const OBSERVED_TILEMAP_DESCRIPTOR_FORMAT: &str = "observed-tilemap-descriptor-v1-json";
+pub const MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES: u64 = 1024 * 1024;
+pub const OBSERVED_TILEMAP_ROW_ID: &str = "graphics.observed-tilemap-row";
+pub const OBSERVED_TILEMAP_ROW_FILE: &str = "observed-tilemap-row.json";
+pub const OBSERVED_TILEMAP_ROW_FORMAT: &str = "observed-tilemap-row-v2-json";
+pub const MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -579,7 +614,9 @@ pub const MAX_BG_BASE_PALETTES_FILE_BYTES: u64 = 1024 * 1024;
 pub const MANIFEST_FILE: &str = "manifest.toml";
 pub const MAX_FILE_BYTES: u64 = 16 * 1024;
 pub const MAX_BG_DESCRIPTORS_FILE_BYTES: u64 = 256 * 1024;
-pub const MAX_DATASET_BYTES: usize = 512 * 1024 * 1024;
+// Retain a finite aggregate input guard while allowing current and subsequent
+// decoded EUR resources; individual file guards continue to apply separately.
+pub const MAX_DATASET_BYTES: usize = 768 * 1024 * 1024;
 pub const DIMENSIONS_SHA256: &str =
     "6ff886b23cde2726a4ceb9cba8c5569bbb4dc6a1185769547f78dfbcb7e2d991";
 
@@ -787,6 +824,13 @@ pub struct Extraction {
     pub conditional_language_pair: Option<conditional_language_pair::Catalog>,
     pub text_reader_registry: Option<text_reader_registry::Catalog>,
     pub conditional_substitution_words: Option<conditional_substitution_words::Catalog>,
+    pub display_control_tables: Option<display_control_tables::Catalog>,
+    pub compact_primary_alias: Option<compact_primary_alias::Catalog>,
+    pub observed_lz: Option<observed_lz::Catalog>,
+    pub constructor_template64: Option<constructor_template64::Catalog>,
+    pub observed_tilemap: Option<observed_tilemap::Catalog>,
+    pub observed_tilemap_descriptor: Option<observed_tilemap_descriptor::Catalog>,
+    pub observed_tilemap_row: Option<observed_tilemap_row::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -906,6 +950,13 @@ pub struct BaseFiles<'a> {
     pub conditional_language_pair: Option<(&'a conditional_language_pair::ConditionalLanguagePair, &'a [u8])>,
     pub text_reader_registry: Option<(&'a text_reader_registry::TextReaderRegistry, &'a [u8])>,
     pub conditional_substitution_words: Option<(&'a conditional_substitution_words::ConditionalSubstitutionWords, &'a [u8])>,
+    pub display_control_tables: Option<(&'a display_control_tables::DisplayControlTables, &'a [u8])>,
+    pub compact_primary_alias: Option<(&'a compact_primary_alias::CompactPrimaryAlias, &'a [u8])>,
+    pub observed_lz: Option<(&'a observed_lz::ObservedLzBlock, &'a [u8])>,
+    pub constructor_template64: Option<(&'a constructor_template64::ConstructorTemplate64, &'a [u8])>,
+    pub observed_tilemap: Option<(&'a observed_tilemap::ObservedTilemap, &'a [u8])>,
+    pub observed_tilemap_descriptor: Option<(&'a observed_tilemap_descriptor::ObservedTilemapDescriptor, &'a [u8])>,
+    pub observed_tilemap_row: Option<(&'a observed_tilemap_row::ObservedTilemapRow, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1672,6 +1723,62 @@ impl Extraction {
                 dependencies: vec![TEXT_CATALOGS_ID.into()], sources: metadata.sources.clone(),
             });
             result.conditional_substitution_words = Some(metadata);
+            let metadata = display_control_tables::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(DISPLAY_CONTROL_TABLES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: DISPLAY_CONTROL_TABLES_ID.into(), path: DISPLAY_CONTROL_TABLES_FILE.into(),
+                format: DISPLAY_CONTROL_TABLES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.display_control_tables = Some(metadata);
+            let metadata = compact_primary_alias::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(COMPACT_PRIMARY_ALIAS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: COMPACT_PRIMARY_ALIAS_ID.into(), path: COMPACT_PRIMARY_ALIAS_FILE.into(),
+                format: COMPACT_PRIMARY_ALIAS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![TASK_DESCRIPTORS_ID.into(), COMPACT_OBJ_CATALOG_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.compact_primary_alias = Some(metadata);
+            let metadata = observed_lz::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(OBSERVED_LZ_ID.into());
+            result.manifest.resources.push(Resource {
+                id: OBSERVED_LZ_ID.into(), path: OBSERVED_LZ_FILE.into(),
+                format: OBSERVED_LZ_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.observed_lz = Some(metadata);
+            let metadata = constructor_template64::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(CONSTRUCTOR_TEMPLATE64_ID.into());
+            result.manifest.resources.push(Resource {
+                id: CONSTRUCTOR_TEMPLATE64_ID.into(), path: CONSTRUCTOR_TEMPLATE64_FILE.into(),
+                format: CONSTRUCTOR_TEMPLATE64_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.constructor_template64 = Some(metadata);
+            let metadata = observed_tilemap::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(OBSERVED_TILEMAP_ID.into());
+            result.manifest.resources.push(Resource {
+                id: OBSERVED_TILEMAP_ID.into(), path: OBSERVED_TILEMAP_FILE.into(),
+                format: OBSERVED_TILEMAP_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.observed_tilemap = Some(metadata);
+            let metadata = observed_tilemap_descriptor::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(OBSERVED_TILEMAP_DESCRIPTOR_ID.into());
+            result.manifest.resources.push(Resource {
+                id: OBSERVED_TILEMAP_DESCRIPTOR_ID.into(), path: OBSERVED_TILEMAP_DESCRIPTOR_FILE.into(),
+                format: OBSERVED_TILEMAP_DESCRIPTOR_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBSERVED_TILEMAP_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.observed_tilemap_descriptor = Some(metadata);
+            let metadata = observed_tilemap_row::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(OBSERVED_TILEMAP_ROW_ID.into());
+            result.manifest.resources.push(Resource {
+                id: OBSERVED_TILEMAP_ROW_ID.into(), path: OBSERVED_TILEMAP_ROW_FILE.into(),
+                format: OBSERVED_TILEMAP_ROW_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBSERVED_TILEMAP_DESCRIPTOR_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.observed_tilemap_row = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1819,6 +1926,13 @@ impl Extraction {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -1967,6 +2081,13 @@ impl Extraction {
             || self.context_callback_descriptor.is_some() != self.conditional_language_pair.is_some()
             || self.conditional_language_pair.is_some() != self.text_reader_registry.is_some()
             || self.text_reader_registry.is_some() != self.conditional_substitution_words.is_some()
+            || self.conditional_substitution_words.is_some() != self.display_control_tables.is_some()
+            || self.display_control_tables.is_some() != self.compact_primary_alias.is_some()
+            || self.compact_primary_alias.is_some() != self.observed_lz.is_some()
+            || self.observed_lz.is_some() != self.constructor_template64.is_some()
+            || self.constructor_template64.is_some() != self.observed_tilemap.is_some()
+            || self.observed_tilemap.is_some() != self.observed_tilemap_descriptor.is_some()
+            || self.observed_tilemap_descriptor.is_some() != self.observed_tilemap_row.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -2841,6 +2962,69 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected conditional_substitution_words".into()),
         }
+        match (&self.display_control_tables, files.display_control_tables) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_DISPLAY_CONTROL_TABLES_FILE_BYTES { return Err("Display-control tables file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[113].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected display_control_tables".into()),
+        }
+        match (&self.compact_primary_alias, files.compact_primary_alias) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_COMPACT_PRIMARY_ALIAS_FILE_BYTES { return Err("Compact primary alias file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[114].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected compact_primary_alias".into()),
+        }
+        match (&self.observed_lz, files.observed_lz) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_OBSERVED_LZ_FILE_BYTES { return Err("Observed LZ file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[115].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected observed_lz".into()),
+        }
+        match (&self.constructor_template64, files.constructor_template64) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_CONSTRUCTOR_TEMPLATE64_FILE_BYTES { return Err("Constructor template file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[116].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected constructor_template64".into()),
+        }
+        match (&self.observed_tilemap, files.observed_tilemap) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_OBSERVED_TILEMAP_FILE_BYTES { return Err("Observed tilemap file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[117].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected observed_tilemap".into()),
+        }
+        match (&self.observed_tilemap_descriptor, files.observed_tilemap_descriptor) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES { return Err("Observed tilemap descriptor file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[118].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected observed_tilemap_descriptor".into()),
+        }
+        match (&self.observed_tilemap_row, files.observed_tilemap_row) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES { return Err("Observed tilemap row file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[119].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected observed_tilemap_row".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3395,6 +3579,36 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded conditional_substitution_words differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.display_control_tables, files.display_control_tables) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded display_control_tables differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.compact_primary_alias, files.compact_primary_alias) {
+            let tasks = files.task_descriptors.ok_or("Missing task descriptor dependency")?.0;
+            let compact = files.compact_obj_catalog.ok_or("Missing compact catalog dependency")?.0;
+            decoded.validate_dependencies(tasks, compact)?;
+            if decoded != &expected.decoded { return Err("Decoded compact_primary_alias differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.observed_lz, files.observed_lz) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded observed_lz differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.constructor_template64, files.constructor_template64) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded constructor_template64 differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap, files.observed_tilemap) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded observed_tilemap differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap_descriptor, files.observed_tilemap_descriptor) {
+            decoded.validate_dependencies(files.observed_tilemap.ok_or("Missing tilemap dependency")?.0)?;
+            if decoded != &expected.decoded { return Err("Decoded observed_tilemap_descriptor differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.observed_tilemap_row, files.observed_tilemap_row) {
+            decoded.validate_dependencies(files.observed_tilemap_descriptor.ok_or("Missing tilemap dependency")?.0)?;
+            if decoded != &expected.decoded { return Err("Decoded observed_tilemap_row differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3519,6 +3733,13 @@ impl Extraction {
             + usize::from(self.conditional_language_pair.is_some())
             + usize::from(self.text_reader_registry.is_some())
             + usize::from(self.conditional_substitution_words.is_some())
+            + usize::from(self.display_control_tables.is_some())
+            + usize::from(self.compact_primary_alias.is_some())
+            + usize::from(self.observed_lz.is_some())
+            + usize::from(self.constructor_template64.is_some())
+            + usize::from(self.observed_tilemap.is_some())
+            + usize::from(self.observed_tilemap_descriptor.is_some())
+            + usize::from(self.observed_tilemap_row.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3686,6 +3907,13 @@ mod tests {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3806,6 +4034,13 @@ mod tests {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -3936,6 +4171,13 @@ mod tests {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4055,6 +4297,13 @@ mod tests {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

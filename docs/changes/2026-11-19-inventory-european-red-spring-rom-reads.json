@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "inventory-european-red-spring-rom-reads",
+  "title": "Inventory European Red Spring ROM reads under E172",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Add an optional feature-gated address-only ROM-read inventory to the existing recorded-scene raw/managed differential, retaining source ownership and reader categories without collecting game data values.",
+    "Record actual E172 unowned read leads during the existing ordinary Red Spring action, including sprite-peek and bus accesses near compact root 6c1e78."
+  ],
+  "validation": [
+    "Windows GNU test build e172-redspring-audit-build-5_epxh0f passed. The Wine child in e172-redspring-audit-wine-c9uprkbl matched complete state, clock, video, OAM, dispatch and five audio streams for 600 frames and observed compact root 6c1e78; Wine drained.",
+    "The original Wine unit is FAIL because its 40 MiB report exceeded the 16 MiB evidence-copy limit. Recovery e172-redspring-audit-recovery-05iu77v6 independently rechecked all 26 protected inputs, log and E172 manifest classification, retained the complete report, and passed without replaying the game.",
+    "The bounded inventory records 317927 unique selected-reader requests, 184004 distinct image bytes and 9423 bytes outside E172 source ownership; 6075 unowned bytes are at or above 370000."
+  ],
+  "limitations": [
+    "Address-only observations do not establish asset boundaries, exact original instruction sites, universal raw fallback or all readers; original fetches, folded constants, unselected host paths and other scenes remain outside scope.",
+    "The observed 6c1e78 and other high-ROM raw ranges need source/owner attribution and migration. Linux, USA and native Windows remain pending; no performance measurements were made."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

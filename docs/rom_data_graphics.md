@@ -2029,3 +2029,186 @@ attachment passes with zero new alternate use. Positive ordinary alternate use,
 script/live reachability and new Linux/USA/nativeWindows/new32:9 remain pending. No performance/storage campaign
 or new gameplay checkpoint.
 [Alternate runtime contract](rom_data_unit_obj.md#alternate-managed-publication-and-typed-runtime-reads).
+
+## E174 observed Red Spring LZ77 block
+
+The E172 Red Spring address inventory observed every byte in the previously
+unowned EUR source interval `b0e2b8..b0ecca`. Authenticated source inspection
+confirms one complete GBA LZ77 stream: 2,578 encoded bytes produce 4,096
+decoded bytes, with no overlap against E173 owners. Its game-level asset
+identity is not established. The result `e174-redspring-lz-source-0vubt1mc`
+records the source geometry and decoded digest. One adjacent relative-offset
+pair was only an arithmetic candidate: those entries are fields of background
+descriptor 62 and have their own documented base; the Red Spring trace did not
+observe them, so they are not asserted as this block's producer.
+
+The focused Wine trace `e174-redspring-lz-trace-wine-tt50ykqb` observes the
+actual header read in guest frame 7836, ending at frame 7837. It identifies
+the original Thumb SWI11 at `08145254`, with source `08b0e2b8`, and an LR
+whose authenticated preceding BL at `080db16e` targets that wrapper. The
+instruction ran through interpreter fallback; the trace does not identify all
+other callers or the asset's meaning.
+
+EUR E174-d173 adds `graphics.observed-lz-block` in
+`observed-lz-block.json`. It validates the exact source encoding against its
+decoded output and authenticated ROM source. Guest bus reads receive the
+original encoded representation, including mixed boundary and mirror reads;
+the matching BIOS LZ77 HLE receives the decoded bytes directly. Other sources
+retain their prior routing. Wine `e174-observed-lz-wine-xlo4jdo9` preserves all
+115 previous resources and passes source, altered-backing, boundary and
+original SWI complete-state/clock checks. The first build
+`e174-observed-lz-build-pw1zse8_` failed because three test calls lacked the
+new file-budget argument; the corrected build passed. A first source-check
+attempt used an unresolved generation placeholder and is retained separately.
+
+Wine `e174-observed-lz-scene-wine-c_ce4pye` compares the retained normal-input
+Red Spring action for 600 frames with all 2,578 source bytes inverted during
+each managed frame. Complete state, guest clock, central/wide video, OAM,
+dispatch and five nonempty audio streams match, and one decoded HLE call is
+observed. Production Wine CLI create/reuse/verify passes in
+`e174-observed-lz-cli-wine-mlc8meas`; its 117 files match the tested
+generation. These results cover one block and one action, not all callers,
+scenes or complete ROM independence. Direct DMA and real-BIOS consumption of
+this block, Linux, USA and native Windows remain to verify. Of the E172
+inventory, 6,211 unowned observed bytes lie outside the E173 and E174
+increments. No performance measurement was performed.
+
+## E175 additional Red Spring LZ77 streams
+
+The retained E172 Red Spring read inventory also contains six complete EUR
+LZ77 streams at `b02ea4`, `b030c0`, `b0dd5c`, `b0df2c`, `b0ecd0` and
+`b151d8`. Their authenticated source extents contain 2,291 bytes in total
+and decode to 3,536 bytes; every source byte was observed on the guest bus and
+none had an E174 owner. Source inventory
+`e175-redspring-lz-source-zi6u7skx` establishes those extents and format, not
+their game-level asset identities or all callers.
+
+EUR E175-d174 extends `graphics.observed-lz-block` to seven blocks, retaining
+the E174 block and the 115 other resource records and files. The resource
+format is now `observed-lz-block-v2-json`. Its owner supplies each exact
+encoded source span to guest reads and its decoded output to the matching
+LZ77 HLE source address; other addresses retain existing routing. Wine
+`e175-observed-lz-wine-_42f690d` passes exact source, altered-backing,
+mirror/boundary and seven original SWI complete-state/clock comparisons.
+
+The first Wine publication attempt `e175-observed-lz-wine-f0e28tia` failed
+because the expanded dataset exceeded the 512 MiB aggregate input guard.
+E175 raises that finite guard to 768 MiB while retaining per-file bounds;
+the corrected Wine unit verifies the aggregate boundary and one-byte overflow
+as well as the existing family guards. Both Wine servers drained.
+
+Wine `e175-observed-lz-scene-wine-6jqo8wyd` matches complete state, guest
+clock, central/wide video, OAM, dispatch and five nonempty audio streams for
+all 600 frames of the retained Red Spring action while all 4,869 encoded
+bytes across the seven blocks are altered in the managed machine. Each block
+is consumed once by the decoded HLE. Production Wine CLI create/reuse/verify
+passes in `e175-observed-lz-cli-wine-fonccar1`; its 117 files match the
+tested generation. This proves one EUR action and selected SWI paths, not
+all scenes or consumers, direct DMA, real BIOS or total ROM independence.
+Of the E172 inventory, 3,920 unowned observed bytes lie outside the E173,
+E174 and E175 increments. Linux, USA and native Windows remain pending;
+no performance measurements were performed.
+
+## E177 observed Red Spring tilemap
+
+The EUR source at `af2718..af277e` describes a 16×16 tilemap: the original
+reader uses mode 4 and compressed 16-bit runs, with 24 ascending or repeated
+runs yielding 256 cells. Two additional header bytes are preserved without
+inventing a meaning. The next independently pointed source begins at
+`af2780`; its padding and contents are outside this resource. Source
+`e177-af2718-tilemap-source-yiosygyx` authenticates the source, relevant
+instruction windows, two pointer cells and the independent reconstruction.
+Of the 102 source bytes, 100 appeared in the E172 unowned-read sample.
+
+Wine `e177-af271c-trace-wine-r7r9ungh` observes the original instruction at
+`080da560` reading this source during the recorded Red Spring action. That
+dispatch used interpreter fallback, so the trace alone is not an all-native
+claim. EUR E177-d176 publishes `graphics.observed-tilemap` as a typed header
+and runs, reconstructs the original source view for guest bus reads, and
+leaves decompression, placement and live state to the guest.
+
+Wine `e177-tilemap-wine-798svo0e` preserves 117 earlier resource files and
+records, rejects a coherent data/hash edit, checks altered backing and
+mirror/boundary reads, and compares all 256 results of the original interpreter
+and separately compiled reader with equal complete state and guest clock.
+Wine `e177-tilemap-scene-wine-mpurdf2y` matches complete state, clock,
+central/wide video, OAM, dispatch and audio at every frame of the recorded
+600-frame action while all 102 backing bytes are inverted in the managed
+machine. The tilemap owner serves 4,115 bytes during that action. This is one
+source and the stated reader. Wine production CLI
+`e177-tilemap-cli-wine-it5komaw` creates, reuses and verifies 119 files matching
+the tested generation. Other modes, assets, callers and the still-raw pointer
+tables remain open. Linux, USA and native Windows remain pending. No performance
+measurement was performed.
+
+## E178 observed tilemap descriptor
+
+The EUR descriptor at `3a4b70..3a4b78` contains the E177 tilemap pointer, a
+16-bit parameter, an 8-bit parameter and one unclassified byte. The original
+reader loads the first seven bytes before calling the tilemap routine. E179
+subsequently owns its selected outer row; other descriptors remain raw. Source
+`e178-descriptor-source-vapbrkwo` authenticates the descriptor and its reader,
+and Wine `e178-descriptor-trace-wine-i1a1chh7` observes the pointer load at
+`080db318` in the recorded action via interpreter fallback.
+
+EUR E178-d177 publishes `graphics.observed-tilemap-descriptor` with an
+explicit dependency on the authenticated E177 tilemap. The guest retains its
+live task state and the source view is reconstructed from typed fields. Wine
+`e178-descriptor-wine-ve3ggqgj` preserves the previous 118 resources, rejects
+a coherent data/hash edit, checks altered backing and mirror/boundary reads,
+and compares the original interpreter and separately compiled field reader
+with equal complete state and guest clock. Wine scene
+`e178-descriptor-scene-wine-7tvsftjk` matches state, clock, video, OAM,
+dispatch and audio for 600 frames with all eight descriptor backing bytes
+altered; the owner serves the seven bytes actually read. Wine CLI
+`e178-descriptor-cli-wine-2aiu_s0o` creates, reuses and verifies 120 files
+matching the tested generation. Other descriptors, readers, Linux, USA and
+native Windows remain open. No performance measurement was performed.
+
+## E179 observed tilemap row
+
+The EUR row at `3a4bec..3a4bf8` contains two bytes, a halfword, an E178
+descriptor pointer and a final word. Only the pointer's purpose is identified;
+the other fields retain their source values without inferred semantics. Source
+`e179-row-source-cc9b5_to` authenticates all 12 bytes and their observed access
+widths. Wine trace `e179-row-trace-wine-xvj_6rmw` identifies the pointer load
+at `080db316`; this ordinary trace used interpreter fallback.
+
+EUR E179-d178 publishes `graphics.observed-tilemap-row` with an explicit E178
+descriptor dependency. It reconstructs this row for guest reads without
+constraining other indices or guest state. Wine `e179-row-wine-fhgchuk_`
+preserves the 119 earlier resources, rejects a coherent data/hash edit, checks
+altered source, mirrors and boundaries, and compares the original interpreter
+and separately compiled indexed pointer reader with equal state and guest
+clock. Wine `e179-row-scene-wine-4y6kd_rg` matches complete state, clock,
+central/wide video, OAM, dispatch and audio during the recorded 600-frame
+action with all 12 backing bytes inverted; the owner serves 16 source bytes.
+Wine CLI `e179-row-cli-wine-n7qzldpv` creates, reuses and verifies 121 files
+matching the tested generation.
+Other rows, selectors, callers, Linux, USA and native Windows remain open.
+No performance measurement was performed.
+
+## E180 adjacent observed tilemap rows
+
+Four EUR rows at `3a4bbc..3a4bec` precede the E179 row. All 48 bytes were
+observed by the retained E172 scene inventory with the same field widths;
+their descriptor pointers target `3a4b18`, `3a4b20`, `3a4b28` and `3a4b30`.
+These pointed descriptors are still raw. Source `e180-rows-source-5w43a4ri`
+authenticates the four rows and preserves their distinct pointers without
+claiming a global array extent. Wine `e180-rows-trace-wine-atgqm66z` observes
+one row's byte read at `080db4ac` via interpreter fallback.
+
+EUR E180-d179 extends `graphics.observed-tilemap-row` to these four rows,
+preserving the prior row and changing the resource format to v2. Guest indexing
+and the target descriptors remain unchanged. Wine `e180-rows-wine-jcmdanqw`
+preserves the prior row and 119 other resources, rejects coherent edits, checks
+altered backing and mirror/boundary reads, and compares both original
+interpreter and separately compiled pointer/flag readers over five controlled
+indices with equal complete state and guest clock. Wine
+`e180-rows-scene-wine-4nxkgjnp` matches complete state, clock,
+central/wide video, OAM, dispatch and audio at every frame of the recorded
+600-frame action with all 48 new backing bytes inverted. The owner serves 137
+bytes in aggregate across the old and new rows. Wine production CLI
+`e180-rows-cli-wine-ilg230s3` creates, reuses and verifies 121 files matching
+the tested dataset. Other rows, targets, scenes, Linux, USA and native Windows
+remain open. No performance measurement was performed.

@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "consume-observed-red-spring-lz",
+  "title": "Consume an observed European Red Spring LZ77 block",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish the observed 2578-byte LZ source and its 4096-byte decoded output with authenticated source and bounded decoding.",
+    "Serve the exact encoded source through guest reads and the decoded output through the existing BIOS LZ77 HLE while preserving previous owners and raw fallback."
+  ],
+  "validation": [
+    "Source geometry 0vubt1mc and Wine trace tt50ykqb identify the original SWI11 and observed Red Spring caller; Wine publication/SWI xlo4jdo9 preserves 115 earlier resources and passes altered source and boundary checks.",
+    "Wine action c_ce4pye matches state, clock, video, OAM, dispatch and audio for 600 frames with the 2578 source bytes altered and one decoded HLE call; Wine production CLI mlc8meas creates, reuses and verifies 117 matching files.",
+    "Initial source check xsp8lv04 failed due to a literal generation placeholder; initial build pw1zse8_ failed because three budget-test calls needed one argument. Corrected checks pass; Wine servers drained."
+  ],
+  "limitations": [
+    "The asset identity, other callers and direct DMA/real-BIOS consumption remain unverified. The result covers one EUR action; 6211 previously observed unowned bytes lie outside this and the earlier compact-bank increment.",
+    "Linux, USA and native Windows checks remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/bus.rs",
+    "crates/gba-core/src/hle.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_lz_tests.rs",
+    "crates/recomp/src/rom_data/redspring_lz_source_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

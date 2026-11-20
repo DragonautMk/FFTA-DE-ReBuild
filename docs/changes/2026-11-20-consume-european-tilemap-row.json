@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-european-tilemap-row",
+  "title": "Consume the observed European tilemap row",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish the authenticated twelve-byte tilemap row as typed fields with an explicit dependency on the extracted E178 descriptor; preserve unknown fields and live guest indexing."
+  ],
+  "validation": [
+    "Source cc9b5_to authenticates the row and its original reader, and all twelve bytes appeared in the E172 unowned inventory. Wine trace xvj_6rmw observes the original pointer read via interpreter fallback.",
+    "Wine fhgchuk_ preserves 119 previous resources, rejects a coherent edit, checks poisoned mirrors and boundaries, and compares the original interpreter and separately compiled indexed reader with full state and guest clock.",
+    "Wine scene 4y6kd_rg matches state, clock, video, OAM, dispatch and audio for 600 frames with all twelve source bytes altered and sixteen managed bytes served. Wine CLI n7qzldpv creates, reuses and verifies 121 matching files; Wine drained."
+  ],
+  "limitations": [
+    "Other rows, selectors, consumers and scenes remain open; 3737 other observed bytes remain in the E172 sample.",
+    "Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_row_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

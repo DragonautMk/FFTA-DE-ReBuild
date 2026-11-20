@@ -139,6 +139,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let mut audio = [0u64; 5];
     let mut source_mask = 0;
     let mut first_alternate_read = None;
+    let poison_observed_lz = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_LZ").is_some();
+    let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
+    let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
+    let poison_tilemap_descriptor = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_DESCRIPTOR").is_some();
+    let poison_tilemap_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROW").is_some();
+    let poison_tilemap_extra_rows = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_EXTRA_ROWS").is_some();
     #[cfg(feature = "rom-data-read-audit")]
     let compact_watch_root = std::env::var("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").ok()
         .map(|value| u32::from_str_radix(value.trim_start_matches("0x"), 16).expect("compact watch root"))
@@ -150,13 +156,63 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     });
     #[cfg(feature = "rom-data-read-audit")]
     let mut compact_watch_hit = None;
+    #[cfg(feature = "rom-data-read-audit")]
+    let scene_audit_path = std::env::var_os("FFTA_STATE_TEST_ROM_AUDIT_REPORT").map(PathBuf::from);
+    #[cfg(feature = "rom-data-read-audit")]
+    let poison_red_spring = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_BANK").is_some();
+    #[cfg(feature = "rom-data-read-audit")]
+    let mut red_spring_reads = std::collections::BTreeSet::new();
+    #[cfg(feature = "rom-data-read-audit")]
+    if let Some(path) = &scene_audit_path {
+        assert!(!path.exists(), "preserve earlier scene audit reports");
+    }
+    #[cfg(feature = "rom-data-read-audit")]
+    let mut scene_reads = std::collections::BTreeSet::new();
     #[cfg(not(feature = "rom-data-read-audit"))]
-    assert!(std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").is_none() && std::env::var_os("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").is_none(), "compact source watch requires rom-data-read-audit");
+    assert!(std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").is_none() && std::env::var_os("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").is_none() && std::env::var_os("FFTA_STATE_TEST_ROM_AUDIT_REPORT").is_none() && std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_BANK").is_none(), "scene source audit requires rom-data-read-audit");
     for relative in 0..frames {
         let mut counts = [(0, 0); 2];
         for (index, machine) in [&mut legacy, &mut decoded].into_iter().enumerate() {
             machine.bus.keys = input.keys_at(relative);
             input.apply_mouse(&mut machine.bus, relative).unwrap();
+            if index == 1 && poison_observed_lz {
+                for (start, len) in observed_lz_test_spans() {
+                    for at in start..start+len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_constructor64 {
+                use gba_core::rom_data::constructor_template64::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_observed_tilemap {
+                use gba_core::rom_data::observed_tilemap::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_tilemap_descriptor {
+                use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_tilemap_row {
+                use gba_core::rom_data::observed_tilemap_row::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_tilemap_extra_rows {
+                use gba_core::rom_data::observed_tilemap_row::{ADDITIONAL_SPECS, SOURCE_LENGTH};
+                for &(offset, _, _) in &ADDITIONAL_SPECS {
+                    let start = offset as usize;
+                    for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            #[cfg(feature = "rom-data-read-audit")]
+            if index == 1 && poison_red_spring {
+                for &(start, end) in super::compact_redspring_tests::NEW_SPANS {
+                    for at in start..end { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             let pointer = machine as *mut gba_core::Machine as *mut std::ffi::c_void;
             #[cfg(feature = "rom-data-read-audit")]
             let compact_watch = if index == 1 && compact_watch_hit.is_none() && compact_watch_span.is_some() {
@@ -165,10 +221,65 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     start: 0x08000000 + start, end: 0x08000000 + end, write: false, width: None, value: None,
                 }).unwrap())
             } else { None };
+            #[cfg(feature = "rom-data-read-audit")]
+            let scene_audit = (index == 1 && (scene_audit_path.is_some() || poison_red_spring))
+                .then(gba_core::rom_data::read_audit::Capture::start);
             counts[index] = run_frame_native(machine, &table, pointer, FRAME_STEP_GUARD);
+            #[cfg(feature = "rom-data-read-audit")]
+            if let Some(capture) = scene_audit {
+                let reads = capture.finish();
+                if poison_red_spring {
+                    red_spring_reads.extend(reads.iter().copied().filter(|read| {
+                        let start = read.physical_offset as usize;
+                        let end = start.saturating_add(read.length);
+                        super::compact_redspring_tests::NEW_SPANS.iter().any(|&(a, z)| start < z && end > a)
+                    }));
+                }
+                if scene_audit_path.is_some() { scene_reads.extend(reads); }
+            }
             #[cfg(feature = "rom-data-read-audit")]
             if let Some(watch) = compact_watch {
                 if let Some(hit) = watch.hit() { compact_watch_hit = Some((machine.bus.frames, hit)); }
+            }
+            #[cfg(feature = "rom-data-read-audit")]
+            if index == 1 && poison_red_spring {
+                // Snapshot identity hashes the ROM; restore only after the frame's
+                // guest and host readers have used the altered backing bytes.
+                for &(start, end) in super::compact_redspring_tests::NEW_SPANS {
+                    machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+                }
+            }
+            if index == 1 && poison_observed_lz {
+                for (start, len) in observed_lz_test_spans() {
+                    machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_constructor64 {
+                use gba_core::rom_data::constructor_template64::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_observed_tilemap {
+                use gba_core::rom_data::observed_tilemap::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_tilemap_descriptor {
+                use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_tilemap_row {
+                use gba_core::rom_data::observed_tilemap_row::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_tilemap_extra_rows {
+                use gba_core::rom_data::observed_tilemap_row::{ADDITIONAL_SPECS, SOURCE_LENGTH};
+                for &(offset, _, _) in &ADDITIONAL_SPECS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+                }
             }
             assert_eq!(machine.bus.frames, first + relative + 1, "incomplete frame");
             assert!(machine.bus.frame_ready);
@@ -240,6 +351,47 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         clear_audio(&mut decoded);
     }
     assert!(dispatch[0] > 0, "native dispatch must execute");
+    if poison_constructor64 {
+        let stats = decoded.bus.rom_resources().unwrap().constructor_template64_stats().expect("constructor template owner");
+        assert!(stats.source_bytes > 0, "scene must consume the managed constructor template");
+        eprintln!("ROM_DATA_CONSTRUCTOR64_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_observed_tilemap {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("observed tilemap owner");
+        assert!(stats.source_bytes > 0, "scene must consume the managed tilemap");
+        eprintln!("ROM_DATA_OBSERVED_TILEMAP_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_tilemap_descriptor {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");
+        assert!(stats.source_bytes > 0, "scene must consume the managed tilemap descriptor");
+        eprintln!("ROM_DATA_TILEMAP_DESCRIPTOR_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_tilemap_row {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_row_stats().expect("tilemap row owner");
+        assert!(stats.source_bytes >= 12, "scene must consume the managed tilemap row");
+        eprintln!("ROM_DATA_TILEMAP_ROW_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_tilemap_extra_rows {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_row_stats().expect("tilemap row owner");
+        assert!(stats.source_bytes >= 48, "scene must consume the managed tilemap rows");
+        eprintln!("ROM_DATA_TILEMAP_EXTRA_ROWS_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_observed_lz {
+        let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
+        assert!(stats.hle_calls_by_block.iter().all(|&calls| calls > 0),
+            "scene must consume each observed decoded LZ block: {:?}", stats.hle_calls_by_block);
+        eprintln!("ROM_DATA_OBSERVED_LZ_POISON encoded_bytes={} hle_calls={} by_block={:?}",
+            observed_lz_test_spans().map(|(_,len)| len).sum::<usize>(), stats.hle_calls, stats.hle_calls_by_block);
+    }
+    #[cfg(feature = "rom-data-read-audit")]
+    if poison_red_spring {
+        use gba_core::rom_data::read_audit::Reader;
+        let bus = red_spring_reads.iter().filter(|read| read.reader == Reader::Bus).count();
+        let typed_host = red_spring_reads.iter().filter(|read| read.reader == Reader::SpriteList).count();
+        let raw_host = red_spring_reads.iter().filter(|read| read.reader == Reader::SpritePeek).count();
+        assert!(bus > 0 && typed_host > 0 && raw_host == 0, "new bank bytes must be consumed through managed bus and sprite lists");
+        eprintln!("ROM_DATA_RED_SPRING_POISON new_bytes=634 bus_requests={bus} typed_sprite_requests={typed_host} raw_sprite_requests={raw_host}");
+    }
     #[cfg(feature = "rom-data-read-audit")]
     if let Some(root) = compact_watch_root {
         let (frame, hit) = compact_watch_hit.expect("scene must read represented compact bank bytes");
@@ -760,6 +912,10 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         stats.bus_reads + stats.host_rom_reads + stats.host_ram_reads > 0,
         "typed bus or host consumers must execute"
     );
+    #[cfg(feature = "rom-data-read-audit")]
+    if let Some(path) = scene_audit_path {
+        write_scene_rom_audit(&path, &source.manifest, first, frames, &scene_reads);
+    }
     eprintln!("ROM_DATA_SCENE frames={frames} first={first} native={} fallback={} full_states={frames} audio={audio:?} bus_reads={} host_rom_reads={} host_ram_reads={} dynamic_ram_reads={} bus_source_mask={}", dispatch[0], dispatch[1], stats.bus_reads, stats.host_rom_reads, stats.host_ram_reads, stats.dynamic_ram_reads, stats.bus_source_mask);
     eprintln!(
         "ROM_DATA_BG_SCENE frames={frames} bus_reads={} projected_bytes={}",
@@ -767,11 +923,82 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     );
 }
 
+#[cfg(feature = "rom-data-read-audit")]
+fn write_scene_rom_audit(
+    path: &Path,
+    manifest: &Manifest,
+    first: u64,
+    frames: u64,
+    reads: &std::collections::BTreeSet<gba_core::rom_data::read_audit::Read>,
+) {
+    use gba_core::rom_data::read_audit::Reader;
+    use std::collections::{BTreeMap, BTreeSet};
+
+    assert!(reads.iter().any(|read| read.reader == Reader::Bus));
+    assert!(reads.iter().any(|read| read.reader == Reader::AudioValue));
+    let mut ranges: Vec<_> = manifest.resources.iter().flat_map(|r| &r.sources)
+        .map(|s| (s.offset, s.offset.checked_add(s.length).unwrap())).collect();
+    ranges.sort_unstable();
+    let mut owned: Vec<(u32, u32)> = Vec::new();
+    for (start, end) in ranges {
+        assert!(start < end && end <= manifest.source_rom_size);
+        if let Some(last) = owned.last_mut().filter(|last| start <= last.1) {
+            last.1 = last.1.max(end);
+        } else {
+            owned.push((start, end));
+        }
+    }
+    let mut image_bytes = BTreeSet::new();
+    let mut unowned_bytes = BTreeSet::new();
+    let mut unowned_reads = Vec::new();
+    let mut readers = BTreeMap::new();
+    for read in reads {
+        let end = read.physical_offset.checked_add(u32::try_from(read.length).unwrap()).unwrap();
+        assert!(end <= manifest.source_rom_size);
+        *readers.entry(read.reader).or_insert(0usize) += 1;
+        let mut missing: Vec<(u32, u32)> = Vec::new();
+        for offset in read.physical_offset..end {
+            image_bytes.insert(offset);
+            let index = owned.partition_point(|&(_, end)| end <= offset);
+            if !owned.get(index).is_some_and(|&(start, _)| start <= offset) {
+                unowned_bytes.insert(offset);
+                if let Some(last) = missing.last_mut().filter(|last| last.1 == offset) {
+                    last.1 += 1;
+                } else {
+                    missing.push((offset, offset + 1));
+                }
+            }
+        }
+        if !missing.is_empty() {
+            unowned_reads.push(serde_json::json!({"read": read, "unowned_ranges": missing}));
+        }
+    }
+    let report = serde_json::json!({
+        "status": "PASS", "scope": "one recorded raw/managed scene; address-only selected readers",
+        "first_guest_frame": first, "last_guest_frame": first + frames, "frames": frames,
+        "extractor_revision": manifest.extractor_revision, "decoder_revision": manifest.decoder_revision,
+        "resource_count": manifest.resources.len(), "source_rom_sha256": manifest.source_rom_sha256,
+        "unique_reads": reads.len(), "reader_unique_requests": readers,
+        "unique_image_bytes": image_bytes.len(), "unique_unowned_bytes": unowned_bytes.len(),
+        "reads": reads, "unowned_reads": unowned_reads,
+        "per_frame_state_clock_video_oam_dispatch_audio_equal": true,
+        "limits": "Address-only selected readers; unowned bytes can be code. Interpreter fetches, folded constants, unselected host readers, other scenes and instruction attribution are outside this report.",
+        "performance_measurements": false
+    });
+    fs::write(path, serde_json::to_vec_pretty(&report).unwrap()).unwrap();
+}
+
 fn clear_audio(machine: &mut gba_core::Machine) {
     machine.bus.audio_buf.clear();
     machine.bus.psg_tap.clear();
     machine.bus.hle_tap.clear();
     machine.bus.fifo_tap.iter_mut().for_each(Vec::clear);
+}
+
+fn observed_lz_test_spans() -> impl Iterator<Item = (usize, usize)> {
+    use gba_core::rom_data::observed_lz::{OFFSET, ENCODED_LENGTH, ADDITIONAL_SPECS};
+    std::iter::once((OFFSET as usize, ENCODED_LENGTH))
+        .chain(ADDITIONAL_SPECS.iter().map(|s| (s.offset as usize, s.encoded_length)))
 }
 
 #[test]

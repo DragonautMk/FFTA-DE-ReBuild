@@ -328,8 +328,9 @@ No other development was selected. On resumption read only the individual ID in
   **Acceptance 2026-11-04 — complete for the command-language contract.** The
   shared parser and handlers connect the requested operations and ID selection;
   the channel checks above cover matching actions, results and selected invalid
-  inputs. Native Windows, physical input and a live audit-enabled watch hit remain
-  integration-matrix work under DBG2-27; they are not claimed by these checks.
+  inputs. Native Windows and physical input remain integration-matrix work under
+  DBG2-27. A later [Linux synthetic live watch](../changes/2026-11-20-verify-linux-live-watch.json)
+  covers one audit-enabled write case; these checks did not cover it.
 
 - [x] **DBG2-14 — Integrated editor, completion and contextual help.**
       Provide a “Command console” panel with explicit submission, history,
@@ -986,7 +987,7 @@ No other development was selected. On resumption read only the individual ID in
   evidence and unchanged protected inputs. Native Windows and physical input
   remain part of DBG2-27.
 
-- [ ] **DBG2-27 — Targeted integration and regression checks.**
+- [x] **DBG2-27 — Targeted integration and regression checks.**
       Exercise new selection, console off/on, macros and cheats with public synthetic
       fixtures and a few declared real cases. Test keyboard/mouse/controller,
       button-only dialogs, caps, cancel, close, errors and moved folder; compare the
@@ -998,7 +999,24 @@ No other development was selected. On resumption read only the individual ID in
       success and no automatic repetition of all cases. **Depends on:** selected
       DBG2-04…26 increments; begin checks with each increment.
 
-- [ ] **DBG2-28 — Guide, distribution and version compatibility.**
+  An [evidence matrix](DEBUG_TOOLS_V2_VALIDATION_MATRIX.md) maps retained Wine
+  and Linux results to the required operations and records the limited physical
+  controller outcomes and the native Windows waiver. A protected Linux/Xvfb synthetic
+  ten-frame pair matched state/clock/registers with the event console visibly
+  on and off; [evidence](../changes/2026-11-20-verify-linux-event-console-parity.json).
+  A separate Linux synthetic-seed [comparison](../changes/2026-11-20-verify-linux-debug-channel-parity.json)
+  matched inspection and one neutral frame across menu, CLI and command console.
+  An audit-enabled Linux runtime also observed one synthetic write watch hit
+  with a matching control state. A physical controller moved one Debug menu row
+  on Linux without guest advancement; [evidence](../changes/2026-11-20-verify-physical-debug-navigation.json).
+  Physical confirm and cancel also opened and returned from the selector, with
+  repeated cancel allowed; [evidence](../changes/2026-11-20-verify-physical-selector-controls.json).
+  **Accepted 2026-11-20 for the documented selected matrix**, with the user's
+  explicit waiver of native Windows execution. No native Windows result is
+  claimed; repeated physical cancel and prior divergent/timeout outcomes retain
+  their stated limits. DBG2-20 remains suspended.
+
+- [x] **DBG2-28 — Guide, distribution and version compatibility.**
       Update help and guide with complete menu/console paths, actually supported
       commands, host-tool prerequisites and local index migration. Distribute only
       public adapters/schemas/fixtures; third-party cheat catalog, personal macros,
@@ -1008,6 +1026,20 @@ No other development was selected. On resumption read only the individual ID in
       commands from a moved folder and accessible logs; an old version receives a
       clear incompatibility. Checklist/record/state/handoff describe only what was
       proven. **Depends on:** DBG2-27 for distributed features.
+
+  The common guide documents the selector, consoles, recipes, cheat import and
+  persistence. A protected offline Linux build produced a path-remapped local
+  candidate; its manifest, private-prefix guard and moved wrapper/log passed.
+  A synthetic Linux/Xvfb check also matched candidate menu, CLI and console
+  inspection/step. The empty selector and cheat catalog displayed instructions;
+  candidate CLI and command client refused an unsupported operation against a
+  real older Linux frontend before publication. **Accepted 2026-11-20** for
+  these recorded cases, with the user's native Windows execution waiver recorded
+  in DBG2-27. No native Windows test or public release is claimed.
+  [Guide](../changes/2026-11-20-update-debug-v2-distribution-guide.json),
+  [candidate](../changes/2026-11-20-build-remapped-linux-debug-candidate.json),
+  [GUI](../changes/2026-11-20-verify-remapped-linux-debug-candidate.json),
+  [empty and old-version checks](../changes/2026-11-20-verify-debug-empty-and-older-runtime.json).
 
 <a id="riferimenti-e-anomalie-dei-cheat-da-conservare"></a>
 

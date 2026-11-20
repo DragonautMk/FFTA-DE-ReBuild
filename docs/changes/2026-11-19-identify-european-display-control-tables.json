@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "identify-european-display-control-tables",
+  "title": "Identify European display-control table sources",
+  "kind": "changed",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Record a bounded source contract for two four-halfword arrays and four IWRAM pointers used by original display-control readers. Their 32 bytes are outside E170 ownership and require typed runtime integration."
+  ],
+  "validation": [
+    "Wine observation e170-post-indexed-lower-sites-wine-9ei8p1cy records the first and last array bytes within the original copy-loop instruction and all four adjacent pointer words within the two original scoped readers. The same 12-frame recorded input and protected E170 dataset were reused; Wine drained.",
+    "Wine disassembly e170-post-indexed-reader-dis-wine-lme0glm7 and protected source audit e170-context-control-source-s94ilj14 verify six literal references, four calls to the original copy routine, the two eight-byte copy sizes, the halfword consumers, IWRAM-pointer consumers and absence of E170 source overlap."
+  ],
+  "limitations": [
+    "The trace does not independently tie every copy invocation to a particular caller; unscoped translated reads do not prove native instruction attribution. The table values' complete semantics, all callers and guest selector domains remain open; no guest bounds are introduced.",
+    "The typed model, publication and runtime ownership are not yet implemented. The other 536 unmatched lower-ROM bytes, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-inventory-european-post-indexed-rom-reads.json"
+  ]
+}

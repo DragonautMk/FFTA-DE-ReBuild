@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "consume-european-compact-primary-alias",
+  "title": "Consume the conditional primary-task compact alias",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish E172-d171 graphics.compact-primary-alias for the selector byte and signed position halfwords conditionally read when primary task ID 362 reaches the existing compact callback with wrapped index 255.",
+    "Authenticate the original constructor and callback source, require the existing task-descriptor and compact-catalog resources, and preserve prior-owner/raw composition without changing guest IDs, index arithmetic or live task state."
+  ],
+  "validation": [
+    "Protected source audit e172-compact-primary-source-0k922apv pins the original ID-to-callback flow, both read addresses and E171 owner exclusions; the selected compact sequence is already represented.",
+    "Windows GNU test build e172-compact-primary-build-figq39ys and Wine e172-compact-primary-wine-_5qb5ej3 pass publication and reuse, preservation of all 114 prior resources, poisoned mixed-boundary reads, dependency and coherent-edit rejection, failed-attachment transactionality and ten interpreter/compiled original-prefix state-clock comparisons; Wine drained.",
+    "Windows GNU production build e172-compact-primary-cli-build-jwcpkwsm and Wine e172-compact-primary-cli-wine-lhle9dmz pass create/reuse/verify; all 116 generated files match the tested dataset and reuse/verify leaves it unchanged. Wine drained."
+  ],
+  "limitations": [
+    "Primary ID 362, the callback state transition and helper result are conditional; no ordinary invocation, complete callback ABI, other IDs or global selector domain are proved.",
+    "Linux, USA, native Windows and revision-pinned E170/E171 Wine fixtures remain pending; no performance measurement was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/compact_primary_alias.rs",
+    "crates/gba-core/src/rom_data/runtime/compact_primary_alias.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/compact_primary_alias_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_tasks.md"
+  ]
+}

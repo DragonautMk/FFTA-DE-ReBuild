@@ -7836,3 +7836,32 @@ performance measurement.
 Production Wine CLI `e154-dialogue-sequence-cli-wine-huydule1` passes create,
 no-write reuse, verification and one-frame managed startup, reporting one
 draw-sequence source byte; 102 unrelated resource files match E153.
+
+## E176 European constructor template at 14d1f0
+
+The EUR original has a 64-byte initial template at `14d1f0..14d230`. The
+constructor beginning at `08010a28` loads its address at `08010a8e` and invokes
+the initialized IWRAM copy helper for exactly 64 bytes at `08010ab4`.
+`e176-constructor64-source-n33tj6pd` authenticates this source and instruction
+window and verifies that no preceding resource owns the span. The E172 Red
+Spring address inventory observed all 16 source words, but does not establish
+which dynamic caller made those reads.
+
+EUR E176-d175 publishes `engine.constructor-template64` as 16 little-endian
+words without assigning unproved field meanings. Guest reads are overlaid from
+the authenticated dataset; allocation, copying and later live-record writes
+remain the original guest's work. Wine `e176-constructor64-wine-nibv6hif`
+preserves the previous 116 resource files and records, tests altered source,
+mirrored and boundary reads, and compares the original interpreter and
+compiled copy prefix including complete state and guest clock.
+
+In Wine `e176-constructor64-scene-wine-2efs1kas`, the recorded 600-frame Red
+Spring action reads 256 managed source bytes while all 64 backing ROM bytes
+are inverted on every managed frame. Complete state, clock, central/wide
+video, OAM, dispatch and audio match at every frame. Production Wine CLI
+`e176-constructor64-cli-wine-0qyhd6ao` creates, reuses and verifies 118 files
+matching the tested dataset. This proves the selected scene uses the managed
+source, not the identity of its caller or the complete
+set of consumers. The other 3,856 bytes of the E172 sample outside E173–E176
+still require classification. Linux, USA and native Windows remain pending;
+no performance measurement was performed.

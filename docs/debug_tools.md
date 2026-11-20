@@ -11,22 +11,60 @@ Use an isolated copy and an explicitly selected case. These workflows do not
 automatically change DS evidence status or start general campaigns. Game data
 is added locally after extracting the package.
 
-The [integrated Debug TODO](development/DEBUG_TOOLS_V2_TODO.md) describes
-planned extensions: menu choices and scripts without automatic pickers,
-event/command consoles and cheats. Implementation begins with the
-[operation contract](debug_operations.md): `debug-operations list/show` lists
-entries, parameters and current gaps without executing them. The
-[content catalog](debug_content.md), `debug-content scan/check`, adds a readonly
-index with explicit roots, identities and states.
-[Debug > Content selector](debug_selector.md) offers the new internal choice;
-typed roles and `Parameters / prepare profiles` offer selection and drafts for
-existing handlers. `Debug > Scripts and tools` adds declared adapters for the
-homepage, campaign reports and artifact previews, readonly recipes and separate
-guest catalogs. Start and cancellation are explicit; the three adapters require
-Python 3.11+ selected in the menu, with output and logs in the current config root.
-Selector choices and views are saved in the config root and follow portable
-relocation, with pins and explanations for missing/changed files. Console and
-cheats follow the new TODO.
+The Debug page includes a [content selector](debug_selector.md), parameter
+forms, scripts and tools, an event console, a command console and a local cheat
+catalog. An isolated debug session is required for commands that control the
+copied game. Selection and preview do not start an operation; start, apply,
+arming and cancellation remain explicit. The [integration matrix](development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md)
+describes the platforms and scenarios actually verified.
+
+## Find a tool or send a command
+
+1. From the normal game, choose **Debug > Overview > Start debug session**.
+   This creates and opens an isolated copy of the current state; the normal game
+   stays paused. The procedures below assume the copy is open and paused.
+2. Choose **Debug > Overview > Content selector** to refresh declared roots or
+   explicitly add a file/folder. An empty list means no indexed content has been
+   found; refresh or add a location. Selecting content alone does not execute it.
+   Choose **Tool inputs / current selections** for role-specific references.
+3. Choose **Debug > Overview > Command console**. Enter `help` to discover the
+   commands supported by that runtime, then submit explicitly with Enter. For
+   example `status`, `inspect 0x08000000 16`, and `step 1` query the copy,
+   inspect backing memory, and advance one neutral frame respectively. F2 shows
+   command context; Ctrl+Shift+C copies the last JSON result. See
+   [local control and command syntax](debug_control.md).
+4. For the same command from a second terminal, substitute the actual session
+   folder in `debug-command SESSION 'status'`. The direct command
+   `debug-control status SESSION` uses the same local channel. `ready.json` in the session's
+   `Data/config/debug-control` declares the active run and capabilities; an
+   older session retains its pinned runtime. Create a new session with a
+   compatible runtime when a capability is unavailable. No network service is
+   opened; access to that folder permits local control.
+5. Open **Debug > Traces and inspectors > Event console**, or press F9 with
+   Debug enabled, to observe bounded events. Escape hides the console. See
+   [event controls and limits](debug_events.md).
+6. **Debug > Scripts and tools** offers declared host adapters, typed recipes
+   and guest-script metadata. Host adapters require an explicitly selected
+   Python 3.11+ executable; Details and selection do not run them. Recipe save,
+   preview and preparation do not dispatch actions. A previously explicitly
+   concluded matching run requires a reopening reason. See
+   [the library](debug_selector.md#script-and-tool-library-dbg2-06) and
+   [recipe execution](debug_control.md#typed-command-recipes--dbg2-16).
+7. **Debug > Cheat > Cheat catalog** browses an explicitly supplied local
+   catalog. If it is empty, choose **Import catalog...**, select your own
+   catalog in the content selector, return and choose **Reload**.
+   Source selection and preview precede explicit apply or arm. Support is
+   source- and runtime-specific; consult [cheat capabilities and limits](cheats.md).
+
+Selector choices and views are stored in `Data/config/debug-choices.json` in
+portable mode. Internal references follow a folder move; external references
+remain at their declared paths. Missing, changed or incompatible references are
+shown with reasons and rechecked before use. Unknown or invalid schema files
+are left untouched; the application does not silently migrate them or execute
+restored selections. [Persistence details](debug_selector.md#persistent-choices-dbg2-07).
+The [operation contract](debug_operations.md) and `debug-operations list/show`
+are read-only inventories; they do not guarantee that an older pinned session
+supports a listed command.
 
 To create a **private** portable copy with the local debug collection and EUR
 slots ready, use the [asset export script](private_debug_assets.md). This export

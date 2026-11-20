@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-linux-live-watch",
+  "title": "Verify an audit-enabled Linux live watchpoint",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record one live synthetic write watch and matched execution control using an existing audit-feature interpreter."
+  ],
+  "validation": [
+    "A derived public synthetic ROM executed ARM instructions that wrote 91 to 0x02000000. An audit-enabled debug-control watch reported the four-byte write after the complete interpreter step; read-only inspection confirmed the backing bytes. A separate copy stopped at the next instruction without a watch and matched the full guest-state hash, clock, registers, keys and pause state. Both windows closed normally and declared inputs remained protected (dbg27-linux-live-watch-final-dq5hpsy0).",
+    "The first fixture used a seed bound to a different ROM and was refused before execution (xl2p7po4). A subsequent boot run passed but copied an unused seed outside the declared protection list (y_1grav5); the final proof removed that dependency and guarded all inputs."
+  ],
+  "limitations": [
+    "This verifies one synthetic ARM write via local control on Linux/Xvfb using an existing feature-enabled executable SHA-256 c3609dfe9017ca7d1424f5850e6e3e988bb54c3d709ff289177b1b2f9ee466e5, not current-source rebuild equivalence, other watch types or sites, physical controller, native Windows, or every command channel."
+  ],
+  "files": [
+    "docs/debug_probes.md",
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_probes.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-european-red-spring-tilemap",
+  "title": "Consume an observed European Red Spring tilemap",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish the authenticated 16 by 16 tilemap as a typed header and 24 ascending or repeated runs, reconstructing the original source bytes while leaving decompression and drawing to the guest.",
+    "Generalize the retained scene trace to accept a bounded source range; preserve all earlier resources and dataset safety guards."
+  ],
+  "validation": [
+    "Static source yiosygyx authenticates the 102-byte stream, original reader windows, pointer cells and 256 reconstructed entries; 100 bytes were unowned in the E172 scene inventory. Wine trace r7r9ungh observes the actual header read at interpreter PC 080da560.",
+    "Wine 798svo0e preserves 117 earlier resources, rejects a coherent edit, verifies poisoned mirrors and boundaries, and compares 256 original interpreter and separately compiled reader outputs with full state and guest clock.",
+    "Wine scene mpurdf2y matches state, clock, video, OAM, dispatch and audio for 600 frames with all 102 backing bytes altered and 4115 managed source bytes served. Wine CLI it5komaw creates, reuses and verifies 119 matching files; Wine drained."
+  ],
+  "limitations": [
+    "The ordinary trace used interpreter fallback. Other assets, modes, consumers and raw pointer/descriptor tables remain open; 3756 other observed bytes remain in the E172 sample.",
+    "Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_tests.rs",
+    "crates/recomp/src/rom_data/redspring_lz_source_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-remapped-linux-debug-candidate",
+  "title": "Verify the remapped Linux debug candidate in the GUI",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record selected graphical and local-channel execution of the path-remapped portable candidate from a moved bundle."
+  ],
+  "validation": [
+    "A protected candidate archive was extracted into a spaced Unicode folder. Three isolated interpreter sessions using its exact runtime and the same public synthetic seed performed a read-only 16-byte inspection and one neutral frame through menu, local-control CLI and interactive command console. Inspection results, origin and endpoint state/frame/clock/registers/keys matched; GUI sessions closed normally and protected inputs were unchanged. Console output screenshot reviewed (dbg28-candidate-gui-g5denal6)."
+  ],
+  "limitations": [
+    "This synthetic Xvfb check covers only inspection and one frame with simulated keyboard/mouse; physical controller, native Windows, old-version/empty-state behavior, full integration and release remain open."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

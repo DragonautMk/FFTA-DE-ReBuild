@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-six-european-red-spring-lz-streams",
+  "title": "Consume six additional European Red Spring LZ77 streams",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the observed LZ resource to six additional authenticated streams while preserving the original E174 block; serve their encoded guest views and decoded BIOS HLE output.",
+    "Raise the finite aggregate input guard from 512 to 768 MiB so the expanded dataset loads, while retaining per-file limits and explicit aggregate rejection."
+  ],
+  "validation": [
+    "Source inventory zi6u7skx proves six non-overlapping previously unowned streams covering 2291 observed bytes. Wine publication and guard unit _42f690d preserves 115 other resources, verifies seven original SWI cases and checks aggregate boundary, overflow and per-family limits.",
+    "Wine scene 6jqo8wyd matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 4869 encoded bytes altered; each of seven blocks is consumed once. Wine CLI fonccar1 creates, reuses and verifies 117 matching files.",
+    "Initial Wine unit f0e28tia failed at the 512 MiB aggregate input guard; increasing the finite guard corrected it and the affected checks passed. Wine servers drained."
+  ],
+  "limitations": [
+    "One European action and selected SWI cases do not establish asset identities, all consumers, direct DMA, real BIOS or complete ROM independence. 3920 previously observed unowned bytes remain outside the three increments.",
+    "Linux, USA and native Windows remain pending; no performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_lz_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

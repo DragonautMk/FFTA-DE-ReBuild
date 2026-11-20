@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "verify-european-indexed-historical-endpoint",
+  "title": "Verify the European indexed route against its historical endpoint",
+  "kind": "changed",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Record the historical endpoint comparison and preserve the separate raw/managed comparison and legacy-translation failure with their actual scopes."
+  ],
+  "validation": [
+    "Wine unit indexed-historical-endpoint-guarded-wine-0gj2cglj replays the recorded 8,820-frame continuation using the retained qpbgtmmw event-guarded translation. The final serialized state matches the frame-9,000 historical capture after clearing output audio, tap enablement and host mixer shadows; CPU, guest RAM, guest clock and emulated audio state remain compared. Protected inputs passed and Wine drained.",
+    "The earlier legacy-object endpoint unit tagk77bt remains FAIL. Its retained normalized states contain differences in guest PC, IRQ-stack memory, clock and PSG phase. Another previously recorded scene showed a similar legacy-object boundary mismatch and passed with the guarded translation; the objects differ in more than just the guard."
+  ],
+  "limitations": [
+    "The existing E170 raw/managed full-route pair klmjn8sv uses the legacy translation; the guarded replay is a separate raw-to-historical endpoint comparison, not a new guarded raw/managed scene pair. Unnormalized host observation fields, other scenes and consumers, Linux, USA and native Windows remain unverified. No performance measurements.",
+    "A focused consultant was requested as gpt-6.1-sol with xhigh; the effective model and effort, and the primary model and effort, were not independently confirmed."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

@@ -838,3 +838,113 @@ unverified. No performance measurements were made. Evidence:
 `target/rom-data-compact-catalog-ordinary-20261103/task47-select.png`,
 `target/rom-data-compact-catalog-ordinary-20261103/task47-target.png` and
 `target/rom-data-e127-loop-stardust-watch-20261104/watch-unit.json`.
+
+## Conditional primary-task alias for 6cb278
+
+The existing E125 projection covers secondary task IDs 363–366 and lookup
+indices 0–3. The original primary constructor instead maps ID 362 to the
+first of the same task descriptors and stores that ID in its message. If its
+callback `0811eaa8` receives that message in state 0, the original byte
+subtraction stores index 255. If invoked in state `80h`, subject to the original
+helper result, the callback reads the selector byte at `3aba8b` and two signed
+position halfwords at `3abd78..3abd7c`. The selected compact sequence already
+has an owner. Source audit `e172-compact-primary-source-0k922apv` authenticates
+the constructor, callback, literals and descriptor, and verifies these five
+bytes have no E171 owner. This is conditional source flow: no ordinary call to
+primary ID 362 or complete callback execution is established.
+
+EUR E172-d171 publishes `graphics.compact-primary-alias` with those two exact
+source spans. Its declared dependencies are the existing task descriptors and
+compact catalog. The runtime reconstructs the selector and signed position
+fields from the authenticated resource, composing neighboring bytes with
+prior owners or raw ROM. It does not change guest IDs, arithmetic, mutable
+task state or the existing compact bank.
+
+Wine `e172-compact-primary-wine-_5qb5ej3` verifies create/reuse, preservation
+of all 114 previous resource records and files, mixed-width/mirror boundaries
+with backing bytes inverted, dependency and overlap checks, coherent-edit
+rejection and transactional failed attachment. Five separately initialized
+original prefixes compare interpreter and compiled execution against the raw
+reference (ten complete state/clock comparisons); these include the primary
+ID store, descriptor load, callback slot calculation and the two source
+readers. The existing compact sequence is also read through its prior owner
+with its backing bytes inverted. Production CLI Wine
+`e172-compact-primary-cli-wine-lhle9dmz` creates, reuses and verifies the
+115-resource generation; all 116 files match the tested dataset and reuse and
+verification leave it unchanged. Both Wine units drained. The prefixes do not
+prove ordinary reachability, a full callback ABI or a global selector domain.
+Linux, USA and native Windows remain pending. No performance measurement ran.
+
+## E172 Red Spring ROM-read inventory
+
+The retained normal-input Red Spring confirmation was replayed on EUR/Wine
+from guest frame 7657 through 8257 against E172-d171. The original-ROM and
+managed machines matched complete state, guest clock, central/wide video, OAM,
+dispatch and five nonempty audio streams at each of the 600 frames. The
+existing compact-root watch observed `6c1e78` at frame 7876; its owner served
+12,983 aggregate source bytes over the window. This is one ordinary action,
+not complete animation, all-native execution or all-consumer coverage.
+
+A test-only, feature-gated address observer collected reads from the managed
+arm in the same comparison. The resulting 317,927 unique reader/address/width
+requests cover 184,004 distinct image bytes; 9,423 bytes have no E172 source
+owner, of which 6,075 lie at or above `370000`. Among the uncovered addresses
+are ranges within the vicinity of compact root `6c1e78`, including
+`6c1eb0..6c1f0a`, `6c1f0c..6c1fae`, `6c209e..6c2186` and
+`6c218e..6c220a`. Bus reads cover all four ranges; selected host sprite peeks
+also overlap the first three. At E172 these were observed bytes rather than
+proved asset boundaries or per-instruction attribution; the subsequent E173
+bank extension below authenticates the matching compact-bank geometry. Other uncovered ranges
+include `b0e2b8..b0ecca` and `b151d8..b1550c`. Their readers, formats and
+relationships to assets require separate source validation.
+
+Wine unit `e172-redspring-audit-wine-c9uprkbl` completed the child test and
+drained its server, but its unit receipt is FAIL because the 40 MiB address
+report exceeded the runner's 16 MiB evidence-copy limit. Recovery unit
+`e172-redspring-audit-recovery-05iu77v6` independently rechecked all 26
+original input guards, the test log and report against the authenticated E172
+manifest, retained the complete report and produced a compact uncovered-read
+index. It did not replay the game. Large reports should be retained with
+`--keep-path` rather than requested as small `--evidence` files. The observer
+misses unselected host paths and folded constants, and unowned bytes can be
+code. Linux, USA and native Windows remain pending; no performance measurement
+was performed.
+
+## E173 Red Spring compact bank and host sprite lists
+
+The authenticated EUR bank at `6c1e78` has seven represented selectors and
+34 referenced lists. Original relative offsets and record lengths cover the
+continuous interval `6c1e78..6c22fe`: 1,158 bytes, including 634 bytes that
+were outside the E172 catalog. The added selectors 0, 1 and 2 have 8, 39 and
+12 frames; their referenced lists account for 21 newly represented lists.
+The earlier 600-frame inventory observed all 634 new bytes through the guest
+bus and all 462 new list-body bytes through host sprite peeks. These checks
+establish the source geometry and observed use, not individual selector timing
+or a bound on arbitrary guest arithmetic. Source evidence:
+`e173-compact-bank-source-j2cu37bc`.
+
+EUR E173-d172 publishes the extended existing compact catalog. Its guest bus
+serves the added fields, and host sprite-list lookups now consult this catalog
+after the existing list owners. The focused Wine check `e173-redspring-wine-s73gcfva`
+preserves the previous projections of 63 banks and all 114 other resources,
+checks the 634 new bytes with altered backing ROM, mirrored and mixed-boundary
+reads, three original interpreter/compiled count prefixes, and 33 nonempty
+host lists with the whole bank altered. The first attempt
+`e173-redspring-wine-k2ma7lbz` failed because the general game object did not
+contain the isolated compiled reader; the corrected test reused the previously
+authenticated compact-reader object. Both Wine servers drained.
+
+The normal-input Red Spring action `e173-redspring-scene-wine-czzprb8z`
+matched original and managed complete state, guest clock, central/wide video,
+OAM, dispatch and five nonempty audio streams for all 600 frames, while all
+634 new source bytes were altered during each managed frame. The selected
+address audit recorded 610 unique guest-bus requests and 42 typed sprite-list
+requests overlapping those bytes, with no raw sprite-peek request in that
+set. Production CLI create/reuse/verify passed on Wine
+(`e173-redspring-cli-wine-u2r2goyn`), and its 116 files match the tested
+generation. One action and the selected prefixes do not establish all scenes,
+readers, native execution paths or total ROM independence. Of the earlier
+E172 inventory, 8,789 unowned observed bytes lie outside this bank increment;
+[E174](rom_data_graphics.md#e174-observed-red-spring-lz77-block) subsequently
+integrates 2,578 of them. Linux, USA and native Windows are pending.
+No performance measurement was performed.

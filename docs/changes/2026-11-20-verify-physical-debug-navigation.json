@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-physical-debug-navigation",
+  "title": "Verify physical controller debug navigation on Linux",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record a real controller navigation case in the Debug integration matrix."
+  ],
+  "validation": [
+    "A user pressed the physical D-pad down on a Generic X-Box pad connected to Linux. The isolated paused interpreter session observed a real joystick axis event and the Debug selection advanced from Start debug session to Start interpreter debug copy; state hash, registers, keys, frame and clock remained unchanged. Screenshots before/after were reviewed, protected public synthetic inputs remained unchanged and the GUI closed normally (dbg27-physical-pad-ready-gz_yasxx).",
+    "An earlier session timed out without physical activity (dbg27-linux-physical-pad-x3e2zrpt); this is retained as a timeout, not attributed to a product failure."
+  ],
+  "limitations": [
+    "One physical D-pad navigation case on Linux/Xvfb using an existing Linux binary does not establish confirmation/cancellation, other controllers, native Windows, or current-source rebuild equivalence."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -3,6 +3,395 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-20 — Verify the remapped Linux debug candidate in the GUI
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record selected graphical and local-channel execution of the path-remapped portable candidate from a moved bundle.
+
+**Validation**
+
+- A protected candidate archive was extracted into a spaced Unicode folder. Three isolated interpreter sessions using its exact runtime and the same public synthetic seed performed a read-only 16-byte inspection and one neutral frame through menu, local-control CLI and interactive command console. Inspection results, origin and endpoint state/frame/clock/registers/keys matched; GUI sessions closed normally and protected inputs were unchanged. Console output screenshot reviewed (dbg28-candidate-gui-g5denal6).
+
+**Limitations**
+
+- This synthetic Xvfb check covers only inspection and one frame with simulated keyboard/mouse; physical controller, native Windows, old-version/empty-state behavior, full integration and release remain open.
+
+Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-remapped-linux-debug-candidate.json)
+
+## 2026-11-20 — Verify physical controller selector controls on Linux
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record real controller confirmation and cancellation through the Debug content selector.
+
+**Validation**
+
+- A user used the bottom and right face buttons of a Generic X-Box pad in an isolated paused synthetic session. Physical button events were observed, the content selector opened and returned to Debug, full guest state hash, frame, clock, registers, CPSR and keys stayed unchanged, screenshots were reviewed, inputs remained protected and the window closed normally (dbg27-physical-confirm-cancel-v2-srbepjjc).
+- The first attempt recorded confirm and a physical cancel button but timed out waiting for return (72s6yqj4). The passing retry allowed the user to press cancel again and extended the observation window; its raw event capture does not prove which cancel press produced the return.
+
+**Limitations**
+
+- This covers one controller, one selector and simulated keyboard setup on Linux/Xvfb; it does not establish other dialogs, held-button behavior, current-source rebuild equivalence, native Windows or other devices.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-physical-selector-controls.json)
+
+## 2026-11-20 — Verify physical controller debug navigation on Linux
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record a real controller navigation case in the Debug integration matrix.
+
+**Validation**
+
+- A user pressed the physical D-pad down on a Generic X-Box pad connected to Linux. The isolated paused interpreter session observed a real joystick axis event and the Debug selection advanced from Start debug session to Start interpreter debug copy; state hash, registers, keys, frame and clock remained unchanged. Screenshots before/after were reviewed, protected public synthetic inputs remained unchanged and the GUI closed normally (dbg27-physical-pad-ready-gz_yasxx).
+- An earlier session timed out without physical activity (dbg27-linux-physical-pad-x3e2zrpt); this is retained as a timeout, not attributed to a product failure.
+
+**Limitations**
+
+- One physical D-pad navigation case on Linux/Xvfb using an existing Linux binary does not establish confirmation/cancellation, other controllers, native Windows, or current-source rebuild equivalence.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-physical-debug-navigation.json)
+
+## 2026-11-20 — Verify an audit-enabled Linux live watchpoint
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record one live synthetic write watch and matched execution control using an existing audit-feature interpreter.
+
+**Validation**
+
+- A derived public synthetic ROM executed ARM instructions that wrote 91 to 0x02000000. An audit-enabled debug-control watch reported the four-byte write after the complete interpreter step; read-only inspection confirmed the backing bytes. A separate copy stopped at the next instruction without a watch and matched the full guest-state hash, clock, registers, keys and pause state. Both windows closed normally and declared inputs remained protected (dbg27-linux-live-watch-final-dq5hpsy0).
+- The first fixture used a seed bound to a different ROM and was refused before execution (xl2p7po4). A subsequent boot run passed but copied an unused seed outside the declared protection list (y_1grav5); the final proof removed that dependency and guarded all inputs.
+
+**Limitations**
+
+- This verifies one synthetic ARM write via local control on Linux/Xvfb using an existing feature-enabled executable SHA-256 c3609dfe9017ca7d1424f5850e6e3e988bb54c3d709ff289177b1b2f9ee466e5, not current-source rebuild equivalence, other watch types or sites, physical controller, native Windows, or every command channel.
+
+Documentation: [debug_probes.md](docs/debug_probes.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-linux-live-watch.json)
+
+## 2026-11-20 — Verify Linux event-console state parity
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record a matched Linux interpreter comparison with the event console on and off using the public synthetic seed.
+
+**Validation**
+
+- Two isolated Linux/Xvfb sessions started from the same protected public synthetic ROM and seed, with the same runtime. Opening the event console left the origin state, frame and clock unchanged; the console window was visibly collecting and its redrawn image was reviewed. After ten neutral frames, full state hash, frame, clock, registers, keys and CPSR matched between on and off. Both GUIs closed normally, protected inputs remained unchanged and scratch was removed (dbg27-linux-event-console-redraw-wx0bn7tu).
+- An initial sandbox attempt failed before the game launched because Xvfb could not bind a local socket (czd5uk5d). A host retry produced matching state but captured the underlying menu before console redraw (iwlat53y); it is not treated as visual proof. The redraw retry supplied the reviewed console image.
+
+**Limitations**
+
+- A ten-frame synthetic interpreter/Xvfb pair does not establish long-running cost, other event producers, audible quality, physical controller, native Windows, Wayland or general Linux integration. The tested executable was an existing canonical Linux build; current source equivalence was not rebuilt or asserted.
+
+Documentation: [debug_events.md](docs/debug_events.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-linux-event-console-parity.json)
+
+## 2026-11-20 — Verify Linux debug command channel parity
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record a same-seed inspection and neutral-step comparison across menu, local-control CLI and interactive command console.
+
+**Validation**
+
+- Three isolated interpreter sessions used the same protected public synthetic ROM, seed and existing Linux runtime. The full 16-byte read-only inspection matched across channels without guest mutation; origin and one-frame endpoint state hashes, frame, clock, registers, CPSR, keys, PC, mode, pause and remaining budget matched. Each GUI closed normally and protected inputs stayed unchanged (dbg27-linux-threeway-guarded3-zwhascbo). Console screenshots were reviewed.
+- The navigation-only unit passed and located the default inspect form (dbg27-linux-inspect-route-5042xmbn). Earlier comparison drivers stopped before parity: rapid simulated keys collapsed, a return retained the selected row, or a section click did not land (723el4jv, ai_smwm_, q3fqberg); the guarded final run passed. A separate physical pad was detected but its input window timed out without an observed button (dbg27-linux-physical-pad-x3e2zrpt).
+
+**Limitations**
+
+- The selected synthetic interpreter scenario does not establish general Linux integration, real controller input, native Windows, other commands or a source-to-executable rebuild match. The tested executable SHA-256 is 2f53ae682ea1643d92a0136261aba2c5b396a36dac014648d4d8e6f7277eb50f.
+
+Documentation: [debug_control.md](docs/debug_control.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-linux-debug-channel-parity.json)
+
+## 2026-11-20 — Verify empty debug views and older runtime refusal
+
+Type: docs. Platforms: Linux/Xvfb.
+
+**Changes**
+
+- Record candidate empty content and cheat views and unsupported-capability behavior against a real older frontend.
+
+**Validation**
+
+- The remapped candidate opened an empty content selector and cheat catalog on a public synthetic seed; reviewed screenshots show the refresh/add and import instructions. Frame, clock, full-state hash, registers, CPSR and keys stayed unchanged, the window closed normally and protected inputs were unchanged (dbg28-empty-compat-l50bh__p). A synthetic old-capability metadata check returned incompatible and not-sent via both clients.
+- A separate copied older Linux executable advertised cheat-catalog-v1 but not cheat-capabilities-v1. Both the new candidate debug-control and debug-command clients returned a clear incompatible/not-sent error without changing either mailbox or guest frame, clock, full-state hash, registers or keys. The older window closed normally and all protected originals stayed unchanged (dbg28-real-old-runtime-fixed-1rsjato1). The first driver timed out finding the old window under its newer title (nhi89gqx); the corrected title passed.
+
+**Limitations**
+
+- These are selected Linux/Xvfb cases with synthetic input, not all empty states or old protocol combinations. Physical controller, native Windows, the rest of DBG2-27 and release remain open. The older executable was copied read-only; its original session was not resumed.
+
+Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-verify-debug-empty-and-older-runtime.json)
+
+## 2026-11-20 — Update the portable Debug v2 guide and check Linux packaging
+
+Type: docs. Platforms: Linux.
+
+**Changes**
+
+- Replace obsolete future-tense console and cheat guidance with current menu, command, recipe, event, cheat-import and persistence paths; reconcile stale selector persistence and command-discovery descriptions.
+
+**Validation**
+
+- The existing Linux portable packager rejected local runtime inputs containing the checked private build prefix. An internal diagnostic archive without that release guard contained 85 files, matched its manifest, omitted Data, cheat catalog and game/save/input filename classes, and ran debug-command help through the Bash wrapper after relocation to a Unicode/spaced path from an unrelated working directory; a local log was created. Inputs were protected and successful scratch removed (dbg28-linux-bundle-final-guide-1u409xol).
+- The 11 portable-packager synthetic tests and relative guide-link checks passed (dbg28-guide-package-tests-ulwuwvn5). An initial archive-inspection driver rejected the archive root directory before completing its checks (5pag2ugd); a corrected diagnostic passed (g7o_dflo), and the final guide revision was checked in 1u409xol.
+
+**Limitations**
+
+- The diagnostic archive is not distributable: existing binaries contain a personal build prefix and the guarded packager refuses them. A path-remapped compatible runtime, complete DBG2-27 matrix and remaining old-version/empty-state acceptance remain necessary for DBG2-28. Existing Linux binary provenance is not a current-source rebuild claim; no release was published.
+
+Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-update-debug-v2-distribution-guide.json)
+
+## 2026-11-20 — Map Debug Tools v2 integration evidence and gaps
+
+Type: docs. Platforms: Linux, Windows GNU and Wine.
+
+**Changes**
+
+- Map accepted selected integration evidence to DBG2-27 operations, platforms and inputs while keeping missing platform and device outcomes explicit.
+
+**Validation**
+
+- Read the linked feature change records and selected terminal receipts, distinguishing retained failed diagnostics from passing scopes; no builds, gameplay or completed tests were repeated.
+- Host device inventory exposed no joystick nodes on 2026-11-20; this records only the current observation and does not replace physical-controller execution.
+
+**Limitations**
+
+- DBG2-27 remains open: native Windows, physical controller, broader Linux and cross-operation combinations and live audit-enabled watch hit are not established by this evidence map. DBG2-20 remains user-suspended.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [debug_control.md](docs/debug_control.md), [cheats.md](docs/cheats.md).
+
+[Change record](docs/changes/2026-11-20-map-debug-tools-integration-evidence.json)
+
+## 2026-11-20 — Consume six additional European Red Spring LZ77 streams
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed LZ resource to six additional authenticated streams while preserving the original E174 block; serve their encoded guest views and decoded BIOS HLE output.
+- Raise the finite aggregate input guard from 512 to 768 MiB so the expanded dataset loads, while retaining per-file limits and explicit aggregate rejection.
+
+**Validation**
+
+- Source inventory zi6u7skx proves six non-overlapping previously unowned streams covering 2291 observed bytes. Wine publication and guard unit _42f690d preserves 115 other resources, verifies seven original SWI cases and checks aggregate boundary, overflow and per-family limits.
+- Wine scene 6jqo8wyd matches complete state, guest clock, video, OAM, dispatch and audio over 600 frames with all 4869 encoded bytes altered; each of seven blocks is consumed once. Wine CLI fonccar1 creates, reuses and verifies 117 matching files.
+- Initial Wine unit f0e28tia failed at the 512 MiB aggregate input guard; increasing the finite guard corrected it and the affected checks passed. Wine servers drained.
+
+**Limitations**
+
+- One European action and selected SWI cases do not establish asset identities, all consumers, direct DMA, real BIOS or complete ROM independence. 3920 previously observed unowned bytes remain outside the three increments.
+- Linux, USA and native Windows remain pending; no performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-consume-six-european-red-spring-lz-streams.json)
+
+## 2026-11-20 — Consume the observed European tilemap row
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish the authenticated twelve-byte tilemap row as typed fields with an explicit dependency on the extracted E178 descriptor; preserve unknown fields and live guest indexing.
+
+**Validation**
+
+- Source cc9b5_to authenticates the row and its original reader, and all twelve bytes appeared in the E172 unowned inventory. Wine trace xvj_6rmw observes the original pointer read via interpreter fallback.
+- Wine fhgchuk_ preserves 119 previous resources, rejects a coherent edit, checks poisoned mirrors and boundaries, and compares the original interpreter and separately compiled indexed reader with full state and guest clock.
+- Wine scene 4y6kd_rg matches state, clock, video, OAM, dispatch and audio for 600 frames with all twelve source bytes altered and sixteen managed bytes served. Wine CLI n7qzldpv creates, reuses and verifies 121 matching files; Wine drained.
+
+**Limitations**
+
+- Other rows, selectors, consumers and scenes remain open; 3737 other observed bytes remain in the E172 sample.
+- Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-consume-european-tilemap-row.json)
+
+## 2026-11-20 — Consume the observed European tilemap descriptor
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish the authenticated eight-byte tilemap descriptor as typed fields with an explicit dependency on the extracted E177 tilemap; preserve live guest task behavior.
+
+**Validation**
+
+- Source vapbrkwo authenticates the descriptor and original reader; seven bytes were unowned in the E172 inventory. Wine trace i1a1chh7 observes the original pointer read via interpreter fallback.
+- Wine ve3ggqgj preserves 118 previous resources, rejects a coherent edit, verifies poisoned mirrors and boundaries, and compares the original interpreter and separately compiled reader with full state and guest clock.
+- Wine scene 7tvsftjk matches state, clock, video, OAM, dispatch and audio for 600 frames with all eight source bytes altered and seven managed bytes served. Wine CLI 2aiu_s0o creates, reuses and verifies 120 matching files; Wine drained.
+
+**Limitations**
+
+- Other descriptor rows, raw pointer tables, selectors, scenes and consumers remain open; 3749 other observed bytes remain in the E172 sample.
+- Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-consume-european-tilemap-descriptor.json)
+
+## 2026-11-20 — Consume an observed European Red Spring tilemap
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish the authenticated 16 by 16 tilemap as a typed header and 24 ascending or repeated runs, reconstructing the original source bytes while leaving decompression and drawing to the guest.
+- Generalize the retained scene trace to accept a bounded source range; preserve all earlier resources and dataset safety guards.
+
+**Validation**
+
+- Static source yiosygyx authenticates the 102-byte stream, original reader windows, pointer cells and 256 reconstructed entries; 100 bytes were unowned in the E172 scene inventory. Wine trace r7r9ungh observes the actual header read at interpreter PC 080da560.
+- Wine 798svo0e preserves 117 earlier resources, rejects a coherent edit, verifies poisoned mirrors and boundaries, and compares 256 original interpreter and separately compiled reader outputs with full state and guest clock.
+- Wine scene mpurdf2y matches state, clock, video, OAM, dispatch and audio for 600 frames with all 102 backing bytes altered and 4115 managed source bytes served. Wine CLI it5komaw creates, reuses and verifies 119 matching files; Wine drained.
+
+**Limitations**
+
+- The ordinary trace used interpreter fallback. Other assets, modes, consumers and raw pointer/descriptor tables remain open; 3756 other observed bytes remain in the E172 sample.
+- Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-consume-european-red-spring-tilemap.json)
+
+## 2026-11-20 — Consume the European 64-byte constructor template
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish the authenticated 64-byte EUR constructor template as sixteen little-endian words and serve its source reads from the managed dataset while the guest retains allocation and live writes.
+- Preserve prior resources, bounded dataset validation and unchanged USA revision; expose source-use counters and retain the existing reader routing.
+
+**Validation**
+
+- Source n33tj6pd authenticates the template and original fixed-length copy. Wine nibv6hif preserves 116 earlier resources and passes poisoned boundary/mirror reads and interpreter versus compiled original copy including full state and guest clock.
+- Wine 2efs1kas matches state, clock, video, OAM, dispatch and audio across 600 recorded frames with all 64 source bytes altered; the managed owner serves 256 bytes. Wine CLI 0qyhd6ao creates, reuses and verifies 118 matching files.
+- Wine servers drained. Initial source attempt hr0chmaj used an unresolved generation placeholder; initial build grl6fsjd used a path relative to scratch. Both were corrected before passing checks.
+
+**Limitations**
+
+- The observed scene does not identify its dynamic caller; unclassified fields, additional consumers and 3856 other bytes in the E172 sample remain open.
+- Linux, USA and native Windows checks remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-20-consume-european-constructor-template64.json)
+
+## 2026-11-20 — Consume four adjacent European tilemap rows
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed tilemap row resource with four authenticated adjacent rows while preserving the prior row, original guest indexing and raw descriptor targets.
+
+**Validation**
+
+- Source 5w43a4ri authenticates 48 newly owned bytes observed in the E172 sample; Wine trace atgqm66z observes an original byte reader via interpreter fallback.
+- Wine jcmdanqw preserves the prior row and 119 other resources, rejects coherent edits, checks poisoned mirrors and boundaries, and compares original interpreter and separately compiled pointer and flag readers over ten cases with equal state and guest clock.
+- Wine scene 4nxkgjnp matches state, clock, video, OAM, dispatch and audio for 600 frames with all 48 new source bytes altered and 137 owner bytes served in aggregate. Wine CLI ilg230s3 creates, reuses and verifies 121 matching files; Wine drained.
+
+**Limitations**
+
+- The four pointed descriptors, other rows, selectors, consumers and scenes remain open; 3689 other observed bytes remain in the E172 sample. Ordinary trace uses interpreter fallback.
+- Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-consume-european-adjacent-tilemap-rows.json)
+
+## 2026-11-20 — Build a path-remapped Linux debug package candidate
+
+Type: docs. Platforms: Linux.
+
+**Changes**
+
+- Build a guarded local Linux candidate from a copied current source snapshot with remapped build paths and public TinyCC; retain the selected archive for remaining DBG2-28 checks.
+
+**Validation**
+
+- Offline release Cargo build and TinyCC succeeded from protected sources. The portable packager passed the private-prefix guard; all 85 archive files matched their manifest, game/save/input and private Data/catalog paths were excluded, and a moved Unicode/spaced bundle ran debug-command help from an unrelated working directory with a local log. ldd reported no missing runtime libraries on the build host. The validation unit passed all input guards and retained only candidate.tar.gz (dbg28-remapped-linux-candidate-6dili0rp; archive SHA-256 ba5625cade56dbb68636e2622ab20547ca4806629ac27b028ceb2456be963677).
+
+**Limitations**
+
+- This is a local Linux candidate, not a published release. The prefix guard checks the declared private prefix, not every possible secret; source snapshot includes concurrent workspace changes protected during the unit. Actual candidate GUI, old-version and empty-state checks, native Windows and physical controller remain open. Host ldd does not prove compatibility with all Linux distributions.
+
+Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-build-remapped-linux-debug-candidate.json)
+
+## 2026-11-20 — Accept the selected debug integration matrix with a Windows waiver
+
+Type: docs. Platforms: Linux/Xvfb and Windows GNU/Wine.
+
+**Changes**
+
+- Accept DBG2-27 for the documented selected matrix after the user explicitly waived native Windows execution; preserve the distinction between acceptance and a test result.
+
+**Validation**
+
+- Reviewed retained Wine selection, controller, cancellation, error and moved-folder records; Linux event-console, three-channel parity, live watch and physical navigation/selector receipts; cheat and recipe replay records. Selected cases and protected-input/normal-close evidence are linked in the integration matrix. Synthetic divergence and earlier timeouts remain negative outcomes.
+
+**Limitations**
+
+- Native Windows was not run: the user requested that criterion be considered accepted. The physical cancel case allowed repeated presses; other devices, dialogs and combinations remain unverified. DBG2-20 remains suspended and its outstanding criteria are not covered by this acceptance.
+
+Documentation: [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md), [DEBUG_TOOLS_V2_VALIDATION_MATRIX.md](docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md).
+
+[Change record](docs/changes/2026-11-20-accept-debug-integration-user-windows-waiver.json)
+
+## 2026-11-20 — Accept the scoped Debug v2 distribution guide
+
+Type: docs. Platforms: Linux.
+
+**Changes**
+
+- Accept DBG2-28 for the recorded guide, portable candidate and compatibility checks after the DBG2-27 selected matrix was accepted with a user waiver for native Windows execution.
+
+**Validation**
+
+- Reviewed the public guide, selector migration/persistence and local-channel capability guidance; 11 packager tests, guarded remapped 85-file Linux candidate, moved wrapper/log, selected candidate GUI, empty states and a real older Linux frontend refusal passed in their recorded units. No private catalog, game/save/input payload or personal Data was packaged.
+
+**Limitations**
+
+- The accepted evidence is limited to the documented cases; native Windows was not executed and is covered only by the user waiver. Other platforms and device combinations remain unverified. No release was published; DBG2-20 remains suspended.
+
+Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
+
+[Change record](docs/changes/2026-11-20-accept-debug-distribution-guide.json)
+
 ## 2026-11-19 — Verify indexed archive cold input prefix
 
 Type: changed. Platforms: EUR / Windows GNU under Wine; offline snapshot inspection.
@@ -20,6 +409,50 @@ Type: changed. Platforms: EUR / Windows GNU under Wine; offline snapshot inspect
 - Raw snapshots differ in the output queue; initial exact-byte comparison snmplz7o is retained as FAIL. This does not prove the complete 9000-frame capture, other scenes, consumers or platforms. Sol xhigh was requested for diagnosis; effective Sol and primary model/effort were not independently confirmed.
 
 [Change record](docs/changes/2026-11-19-verify-indexed-direct-cold-prefix.json)
+
+## 2026-11-19 — Verify the European indexed route against its historical endpoint
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record the historical endpoint comparison and preserve the separate raw/managed comparison and legacy-translation failure with their actual scopes.
+
+**Validation**
+
+- Wine unit indexed-historical-endpoint-guarded-wine-0gj2cglj replays the recorded 8,820-frame continuation using the retained qpbgtmmw event-guarded translation. The final serialized state matches the frame-9,000 historical capture after clearing output audio, tap enablement and host mixer shadows; CPU, guest RAM, guest clock and emulated audio state remain compared. Protected inputs passed and Wine drained.
+- The earlier legacy-object endpoint unit tagk77bt remains FAIL. Its retained normalized states contain differences in guest PC, IRQ-stack memory, clock and PSG phase. Another previously recorded scene showed a similar legacy-object boundary mismatch and passed with the guarded translation; the objects differ in more than just the guard.
+
+**Limitations**
+
+- The existing E170 raw/managed full-route pair klmjn8sv uses the legacy translation; the guarded replay is a separate raw-to-historical endpoint comparison, not a new guarded raw/managed scene pair. Unnormalized host observation fields, other scenes and consumers, Linux, USA and native Windows remain unverified. No performance measurements.
+- A focused consultant was requested as gpt-6.1-sol with xhigh; the effective model and effort, and the primary model and effort, were not independently confirmed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-19-verify-european-indexed-historical-endpoint.json)
+
+## 2026-11-19 — Verify indexed archive consumption with guarded translation
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Verify the actual E170 managed indexed-archive path with the event-guarded translation, addressing the execution-mode gap in the earlier legacy-object comparison.
+
+**Validation**
+
+- Wine unit indexed-guarded-ordinary-pair-wine-u75gcclc reuses the authenticated E170 dataset, recorded input and qpbgtmmw guarded translation. Eleven raw/managed frames match complete state, guest clock, central/wide video, OAM, dispatch and five audio streams; mixed audio is nonempty. With managed archive sources and caller literals altered, the owners serve 302 and 3,292 bytes. Protected inputs passed and Wine drained.
+- The earlier separate guarded historical endpoint 0gj2cglj matches the recorded normalized frame-9,000 state; the earlier 8,820-frame raw/managed pair klmjn8sv used a legacy translation. Neither result is replaced by this bounded pair.
+
+**Limitations**
+
+- Generated dispatch may fall back to interpretation; the aggregate counters do not attribute individual reads to native PCs. Other scenes, consumers, Linux, USA and native Windows remain open. No performance measurements.
+- The diagnostic unit retains its generated end checkpoint for a source-backed follow-up; retire it when further indexed-route diagnosis no longer needs it.
+
+Documentation: [2026-11-19-verify-european-indexed-historical-endpoint.json](docs/changes/2026-11-19-verify-european-indexed-historical-endpoint.json).
+
+[Change record](docs/changes/2026-11-19-verify-european-indexed-guarded-pair.json)
 
 ## 2026-11-19 — Validate native title language selections
 
@@ -405,6 +838,98 @@ Documentation: [2026-11-19-validate-e134-ordinary-sequence-selectors.json](docs/
 
 [Change record](docs/changes/2026-11-19-observe-e134-ordinary-hold-cutoff.json)
 
+## 2026-11-19 — Inventory European Red Spring ROM reads under E172
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Add an optional feature-gated address-only ROM-read inventory to the existing recorded-scene raw/managed differential, retaining source ownership and reader categories without collecting game data values.
+- Record actual E172 unowned read leads during the existing ordinary Red Spring action, including sprite-peek and bus accesses near compact root 6c1e78.
+
+**Validation**
+
+- Windows GNU test build e172-redspring-audit-build-5_epxh0f passed. The Wine child in e172-redspring-audit-wine-c9uprkbl matched complete state, clock, video, OAM, dispatch and five audio streams for 600 frames and observed compact root 6c1e78; Wine drained.
+- The original Wine unit is FAIL because its 40 MiB report exceeded the 16 MiB evidence-copy limit. Recovery e172-redspring-audit-recovery-05iu77v6 independently rechecked all 26 protected inputs, log and E172 manifest classification, retained the complete report, and passed without replaying the game.
+- The bounded inventory records 317927 unique selected-reader requests, 184004 distinct image bytes and 9423 bytes outside E172 source ownership; 6075 unowned bytes are at or above 370000.
+
+**Limitations**
+
+- Address-only observations do not establish asset boundaries, exact original instruction sites, universal raw fallback or all readers; original fetches, folded constants, unselected host paths and other scenes remain outside scope.
+- The observed 6c1e78 and other high-ROM raw ranges need source/owner attribution and migration. Linux, USA and native Windows remain pending; no performance measurements were made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-19-inventory-european-red-spring-rom-reads.json)
+
+## 2026-11-19 — Inventory European ROM reads after indexed archive use
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded source-read inventory after the guarded indexed-archive continuation and identify remaining addresses that require reader attribution before proposing another resource.
+
+**Validation**
+
+- Wine unit e170-post-indexed-raw-audit-wine-108ejhdv observes 12 recorded neutral frames using the authenticated E170 dataset and retained guarded translation. Instrumented and reference states, clocks, video, OAM, dispatch and audio match each frame; protected inputs passed and Wine drained.
+- Read-only reconciliation e170-post-indexed-reconcile-c8paxoub verifies earlier source witnesses against the exact EUR ROM. Of 4,680 bytes outside manifest spans, 3,600 are within the previously documented copied-IWRAM block and 12 match hardware/branch support. Of 1,068 lower-ROM bytes, 500 overlap previous source witnesses and 568 do not.
+
+**Limitations**
+
+- The observed copied block contains executable support but individual bytes are not all classified as instructions. Earlier witnesses do not establish the current reader PCs; the 568 unmatched bytes are leads rather than established assets. Byte reads at 14d2dc..14d2ec need reader and extent attribution.
+- The audit covers one short recorded window and selected instrumented readers. Other scenes and consumers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-19-verify-european-indexed-guarded-pair.json](docs/changes/2026-11-19-verify-european-indexed-guarded-pair.json).
+
+[Change record](docs/changes/2026-11-19-inventory-european-post-indexed-rom-reads.json)
+
+## 2026-11-19 — Consume European display-control tables from extracted data
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish E171-d170 graphics.display-control-tables as two four-halfword arrays and four live-IWRAM pointers, authenticate the original source and reader contract, and serve only the three owned spans while retaining prior-owner and raw fallback.
+- Keep all 113 E170 resource files and manifest entries unchanged, retain the original guest selector and live IWRAM structures, and include the new resource in preparation, verification, diagnostics and size guards.
+
+**Validation**
+
+- Windows GNU test cross-build e171-display-control-build-thzaevdd passed after adding the new budget argument to three existing test calls; an initial wrapper path and earlier compile attempt were corrected.
+- Wine e171-display-control-wine-8bb1ykny passed source and mixed-boundary reads with inverted backing bytes, overlap and coherent-edit rejection, failed-attachment transactionality, eight original-reader comparisons and a 12-frame raw/managed state-clock-video-OAM-dispatch-audio pair; both new source classes were read and Wine drained.
+- Windows GNU production cross-build e171-display-control-cli-build-unkzvpb0 and Wine e171-display-control-cli-wine-ikwqgxwg passed CLI create/reuse/verify; all 115 generated files matched the tested dataset and reuse/verify left it unchanged. Wine drained.
+
+**Limitations**
+
+- The bounded ordinary window and aggregate counters do not prove every caller, selector or native instruction attribution. The other 536 unmatched lower-ROM bytes and wider ROM-data families remain open.
+- Linux, USA, native Windows and revision-pinned historical E170 regression fixtures remain to verify or adapt; no performance measurements were made.
+
+Documentation: [2026-11-19-identify-european-display-control-tables.json](docs/changes/2026-11-19-identify-european-display-control-tables.json).
+
+[Change record](docs/changes/2026-11-19-integrate-european-display-control-tables.json)
+
+## 2026-11-19 — Identify European display-control table sources
+
+Type: changed. Platforms: EUR / Wine.
+
+**Changes**
+
+- Record a bounded source contract for two four-halfword arrays and four IWRAM pointers used by original display-control readers. Their 32 bytes are outside E170 ownership and require typed runtime integration.
+
+**Validation**
+
+- Wine observation e170-post-indexed-lower-sites-wine-9ei8p1cy records the first and last array bytes within the original copy-loop instruction and all four adjacent pointer words within the two original scoped readers. The same 12-frame recorded input and protected E170 dataset were reused; Wine drained.
+- Wine disassembly e170-post-indexed-reader-dis-wine-lme0glm7 and protected source audit e170-context-control-source-s94ilj14 verify six literal references, four calls to the original copy routine, the two eight-byte copy sizes, the halfword consumers, IWRAM-pointer consumers and absence of E170 source overlap.
+
+**Limitations**
+
+- The trace does not independently tie every copy invocation to a particular caller; unscoped translated reads do not prove native instruction attribution. The table values' complete semantics, all callers and guest selector domains remain open; no guest bounds are introduced.
+- The typed model, publication and runtime ownership are not yet implemented. The other 536 unmatched lower-ROM bytes, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [2026-11-19-inventory-european-post-indexed-rom-reads.json](docs/changes/2026-11-19-inventory-european-post-indexed-rom-reads.json).
+
+[Change record](docs/changes/2026-11-19-identify-european-display-control-tables.json)
+
 ## 2026-11-19 — Document the E134 ordinary sequence regression test
 
 Type: docs. Platforms: EUR / Windows GNU under Wine.
@@ -425,6 +950,79 @@ Type: docs. Platforms: EUR / Windows GNU under Wine.
 Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [2026-11-19-validate-e134-complete-first-sequence.json](docs/changes/2026-11-19-validate-e134-complete-first-sequence.json).
 
 [Change record](docs/changes/2026-11-19-document-e134-ordinary-sequence-test.json)
+
+## 2026-11-19 — Consume the European Red Spring compact bank and host sprite lists
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend compact bank 6c1e78 with three sequences and 21 lists, migrating 634 observed source bytes, and serve catalog lists to the host sprite reader while preserving previous owners.
+- Add targeted publication, poisoned source, interpreter/compiled prefix, host list and ordinary scene validation without changing the guest selector bounds.
+
+**Validation**
+
+- Authenticated source geometry j2cu37bc; Windows cross-build bo68od41 and Wine reader/host unit s73gcfva pass, preserving 114 other resources and previous bank projections.
+- Wine 600-frame Red Spring action czzprb8z matches state, clock, video, OAM, dispatch and audio with 634 backing bytes altered; 610 unique bus and 42 typed sprite requests overlap the increment, with zero raw sprite-peek requests there.
+- Wine production CLI u2r2goyn creates, reuses and verifies the generation and matches 116 tested files. Wine servers drained.
+- The initial Wine unit k2ma7lbz failed because the general game object lacked the isolated reader entry; a previously authenticated reader object fixed the test fixture. The first build ephycvm7 stopped before compilation due to a relative path.
+
+**Limitations**
+
+- The result covers one EUR action and selected readers, not all scenes, consumers, selector domains or native execution; 8789 E172 observed unowned bytes are outside this increment. Linux, USA and native Windows checks remain pending.
+- No performance measurements were performed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-19-consume-red-spring-compact-bank.json)
+
+## 2026-11-19 — Consume an observed European Red Spring LZ77 block
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish the observed 2578-byte LZ source and its 4096-byte decoded output with authenticated source and bounded decoding.
+- Serve the exact encoded source through guest reads and the decoded output through the existing BIOS LZ77 HLE while preserving previous owners and raw fallback.
+
+**Validation**
+
+- Source geometry 0vubt1mc and Wine trace tt50ykqb identify the original SWI11 and observed Red Spring caller; Wine publication/SWI xlo4jdo9 preserves 115 earlier resources and passes altered source and boundary checks.
+- Wine action c_ce4pye matches state, clock, video, OAM, dispatch and audio for 600 frames with the 2578 source bytes altered and one decoded HLE call; Wine production CLI mlc8meas creates, reuses and verifies 117 matching files.
+- Initial source check xsp8lv04 failed due to a literal generation placeholder; initial build pw1zse8_ failed because three budget-test calls needed one argument. Corrected checks pass; Wine servers drained.
+
+**Limitations**
+
+- The asset identity, other callers and direct DMA/real-BIOS consumption remain unverified. The result covers one EUR action; 6211 previously observed unowned bytes lie outside this and the earlier compact-bank increment.
+- Linux, USA and native Windows checks remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-19-consume-observed-red-spring-lz.json)
+
+## 2026-11-19 — Consume the conditional primary-task compact alias
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish E172-d171 graphics.compact-primary-alias for the selector byte and signed position halfwords conditionally read when primary task ID 362 reaches the existing compact callback with wrapped index 255.
+- Authenticate the original constructor and callback source, require the existing task-descriptor and compact-catalog resources, and preserve prior-owner/raw composition without changing guest IDs, index arithmetic or live task state.
+
+**Validation**
+
+- Protected source audit e172-compact-primary-source-0k922apv pins the original ID-to-callback flow, both read addresses and E171 owner exclusions; the selected compact sequence is already represented.
+- Windows GNU test build e172-compact-primary-build-figq39ys and Wine e172-compact-primary-wine-_5qb5ej3 pass publication and reuse, preservation of all 114 prior resources, poisoned mixed-boundary reads, dependency and coherent-edit rejection, failed-attachment transactionality and ten interpreter/compiled original-prefix state-clock comparisons; Wine drained.
+- Windows GNU production build e172-compact-primary-cli-build-jwcpkwsm and Wine e172-compact-primary-cli-wine-lhle9dmz pass create/reuse/verify; all 116 generated files match the tested dataset and reuse/verify leaves it unchanged. Wine drained.
+
+**Limitations**
+
+- Primary ID 362, the callback state transition and helper result are conditional; no ordinary invocation, complete callback ABI, other IDs or global selector domain are proved.
+- Linux, USA, native Windows and revision-pinned E170/E171 Wine fixtures remain pending; no performance measurement was performed.
+
+Documentation: [rom_data_tasks.md](docs/rom_data_tasks.md).
+
+[Change record](docs/changes/2026-11-19-consume-european-compact-primary-alias.json)
 
 ## 2026-11-19 — Recover local storage from duplicate archives and closed Wine diagnostics
 

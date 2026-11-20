@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-european-tilemap-descriptor",
+  "title": "Consume the observed European tilemap descriptor",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish the authenticated eight-byte tilemap descriptor as typed fields with an explicit dependency on the extracted E177 tilemap; preserve live guest task behavior."
+  ],
+  "validation": [
+    "Source vapbrkwo authenticates the descriptor and original reader; seven bytes were unowned in the E172 inventory. Wine trace i1a1chh7 observes the original pointer read via interpreter fallback.",
+    "Wine ve3ggqgj preserves 118 previous resources, rejects a coherent edit, verifies poisoned mirrors and boundaries, and compares the original interpreter and separately compiled reader with full state and guest clock.",
+    "Wine scene 7tvsftjk matches state, clock, video, OAM, dispatch and audio for 600 frames with all eight source bytes altered and seven managed bytes served. Wine CLI 2aiu_s0o creates, reuses and verifies 120 matching files; Wine drained."
+  ],
+  "limitations": [
+    "Other descriptor rows, raw pointer tables, selectors, scenes and consumers remain open; 3749 other observed bytes remain in the E172 sample.",
+    "Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_descriptor_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

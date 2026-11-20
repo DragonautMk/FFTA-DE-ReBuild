@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-linux-event-console-parity",
+  "title": "Verify Linux event-console state parity",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record a matched Linux interpreter comparison with the event console on and off using the public synthetic seed."
+  ],
+  "validation": [
+    "Two isolated Linux/Xvfb sessions started from the same protected public synthetic ROM and seed, with the same runtime. Opening the event console left the origin state, frame and clock unchanged; the console window was visibly collecting and its redrawn image was reviewed. After ten neutral frames, full state hash, frame, clock, registers, keys and CPSR matched between on and off. Both GUIs closed normally, protected inputs remained unchanged and scratch was removed (dbg27-linux-event-console-redraw-wx0bn7tu).",
+    "An initial sandbox attempt failed before the game launched because Xvfb could not bind a local socket (czd5uk5d). A host retry produced matching state but captured the underlying menu before console redraw (iwlat53y); it is not treated as visual proof. The redraw retry supplied the reviewed console image."
+  ],
+  "limitations": [
+    "A ten-frame synthetic interpreter/Xvfb pair does not establish long-running cost, other event producers, audible quality, physical controller, native Windows, Wayland or general Linux integration. The tested executable was an existing canonical Linux build; current source equivalence was not rebuilt or asserted."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_events.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

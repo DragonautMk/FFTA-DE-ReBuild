@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "map-debug-tools-integration-evidence",
+  "title": "Map Debug Tools v2 integration evidence and gaps",
+  "kind": "docs",
+  "platforms": [
+    "Linux",
+    "Windows GNU and Wine"
+  ],
+  "changes": [
+    "Map accepted selected integration evidence to DBG2-27 operations, platforms and inputs while keeping missing platform and device outcomes explicit."
+  ],
+  "validation": [
+    "Read the linked feature change records and selected terminal receipts, distinguishing retained failed diagnostics from passing scopes; no builds, gameplay or completed tests were repeated.",
+    "Host device inventory exposed no joystick nodes on 2026-11-20; this records only the current observation and does not replace physical-controller execution."
+  ],
+  "limitations": [
+    "DBG2-27 remains open: native Windows, physical controller, broader Linux and cross-operation combinations and live audit-enabled watch hit are not established by this evidence map. DBG2-20 remains user-suspended."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/debug_control.md",
+    "docs/cheats.md"
+  ]
+}

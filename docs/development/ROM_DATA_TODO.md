@@ -256,6 +256,42 @@ families and Linux/USA remain open. [Contract](../rom_data_gameplay.md).
 
 ## ROMDATA-02 — Extractors and decoders
 
+**ROMDATA-01-E172-REDSPRING-RAW scoped EUR progress:** the recorded 600-frame
+Red Spring action matches raw/managed state, clock, video, OAM, dispatch and
+audio under Wine. Its E172 address inventory records 9,423 bytes outside the
+declared source set, including sprite-peek reads near `6c1e78`; these are
+historical observations (`05iu77v6`). E173 authenticates and migrates 634 of
+those bytes into the compact catalog, including host sprite-list reads; 8,789
+observed bytes lie outside that increment and need separate classification.
+E174 also migrates a 2,578-byte LZ77 stream observed in that action, preserving
+its source view and serving the 4,096-byte decoded output to the BIOS HLE.
+E175 extends that owner with six more observed streams totaling 2,291 source
+bytes. E176 additionally owns a 64-byte constructor template, and E177 owns
+100 observed bytes in a tilemap. E178 owns seven observed descriptor bytes,
+and E179 owns a 12-byte row pointing to it. E180 adds four adjacent rows
+covering 48 observed bytes. The altered-source 600-frame actions and CLI checks
+through E180 pass on Wine; 3,689 original observed unowned bytes lie outside
+these eight increments.
+Other readers, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
+
+**ROMDATA-01-OBJ-6CB278-PRIMARY scoped EUR progress:** E172-d171 serves
+five conditional selector/position bytes reached by the primary task-362 alias.
+Wine verifies prior-resource preservation, mixed boundaries and ten original
+interpreter/compiled prefix comparisons (`_5qb5ej3`); production CLI
+create/reuse/verify passes (`lhle9dmz`). Ordinary reachability, other consumers,
+Linux, USA and native Windows remain open.
+[Contract](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278).
+
+**ROMDATA-02-04-DISPLAY-CONTROL-TABLES scoped EUR progress:** E171-d170
+publishes the two four-halfword arrays and four IWRAM pointers at
+`14d2dc..14d2fc` and serves their source bytes from typed data. Wine validates
+publication, mixed boundaries, eight original-reader cases and a 12-frame
+ordinary raw/managed pair with the backing source altered (`8bb1ykny`).
+Production Wine CLI create/reuse/verify passes (`ikwqgxwg`). Other readers,
+the remaining inventory, Linux, USA and native Windows remain open.
+[Contract and evidence](../rom_data_runtime.md#european-display-control-source-tables-at-14d2dc).
+
 **ROMDATA-02-OBJ-CONTEXT-GRAPHICS scoped EUR progress:** E135 adds a
 32 KiB fixed OBJ transfer. A clean Wine profile passes CLI first create/reuse/
 verify/startup and interpreter plus translated original queue/DMA full-state/

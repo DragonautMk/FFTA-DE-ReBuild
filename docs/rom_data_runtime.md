@@ -2855,3 +2855,78 @@ time, and timing collectors were disabled. This checks the final state, not
 every frame. Both comparisons are limited to these windows; full scenes, other
 inputs, further consumers, Linux, USA and native Windows remain open. No
 performance measurement was made.
+
+## E170 post-indexed ROM read inventory
+
+Wine `e170-post-indexed-raw-audit-wine-108ejhdv` observes the next 12 neutral
+frames after the retained guarded indexed-archive continuation. The audited
+input matches the original recording for that window. The E170 dataset, ROM,
+checkpoint, input and guarded translation were protected; the instrumented and
+reference machines match complete state, clock, video, OAM, dispatch and audio
+at every frame. Wine drained and successful scratch was removed.
+
+The instrumented bus and selected host readers report 33,077 distinct physical
+ROM bytes, of which 4,680 are outside E170 manifest source spans. Static
+reconciliation `e170-post-indexed-reconcile-c8paxoub` verifies prior source
+witnesses against the exact ROM. Of the unowned bytes, 3,600 fall inside the
+previously documented 3,648-byte copied-IWRAM block containing executable
+support; another 12 match hardware/branch-support sources. Of the remaining
+1,068 lower-ROM bytes, 500 overlap earlier scoped source witnesses and 568 do
+not match those particular witnesses. The old witnesses do not identify the
+current reader PCs, and an unmatched byte is not by itself an asset. In
+particular, the byte reads at `14d2dc..14d2ec` were investigated separately
+below.
+
+This is one bounded scene and only the instrumented readers; it does not prove
+global coverage, classify every byte, or establish exact instruction sites.
+Other scenes and consumers, Linux, USA and native Windows remain open. No
+performance measurement was made.
+
+## European display-control source tables at 14d2dc
+
+Wine site observation `e170-post-indexed-lower-sites-wine-9ei8p1cy` records
+byte reads at both ends of `14d2dc..14d2ec` in the original copy loop at
+`08147e0c`; other accesses to those bytes have no interpreter scope. The same
+window records original word readers at `0801f47a/7e` and `0801f52c/30` for
+the adjacent `14d2ec..14d2fc` table. Static source reconciliation
+`e170-context-control-source-s94ilj14` verifies that each of the two caller
+branches loads three original pointers, copies two eight-byte arrays to its
+stack through the same original byte-copy routine, and copies four aligned
+IWRAM pointers. The original caller then combines selected halfwords and uses
+the selected pointer for live structure writes. The two arrays are represented
+as four little-endian halfwords each; the pointer table has four 32-bit entries.
+These shapes follow the original copy operations, not a guessed neighboring
+extent. The three spans total 32 bytes, have source SHA-256
+`5c5502e34c5e00cb3c556b9bd4f9e8582c6dec845b71c15669f362f30d020760`, and do
+not overlap any E170 source binding.
+
+The scoped copy-loop reads and the two static caller paths establish a bounded
+source contract; the trace alone does not tie each copy invocation to a
+specific caller. The pointers refer to live IWRAM rather than replacing those
+mutable structures. No guest selector cap, full value semantics or global
+caller domain is inferred.
+
+E171-d170 publishes `graphics.display-control-tables` as two arrays of four
+halfwords and four IWRAM pointers in `display-control-tables.json`. The EUR
+source image, original reader/copy instructions, pointer literals and source
+spans are authenticated before publication. The runtime reconstructs the
+three exact source spans from the typed data, composing with earlier owners or
+raw ROM for other bytes; it does not replace the live structures in IWRAM.
+All 113 E170 resource files and their manifest entries match the predecessor.
+
+Wine `e171-display-control-wine-8bb1ykny` verifies creation and reuse, source
+and mixed-boundary reads across the three ROM mirrors with the 32 backing ROM
+bytes inverted, coherent-data/overlap rejection and transactional failed
+attachment. Four original reader paths each match complete state and guest
+clock in interpreter and compiled execution. A separate 12-frame guarded
+raw/managed continuation matches state, guest clock, video, OAM, dispatch and
+nonempty audio at each frame while those managed source bytes are inverted;
+aggregate counters report 32 halfword-source and 32 pointer-source bytes.
+Production CLI Wine `e171-display-control-cli-wine-ikwqgxwg` creates, reuses
+and verifies a 114-resource generation; all 115 files match the tested dataset
+and reuse/verification leave that generation unchanged. Both Wine units drained
+the shared server. Generated dispatch may fall back to interpretation, and
+aggregate counts do not identify individual instructions. The 536 other
+unmatched lower-ROM bytes, other readers, selector domains, Linux, USA and
+native Windows remain open.
+No performance measurement was made.

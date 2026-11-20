@@ -481,9 +481,42 @@ audio streams match. Source bytes are restored only to serialize the managed
 state for comparison. Inputs were protected, Wine drained and successful
 scratch was removed. Wine logged a D-Bus assertion, but the test completed.
 The explicitly selected translation uses generated dispatch with interpreter
-fallback. The result does not compare the endpoint to the original historical
-capture or attribute individual reads to native PCs; other routes, consumers,
-Linux, USA and native Windows remain open.
+fallback. This particular pair uses a legacy translation and does not compare
+its endpoint to the original historical capture or attribute individual reads
+to native PCs.
+
+A separate EUR/Wine replay of the same 8,820-frame continuation using the
+retained event-guarded translation `qpbgtmmw` matches the historical frame-9,000
+capture's complete serialized state after clearing output-audio queues, the
+tap flag and host-side MP2K/GAX/RDRV shadows (`indexed-historical-endpoint-guarded-wine-0gj2cglj`).
+CPU, guest RAM, guest clock and emulated audio state are not excluded. Protected
+inputs passed, Wine drained and successful scratch was removed. The earlier
+attempt `indexed-historical-endpoint-wine-tagk77bt`, using the legacy object,
+failed that comparison; its retained states differ in the PC, IRQ-stack bytes,
+clock and PSG phase as well as the derived payload checksum. That object lacks
+the current event-guard tag and an earlier separate scene showed a similar
+10-cycle boundary difference that disappeared with the guarded translation
+(`je_s2es2`, `u_28pjng`). Changing the object restores this endpoint, but does
+not isolate which of its code differences caused every mismatch. The guarded
+replay is separate from the raw/managed pair above, which used the legacy
+translation; it is not a guarded raw/managed scene comparison. A Sol consultant
+was requested as `gpt-6.1-sol`/`xhigh`; effective settings and the primary
+model/effort were not independently confirmed. Other routes, consumers, Linux,
+USA and native Windows remain open. No performance measurement was made.
+
+The same recorded cold-origin continuation was then checked on E170 using the
+retained guarded translation. Wine
+`indexed-guarded-ordinary-pair-wine-u75gcclc` locates the first archive reads
+and compares the surrounding 11 raw/managed frames while both archive sources
+and their caller literals are overwritten in the managed ROM copy. The two
+owners serve 302 and 3,292 source bytes respectively; full state, clock,
+central/wide video, OAM, dispatch and five audio streams match each frame, with
+nonempty mixed audio. The guarded object and dataset were authenticated against
+their earlier receipts; inputs were protected and Wine drained. The generated
+translation can fall back to interpretation. This bounded pair is distinct
+from both the guarded historical endpoint and the full legacy-object pair; it
+does not prove all callers, scenes or per-read native attribution. Linux, USA
+and native Windows remain unverified. No performance measurement was made.
 
 A retained EUR DS-20 checkpoint contains program 160 before its request-12
 instruction. Its flag `0244` is clear, so the original conditional can route

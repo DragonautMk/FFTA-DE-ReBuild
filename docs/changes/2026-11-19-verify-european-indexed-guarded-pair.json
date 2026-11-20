@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "verify-european-indexed-guarded-pair",
+  "title": "Verify indexed archive consumption with guarded translation",
+  "kind": "changed",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Verify the actual E170 managed indexed-archive path with the event-guarded translation, addressing the execution-mode gap in the earlier legacy-object comparison."
+  ],
+  "validation": [
+    "Wine unit indexed-guarded-ordinary-pair-wine-u75gcclc reuses the authenticated E170 dataset, recorded input and qpbgtmmw guarded translation. Eleven raw/managed frames match complete state, guest clock, central/wide video, OAM, dispatch and five audio streams; mixed audio is nonempty. With managed archive sources and caller literals altered, the owners serve 302 and 3,292 bytes. Protected inputs passed and Wine drained.",
+    "The earlier separate guarded historical endpoint 0gj2cglj matches the recorded normalized frame-9,000 state; the earlier 8,820-frame raw/managed pair klmjn8sv used a legacy translation. Neither result is replaced by this bounded pair."
+  ],
+  "limitations": [
+    "Generated dispatch may fall back to interpretation; the aggregate counters do not attribute individual reads to native PCs. Other scenes, consumers, Linux, USA and native Windows remain open. No performance measurements.",
+    "The diagnostic unit retains its generated end checkpoint for a source-backed follow-up; retire it when further indexed-route diagnosis no longer needs it."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-verify-european-indexed-historical-endpoint.json"
+  ]
+}

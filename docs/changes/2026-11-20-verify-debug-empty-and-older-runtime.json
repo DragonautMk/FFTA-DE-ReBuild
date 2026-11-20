@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-debug-empty-and-older-runtime",
+  "title": "Verify empty debug views and older runtime refusal",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record candidate empty content and cheat views and unsupported-capability behavior against a real older frontend."
+  ],
+  "validation": [
+    "The remapped candidate opened an empty content selector and cheat catalog on a public synthetic seed; reviewed screenshots show the refresh/add and import instructions. Frame, clock, full-state hash, registers, CPSR and keys stayed unchanged, the window closed normally and protected inputs were unchanged (dbg28-empty-compat-l50bh__p). A synthetic old-capability metadata check returned incompatible and not-sent via both clients.",
+    "A separate copied older Linux executable advertised cheat-catalog-v1 but not cheat-capabilities-v1. Both the new candidate debug-control and debug-command clients returned a clear incompatible/not-sent error without changing either mailbox or guest frame, clock, full-state hash, registers or keys. The older window closed normally and all protected originals stayed unchanged (dbg28-real-old-runtime-fixed-1rsjato1). The first driver timed out finding the old window under its newer title (nhi89gqx); the corrected title passed."
+  ],
+  "limitations": [
+    "These are selected Linux/Xvfb cases with synthetic input, not all empty states or old protocol combinations. Physical controller, native Windows, the rest of DBG2-27 and release remain open. The older executable was copied read-only; its original session was not resumed."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

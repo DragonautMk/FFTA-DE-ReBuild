@@ -128,7 +128,10 @@ In two isolated EUR Wine/Xvfb sessions started from the same seed, local-control
 CLI and the interactive console reached the same Thumb breakpoint with identical
 search results and endpoint state. On the default build, both refused the same
 watch request with the same feature-unavailable error before changing guest state.
-This comparison does not establish a live watch hit in an audit-enabled build.
+That comparison did not establish a live watch hit. A subsequent Linux/Xvfb
+check with an existing audit-enabled interpreter observed a synthetic 32-bit
+write hit, verified its address/value and backing bytes, and matched the full
+post-step state against a separate stop before the following instruction.
 
 <a id="named-searches--dbg2-24"></a>
 

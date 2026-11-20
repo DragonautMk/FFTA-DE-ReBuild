@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-european-adjacent-tilemap-rows",
+  "title": "Consume four adjacent European tilemap rows",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the observed tilemap row resource with four authenticated adjacent rows while preserving the prior row, original guest indexing and raw descriptor targets."
+  ],
+  "validation": [
+    "Source 5w43a4ri authenticates 48 newly owned bytes observed in the E172 sample; Wine trace atgqm66z observes an original byte reader via interpreter fallback.",
+    "Wine jcmdanqw preserves the prior row and 119 other resources, rejects coherent edits, checks poisoned mirrors and boundaries, and compares original interpreter and separately compiled pointer and flag readers over ten cases with equal state and guest clock.",
+    "Wine scene 4nxkgjnp matches state, clock, video, OAM, dispatch and audio for 600 frames with all 48 new source bytes altered and 137 owner bytes served in aggregate. Wine CLI ilg230s3 creates, reuses and verifies 121 matching files; Wine drained."
+  ],
+  "limitations": [
+    "The four pointed descriptors, other rows, selectors, consumers and scenes remain open; 3689 other observed bytes remain in the E172 sample. Ordinary trace uses interpreter fallback.",
+    "Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_rows_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

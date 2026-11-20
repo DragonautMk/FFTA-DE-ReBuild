@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "update-debug-v2-distribution-guide",
+  "title": "Update the portable Debug v2 guide and check Linux packaging",
+  "kind": "docs",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Replace obsolete future-tense console and cheat guidance with current menu, command, recipe, event, cheat-import and persistence paths; reconcile stale selector persistence and command-discovery descriptions."
+  ],
+  "validation": [
+    "The existing Linux portable packager rejected local runtime inputs containing the checked private build prefix. An internal diagnostic archive without that release guard contained 85 files, matched its manifest, omitted Data, cheat catalog and game/save/input filename classes, and ran debug-command help through the Bash wrapper after relocation to a Unicode/spaced path from an unrelated working directory; a local log was created. Inputs were protected and successful scratch removed (dbg28-linux-bundle-final-guide-1u409xol).",
+    "The 11 portable-packager synthetic tests and relative guide-link checks passed (dbg28-guide-package-tests-ulwuwvn5). An initial archive-inspection driver rejected the archive root directory before completing its checks (5pag2ugd); a corrected diagnostic passed (g7o_dflo), and the final guide revision was checked in 1u409xol."
+  ],
+  "limitations": [
+    "The diagnostic archive is not distributable: existing binaries contain a personal build prefix and the guarded packager refuses them. A path-remapped compatible runtime, complete DBG2-27 matrix and remaining old-version/empty-state acceptance remain necessary for DBG2-28. Existing Linux binary provenance is not a current-source rebuild claim; no release was published."
+  ],
+  "files": [
+    "docs/debug_tools.md",
+    "docs/debug_selector.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

@@ -155,6 +155,27 @@ pub use text_reader_registry::TextReaderRegistryStats;
 mod conditional_substitution_words;
 use conditional_substitution_words::ConditionalSubstitutionWordsResources;
 pub use conditional_substitution_words::ConditionalSubstitutionWordsStats;
+mod display_control_tables;
+use display_control_tables::DisplayControlTablesResources;
+pub use display_control_tables::DisplayControlTablesStats;
+mod compact_primary_alias;
+use compact_primary_alias::CompactPrimaryAliasResources;
+pub use compact_primary_alias::CompactPrimaryAliasStats;
+mod observed_lz;
+use observed_lz::ObservedLzResources;
+pub use observed_lz::{ObservedLzRead, ObservedLzStats};
+mod constructor_template64;
+use constructor_template64::ConstructorTemplate64Resources;
+pub use constructor_template64::ConstructorTemplate64Stats;
+mod observed_tilemap;
+use observed_tilemap::ObservedTilemapResources;
+pub use observed_tilemap::ObservedTilemapStats;
+mod observed_tilemap_descriptor;
+use observed_tilemap_descriptor::ObservedTilemapDescriptorResources;
+pub use observed_tilemap_descriptor::ObservedTilemapDescriptorStats;
+mod observed_tilemap_row;
+use observed_tilemap_row::ObservedTilemapRowResources;
+pub use observed_tilemap_row::ObservedTilemapRowStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -405,6 +426,13 @@ pub struct RuntimeResources {
     conditional_language_pair: Option<Box<ConditionalLanguagePairResources>>,
     text_reader_registry: Option<Box<TextReaderRegistryResources>>,
     conditional_substitution_words: Option<Box<ConditionalSubstitutionWordsResources>>,
+    display_control_tables: Option<Box<DisplayControlTablesResources>>,
+    compact_primary_alias: Option<Box<CompactPrimaryAliasResources>>,
+    observed_lz: Option<Box<ObservedLzResources>>,
+    constructor_template64: Option<Box<ConstructorTemplate64Resources>>,
+    observed_tilemap: Option<Box<ObservedTilemapResources>>,
+    observed_tilemap_descriptor: Option<Box<ObservedTilemapDescriptorResources>>,
+    observed_tilemap_row: Option<Box<ObservedTilemapRowResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -697,6 +725,27 @@ impl RuntimeResources {
         if let Some((data, _)) = files.conditional_substitution_words {
             resources.conditional_substitution_words = Some(Box::new(ConditionalSubstitutionWordsResources::new(data.clone(), &source.conditional_substitution_words.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.display_control_tables {
+            resources.display_control_tables = Some(Box::new(DisplayControlTablesResources::new(data.clone(), &source.display_control_tables.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.compact_primary_alias {
+            resources.compact_primary_alias = Some(Box::new(CompactPrimaryAliasResources::new(data.clone(), &source.compact_primary_alias.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.observed_lz {
+            resources.observed_lz = Some(Box::new(ObservedLzResources::new(data.clone(), &source.observed_lz.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.constructor_template64 {
+            resources.constructor_template64 = Some(Box::new(ConstructorTemplate64Resources::new(data.clone(), &source.constructor_template64.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.observed_tilemap {
+            resources.observed_tilemap = Some(Box::new(ObservedTilemapResources::new(data.clone(), &source.observed_tilemap.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.observed_tilemap_descriptor {
+            resources.observed_tilemap_descriptor = Some(Box::new(ObservedTilemapDescriptorResources::new(data.clone(), &source.observed_tilemap_descriptor.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.observed_tilemap_row {
+            resources.observed_tilemap_row = Some(Box::new(ObservedTilemapRowResources::new(data.clone(), &source.observed_tilemap_row.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -957,6 +1006,13 @@ impl RuntimeResources {
             conditional_language_pair: None,
             text_reader_registry: None,
             conditional_substitution_words: None,
+            display_control_tables: None,
+            compact_primary_alias: None,
+            observed_lz: None,
+            constructor_template64: None,
+            observed_tilemap: None,
+            observed_tilemap_descriptor: None,
+            observed_tilemap_row: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1096,6 +1152,13 @@ impl RuntimeResources {
             + self.conditional_language_pair.as_ref().map_or(0, |i| i.resident_bytes())
             + self.text_reader_registry.as_ref().map_or(0, |i| i.resident_bytes())
             + self.conditional_substitution_words.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.display_control_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.compact_primary_alias.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.observed_lz.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.constructor_template64.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.observed_tilemap.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.observed_tilemap_descriptor.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.observed_tilemap_row.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1260,6 +1323,13 @@ impl RuntimeResources {
     pub fn conditional_language_pair_stats(&self) -> Option<ConditionalLanguagePairStats> {self.conditional_language_pair.as_ref().map(|m|m.stats())}
     pub fn text_reader_registry_stats(&self) -> Option<TextReaderRegistryStats> {self.text_reader_registry.as_ref().map(|m|m.stats())}
     pub fn conditional_substitution_words_stats(&self) -> Option<ConditionalSubstitutionWordsStats> {self.conditional_substitution_words.as_ref().map(|m|m.stats())}
+    pub fn display_control_tables_stats(&self) -> Option<DisplayControlTablesStats> { self.display_control_tables.as_ref().map(|m| m.stats()) }
+    pub fn compact_primary_alias_stats(&self) -> Option<CompactPrimaryAliasStats> { self.compact_primary_alias.as_ref().map(|m| m.stats()) }
+    pub fn observed_lz_stats(&self) -> Option<ObservedLzStats> { self.observed_lz.as_ref().map(|m| m.stats()) }
+    pub fn constructor_template64_stats(&self) -> Option<ConstructorTemplate64Stats> { self.constructor_template64.as_ref().map(|m| m.stats()) }
+    pub fn observed_tilemap_stats(&self) -> Option<ObservedTilemapStats> { self.observed_tilemap.as_ref().map(|m| m.stats()) }
+    pub fn observed_tilemap_descriptor_stats(&self) -> Option<ObservedTilemapDescriptorStats> { self.observed_tilemap_descriptor.as_ref().map(|m| m.stats()) }
+    pub fn observed_tilemap_row_stats(&self) -> Option<ObservedTilemapRowStats> { self.observed_tilemap_row.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1345,6 +1415,7 @@ impl RuntimeResources {
             .or_else(|| self.obj_animations.as_ref()?.host_list(address & 0x1ffffff))
             .or_else(|| self.word_task_obj_animations.as_ref()?.host_list(address & 0x1ffffff))
             .or_else(|| self.layered_obj_animations.as_ref()?.host_list(address & 0x1ffffff))
+            .or_else(|| self.compact_obj_catalog.as_ref()?.host_list(address & 0x1ffffff))
     }
 
     pub fn font_keyboard_stats(&self) -> Option<FontKeyboardStats> { self.font_keyboard.as_ref().map(|f| f.stats()) }
@@ -1563,6 +1634,34 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.conditional_substitution_words {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.display_control_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.compact_primary_alias {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.observed_lz {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.constructor_template64 {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.observed_tilemap {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.observed_tilemap_descriptor {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.observed_tilemap_row {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -1953,6 +2052,13 @@ impl crate::MemMap {
             || ConditionalLanguagePairResources::source_page(index)
             || TextReaderRegistryResources::source_page(index)
             || ConditionalSubstitutionWordsResources::source_page(index)
+            || DisplayControlTablesResources::source_page(index)
+            || CompactPrimaryAliasResources::source_page(index)
+            || ObservedLzResources::source_page(index)
+            || ConstructorTemplate64Resources::source_page(index)
+            || ObservedTilemapResources::source_page(index)
+            || ObservedTilemapDescriptorResources::source_page(index)
+            || ObservedTilemapRowResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

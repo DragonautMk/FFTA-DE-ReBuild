@@ -1435,6 +1435,10 @@ impl Bus for MemMap {
         self.rom_resources.as_ref()?.decoded_packet_body(source)
     }
 
+    fn decoded_observed_lz(&self, source: u32) -> Option<crate::rom_data::ObservedLzRead> {
+        self.rom_resources.as_ref()?.decoded_observed_lz(source)
+    }
+
     fn read8(&mut self, addr: u32) -> u8 {
         let value = (|| {
         match addr >> 24 {

@@ -82,3 +82,28 @@ low. Builds and ordinary validation must work with the external disk unplugged.
       Identify the exact executable still needed and verify consumers before retiring
       any cache. The size is an upper bound for that review.
 - [ ] Native Windows verification remains deferred. The verified host was Linux.
+
+## Cleanup on 20 November 2026
+
+- [x] Verified all 32 local archives from 25 closed test directories. They hold
+  old executables and two generated JSON files. Seventeen files came from passing
+  runs and 15 from failed runs. All 32 matched their original SHA-256 hashes.
+- [x] Restored one GUI executable at its original path with the external volume
+  unavailable. It matched the retained executable byte for byte and returned to
+  the archive after comparison.
+- [x] Reclaimed **3.24 GiB** after compression, catalog entries and receipts.
+  The four rounds released **16.48 GiB** in total. The duplicate archive preview
+  found zero further copies. The local receipt is
+  `target/storage-historical-20261119-tcl2umci/result.json`.
+- [x] Archived the superseded European E171 and E172 datasets, the failed E173
+  extraction and a staged Linux debug executable. Verified all 354 files across
+  the four local archives. The successful E173 retry and the datasets used by
+  ongoing work stayed available.
+- [x] Restored E171 and the failed E173 extraction with the external volume
+  unavailable. The E171 text catalog matched its E179 counterpart byte for byte.
+  All 116 files in the failed E173 generation matched the successful retry.
+  Both temporary restorations retired after comparison.
+- [x] Reclaimed another **1.73 GiB** after accounting for the catalog and
+  receipts, bringing the five rounds to **18.22 GiB**. The internal volume
+  had **9.99 GiB** free at verification. U31 and leased test folders remain
+  deferred. The local receipt is `target/storage-closed-20261120-27pciska/result.json`.

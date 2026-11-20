@@ -7,8 +7,8 @@ The page requires [persistent Debug unlock](menu_clan_atlas.md#sblocco-permanent
 
 DBG2-03 adds **Debug > Content selector**, a reusable page over the
 [shared catalog](debug_content.md). A confirmed choice is a host reference:
-selecting it starts no replay, script, state load or cheat. DBG2-04 migration
-is in progress; completed checks remain separate from the new integration.
+selecting it starts no replay, script, state load or cheat. Typed role selection
+and persistence are described below; each action still performs its own preflight.
 
 Opening the page shows the available index or an empty list. **Refresh**
 explicitly updates declared roots in a bounded worker; the page stays navigable.
@@ -30,10 +30,10 @@ unknown-kind or incompatible files are refused. An index-generation change
 prevents using a previous row for a different file.
 
 **Favorite** retains at most 512 IDs; Recent retains the last 32 confirmations.
-Choices stay in memory in the current window: persistence and references after
-reopening are DBG2-07. Returning from the selector retains the caller and the
-confirmed choice. A selection still in progress is discarded when the page
-is cancelled; a late result neither reopens it nor applies a choice.
+Choices, views and bookmarks persist as described in
+[Persistent choices](#persistent-choices-dbg2-07). Returning from the selector
+retains the caller and confirmed choice. A selection still in progress is
+discarded when the page is cancelled; a late result neither reopens it nor applies a choice.
 
 **Details / preview** makes complete IDs, path, identity, status, reason and
 messages scrollable. For snapshots with an embedded image, it uses the existing
@@ -64,8 +64,8 @@ The page uses one I/O operation at a time, with index generation and view
 identity. It retains catalog caps; details wrap text using the renderer's same
 fonts, kerning and advances and bound the window to 16,384 characters.
 `debug-control status` includes host `content_picker` status for reading count,
-generation, pending operation and confirmed selection. This is not yet a new
-execution command for the DBG2-13/15 console.
+generation, pending operation and confirmed selection. The command console can
+also discover and select supported content by ID; see [local control](debug_control.md).
 
 Actual checks, platforms and any open criteria are recorded in the
 [DBG2 TODO](development/DEBUG_TOOLS_V2_TODO.md) and

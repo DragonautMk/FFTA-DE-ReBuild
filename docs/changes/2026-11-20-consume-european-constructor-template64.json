@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "consume-european-constructor-template64",
+  "title": "Consume the European 64-byte constructor template",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish the authenticated 64-byte EUR constructor template as sixteen little-endian words and serve its source reads from the managed dataset while the guest retains allocation and live writes.",
+    "Preserve prior resources, bounded dataset validation and unchanged USA revision; expose source-use counters and retain the existing reader routing."
+  ],
+  "validation": [
+    "Source n33tj6pd authenticates the template and original fixed-length copy. Wine nibv6hif preserves 116 earlier resources and passes poisoned boundary/mirror reads and interpreter versus compiled original copy including full state and guest clock.",
+    "Wine 2efs1kas matches state, clock, video, OAM, dispatch and audio across 600 recorded frames with all 64 source bytes altered; the managed owner serves 256 bytes. Wine CLI 0qyhd6ao creates, reuses and verifies 118 matching files.",
+    "Wine servers drained. Initial source attempt hr0chmaj used an unresolved generation placeholder; initial build grl6fsjd used a path relative to scratch. Both were corrected before passing checks."
+  ],
+  "limitations": [
+    "The observed scene does not identify its dynamic caller; unclassified fields, additional consumers and 3856 other bytes in the E172 sample remain open.",
+    "Linux, USA and native Windows checks remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/constructor_template64.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/constructor_template64.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/constructor_template64_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

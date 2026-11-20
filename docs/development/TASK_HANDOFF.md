@@ -31,49 +31,52 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 - State: active
 - Outcome: partial
-- Selection: paused INDEXED endpoint; `klmjn8sv` PASS, `tagk77bt` FAIL: normalized frame-9000 states differ. Diagnostics retained; resume on request.
-- E170-GUI-FAILED-DATASET-CLEANUP partial: nested raw lease blocks 114 duplicates; Wine drained, 3 host processes unreadable. Preserve lease. `e170-gui-load-undo-2myj8gap/cleanup-observation.json`.
+- E173 Red Spring `s73gcfva`/`czzprb8z`/`u2r2goyn` PASS; 634 bytes migrated.
+- Selection ROMDATA-01-E180-TILEMAP-DESCRIPTORS-3A4B18: EUR/Wine, no metrics/space cap. E180 rows PASS; four descriptor targets raw. Authenticate sources/readers, extend descriptor owner if proved; Wine reader/scene/CLI. Risk: target assets/aliases; stop on proof/prerequisite. Other families/Linux/USA open.
+- E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
+- E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
 - ROMDATA-04-METADATA14-ID1-ALIAS partial: batch `g2cugem4` PASS; event22/key161 ordinary path open. `6d1p8x1c` excludes operand161 in 191 declared writer instructions. Source `o9iv4u54` conditionally finds queue initialization selects zero slot1; later writes/IWRAM body and other producers remain open.
-- Title bank: `ntggzh1c` full six-phase default-hook sequence/flag PASS; `8j504dl0` patch-off pair PASS, five direct native headers. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
+- Title bank: six-phase default hook `ntggzh1c`, patch-off five native headers `8j504dl0` PASS. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
-- CONTEXT-3AE42C: five ordinary values/both tables direct native PASS (`arfmrs12`); title routes/cursor `4yp7q7yd`. E168 owns 261/261 pairs. Other readers/writers/value domain open.
-- E134: controlled (b6uugr9g), ordinary selections (jusromci), patch-off draw (an9unydr) PASS; neutral instance exits with 26 ticks (n455br6k). Full ordinary hold/default draw open; GUI cache (p7tuq7iz).
+- CONTEXT-3AE42C: five values/both tables native `arfmrs12`, title cursor `4yp7q7yd`; E168 owns 261/261 pairs. Other readers/writers/domain open.
+- E134: controlled b6uugr9g, selections jusromci, patch-off draw an9unydr PASS; neutral exits after 26 ticks n455br6k. Ordinary hold/default draw open; GUI cache p7tuq7iz.
 - CONTEXT-3710D4: E170 world-map pair and four direct native reads (`ax_5va8t`), controlled byte-domain/33-record fields (`9l5p79sq`) PASS; other callers/contexts/ABI open. e160 SUBSTITUTION-371158 and e161 RANGE-37140C pass; consumers open.
-- ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home `lby31j3d` identifies state-width/height groups, 56 bytes and 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
+- ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home lby31j3d: state-width/height, 56 bytes, 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
-- SUBSTITUTION-ORDINARY: Sol /root/sol_context_callback xhigh unconfirmed; home source gk6kl05w conditional; Wine zonc4h0q reads seven programs, zero callbacks. Other scenes open.
+- SUBSTITUTION-ORDINARY: Sol /root/sol_context_callback xhigh unconfirmed; home gk6kl05w conditional; zonc4h0q reads seven programs, zero callbacks. Other scenes open.
 - TEXT-READER-REGISTRY-371068: home pair `8672kdim`, complete byte-domain prefixes `u43_buss` PASS; callbacks, ordinary indices/scenes/platforms open.
-- SUBSTITUTION-REMAINING: E170 Wine sjojlovh/alfjrf8b PASS; CLI scene zero new reads. Ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
+- SUBSTITUTION-REMAINING: E170 sjojlovh/alfjrf8b PASS, CLI zero new reads; ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
 - SCRIPT39-REGISTRY-POSES: e163 runtime/12 readers/CLI PASS (ga87pps5/vgo1cewu); ordinary/domains/Linux/USA open.
 - SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76), action13 (uto86fc6/_mvdi9t3); home `s4quofvj`/`1zjiaoiz` link opcode39 to task/null parts; `lwnzoodb` body index/sequence/OBJ/pixel reads and 1,800-frame altered-source pair PASS. Full animation/other paths open.
 - INDEXED-DIRECT-3AE484/3AE5A4: e165 qk3xqc4z/e87ug9pq, e166 puxz2kz7/ozq4vcii PASS; other scenes/consumers/Linux/USA open.
 - CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary Wine `hf5czvkg` reads 14 bytes with altered sources; three-frame state/clock/video/OAM/nonempty audio pair PASS. Other paths/Linux/USA/native Windows open.
-- INDEXED-DIRECT-ORDINARY: cold prefix `v89740hr`, full 8,820-frame pair `klmjn8sv` PASS. Historical endpoint, other scenes/consumers open.
-- INDEXED-DS20 waiting: slot65 ancestry unknown; E167 build 4q2i907e PASS. Lower priority; rebuild run-ds20-wine.py if needed.
+- INDEXED-DIRECT-ORDINARY: prefix `v89740hr`, legacy 8,820-frame pair `klmjn8sv`, guarded endpoint `0gj2cglj`, 11-frame guarded pair `u75gcclc` PASS; other scenes/consumers open.
+- INDEXED-DS20 waiting: slot65 ancestry unknown; E167 4q2i907e PASS; lower priority, rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
 - Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
-  - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: partial; writers map to 59 rows (js3rbve5); retained lists negative/inconclusive (m1p_8lhy). Live domain, save loads and aliases open. `docs/rom_data_gameplay.md`.
-  - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: partial; static text screen 78suaoix found no token; generated/indirect sources open, no blind Select. `docs/rom_data_gameplay.md`.
-  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI and full pair accepted from unknown-ancestry save; cheat-free proof open. Ambervale confirmed; movement/post-save A windows negative (inl3r0yl/l_97lwxn). `docs/rom_data_gameplay.md`.
-  - Localized table graphics: scoped ordinary trigger and pair accepted; aggregate counters do not identify the three groups, and all-bank/all-group/consumer coverage remains open. `docs/rom_data_ui_graphics.md`, ordinary table extension section.
-  - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` / `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths accepted; global domain/ordinary invocation open. Unit320 negative and state2/state4/selector diagnosis closed without a scene. Archive 59..75, 789..866; no blind navigation.
-  - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: increments accepted; global inventory/consumers open. Do not repeat 61-truncation experiment. Archive 2853..2874, then selected family record.
-  - `ROMDATA-05-OBJ-VALIDATION`: equivalence/costs, GUI, archive and USA initializer accepted; native Windows, further catalogs/scenes and normal enablement open. Archive 3945..4087. Earlier RSS/space and `ROMDATA-05-BG-SCENES-COSTS` limits superseded by EUR/no-metrics steering.
-  - Compact OBJ e101..e108: prefixes/model/runtime/CLI accepted; e106/6c6928 selector2 600-frame pair accepted. Other e101..e107 ordinary use, record222/candidate-table and selector33 remain unproved. e108/6cc124 IN-19 Roulette selectors0/1 native and selector2 interpreter observed; 1200-frame pair passes. Full animation/selector-list domain open. Archive 11..65 and ordinary-use record; do not repeat accepted replays.
-  - UI context e109: selector/copy catalog and templates 5/2 paired Wine scenes accepted; full UI extent/consumers/all 11 records unproved. docs/rom_data_ui.md. Do not repeat pairs.
-  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 accepted. Full29-root/selector/animation/consumer coverage open; counters aggregate banks. Leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
-  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI accepted; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 paired Wine scenes PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: 59 writer rows js3rbve5, lists negative/inconclusive m1p_8lhy; live domain, saves, aliases open. `docs/rom_data_gameplay.md`.
+  - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: text screen 78suaoix no token; generated/indirect sources open; no blind Select. `docs/rom_data_gameplay.md`.
+  - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI/full pair PASS, unknown ancestry; cheat-free proof open. Ambervale; movement/post-save A negative inl3r0yl/l_97lwxn. `docs/rom_data_gameplay.md`.
+  - Localized table graphics: ordinary trigger/pair PASS, aggregate groups unidentified; all-bank/group/consumer coverage open. `docs/rom_data_ui_graphics.md` ordinary table extension.
+  - `ROMDATA-05-DYNAMIC-RAW-ORDINARY-REACHABILITY` / `ROMDATA-01-LOCALIZED-RAW-DYNAMIC-DOMAIN`: conditional fragments/paths PASS; global domain/ordinary invocation open. Unit320 negative, state2/4/selector diagnosis closed without scene. Archive 59..75, 789..866; no blind navigation.
+  - `ROMDATA-01-OBJ-REMAINING-DRAW-ROOTS`, `ROMDATA-01-OBJ-REMAINING-CONSTRUCTOR-SOURCES`, `ROMDATA-01-OBJ-GRAPHICS-PAYLOADS`: increments PASS; global inventory/consumers open. No repeat 61-truncation; archive 2853..2874, selected family record.
+  - `ROMDATA-05-OBJ-VALIDATION`: equivalence/costs, GUI, archive and USA initializer PASS; native Windows, other catalogs/scenes and normal enablement open. Archive 3945..4087; earlier RSS/space/`ROMDATA-05-BG-SCENES-COSTS` limits superseded by EUR/no-metrics.
+  - Compact OBJ e101..e108: prefixes/model/runtime/CLI, e106/6c6928 selector2 600-frame pair PASS. Other e101..e107 ordinary use, record222/candidate-table/selector33 open. e108/6cc124 IN-19 Roulette selectors0/1 native, 2 interpreter and 1200-frame pair PASS; full animation/selector domain open. Archive 11..65 and ordinary-use record; no repeat.
+  - UI context e109: selector/copy catalog, templates 5/2 pairs PASS; full extent/consumers/all 11 records open. docs/rom_data_ui.md; no repeat.
+  - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
 
-### TARGET-ARCHIVE-HISTORY
+### TARGET-NON-U31-FOLLOWUP
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: previous rounds recovered 13.24 GiB. The local batch reported PASS for 32/32 files.
-- Missing: independent offline restore and net total.
-- Resume: on request, target/storage-historical-20261119-tcl2umci/progress.json and STORAGE_CHECKLIST.md; skip U31.
+- Selection: user requests more cleanup; 18.22 GiB recovered (STORAGE_CHECKLIST.md).
+- Verified: prior four archives pass and restore offline.
+- Missing: identify and archive additional eligible outputs, verify restoration and net space.
+- Resume: inventory, guard consumers and host activity, then pack locally. Stop on completed inventory or ownership uncertainty. U31, active work and current assets are outside scope.
 
 ## Incomplete tasks and open criteria
 
@@ -133,22 +136,6 @@ Archive completed tasks; don't reopen closed children or stop other work.
 - Separate USA third-appearance value02: derived private entry/menu one-shot PASS (`dbg20-third-appearance-menu-xtrn7in4`); CH-0236 unchanged.
 - Resume: `docs/changes/2026-11-10-inspect-third-character-record.json`.
 
-### DBG2-27
-
-- State: waiting
-- Outcome: not_started
-- Verified: preceding foundations accepted; no recorded closure of parent 27, outside audit 13..23.
-- Missing: targeted integration/regression matrix; dependencies on earlier criteria and distinct platforms/input paths.
-- Resume: only criterion DBG2-27 in TODO section P4 upon a relevant request; no development selected now.
-
-### DBG2-28
-
-- State: waiting
-- Outcome: not_started
-- Verified: preceding foundations accepted; no recorded closure of parent 28, outside audit 13..23.
-- Missing: guide, distribution and version compatibility; depends on DBG2-27 for distributed features.
-- Resume: only criterion DBG2-28 in TODO section P4 upon a relevant request; no development selected now.
-
 ### PERFORMANCE-TODO
 
 - State: suspended
@@ -187,9 +174,9 @@ Archive completed tasks; don't reopen closed children or stop other work.
 
 ## Final handover
 
-- Task: GIT-DECOMP-INTO-MAIN, partial.
-- Last verified result: local main and decomp match ac36973b; committed range and memory checks passed.
-- Remaining work: fast-forward origin/main from 51d3e1f4 and verify both remote tips.
-- Errors or blockers: automatic review requires explicit user authorization to push to GitHub main.
-- Next action: await push authorization, then recheck remote ancestry and push without force.
-- References: Git refs and project-memory check.
+- Task: ROMDATA-01-E180-TILEMAP-DESCRIPTORS-3A4B18.
+- Last verified result: E180 rows PASS; four descriptor targets raw.
+- Remaining work: authenticate/migrate descriptors; other families/Linux/USA open.
+- Errors or blockers: none established.
+- Next action: inspect authenticated descriptor sources and trace reader.
+- References: `5w43a4ri`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.

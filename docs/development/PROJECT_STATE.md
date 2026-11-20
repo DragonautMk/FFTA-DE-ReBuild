@@ -213,6 +213,12 @@ and normal enablement retain their existing acceptance gates.
   verification remain unfinished.
 
 - The [integrated debug follow-up](DEBUG_TOOLS_V2_TODO.md) is in implementation.
+  DBG2-27 is accepted for its selected evidence matrix with the user's waiver
+  of native Windows execution; this is not a native Windows test result. Linux
+  physical-controller navigation and selector confirm/cancel passed within the
+  recorded limits. DBG2-28 is accepted for the documented guide and Linux
+  package/compatibility checks, with the same Windows waiver; no release was
+  published. DBG2-20 remains suspended.
   DBG2-24 provides [named bounded searches](../debug_probes.md#named-searches--dbg2-24) via the command console and debug-command. Definitions default to disabled; explicit runs support bounded counts/windows, a RAM guard and pause/capture/freeze actions. DBG2-24 is accepted in the recorded interpreter/Wine scope; broader platform and input validation remains DBG2-27.
   DBG2-25 adds [session-local pinned observations](../debug_probes.md#pinned-observations--dbg2-25) for registers, backing memory and authenticated EUR context fields. Samples retain sources and previous values; state restoration invalidates their context. The command console displays filtered changes and stale pins; native Windows and physical-controller coverage remain separate.
   DBG2-26 adds a bounded private [issue timeline](../debug_issues.md#timeline-and-selected-recipe--dbg2-26), bookmarks, selected recipe/checkpoint correlation and links to retained session reports. It records losses and does not infer causation; the copyable command reproduces the pinned replay rather than automatically running the selected recipe.
@@ -1803,6 +1809,74 @@ and normal enablement retain their existing acceptance gates.
   helper0, authenticatedclassicworldtravel/no arrival-missionoutcomeclaim.
   Chainclosed/oneordinary; no oldproof/negativebound/route replay ormetrics.
 
+- EUR E173-d172 [extends compact bank `6c1e78`](../rom_data_compact_catalog.md#e173-red-spring-compact-bank-and-host-sprite-lists)
+  by 634 bytes and connects host sprite lists to the existing typed catalog.
+  Wine source/readers, 600-frame altered-source action and CLI pass
+  (`j2cu37bc`, `s73gcfva`, `czzprb8z`, `u2r2goyn`). Of the E172 inventory's
+  9,423 unowned observed bytes, 8,789 lie outside this increment; later LZ
+  increments cover part of those. Other scenes/readers and platforms remain open.
+
+- EUR E174-d173 owns an [observed Red Spring LZ77 block](../rom_data_graphics.md#e174-observed-red-spring-lz77-block):
+  2,578 encoded and 4,096 decoded bytes. Guest reads use the retained source
+  representation and the observed SWI11 path uses decoded output. Wine
+  publication/SWI, altered-source 600-frame action and CLI pass (`xlo4jdo9`,
+  `c_ce4pye`, `mlc8meas`). Other callers, direct DMA/real-BIOS checks and
+  Linux/USA/native Windows remain open.
+
+- EUR E175-d174 extends the [observed Red Spring LZ77 owner](../rom_data_graphics.md#e175-additional-red-spring-lz77-streams)
+  to six additional streams/2,291 encoded bytes. Wine source, reader/guard,
+  600-frame altered-source action and CLI checks pass (`zi6u7skx`, `_42f690d`,
+  `6jqo8wyd`, `fonccar1`). The finite aggregate input guard is 768 MiB;
+  per-file bounds remain. Before E176, the E172 inventory had 3,920 observed
+  unowned bytes outside the three completed increments; classification,
+  other scenes/readers, Linux/USA/native Windows remain open.
+
+- EUR E176-d175 publishes a [64-byte constructor template](../rom_data_gameplay.md#e176-european-constructor-template-at-14d1f0)
+  as 16 unclassified little-endian words while the original guest retains live
+  allocation and writes. Wine source/copy `n33tj6pd`/`nibv6hif` and altered-
+  source 600-frame action `2efs1kas` and CLI `0qyhd6ao` pass. The earlier E172 sample has 3,856
+  observed unowned bytes outside E173–E176; other callers/scenes and Linux,
+  USA and native Windows remain open.
+
+- EUR E177-d176 publishes one [observed 16×16 tilemap](../rom_data_graphics.md#e177-observed-red-spring-tilemap)
+  as a typed header and 24 runs. Wine source/trace/reader `yiosygyx`,
+  `r7r9ungh`, `798svo0e`, the 600-frame action `mpurdf2y` and production CLI
+  `it5komaw` pass.
+  The E172 sample has 3,756 other observed unowned bytes. Other modes, sources,
+  Linux, USA and native Windows remain open.
+
+- EUR E178-d177 publishes its [tilemap descriptor](../rom_data_graphics.md#e178-observed-tilemap-descriptor)
+  with an explicit tilemap dependency. Wine source/trace/reader `vapbrkwo`,
+  `i1a1chh7`, `ve3ggqgj`, 600-frame scene `7tvsftjk` and CLI `2aiu_s0o` pass.
+  Before E179, the E172 sample had 3,749 other observed unowned bytes. Other
+  descriptors, Linux, USA and native Windows remain open.
+
+- EUR E179-d178 publishes one [observed tilemap row](../rom_data_graphics.md#e179-observed-tilemap-row)
+  with a descriptor dependency. Wine source/trace/reader `cc9b5_to`,
+  `xvj_6rmw`, `fhgchuk_`, scene `4y6kd_rg` and CLI `n7qzldpv` pass. The E172
+  sample had 3,737 other observed unowned bytes before E180. Other rows,
+  Linux, USA and native Windows remain open.
+
+- EUR E180-d179 extends the [observed tilemap rows](../rom_data_graphics.md#e180-adjacent-observed-tilemap-rows)
+  by four rows/48 observed bytes. Wine source/trace/readers `5w43a4ri`,
+  `atgqm66z`, `jcmdanqw`, scene `4nxkgjnp` and CLI `ilg230s3` pass. The four
+  descriptor targets remain raw; the E172 sample has 3,689 other observed
+  unowned bytes. Other families, Linux, USA and native Windows remain open.
+
+- EUR E172-d171 serves the [conditional primary-task compact alias](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278):
+  five source bytes with existing task/catalog dependencies. Wine `_5qb5ej3`
+  passes source boundaries and ten controlled original-prefix state/clock
+  comparisons; production CLI create/reuse/verify passes (`lhle9dmz`). Ordinary
+  invocation and deferred platforms remain open.
+
+- The EUR E171-d170 [display-control tables](../rom_data_runtime.md#european-display-control-source-tables-at-14d2dc)
+  publish 32 source bytes as two halfword arrays and four IWRAM pointers; the
+  pointed-to structures remain live. Wine `8bb1ykny` verifies preservation of
+  all 113 prior resources, original reader paths and one 12-frame ordinary
+  raw/managed pair with the backing bytes altered. Production Wine CLI
+  create/reuse/verify passes (`ikwqgxwg`). Other readers and deferred platforms
+  remain open.
+
 - The [EUR indexed graphics archive source contract](../rom_data_indexed_graphics.md)
   now includes 33 typed context records at `3710d4..371158` in e159-d158;
   one Wine publication/reader test and an 11-frame ordinary context-3 window
@@ -1835,7 +1909,10 @@ and normal enablement retain their existing acceptance gates.
   A source-guided ordinary program-1 Wine window read neither direct archive
   (`dh34xwul`). A separate cold-origin Wine continuation (`abz4lk0q`) reads
   both and passes 11 frames of raw/managed state, clock, video, OAM and audio
-  comparison with managed sources altered; other scenes remain open.
+  comparison with managed sources altered. A separate E170 guarded-translation
+  pair passes the same bounded source-use criterion (`u75gcclc`); another
+  guarded replay matches the normalized historical endpoint (`0gj2cglj`).
+  Other scenes and consumers remain open.
   Conditional language-position addresses now have 256 of 261 physical pairs
   assigned in E166 (`a1j2lsxv`); the remaining five pairs and the ordinary
   selector domain are still open. [Details](../rom_data_obj.md#conditional-language-position-pairs-e141).

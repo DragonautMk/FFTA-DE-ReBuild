@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "accept-debug-integration-user-windows-waiver",
+  "title": "Accept the selected debug integration matrix with a Windows waiver",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb and Windows GNU/Wine"
+  ],
+  "changes": [
+    "Accept DBG2-27 for the documented selected matrix after the user explicitly waived native Windows execution; preserve the distinction between acceptance and a test result."
+  ],
+  "validation": [
+    "Reviewed retained Wine selection, controller, cancellation, error and moved-folder records; Linux event-console, three-channel parity, live watch and physical navigation/selector receipts; cheat and recipe replay records. Selected cases and protected-input/normal-close evidence are linked in the integration matrix. Synthetic divergence and earlier timeouts remain negative outcomes."
+  ],
+  "limitations": [
+    "Native Windows was not run: the user requested that criterion be considered accepted. The physical cancel case allowed repeated presses; other devices, dialogs and combinations remain unverified. DBG2-20 remains suspended and its outstanding criteria are not covered by this acceptance."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md"
+  ]
+}

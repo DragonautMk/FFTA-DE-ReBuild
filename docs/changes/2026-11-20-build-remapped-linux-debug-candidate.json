@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "build-remapped-linux-debug-candidate",
+  "title": "Build a path-remapped Linux debug package candidate",
+  "kind": "docs",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Build a guarded local Linux candidate from a copied current source snapshot with remapped build paths and public TinyCC; retain the selected archive for remaining DBG2-28 checks."
+  ],
+  "validation": [
+    "Offline release Cargo build and TinyCC succeeded from protected sources. The portable packager passed the private-prefix guard; all 85 archive files matched their manifest, game/save/input and private Data/catalog paths were excluded, and a moved Unicode/spaced bundle ran debug-command help from an unrelated working directory with a local log. ldd reported no missing runtime libraries on the build host. The validation unit passed all input guards and retained only candidate.tar.gz (dbg28-remapped-linux-candidate-6dili0rp; archive SHA-256 ba5625cade56dbb68636e2622ab20547ca4806629ac27b028ceb2456be963677)."
+  ],
+  "limitations": [
+    "This is a local Linux candidate, not a published release. The prefix guard checks the declared private prefix, not every possible secret; source snapshot includes concurrent workspace changes protected during the unit. Actual candidate GUI, old-version and empty-state checks, native Windows and physical controller remain open. Host ldd does not prove compatibility with all Linux distributions."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

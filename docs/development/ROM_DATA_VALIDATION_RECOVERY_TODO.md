@@ -421,8 +421,11 @@ current evidence before running another check.
   audio with managed ROM sources altered. The original cold input prefix now
   joins the checkpoint after the test's existing audio-output drain
   (`v89740hr`); raw snapshots differ in that silent output queue. The full
-  8,820-frame recorded continuation now passes on E170 (`klmjn8sv`). Other
-  scenes and consumers remain open.
+  8,820-frame recorded continuation now passes on E170 (`klmjn8sv`). A separate
+  replay using the guarded translation matches the normalized historical
+  endpoint (`0gj2cglj`). A separate bounded guarded E170 raw/managed pair
+  reads both archives and matches 11 frames (`u75gcclc`). Other scenes and
+  consumers remain open.
   The source-guided program-1 checkpoint
   (`p0qt7o6q`) yields zero archive reads in 6,000 recorded Wine frames
   (`dh34xwul`); no scene pair ran. Determine whether the command or flag gate
@@ -451,8 +454,22 @@ current evidence before running another check.
   the recorded frame-9,000 endpoint. With both archive spans and caller literals
   inverted during execution, the archives serve 302 and 3,292 bytes; full state,
   clock, video, OAM, dispatch and five nonempty audio streams match each frame.
-  Historical endpoint identity, other scenes, consumers and platforms remain
-  open. [Evidence](../rom_data_indexed_graphics.md).
+  The pair itself uses a legacy translation and does not establish historical
+  endpoint identity. Other scenes, consumers and platforms remain open.
+  [Evidence](../rom_data_indexed_graphics.md).
+- [x] **ROMDATA-04-INDEXED-HISTORICAL-ENDPOINT scoped:** the recorded Wine
+  continuation using retained guarded translation `qpbgtmmw` matches the
+  historical frame-9,000 complete state after normalization of audio output,
+  tap enablement and host mixer shadows (`0gj2cglj`). The earlier legacy-object
+  attempt `tagk77bt` remains FAIL and retains its guest-state differences.
+  This separate replay does not repeat the legacy raw/managed pair with the
+  guarded object; other routes and platforms remain open.
+- [x] **ROMDATA-04-INDEXED-GUARDED-PAIR scoped:** E170 Wine `u75gcclc` uses
+  the guarded translation and matches 11 ordinary raw/managed frames with the
+  two archive sources and caller literals altered in the managed ROM copy.
+  Both archives have positive typed reads; state, clock, video, OAM, dispatch
+  and audio match, with nonempty mixed audio. Other scenes, consumers and
+  platforms remain open. [Evidence](../rom_data_indexed_graphics.md).
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
@@ -791,6 +808,131 @@ current evidence before running another check.
 
 ## 5. Resolve prerequisites before selecting further proofs
 
+- [ ] **ROMDATA-01-POST-INDEXED-LOWER-READERS:** attribute the remaining 536
+  lower-ROM bytes not matched by prior source witnesses in the E170 post-indexed
+  Wine inventory (`108ejhdv`, reconciliation `c8paxoub`). Thirty-two bytes at
+  `14d2dc..14d2fc` have a bounded table contract (`9ei8p1cy`, `s94ilj14`) and
+  E171 managed ownership (`8bb1ykny`). Remaining unmatched addresses may be
+  executable support; the inventory alone does not prove an asset.
+  [Evidence](../rom_data_runtime.md#e170-post-indexed-rom-read-inventory).
+- [x] **ROMDATA-02-04-DISPLAY-CONTROL-TABLES scoped EUR/Wine:** model and publish the two
+  four-halfword display-control arrays and four IWRAM pointers at
+  `14d2dc..14d2fc`, then serve their bytes through the EUR runtime. Preserve
+  live destination structures and raw fallback outside the three exact spans;
+  verify affected source, mixed-boundary and original-reader behavior on Wine.
+  E171 Wine `8bb1ykny` passes publication, boundaries, original-reader cases
+  and a 12-frame ordinary pair. Production Wine CLI create/reuse/verify passes
+  (`ikwqgxwg`).
+  Other readers and selectors, Linux, USA and native Windows remain pending.
+  [Source contract](../rom_data_runtime.md#european-display-control-source-tables-at-14d2dc).
+- [x] **ROMDATA-01-E172-REDSPRING-RAW scoped EUR/Wine:** the retained
+  600-frame action matches raw/managed state, clock, video, OAM, dispatch and
+  audio, with positive compact-root use. `c9uprkbl` failed only while copying
+  its oversized evidence; `05iu77v6` verified the original inputs and report
+  and retained the complete inventory without a replay.
+  [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
+- [x] **ROMDATA-01-E172-REDSPRING-6C1E78-RAW scoped EUR/Wine:** E173 extends
+  the authenticated compact bank by 634 observed bytes and connects its host
+  sprite lists. Source/reader `s73gcfva`, altered-source 600-frame action
+  `czzprb8z` and production CLI `u2r2goyn` pass. The first reader attempt
+  `k2ma7lbz` used an object lacking the selected block and was corrected.
+  [Evidence](../rom_data_compact_catalog.md#e173-red-spring-compact-bank-and-host-sprite-lists).
+- [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** classify the 8,789 previously
+  observed unowned bytes outside the E173 bank increment. E174 migrates 2,578
+  and E175 another 2,291. E176 owns another 64, E177 another 100, E178
+  another 7, E179 another 12 and E180 another 48; the other 3,689 require classification before
+  claiming the action has no remaining raw source. Other scenes,
+  consumers, Linux, USA and native Windows remain pending.
+- [x] **ROMDATA-01-E172-REDSPRING-AF271C scoped EUR/Wine:** E177 identifies a 102-byte
+  compressed tilemap, including 100 sampled unowned bytes. Source `yiosygyx`,
+  Wine trace `r7r9ungh`, original reader/publication `798svo0e` and altered-
+  source 600-frame action `mpurdf2y` and production CLI `it5komaw` pass.
+  [Evidence](../rom_data_graphics.md#e177-observed-red-spring-tilemap).
+- [ ] **ROMDATA-01-E177-TILEMAP-OTHER-CONSUMERS:** identify other assets,
+  modes and readers without assuming guest bounds or a complete tilemap family;
+  the table at `3a4d84` and other descriptor rows remain raw.
+- [x] **ROMDATA-01-E178-TILEMAP-ROW-3A4BEC scoped EUR/Wine:** E179 publishes the observed
+  12-byte row selecting the E178 descriptor. Wine trace `xvj_6rmw`, source
+  `cc9b5_to`, original reader/publication `fhgchuk_` and altered-source
+  600-frame scene `4y6kd_rg` and production CLI `n7qzldpv` pass.
+  [Evidence](../rom_data_graphics.md#e179-observed-tilemap-row).
+- [ ] **ROMDATA-01-E179-ROW-OTHER-CONSUMERS:** identify other rows, selectors
+  and readers without assuming a global guest bound.
+- [x] **ROMDATA-01-E179-TILEMAP-ROWS-3A4BBC scoped EUR/Wine:** E180 extends the selected row
+  resource with four adjacent observed rows. Source `5w43a4ri`, Wine trace
+  `atgqm66z`, original reader/publication `jcmdanqw` and 600-frame scene
+  `4nxkgjnp` and production CLI `ilg230s3` pass.
+  [Evidence](../rom_data_graphics.md#e180-adjacent-observed-tilemap-rows).
+- [ ] **ROMDATA-01-E180-ROW-TARGETS:** authenticate and migrate the four
+  still-raw descriptor targets at `3a4b18..3a4b38` and their consumers.
+- [ ] **ROMDATA-01-E180-ROWS-LINUX:** repeat row publication, readers, scene
+  and CLI checks when Linux coverage resumes.
+- [ ] **ROMDATA-01-E180-ROWS-USA:** authenticate any equivalent USA sources
+  and validate their consumers; native Windows remains pending too.
+- [ ] **ROMDATA-01-E179-ROW-LINUX:** repeat row publication, reader, scene and
+  CLI checks when Linux coverage resumes.
+- [ ] **ROMDATA-01-E179-ROW-USA:** authenticate any equivalent USA source and
+  validate its consumers; native Windows remains pending too.
+- [x] **ROMDATA-01-E177-TILEMAP-DESCRIPTOR-3A4B70 scoped EUR/Wine:** E178 authenticates the
+  8-byte descriptor and publishes it with its tilemap dependency. Wine trace
+  `i1a1chh7`, source `vapbrkwo`, reader/publication `ve3ggqgj` and 600-frame
+  scene `7tvsftjk` and production CLI `2aiu_s0o` pass.
+  [Evidence](../rom_data_graphics.md#e178-observed-tilemap-descriptor).
+- [ ] **ROMDATA-01-E178-DESCRIPTOR-LINUX:** repeat descriptor publication,
+  original reader, affected scene and CLI checks when Linux coverage resumes.
+- [ ] **ROMDATA-01-E178-DESCRIPTOR-USA:** locate and authenticate an equivalent
+  USA descriptor and validate its consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E177-TILEMAP-LINUX:** repeat publication, original reader,
+  affected scene and CLI checks on Linux when platform coverage resumes.
+- [ ] **ROMDATA-01-E177-TILEMAP-USA:** locate and authenticate any equivalent
+  USA source and validate its consumers; native Windows remains pending too.
+- [x] **ROMDATA-01-E175-REDSPRING-14D1F0 scoped EUR/Wine:** E176 owns the
+  authenticated 64-byte constructor template. Source `n33tj6pd`, poisoned
+  native/interpreter copy and publication `nibv6hif`, and the altered-source
+  600-frame action `2efs1kas`, and production CLI `0qyhd6ao` pass. Static constructor evidence and the scene
+  inventory do not by themselves identify the scene's dynamic caller.
+  [Evidence](../rom_data_gameplay.md#e176-european-constructor-template-at-14d1f0).
+- [ ] **ROMDATA-01-E176-CONSTRUCTOR64-OTHER-CALLERS:** identify live-record
+  field meanings and additional callers/scenes; the original guest retains
+  allocation and writes. Do not infer a caller from the address alone.
+- [ ] **ROMDATA-01-E176-CONSTRUCTOR64-LINUX:** repeat publication, copy and
+  affected scene/CLI checks on Linux when platform coverage is resumed.
+- [ ] **ROMDATA-01-E176-CONSTRUCTOR64-USA:** locate and authenticate any
+  equivalent USA resource and validate its consumers; no USA equivalence is
+  assumed. Native Windows validation remains separately pending.
+- [x] **ROMDATA-01-E172-REDSPRING-OTHER-LZ scoped EUR/Wine:** E175 publishes
+  six additional LZ77 streams. Source `zi6u7skx`, publication/SWI and input
+  guards `_42f690d`, altered-source 600-frame action `6jqo8wyd` and CLI
+  `fonccar1` pass. The initial publication `f0e28tia` reached the earlier
+  aggregate input bound; the corrected finite bound and per-file guards pass.
+  [Evidence](../rom_data_graphics.md#e175-additional-red-spring-lz77-streams).
+- [ ] **ROMDATA-01-E172-REDSPRING-OTHER-LZ-CONSUMERS:** identify the six
+  assets and other callers; verify direct DMA and real-BIOS consumption, plus
+  Linux, USA and native Windows, before claiming wider coverage.
+- [x] **ROMDATA-01-E172-REDSPRING-B0E2B8 scoped EUR/Wine:** E174 publishes
+  the observed LZ77 block and serves both guest source reads and decoded SWI11
+  output. Publication/SWI `xlo4jdo9`, altered-source 600-frame action
+  `c_ce4pye` and production CLI `mlc8meas` pass.
+  [Evidence](../rom_data_graphics.md#e174-observed-red-spring-lz77-block).
+- [ ] **ROMDATA-01-E172-REDSPRING-B0E2B8-OTHER-CONSUMERS:** identify the asset
+  and other callers; verify direct DMA and real-BIOS consumption, plus Linux,
+  USA and native Windows, before claiming wider coverage of this block.
+- [x] **ROMDATA-01-OBJ-6CB278-PRIMARY scoped EUR/Wine:** E172 Wine
+  `_5qb5ej3` passes publication, mixed boundaries and ten controlled original
+  prefixes for the five conditional primary-alias bytes. Production Wine CLI
+  create/reuse/verify passes (`lhle9dmz`).
+  [Evidence](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278).
+- [ ] **ROMDATA-04-OBJ-6CB278-PRIMARY-ORDINARY:** establish an ordinary primary
+  ID-362 invocation and its complete callback/consumers before claiming normal
+  use. Other selectors, Linux, USA and native Windows remain open.
+- [ ] **ROMDATA-E172-DEFERRED-REGRESSIONS:** update or explicitly preserve
+  E171-pinned Wine fixtures before rerunning them with E172, then run affected
+  Linux checks when Linux validation is selected. USA and native Windows remain
+  separate pending platforms.
+- [ ] **ROMDATA-E171-DEFERRED-REGRESSIONS:** update or explicitly preserve the
+  revision-pinned historical E170 Wine fixtures before rerunning them against
+  E171; run the corresponding affected Linux checks when Linux validation is
+  selected. USA and native Windows remain separate pending platforms.
 - [x] **ROMDATA-02-04-6C1E78-DEFAULT-SELECTORS:** reconcile source geometry and
   current-manifest conflicts for caller-derived selectors 4/6, then integrate
   and validate them if supported. Current conditional selectors 3/5 do not

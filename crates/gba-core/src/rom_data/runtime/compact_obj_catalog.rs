@@ -3,11 +3,11 @@ use super::*;
 use crate::rom_data::compact_obj_catalog as model;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64 }
+pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64, pub host_reads: u64 }
 
 pub(super) struct CompactObjCatalogResources {
     data: model::CompactObjCatalog,
-    counters: [AtomicU64; 2],
+    counters: [AtomicU64; 3],
 }
 impl CompactObjCatalogResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -35,8 +35,14 @@ impl CompactObjCatalogResources {
         self.counters[1].fetch_add(source_bytes, Ordering::Relaxed);
         Some(bytes)
     }
+    pub(super) fn host_list(&self, offset: u32) -> Option<&crate::rom_data::obj_lists::List> {
+        let list = self.data.banks.iter().flat_map(|bank| &bank.lists)
+            .find(|entry| entry.list.source_offset == offset)?;
+        self.counters[2].fetch_add(1, Ordering::Relaxed);
+        Some(&list.list)
+    }
     pub(super) fn stats(&self) -> CompactObjCatalogStats {
-        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed) }
+        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed), host_reads: self.counters[2].load(Ordering::Relaxed) }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>()

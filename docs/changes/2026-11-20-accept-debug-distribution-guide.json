@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "accept-debug-distribution-guide",
+  "title": "Accept the scoped Debug v2 distribution guide",
+  "kind": "docs",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Accept DBG2-28 for the recorded guide, portable candidate and compatibility checks after the DBG2-27 selected matrix was accepted with a user waiver for native Windows execution."
+  ],
+  "validation": [
+    "Reviewed the public guide, selector migration/persistence and local-channel capability guidance; 11 packager tests, guarded remapped 85-file Linux candidate, moved wrapper/log, selected candidate GUI, empty states and a real older Linux frontend refusal passed in their recorded units. No private catalog, game/save/input payload or personal Data was packaged."
+  ],
+  "limitations": [
+    "The accepted evidence is limited to the documented cases; native Windows was not executed and is covered only by the user waiver. Other platforms and device combinations remain unverified. No release was published; DBG2-20 remains suspended."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_tools.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

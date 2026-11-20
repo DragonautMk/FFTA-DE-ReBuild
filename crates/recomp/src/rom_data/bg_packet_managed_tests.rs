@@ -232,7 +232,7 @@ fn european_packet_dataset_publishes_authenticates_and_retains_e7() {
             0,
             0,
             0,
-            0,
+            MAX_SCRIPT_TEXT_FILE_BYTES as usize,
 
             0,
 
@@ -264,6 +264,13 @@ fn european_packet_dataset_publishes_authenticates_and_retains_e7() {
         0,
         0,
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,        0, 0, 0, 0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0,
         0,
         0,

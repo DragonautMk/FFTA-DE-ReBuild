@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-linux-debug-channel-parity",
+  "title": "Verify Linux debug command channel parity",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record a same-seed inspection and neutral-step comparison across menu, local-control CLI and interactive command console."
+  ],
+  "validation": [
+    "Three isolated interpreter sessions used the same protected public synthetic ROM, seed and existing Linux runtime. The full 16-byte read-only inspection matched across channels without guest mutation; origin and one-frame endpoint state hashes, frame, clock, registers, CPSR, keys, PC, mode, pause and remaining budget matched. Each GUI closed normally and protected inputs stayed unchanged (dbg27-linux-threeway-guarded3-zwhascbo). Console screenshots were reviewed.",
+    "The navigation-only unit passed and located the default inspect form (dbg27-linux-inspect-route-5042xmbn). Earlier comparison drivers stopped before parity: rapid simulated keys collapsed, a return retained the selected row, or a section click did not land (723el4jv, ai_smwm_, q3fqberg); the guarded final run passed. A separate physical pad was detected but its input window timed out without an observed button (dbg27-linux-physical-pad-x3e2zrpt)."
+  ],
+  "limitations": [
+    "The selected synthetic interpreter scenario does not establish general Linux integration, real controller input, native Windows, other commands or a source-to-executable rebuild match. The tested executable SHA-256 is 2f53ae682ea1643d92a0136261aba2c5b396a36dac014648d4d8e6f7277eb50f."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/debug_control.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}

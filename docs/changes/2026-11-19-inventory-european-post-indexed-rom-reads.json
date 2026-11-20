@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-19",
+  "slug": "inventory-european-post-indexed-rom-reads",
+  "title": "Inventory European ROM reads after indexed archive use",
+  "kind": "changed",
+  "platforms": ["EUR / Wine"],
+  "changes": [
+    "Record a bounded source-read inventory after the guarded indexed-archive continuation and identify remaining addresses that require reader attribution before proposing another resource."
+  ],
+  "validation": [
+    "Wine unit e170-post-indexed-raw-audit-wine-108ejhdv observes 12 recorded neutral frames using the authenticated E170 dataset and retained guarded translation. Instrumented and reference states, clocks, video, OAM, dispatch and audio match each frame; protected inputs passed and Wine drained.",
+    "Read-only reconciliation e170-post-indexed-reconcile-c8paxoub verifies earlier source witnesses against the exact EUR ROM. Of 4,680 bytes outside manifest spans, 3,600 are within the previously documented copied-IWRAM block and 12 match hardware/branch support. Of 1,068 lower-ROM bytes, 500 overlap previous source witnesses and 568 do not."
+  ],
+  "limitations": [
+    "The observed copied block contains executable support but individual bytes are not all classified as instructions. Earlier witnesses do not establish the current reader PCs; the 568 unmatched bytes are leads rather than established assets. Byte reads at 14d2dc..14d2ec need reader and extent attribution.",
+    "The audit covers one short recorded window and selected instrumented readers. Other scenes and consumers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-19-verify-european-indexed-guarded-pair.json"
+  ]
+}

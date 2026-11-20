@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "verify-physical-selector-controls",
+  "title": "Verify physical controller selector controls on Linux",
+  "kind": "docs",
+  "platforms": [
+    "Linux/Xvfb"
+  ],
+  "changes": [
+    "Record real controller confirmation and cancellation through the Debug content selector."
+  ],
+  "validation": [
+    "A user used the bottom and right face buttons of a Generic X-Box pad in an isolated paused synthetic session. Physical button events were observed, the content selector opened and returned to Debug, full guest state hash, frame, clock, registers, CPSR and keys stayed unchanged, screenshots were reviewed, inputs remained protected and the window closed normally (dbg27-physical-confirm-cancel-v2-srbepjjc).",
+    "The first attempt recorded confirm and a physical cancel button but timed out waiting for return (72s6yqj4). The passing retry allowed the user to press cancel again and extended the observation window; its raw event capture does not prove which cancel press produced the return."
+  ],
+  "limitations": [
+    "This covers one controller, one selector and simulated keyboard setup on Linux/Xvfb; it does not establish other dialogs, held-button behavior, current-source rebuild equivalence, native Windows or other devices."
+  ],
+  "files": [
+    "docs/development/DEBUG_TOOLS_V2_VALIDATION_MATRIX.md",
+    "docs/development/DEBUG_TOOLS_V2_TODO.md",
+    "crates/menu/assets/debug_v2.tsv"
+  ],
+  "references": [
+    "docs/development/DEBUG_TOOLS_V2_TODO.md"
+  ]
+}
