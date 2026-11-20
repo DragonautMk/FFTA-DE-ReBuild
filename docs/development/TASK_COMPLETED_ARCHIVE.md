@@ -24473,3 +24473,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Android build 31 opens the ROM-selection menu and offers guarded cartridge/state file imports; the user confirmed the initial menu and three states. Three legacy states were copied to empty slots and the legacy cartridge save was imported with approval; existing destination data were backed up and originals preserved.
 - Evidence: `docs/changes/2026-11-20-android-startup-save-import.json`; `android-setup-import-native-tests-hut4irtf`, `android-initial-menu-import-build31-f8l2g21t`, `android-initial-menu-import-audit31-p0iwwu0g`, `android-initial-menu-build31-device-update-dwo8s5d0`, `android-import-previous-states-into-empty-slots-msie2qdw`, `android-import-previous-cartridge-with-backup-fw6zgm0r`.
 - Limits: Android prevents direct app-only access to legacy private files; file import needs an export or computer transfer. Raw saves are size-checked only; full gameplay and Windows ADB remain unverified.
+
+### ANDROID-STARTUP-IMPORT-RELEASE-DRAFT
+
+- Outcome: completed
+- Verified criteria: main and decomp synchronized to source commit `1750b8c0`; the unpublished 1.2 draft targets that commit and all 12 asset sizes and SHA-256 hashes match the local package. Android source manifest matches the commit and GitHub Project memory CI passed.
+- Evidence: draft 452599943; `android-initial-menu-import-build31-f8l2g21t`, `android-initial-menu-import-audit31-p0iwwu0g`; GitHub run 44751737774.
+- Limits: the release remains a draft; Android app-only legacy access and native Windows/Windows ADB remain unverified. Later memory-only commits do not alter the build sources.

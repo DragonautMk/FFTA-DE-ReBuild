@@ -75,13 +75,11 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ANDROID-AUTO-MIGRATION
 
-- State: active
+- State: waiting
 - Outcome: partial
-- Selection: finish the 1.2 draft refresh for the user-requested startup save import.
-- Verified: user confirmed build 31 initial menu and all three migrated states; the approved legacy cartridge save was copied with device and private preimage backups. Originals and other saves remained unchanged. `ANDROID-STARTUP-SAVE-IMPORT` is closed.
-- Missing: synchronize main/decomp and update the unpublished draft with the verified build and notes.
-- Limits: Android blocks silent direct access to the old app's private files; Windows ADB and full gameplay remain unverified.
-- Resume: commit reviewed changes, verify source identity and refresh draft 452599943 without publishing.
+- Verified: user confirmed build 31 startup menu and all three migrated states; the approved legacy cartridge save was imported with recoverable preimages. The startup-import and draft-refresh children are completed.
+- Missing: silent app-only import from 1.1.2 is blocked by Android's private storage and the unavailable old signer/provider. Windows ADB and full gameplay remain unverified.
+- Resume: revisit silent access only if a supported transfer channel or compatible signer becomes available. Existing file import and ADB transfers are not synchronization.
 
 ### ANDROID-MENU-PARITY
 
@@ -177,9 +175,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ANDROID-AUTO-MIGRATION, release draft refresh.
-- Last verified result: user confirmed startup menu and three states; legacy cartridge imported with recoverable preimages.
-- Remaining work: synchronize branches and refresh the unpublished 1.2 draft.
-- Errors or blockers: silent access to the old app's private files remains unavailable.
-- Next action: commit reviewed changes and verify the draft assets.
-- References: `docs/changes/2026-11-20-android-startup-save-import.json`; `ANDROID-STARTUP-SAVE-IMPORT`.
+- Task: ANDROID-AUTO-MIGRATION.
+- Last verified result: build 31 menu, migrated states and approved cartridge transfer verified; draft 452599943 contains 12 matching assets.
+- Remaining work: silent app-only access, Windows ADB and full gameplay remain unverified.
+- Errors or blockers: Android blocks direct access to the old app's private files.
+- Next action: revisit automatic transfer only when a supported channel is available.
+- References: `docs/changes/2026-11-20-android-startup-save-import.json`; `ANDROID-STARTUP-IMPORT-RELEASE-DRAFT`.
