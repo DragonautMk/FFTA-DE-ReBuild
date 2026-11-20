@@ -2359,6 +2359,10 @@ and normal enablement retain their existing acceptance gates.
   separate Cargo/Gradle/signing caches and APK/hash/test export avoid writing
   build intermediates into either checkout. The distributed preview can use a
   persistent private signing key via BuildKit secrets; see [Android Docker](../android_docker.md).
+  The Android startup and pause menus display their APK version and build.
+  A one-time [ADB migration helper](../../AndroidPort/scripts/migrate_legacy_saves.py)
+  copies legacy preview saves with verified private backups; Android does not
+  allow the new app to read the old app's private storage directly.
 - `crates/recomp/src/play.rs` connects the desktop event loop, input, menu and
   presentation. `crates/menu` owns UI state and rendering; `crates/input-config`
   owns persisted bindings and combo capture/latching. `crates/screen` presents

@@ -49,6 +49,7 @@ private val Paper = Color(0xFFF6EBD0)
 private val Ink = Color(0xFF302519)
 private val Gold = Color(0xFFB68B35)
 private val Forest = Color(0xFF14231C)
+private fun previewBuildLabel() = "${BuildConfig.VERSION_NAME} (build ${BuildConfig.VERSION_CODE})"
 
 /** Separate sources prevent releasing a touch button from releasing a held controller button. */
 class GameInput {
@@ -352,6 +353,7 @@ private fun MainScreen(settings: GameSettings, input: GameInput, setInGame: (Boo
                 .padding(24.dp).scrollWithIndicator(),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                 Text("FFTA DE-ReBuild",fontFamily=FontFamily.Serif,fontWeight=FontWeight.Bold,fontSize=32.sp,color=Ink)
                 Text("ANDROID PREVIEW",color=Gold,letterSpacing=3.sp,fontSize=11.sp)
+                Text(previewBuildLabel(),fontSize=12.sp,color=Ink.copy(alpha=0.75f))
                 HorizontalDivider(color=Gold)
                 Text("Your adventure, a wider view.",fontFamily=FontFamily.Serif,fontSize=20.sp)
                 Text("Select your own unmodified FFTA USA or Europe ROM. The game is compiled locally; your ROM stays on this device.")
@@ -394,6 +396,7 @@ private fun LoadingScreen() {
             horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(18.dp)) {
             Image(painterResource(R.drawable.de_rebuild_logo),contentDescription=null,modifier=Modifier.size(112.dp))
             Text("FFTA DE-ReBuild",fontFamily=FontFamily.Serif,fontWeight=FontWeight.Bold,fontSize=28.sp,color=Ink)
+            Text(previewBuildLabel(),fontSize=12.sp,color=Ink.copy(alpha=0.75f))
             HorizontalDivider(color=Gold.copy(alpha=0.65f))
             Text("LOADING",color=Gold,letterSpacing=3.sp,fontSize=11.sp)
             LinearProgressIndicator(modifier=Modifier.fillMaxWidth().height(3.dp),color=Gold,trackColor=Ink.copy(alpha=0.1f))
@@ -610,6 +613,7 @@ private fun GameScreen(settings:GameSettings,input:GameInput,onSwitchRom:()->Boo
                     .background(Paper.copy(alpha=1f-settings.menuTransparency),RoundedCornerShape(18.dp)).border(1.dp,Gold,RoundedCornerShape(18.dp))
                     .padding(20.dp).scrollWithIndicator(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                     Text(when(page){"main"->"FFTA DE-ReBuild";"rom"->"Switch ROM";else->page.replaceFirstChar{it.uppercase()}},fontFamily=FontFamily.Serif,fontSize=26.sp,fontWeight=FontWeight.Bold,color=Ink)
+                    Text(previewBuildLabel(),fontSize=12.sp,color=Ink.copy(alpha=0.75f))
                     Text("PAUSED",letterSpacing=3.sp,fontSize=10.sp,color=Gold)
                     HorizontalDivider(color=Gold)
                     failure?.let{Text(it,color=Color(0xFF9B2929),fontSize=12.sp)}

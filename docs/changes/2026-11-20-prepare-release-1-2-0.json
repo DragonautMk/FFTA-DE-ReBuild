@@ -10,7 +10,7 @@
     "Windows"
   ],
   "changes": [
-    "Set the maintained Android preview version to 1.2.0 with version code 28, and prepare release notes covering changes since 1.1.2.",
+    "Prepare the initial Android 1.2 preview at version code 28 and release notes since 1.1.2; later preview builds increase the code.",
     "Prepare an unpublished v1.2.0 GitHub draft with verified Windows and Linux artifacts; initially hold the Android APK pending signing compatibility."
   ],
   "validation": [

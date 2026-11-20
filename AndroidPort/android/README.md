@@ -96,6 +96,8 @@ response and debug tools are not yet available here.
 Desktop window and VSync settings also do not map directly to the Android
 full-screen renderer. The Android aspect choices include the desktop ratios,
 as well as device, square and 19:9 modes; mobile zoom is capped at level 6.
+The startup, loading and pause menus display the actual preview version name
+and build number from the installed APK.
 
 ## Preview migration and signing
 
@@ -103,6 +105,36 @@ The 1.2 preview has a different signing key and application ID
 (`com.fftarecomp.port.preview`) from 1.1.2 (`com.fftarecomp.port`). Android
 installs it as a separate app, so the earlier app and its private data remain
 available. They do not share storage automatically.
+
+### One-time transfer with a connected computer
+
+Both previews are debuggable and can be migrated with Android Debug Bridge
+(ADB), Python 3.9 or later, and an authorized connected device. Install the
+same ROM in both apps and close both completely. From `AndroidPort/`, run:
+
+```sh
+python scripts/migrate_legacy_saves.py --backup-root ../../FFTARecomp-private/android-migration-backups
+```
+
+Choose another private backup directory outside the source checkout if needed;
+use `--serial DEVICE` when more than one ADB device is connected. The helper
+copies the old cartridge save, state slots and cartridge-backup files into the
+new app after verifying the ROM identities and file hashes. It first preserves
+both apps' existing save files in a private local backup, checks that neither
+app is running, and rolls back a failed transfer when it is safe to do so. Keep
+both apps closed until the command finishes. It does not copy ROM bytes,
+settings or signing keys, and a completion marker prevents a later run from
+overwriting new progress. Keep the old app until you have checked the result.
+
+This is a one-time computer-assisted transfer; opening the app alone cannot
+read the older app's private storage, and the two apps do not stay synchronized.
+Android's normal two-backup rotation still applies after the new app starts;
+the complete pre-migration backup remains in the chosen private directory.
+The ADB workflow has been exercised on Linux with a moto g34; Windows has not
+been verified. Protect the backup directory with your operating system's
+private-file permissions.
+
+### Manual transfer on the phone
 
 To transfer progress through the apps' document pickers:
 

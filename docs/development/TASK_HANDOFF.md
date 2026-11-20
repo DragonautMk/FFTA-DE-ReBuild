@@ -73,6 +73,14 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Incomplete tasks and open criteria
 
+### ANDROID-AUTO-MIGRATION
+
+- State: active
+- Outcome: partial
+- Selection: user requested automatic legacy saves and a visible Android version/build. Android isolates old app data; use a one-time ADB bridge for 1.1.2.
+- Verified: cartridge, three states and two backups transferred with unchanged originals, private preimage backup and idempotence (`android-legacy-migration-device-19rmmwgy`); user thinks progress visible. Binary ADB probe `android-legacy-migration-adb-probe-1kvztyn7` and 22 Python tests `android-legacy-migration-release-tests-802apuys` PASS. Signed build 29 `android-preview-version-menu-build-usxyshqp`, signer/privacy audit `android-preview-version-menu-audit-j6374qfe` and save-preserving phone update `android-preview-build29-device-update-2zjtcug7` PASS; user confirmed menu label.
+- Missing: commit reviewed code/memory, sync branches and update/verify unpublished draft. App-only legacy import, Windows validation and public release remain outside this unit.
+- Resume: publish scoped source/changelog and the verified APK/helper in the draft; do not alter phone saves further.
 
 ### ANDROID-MENU-PARITY
 

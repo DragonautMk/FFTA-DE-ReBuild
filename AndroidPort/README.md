@@ -9,7 +9,7 @@ The README stays at the top of this folder so GitHub displays it.
 - Preview APK: `APK/FFTARecomp-android-arm64-preview.apk`.
 - Android UI / Android Studio project: `android/`.
 - Required Rust engine and recompiler: `crates/`.
-- Build and camera-test scripts: `scripts/`.
+- Build, camera-test and legacy-save migration scripts: `scripts/`.
 - Credits and licenses: `Licenses/`.
 - No ROMs, saves, input recordings, SDK, NDK or caches are included.
 
