@@ -75,12 +75,12 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ANDROID-AUTO-MIGRATION
 
-- State: active
+- State: waiting
 - Outcome: partial
-- Selection: user requested automatic legacy saves and a visible Android version/build. Android isolates old app data; use a one-time ADB bridge for 1.1.2.
-- Verified: cartridge, three states and two backups transferred with unchanged originals, private preimage backup and idempotence (`android-legacy-migration-device-19rmmwgy`); user thinks progress visible. Binary ADB probe `android-legacy-migration-adb-probe-1kvztyn7` and 22 Python tests `android-legacy-migration-release-tests-802apuys` PASS. Signed build 29 `android-preview-version-menu-build-usxyshqp`, signer/privacy audit `android-preview-version-menu-audit-j6374qfe` and save-preserving phone update `android-preview-build29-device-update-2zjtcug7` PASS; user confirmed menu label.
-- Missing: commit reviewed code/memory, sync branches and update/verify unpublished draft. App-only legacy import, Windows validation and public release remain outside this unit.
-- Resume: publish scoped source/changelog and the verified APK/helper in the draft; do not alter phone saves further.
+- Selection: user requested automatic legacy saves when opening Android and a visible version/build.
+- Verified: one-time ADB child completed; cartridge, three states and two backups transferred with unchanged originals and private preimage backup (`android-legacy-migration-device-19rmmwgy`). User thinks progress visible. Build 29, signer audit, save-preserving phone update and user-confirmed version label PASS (`android-preview-version-menu-build-usxyshqp`, `android-preview-version-menu-audit-j6374qfe`, `android-preview-build29-device-update-2zjtcug7`). Draft 452599943 includes APK/helper; 12 remote hashes match.
+- Missing: fully automatic app-only import from 1.1.2 cannot access the old app's private storage under Android's sandbox; the original signer/export provider is unavailable. Windows ADB execution remains unverified.
+- Resume: revisit app-only import if a compatible old signing key or a supported user-authorized transfer channel becomes available. The existing ADB/manual paths are one-time, not synchronization; preserve both apps and private backups.
 
 ### ANDROID-MENU-PARITY
 

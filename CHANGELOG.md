@@ -563,6 +563,7 @@ Type: added. Platforms: Android, Linux.
 - The ADB binary transport probe passed; eight migration and fourteen Android build/signing tests passed (android-legacy-migration-adb-probe-1kvztyn7; android-legacy-migration-release-tests-802apuys).
 - Signed Android build 29 and 29 Kotlin tests passed; APK version, signing compatibility and exclusion of private data were checked (android-preview-version-menu-build-usxyshqp; android-preview-version-menu-audit-j6374qfe).
 - Build 29 updated the installed preview without changing either app's saves or ROM hashes; the user confirmed the menu version label and reported the migrated progress appeared present (android-preview-build29-device-update-2zjtcug7).
+- The unpublished 1.2 draft at b8f3474f includes build 29 and the ADB helper; all twelve assets match local sizes and SHA-256 hashes.
 
 **Limitations**
 

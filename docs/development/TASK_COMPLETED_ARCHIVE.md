@@ -24459,3 +24459,10 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: prepared the unpublished 1.2 draft and synchronized main/decomp; verified all eleven remote asset sizes and SHA-256 hashes. The Android preview uses a new locally protected signer and a separate application ID. The legacy phone's normal cartridge save and three states passed isolated import/load checks without altering originals; the new app was installed alongside 1.1.2.
 - Evidence: GitHub draft 452599943 targets `7b99206b`; `release-120-android-preview-verified-lj2vddwg`, `android-preview-identity-audit-7bum_8x_`, `android-preview-legacy-phone-save-check-0cd34k7c`, `android-preview-coinstall-4edvxszk`, `android-preview-signing-failure-guard-t7en5_b6`; `docs/changes/2026-11-20-android-preview-signing-migration.json`.
 - Limits: the old key was not recovered. Migration requires manual state export/import; settings and automatic backup history do not transfer. The new app was not launched and real-device migration UI/gameplay and native Windows remain unverified. Public release was not requested.
+
+### ANDROID-AUTO-MIGRATION-ADB
+
+- Outcome: completed
+- Verified criteria: the one-time ADB helper copied the legacy cartridge save, three states and two backups on a moto g34, with original hashes unchanged, the destination preimage privately backed up and repeat execution harmless. Signed Android preview build 29 was installed without changing either app's saves; the user confirmed its version label.
+- Evidence: `android-legacy-migration-device-19rmmwgy`, `android-legacy-migration-release-tests-802apuys`, `android-preview-version-menu-build-usxyshqp`, `android-preview-version-menu-audit-j6374qfe`, `android-preview-build29-device-update-2zjtcug7`; draft 452599943 targeted `b8f3474f` with 12 verified assets.
+- Limits: legacy app-only automatic import is not available across the Android sandbox; the ADB/manual transfer is not ongoing synchronization. Windows ADB and full gameplay remain unverified; public release was not requested.
