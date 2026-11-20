@@ -18,7 +18,8 @@
     "A moto g34 installed the new preview alongside 1.1.2; the old app and its cartridge save and three states were unchanged. The new app was not launched (android-preview-coinstall-4edvxszk).",
     "Fourteen Python Android builder, context-filtering, signing-option and path-redaction tests passed.",
     "A signed build with an incorrect password was rejected without an APK, reused the Gradle cache and redacted private file paths (android-preview-signing-failure-guard-t7en5_b6).",
-    "A default Android Docker build without private signing files also passed its 29 Kotlin tests (android-preview-default-build-1y7_r2cm)."
+    "A default Android Docker build without private signing files also passed its 29 Kotlin tests (android-preview-default-build-1y7_r2cm).",
+    "Unpublished GitHub draft 452599943 targets 7b99206b; all eleven release files match local sizes and SHA-256 hashes, including the new Android APK."
   ],
   "limitations": [
     "The old signing key was not recovered, so 1.2 cannot update 1.1.2 in place; settings and automatic backup history do not migrate automatically.",

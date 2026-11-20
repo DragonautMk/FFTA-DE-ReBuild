@@ -536,6 +536,7 @@ Type: changed. Platforms: Android.
 - Fourteen Python Android builder, context-filtering, signing-option and path-redaction tests passed.
 - A signed build with an incorrect password was rejected without an APK, reused the Gradle cache and redacted private file paths (android-preview-signing-failure-guard-t7en5_b6).
 - A default Android Docker build without private signing files also passed its 29 Kotlin tests (android-preview-default-build-1y7_r2cm).
+- Unpublished GitHub draft 452599943 targets 7b99206b; all eleven release files match local sizes and SHA-256 hashes, including the new Android APK.
 
 **Limitations**
 

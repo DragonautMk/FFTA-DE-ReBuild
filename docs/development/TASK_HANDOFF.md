@@ -73,15 +73,6 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Incomplete tasks and open criteria
 
-### RELEASE-1-2-PREP
-
-- State: active
-- Outcome: partial
-- Selection: user authorized a new local Android key, legacy save checks and changelog warning; preserve 1.1.2/data.
-- Verified: main/decomp include `78aa6510`; CI/Pages PASS. Windows `_njed1p3` (980), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), desktop smokes PASS (`release-120-` units). Draft 452599943 targets `919186a7`, unpublished; eight assets, no APK.
-- Android: old key not found; new local private key. Synthetic `android-preview-migration-synthetic-1d0yewvk`, real cartridge/3 states `android-preview-legacy-phone-save-check-0cd34k7c`, final signed build `release-120-android-preview-verified-lj2vddwg`, identity `android-preview-identity-audit-7bum_8x_`, phone co-install `android-preview-coinstall-4edvxszk`, password/cache guard `android-preview-signing-failure-guard-t7en5_b6` and default build `android-preview-default-build-1y7_r2cm` PASS. Phone originals unchanged; temporary copies removed.
-- Missing: commit reviewed changes, synchronize main/decomp and update/verify unpublished draft. Real-phone migration UI, native Windows and public release remain outside this unit.
-- Resume: publish scoped source/changelog and draft only; preserve old app and private key. Sol `/root/sol_android_signing` requested `gpt-6.1-sol` xhigh; effective and primary settings unconfirmed.
 
 ### ANDROID-MENU-PARITY
 
