@@ -222,6 +222,7 @@ Type: changed. Platforms: Android, Linux, Windows.
 **Changes**
 
 - Set the maintained Android preview version to 1.2.0 with version code 28, and prepare release notes covering changes since 1.1.2.
+- Prepare an unpublished v1.2.0 GitHub draft with verified Windows and Linux artifacts; hold the Android APK pending signing compatibility.
 
 **Validation**
 
@@ -231,7 +232,8 @@ Type: changed. Platforms: Android, Linux, Windows.
 - The packaged Linux command-line executable started successfully (release-120-linux-smoke-_lj__3eo).
 - Android Docker build and 29 Kotlin tests passed; APK integrity and the build-source hash were verified (release-120-android-gv6ifh_l).
 - Android tools verified version 1.2.0 and code 28, but the signing certificate differed from the published 1.1.2 APK (release-120-android-identity-r4m7wl53).
-- GitHub main and decomp were synchronized at 78aa6510; the main project-memory CI passed and Pages served the treemap from that commit.
+- GitHub main and decomp include the tested source 78aa6510; main project-memory CI passed and Pages served the verified treemap.
+- GitHub draft 452599943 targets 919186a7; its eight assets match local sizes and SHA-256 hashes, its notes match, and no Android APK is attached.
 
 **Limitations**
 

@@ -77,10 +77,10 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: waiting
 - Outcome: partial
-- Selection: user approved the 48-file release scope and requested main update.
-- Verified: local/GitHub main and decomp include tested source `78aa6510`; main project-memory CI passes, public treemap matches decomp. Build inputs match snapshot `target/release-1.2.0-source-c7ddiima/source`. Windows `_njed1p3` (980 tests), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), Windows smoke `jpi6mapg` and Linux smoke `_lj__3eo` PASS; units use `release-120-<platform>-` prefix.
-- Missing: Android signer differs from 1.1.2 (`release-120-android-identity-r4m7wl53`); public release not requested.
-- Resume: await the previous Android signing-key backup; verify its certificate before re-signing the candidate. Sol `/root/sol_android_signing` (requested `gpt-6.1-sol` xhigh; effective settings unknown) found no matching key or Timeshift backup. Primary model/effort unconfirmed.
+- Selection: user approved 48 files, main update and preparation of release 1.2.
+- Verified: local/GitHub main and decomp include tested source `78aa6510`; main CI and public treemap pass. Windows `_njed1p3` (980 tests), Linux `m47i0oey` (979), Android `gv6ifh_l` (29), Windows smoke `jpi6mapg` and Linux smoke `_lj__3eo` PASS; units use `release-120-<platform>-` prefix. GitHub draft `v1.2.0` (ID 452599943, target `919186a7`) remains unpublished with eight desktop/notes assets verified by size and SHA-256; no Android APK.
+- Missing: previous Android signer; candidate differs from 1.1.2 (`release-120-android-identity-r4m7wl53`). Public release not requested.
+- Resume: await previous signing-key backup or an explicit distribution decision; verify its certificate before re-signing. Preserve installed app/data. Sol `/root/sol_android_signing` requested `gpt-6.1-sol` xhigh; effective settings and primary model/effort unconfirmed.
 
 ### ANDROID-MENU-PARITY
 
