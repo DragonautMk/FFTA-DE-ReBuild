@@ -13,11 +13,13 @@ pub struct ObjListStats {
     pub directory_bytes: u64,
     pub actor_lookup_bytes: u64,
     pub iwram_callback_bytes: [u64; 5],
+    pub iwram_extra_callback_bytes: [u64; 2],
+    pub layout_offset_bytes: [u64; 3],
 }
 
 pub(super) struct ObjListResources {
     lists: Lists,
-    counts: [AtomicU64; 11],
+    counts: [AtomicU64; 16],
     host_reads: AtomicU64,
     used: Vec<[AtomicBool; 2]>,
 }
@@ -42,6 +44,20 @@ impl ObjListResources {
     }
 
     fn byte(&self, index: usize) -> Option<(u8, usize)> {
+        if let Some(offsets) = &self.lists.layout_offsets {
+            if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::LAYOUT_OFFSETS_ROOT as usize) {
+                if let Some(&byte) = offsets.source_bytes().get(relative) {
+                    return Some((byte, 13 + if relative < 2 { 0 } else if relative < 4 { 1 } else { 2 }));
+                }
+            }
+        }
+        if let Some(callbacks) = &self.lists.iwram_extra_callbacks {
+            for (slot, &root) in crate::rom_data::obj_lists::IWRAM_EXTRA_CALLBACK_ROOTS.iter().enumerate() {
+                if let Some(relative) = index.checked_sub(root as usize).filter(|&relative| relative < 4) {
+                    return Some((callbacks[slot].to_le_bytes()[relative], 11 + slot));
+                }
+            }
+        }
         if let Some(callbacks) = &self.lists.iwram_draw_callbacks {
             if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::IWRAM_DRAW_CALLBACKS_ROOT as usize) {
                 if let Some(pointer) = callbacks.get(relative / 4) {
@@ -122,7 +138,7 @@ impl ObjListResources {
         if !Self::source_page(index) {
             return prior;
         }
-        let mut counts = [0; 11];
+        let mut counts = [0; 16];
         let bytes = std::array::from_fn(|i| match self.byte(index + i) {
             Some((byte, kind)) => {
                 counts[1] += 1;
@@ -143,7 +159,7 @@ impl ObjListResources {
 
     pub(super) fn stats(&self) -> ObjListStats {
         let [bus_reads, source_bytes, count_bytes, attribute_bytes, directory_bytes, actor_lookup_bytes,
-             callback0, callback1, callback2, callback3, callback4] =
+             callback0, callback1, callback2, callback3, callback4, extra0, extra1, layout0, layout1, layout2] =
             self.counts.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObjListStats {
             bus_reads,
@@ -154,6 +170,8 @@ impl ObjListResources {
             directory_bytes,
             actor_lookup_bytes,
             iwram_callback_bytes: [callback0, callback1, callback2, callback3, callback4],
+            iwram_extra_callback_bytes: [extra0, extra1],
+            layout_offset_bytes: [layout0, layout1, layout2],
         }
     }
 

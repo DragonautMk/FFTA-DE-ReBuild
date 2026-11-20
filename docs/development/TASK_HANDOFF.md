@@ -14,9 +14,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: suspended
 - Outcome: partial
-- Verified: U31-02: 7 replay/10 core tests, USA/EUR GUI and Right interruptions; EUR native category, Right and pointer-exit comparisons match; shop hook observed. Decisions: upstream-audit/U31-approved-decisions.md.
-- Missing: U31-02 other GUI pointer/native cancellation paths and Windows; menu fix, Party device, autosave and other audit. Approval is not acceptance.
-- Resume: branch `codex/u31-shop-replay-wip` in `/tmp/u31-shop-replay-wip`; private evidence `target/u31-shop-replay-repair-B9AOtX/`. Reconciliation deferred; resume only on request.
+- Verified: U31-02 7 replay/10 core tests, USA/EUR GUI/Right interruptions; EUR category, Right, pointer-exit match; shop hook. `upstream-audit/U31-approved-decisions.md`.
+- Missing: U31-02 other GUI/native cancellation and Windows; menu fix, Party, autosave, audit. Approval is not acceptance.
+- Resume: `codex/u31-shop-replay-wip`, `/tmp/u31-shop-replay-wip`; evidence `target/u31-shop-replay-repair-B9AOtX/`. Only on request.
 
 ### ENGLISH-FIRST-PROJECT
 
@@ -24,21 +24,21 @@ Archive completed tasks; preserve closed children and other jobs.
 - Outcome: partial
 - Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 356 reviewed files, 9 Markdown pending; upstream decision plan translated with legacy anchors.
 - Missing: remaining documentation (ROM guide e11–e25, e28–e30, e33–e34, e37–e41, e44–e61 and e66–e76 clarified; rest pending), other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history. Focus choice diagnostics follow English/Italian; preserve active DBG2 work. DBG2 checklist and TSV matched at last review; reconcile future concurrent changes. The handoff audit hash is volatile; saved ROM coverage JSON/HTML reconciled. Do not repeat the lost character diff.
-- Launcher: foundation and play/input/audio/video authored text reviewed in English; dynamic values and runtime/platform behavior remain unverified. Evidence: `docs/changes/2026-11-03-review-launcher-screens-english.json`.
-- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: map guide reviewed; ROM guide e26/e27/e31/e32, packet intro and extracted-files/validation text clarified. Earlier inventory and remaining ROM guide sections need review. Evidence: `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
+- Launcher: foundation and play/input/audio/video text reviewed in English; dynamic values/runtime/platform behavior unverified. `docs/changes/2026-11-03-review-launcher-screens-english.json`.
+- Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: map guide reviewed; ROM guide e26/e27/e31/e32, packet intro and extracted-files/validation clarified. Earlier inventory and remaining ROM guide sections need review. `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
 
 ### ROM-DATA-FULL-EUR
 
 - State: suspended
 - Outcome: partial
-- E173 and E181–E187 EUR/Wine PASS (archive); E188 IWRAM callbacks `rm56pdw9`/`ryj41yi9`/`ch94duvy`/`3z2jda18` PASS. 3,357 E172-sampled bytes remain unowned.
+- E173/E181–E201 EUR/Wine PASS (archive); E202 Blue Screw first-pair altered-source `9qneu93s` PASS. 3,276 E172-sampled bytes remain unowned.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
-- ROMDATA-04-METADATA14-ID1-ALIAS partial: batch `g2cugem4` PASS; event22/key161 ordinary path open. `6d1p8x1c` excludes operand161 in 191 declared writer instructions. Source `o9iv4u54` conditionally finds queue initialization selects zero slot1; later writes/IWRAM body and other producers remain open.
-- Title bank: six-phase default hook `ntggzh1c`, patch-off five native headers `8j504dl0` PASS. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
+- ROMDATA-04-METADATA14-ID1-ALIAS: batch `g2cugem4` PASS; `6d1p8x1c` excludes operand161 in 191 writers; `o9iv4u54` conditional zero slot1. Event22/key161 ordinary path, later writes/IWRAM/other producers open.
+- Title bank: six-phase default `ntggzh1c`, patch-off five native headers `8j504dl0` PASS. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: five values/both tables native `arfmrs12`, title cursor `4yp7q7yd`; E168 owns 261/261 pairs. Other readers/writers/domain open.
 - E134: controlled b6uugr9g, selections jusromci, patch-off draw an9unydr PASS; neutral exits after 26 ticks n455br6k. Ordinary hold/default draw open; GUI cache p7tuq7iz.
@@ -49,13 +49,13 @@ Archive completed tasks; preserve closed children and other jobs.
 - TEXT-READER-REGISTRY-371068: home pair `8672kdim`, complete byte-domain prefixes `u43_buss` PASS; callbacks, ordinary indices/scenes/platforms open.
 - SUBSTITUTION-REMAINING: E170 sjojlovh/alfjrf8b PASS, CLI zero new reads; ordinary indices/callbacks open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
 - SCRIPT39-REGISTRY-POSES: e163 runtime/12 readers/CLI PASS (ga87pps5/vgo1cewu); ordinary/domains/Linux/USA open.
-- SCRIPT39-SPECIAL-POSES: e164 Wine PASS (jrp5fb0y/72_aby76), action13 (uto86fc6/_mvdi9t3); home `s4quofvj`/`1zjiaoiz` link opcode39 to task/null parts; `lwnzoodb` body index/sequence/OBJ/pixel reads and 1,800-frame altered-source pair PASS. Full animation/other paths open.
+- SCRIPT39-SPECIAL-POSES: e164 `jrp5fb0y`/`72_aby76`, action13 `uto86fc6`/`_mvdi9t3`; home `s4quofvj`/`1zjiaoiz` links opcode39 to task/null parts; `lwnzoodb` body/sequence/OBJ/pixel and 1,800-frame altered pair PASS. Full animation/other paths open.
 - INDEXED-DIRECT-3AE484/3AE5A4: e165 qk3xqc4z/e87ug9pq, e166 puxz2kz7/ozq4vcii PASS; other scenes/consumers/Linux/USA open.
 - CONTEXT-CALLBACK-3AE47C: E167 Wine PASS (md0zxb9k/555lr8qm); ordinary Wine `hf5czvkg` reads 14 bytes with altered sources; three-frame state/clock/video/OAM/nonempty audio pair PASS. Other paths/Linux/USA/native Windows open.
 - INDEXED-DIRECT-ORDINARY: prefix `v89740hr`, legacy 8,820-frame pair `klmjn8sv`, guarded endpoint `0gj2cglj`, 11-frame guarded pair `u75gcclc` PASS; other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 4q2i907e PASS; lower priority, rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
-- Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
+- Resume: on user request; [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: 59 writer rows js3rbve5, lists negative/inconclusive m1p_8lhy; live domain, saves, aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: text screen 78suaoix no token; generated/indirect sources open; no blind Select. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI/full pair PASS, unknown ancestry; cheat-free proof open. Ambervale; movement/post-save A negative inl3r0yl/l_97lwxn. `docs/rom_data_gameplay.md`.
@@ -68,16 +68,21 @@ Archive completed tasks; preserve closed children and other jobs.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
 
-### ROMDATA-01-E189-DMA-DIRECTORIES-370E68
+### ROMDATA-01-E203-REDSPRING-CODE-SUPPORT
 
 - State: suspended
 - Outcome: partial
-- Request: EUR, Wine only; no performance measurement or space limits.
-- Verified: source `_zu8l44g`, Wine trace `vgsu5kue`, build `ay5k4jkl`, Wine readers/four DMA writes `598qsw1v` PASS; Wine drained. E172 sampled 24 of 32 bytes.
-- Missing: poisoned Wine scene and production CLI, documentation/acceptance; other callers/helper vector, Linux/USA/native Windows open.
-- Consult: `/root/sol_dma_clock_diagnosis` requested `gpt-6.1-sol` xhigh (effective unconfirmed); failure `gsiv7n3d` double-executed a chained store. Retry PASS; build `cbftiwkl` arity error corrected.
-- Risk: preserve DMA effects, guest clock and unbounded behavior.
-- Resume: user paused the goal; only on explicit resumption inspect receipts, run the affected Wine scene and CLI, then close this unit.
+- Verified: `usda5fn4` PASS: 420 B/105 prior-site words (93 literal, 12 switch); 3,276 still unowned.
+- Missing: document join; E172 PCs/other uses and parent/Linux/USA open.
+- Resume: on user request, update docs, memory, archive and checks; no replay.
+
+### ROMDATA-05-WINE-DBUS-PENDING-CALL
+
+- State: waiting
+- Outcome: partial
+- Verified: installed Wine 10 guard matches MR7302 (`ijsvoxgk`); local backport and leased wrapper `s10dafvr`/`25z4y70w` PASS. Blue Screw 600 frames quiet (`hrc9ivgq`, parser FAIL reconciled `qxfzqz9z`); server drained. Sol `/root/sol_wine_overlay_build` xhigh requested/unconfirmed.
+- Missing: compatible corrected system runtime and authorization for shared update; exact event, physical Bluetooth and asynchronous property updates. Parent and deferred platforms remain open.
+- Resume: use opt-in wrapper for affected Wine units; when system correction is available, confirm guard and rerun affected Wine path without assertion, with server drain. `ROM_DATA_VALIDATION.md`.
 
 ## Incomplete tasks and open criteria
 
@@ -166,9 +171,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: interrupted
 - Outcome: partial
-- Verified: Oct 26 applied.json; later sweeps closed separately; reorganization deleted nothing.
-- Missing: original final validation/memory closure unattested.
-- Resume: on cleanup review limits, archive 2486..2496 and `target/local-artifact-cleanup-2026-10-26/applied.json`; no reconstructive sweep.
+- Verified: Oct 26 applied.json; later sweeps closed separately, including 2026-11-20 continuation (~2.40 GiB reclaimed); reorganization deleted nothing.
+- Missing: original Oct 26 final validation/memory closure unattested.
+- Resume: review archive 2486..2496 and `target/local-artifact-cleanup-2026-10-26/applied.json`; no reconstructive sweep.
 
 ## Blockers, dependencies and shared resources
 
@@ -176,16 +181,16 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
-- Host-check owners, handles and outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles or old receipts do not prove inactivity.
+- Host-check owners/handles/outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles or receipts do not prove inactivity.
 - Memory: shared lock and both preimage hashes; merge conflicts and preserve other locks/processes. See MEMORY_WORKFLOW.
 - History: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration: TASK_HANDOFF_MIGRATION.json.
 - Godot assessment complete, implementation deferred. AndroidPort is separate; exclude ROM/BIOS, private catalogs, saves and recordings from commits/packages.
 
 ## Final handover
 
-- Task: ROM-DATA-FULL-EUR / E189, suspended by user.
-- Last verified result: E189 corrected Wine readers and four DMA writes PASS; Wine drained.
-- Remaining work: E189 poisoned scene/CLI, other families/consumers; Linux/USA open.
-- Errors or blockers: earlier test double-executed a chained store; corrected retry PASS.
-- Next action: await explicit resumption; then validate the E189 scene and CLI.
-- References: `docs/rom_data_runtime.md`; `ROM_DATA_VALIDATION_RECOVERY_TODO.md`.
+- Task: 2026-11-20 cleanup continuation completed; Oct 26 hygiene remains interrupted.
+- Last verified result: ~2.40 GiB reclaimed; 13 archives local, 54 optional test executables on HDD.
+- Remaining work: original Oct 26 closure and separately protected/active scopes remain open.
+- Errors or blockers: retained or nested leases prevent safe cleanup of some copies; U31 skipped.
+- Next action: revisit only after ownership is established or new eligible work completes.
+- References: `target/local-artifact-cleanup-20261120-continuation/final-summary.json`; `docs/development/STORAGE_CHECKLIST.md`.

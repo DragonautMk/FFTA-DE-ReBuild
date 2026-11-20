@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-alternate-tilemap-rectangles",
+  "title": "Extract alternate tilemap rectangles",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the European observed-tilemap resource with two authenticated rectangle alternatives and their eight-byte selector, preserving original guest selection and copy behavior. Eight bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e195-tilemap-source-n6nl69bd authenticates 126 bytes; Wine e195-tilemap-trace-wine-9x55uknb observes the selector and normal rectangle header plus a native IWRAM cell read. Wine e195-tilemap-wine-9sclx54d preserves 122 other resources, rejects coherent edits, checks altered/mixed reads, compares three interpreter/native readers and exercises both original branch outcomes.",
+    "Wine e195-tilemap-scene-wine-yxymrems matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with both rectangles and the selector altered. Wine e195-tilemap-cli-wine-3j_wfn2z creates, reuses and verifies 124 matching files."
+  ],
+  "limitations": [
+    "The scene log contains a D-Bus pending-call assertion before successful completion; cause unestablished. The alternate branch was controlled but its ordinary copy and other consumers remain open, as do Linux, USA and native Windows. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_alternates_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

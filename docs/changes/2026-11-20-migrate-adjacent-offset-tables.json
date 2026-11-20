@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-adjacent-offset-tables",
+  "title": "Extract adjacent offset tables",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Publish and serve five independently rooted European offset tables as typed original bytes while keeping guest indexing and arithmetic unchanged. Five bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e194-offset-source-r364fmf9 authenticates all 32 bytes and the successor. Wine e194-offset-trace-wine-uxtnxes3 observes four tables; e194-offset-wine-ug76r3cd preserves 122 other resources, rejects coherent edits, checks altered and mixed reads and compares six interpreter/native readers, including signed-byte cases.",
+    "Wine e194-offset-scene-wine-dh8ic7ya matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 32 source bytes altered. Wine e194-offset-cli-wine-7ind1kk9 creates, reuses and verifies 124 matching files."
+  ],
+  "limitations": [
+    "Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary trace observed four of five tables through interpreter fallback; the fifth was covered by a controlled original reader. Other consumers, Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/adjacent_offset_tables.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/adjacent_offset_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/adjacent_offset_tables_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

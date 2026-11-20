@@ -3,6 +3,48 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-21 — Verify extracted tilemap chains in Blue Screw
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Add an opt-in recorded-scene check that alters the first interleaved LZ and direct tilemap chain sources in memory and requires extracted-resource counters.
+
+**Validation**
+
+- Source e202-second-stage-source-_impqiwz pins the second two-row selector. Wine e202-blue-audit-wine-dyl4e4jy observes the first row pair, descriptors, wrapper and direct stream. Wine e202-blue-poison-wine-9qneu93s matches full state, guest clock, video, OAM, dispatch and nonempty audio for 600 frames with positive row, descriptor, direct-stream and decoded LZ HLE counters; both Wine servers drained.
+- Windows test executable build e202-blue-build-5v7yue3l passes. Earlier e202-blue-build-3_mw7irl failed before compilation because the script path was relative to scratch.
+
+**Limitations**
+
+- The address audit does not identify the executing callback; other pairs, scenes, consumers, real BIOS and DMA remain open. Both Wine scene logs include the separately tracked D-Bus assertion. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-21-verify-blue-screw-interleaved-chains.json)
+
+## 2026-11-21 — Provide a leased Wine Bluetooth backport
+
+Type: added. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Provide an opt-in validation wrapper that verifies its parent owns the managed leases and checks the local Bluetooth module and installed Wine hashes before mounting the matching upstream guard backport in a private namespace.
+
+**Validation**
+
+- Matching Wine 10 source and compiled module pass checksum, corrected-guard disassembly and exported ABI checks in wine-dbus-overlay-link-s10dafvr. Wine loader proofs v50bntvr and 25z4y70w initialize the module without the assertion and drain the server.
+- The affected Blue Screw scene in wine-dbus-overlay-reproducer-hrc9ivgq matches 600 frames without the D-Bus assertion and drains Wine. That unit reports FAIL because its trace parser mishandled a split openat; read-only reconciliation qxfzqz9z verifies the successful open and unchanged protected inputs.
+
+**Limitations**
+
+- The installed system module remains defective and ordinary Wine commands do not use the opt-in overlay. The exact D-Bus event, physical Bluetooth and asynchronous property updates remain unverified; source signatures were not independently authenticated. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md).
+
+[Change record](docs/changes/2026-11-21-provide-leased-wine-bluetooth-backport.json)
+
 ## 2026-11-20 — Verify the remapped Linux debug candidate in the GUI
 
 Type: docs. Platforms: Linux/Xvfb.
@@ -149,6 +191,27 @@ Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](d
 
 [Change record](docs/changes/2026-11-20-verify-debug-empty-and-older-runtime.json)
 
+## 2026-11-20 — Validate DMA register directories on Wine
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Complete the European Wine acceptance of the staged DMA register directories: the guest retains index arithmetic and hardware operations while the bus serves two authenticated extracted directories.
+
+**Validation**
+
+- Source e189-dma-source-_zu8l44g and Wine trace e189-dma-trace-wine-vgsu5kue; Wine e189-dma-wine-598qsw1v validates 16 interpreter/native readers, four DMA register writes, mixed boundaries and full-state/guest-clock equality.
+- Wine e189-dma-scene-wine-dgpightt matches full state, clock, video, OAM, dispatch and audio for 600 frames with all 32 backing bytes altered. Wine e189-dma-cli-wine-98p9_ms6 creates, reuses and verifies 122 matching files.
+
+**Limitations**
+
+- Other DMA callers, the separate IWRAM helper vector, Linux, USA and native Windows remain pending. The trace did not identify exact instructions during native dispatch; no performance measurements were performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-20-validate-dma-register-directories.json)
+
 ## 2026-11-20 — Update the portable Debug v2 guide and check Linux packaging
 
 Type: docs. Platforms: Linux.
@@ -169,6 +232,26 @@ Type: docs. Platforms: Linux.
 Documentation: [debug_tools.md](docs/debug_tools.md), [DEBUG_TOOLS_V2_TODO.md](docs/development/DEBUG_TOOLS_V2_TODO.md).
 
 [Change record](docs/changes/2026-11-20-update-debug-v2-distribution-guide.json)
+
+## 2026-11-20 — Trace a conditional tilemap row-list path
+
+Type: docs. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Document the original row-list initialization and conditional path, and retain ordinary-use proof for the new rows as an explicit open prerequisite.
+
+**Validation**
+
+- Wine disassembly e202-selector-source-8r_6wz80, e202-constructor-source-amu94h3q, e202-callback-source-enzv4iwu, e202-consumer-source-_tv6i5rb, e202-list-task-source-a7lzqd99 and e202-list-tail-source-g_x2m5fb identify the original dataflow. Source audit e202-selector-dataflow-9jydyc_i pins the instructions and bounded direct-call candidates.
+
+**Limitations**
+
+- The first four row indices follow only if the index starts zero and pointer, count and index remain unchanged. Other producers, writes and contexts remain possible; no ordinary trigger or new gameplay replay was established. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-trace-conditional-tilemap-row-list.json)
 
 ## 2026-11-20 — Allow automatic cartridge-save backups to be disabled
 
@@ -425,6 +508,48 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-20-migrate-observed-rectangle-list-row.json)
 
+## 2026-11-20 — Extract OBJ layout byte groups
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the European OBJ static-list resource with three independently rooted byte groups, preserving guest indexing and interpretation. Two bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e196-obj-source-v9z3u37q authenticates eight bytes and reader windows; Wine e196-obj-trace-wine-jcuo75ia observes the second group through original interpreter fallback. Wine e196-obj-wine-54zxpyzj checks preservation, coherent edit rejection, altered mirrored/mixed reads and four original interpreter/native reader cases.
+- Wine e196-obj-scene-wine-s0azwl5i matches full state, guest clock, video, OAM, dispatch and audio for 600 frames while all eight original bytes are altered; the second group is served. Wine e196-obj-cli-wine-u7pcy_df creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary use of the other groups and other callers remain open, as do Linux, USA and native Windows. No performance measurements were performed.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-20-migrate-obj-layout-byte-groups.json)
+
+## 2026-11-20 — Extract linked-record callback tables
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the European linked-records4 resource with three independently rooted callback partitions containing 107 original Thumb pointers; guest indices, dispatch and reads outside the physical ownership remain unchanged. Sixteen bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e192-callback-source-vgus1zn1 authenticates the 428 bytes, original readers and distinct successor. Wine e192-callback-trace-wine-i99518dm observes all three tables; e192-callback-wine-rg_ejxyn preserves previous records and 121 other resources, rejects coherent edits, checks altered and mixed reads and compares three interpreter/native branch entries.
+- Wine e192-callback-scene-wine-ditx_b0y matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 428 source bytes altered. Wine e192-callback-cli-wine-yzo92bp7 creates, reuses and verifies 123 matching files.
+
+**Limitations**
+
+- The reader and scene logs each contain a D-Bus pending-call assertion before successful test completion; its cause is unestablished. Other callers and paths, old revision-pinned records4 fixtures, Linux, USA and native Windows remain pending. Ordinary traced reads used interpreter fallback; no performance measurements were performed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-20-migrate-linked-record-callback-tables.json)
+
 ## 2026-11-20 — Migrate observed IWRAM OBJ callback words
 
 Type: changed. Platforms: Windows via Wine; European ROM.
@@ -447,6 +572,216 @@ Type: changed. Platforms: Windows via Wine; European ROM.
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
 
 [Change record](docs/changes/2026-11-20-migrate-iwram-obj-callback-words.json)
+
+## 2026-11-20 — Extract the IWRAM memory-helper vector
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish and serve the three authenticated European IWRAM memory-helper Thumb pointer words as a dedicated resource; the original guest retains selection, indexing and execution of mutable IWRAM code. All 12 bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e190-helper-source-2muj949h authenticates the vector, reader windows and ROM code prefixes. Wine e190-helper-trace-wine-1jrexdnx observes all three reads; Wine e190-helper-wine-r9rce5o_ preserves the previous 121 resources, rejects coherent edits and validates altered sources, mirrored and mixed boundaries and three interpreter/native load-and-branch entries.
+- Wine e190-helper-scene-wine-94ao1rz2 matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 12 source bytes altered. Wine e190-helper-cli-wine-h_owgk16 creates, reuses and verifies 123 matching files.
+
+**Limitations**
+
+- The first traced read occurred in native dispatch without exact instruction attribution; the other two used interpreter fallback. Other callers and live IWRAM paths, Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md).
+
+[Change record](docs/changes/2026-11-20-migrate-iwram-memory-helpers.json)
+
+## 2026-11-20 — Extract interleaved LZ chains
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed LZ, tilemap descriptor and row resources with seven linked interleaved chains, preserving encoded source, decoded data, opaque fields, source routing and guest indexing.
+
+**Validation**
+
+- Source e201-interleaved-source-w13041vc independently authenticates seven rows, descriptors, wrappers and 4123 encoded LZ bytes decoding to 5728 bytes. Wine e201-chain-wine-0vq42lsj preserves 120 other resources, rejects missing dependencies/coherent edits, checks altered mirrors/mixed owner boundaries and compares seven original SWI/HLE cases and 28 interpreter/native readers with equal full state and guest clock.
+- Wine e201-chain-cli-wine-7l8ix18e creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use, real-BIOS/DMA paths, other consumers, Linux, USA and native Windows remain open. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-interleaved-lz-chains.json)
+
+## 2026-11-20 — Extract indexed tilemap pointers
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed tilemap resource with eight authenticated pointer words used by the original indexed reader, preserving outside guest indices and existing neighboring resources.
+
+**Validation**
+
+- Wine source/disassembly e197-tilemap-source-wrir7wj7 authenticates the selected words and identifies the original indexed load. Wine e197-tilemap-wine-i23_yk35 preserves 122 other resources, rejects coherent edits, verifies mirrored/mixed reads and compares the original interpreter and compiled five-instruction reader for ten indices with equal full state and guest clock.
+- Wine e197-tilemap-cli-wine-q7a_34j2 creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use and the seven other pointed-to payloads remain unproved, as do other consumers, Linux, USA and native Windows. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-indexed-tilemap-pointers.json)
+
+## 2026-11-20 — Extract two additional IWRAM OBJ callbacks
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the European OBJ static-list resource with the authenticated callback words at 397fa4 and 397fb8; the guest retains callback selection and execution of mutable IWRAM. All eight bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e191-callback-source-m460uxk9 and Wine e191-callback-trace-wine-35oh5q8o authenticate and observe both readers. Wine e191-callback-wine-gj6h0gcr preserves 121 other resources and prior OBJ fields, rejects coherent edits, checks altered mirrored and mixed reads and compares two interpreter/native load-and-branch entries.
+- Wine e191-callback-scene-wine-_vpbz8be matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all eight backing bytes altered. Wine e191-callback-cli-wine-fttzwwhr creates, reuses and verifies 123 matching files.
+
+**Limitations**
+
+- Both observed ordinary reads used interpreter fallback. Other callbacks, callers and live IWRAM paths, Linux, USA and native Windows remain pending; no performance measurements were performed. The first build launch 89y445bs used an invalid relative path; e_8ykhv5 was interrupted and k1nk95_g passed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-20-migrate-extra-iwram-obj-callbacks.json)
+
+## 2026-11-20 — Extract direct tilemap rows
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the tilemap row resource with seven noncontiguous rows linked to the extracted direct descriptors, preserving guest indexing and intervening source routing.
+
+**Validation**
+
+- Source e200-row-source-u4ror4sy authenticates 84 bytes and all seven existing descriptor dependencies. Wine e200-rows-wine-29if0sg2 preserves 122 other resources, rejects missing dependencies and coherent edits, checks altered mirrored/mixed reads and compares fourteen original interpreter/native reader cases with equal complete state and guest clock.
+- Wine e200-rows-cli-wine-irh5mvpj creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use, intervening rows, other consumers, Linux, USA and native Windows remain open. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-direct-tilemap-rows.json)
+
+## 2026-11-20 — Extract direct tilemap descriptors
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the tilemap descriptor resource with seven authenticated direct descriptors linked to the previously extracted tilemap streams, preserving guest-interpreted parameters and indexing.
+
+**Validation**
+
+- Source e199-descriptor-source-uottnw22 authenticates 56 bytes and the seven existing target dependencies. Wine e199-descriptors-wine-9ofg9nm8 preserves 122 other resources, rejects missing dependencies and coherent edits, checks altered mirrored/mixed reads and compares seven original interpreter/native field readers with equal complete state and guest clock.
+- Wine e199-descriptors-cli-wine-0bqdvd05 creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- Ordinary use of the seven descriptors, other rows and consumers, Linux, USA and native Windows remain open. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-direct-tilemap-descriptors.json)
+
+## 2026-11-20 — Extract alternate tilemap rectangles
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the European observed-tilemap resource with two authenticated rectangle alternatives and their eight-byte selector, preserving original guest selection and copy behavior. Eight bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e195-tilemap-source-n6nl69bd authenticates 126 bytes; Wine e195-tilemap-trace-wine-9x55uknb observes the selector and normal rectangle header plus a native IWRAM cell read. Wine e195-tilemap-wine-9sclx54d preserves 122 other resources, rejects coherent edits, checks altered/mixed reads, compares three interpreter/native readers and exercises both original branch outcomes.
+- Wine e195-tilemap-scene-wine-yxymrems matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with both rectangles and the selector altered. Wine e195-tilemap-cli-wine-3j_wfn2z creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- The scene log contains a D-Bus pending-call assertion before successful completion; cause unestablished. The alternate branch was controlled but its ordinary copy and other consumers remain open, as do Linux, USA and native Windows. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-alternate-tilemap-rectangles.json)
+
+## 2026-11-20 — Extract adjacent offset tables
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Publish and serve five independently rooted European offset tables as typed original bytes while keeping guest indexing and arithmetic unchanged. Five bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e194-offset-source-r364fmf9 authenticates all 32 bytes and the successor. Wine e194-offset-trace-wine-uxtnxes3 observes four tables; e194-offset-wine-ug76r3cd preserves 122 other resources, rejects coherent edits, checks altered and mixed reads and compares six interpreter/native readers, including signed-byte cases.
+- Wine e194-offset-scene-wine-dh8ic7ya matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 32 source bytes altered. Wine e194-offset-cli-wine-7ind1kk9 creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary trace observed four of five tables through interpreter fallback; the fifth was covered by a controlled original reader. Other consumers, Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-20-migrate-adjacent-offset-tables.json)
+
+## 2026-11-20 — Extract additional compressed tilemaps
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed tilemap resource with seven authenticated mode-4 streams, preserving ascending, repeated and literal tokens and leaving inter-stream padding to the original routing.
+
+**Validation**
+
+- Wine decoder e198-tilemap-source-nuq8mgl_ and source audit e198-streams-source-2llwimo3 establish seven encoded extents and decoded hashes. Wine e198-streams-wine-d97f6l58 verifies preservation, malformed/coherent edit rejection, altered source and mixed boundaries, and all 1792 original interpreter/native cell results with equal complete state and guest clock per stream.
+- Wine e198-streams-cli-wine-gfc_c1yi creates, reuses and verifies 124 matching files.
+
+**Limitations**
+
+- The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use, other consumers and tilemaps, Linux, USA and native Windows remain open. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-20-migrate-additional-compressed-tilemaps.json)
+
+## 2026-11-20 — Extract action-callback records
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the European linked-records4 resource with 93 authenticated action-callback records, preserving each Thumb pointer and its two opaque words. Guest indexing and dispatch remain original; six bytes were unowned in the E172 sample.
+
+**Validation**
+
+- Source e193-action-source-2po3wuk9 authenticates 1116 bytes and the distinct successor. Wine e193-action-trace-wine-fqhwgje1 observes the callback and field readers; e193-action-wine-jcz5bcc5 preserves previous fields and 121 other resources, rejects coherent edits, checks altered and mixed reads and compares two interpreter/native reader cases.
+- Wine e193-action-scene-wine-vys970r2 matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 1116 source bytes altered. Wine e193-action-cli-wine-5zlmal_2 creates, reuses and verifies 123 matching files.
+
+**Limitations**
+
+- Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary traces used interpreter fallback. Other consumers, older revision-pinned records4 fixtures, Linux, USA and native Windows remain pending. No performance measurements were performed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-20-migrate-action-callback-records.json)
 
 ## 2026-11-20 — Add menu controls for extracted game data
 
@@ -514,6 +849,26 @@ Type: docs. Platforms: Android, Linux, Windows.
 Documentation: [v1.2.0.md](docs/releases/v1.2.0.md).
 
 [Change record](docs/changes/2026-11-20-finalize-1-2-release-notes.json)
+
+## 2026-11-20 — Trace the Wine Bluetooth D-Bus assertion
+
+Type: docs. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Record a repeatable Wine service assertion, the matching upstream Bluetooth NULL-call defect and the exact remaining runtime prerequisite without altering shared Wine resources.
+
+**Validation**
+
+- Wine wine-dbus-process-smoke-zkjnk_35 passes without the assertion; Wine wine-dbus-reader-trace-qxwtl8he reproduces it in winedevice.exe while the reader passes. Both servers drain. Static audit wine-dbus-binary-audit-ijsvoxgk identifies the defective guard in installed Wine 10.0 and links Wine MR7302.
+
+**Limitations**
+
+- The exact triggering call stack and physical Bluetooth impact remain unproved. A corrected matching Wine runtime is not available locally; changing shared Wine resources requires authorization and focused revalidation. No performance measurements or Linux game tests were run.
+
+Documentation: [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md).
+
+[Change record](docs/changes/2026-11-20-diagnose-wine-bluetooth-dbus-assertion.json)
 
 ## 2026-11-20 — Consume six additional European Red Spring LZ77 streams
 

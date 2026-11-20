@@ -1364,10 +1364,10 @@ scheduler behavior. No RAM code or mutable state is exported as a base asset.
 The36B conditional plans are disjoint from all65existing owners; only20B/five
 words were actually observed in the Bank12 report. Those20B are now classified
 as executable hardware/branch support, while656observed lower bytes remain a
-separate source-classification task. All676bytes still lie outside exported
-owner plans: classification does not silently turn them into managed resources.
-The original ROM/code-support dependency stays explicit. No new gameplay,
-graphics, text or audio model/resource/revision follows from these pointers.
+separate source-classification task. At that source milestone all676bytes remained outside exported owner plans:
+classification did not itself turn them into managed resources. E189 later
+integrates the two DMA directories as described below; the separate helper
+vector and other original ROM/code support remain open.
 
 Exact ROM, static tool and saved address-report hash/mtime guards pass. No
 build, game test, checkpoint, navigation, performance measurement or replay of
@@ -2963,20 +2963,118 @@ code paths remain open, as do Linux, USA and native Windows. Historical
 revision-pinned OBJ fixtures need adaptation before reuse. No performance
 measurements were performed.
 
-## E189 DMA register directories (partial)
+## E189 DMA register directories
 
-A dedicated EUR resource is staged for the two four-word DMA register
-address directories at `370e68..370e88`. The guest still computes indices,
-reads and writes the hardware registers, and performs DMA. Source
-`e189-dma-source-_zu8l44g` authenticates the original directories and reader
-windows. Wine `e189-dma-trace-wine-vgsu5kue` observes both tables during native
-dispatch, without identifying the exact instruction. Wine
-`e189-dma-wine-598qsw1v` passes publication, mixed boundaries, 16 separately
-compiled reader cases and four controlled DMA register writes with matching
-full state and guest clock. The first attempt `e189-dma-wine-gsiv7n3d` failed
-because its test invoked a chained native store twice; the test was corrected.
+EUR E189-d188 publishes `engine.dma-register-directories`, containing two
+four-word DMA register address directories at `370e68..370e88`. The guest
+continues to compute indices, access hardware and perform DMA. The 32 managed
+bytes include 24 sampled as unowned in E172; the projection does not impose a
+guest index bound. Source `e189-dma-source-_zu8l44g` authenticates the original
+directories and reader windows. Wine `e189-dma-trace-wine-vgsu5kue` observes
+both tables during native dispatch, without identifying the exact instruction.
 
-This work is suspended at the user's request. The altered-source recorded scene
-and production CLI remain unverified, so E189 is not yet accepted. Other DMA
-callers and the separate IWRAM helper vector, Linux, USA and native Windows
-remain open. No performance measurements were performed.
+Wine `e189-dma-wine-598qsw1v` passes publication, mixed boundaries, 16
+interpreter/separately compiled reader cases and four controlled DMA register
+writes with matching full state and guest clock. The first attempt
+`e189-dma-wine-gsiv7n3d` failed because the test invoked a chained native store
+twice; the corrected retry passed. Wine `e189-dma-scene-wine-dgpightt`
+compares the recorded 600-frame Red Spring action with all 32 backing bytes
+altered in the managed machine. Both directories are served from the resource;
+full state, guest clock, central/wide video, OAM, dispatch and audio match each
+frame. Wine `e189-dma-cli-wine-98p9_ms6` creates, reuses and verifies 122 files
+matching the tested generation. Other DMA callers, Linux, USA and native
+Windows remain open. E190 subsequently integrates the separate IWRAM helper
+vector. No performance measurements were performed.
+
+## E190 IWRAM memory-helper vector
+
+EUR E190-d189 publishes `engine.iwram-memory-helpers` for the three Thumb
+pointer words at `370eb0..370ebc`. The guest continues to select and execute
+its IWRAM code; the resource owns only the encoded pointer bytes and does not
+bound other guest indices or freeze mutable instructions. Source
+`e190-helper-source-2muj949h` authenticates the vector, selected original
+readers and matching ROM code prefixes. The previously verified original
+initializer and copied code are described in the [palette source contract](rom_data_ui_palettes.md#source-and-consumer-contract).
+All 12 new bytes were sampled as unowned in E172.
+
+Wine `e190-helper-trace-wine-1jrexdnx` observes all three reads: the first in
+native dispatch without exact instruction attribution and the other two with
+interpreter fallback. Wine `e190-helper-wine-r9rce5o_` preserves the other 121
+resources, rejects coherent file/hash edits, checks altered backing bytes and
+mirrored/mixed boundaries, and compares three interpreter/separately compiled
+load-and-branch entries with matching full state and guest clock.
+
+Wine `e190-helper-scene-wine-94ao1rz2` compares the recorded 600-frame Red
+Spring action with all 12 backing bytes altered in the managed machine. All
+three pointers are served from the resource; full state, guest clock,
+central/wide video, OAM, dispatch and audio match every frame. Wine
+`e190-helper-cli-wine-h_owgk16` creates, reuses and verifies 123 files matching
+the tested generation. Other callers, live IWRAM code paths, Linux, USA and
+native Windows remain open. No performance measurements were performed.
+
+## E191 independently rooted IWRAM OBJ callbacks
+
+EUR E191-d190 extends `graphics.obj-static-lists` with the two separately
+rooted Thumb callback words at `397fa4` and `397fb8`. Their original code is
+part of the copied IWRAM block described in the E188 contract; only the
+encoded words are managed. Guest indexing, callback selection and mutable
+IWRAM instructions remain under guest control. All eight bytes were sampled
+as unowned in E172.
+
+Source `e191-callback-source-m460uxk9` authenticates the source words,
+selected reader windows and copied-code prefixes. Wine
+`e191-callback-trace-wine-35oh5q8o` observes the original reads at
+`0809b6fc` and `0809e40e` through interpreter fallback. Wine
+`e191-callback-wine-gj6h0gcr` preserves the previous OBJ fields and 121 other
+resources, rejects coherent file/hash edits, checks altered backing bytes and
+mirrored/mixed boundaries, and compares both original interpreter/separately
+compiled load-and-branch entries with matching full state and guest clock.
+
+Wine `e191-callback-scene-wine-_vpbz8be` compares the recorded 600-frame Red
+Spring action with all eight backing ROM bytes altered in the managed machine.
+Both callbacks are served from the resource; full state, guest clock,
+central/wide video, OAM, dispatch and audio match every frame. Wine
+`e191-callback-cli-wine-fttzwwhr` creates, reuses and verifies 123 files
+matching the tested generation. The initial build launch `89y445bs` used an
+invalid relative script path; `e_8ykhv5` was interrupted and the subsequent
+`k1nk95_g` completed. Other callbacks, callers and live IWRAM paths, Linux,
+USA and native Windows remain open. No performance measurements were made.
+
+EUR E192-d191 extends the runtime's linked-records4 resource with three
+[callback partitions](rom_data_gameplay.md#e192-linked-record-callback-tables);
+the original guest still selects and executes the callbacks.
+
+EUR E193-d192 also serves the adjacent [action-callback records](rom_data_gameplay.md#e193-action-callback-records);
+the original guest retains selection, dispatch and reads outside that partition.
+
+## E194 adjacent offset tables
+
+EUR E194-d193 publishes `engine.adjacent-offset-tables` for five independently
+rooted physical tables at `3ad460..3ad480`: four four-byte rows followed by
+four four-byte tables. The next separately rooted source starts at `3ad480`.
+All original byte values, including padding and values later read as signed,
+are preserved. The projection does not bound guest indices or replace original
+selection and arithmetic; reads outside the owned range continue through their
+existing owners or the ROM. Five bytes were observed unowned in E172.
+
+Source `e194-offset-source-r364fmf9` authenticates the 32 bytes, selected
+reader windows and successor. Wine `e194-offset-trace-wine-uxtnxes3` observes
+reads from four tables through interpreter fallback. Wine
+`e194-offset-wine-ug76r3cd` preserves all 122 previous resources, rejects a
+coherent file/hash edit, checks altered, mirrored and mixed boundary reads, and
+compares six original interpreter/separately compiled byte readers with full
+state and guest clock equal. This includes controlled signed-byte readers and
+the separately rooted fifth table, whose ordinary use remains unproved.
+
+Wine `e194-offset-scene-wine-dh8ic7ya` compares the recorded 600-frame Red
+Spring action with all 32 backing bytes altered in the managed machine. Four
+tables are served from the resource; full state, guest clock, central/wide
+video, OAM, dispatch and audio match every frame. Wine
+`e194-offset-cli-wine-7ind1kk9` creates, reuses and verifies 124 files matching
+the tested generation. Reader and scene logs contain D-Bus pending-call
+assertions before successful completion; their cause remains unestablished.
+Other readers, fifth-table ordinary use, Linux, USA and native Windows remain
+open. No performance measurements were made.
+
+EUR E195-d194 also serves [two tilemap alternatives and their selector](rom_data_graphics.md#e195-alternate-tilemap-rectangles)
+through the existing observed-tilemap resource.

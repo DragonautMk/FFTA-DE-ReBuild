@@ -7,6 +7,15 @@ pub const SOURCE_OFFSET: u32 = 0x3a4b70;
 pub const SOURCE_LENGTH: usize = 8;
 pub const SOURCE_SHA256: &str = "1a6f836689bf342c63de1ecab160ca4e134120ae3670782998696e02242f7a05";
 pub const WRAPPER_LENGTH: usize = 4;
+pub const TILEMAP_DESCRIPTOR_SHA256: [&str; 7] = [
+    "8a85155dd9c49f25a62e317de1bea1c16408eb8e49263a869094b18e8886b410",
+    "b2ac9e364624ab0bdc38e744ce75ba7c63ac3bfcdeea801018ffe5fb03c27c82",
+    "0ece24698c19ab28faa9dfec6fa1bd7348854370b408a09822edd4edd159fd90",
+    "b95f3c18219c1247db0128ccecee92a112e15408be4578f0cc8f59bf043e848d",
+    "ad040f4652914f454b00b2023a34034a413dcebd8c6bffc537d9623c225fef0c",
+    "f93fe3088e0367691e98d3341fade76895e033a95351e2d7ea6e3a8bdb3e21c2",
+    "2d54e7fb29569f3d12318bb15bcd36f1080f278fad9fb8fdc0de68d867a8d538",
+];
 /// Selected descriptor and wrapper roots; the compressed streams have a separate owner.
 pub const ADDITIONAL_SPECS: [(u32, &str, u32, &str); 4] = [
     (0x3a4b18, "4d41b742909b6b74166dc4a9da10958203010961d902f1a72e995cf81d3530e0", 0xb0e2b4, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
@@ -19,6 +28,16 @@ pub const TRANSFER_SPECS: [(u32, &str, u32, &str); 3] = [
     (0x399774, "1e2b07e65c23762cf89bc63f87c23f78833cd01bd99c60f97efafcee05369b5c", 0xb02ea0, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
     (0x39977c, "4463dd11a5014a50c1be9712f36000206dc8c7699ab18b50ffe6e5ad63936828", 0xb030bc, "8a53a04d258d253d29a4035818bbe3fb8130138a0fe327563e42e0ff020de37e"),
     (0x399784, "1828ce907e40e0fc7041797a08cb7e7fa37f49d2a39bc5d84645c676d3542c8d", 0xb151d4, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+];
+/// Seven LZ descriptors paired with the E200 direct tilemap rows.
+pub const INTERLEAVED_LZ_SPECS: [(u32, &str, u32, &str); 7] = [
+    (0x3a4b38, "0677d43723a8f37de758cfa6ebceeeb39ba58b5f5b2c08b9612aaa2f5f3127fa", 0xb0efd8, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b40, "fc9c0e60d21317c0ca8d7af6eb147395a95ba7b97229faf8ed29296e0a8d2db7", 0xb0f1b8, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b48, "2326d75fda5cef0c9e6110c31632af0819998e2396577c13e63f81ae0611d6c8", 0xb0f4d4, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b50, "bf1dd9128894b565b215d4d33cf39edae67b58e4b09f68a81000b39564ca5b1a", 0xb0f75c, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b58, "b4d74acbb476e8a269b8f66ad3d130bae42eef180af75b241b2a8b879db40617", 0xb0fa10, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b60, "840b0825bb1fb0deb70fe9bef3f5dd067d979efc96c2ebd557417a9c471928d4", 0xb0fbd8, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x3a4b68, "eac3397f8eae08655b6b39d7f0ca7ced172653a6e9827a6dbbd452bf9132631b", 0xb0fdec, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -63,6 +82,23 @@ fn descriptor_bytes(pointer: u32, parameter16: u16, parameter8: u8, opaque: u8) 
     bytes
 }
 
+/// A direct tilemap descriptor; its parameters remain guest-interpreted.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct DirectTilemapDescriptor {
+    pub source_offset: u32,
+    pub tilemap_pointer: u32,
+    pub parameter16: u16,
+    pub parameter8: u8,
+    pub opaque_byte: u8,
+}
+
+impl DirectTilemapDescriptor {
+    pub fn source_bytes(&self) -> [u8; SOURCE_LENGTH] {
+        descriptor_bytes(self.tilemap_pointer, self.parameter16, self.parameter8, self.opaque_byte)
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ObservedTilemapDescriptor {
@@ -73,6 +109,10 @@ pub struct ObservedTilemapDescriptor {
     pub opaque_byte: u8,
     pub additional_descriptors: [AdditionalDescriptor; 4],
     pub transfer_descriptors: [AdditionalDescriptor; 3],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub additional_tilemap_descriptors: Option<[DirectTilemapDescriptor; 7]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub interleaved_lz_descriptors: Option<[AdditionalDescriptor; 7]>,
 }
 
 impl ObservedTilemapDescriptor {
@@ -87,6 +127,22 @@ impl ObservedTilemapDescriptor {
                 return Err("Invalid additional tilemap descriptor or LZ wrapper".into());
             }
         }
+        if let Some(entries) = &self.additional_tilemap_descriptors {
+            for (i, (entry, &(target, _, _, _))) in entries.iter().zip(&observed_tilemap::ADDITIONAL_STREAM_SPECS).enumerate() {
+                if entry.source_offset != SOURCE_OFFSET + ((i + 1) * SOURCE_LENGTH) as u32
+                    || entry.tilemap_pointer != 0x0800_0000 + target {
+                    return Err("Invalid direct tilemap descriptor".into());
+                }
+            }
+        }
+        if let Some(entries) = &self.interleaved_lz_descriptors {
+            for (entry, &(offset, _, wrapper_offset, _)) in entries.iter().zip(&INTERLEAVED_LZ_SPECS) {
+                if entry.source_offset != offset || entry.asset_pointer != 0x0800_0000 + wrapper_offset
+                    || entry.wrapper.source_offset != wrapper_offset || entry.wrapper.flags & 2 == 0 {
+                    return Err("Invalid interleaved LZ descriptor or wrapper".into());
+                }
+            }
+        }
         Ok(())
     }
 
@@ -96,13 +152,20 @@ impl ObservedTilemapDescriptor {
         if self.tilemap_pointer != 0x0800_0000 + tilemap.source_offset {
             return Err("Observed tilemap descriptor dependency mismatch".into());
         }
+        if let Some(entries) = &self.additional_tilemap_descriptors {
+            let streams = tilemap.additional_streams.as_ref().ok_or("Missing additional tilemap dependencies")?;
+            if entries.iter().zip(streams).any(|(entry, stream)| entry.tilemap_pointer != 0x0800_0000 + stream.source_offset) {
+                return Err("Additional tilemap descriptor dependency mismatch".into());
+            }
+        }
         Ok(())
     }
 
     pub fn validate_lz_dependencies(&self, lz: &observed_lz::ObservedLzBlock) -> Result<(), String> {
         self.validate()?;
         lz.validate()?;
-        for entry in self.additional_descriptors.iter().chain(&self.transfer_descriptors) {
+        for entry in self.additional_descriptors.iter().chain(&self.transfer_descriptors)
+            .chain(self.interleaved_lz_descriptors.iter().flatten()) {
             if !lz.streams().any(|(offset, _, _)| offset == entry.wrapper.source_offset + WRAPPER_LENGTH as u32) {
                 return Err("Missing linked observed LZ stream".into());
             }
@@ -128,6 +191,15 @@ impl ObservedTilemapDescriptor {
             spans.push((entry.source_offset, entry.source_bytes().to_vec(), descriptor_role));
             spans.push((entry.wrapper.source_offset, entry.wrapper.source_bytes().to_vec(), wrapper_role));
         }
+        if let Some(entries) = &self.additional_tilemap_descriptors {
+            for entry in entries { spans.push((entry.source_offset, entry.source_bytes().to_vec(), "additional-tilemap-descriptor")); }
+        }
+        if let Some(entries) = &self.interleaved_lz_descriptors {
+            for entry in entries {
+                spans.push((entry.source_offset, entry.source_bytes().to_vec(), "interleaved-lz-descriptor"));
+                spans.push((entry.wrapper.source_offset, entry.wrapper.source_bytes().to_vec(), "interleaved-lz-wrapper"));
+            }
+        }
         spans
     }
 }
@@ -149,8 +221,13 @@ impl Catalog {
         if !map.sources.iter().any(|source| source.offset == observed_tilemap::SOURCE_OFFSET && source.length as usize == observed_tilemap::SOURCE_LENGTH) {
             return Err("Observed tilemap descriptor source dependency mismatch".into());
         }
+        for &(offset, length, _, _) in &observed_tilemap::ADDITIONAL_STREAM_SPECS {
+            if !map.sources.iter().any(|source| source.offset == offset && source.length as usize == length) {
+                return Err("Missing additional tilemap descriptor source dependency".into());
+            }
+        }
         let lz = previous.iter().find(|resource| resource.id == OBSERVED_LZ_ID).ok_or("Missing observed LZ dependency")?;
-        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS) {
+        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS) {
             let at = offset as usize;
             let wrapper = wrapper_offset as usize;
             if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash
@@ -173,11 +250,25 @@ impl Catalog {
         };
         let additional_descriptors = std::array::from_fn(|i| read_descriptor(ADDITIONAL_SPECS[i].0, ADDITIONAL_SPECS[i].2));
         let transfer_descriptors = std::array::from_fn(|i| read_descriptor(TRANSFER_SPECS[i].0, TRANSFER_SPECS[i].2));
+        let interleaved_lz_descriptors = std::array::from_fn(|i| read_descriptor(INTERLEAVED_LZ_SPECS[i].0, INTERLEAVED_LZ_SPECS[i].2));
+        let mut tilemap_descriptors = Vec::new();
+        for (i, expected) in TILEMAP_DESCRIPTOR_SHA256.iter().enumerate() {
+            let offset = SOURCE_OFFSET + ((i + 1) * SOURCE_LENGTH) as u32;
+            let entry = &rom[offset as usize..offset as usize + SOURCE_LENGTH];
+            if ffta_rom::digest(entry) != *expected { return Err("Additional tilemap descriptor source mismatch".into()); }
+            tilemap_descriptors.push(DirectTilemapDescriptor {
+                source_offset: offset, tilemap_pointer: u32::from_le_bytes(entry[..4].try_into().unwrap()),
+                parameter16: u16::from_le_bytes(entry[4..6].try_into().unwrap()), parameter8: entry[6], opaque_byte: entry[7],
+            });
+        }
+        let additional_tilemap_descriptors: [DirectTilemapDescriptor; 7] = tilemap_descriptors.try_into().map_err(|_| "Incomplete tilemap descriptors")?;
         let decoded = ObservedTilemapDescriptor {
             source_offset: SOURCE_OFFSET,
             tilemap_pointer: u32::from_le_bytes(bytes[..4].try_into().unwrap()),
             parameter16: u16::from_le_bytes(bytes[4..6].try_into().unwrap()),
             parameter8: bytes[6], opaque_byte: bytes[7], additional_descriptors, transfer_descriptors,
+            additional_tilemap_descriptors: Some(additional_tilemap_descriptors),
+            interleaved_lz_descriptors: Some(interleaved_lz_descriptors),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

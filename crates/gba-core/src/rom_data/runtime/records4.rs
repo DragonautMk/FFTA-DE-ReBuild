@@ -12,6 +12,10 @@ pub struct Records4Stats {
     pub field02_bytes: u64,
     pub field03_bytes: u64,
     pub records_used: u64,
+    pub callback_bus_reads: u64,
+    pub callback_bytes: [u64; 3],
+    pub action_bus_reads: u64,
+    pub action_field_bytes: [u64; 3],
 }
 pub(super) struct Records4Resources {
     data: model::Records4,
@@ -19,10 +23,14 @@ pub(super) struct Records4Resources {
     bytes: AtomicU64,
     fields: [AtomicU64; 4],
     records: [AtomicU64; 4],
+    callback_reads: AtomicU64,
+    callbacks: [AtomicU64; 3],
+    action_reads: AtomicU64,
+    action_fields: [AtomicU64; 3],
 }
 impl Records4Resources {
     pub(super) fn source_page(index: usize) -> bool {
-        index >> 12 == 0x713
+        matches!(index >> 12, 0x3ad | 0x713)
     }
     pub(super) fn new(data: model::Records4, sources: &[SourceRange]) -> Result<Self, String> {
         data.validate()?;
@@ -45,6 +53,10 @@ impl Records4Resources {
             bytes: AtomicU64::new(0),
             fields: std::array::from_fn(|_| AtomicU64::new(0)),
             records: std::array::from_fn(|_| AtomicU64::new(0)),
+            callback_reads: AtomicU64::new(0),
+            callbacks: std::array::from_fn(|_| AtomicU64::new(0)),
+            action_reads: AtomicU64::new(0),
+            action_fields: std::array::from_fn(|_| AtomicU64::new(0)),
         })
     }
     pub(super) fn guest_read<const N: usize>(
@@ -66,18 +78,36 @@ impl Records4Resources {
         }
         let mut fields = [0u64; 4];
         let mut records = [0u64; 4];
+        let mut callbacks = [0u64; 3];
+        let mut action_fields = [0u64; 3];
         let bytes = std::array::from_fn(|i| match values[i] {
             Some(byte) => {
-                let at = index + i - model::SOURCE as usize;
-                let record = at / model::RECORD_BYTES;
-                records[record / 64] |= 1 << (record % 64);
-                fields[at % model::RECORD_BYTES] += 1;
+                let address = (index + i) as u32;
+                if let Some((_, table)) = self.data.callback_byte_at(address) {
+                    callbacks[table] += 1;
+                } else if let Some((_, field)) = self.data.action_byte_at(address) {
+                    action_fields[field] += 1;
+                } else {
+                    let at = index + i - model::SOURCE as usize;
+                    let record = at / model::RECORD_BYTES;
+                    records[record / 64] |= 1 << (record % 64);
+                    fields[at % model::RECORD_BYTES] += 1;
+                }
                 byte
             }
             None => prior.as_ref().map_or_else(|| rom[index + i], |p| p[i]),
         });
-        self.reads.fetch_add(1, Ordering::Relaxed);
-        self.bytes.fetch_add(fields.iter().sum(), Ordering::Relaxed);
+        let record_bytes: u64 = fields.iter().sum();
+        if record_bytes != 0 { self.reads.fetch_add(1, Ordering::Relaxed); }
+        if callbacks.iter().any(|&count| count != 0) { self.callback_reads.fetch_add(1, Ordering::Relaxed); }
+        if action_fields.iter().any(|&count| count != 0) { self.action_reads.fetch_add(1, Ordering::Relaxed); }
+        self.bytes.fetch_add(record_bytes, Ordering::Relaxed);
+        for (counter, count) in self.callbacks.iter().zip(callbacks) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
+        for (counter, count) in self.action_fields.iter().zip(action_fields) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
         for (counter, count) in self.fields.iter().zip(fields) {
             counter.fetch_add(count, Ordering::Relaxed);
         }
@@ -96,6 +126,10 @@ impl Records4Resources {
             field01_bytes,
             field02_bytes,
             field03_bytes,
+            callback_bus_reads: self.callback_reads.load(Ordering::Relaxed),
+            callback_bytes: self.callbacks.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            action_bus_reads: self.action_reads.load(Ordering::Relaxed),
+            action_field_bytes: self.action_fields.each_ref().map(|v| v.load(Ordering::Relaxed)),
             records_used: self
                 .records
                 .iter()
@@ -106,5 +140,7 @@ impl Records4Resources {
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>()
             + self.data.records.capacity() * std::mem::size_of::<model::Record>()
+            + self.data.callback_tables.as_ref().map_or(0, |tables| tables.iter().map(|table| table.capacity() * std::mem::size_of::<u32>()).sum())
+            + self.data.action_callbacks.as_ref().map_or(0, |actions| actions.capacity() * std::mem::size_of::<model::ActionCallback>())
     }
 }

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "trace-conditional-tilemap-row-list",
+  "title": "Trace a conditional tilemap row-list path",
+  "kind": "docs",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Document the original row-list initialization and conditional path, and retain ordinary-use proof for the new rows as an explicit open prerequisite."
+  ],
+  "validation": [
+    "Wine disassembly e202-selector-source-8r_6wz80, e202-constructor-source-amu94h3q, e202-callback-source-enzv4iwu, e202-consumer-source-_tv6i5rb, e202-list-task-source-a7lzqd99 and e202-list-tail-source-g_x2m5fb identify the original dataflow. Source audit e202-selector-dataflow-9jydyc_i pins the instructions and bounded direct-call candidates."
+  ],
+  "limitations": [
+    "The first four row indices follow only if the index starts zero and pointer, count and index remain unchanged. Other producers, writes and contexts remain possible; no ordinary trigger or new gameplay replay was established. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

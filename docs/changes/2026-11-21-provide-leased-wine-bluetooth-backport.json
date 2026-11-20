@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "provide-leased-wine-bluetooth-backport",
+  "title": "Provide a leased Wine Bluetooth backport",
+  "kind": "added",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Provide an opt-in validation wrapper that verifies its parent owns the managed leases and checks the local Bluetooth module and installed Wine hashes before mounting the matching upstream guard backport in a private namespace."
+  ],
+  "validation": [
+    "Matching Wine 10 source and compiled module pass checksum, corrected-guard disassembly and exported ABI checks in wine-dbus-overlay-link-s10dafvr. Wine loader proofs v50bntvr and 25z4y70w initialize the module without the assertion and drain the server.",
+    "The affected Blue Screw scene in wine-dbus-overlay-reproducer-hrc9ivgq matches 600 frames without the D-Bus assertion and drains Wine. That unit reports FAIL because its trace parser mishandled a split openat; read-only reconciliation qxfzqz9z verifies the successful open and unchanged protected inputs."
+  ],
+  "limitations": [
+    "The installed system module remains defective and ordinary Wine commands do not use the opt-in overlay. The exact D-Bus event, physical Bluetooth and asynchronous property updates remain unverified; source signatures were not independently authenticated. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "scripts/wine_bluetooth_overlay.py",
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION.md"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-extra-iwram-obj-callbacks",
+  "title": "Extract two additional IWRAM OBJ callbacks",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the European OBJ static-list resource with the authenticated callback words at 397fa4 and 397fb8; the guest retains callback selection and execution of mutable IWRAM. All eight bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e191-callback-source-m460uxk9 and Wine e191-callback-trace-wine-35oh5q8o authenticate and observe both readers. Wine e191-callback-wine-gj6h0gcr preserves 121 other resources and prior OBJ fields, rejects coherent edits, checks altered mirrored and mixed reads and compares two interpreter/native load-and-branch entries.",
+    "Wine e191-callback-scene-wine-_vpbz8be matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all eight backing bytes altered. Wine e191-callback-cli-wine-fttzwwhr creates, reuses and verifies 123 matching files."
+  ],
+  "limitations": [
+    "Both observed ordinary reads used interpreter fallback. Other callbacks, callers and live IWRAM paths, Linux, USA and native Windows remain pending; no performance measurements were performed. The first build launch 89y445bs used an invalid relative path; e_8ykhv5 was interrupted and k1nk95_g passed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/iwram_extra_callbacks_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

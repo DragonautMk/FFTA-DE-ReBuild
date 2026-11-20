@@ -277,11 +277,35 @@ E184 owns their selected roots, including another 17 observed bytes. E185
 owns the row selecting that list, including six observed bytes. E186 owns
 three compact-bank records covering another 60 observed bytes. E187 owns two
 timed sound schedules and their roots, including another 57 observed bytes.
-E188 owns five IWRAM callback words covering another 20 observed bytes. The
-altered-source 600-frame actions and CLI checks through E188 pass on Wine;
-3,357 original observed unowned bytes lie outside these sixteen increments.
+E188 owns five IWRAM callback words covering another 20 observed bytes. E189
+owns two DMA register directories, including another 24 observed bytes. E190
+owns three IWRAM memory-helper words covering another 12 observed bytes. E191
+owns two additional IWRAM OBJ callbacks covering another eight observed bytes.
+E192 owns three linked-record callback tables, including another 16 observed
+bytes. E193 owns 93 action-callback records, including another six observed
+bytes. E194 owns five adjacent offset tables, including another five observed
+bytes. E195 owns two tilemap alternatives and their selector, including another
+eight observed bytes. E196 owns three OBJ byte groups, including another two
+observed bytes. The altered-source 600-frame actions and CLI checks through
+E196 pass on Wine; 3,276 original observed unowned bytes lie outside these 24
+increments. The E192–E194 and E196 reader and scene logs and the E195 scene log
+contain D-Bus assertions before the successful tests.
 Other readers, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
+
+**ROMDATA-01-E197-TILEMAP-3A4D84 scoped EUR/Wine:** E197-d196 publishes eight
+original tilemap pointer words for the original indexed reader. Wine checks
+the selected words, indices outside the physical projection and production CLI.
+E198-d197 also publishes the seven other pointed-to tilemap streams, including
+literal runs; Wine validates every decoded cell and the CLI. E199-d198 publishes
+seven direct descriptors linked to those streams and verifies their readers and
+CLI on Wine. E200-d199 adds seven rows selecting those descriptors; E201-d200
+adds seven interleaved rows and their LZ descriptor, wrapper and stream chains.
+E202 verifies ordinary use of the first pair and both linked streams in a Wine
+Blue Screw scene with altered ROM backing. Other pairs and scenes, real-BIOS/DMA,
+other consumers, Linux, USA and native Windows remain open. The E172 sample is
+unchanged.
+[Evidence](../rom_data_graphics.md#e197-indexed-tilemap-pointers).
 
 **ROMDATA-01-OBJ-6CB278-PRIMARY scoped EUR progress:** E172-d171 serves
 five conditional selector/position bytes reached by the primary task-362 alias.

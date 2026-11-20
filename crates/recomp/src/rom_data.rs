@@ -85,6 +85,8 @@ use gba_core::rom_data::{
     observed_tilemap_descriptor::ObservedTilemapDescriptor, OBSERVED_TILEMAP_DESCRIPTOR_ID, OBSERVED_TILEMAP_DESCRIPTOR_FILE, MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES,
     observed_tilemap_row::ObservedTilemapRow, OBSERVED_TILEMAP_ROW_ID, OBSERVED_TILEMAP_ROW_FILE, MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES,
     dma_register_directories::DmaRegisterDirectories, DMA_REGISTER_DIRECTORIES_ID, DMA_REGISTER_DIRECTORIES_FILE, MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES,
+    iwram_memory_helpers::IwramMemoryHelpers, IWRAM_MEMORY_HELPERS_ID, IWRAM_MEMORY_HELPERS_FILE, MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES,
+    adjacent_offset_tables::AdjacentOffsetTables, ADJACENT_OFFSET_TABLES_ID, ADJACENT_OFFSET_TABLES_FILE, MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -236,7 +238,15 @@ mod observed_obj_lists_runtime_tests;
 #[cfg(test)]
 mod iwram_obj_callbacks_tests;
 #[cfg(test)]
+mod iwram_extra_callbacks_tests;
+#[cfg(test)]
+mod obj_layout_offsets_tests;
+#[cfg(test)]
 mod dma_register_directories_tests;
+#[cfg(test)]
+mod iwram_memory_helpers_tests;
+#[cfg(test)]
+mod adjacent_offset_tables_tests;
 #[cfg(test)]
 mod obj_animation_tests;
 #[cfg(test)]
@@ -380,6 +390,10 @@ mod metadata28_runtime_tests;
 #[cfg(test)]
 mod records4_runtime_tests;
 #[cfg(test)]
+mod records4_callbacks_tests;
+#[cfg(test)]
+mod records4_action_callbacks_tests;
+#[cfg(test)]
 mod conditional_records8_runtime_tests;
 #[cfg(test)]
 mod mission_records70_runtime_tests;
@@ -450,11 +464,19 @@ mod redspring_lz_source_tests;
 #[cfg(test)]
 mod observed_lz_tests;
 #[cfg(test)]
+mod interleaved_lz_chain_tests;
+#[cfg(test)]
 mod constructor_template64_tests;
 #[cfg(test)]
 mod observed_tilemap_tests;
 #[cfg(test)]
 mod observed_tilemap_rectangles_tests;
+#[cfg(test)]
+mod observed_tilemap_alternates_tests;
+#[cfg(test)]
+mod observed_tilemap_pointers_tests;
+#[cfg(test)]
+mod observed_tilemap_streams_tests;
 #[cfg(test)]
 mod observed_tilemap_roots_tests;
 #[cfg(test)]
@@ -464,6 +486,8 @@ mod compact_redspring_records_tests;
 #[cfg(test)]
 mod observed_tilemap_descriptor_tests;
 #[cfg(test)]
+mod observed_tilemap_direct_descriptors_tests;
+#[cfg(test)]
 mod observed_tilemap_descriptors_tests;
 #[cfg(test)]
 mod observed_transfer_records_tests;
@@ -471,6 +495,8 @@ mod observed_transfer_records_tests;
 mod observed_tilemap_row_tests;
 #[cfg(test)]
 mod observed_tilemap_rows_tests;
+#[cfg(test)]
+mod observed_tilemap_direct_rows_tests;
 #[cfg(test)]
 mod compact_obj_catalog_table_tests;
 #[cfg(test)]
@@ -1128,6 +1154,8 @@ fn parse_observed_tilemap(bytes: &[u8]) -> Result<ObservedTilemap, String> { let
 fn parse_observed_tilemap_descriptor(bytes: &[u8]) -> Result<ObservedTilemapDescriptor, String> { let value: ObservedTilemapDescriptor = serde_json::from_slice(bytes).map_err(|e| format!("Invalid observed_tilemap_descriptor: {e}"))?; value.validate()?; Ok(value) }
 fn parse_observed_tilemap_row(bytes: &[u8]) -> Result<ObservedTilemapRow, String> { let value: ObservedTilemapRow = serde_json::from_slice(bytes).map_err(|e| format!("Invalid observed_tilemap_row: {e}"))?; value.validate()?; Ok(value) }
 fn parse_dma_register_directories(bytes: &[u8]) -> Result<DmaRegisterDirectories, String> { let value: DmaRegisterDirectories = serde_json::from_slice(bytes).map_err(|e| format!("Invalid dma_register_directories: {e}"))?; value.validate()?; Ok(value) }
+fn parse_iwram_memory_helpers(bytes: &[u8]) -> Result<IwramMemoryHelpers, String> { let value: IwramMemoryHelpers = serde_json::from_slice(bytes).map_err(|e| format!("Invalid iwram_memory_helpers: {e}"))?; value.validate()?; Ok(value) }
+fn parse_adjacent_offset_tables(bytes: &[u8]) -> Result<AdjacentOffsetTables, String> { let value: AdjacentOffsetTables = serde_json::from_slice(bytes).map_err(|e| format!("Invalid adjacent_offset_tables: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1160,6 +1188,8 @@ fn encode_observed_tilemap(value: &ObservedTilemap) -> Result<Vec<u8>, String> {
 fn encode_observed_tilemap_descriptor(value: &ObservedTilemapDescriptor) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode observed_tilemap_descriptor: {e}")) }
 fn encode_observed_tilemap_row(value: &ObservedTilemapRow) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode observed_tilemap_row: {e}")) }
 fn encode_dma_register_directories(value: &DmaRegisterDirectories) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode dma_register_directories: {e}")) }
+fn encode_iwram_memory_helpers(value: &IwramMemoryHelpers) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode iwram_memory_helpers: {e}")) }
+fn encode_adjacent_offset_tables(value: &AdjacentOffsetTables) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode adjacent_offset_tables: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1452,6 +1482,8 @@ struct Dataset {
     observed_tilemap_descriptor: Option<ObservedTilemapDescriptor>,
     observed_tilemap_row: Option<ObservedTilemapRow>,
     dma_register_directories: Option<DmaRegisterDirectories>,
+    iwram_memory_helpers: Option<IwramMemoryHelpers>,
+    adjacent_offset_tables: Option<AdjacentOffsetTables>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1555,6 +1587,8 @@ struct Dataset {
     observed_tilemap_descriptor_bytes: Option<Vec<u8>>,
     observed_tilemap_row_bytes: Option<Vec<u8>>,
     dma_register_directories_bytes: Option<Vec<u8>>,
+    iwram_memory_helpers_bytes: Option<Vec<u8>>,
+    adjacent_offset_tables_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1684,6 +1718,8 @@ impl Dataset {
             observed_tilemap_descriptor: self.observed_tilemap_descriptor.as_ref().zip(self.observed_tilemap_descriptor_bytes.as_deref()),
             observed_tilemap_row: self.observed_tilemap_row.as_ref().zip(self.observed_tilemap_row_bytes.as_deref()),
             dma_register_directories: self.dma_register_directories.as_ref().zip(self.dma_register_directories_bytes.as_deref()),
+            iwram_memory_helpers: self.iwram_memory_helpers.as_ref().zip(self.iwram_memory_helpers_bytes.as_deref()),
+            adjacent_offset_tables: self.adjacent_offset_tables.as_ref().zip(self.adjacent_offset_tables_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -1881,6 +1917,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let observed_tilemap_descriptor_bytes=manifest.coverage.iter().any(|id|id==OBSERVED_TILEMAP_DESCRIPTOR_ID).then(||read_bounded(&path.join(OBSERVED_TILEMAP_DESCRIPTOR_FILE),MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES)).transpose()?;
     let observed_tilemap_row_bytes=manifest.coverage.iter().any(|id|id==OBSERVED_TILEMAP_ROW_ID).then(||read_bounded(&path.join(OBSERVED_TILEMAP_ROW_FILE),MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES)).transpose()?;
     let dma_register_directories_bytes=manifest.coverage.iter().any(|id|id==DMA_REGISTER_DIRECTORIES_ID).then(||read_bounded(&path.join(DMA_REGISTER_DIRECTORIES_FILE),MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES)).transpose()?;
+    let iwram_memory_helpers_bytes=manifest.coverage.iter().any(|id|id==IWRAM_MEMORY_HELPERS_ID).then(||read_bounded(&path.join(IWRAM_MEMORY_HELPERS_FILE),MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES)).transpose()?;
+    let adjacent_offset_tables_bytes=manifest.coverage.iter().any(|id|id==ADJACENT_OFFSET_TABLES_ID).then(||read_bounded(&path.join(ADJACENT_OFFSET_TABLES_FILE),MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2030,6 +2068,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         observed_tilemap_descriptor_bytes.as_ref().map_or(0, Vec::len),
         observed_tilemap_row_bytes.as_ref().map_or(0, Vec::len),
         dma_register_directories_bytes.as_ref().map_or(0, Vec::len),
+        iwram_memory_helpers_bytes.as_ref().map_or(0, Vec::len),
+        adjacent_offset_tables_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2134,6 +2174,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let observed_tilemap_descriptor=observed_tilemap_descriptor_bytes.as_deref().map(parse_observed_tilemap_descriptor).transpose()?;
     let observed_tilemap_row=observed_tilemap_row_bytes.as_deref().map(parse_observed_tilemap_row).transpose()?;
     let dma_register_directories=dma_register_directories_bytes.as_deref().map(parse_dma_register_directories).transpose()?;
+    let iwram_memory_helpers=iwram_memory_helpers_bytes.as_deref().map(parse_iwram_memory_helpers).transpose()?;
+    let adjacent_offset_tables=adjacent_offset_tables_bytes.as_deref().map(parse_adjacent_offset_tables).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2288,6 +2330,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         observed_tilemap_descriptor,
         observed_tilemap_row,
         dma_register_directories,
+        iwram_memory_helpers,
+        adjacent_offset_tables,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2391,6 +2435,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         observed_tilemap_descriptor_bytes,
         observed_tilemap_row_bytes,
         dma_register_directories_bytes,
+        iwram_memory_helpers_bytes,
+        adjacent_offset_tables_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2522,6 +2568,8 @@ fn check_dataset_budget(
     observed_tilemap_descriptor: usize,
     observed_tilemap_row: usize,
     dma_register_directories: usize,
+    iwram_memory_helpers: usize,
+    adjacent_offset_tables: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -2641,6 +2689,8 @@ fn check_dataset_budget(
         || observed_tilemap_descriptor as u64 > MAX_OBSERVED_TILEMAP_DESCRIPTOR_FILE_BYTES
         || observed_tilemap_row as u64 > MAX_OBSERVED_TILEMAP_ROW_FILE_BYTES
         || dma_register_directories as u64 > MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES
+        || iwram_memory_helpers as u64 > MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES
+        || adjacent_offset_tables as u64 > MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -2766,6 +2816,8 @@ fn check_dataset_budget(
         .saturating_add(observed_tilemap_descriptor)
         .saturating_add(observed_tilemap_row)
         .saturating_add(dma_register_directories)
+        .saturating_add(iwram_memory_helpers)
+        .saturating_add(adjacent_offset_tables)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -2983,6 +3035,8 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if dataset.observed_tilemap_descriptor.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} file={} descriptors=8 lz_wrappers=7",dataset.manifest.resources[118].sha256);}
     if dataset.observed_tilemap_row.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ROW_ID} file={} rows=9",dataset.manifest.resources[119].sha256);}
     if dataset.dma_register_directories.is_some() {eprintln!("ROM_DATA runtime=decoded resource={DMA_REGISTER_DIRECTORIES_ID} file={} directories=2",dataset.manifest.resources[120].sha256);}
+    if dataset.iwram_memory_helpers.is_some() {eprintln!("ROM_DATA runtime=decoded resource={IWRAM_MEMORY_HELPERS_ID} file={} helpers=3",dataset.manifest.resources[121].sha256);}
+    if dataset.adjacent_offset_tables.is_some() {eprintln!("ROM_DATA runtime=decoded resource={ADJACENT_OFFSET_TABLES_ID} file={} tables=5",dataset.manifest.resources[122].sha256);}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3155,6 +3209,8 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} wrapper_bytes={} transfer_descriptor_bytes={} transfer_wrapper_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.descriptor_bytes,i.wrapper_bytes,i.transfer_descriptor_bytes,i.transfer_wrapper_bytes);}
         if let Some(i)=resources.observed_tilemap_row_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ROW_ID} dataset={} bus_reads={} source_bytes={} transfer_source_bytes={} list_source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.transfer_source_bytes,i.list_source_bytes);}
         if let Some(i)=resources.dma_register_directories_stats() {eprintln!("ROM_DATA_USE resource={DMA_REGISTER_DIRECTORIES_ID} dataset={} bus_reads={} directory_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.directory_bytes);}
+        if let Some(i)=resources.iwram_memory_helpers_stats() {eprintln!("ROM_DATA_USE resource={IWRAM_MEMORY_HELPERS_ID} dataset={} bus_reads={} helper_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.helper_bytes);}
+        if let Some(i)=resources.adjacent_offset_tables_stats() {eprintln!("ROM_DATA_USE resource={ADJACENT_OFFSET_TABLES_ID} dataset={} bus_reads={} table_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.table_bytes);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3564,6 +3620,8 @@ fn write_dataset_inner(
     let observed_tilemap_descriptor_data=source.observed_tilemap_descriptor.as_ref().map(|c|encode_observed_tilemap_descriptor(&c.decoded)).transpose()?;
     let observed_tilemap_row_data=source.observed_tilemap_row.as_ref().map(|c|encode_observed_tilemap_row(&c.decoded)).transpose()?;
     let dma_register_directories_data=source.dma_register_directories.as_ref().map(|c|encode_dma_register_directories(&c.decoded)).transpose()?;
+    let iwram_memory_helpers_data=source.iwram_memory_helpers.as_ref().map(|c|encode_iwram_memory_helpers(&c.decoded)).transpose()?;
+    let adjacent_offset_tables_data=source.adjacent_offset_tables.as_ref().map(|c|encode_adjacent_offset_tables(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -3699,6 +3757,8 @@ fn write_dataset_inner(
     if let Some(bytes)=&observed_tilemap_descriptor_data {files.push(bytes);}
     if let Some(bytes)=&observed_tilemap_row_data {files.push(bytes);}
     if let Some(bytes)=&dma_register_directories_data {files.push(bytes);}
+    if let Some(bytes)=&iwram_memory_helpers_data {files.push(bytes);}
+    if let Some(bytes)=&adjacent_offset_tables_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -3825,6 +3885,8 @@ fn write_dataset_inner(
         observed_tilemap_descriptor_data.as_ref().map_or(0, Vec::len),
         observed_tilemap_row_data.as_ref().map_or(0, Vec::len),
         dma_register_directories_data.as_ref().map_or(0, Vec::len),
+        iwram_memory_helpers_data.as_ref().map_or(0, Vec::len),
+        adjacent_offset_tables_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -3944,6 +4006,8 @@ fn write_dataset_inner(
     if let Some(bytes)=&observed_tilemap_descriptor_data {write(&path.join(OBSERVED_TILEMAP_DESCRIPTOR_FILE),bytes)?;}
     if let Some(bytes)=&observed_tilemap_row_data {write(&path.join(OBSERVED_TILEMAP_ROW_FILE),bytes)?;}
     if let Some(bytes)=&dma_register_directories_data {write(&path.join(DMA_REGISTER_DIRECTORIES_FILE),bytes)?;}
+    if let Some(bytes)=&iwram_memory_helpers_data {write(&path.join(IWRAM_MEMORY_HELPERS_FILE),bytes)?;}
+    if let Some(bytes)=&adjacent_offset_tables_data {write(&path.join(ADJACENT_OFFSET_TABLES_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4289,6 +4353,8 @@ mod tests {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4616,8 +4682,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

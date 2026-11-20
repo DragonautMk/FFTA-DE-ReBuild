@@ -645,3 +645,68 @@ under target/rom-data-bg-alternate-callers. All process handles are terminal.
 These declared EUR scene/GUI units are complete; other regional/gameplay scenes,
 global exclusions of the five FFrecords, languages/catalogs, actual archives,
 native Windows/default enablement and the other resource/mod phases remain.
+
+## Wine Bluetooth D-Bus diagnostic
+
+Several successful EUR/Wine reader and scene logs contain a
+`dbus_pending_call_set_notify` NULL-argument assertion. The minimal managed
+Wine command `wine-dbus-process-smoke-zkjnk_35` passed without reproducing it;
+`wine-dbus-reader-trace-qxwtl8he` reproduced it in `winedevice.exe` while the
+E196 reader still passed. Both Wine servers drained. The passing reader result
+does not establish that the Wine Bluetooth service remained healthy.
+
+The installed Wine 10.0 Bluetooth module's authenticated binary and
+`wine-dbus-binary-audit-ijsvoxgk` show the inverted NULL guard addressed by
+[Wine MR7302](https://list.winehq.org/hyperkitty/list/wine-gitlab@list.winehq.org/thread/ZEBOUKFLYJZWNZYMRFPFXAXU33I5OBWB/).
+This is a strong match for the assertion, although the exact triggering call
+stack and physical Bluetooth impact were not captured. Sol was requested as
+`gpt-6.1-sol` with `xhigh` reasoning; the client returned a handle without
+independently confirming the effective settings.
+
+A local Wine 10.0 Bluetooth backport is now available for **opt-in managed
+validation**. Ubuntu source `wine-dbus-source-fetch-22fg5zjx` matches the
+published checksums; `wine-dbus-generated-source-etyzrg_b` supplies generated
+files from the matching upstream release. Their maintainer signatures were not
+independently authenticated. The patched source differs from the original in
+the MR7302 guard only. `wine-dbus-overlay-link-s10dafvr` links the two compiled
+Bluetooth objects to the installed matching `ntdll.so`, checks exported symbols
+and dependencies, and retains the local module and its hash manifest. Its
+disassembly checks both the pending call and callback before notifying.
+
+`wine-dbus-overlay-reproducer-hrc9ivgq` ran the previously affected Blue Screw
+scene for 600 frames with no D-Bus assertion and a drained server; the game
+comparison passed. The unit itself reported FAIL because its trace parser did
+not join an interrupted `openat` with its resumed line. Read-only reconciliation
+`wine-dbus-trace-reconcile-qxfzqz9z` verifies the successful open, unchanged
+protected inputs and unchanged installed module. Separate ten-frame Wine
+`wine-dbus-loader-proof-v50bntvr` and `wine-dbus-wrapper-proof-25z4y70w` prove
+the dynamic loader initialized the corrected module and drain the server.
+
+For subsequent affected Wine checks, run the existing host driver through
+`scripts/wine_bluetooth_overlay.py` as the **direct** command of
+`validation_unit.py --wine-host`. From the project root, the current local
+module and manifest are:
+
+```sh
+wine_module="$PWD/target/validation/units/wine-dbus-overlay-link-s10dafvr/work/overlay/winebth.so"
+wine_manifest="$PWD/target/validation/units/wine-dbus-overlay-link-s10dafvr/evidence/result.json"
+python3 scripts/validation_unit.py --name YOUR_UNIT --wine-host --result result.json \
+  --protect "$wine_module" --protect "$wine_manifest" \
+  -- python3 "$PWD/scripts/wine_bluetooth_overlay.py" \
+  --module "$wine_module" --manifest "$wine_manifest" -- YOUR_HOST_DRIVER
+```
+
+Supply the existing driver's other environment, inputs, evidence and Wine
+server options as usual. The wrapper checks that its parent owns both managed
+leases, verifies the local module and installed Wine hashes, then mounts the
+backport read-only in a private `bwrap` namespace for that command. It refuses
+incompatible Wine binaries. No system file, prefix setting, Bluetooth service
+or warning filter is changed. The retained module is local validation output,
+not a redistributable artifact.
+
+The system Wine installation still has the defective guard; other Wine commands
+do not automatically use this overlay. A compatible corrected system runtime
+and any authorized shared-resource update remain open. The exact triggering
+stack, physical Bluetooth operation and asynchronous property updates have not
+been validated. This investigation did not measure performance or execute
+Linux game tests.

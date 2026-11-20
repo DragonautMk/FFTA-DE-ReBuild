@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "diagnose-wine-bluetooth-dbus-assertion",
+  "title": "Trace the Wine Bluetooth D-Bus assertion",
+  "kind": "docs",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Record a repeatable Wine service assertion, the matching upstream Bluetooth NULL-call defect and the exact remaining runtime prerequisite without altering shared Wine resources."
+  ],
+  "validation": [
+    "Wine wine-dbus-process-smoke-zkjnk_35 passes without the assertion; Wine wine-dbus-reader-trace-qxwtl8he reproduces it in winedevice.exe while the reader passes. Both servers drain. Static audit wine-dbus-binary-audit-ijsvoxgk identifies the defective guard in installed Wine 10.0 and links Wine MR7302."
+  ],
+  "limitations": [
+    "The exact triggering call stack and physical Bluetooth impact remain unproved. A corrected matching Wine runtime is not available locally; changing shared Wine resources requires authorization and focused revalidation. No performance measurements or Linux game tests were run."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION.md"
+  ]
+}

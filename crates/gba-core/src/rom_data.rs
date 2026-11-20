@@ -67,6 +67,8 @@ pub mod observed_tilemap;
 pub mod observed_tilemap_descriptor;
 pub mod observed_tilemap_row;
 pub mod dma_register_directories;
+pub mod iwram_memory_helpers;
+pub mod adjacent_offset_tables;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -132,8 +134,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 189;
-pub const DECODER_REV: u32 = 188;
+pub const EXTRACTOR_REV: u32 = 201;
+pub const DECODER_REV: u32 = 200;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -478,6 +480,14 @@ pub const DMA_REGISTER_DIRECTORIES_ID: &str = "engine.dma-register-directories";
 pub const DMA_REGISTER_DIRECTORIES_FILE: &str = "dma-register-directories.json";
 pub const DMA_REGISTER_DIRECTORIES_FORMAT: &str = "dma-register-directories-v1-json";
 pub const MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES: u64 = 1024 * 1024;
+pub const IWRAM_MEMORY_HELPERS_ID: &str = "engine.iwram-memory-helpers";
+pub const ADJACENT_OFFSET_TABLES_ID: &str = "engine.adjacent-offset-tables";
+pub const IWRAM_MEMORY_HELPERS_FILE: &str = "iwram-memory-helpers.json";
+pub const ADJACENT_OFFSET_TABLES_FILE: &str = "adjacent-offset-tables.json";
+pub const IWRAM_MEMORY_HELPERS_FORMAT: &str = "iwram-memory-helpers-v1-json";
+pub const ADJACENT_OFFSET_TABLES_FORMAT: &str = "adjacent-offset-tables-v1-json";
+pub const MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -837,6 +847,8 @@ pub struct Extraction {
     pub observed_tilemap_descriptor: Option<observed_tilemap_descriptor::Catalog>,
     pub observed_tilemap_row: Option<observed_tilemap_row::Catalog>,
     pub dma_register_directories: Option<dma_register_directories::Catalog>,
+    pub iwram_memory_helpers: Option<iwram_memory_helpers::Catalog>,
+    pub adjacent_offset_tables: Option<adjacent_offset_tables::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -964,6 +976,8 @@ pub struct BaseFiles<'a> {
     pub observed_tilemap_descriptor: Option<(&'a observed_tilemap_descriptor::ObservedTilemapDescriptor, &'a [u8])>,
     pub observed_tilemap_row: Option<(&'a observed_tilemap_row::ObservedTilemapRow, &'a [u8])>,
     pub dma_register_directories: Option<(&'a dma_register_directories::DmaRegisterDirectories, &'a [u8])>,
+    pub iwram_memory_helpers: Option<(&'a iwram_memory_helpers::IwramMemoryHelpers, &'a [u8])>,
+    pub adjacent_offset_tables: Option<(&'a adjacent_offset_tables::AdjacentOffsetTables, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1794,6 +1808,22 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.dma_register_directories = Some(metadata);
+            let metadata = iwram_memory_helpers::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(IWRAM_MEMORY_HELPERS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: IWRAM_MEMORY_HELPERS_ID.into(), path: IWRAM_MEMORY_HELPERS_FILE.into(),
+                format: IWRAM_MEMORY_HELPERS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.iwram_memory_helpers = Some(metadata);
+            let metadata = adjacent_offset_tables::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(ADJACENT_OFFSET_TABLES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: ADJACENT_OFFSET_TABLES_ID.into(), path: ADJACENT_OFFSET_TABLES_FILE.into(),
+                format: ADJACENT_OFFSET_TABLES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.adjacent_offset_tables = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1949,6 +1979,8 @@ impl Extraction {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2105,6 +2137,8 @@ impl Extraction {
             || self.observed_tilemap.is_some() != self.observed_tilemap_descriptor.is_some()
             || self.observed_tilemap_descriptor.is_some() != self.observed_tilemap_row.is_some()
             || self.observed_tilemap_row.is_some() != self.dma_register_directories.is_some()
+            || self.dma_register_directories.is_some() != self.iwram_memory_helpers.is_some()
+            || self.iwram_memory_helpers.is_some() != self.adjacent_offset_tables.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3051,6 +3085,24 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected dma_register_directories".into()),
         }
+        match (&self.iwram_memory_helpers, files.iwram_memory_helpers) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES { return Err("IWRAM memory helpers file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[121].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected iwram_memory_helpers".into()),
+        }
+        match (&self.adjacent_offset_tables, files.adjacent_offset_tables) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES { return Err("Adjacent offset tables file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[122].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected adjacent_offset_tables".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3641,6 +3693,14 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded dma_register_directories differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.iwram_memory_helpers, files.iwram_memory_helpers) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded iwram_memory_helpers differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.adjacent_offset_tables, files.adjacent_offset_tables) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded adjacent_offset_tables differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3773,6 +3833,8 @@ impl Extraction {
             + usize::from(self.observed_tilemap_descriptor.is_some())
             + usize::from(self.observed_tilemap_row.is_some())
             + usize::from(self.dma_register_directories.is_some())
+            + usize::from(self.iwram_memory_helpers.is_some())
+            + usize::from(self.adjacent_offset_tables.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -3948,6 +4010,8 @@ mod tests {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4076,6 +4140,8 @@ mod tests {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4214,6 +4280,8 @@ mod tests {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4341,6 +4409,8 @@ mod tests {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

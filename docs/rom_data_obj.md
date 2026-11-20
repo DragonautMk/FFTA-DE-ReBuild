@@ -3954,3 +3954,30 @@ the neutral opening: the managed halfword is read with its ROM source
 poisoned and no raw request, and the frame matches the original full state
 and clock. Other scenes and native dispatch remain open; Linux, USA and
 native Windows remain pending. No performance measurement.
+
+## E196 OBJ layout byte groups
+
+EUR E196-d195 extends `graphics.obj-static-lists` with three independently
+rooted groups at `398de8..398dea`, `398dea..398dec` and `398dec..398df0`.
+They preserve eight original bytes and the original guest's indexing and
+interpretation; the physical group boundaries do not limit the guest's access.
+The immediately following actor lookup was already owned. Two of these bytes
+were unowned in the E172 scene sample.
+
+Source `e196-obj-source-v9z3u37q` authenticates the data, selected reader
+windows and four literals. Wine `e196-obj-trace-wine-jcuo75ia` observes both
+bytes of the second group at original reader `0809ae64` through interpreter
+fallback. Wine `e196-obj-wine-54zxpyzj` preserves the old OBJ fields and 122
+other resources, rejects coherent file/hash edits, checks altered mirrored and
+mixed-boundary reads, and compares four original interpreter and separately
+compiled reader cases with equal full state and guest clock.
+
+Wine `e196-obj-scene-wine-s0azwl5i` compares the recorded 600-frame Red Spring
+action with all eight bytes altered in the backing ROM. The two bytes of the
+second group are served from the resource; full state, guest clock, video, OAM,
+dispatch and audio match at every frame. Wine `e196-obj-cli-wine-u7pcy_df`
+creates, reuses and verifies 124 files matching the tested generation. The
+reader and scene logs contain D-Bus pending-call assertions before successful
+completion; the cause remains unestablished. Ordinary use of the other groups,
+other callers, Linux, USA and native Windows remain open. No performance
+measurements were made.

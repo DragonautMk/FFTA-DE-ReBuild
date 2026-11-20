@@ -12,15 +12,42 @@ pub mod conditional_markers;
 pub mod context_selector;
 
 pub const ACTOR_LOOKUP_ROOT: u32 = 0x398df0;
+pub const LAYOUT_OFFSETS_ROOT: u32 = 0x398de8;
+pub const LAYOUT_OFFSETS_LENGTH: usize = 8;
+pub const LAYOUT_OFFSETS_SHA256: &str = "1bd03f2982e14e5c256e49cf9432f967e48d3aa69b863e120a1d1d3589e4909a";
 /// Five observed Thumb callbacks into the guest-copied IWRAM OBJ routines.
 pub const IWRAM_DRAW_CALLBACKS_ROOT: u32 = 0x397f80;
 pub const IWRAM_DRAW_CALLBACKS_COUNT: usize = 5;
 pub const IWRAM_DRAW_CALLBACKS_SHA256: &str = "4673dedee715e28da29fdc9e3db2b9ef233d956e70847774cae8922a13011f60";
+/// Two independently observed callback words outside the contiguous draw vector.
+pub const IWRAM_EXTRA_CALLBACK_ROOTS: [u32; 2] = [0x397fa4, 0x397fb8];
+pub const IWRAM_EXTRA_CALLBACK_SHA256: [&str; 2] = [
+    "c5059998b08db05ec6cfe0b8d7263dfb32447670eebfb269712a55e6dc24799c",
+    "6f64a62b102700d15e8548ad7f43d998c60bc5d2160e7c4834f47ed378749f1b",
+];
 pub const TITLE_OPENING_DIRECTORY_ROOT: u32 = 0x3ade64;
 pub const TITLE_OPENING_DIRECTORY_COUNT: usize = 19;
 pub const BATTLE_DIRECTORY_ROOT: u32 = 0x40d300;
 pub const BATTLE_DIRECTORY_COUNT: usize = 103;
 pub const BATTLE_DIRECTORY_SHA256: &str = "2c35f140bd943bb98726767c2a4032be05dee531b2c965b727a3dce867cd27da";
+
+/// Three separately rooted byte groups; the guest retains their interpretation.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LayoutOffsets {
+    pub first_pair: [u8; 2],
+    pub second_pair: [u8; 2],
+    pub transform_offsets: [u8; 4],
+}
+impl LayoutOffsets {
+    pub fn source_bytes(&self) -> [u8; LAYOUT_OFFSETS_LENGTH] {
+        let mut bytes = [0; LAYOUT_OFFSETS_LENGTH];
+        bytes[..2].copy_from_slice(&self.first_pair);
+        bytes[2..4].copy_from_slice(&self.second_pair);
+        bytes[4..].copy_from_slice(&self.transform_offsets);
+        bytes
+    }
+}
 
 /// Bounded relative index used by the observed battle draw producer. Its
 /// targets are not necessarily all classified OBJ payloads.
@@ -230,6 +257,12 @@ pub struct Lists {
     /// Encoded guest Thumb pointers; the live IWRAM functions remain guest-owned.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub iwram_draw_callbacks: Option<[u32; IWRAM_DRAW_CALLBACKS_COUNT]>,
+    /// Independently rooted Thumb callbacks into mutable guest IWRAM.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub iwram_extra_callbacks: Option<[u32; 2]>,
+    /// Original bytes used by the independently rooted OBJ readers.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub layout_offsets: Option<LayoutOffsets>,
 }
 
 impl Lists {
@@ -277,6 +310,20 @@ impl Lists {
                     && start < list.source_offset + list.source_len() as u32) {
                 return Err("Invalid IWRAM OBJ callback projection".into());
             }
+        }
+        if let Some(callbacks) = &self.iwram_extra_callbacks {
+            for (&root, &pointer) in IWRAM_EXTRA_CALLBACK_ROOTS.iter().zip(callbacks) {
+                if pointer & 1 == 0 || !(0x0300_5f28..0x0300_6d68).contains(&(pointer & !1))
+                    || self.lists.iter().any(|list| list.source_offset < root + 4
+                        && root < list.source_offset + list.source_len() as u32) {
+                    return Err("Invalid extra IWRAM OBJ callback projection".into());
+                }
+            }
+        }
+        if self.layout_offsets.is_some() && self.lists.iter().any(|list|
+            list.source_offset < LAYOUT_OFFSETS_ROOT + LAYOUT_OFFSETS_LENGTH as u32
+                && LAYOUT_OFFSETS_ROOT < list.source_offset + list.source_len() as u32) {
+            return Err("OBJ layout offsets overlap an OBJ list".into());
         }
         Ok(())
     }
@@ -533,9 +580,53 @@ impl Catalog {
         }));
         sources.push(SourceRange { offset: IWRAM_DRAW_CALLBACKS_ROOT, length: callback_bytes.len() as u32,
             sha256: ffta_rom::digest(callback_bytes), role: "iwram-obj-draw-callbacks".into() });
+        for (start, end, expected) in [
+            (0x9b6f2, 0x9b702, "64a9495198d4a6c1f68d57c2fb77a8ce0f0d5b12ff834e0ffeeebea8289d7cd0"),
+            (0x9e404, 0x9e428, "56e852ca91b5faff9d1616a319def1725ac6cb59e2aeed46be160d515de6811d"),
+            (0xd9757c, 0xd9759c, "a7ccf663d61d891100deaf772317c0409f803368bb4a4ec58b32f705cb5c0184"),
+            (0xd976c4, 0xd976e4, "7a3c3042dfe2eafffbe4b0d677d3181dafb0dade66280b332acdfba277001b4d"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected {
+                return Err("Extra IWRAM OBJ callback reader or copy mismatch".into());
+            }
+        }
+        if word(0x9b730)? != 0x0800_0000 + IWRAM_EXTRA_CALLBACK_ROOTS[0]
+            || word(0x9e430)? != 0x0800_0000 + IWRAM_EXTRA_CALLBACK_ROOTS[1] {
+            return Err("Extra IWRAM OBJ callback literal mismatch".into());
+        }
+        let mut extra = [0; 2];
+        for (index, &offset) in IWRAM_EXTRA_CALLBACK_ROOTS.iter().enumerate() {
+            let raw = &rom[offset as usize..offset as usize + 4];
+            if ffta_rom::digest(raw) != IWRAM_EXTRA_CALLBACK_SHA256[index] {
+                return Err("Extra IWRAM OBJ callback source mismatch".into());
+            }
+            extra[index] = u32::from_le_bytes(raw.try_into().unwrap());
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(raw), role: "iwram-obj-extra-callback".into() });
+        }
+        let iwram_extra_callbacks = Some(extra);
+        for (start, end, expected) in [
+            (0x9ae58, 0x9ae90, "3a6689a01f7bd7bd9665e81cc693ac5c7260d0c6ee9dc655d34bff015f87cf44"),
+            (0x9bfdc, 0x9c038, "07912b37f8837e18ec9266c55d4e2d938b330c34dbd22966c812054b0ff38ea6"),
+            (0x9c048, 0x9c0c4, "ba5f3c12c5879623b8a07ec9204819ce3b9d68ee39d0d97aeb30c212523cca31"),
+            (0x9e64a, 0x9e668, "6e22605062831783f0c6d01dad2295bdc65df5e517fd780700baebac7cac09f9"),
+            (0xa3320, 0xa3354, "c135ca374af86bb78bea8bdf230fe2b551594daabc4c3605f65c86501d39d3ea"),
+            (0xa339a, 0xa33b8, "073346fe38a1210451eb673da885434cb8ddbe357f0e3c9488280de2b79d827b"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected { return Err("OBJ layout offset reader mismatch".into()); }
+        }
+        for (at, expected) in [(0x9ae8c, LAYOUT_OFFSETS_ROOT + 2), (0x9c034, LAYOUT_OFFSETS_ROOT + 2),
+            (0x9c0c0, LAYOUT_OFFSETS_ROOT), (0x9e724, LAYOUT_OFFSETS_ROOT + 4)] {
+            if word(at)? != 0x0800_0000 + expected { return Err("OBJ layout offset literal mismatch".into()); }
+        }
+        let start = LAYOUT_OFFSETS_ROOT as usize; let bytes = &rom[start..start + LAYOUT_OFFSETS_LENGTH];
+        if ffta_rom::digest(bytes) != LAYOUT_OFFSETS_SHA256 { return Err("OBJ layout offset source mismatch".into()); }
+        let layout_offsets = Some(LayoutOffsets { first_pair: bytes[..2].try_into().unwrap(),
+            second_pair: bytes[2..4].try_into().unwrap(), transform_offsets: bytes[4..].try_into().unwrap() });
+        sources.push(SourceRange { offset: LAYOUT_OFFSETS_ROOT, length: LAYOUT_OFFSETS_LENGTH as u32,
+            sha256: ffta_rom::digest(bytes), role: "obj-layout-offsets".into() });
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
-        let decoded = Lists { lists, battle_directory, actor_lookup, title_opening_directory: Some(title_opening_directory), iwram_draw_callbacks };
+        let decoded = Lists { lists, battle_directory, actor_lookup, title_opening_directory: Some(title_opening_directory), iwram_draw_callbacks, iwram_extra_callbacks, layout_offsets };
         decoded.validate()?;
         Ok(Self { decoded, sources })
     }
@@ -572,7 +663,7 @@ mod tests {
         assert!(Lists {
             lists: vec![list.clone(), empty],
             battle_directory: None,
-            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None,
+            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, layout_offsets: None,
         }
         .validate()
         .is_err());

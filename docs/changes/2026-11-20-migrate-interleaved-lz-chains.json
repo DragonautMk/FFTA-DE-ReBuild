@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-interleaved-lz-chains",
+  "title": "Extract interleaved LZ chains",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the observed LZ, tilemap descriptor and row resources with seven linked interleaved chains, preserving encoded source, decoded data, opaque fields, source routing and guest indexing."
+  ],
+  "validation": [
+    "Source e201-interleaved-source-w13041vc independently authenticates seven rows, descriptors, wrappers and 4123 encoded LZ bytes decoding to 5728 bytes. Wine e201-chain-wine-0vq42lsj preserves 120 other resources, rejects missing dependencies/coherent edits, checks altered mirrors/mixed owner boundaries and compares seven original SWI/HLE cases and 28 interpreter/native readers with equal full state and guest clock.",
+    "Wine e201-chain-cli-wine-7l8ix18e creates, reuses and verifies 124 matching files."
+  ],
+  "limitations": [
+    "The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use, real-BIOS/DMA paths, other consumers, Linux, USA and native Windows remain open. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/interleaved_lz_chain_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -869,28 +869,127 @@ current evidence before running another check.
   mixed boundaries, affected scene and CLI on Linux when selected.
 - [ ] **ROMDATA-01-E188-IWRAM-CONTROL-USA:** locate and authenticate equivalent
   USA callback words and consumers; native Windows remains pending.
-- [ ] **ROMDATA-01-E188-IWRAM-CONTROL-OTHER:** classify other callbacks, including
-  observed words at `397fa4` and `397fb8`, all callers and live IWRAM code paths.
+- [ ] **ROMDATA-01-E188-IWRAM-CONTROL-OTHER:** classify other callbacks, callers
+  and live IWRAM code paths. E191 separately owns `397fa4` and `397fb8`.
 - [ ] **ROMDATA-01-E188-OBJ-LIST-FIXTURES:** adapt older revision-pinned OBJ
   list fixtures to E188 before rerunning them; leave Linux runs pending.
-- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-370E68:** source `_zu8l44g`, Wine
-  trace `vgsu5kue` and corrected Wine reader/side-effect proof `598qsw1v` pass.
-  The user paused before the altered-source scene and production CLI; run them
-  only on explicit resumption. Wine `gsiv7n3d` failed because its test executed
-  a chained store twice; Sol diagnosed it and the corrected retry passed.
+- [x] **ROMDATA-01-E189-DMA-DIRECTORIES-370E68 scoped EUR/Wine:** source
+  `_zu8l44g`, trace `vgsu5kue`, readers/four DMA writes `598qsw1v`, 600-frame
+  scene `dgpightt` and CLI `98p9_ms6` pass.
+  [Evidence](../rom_data_runtime.md#e189-dma-register-directories).
 - [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-LINUX:** validate publication, readers,
   DMA effects, boundaries, scene and CLI on Linux when selected.
 - [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-USA:** locate and authenticate equivalent
   USA directories and callers; native Windows remains pending.
-- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-OTHER:** cover other DMA callers and the
-  separate IWRAM helper vector at `370eb0` without restricting guest indices.
+- [ ] **ROMDATA-01-E189-DMA-DIRECTORIES-OTHER:** cover other DMA callers without
+  restricting guest indices. E190 separately owns the `370eb0` helper vector.
+- [x] **ROMDATA-01-E190-IWRAM-MEMORY-HELPERS-370EB0 scoped EUR/Wine:** source
+  `2muj949h`, trace `1jrexdnx`, readers/branches `r9rce5o_`, 600-frame scene
+  `94ao1rz2` and CLI `h_owgk16` pass.
+  [Evidence](../rom_data_runtime.md#e190-iwram-memory-helper-vector).
+- [ ] **ROMDATA-01-E190-IWRAM-HELPERS-LINUX:** validate publication, reader/branch,
+  mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E190-IWRAM-HELPERS-USA:** locate and authenticate equivalent
+  USA helpers and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E190-IWRAM-HELPERS-OTHER:** cover other callers and live
+  IWRAM execution without imposing guest index or code immutability assumptions.
+- [x] **ROMDATA-01-E191-IWRAM-CALLBACKS-397FA4 scoped EUR/Wine:** source
+  `m460uxk9`, Wine trace `35oh5q8o`, publication/branches `gj6h0gcr`, 600-frame
+  altered-source scene `_vpbz8be` and CLI `fttzwwhr` pass.
+  [Evidence](../rom_data_runtime.md#e191-independently-rooted-iwram-obj-callbacks).
+- [ ] **ROMDATA-01-E191-IWRAM-CALLBACKS-LINUX:** validate publication,
+  reader/branch, mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E191-IWRAM-CALLBACKS-USA:** locate and authenticate equivalent
+  USA callbacks and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E191-IWRAM-CALLBACKS-OTHER:** investigate other callbacks,
+  callers and mutable IWRAM paths without adding guest index restrictions.
+- [x] **ROMDATA-01-E192-LINKED-CALLBACK-TABLES-3AD638 scoped EUR/Wine:**
+  source `vgus1zn1`, Wine trace `i99518dm`, publication/branches `rg_ejxyn`,
+  600-frame altered-source scene `ditx_b0y` and CLI `yzo92bp7` pass. Reader and
+  scene logs contain D-Bus assertions before the completed tests.
+  [Evidence](../rom_data_gameplay.md#e192-linked-record-callback-tables).
+- [ ] **ROMDATA-01-E192-LINKED-CALLBACKS-LINUX:** validate publication, readers,
+  branches, mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E192-LINKED-CALLBACKS-USA:** identify and authenticate the
+  corresponding USA tables and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E192-LINKED-CALLBACKS-OTHER:** investigate other consumers and
+  paths without treating physical table extents as guest index bounds.
+- [ ] **ROMDATA-01-E192-RECORDS4-FIXTURES:** adapt older revision-pinned records4
+  fixtures for the new callback fields; leave Linux runs pending.
+- [x] **ROMDATA-01-E193-ACTION-CALLBACK-RECORDS-3AD7E4 scoped EUR/Wine:**
+  source `2po3wuk9`, Wine trace `fqhwgje1`, readers `jcz5bcc5`, 600-frame
+  altered-source scene `vys970r2` and CLI `5zlmal_2` pass for 93 records.
+  Reader and scene logs contain D-Bus assertions before successful completion.
+  [Evidence](../rom_data_gameplay.md#e193-action-callback-records).
+- [ ] **ROMDATA-01-E193-ACTION-CALLBACKS-LINUX:** validate publication, readers,
+  mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E193-ACTION-CALLBACKS-USA:** locate and authenticate equivalent
+  USA records and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E193-ACTION-CALLBACKS-OTHER:** investigate other consumers and
+  preserve opaque words and unbounded guest indices; update old records4 fixtures.
+- [ ] **ROMDATA-05-WINE-DBUS-PENDING-CALL:** the assertions in passing Wine
+  reader/scene logs include `rg_ejxyn`/`ditx_b0y`, `jcz5bcc5`/`vys970r2`,
+  `ug76r3cd`/`dh8ic7ya`, `yxymrems`, `54zxpyzj`/`s0azwl5i`, `i23_yk35` and
+  `d97f6l58`, `29if0sg2` and `0vq42lsj`. Process trace
+  `qxwtl8he` reproduces the assertion in `winedevice.exe`; static audit
+  `ijsvoxgk` confirms the installed Wine 10.0 Bluetooth module has the NULL-call
+  defect addressed by [Wine MR7302](https://list.winehq.org/hyperkitty/list/wine-gitlab@list.winehq.org/thread/ZEBOUKFLYJZWNZYMRFPFXAXU33I5OBWB/).
+  This strongly implicates that defect, although the exact triggering stack and
+  Bluetooth impact were not captured. A minimal Wine smoke `zkjnk_35` did not
+  reproduce it. A local matching backport and opt-in leased wrapper are now
+  available; see the completed local subtask below. System Wine still contains
+  the defect. When a compatible corrected system runtime is available and a
+  shared-resource change is authorized, validate the affected Wine path with
+  no assertion and a drained server. Physical Bluetooth and asynchronous
+  property updates remain unverified. Do not hide the warning or disable the
+  service as a substitute for a fix.
+- [x] **ROMDATA-05-WINE-DBUS-LOCAL-OVERLAY scoped EUR/Wine:** corrected module
+  `s10dafvr` and loader proof `v50bntvr` pass. Blue Screw `hrc9ivgq` passes
+  600 frames without the assertion and drains Wine; the unit FAIL from a split
+  trace-parser record is reconciled by `qxfzqz9z`. The reusable leased wrapper
+  passes Wine loader proof `25z4y70w`. System Wine and prefix settings remain
+  unchanged. [Procedure](ROM_DATA_VALIDATION.md#wine-bluetooth-d-bus-diagnostic).
+- [x] **ROMDATA-01-E194-ADJACENT-TABLES-3AD460 scoped EUR/Wine:** source
+  `r364fmf9`, trace `uxtnxes3`, readers `ug76r3cd`, 600-frame altered-source
+  scene `dh8ic7ya` and CLI `7ind1kk9` pass. Four tables were observed in the
+  scene; reader and scene logs contain D-Bus assertions before successful completion.
+  [Evidence](../rom_data_runtime.md#e194-adjacent-offset-tables).
+- [ ] **ROMDATA-01-E194-ADJACENT-TABLES-LINUX:** validate publication, readers,
+  mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E194-ADJACENT-TABLES-USA:** locate and authenticate equivalent
+  USA tables and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E194-ADJACENT-TABLES-OTHER:** establish ordinary use of the
+  fifth table and investigate other consumers without imposing guest bounds.
+- [x] **ROMDATA-01-E195-TILEMAP-ALTERNATES-AE6E14 scoped EUR/Wine:** source
+  `n6nl69bd`, trace `9x55uknb`, readers/branches `9sclx54d`, 600-frame
+  altered-source scene `yxymrems` and CLI `3j_wfn2z` pass. The scene log has a
+  D-Bus assertion before successful completion.
+  [Evidence](../rom_data_graphics.md#e195-alternate-tilemap-rectangles).
+- [ ] **ROMDATA-01-E195-TILEMAP-ALTERNATES-LINUX:** validate publication, readers,
+  branches, mixed boundaries, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E195-TILEMAP-ALTERNATES-USA:** locate and authenticate the
+  corresponding USA sources and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E195-TILEMAP-ALTERNATES-OTHER:** prove ordinary alternate-branch
+  copy and other consumers without imposing guest index bounds.
+- [x] **ROMDATA-01-E196-OBJ-BYTES-398DE8 scoped EUR/Wine:** source `v9z3u37q`,
+  Wine trace `jcuo75ia`, readers `54zxpyzj`, altered-source scene `s0azwl5i` and
+  CLI `u7pcy_df` pass. Reader and scene logs contain D-Bus assertions before
+  successful completion. [Evidence](../rom_data_obj.md#e196-obj-layout-byte-groups).
+- [ ] **ROMDATA-01-E196-OBJ-BYTES-LINUX:** validate publication, readers, mixed
+  boundaries, the affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E196-OBJ-BYTES-USA:** locate and authenticate corresponding
+  USA sources and consumers; native Windows remains pending.
+- [ ] **ROMDATA-01-E196-OBJ-BYTES-OTHER:** establish ordinary use of the other
+  byte groups and investigate other callers without imposing guest bounds.
 - [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** classify the 8,789 previously
   observed unowned bytes outside the E173 bank increment. E174 migrates 2,578
   and E175 another 2,291. E176 owns another 64, E177 another 100, E178
   another 7, E179 another 12, E180 another 48, E181 another 28, E182
   another 58, E183 another 86, E184 another 17, E185 another 6 and E186
-  another 60, E187 another 57 and E188 another 20; the other 3,357 require
-  classification before claiming the action has no remaining raw source. Other scenes,
+  another 60, E187 another 57, E188 another 20, E189 another 24, E190 another
+  12, E191 another eight, E192 another 16, E193 another six, E194 another five
+  E195 another eight and E196 another two; the other 3,276 require classification before claiming the action
+  has no remaining raw source. Other scenes,
   consumers, Linux, USA and native Windows remain pending.
 - [x] **ROMDATA-01-E172-REDSPRING-AF271C scoped EUR/Wine:** E177 identifies a 102-byte
   compressed tilemap, including 100 sampled unowned bytes. Source `yiosygyx`,
@@ -899,7 +998,83 @@ current evidence before running another check.
   [Evidence](../rom_data_graphics.md#e177-observed-red-spring-tilemap).
 - [ ] **ROMDATA-01-E177-TILEMAP-OTHER-CONSUMERS:** identify other assets,
   modes and readers without assuming guest bounds or a complete tilemap family;
-  the table at `3a4d84` and other descriptor rows remain raw.
+  E197 owns eight words at `3a4d84`; other indices and descriptor rows remain open.
+- [x] **ROMDATA-01-E197-TILEMAP-3A4D84 scoped EUR/Wine:** source and original
+  reader audit `wrir7wj7`, publication/indexed readers `i23_yk35` and CLI
+  `q7a_34j2` pass. The reader log contains a D-Bus assertion before successful
+  completion. The eight physical words do not bound the original guest index.
+  [Evidence](../rom_data_graphics.md#e197-indexed-tilemap-pointers).
+- [ ] **ROMDATA-01-E197-TILEMAP-LINUX:** validate publication, indexed readers,
+  mixed boundaries and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E197-TILEMAP-USA:** locate and authenticate the corresponding
+  USA table and readers; native Windows remains pending.
+- [ ] **ROMDATA-01-E197-TILEMAP-OTHER:** establish ordinary use and other
+  consumers without imposing guest bounds. E198 owns the seven pointed-to
+  streams; their ordinary use is still open.
+- [x] **ROMDATA-01-E198-TILEMAP-PAYLOADS-AF2780 scoped EUR/Wine:** original
+  decoder `nuq8mgl_`, source `2llwimo3`, readers `d97f6l58` and CLI `gfc_c1yi`
+  pass for seven streams. The reader log contains a D-Bus assertion before
+  successful completion. [Evidence](../rom_data_graphics.md#e198-additional-compressed-tilemaps).
+- [ ] **ROMDATA-01-E198-TILEMAP-LINUX:** validate publication, compressed
+  readers, mixed boundaries and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E198-TILEMAP-USA:** locate and authenticate the corresponding
+  USA streams and readers; native Windows remains pending.
+- [ ] **ROMDATA-01-E198-TILEMAP-OTHER:** establish ordinary use of the other six
+  streams and investigate other readers and tilemaps without assuming a complete
+  catalog; update older
+  revision-pinned tilemap fixtures when their checks are selected.
+- [x] **ROMDATA-01-E199-TILEMAP-DESCRIPTORS-3A4B78 scoped EUR/Wine:** source
+  and extracted dependencies `uottnw22`, Wine readers `9ofg9nm8` and CLI
+  `0bqdvd05` pass. [Evidence](../rom_data_graphics.md#e199-direct-tilemap-descriptors).
+- [ ] **ROMDATA-01-E199-TILEMAP-DESCRIPTORS-LINUX:** validate publication,
+  dependencies, readers, mixed boundaries and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E199-TILEMAP-DESCRIPTORS-USA:** locate and authenticate the
+  corresponding USA descriptors; native Windows remains pending.
+- [ ] **ROMDATA-01-E199-TILEMAP-DESCRIPTORS-OTHER:** establish ordinary use of
+  the other six descriptors and investigate other rows and consumers without
+  imposing guest bounds. E200
+  publishes seven rows selecting the E199 descriptors.
+- [x] **ROMDATA-01-E200-TILEMAP-ROWS-3A4C04 scoped EUR/Wine:** source and
+  extracted descriptor dependencies `u4ror4sy`, Wine readers `29if0sg2` and
+  CLI `irh5mvpj` pass. The reader log contains a D-Bus assertion before
+  successful completion. [Evidence](../rom_data_graphics.md#e200-direct-tilemap-rows).
+- [ ] **ROMDATA-01-E200-TILEMAP-ROWS-LINUX:** validate publication, descriptor
+  dependencies, readers, mixed boundaries and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E200-TILEMAP-ROWS-USA:** locate and authenticate equivalent
+  USA rows and readers; native Windows remains pending.
+- [ ] **ROMDATA-01-E200-TILEMAP-ROWS-OTHER:** establish ordinary use of the other
+  six rows and investigate other consumers without imposing guest bounds. E201 publishes the seven
+  adjacent interleaved LZ rows.
+- [x] **ROMDATA-01-E201-INTERLEAVED-LZ scoped EUR/Wine:** source `w13041vc`,
+  readers/HLE `0vq42lsj` and CLI `7l8ix18e` pass for seven interleaved chains.
+  The reader log contains a D-Bus assertion before successful completion.
+  [Evidence](../rom_data_graphics.md#e201-interleaved-lz-chains).
+- [ ] **ROMDATA-01-E201-INTERLEAVED-LZ-LINUX:** validate publication,
+  dependencies, readers, LZ HLE, mixed boundaries and CLI on Linux.
+- [ ] **ROMDATA-01-E201-INTERLEAVED-LZ-USA:** locate and authenticate the
+  corresponding USA chain; native Windows remains pending.
+- [ ] **ROMDATA-01-E201-INTERLEAVED-LZ-OTHER:** establish ordinary use of the other
+  six chains and investigate other consumers and real-BIOS/DMA paths; update
+  revision-pinned LZ fixtures.
+- [x] **ROMDATA-04-E202-INTERLEAVED-ORDINARY scoped EUR/Wine:** source audit `9jydyc_i` traces
+  one EUR initializer to the row-list task. Under a zero initial row index and
+  no later changes to its pointer, count or index, its nonempty path covers
+  indices 0–3; the first E201/E200 rows are indices 6/7. This does not exclude
+  other producers, computed pointers, later writers or contexts. The subsequent
+  second-stage selector chooses a two-row pair; `_impqiwz` pins its arithmetic
+  and the original task-ID parameter store. Retained Blue Screw Wine audit
+  `dyl4e4jy` finds the first pair; `9qneu93s` confirms 600-frame equivalence
+  with altered backing and positive resource/HLE counters. Both Wine logs
+  contain a D-Bus assertion; both servers drained. Callback attribution remains
+  unproved. Linux, USA and native Windows remain pending.
+  [Evidence](../rom_data_graphics.md#e202-conditional-row-list-dataflow).
+- [ ] **ROMDATA-04-E202-INTERLEAVED-OTHER:** verify other row pairs and scenes,
+  callback attribution and remaining consumers without inventing inputs or
+  imposing guest bounds; real-BIOS/DMA paths remain open.
+- [ ] **ROMDATA-04-E202-INTERLEAVED-LINUX:** repeat the selected ordinary
+  altered-backing proof on Linux when selected.
+- [ ] **ROMDATA-04-E202-INTERLEAVED-USA:** authenticate and verify corresponding
+  USA data and ordinary use; native Windows remains pending.
 - [x] **ROMDATA-01-E178-TILEMAP-ROW-3A4BEC scoped EUR/Wine:** E179 publishes the observed
   12-byte row selecting the E178 descriptor. Wine trace `xvj_6rmw`, source
   `cc9b5_to`, original reader/publication `fhgchuk_` and altered-source

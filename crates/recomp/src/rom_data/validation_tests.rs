@@ -143,17 +143,25 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
     let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
     let poison_tilemap_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_RECTANGLES").is_some();
+    let poison_tilemap_alternates = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ALTERNATES").is_some();
     let poison_tilemap_roots = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROOTS").is_some();
     let poison_tilemap_list_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_LIST_ROW").is_some();
     let poison_compact_records = std::env::var_os("FFTA_STATE_TEST_POISON_COMPACT_RECORDS").is_some();
     let poison_red_spring_sounds = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_SOUNDS").is_some();
     let poison_iwram_obj_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_IWRAM_OBJ_CALLBACKS").is_some();
+    let poison_extra_iwram_obj_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_EXTRA_IWRAM_OBJ_CALLBACKS").is_some();
+    let poison_obj_layout_offsets = std::env::var_os("FFTA_STATE_TEST_POISON_OBJ_LAYOUT_OFFSETS").is_some();
     let poison_dma_directories = std::env::var_os("FFTA_STATE_TEST_POISON_DMA_DIRECTORIES").is_some();
+    let poison_iwram_helpers = std::env::var_os("FFTA_STATE_TEST_POISON_IWRAM_HELPERS").is_some();
+    let poison_records4_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_RECORDS4_CALLBACKS").is_some();
+    let poison_action_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_ACTION_CALLBACKS").is_some();
+    let poison_offset_tables = std::env::var_os("FFTA_STATE_TEST_POISON_OFFSET_TABLES").is_some();
     let poison_tilemap_descriptor = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_DESCRIPTOR").is_some();
     let poison_extra_tilemap_descriptors = std::env::var_os("FFTA_STATE_TEST_POISON_EXTRA_TILEMAP_DESCRIPTORS").is_some();
     let poison_transfer_records = std::env::var_os("FFTA_STATE_TEST_POISON_TRANSFER_RECORDS").is_some();
     let poison_tilemap_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROW").is_some();
     let poison_tilemap_extra_rows = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_EXTRA_ROWS").is_some();
+    let poison_blue_screw_chain = std::env::var_os("FFTA_STATE_TEST_POISON_BLUE_SCREW_CHAIN").is_some();
     #[cfg(feature = "rom-data-read-audit")]
     let compact_watch_root = std::env::var("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").ok()
         .map(|value| u32::from_str_radix(value.trim_start_matches("0x"), 16).expect("compact watch root"))
@@ -184,6 +192,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         for (index, machine) in [&mut legacy, &mut decoded].into_iter().enumerate() {
             machine.bus.keys = input.keys_at(relative);
             input.apply_mouse(&mut machine.bus, relative).unwrap();
+            if index == 1 && poison_blue_screw_chain {
+                for (start, len) in blue_screw_chain_test_spans() {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_observed_lz {
                 for (start, len) in observed_lz_test_spans() {
                     for at in start..start+len { machine.bus.rom[at] = !rom[at]; }
@@ -204,6 +217,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
                     for at in start..start + length { machine.bus.rom[at] = !rom[at]; }
                 }
+            }
+            if index == 1 && poison_tilemap_alternates {
+                use gba_core::rom_data::observed_tilemap::{ALTERNATE_RECT_SPECS, ALTERNATE_SELECTOR_LENGTH, ALTERNATE_SELECTOR_OFFSET};
+                for &(offset, height, width, _, _) in &ALTERNATE_RECT_SPECS {
+                    let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
+                    for at in start..start + length { machine.bus.rom[at] = !rom[at]; }
+                }
+                let start = ALTERNATE_SELECTOR_OFFSET as usize;
+                for at in start..start + ALTERNATE_SELECTOR_LENGTH { machine.bus.rom[at] = !rom[at]; }
             }
             if index == 1 && poison_tilemap_roots {
                 use gba_core::rom_data::observed_tilemap::{RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH, RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH};
@@ -232,10 +254,38 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 let start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
                 for at in start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4 { machine.bus.rom[at] = !rom[at]; }
             }
+            if index == 1 && poison_extra_iwram_obj_callbacks {
+                for offset in gba_core::rom_data::obj_lists::IWRAM_EXTRA_CALLBACK_ROOTS {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_records4_callbacks {
+                use gba_core::rom_data::records4::{CALLBACK_ENDS, CALLBACK_ROOTS};
+                for at in CALLBACK_ROOTS[0] as usize..CALLBACK_ENDS[2] as usize { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_action_callbacks {
+                use gba_core::rom_data::records4::{ACTION_END, ACTION_ROOT};
+                for at in ACTION_ROOT as usize..ACTION_END as usize { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_offset_tables {
+                use gba_core::rom_data::adjacent_offset_tables::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_obj_layout_offsets {
+                use gba_core::rom_data::obj_lists::{LAYOUT_OFFSETS_LENGTH, LAYOUT_OFFSETS_ROOT};
+                let start = LAYOUT_OFFSETS_ROOT as usize;
+                for at in start..start + LAYOUT_OFFSETS_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
             if index == 1 && poison_dma_directories {
                 use gba_core::rom_data::dma_register_directories::{DIRECTORY_LENGTH, WRITE_ROOT};
                 let start = WRITE_ROOT as usize;
                 for at in start..start + DIRECTORY_LENGTH * 2 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_iwram_helpers {
+                use gba_core::rom_data::iwram_memory_helpers::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_LENGTH { machine.bus.rom[at] = !rom[at]; }
             }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -318,6 +368,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
                 }
             }
+            if index == 1 && poison_blue_screw_chain {
+                for (start, len) in blue_screw_chain_test_spans() {
+                    machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
             if index == 1 && poison_constructor64 {
                 use gba_core::rom_data::constructor_template64::{SOURCE_LENGTH, SOURCE_OFFSET};
                 let start = SOURCE_OFFSET as usize;
@@ -333,6 +388,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
                     machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
                 }
+            }
+            if index == 1 && poison_tilemap_alternates {
+                use gba_core::rom_data::observed_tilemap::{ALTERNATE_RECT_SPECS, ALTERNATE_SELECTOR_LENGTH, ALTERNATE_SELECTOR_OFFSET};
+                for &(offset, height, width, _, _) in &ALTERNATE_RECT_SPECS {
+                    let start = offset as usize; let length = 2 + usize::from(height) * usize::from(width) * 2;
+                    machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
+                }
+                let start = ALTERNATE_SELECTOR_OFFSET as usize;
+                machine.bus.rom[start..start + ALTERNATE_SELECTOR_LENGTH].copy_from_slice(&rom[start..start + ALTERNATE_SELECTOR_LENGTH]);
             }
             if index == 1 && poison_tilemap_roots {
                 use gba_core::rom_data::observed_tilemap::{RECTANGLE_CHAIN_OFFSET, RECTANGLE_CHAIN_LENGTH, RECTANGLE_TABLE_OFFSET, RECTANGLE_TABLE_LENGTH};
@@ -364,10 +428,41 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 machine.bus.rom[start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4]
                     .copy_from_slice(&rom[start..start + IWRAM_DRAW_CALLBACKS_COUNT * 4]);
             }
+            if index == 1 && poison_extra_iwram_obj_callbacks {
+                for offset in gba_core::rom_data::obj_lists::IWRAM_EXTRA_CALLBACK_ROOTS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_records4_callbacks {
+                use gba_core::rom_data::records4::{CALLBACK_ENDS, CALLBACK_ROOTS};
+                let start = CALLBACK_ROOTS[0] as usize; let end = CALLBACK_ENDS[2] as usize;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
+            if index == 1 && poison_action_callbacks {
+                use gba_core::rom_data::records4::{ACTION_END, ACTION_ROOT};
+                let start = ACTION_ROOT as usize; let end = ACTION_END as usize;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
+            if index == 1 && poison_offset_tables {
+                use gba_core::rom_data::adjacent_offset_tables::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
+            }
+            if index == 1 && poison_obj_layout_offsets {
+                use gba_core::rom_data::obj_lists::{LAYOUT_OFFSETS_LENGTH, LAYOUT_OFFSETS_ROOT};
+                let start = LAYOUT_OFFSETS_ROOT as usize;
+                machine.bus.rom[start..start + LAYOUT_OFFSETS_LENGTH].copy_from_slice(&rom[start..start + LAYOUT_OFFSETS_LENGTH]);
+            }
             if index == 1 && poison_dma_directories {
                 use gba_core::rom_data::dma_register_directories::{DIRECTORY_LENGTH, WRITE_ROOT};
                 let start = WRITE_ROOT as usize;
                 machine.bus.rom[start..start + DIRECTORY_LENGTH * 2].copy_from_slice(&rom[start..start + DIRECTORY_LENGTH * 2]);
+            }
+            if index == 1 && poison_iwram_helpers {
+                use gba_core::rom_data::iwram_memory_helpers::{SOURCE_LENGTH, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_LENGTH].copy_from_slice(&rom[start..start + SOURCE_LENGTH]);
             }
             if index == 1 && poison_tilemap_descriptor {
                 use gba_core::rom_data::observed_tilemap_descriptor::{SOURCE_LENGTH, SOURCE_OFFSET};
@@ -494,6 +589,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "scene must consume both managed tilemap rectangles");
         eprintln!("ROM_DATA_TILEMAP_RECTANGLES_POISON rectangle_bytes={:?}", stats.rectangle_bytes);
     }
+    if poison_tilemap_alternates {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("observed tilemap owner");
+        assert!(stats.alternate_rectangle_bytes[0] >= 2 && stats.alternate_selector_bytes > 0,
+            "scene must consume the normal alternate rectangle and selector");
+        eprintln!("ROM_DATA_TILEMAP_ALTERNATES_POISON rectangle_bytes={:?} selector_bytes={}", stats.alternate_rectangle_bytes, stats.alternate_selector_bytes);
+    }
     if poison_tilemap_roots {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("observed tilemap owner");
         assert!(stats.root_bytes[0] >= 13 && stats.root_bytes[1] >= 4,
@@ -526,11 +627,46 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "scene must consume all five IWRAM callback words");
         eprintln!("ROM_DATA_IWRAM_OBJ_CALLBACKS_POISON source_bytes={:?}", stats.iwram_callback_bytes);
     }
+    if poison_extra_iwram_obj_callbacks {
+        let stats = decoded.bus.rom_resources().unwrap().obj_list_stats().expect("OBJ list owner");
+        assert!(stats.iwram_extra_callback_bytes.iter().all(|&bytes| bytes >= 4),
+            "scene must consume both extra IWRAM callback words");
+        eprintln!("ROM_DATA_EXTRA_IWRAM_OBJ_CALLBACKS_POISON source_bytes={:?}", stats.iwram_extra_callback_bytes);
+    }
+    if poison_records4_callbacks {
+        let stats = decoded.bus.rom_resources().unwrap().records4_stats().expect("records4 owner");
+        assert!(stats.callback_bytes.iter().all(|&bytes| bytes >= 4),
+            "scene must consume all three records4 callback tables");
+        eprintln!("ROM_DATA_RECORDS4_CALLBACKS_POISON source_bytes={:?}", stats.callback_bytes);
+    }
+    if poison_action_callbacks {
+        let stats = decoded.bus.rom_resources().unwrap().records4_stats().expect("records4 owner");
+        assert!(stats.action_field_bytes.iter().all(|&bytes| bytes > 0),
+            "scene must consume all three action-callback fields");
+        eprintln!("ROM_DATA_ACTION_CALLBACKS_POISON source_bytes={:?}", stats.action_field_bytes);
+    }
+    if poison_offset_tables {
+        let stats = decoded.bus.rom_resources().unwrap().adjacent_offset_tables_stats().expect("offset table owner");
+        assert!([0usize, 1, 2, 4].iter().all(|&index| stats.table_bytes[index] > 0),
+            "scene must consume the four observed offset tables");
+        eprintln!("ROM_DATA_OFFSET_TABLES_POISON source_bytes={:?}", stats.table_bytes);
+    }
+    if poison_obj_layout_offsets {
+        let stats = decoded.bus.rom_resources().unwrap().obj_list_stats().expect("OBJ list owner");
+        assert!(stats.layout_offset_bytes[1] >= 2, "scene must consume the observed OBJ byte group");
+        eprintln!("ROM_DATA_OBJ_LAYOUT_OFFSETS_POISON source_bytes={:?}", stats.layout_offset_bytes);
+    }
     if poison_dma_directories {
         let stats = decoded.bus.rom_resources().unwrap().dma_register_directories_stats().expect("DMA directory owner");
         assert!(stats.directory_bytes.iter().all(|&bytes| bytes >= 12),
             "scene must consume both DMA directories");
         eprintln!("ROM_DATA_DMA_DIRECTORIES_POISON source_bytes={:?}", stats.directory_bytes);
+    }
+    if poison_iwram_helpers {
+        let stats = decoded.bus.rom_resources().unwrap().iwram_memory_helpers_stats().expect("IWRAM helper owner");
+        assert!(stats.helper_bytes.iter().all(|&bytes| bytes >= 4),
+            "scene must consume all three IWRAM helper pointers");
+        eprintln!("ROM_DATA_IWRAM_HELPERS_POISON source_bytes={:?}", stats.helper_bytes);
     }
     if poison_tilemap_descriptor {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");
@@ -560,6 +696,22 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_row_stats().expect("tilemap row owner");
         assert!(stats.source_bytes >= 48, "scene must consume the managed tilemap rows");
         eprintln!("ROM_DATA_TILEMAP_EXTRA_ROWS_POISON bus_reads={} source_bytes={}", stats.bus_reads, stats.source_bytes);
+    }
+    if poison_blue_screw_chain {
+        let resources = decoded.bus.rom_resources().unwrap();
+        let rows = resources.observed_tilemap_row_stats().expect("tilemap row owner");
+        let descriptors = resources.observed_tilemap_descriptor_stats().expect("tilemap descriptor owner");
+        let tilemap = resources.observed_tilemap_stats().expect("tilemap owner");
+        let lz = resources.observed_lz_stats().expect("LZ owner");
+        assert!(rows.interleaved_lz_row_bytes >= 12 && rows.direct_tilemap_row_bytes >= 12,
+            "scene must consume both selected rows: {rows:?}");
+        assert!(descriptors.interleaved_lz_descriptor_bytes >= 5
+            && descriptors.additional_tilemap_descriptor_bytes >= 7
+            && descriptors.interleaved_lz_wrapper_bytes >= 2,
+            "scene must consume both selected descriptors and the LZ wrapper: {descriptors:?}");
+        assert!(tilemap.additional_stream_bytes[0] >= 100, "scene must consume the selected tilemap: {tilemap:?}");
+        assert!(lz.interleaved_hle_calls_by_block[0] > 0, "scene must consume the selected decoded LZ block: {lz:?}");
+        eprintln!("ROM_DATA_BLUE_SCREW_CHAIN_POISON rows={rows:?} descriptors={descriptors:?} tilemap={tilemap:?} lz={lz:?}");
     }
     if poison_observed_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
@@ -1178,6 +1330,29 @@ fn clear_audio(machine: &mut gba_core::Machine) {
     machine.bus.psg_tap.clear();
     machine.bus.hle_tap.clear();
     machine.bus.fifo_tap.iter_mut().for_each(Vec::clear);
+}
+
+// Only the first pair was observed in the retained Blue Screw scene.
+fn blue_screw_chain_test_spans() -> [(usize, usize); 7] {
+    use gba_core::rom_data::{observed_lz, observed_tilemap as tilemap,
+        observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+    let (lz_row, lz_target, _) = row::INTERLEAVED_LZ_ROW_SPECS[0];
+    let (direct_row, direct_target, _) = row::DIRECT_ROW_SPECS[0];
+    let (lz_descriptor, _, wrapper, _) = descriptor::INTERLEAVED_LZ_SPECS[0];
+    let lz = observed_lz::ADDITIONAL_SPECS[6];
+    let (tilemap_offset, tilemap_length, _, _) = tilemap::ADDITIONAL_STREAM_SPECS[0];
+    assert_eq!(lz_target, 0x0800_0000 + lz_descriptor);
+    assert_eq!(direct_target, 0x0800_0000 + descriptor::SOURCE_OFFSET + descriptor::SOURCE_LENGTH as u32);
+    assert_eq!(lz.offset, wrapper + descriptor::WRAPPER_LENGTH as u32);
+    [
+        (lz_row as usize, row::SOURCE_LENGTH),
+        (direct_row as usize, row::SOURCE_LENGTH),
+        (lz_descriptor as usize, descriptor::SOURCE_LENGTH),
+        ((direct_target - 0x0800_0000) as usize, descriptor::SOURCE_LENGTH),
+        (wrapper as usize, descriptor::WRAPPER_LENGTH),
+        (lz.offset as usize, lz.encoded_length),
+        (tilemap_offset as usize, tilemap_length),
+    ]
 }
 
 fn observed_lz_test_spans() -> impl Iterator<Item = (usize, usize)> {

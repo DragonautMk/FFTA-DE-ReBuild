@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-obj-layout-byte-groups",
+  "title": "Extract OBJ layout byte groups",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the European OBJ static-list resource with three independently rooted byte groups, preserving guest indexing and interpretation. Two bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e196-obj-source-v9z3u37q authenticates eight bytes and reader windows; Wine e196-obj-trace-wine-jcuo75ia observes the second group through original interpreter fallback. Wine e196-obj-wine-54zxpyzj checks preservation, coherent edit rejection, altered mirrored/mixed reads and four original interpreter/native reader cases.",
+    "Wine e196-obj-scene-wine-s0azwl5i matches full state, guest clock, video, OAM, dispatch and audio for 600 frames while all eight original bytes are altered; the second group is served. Wine e196-obj-cli-wine-u7pcy_df creates, reuses and verifies 124 matching files."
+  ],
+  "limitations": [
+    "Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary use of the other groups and other callers remain open, as do Linux, USA and native Windows. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_layout_offsets_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

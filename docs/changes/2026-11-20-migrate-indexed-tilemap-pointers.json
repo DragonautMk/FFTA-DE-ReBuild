@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-indexed-tilemap-pointers",
+  "title": "Extract indexed tilemap pointers",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the observed tilemap resource with eight authenticated pointer words used by the original indexed reader, preserving outside guest indices and existing neighboring resources."
+  ],
+  "validation": [
+    "Wine source/disassembly e197-tilemap-source-wrir7wj7 authenticates the selected words and identifies the original indexed load. Wine e197-tilemap-wine-i23_yk35 preserves 122 other resources, rejects coherent edits, verifies mirrored/mixed reads and compares the original interpreter and compiled five-instruction reader for ten indices with equal full state and guest clock.",
+    "Wine e197-tilemap-cli-wine-q7a_34j2 creates, reuses and verifies 124 matching files."
+  ],
+  "limitations": [
+    "The reader log contains a D-Bus pending-call assertion before successful completion; the Wine host defect is tracked separately. Ordinary use and the seven other pointed-to payloads remain unproved, as do other consumers, Linux, USA and native Windows. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_pointers_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

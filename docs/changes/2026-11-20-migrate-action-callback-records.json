@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-action-callback-records",
+  "title": "Extract action-callback records",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the European linked-records4 resource with 93 authenticated action-callback records, preserving each Thumb pointer and its two opaque words. Guest indexing and dispatch remain original; six bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e193-action-source-2po3wuk9 authenticates 1116 bytes and the distinct successor. Wine e193-action-trace-wine-fqhwgje1 observes the callback and field readers; e193-action-wine-jcz5bcc5 preserves previous fields and 121 other resources, rejects coherent edits, checks altered and mixed reads and compares two interpreter/native reader cases.",
+    "Wine e193-action-scene-wine-vys970r2 matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 1116 source bytes altered. Wine e193-action-cli-wine-5zlmal_2 creates, reuses and verifies 123 matching files."
+  ],
+  "limitations": [
+    "Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary traces used interpreter fallback. Other consumers, older revision-pinned records4 fixtures, Linux, USA and native Windows remain pending. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/records4.rs",
+    "crates/gba-core/src/rom_data/runtime/records4.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/records4_action_callbacks_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

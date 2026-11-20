@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "migrate-linked-record-callback-tables",
+  "title": "Extract linked-record callback tables",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the European linked-records4 resource with three independently rooted callback partitions containing 107 original Thumb pointers; guest indices, dispatch and reads outside the physical ownership remain unchanged. Sixteen bytes were unowned in the E172 sample."
+  ],
+  "validation": [
+    "Source e192-callback-source-vgus1zn1 authenticates the 428 bytes, original readers and distinct successor. Wine e192-callback-trace-wine-i99518dm observes all three tables; e192-callback-wine-rg_ejxyn preserves previous records and 121 other resources, rejects coherent edits, checks altered and mixed reads and compares three interpreter/native branch entries.",
+    "Wine e192-callback-scene-wine-ditx_b0y matches full state, guest clock, video, OAM, dispatch and audio for 600 frames with all 428 source bytes altered. Wine e192-callback-cli-wine-yzo92bp7 creates, reuses and verifies 123 matching files."
+  ],
+  "limitations": [
+    "The reader and scene logs each contain a D-Bus pending-call assertion before successful test completion; its cause is unestablished. Other callers and paths, old revision-pinned records4 fixtures, Linux, USA and native Windows remain pending. Ordinary traced reads used interpreter fallback; no performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/records4.rs",
+    "crates/gba-core/src/rom_data/runtime/records4.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/records4_callbacks_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

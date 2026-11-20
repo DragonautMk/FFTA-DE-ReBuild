@@ -24536,3 +24536,241 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Five EUR IWRAM Thumb callback words are authenticated, extracted, and served by the static OBJ resource; Wine reader/branch-entry ABI, poisoned scene and CLI pass. All 20 bytes were unowned in the E172 sample.
 - Evidence: `e188-control-source-rm56pdw9`, Wine `e188-control-trace-wine-sr60q_xk`, `e188-control-tail-trace-wine-fo65p2xu`, `e188-control-wine-ryj41yi9`, `e188-control-scene-wine-ch94duvy`, `e188-control-cli-wine-3z2jda18`; `docs/rom_data_runtime.md#e188-observed-iwram-obj-callback-words`; `docs/changes/2026-11-20-migrate-iwram-obj-callback-words.json`. Source attempt `kix974wc` used an incorrect placeholder path and was corrected.
 - Limits: Scene traces used interpreter fallback; compiled validation covers the five selected load-and-branch entries only. Other callbacks, live IWRAM code paths and consumers, Linux, USA and native Windows remain open. Historical OBJ fixtures need E188 adaptation. No performance measurement.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-BATCH1
+
+- Outcome: completed
+- Verified criteria: two superseded Cargo incremental sessions retired with current sessions and executables guarded; E157 and 11 completed superseded EUR datasets archived and verified locally. Estimated net reclaimed 7,120,502,784 bytes. No external dependency was introduced.
+- Evidence: `target/local-artifact-cleanup-20261120-cargo/progress.json`, `target/local-artifact-cleanup-20261120-e157/pack-result.json`, `target/local-artifact-cleanup-20261120-datasets/progress.json` and corresponding plans/reviews.
+- Limits: E158 was excluded due to a retained consumer lease; E188 and E189 remain hot, U31 untouched. Other work affects total free space. Original Oct 26 cleanup remains interrupted.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-OFFLOAD1
+
+- Outcome: completed
+- Verified criteria: six optional historical Windows test executables were copied to the designated external volume with hashes verified before retiring 69,484,544 allocated bytes of local archive payloads. Catalog entries and completion evidence remain local; current builds/dependencies remain internal.
+- Evidence: `target/local-artifact-cleanup-20261120-offload/plan.json`, `target/local-artifact-cleanup-20261120-offload/progress.json`; external volume UUID `5868399B68397938`, directory `FFTARecomp-cold-20261117-a46d9f0e`.
+- Limits: the external disk is required only to restore those six old test executables. E189 remains active separately; preserve its processes and data.
+
+### ROMDATA-01-E189-DMA-DIRECTORIES-370E68
+
+- Outcome: completed
+- Verified criteria: Two EUR DMA register directories are authenticated, published and served without restricting guest indices. Wine validates 16 reader cases, four controlled DMA writes, mixed boundaries, a 600-frame altered-source scene and production CLI. The 32 bytes include 24 previously unowned E172 sample bytes.
+- Evidence: `e189-dma-source-_zu8l44g`, Wine `e189-dma-trace-wine-vgsu5kue`, `e189-dma-wine-598qsw1v`, `e189-dma-scene-wine-dgpightt`, `e189-dma-cli-wine-98p9_ms6`; `docs/rom_data_runtime.md#e189-dma-register-directories`; `docs/changes/2026-11-20-validate-dma-register-directories.json`. Build `cbftiwkl` had corrected test arity errors; `gsiv7n3d` failed because its test executed a chained native store twice, diagnosed by `/root/sol_dma_clock_diagnosis` (Sol xhigh requested, effective unconfirmed); corrected retry passed.
+- Limits: The ordinary trace identified native dispatch but not exact instruction attribution. Other DMA callers, separate helper vector, Linux, USA and native Windows remain open. No performance measurement.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-PREVIEW1
+
+- Outcome: completed
+- Verified criteria: a read-only completed-only discovery returned zero candidates with explicit exclusions for active/suspended ROM, U31, debug, saves, Android and performance scopes.
+- Evidence: `/tmp/ffta-completed-readonly-preview.json`; 4,012 scopes or paths skipped under the selected policy.
+- Limits: the uncoordinated catalog snapshot authorizes no mutations; skipped scopes remain outside this result.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-OFFLOAD2
+
+- Outcome: completed
+- Verified criteria: 15 optional historical test executables were copied to the designated external volume and verified before retiring 112,975,872 allocated bytes of local payloads. Catalog and completion evidence stay local.
+- Evidence: `target/local-artifact-cleanup-20261120-offload2/plan.json`, `target/local-artifact-cleanup-20261120-offload2/progress.json`; external volume UUID `5868399B68397938`.
+- Limits: the external disk is needed to restore those historical executables; active builds and personal data were not moved.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-BATCH2
+
+- Outcome: completed
+- Verified criteria: nine completed superseded EUR datasets with terminal consumer outcomes were archived and verified on the internal disk. The 64 consumer receipts, including explicit failed exits, were checked; failed diagnostic directories were not changed. Estimated net reclaimed 4,518,047,744 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-datasets2/plan.json`, `target/local-artifact-cleanup-20261120-datasets2/progress.json` and per-unit reviews.
+- Limits: retained/nested leases and active consumers remain excluded; current E188/E189 datasets remained hot. External storage is not needed for these archives.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-BATCH3
+
+- Outcome: completed
+- Verified criteria: three completed superseded EUR datasets were archived and verified locally; their 17 terminal consumer receipts and leases were reviewed, including one failed consumer kept intact. The retained E189 manifest covers all old resource IDs and coverage entries. Estimated net reclaimed 1,499,758,592 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-datasets3/plan.json`, `target/local-artifact-cleanup-20261120-datasets3/progress.json` and per-unit reviews.
+- Limits: E188/E189 remain hot; retained or nested leases and active consumers remain excluded.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E182-FAIL
+
+- Outcome: completed
+- Verified criteria: the closed E182 failed run's resource copy was inventoried, archived and verified locally under its original FAIL outcome. Original failure receipt stayed readable and unchanged; net estimated reclaimed 503,058,432 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e182-fail/review.json`, `target/local-artifact-cleanup-20261120-e182-fail/pack-result.json`; catalog proof kind `failed-diagnostic-preservation`.
+- Limits: failed diagnostics are retained internally and cannot be externally offloaded by the catalog.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-BACKUP-FAIL
+
+- Outcome: completed
+- Verified criteria: the isolated executable from a closed save-backup test was inventoried and archived locally while holding its existing session lock; original ROM/saves and lock were not changed. The command had exit 0, while unit status FAIL recorded a private-input scratch-cleanup refusal. Estimated net reclaimed 366,288,896 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-backup-fail/review.json`, `target/local-artifact-cleanup-20261120-backup-fail/pack-result.json`; catalog retains the original FAIL receipt.
+- Limits: the isolated old binary restores from local cold storage; private inputs remain in place.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E131
+
+- Outcome: completed
+- Verified criteria: the superseded E131 EUR generation was archived and verified locally. The replacement covered its resource IDs and coverage, and all 28 recorded consumers were checked; current generations remained hot. Estimated net reclaimed 498,020,352 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e131/plan.json`, `target/local-artifact-cleanup-20261120-e131/progress.json` and its review.
+- Limits: no E189 or U31 work was resumed by the cleanup; other active work remains separate.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-OVERALL
+
+- Outcome: completed
+- Verified criteria: under the user's cleanup request, two old Cargo incremental sessions were retired, 27 historical payloads were archived locally and 21 optional test binaries were offloaded to the designated HDD, reclaiming an estimated net 14,688,137,216 bytes. Duplicate preview and the selected completed-only scan found no additional candidates. All 48 catalog locations, the external volume identity and retained current datasets were checked.
+- Evidence: `target/local-artifact-cleanup-20261120-inventory/final-summary.json`, `target/local-artifact-cleanup-20261120-inventory/completed-preview.json` and the linked per-operation receipts.
+- Limits: failed/mixed diagnostics, current datasets, builds, toolchains, downloads and private data remain local; old external test binaries need the HDD for restoration. Scopes with retained or nested leases, U31 and active/suspended work were excluded. Original Oct 26 closure remains unattested. Free space varies with concurrent activity.
+
+### ROMDATA-01-E190-IWRAM-MEMORY-HELPERS-370EB0
+
+- Outcome: completed
+- Verified criteria: Three EUR IWRAM helper Thumb words are authenticated, published and served without freezing live IWRAM or bounding guest indices. Wine validates three interpreter/native load-and-branch entries, mixed boundaries, a 600-frame altered-source scene and production CLI. All 12 bytes were observed unowned in the E172 sample.
+- Evidence: `e190-helper-source-2muj949h`, `e190-helper-trace-wine-1jrexdnx`, `e190-helper-wine-r9rce5o_`, `e190-helper-scene-wine-94ao1rz2`, `e190-helper-cli-wine-h_owgk16`; `docs/rom_data_runtime.md#e190-iwram-memory-helper-vector`; `docs/changes/2026-11-20-migrate-iwram-memory-helpers.json`.
+- Limits: First ordinary read was observed in native dispatch without exact instruction attribution; the others used interpreter fallback. Other callers and mutable IWRAM code paths, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E191-IWRAM-CALLBACKS-397FA4
+
+- Outcome: completed
+- Verified criteria: Two EUR IWRAM OBJ callback words are authenticated, published and served while the guest retains mutable IWRAM and selection. Wine validates both interpreter/native load-and-branch entries, mixed boundaries, a 600-frame altered-source scene and production CLI. All eight bytes were observed unowned in the E172 sample.
+- Evidence: `e191-callback-source-m460uxk9`, `e191-callback-trace-wine-35oh5q8o`, `e191-callback-wine-gj6h0gcr`, `e191-callback-scene-wine-_vpbz8be`, `e191-callback-cli-wine-fttzwwhr`; `docs/rom_data_runtime.md#e191-independently-rooted-iwram-obj-callbacks`; `docs/changes/2026-11-20-migrate-extra-iwram-obj-callbacks.json`.
+- Limits: Ordinary traced reads used interpreter fallback. Other callbacks and mutable IWRAM paths, Linux, USA and native Windows remain open. No performance measurement. Build `89y445bs` used a relative path; `e_8ykhv5` was interrupted and `k1nk95_g` passed.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E188
+
+- Outcome: completed
+- Verified criteria: the superseded E188 EUR dataset was archived and verified on the internal disk; six consumer receipts were checked, including one terminal failure kept intact. E191 covers its resource IDs and coverage; E190/E191 remain hot. Estimated net reclaimed 503,078,912 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e188/plan.json`, `target/local-artifact-cleanup-20261120-e188/progress.json` and its review.
+- Limits: original failure results and source inputs remain locally recoverable; active and leased scopes were not altered.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E74-MIXED
+
+- Outcome: completed
+- Verified criteria: the superseded E74 generation was archived and verified locally with mixed diagnostic classification: the original first-stage Wine failure and subsequent accepted remaining stage were retained and hash-guarded. Current E191 covers the old resource IDs; estimated net reclaimed 486,481,920 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e74-mixed/review.json`, `target/local-artifact-cleanup-20261120-e74-mixed/pack-result.json`, and `target/rom-data-constructor-animation-runtime/local-cold-mixed-review-20261120.json`.
+- Limits: the accepted combined task outcome is unchanged; restoring the historical generation uses local cold storage. The archive is ineligible for external offload.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E74-REST
+
+- Outcome: completed
+- Verified criteria: eight manifest-verified files from the older E74 generation were archived locally with mixed diagnostic classification. Original failed and accepted stage receipts and the preparation lock were guarded; estimated net reclaimed 188,788,736 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e74-rest/plan.json`, `target/local-artifact-cleanup-20261120-e74-rest/progress.json`, per-file reviews, and `target/rom-data-constructor-animation-runtime/local-cold-mixed-rest-20261120.json`.
+- Limits: original combined task acceptance is unchanged; all selected files remain restorable without the HDD.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E46-MIXED
+
+- Outcome: completed
+- Verified criteria: the completed historical E46 CLI generation was archived and verified locally under mixed diagnostic preservation; the original failed native stage and corrected successful stages remain unchanged. All 40 resources matched the retained managed baseline before archival and again before retirement. Estimated net reclaimed 217,300,992 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e46-mixed/review.json`, `target/local-artifact-cleanup-20261120-e46-mixed/pack-result.json`, and `target/rom-data-palette-programs/local-cold-mixed-e46-20261120.json`.
+- Limits: the managed reference dataset remains hot; the accepted combined task outcome is unchanged. The diagnostic archive remains local.
+
+### ROMDATA-01-E192-LINKED-CALLBACK-TABLES-3AD638
+
+- Outcome: completed
+- Verified criteria: Three EUR linked-record callback partitions contain 107 authenticated Thumb words. Their physical extents do not constrain guest indices. Wine validates three interpreter/native load-and-branch entries, mixed boundaries, a 600-frame altered-source scene and production CLI. Sixteen bytes were observed unowned in the E172 sample.
+- Evidence: `e192-callback-source-vgus1zn1`, `e192-callback-trace-wine-i99518dm`, `e192-callback-wine-rg_ejxyn`, `e192-callback-scene-wine-ditx_b0y`, `e192-callback-cli-wine-yzo92bp7`; `docs/rom_data_gameplay.md#e192-linked-record-callback-tables`; `docs/changes/2026-11-20-migrate-linked-record-callback-tables.json`.
+- Limits: Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary traces used interpreter fallback. Other consumers, revision-pinned records4 fixtures, Linux, USA and native Windows remain open. No performance measurement.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-E52-E54
+
+- Outcome: completed
+- Verified criteria: two superseded EUR CLI generations were archived and verified locally with mixed diagnostic classification. Original failed model stages and subsequent successful model/CLI/scene receipts were hash-guarded, and E191 covers their resource IDs and coverage. Estimated net reclaimed 708,038,656 bytes.
+- Evidence: `target/local-artifact-cleanup-20261120-e52-e54/plan.json`, `target/local-artifact-cleanup-20261120-e52-e54/progress.json`, and per-unit reviews/certificates.
+- Limits: combined accepted task outcomes are unchanged; both archives remain local, while the current dataset and existing comparison baselines stay hot.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-CARGO2
+
+- Outcome: completed
+- Verified criteria: five older Cargo incremental sessions were retired with the existing Cargo/session locks held and the newer sessions and canonical executable guarded. Reclaimed 97,611,776 allocated bytes; 66,826,240 bytes of shared file blocks were preserved.
+- Evidence: `target/local-artifact-cleanup-20261120-cargo2/plan.json` and `target/local-artifact-cleanup-20261120-cargo2/progress.json`.
+- Limits: current compiler outputs and dependency downloads remain available locally.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-OFFLOAD3
+
+- Outcome: completed
+- Verified criteria: fourteen optional historical CLI executables from completed scopes were copied to the designated external volume and verified before removing 131,780,608 bytes of local archive payloads. Existing completion evidence and all reviewed historical outcome hashes were rechecked and retained.
+- Evidence: `target/local-artifact-cleanup-20261120-offload3/plan.json`, `target/local-artifact-cleanup-20261120-offload3/progress.json`; UUID `5868399B68397938`, mounted at `/run/media/misa/Volume1`.
+- Limits: current builds, datasets and dependencies remain internal; restoring these historical executables requires the external disk.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-OFFLOAD4
+
+- Outcome: completed
+- Verified criteria: forty optional historical test executables from completed scopes were copied to the designated external volume and verified before removing 245,764,096 bytes of local archive payloads. Completion and reviewed historical outcome hashes were rechecked and retained.
+- Evidence: `target/local-artifact-cleanup-20261120-offload4/plan.json`, `target/local-artifact-cleanup-20261120-offload4/progress.json`; UUID `5868399B68397938`, mounted at `/run/media/misa/Volume1`.
+- Limits: current builds, datasets and dependencies remain internal; restoring these historical executables requires the external disk.
+
+### ROMDATA-01-E193-ACTION-CALLBACK-RECORDS-3AD7E4
+
+- Outcome: completed
+- Verified criteria: 93 EUR action-callback records are authenticated, published and served, preserving Thumb pointers and opaque words without bounding guest indices. Wine validates two interpreter/native readers, mixed boundaries, a 600-frame altered-source scene and production CLI. Six bytes were observed unowned in the E172 sample.
+- Evidence: `e193-action-source-2po3wuk9`, `e193-action-trace-wine-fqhwgje1`, `e193-action-wine-jcz5bcc5`, `e193-action-scene-wine-vys970r2`, `e193-action-cli-wine-5zlmal_2`; `docs/rom_data_gameplay.md#e193-action-callback-records`; `docs/changes/2026-11-20-migrate-action-callback-records.json`.
+- Limits: Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary traces used interpreter fallback. Other consumers, revision-pinned records4 fixtures, Linux, USA and native Windows remain open. No performance measurement.
+
+### LOCAL-ARTIFACT-HYGIENE-20261120-CONTINUATION
+
+- Outcome: completed
+- Verified criteria: thirteen historical payloads were archived locally, five old Cargo sessions were retired, and 54 optional completed test executables were offloaded to the designated HDD. Estimated net reclaimed 2,578,845,696 bytes. Local catalog entries, original outcomes, current datasets and the external volume UUID were verified.
+- Evidence: `target/local-artifact-cleanup-20261120-continuation/final-summary.json` and its linked per-operation receipts.
+- Limits: free space changed concurrently. U31, retained/nested leases, active work, current builds and named baselines were excluded. HDD UUID `5868399B68397938` was mounted at `/run/media/misa/Volume1`; for archives recorded under the old mount, `FFTA_COLD_STORAGE_MOUNT=/run/media/misa/Volume1` was verified. Original Oct 26 closure remains unattested.
+
+### ROMDATA-01-E194-ADJACENT-TABLES-3AD460
+
+- Outcome: completed
+- Verified criteria: Five EUR offset tables are authenticated, published and served without bounding guest indices. Wine validates six interpreter/native readers, signed and mixed boundary reads, a 600-frame altered-source scene and production CLI. Five bytes were observed unowned in the E172 sample.
+- Evidence: `e194-offset-source-r364fmf9`, `e194-offset-trace-wine-uxtnxes3`, `e194-offset-wine-ug76r3cd`, `e194-offset-scene-wine-dh8ic7ya`, `e194-offset-cli-wine-7ind1kk9`; `docs/rom_data_runtime.md#e194-adjacent-offset-tables`; `docs/changes/2026-11-20-migrate-adjacent-offset-tables.json`.
+- Limits: Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. Ordinary traces used interpreter fallback and observed four tables; the fifth has controlled-reader coverage only. Other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E195-TILEMAP-ALTERNATES-AE6E14
+
+- Outcome: completed
+- Verified criteria: Two EUR alternate tilemap rectangles and an eight-byte selector are authenticated, published and served without bounding guest indices. Wine validates three interpreter/native readers, both controlled branch outcomes, mixed boundaries, a 600-frame altered-source scene and production CLI. Eight bytes were observed unowned in the E172 sample.
+- Evidence: `e195-tilemap-source-n6nl69bd`, `e195-tilemap-trace-wine-9x55uknb`, `e195-tilemap-wine-9sclx54d`, `e195-tilemap-scene-wine-yxymrems`, `e195-tilemap-cli-wine-3j_wfn2z`; `docs/rom_data_graphics.md#e195-alternate-tilemap-rectangles`; `docs/changes/2026-11-20-migrate-alternate-tilemap-rectangles.json`.
+- Limits: The scene log contains a D-Bus pending-call assertion before successful completion; cause unestablished. A normal cell read occurred during native IWRAM dispatch without exact instruction attribution. The alternate branch was controlled but its ordinary copy, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E196-OBJ-BYTES-398DE8
+
+- Outcome: completed
+- Verified criteria: Three EUR OBJ byte groups are authenticated, published and served without bounding guest indices. Wine validates four interpreter/native readers, mixed boundaries, a 600-frame altered-source scene and production CLI. Two bytes were observed unowned in the E172 sample.
+- Evidence: `e196-obj-source-v9z3u37q`, `e196-obj-trace-wine-jcuo75ia`, `e196-obj-wine-54zxpyzj`, `e196-obj-scene-wine-s0azwl5i`, `e196-obj-cli-wine-u7pcy_df`; `docs/rom_data_obj.md#e196-obj-layout-byte-groups`; `docs/changes/2026-11-20-migrate-obj-layout-byte-groups.json`.
+- Limits: Reader and scene logs contain D-Bus pending-call assertions before successful completion; cause unestablished. The ordinary scene reads only the second group through interpreter fallback; ordinary use of other groups, other callers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E197-TILEMAP-3A4D84
+
+- Outcome: completed
+- Verified criteria: Eight EUR indexed tilemap pointer words are authenticated, published and served without bounding the guest index. Wine verifies preserved resources, mirrors/mixed boundaries, original interpreter/native reader for ten selected indices and production CLI. The E172 sample remains unchanged.
+- Evidence: `e197-tilemap-source-wrir7wj7`, `e197-tilemap-wine-i23_yk35`, `e197-tilemap-cli-wine-q7a_34j2`; `docs/rom_data_graphics.md#e197-indexed-tilemap-pointers`; `docs/changes/2026-11-20-migrate-indexed-tilemap-pointers.json`.
+- Limits: The reader log contains a D-Bus pending-call assertion before successful completion; tracked separately. Ordinary use of these words, the seven other pointed-to payloads, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E198-TILEMAP-PAYLOADS-AF2780
+
+- Outcome: completed
+- Verified criteria: Seven EUR tilemap streams (722 bytes) are authenticated, decoded and served with ascending, repeated and literal tokens, preserving raw padding. Wine compares all 1,792 original interpreter/native cell results with equal complete state and guest clock per stream, checks mixed boundaries and production CLI. The E172 sample remains unchanged.
+- Evidence: `e198-tilemap-source-nuq8mgl_`, `e198-streams-source-2llwimo3`, `e198-streams-wine-d97f6l58`, `e198-streams-cli-wine-gfc_c1yi`; `docs/rom_data_graphics.md#e198-additional-compressed-tilemaps`; `docs/changes/2026-11-20-migrate-additional-compressed-tilemaps.json`.
+- Limits: Reader log contains a D-Bus pending-call assertion before successful completion; tracked separately. Ordinary use, other tilemaps/consumers, revision-pinned fixtures, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E199-TILEMAP-DESCRIPTORS-3A4B78
+
+- Outcome: completed
+- Verified criteria: Seven EUR direct tilemap descriptors (56 bytes) are authenticated, published and served, preserving guest parameters and linking the seven E198 streams. Wine checks missing dependencies, seven original interpreter/native field readers, mixed boundaries and production CLI. The E172 sample remains unchanged.
+- Evidence: `e199-descriptor-source-uottnw22`, `e199-descriptors-wine-9ofg9nm8`, `e199-descriptors-cli-wine-0bqdvd05`; `docs/rom_data_graphics.md#e199-direct-tilemap-descriptors`; `docs/changes/2026-11-20-migrate-direct-tilemap-descriptors.json`.
+- Limits: Ordinary use, other rows/consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E200-TILEMAP-ROWS-3A4C04
+
+- Outcome: completed
+- Verified criteria: Seven noncontiguous EUR tilemap rows (84 bytes) are authenticated, published and served, linked to the E199 direct descriptors and preserving guest indexing and intervening rows. Wine checks missing dependencies, fourteen original interpreter/native reader cases, mixed boundaries and production CLI. The E172 sample remains unchanged.
+- Evidence: `e200-row-source-u4ror4sy`, `e200-rows-wine-29if0sg2`, `e200-rows-cli-wine-irh5mvpj`; `docs/rom_data_graphics.md#e200-direct-tilemap-rows`; `docs/changes/2026-11-20-migrate-direct-tilemap-rows.json`.
+- Limits: Reader log contains a D-Bus pending-call assertion before successful completion; tracked separately. Ordinary use, intervening rows, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-01-E201-INTERLEAVED-LZ
+
+- Outcome: completed
+- Verified criteria: Seven EUR interleaved row/descriptor/wrapper/LZ chains are authenticated, published and served. Wine validates 4,123 encoded bytes/5,728 decoded bytes, seven original SWI/HLE cases, 28 interpreter/native readers, mixed boundaries and production CLI. The E172 sample remains unchanged.
+- Evidence: `e201-interleaved-source-w13041vc`, `e201-chain-wine-0vq42lsj`, `e201-chain-cli-wine-7l8ix18e`; `docs/rom_data_graphics.md#e201-interleaved-lz-chains`; `docs/changes/2026-11-20-migrate-interleaved-lz-chains.json`.
+- Limits: Reader log contains a D-Bus pending-call assertion before successful completion; tracked separately. Ordinary use, real-BIOS/DMA paths, revision-pinned fixtures, other consumers, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-E202-INTERLEAVED-ORDINARY
+
+- Outcome: completed
+- Verified criteria: selected first pair, EUR/Wine. Source-backed retained Blue Screw action; first E201/E200 row and descriptor pair, LZ wrapper, first direct tilemap and decoded LZ HLE consumed with ROM backing altered; equal complete state/clock/video/OAM/dispatch and nonempty audio for 600 frames.
+- Evidence: `e202-second-stage-source-_impqiwz`, `e202-blue-audit-wine-dyl4e4jy`, `e202-blue-build-5v7yue3l`, `e202-blue-poison-wine-9qneu93s`; servers drained. Earlier build `3_mw7irl` failed before compilation due to relative script path. Sol `/root/sol_e202_route` requested xhigh, effective settings unconfirmed. `docs/changes/2026-11-21-verify-blue-screw-interleaved-chains.json`.
+- Limits: address audit does not attribute the callback; other pairs/scenes/consumers, real BIOS/DMA, Linux/USA/native Windows and parent criteria remain open. Both Wine scene logs contain the separately tracked D-Bus assertion. No performance measurements.
+
+### ROMDATA-05-WINE-DBUS-LOCAL-OVERLAY
+
+- Outcome: completed
+- Verified criteria: Wine 10 local upstream guard backport, ABI/dependencies and disassembly verified; opt-in wrapper checks both leases and module/system hashes and uses private mount; short Wine proof initializes corrected module with no assertion and drains server. Affected Blue Screw scene matches 600 frames without assertion.
+- Evidence: `wine-dbus-source-fetch-22fg5zjx`, `wine-dbus-generated-source-etyzrg_b`, `wine-dbus-local-tools-rn4bz8f0`, `wine-dbus-overlay-link-s10dafvr`, `wine-dbus-loader-proof-v50bntvr`, `wine-dbus-wrapper-proof-25z4y70w`. The scene unit `hrc9ivgq` reports FAIL on a split strace parser although gameplay passes; protected-input and trace reconciliation `qxfzqz9z` PASS. Earlier diagnostic failures retained in units `rfct0263`, `o_suitst`, `ioaox25n`, `66b2pve0`, `tv1z5xpl`, `jh8gxe_l`, `hjayvcy2`, `aqn3rlgu`. Sol `/root/sol_wine_overlay_build` requested xhigh, effective setting unconfirmed. `docs/changes/2026-11-21-provide-leased-wine-bluetooth-backport.json`.
+- Limits: system Wine is unchanged and still defective; regular commands do not use overlay. Source signature not independently authenticated; exact event and physical Bluetooth/asynchronous updates unproved. Other ROMDATA criteria, Linux/USA/native Windows remain open; no performance measurements.

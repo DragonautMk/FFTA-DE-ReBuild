@@ -1,4 +1,4 @@
-//! EUR LZ77 blocks observed during the Red Spring action.
+//! Authenticated EUR LZ77 blocks for selected graphics sources.
 use super::{lz77, script39_registry_poses::PriorSources, Resource, SourceRange};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
@@ -38,6 +38,27 @@ pub const ADDITIONAL_SPECS: &[StreamSpec] = &[
     StreamSpec { offset: 0xb151d8, encoded_length: 820, decoded_length: 1504,
         source_sha256: "5a7b9cc3b760679af76d54bb6bbd295362353df7eea5f4e1af6567c38ca0af56",
         decoded_sha256: "11b33398415f12b91f47eca9ee9f3e56ec68cd62d37a194a3478efae6ddf65b2" },
+    StreamSpec { offset: 0xb0efdc, encoded_length: 473, decoded_length: 640,
+        source_sha256: "b2ae228cc6239f508ae1b5bd70f056587092b1a98c8ea1da6978cd379fb0900c",
+        decoded_sha256: "b0fbae427f5155e1d1269b28251c67e0d1da74c0371dbbd6c971d3c50a4c98f9" },
+    StreamSpec { offset: 0xb0f1bc, encoded_length: 791, decoded_length: 992,
+        source_sha256: "24dcb352182627064d91c90a8ad24789c6e769fee6ebdb7d47fab27a384d2fa9",
+        decoded_sha256: "0a960e61c4ec90241f67e5ca446be8420db413f960b6dce3b741a6732b8a6ec6" },
+    StreamSpec { offset: 0xb0f4d8, encoded_length: 643, decoded_length: 992,
+        source_sha256: "1ed39f20f92cc0f194e460883c6cff6a6194b4cab6c0857181f169bb0b58ae6a",
+        decoded_sha256: "28a9e15f327a86b907c1fb6f551a44e792da8c08e1293773bf063f61d7f43e61" },
+    StreamSpec { offset: 0xb0f760, encoded_length: 688, decoded_length: 896,
+        source_sha256: "69fe17486f053796ed913f192ee65967387344eb7b83509d48fbd9955b854746",
+        decoded_sha256: "8c88468f80eccd99cff5432269624f27980f5db1c3afc318a66ef47b8b746669" },
+    StreamSpec { offset: 0xb0fa14, encoded_length: 449, decoded_length: 704,
+        source_sha256: "43c9104e6495f1fff0277ef0aac7d1861df94140668071bef1c80a27991676c5",
+        decoded_sha256: "a44d8684014b90a9a41dcfdc98c4fc147afe3ff13c9b1ccc01d1a5fed3754bc7" },
+    StreamSpec { offset: 0xb0fbdc, encoded_length: 526, decoded_length: 736,
+        source_sha256: "8e7419e855980bf0641ffe2790afcdb60043ee90f6d6240f01086f8a33b052c7",
+        decoded_sha256: "49cb1e2eebb76b6b7d7aaa20ee66102043e34c6e1a9db264f225b1274f7a1e4f" },
+    StreamSpec { offset: 0xb0fdf0, encoded_length: 553, decoded_length: 768,
+        source_sha256: "dfd73dd24d80f051e6ccb6e8c24a6cf080b65cfa5bd4af1c794dddae1b3205e8",
+        decoded_sha256: "9574c9c8e5db19d8b5a614241c45cf76dc3f5719177845575f48e7a1b2b033d3" },
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

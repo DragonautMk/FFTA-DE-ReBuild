@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "verify-blue-screw-interleaved-chains",
+  "title": "Verify extracted tilemap chains in Blue Screw",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Add an opt-in recorded-scene check that alters the first interleaved LZ and direct tilemap chain sources in memory and requires extracted-resource counters."
+  ],
+  "validation": [
+    "Source e202-second-stage-source-_impqiwz pins the second two-row selector. Wine e202-blue-audit-wine-dyl4e4jy observes the first row pair, descriptors, wrapper and direct stream. Wine e202-blue-poison-wine-9qneu93s matches full state, guest clock, video, OAM, dispatch and nonempty audio for 600 frames with positive row, descriptor, direct-stream and decoded LZ HLE counters; both Wine servers drained.",
+    "Windows test executable build e202-blue-build-5v7yue3l passes. Earlier e202-blue-build-3_mw7irl failed before compilation because the script path was relative to scratch."
+  ],
+  "limitations": [
+    "The address audit does not identify the executing callback; other pairs, scenes, consumers, real BIOS and DMA remain open. Both Wine scene logs include the separately tracked D-Bus assertion. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

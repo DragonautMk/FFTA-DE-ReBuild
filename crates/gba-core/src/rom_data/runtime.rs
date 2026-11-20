@@ -179,6 +179,12 @@ pub use observed_tilemap_row::ObservedTilemapRowStats;
 mod dma_register_directories;
 use dma_register_directories::DmaRegisterDirectoriesResources;
 pub use dma_register_directories::DmaRegisterDirectoriesStats;
+mod iwram_memory_helpers;
+use iwram_memory_helpers::IwramMemoryHelpersResources;
+pub use iwram_memory_helpers::IwramMemoryHelpersStats;
+mod adjacent_offset_tables;
+use adjacent_offset_tables::AdjacentOffsetTablesResources;
+pub use adjacent_offset_tables::AdjacentOffsetTablesStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -437,6 +443,8 @@ pub struct RuntimeResources {
     observed_tilemap_descriptor: Option<Box<ObservedTilemapDescriptorResources>>,
     observed_tilemap_row: Option<Box<ObservedTilemapRowResources>>,
     dma_register_directories: Option<Box<DmaRegisterDirectoriesResources>>,
+    iwram_memory_helpers: Option<Box<IwramMemoryHelpersResources>>,
+    adjacent_offset_tables: Option<Box<AdjacentOffsetTablesResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -753,6 +761,12 @@ impl RuntimeResources {
         if let Some((data, _)) = files.dma_register_directories {
             resources.dma_register_directories = Some(Box::new(DmaRegisterDirectoriesResources::new(data.clone(), &source.dma_register_directories.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.iwram_memory_helpers {
+            resources.iwram_memory_helpers = Some(Box::new(IwramMemoryHelpersResources::new(data.clone(), &source.iwram_memory_helpers.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.adjacent_offset_tables {
+            resources.adjacent_offset_tables = Some(Box::new(AdjacentOffsetTablesResources::new(data.clone(), &source.adjacent_offset_tables.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1021,6 +1035,8 @@ impl RuntimeResources {
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
+            iwram_memory_helpers: None,
+            adjacent_offset_tables: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1168,6 +1184,8 @@ impl RuntimeResources {
             + self.observed_tilemap_descriptor.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap_row.as_ref().map_or(0, |i| i.resident_bytes())
             + self.dma_register_directories.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.iwram_memory_helpers.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.adjacent_offset_tables.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1340,6 +1358,8 @@ impl RuntimeResources {
     pub fn observed_tilemap_descriptor_stats(&self) -> Option<ObservedTilemapDescriptorStats> { self.observed_tilemap_descriptor.as_ref().map(|m| m.stats()) }
     pub fn observed_tilemap_row_stats(&self) -> Option<ObservedTilemapRowStats> { self.observed_tilemap_row.as_ref().map(|m| m.stats()) }
     pub fn dma_register_directories_stats(&self) -> Option<DmaRegisterDirectoriesStats> { self.dma_register_directories.as_ref().map(|m| m.stats()) }
+    pub fn iwram_memory_helpers_stats(&self) -> Option<IwramMemoryHelpersStats> { self.iwram_memory_helpers.as_ref().map(|m| m.stats()) }
+    pub fn adjacent_offset_tables_stats(&self) -> Option<AdjacentOffsetTablesStats> { self.adjacent_offset_tables.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1676,6 +1696,14 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.dma_register_directories {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.iwram_memory_helpers {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.adjacent_offset_tables {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -2074,6 +2102,8 @@ impl crate::MemMap {
             || ObservedTilemapDescriptorResources::source_page(index)
             || ObservedTilemapRowResources::source_page(index)
             || DmaRegisterDirectoriesResources::source_page(index)
+            || IwramMemoryHelpersResources::source_page(index)
+            || AdjacentOffsetTablesResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

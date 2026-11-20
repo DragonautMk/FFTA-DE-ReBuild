@@ -59,7 +59,7 @@ impl ObservedLists {
         Lists {
             lists: self.lists.clone(),
             battle_directory: None,
-            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None,
+            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, layout_offsets: None,
         }
         .validate()
     }

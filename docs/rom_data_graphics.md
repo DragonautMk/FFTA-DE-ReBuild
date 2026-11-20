@@ -2146,7 +2146,8 @@ measurement was performed.
 The EUR descriptor at `3a4b70..3a4b78` contains the E177 tilemap pointer, a
 16-bit parameter, an 8-bit parameter and one unclassified byte. The original
 reader loads the first seven bytes before calling the tilemap routine. E179
-subsequently owns its selected outer row; other descriptors remain raw. Source
+subsequently owns its selected outer row; other descriptors were raw at E178.
+E199 adds seven adjacent direct descriptors. Source
 `e178-descriptor-source-vapbrkwo` authenticates the descriptor and its reader,
 and Wine `e178-descriptor-trace-wine-i1a1chh7` observes the pointer load at
 `080db318` in the recorded action via interpreter fallback.
@@ -2359,3 +2360,212 @@ linked spans are used. Wine production CLI `e185-list-row-cli-wine-e42p10cn`
 creates, reuses and verifies 121 files matching the tested generation. Other
 rows, selectors, scenes and consumers, Linux, USA and native Windows remain
 open. No performance measurement was performed.
+
+## E195 alternate tilemap rectangles
+
+EUR E195-d194 extends `graphics.observed-tilemap` with two original
+rectangles: `ae6e14..ae6e5e` has height 12 and width 3; `ae79c0..ae79ec`
+has height 7 and width 3. It also owns the eight-byte selector at
+`3a4d5c..3a4d64`. The original code chooses the second rectangle when its
+selector is 6. The guest retains its selection, copy and destination behavior;
+physical source extents do not impose guest index bounds. Eight bytes were
+observed unowned in E172.
+
+Source `e195-tilemap-source-n6nl69bd` authenticates all 126 bytes, original
+reader windows and neighboring owned sources. Wine
+`e195-tilemap-trace-wine-9x55uknb` observes the selector and normal rectangle
+header through interpreter fallback; a cell read occurs during native IWRAM
+dispatch without exact instruction attribution. Wine
+`e195-tilemap-wine-9sclx54d` preserves prior tilemap fields and 122 other
+resources, rejects coherent file/hash edits, checks altered mirrored/mixed
+boundaries, and compares three original interpreter/separately compiled readers
+and both controlled branch outcomes with full state and guest clock equal.
+
+Wine `e195-tilemap-scene-wine-yxymrems` compares the recorded 600-frame Red
+Spring action with both rectangles and the selector altered in backing ROM.
+The normal rectangle and selector are served from the resource; full state,
+guest clock, central/wide video, OAM, dispatch and audio match every frame.
+Wine `e195-tilemap-cli-wine-3j_wfn2z` creates, reuses and verifies 124 files
+matching the tested generation. The scene log contains a D-Bus pending-call
+assertion before successful completion; its cause remains unestablished. The
+alternate rectangle's ordinary copy, other consumers, Linux, USA and native
+Windows remain open. No performance measurements were made.
+
+## E197 indexed tilemap pointers
+
+EUR E197-d196 extends `graphics.observed-tilemap` with eight authenticated
+32-bit pointer words at `3a4d84..3a4da4`. The first points to the existing E177
+tilemap at `af2718`; at E197 the other seven pointed to sources whose formats
+and consumption were not established. E198 authenticates those seven streams.
+The neighboring
+palette program ends immediately before the new projection. These eight words
+are a physical source projection, not a limit on the guest's index or a claim
+that all other indices are invalid.
+
+Source and Wine disassembly `e197-tilemap-source-wrir7wj7` identify the
+PC-relative root at `08109228` and the indexed load at `081091e8`. The original
+code reads an index byte and performs the address arithmetic without a local
+bounds check. Wine `e197-tilemap-wine-i23_yk35` preserves all previous tilemap
+fields and 122 other resources, rejects coherent file/hash edits, and checks
+altered backing bytes, mirrors and mixed boundaries. It compares the original
+interpreter and a separately compiled five-instruction reader for indices 0–8
+and 255, with equal complete state and guest clock; the two outside indices keep
+their original behavior and do not read the new projection.
+
+Wine `e197-tilemap-cli-wine-q7a_34j2` creates, reuses and verifies 124 files
+matching the tested generation. The reader log contains a D-Bus pending-call
+assertion before successful completion; the host Wine diagnostic is tracked in
+[the validation checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+Ordinary use of the pointer group and the other payloads, other consumers,
+Linux, USA and native Windows remain open. No performance measurements were made.
+
+## E198 additional compressed tilemaps
+
+EUR E198-d197 extends `graphics.observed-tilemap` with the seven sources pointed
+at by E197's entries 1–7. The encoded extents are `af2780..af27e6`,
+`af27e8..af285a`, `af285c..af28c2`, `af28c4..af292a`, `af292c..af2986`,
+`af2988..af29f2` and `af29f4..af2a5e`: 722 source bytes in total. Each
+reconstructs 256 tilemap cells. The two-byte gaps between consecutive sources
+remain outside the projection and retain their original routing.
+
+Wine disassembly `e198-tilemap-source-nuq8mgl_` identifies three forms in
+original reader `080da14c`: ascending, repeated and literal halfwords. Source
+`e198-streams-source-2llwimo3` independently authenticates each extent and
+reconstructs each decoded-cell hash, including five literal tokens. The typed
+resource preserves each control word and its encoded values. The game retains
+its original decompression and index behavior.
+
+Wine `e198-streams-wine-d97f6l58` preserves all prior tilemap fields and 122
+other resources, rejects coherent edits and malformed literal tokens, and checks
+altered source bytes, mirrors and mixed boundaries. For all 1,792 cells it
+compares the original interpreter and separately compiled reader against the
+authenticated decoded results; complete state and guest clock match after each
+stream. Each stream is positively served from the resource. Wine production CLI
+`e198-streams-cli-wine-gfc_c1yi` creates, reuses and verifies 124 files matching
+the tested generation. The reader log contains a D-Bus pending-call assertion
+before successful completion; the host Wine diagnostic is tracked separately.
+Ordinary use, other consumers and tilemaps, Linux, USA and native Windows remain
+open. No performance measurements were made.
+
+## E199 direct tilemap descriptors
+
+EUR E199-d198 extends `graphics.observed-tilemap-descriptor` with seven
+consecutive eight-byte records at `3a4b78..3a4bb0`. Each retains its original
+pointer, 16-bit parameter, 8-bit parameter and opaque byte. The pointers target
+the seven E198 tilemap streams; the resource validates those dependencies and
+retains the original guest's field interpretation and indexing.
+
+Source `e199-descriptor-source-uottnw22` authenticates each record and its
+extracted target. Wine `e199-descriptors-wine-9ofg9nm8` preserves all previous
+descriptor fields and 122 other resources, rejects missing dependencies and a
+coherent file/hash edit, and checks altered backing bytes, mirrors and mixed
+boundaries. It compares the original interpreter and separately compiled
+four-instruction field reader for all seven records, with equal complete state
+and guest clock. Wine production CLI `e199-descriptors-cli-wine-0bqdvd05`
+creates, reuses and verifies 124 files matching the tested generation.
+Ordinary use of these seven records, other rows and consumers, Linux, USA and
+native Windows remain open. No performance measurements were made.
+
+## E200 direct tilemap rows
+
+EUR E200-d199 extends `graphics.observed-tilemap-row` with seven 12-byte rows at
+`3a4c04`, `3a4c1c`, `3a4c34`, `3a4c4c`, `3a4c64`, `3a4c7c` and `3a4c94`.
+Each points to a separate E199 direct descriptor; the other fields retain their
+original values. The intervening rows were outside this projection; E201 adds
+their separate LZ chains. The guest retains its indexing and interpretation,
+with no new index bounds.
+
+Source `e200-row-source-u4ror4sy` authenticates all 84 bytes and the seven
+existing descriptor dependencies. Wine `e200-rows-wine-29if0sg2` preserves
+prior row fields and 122 other resources, rejects missing dependencies and a
+coherent file/hash edit, and checks altered backing bytes, mirrors and mixed
+boundaries. It compares two original interpreter and separately compiled
+readers for each row, with equal complete state and guest clock. Wine production
+CLI `e200-rows-cli-wine-irh5mvpj` creates, reuses and verifies 124 matching
+files. The reader log contains a D-Bus pending-call assertion before successful
+completion; the host Wine diagnostic is tracked separately. At E200 ordinary
+use, intervening rows, other consumers, Linux, USA and native Windows remained
+open. No performance measurements were made.
+
+## E201 interleaved LZ chains
+
+EUR E201-d200 adds seven LZ resource chains interleaved with the E200 direct
+tilemap rows. Each chain contains an authenticated 12-byte row, eight-byte
+descriptor, four-byte wrapper and GBA LZ77 source. Together the seven sources
+contain 4,123 encoded bytes and decode to 5,728 bytes; the rows, descriptors and
+wrappers retain their original guest-interpreted fields. Physical source extents
+do not constrain guest indices or addresses. The historical source role name
+`observed-red-spring-lz77` remains unchanged for compatibility and does not
+claim ordinary Red Spring use of these seven new streams.
+
+Source `e201-interleaved-source-w13041vc` independently reconstructs each
+bounded LZ stream and authenticates the associated original pointers and
+fields. Wine `e201-chain-wine-0vq42lsj` preserves 120 other resources and all
+previous fields, rejects missing dependencies and coherent edits, and checks
+altered source bytes, mirrors and mixed-owner wrapper/stream boundaries. Seven
+original SWI/HLE comparisons match complete state, guest clock and decoded
+bytes, and all 28 selected original interpreter/compiled row and descriptor
+reader cases match complete state and guest clock. Each selected source is
+positively served from its resource.
+
+Wine production CLI `e201-chain-cli-wine-7l8ix18e` creates, reuses and verifies
+124 files matching the tested generation. The reader log contains a D-Bus
+pending-call assertion before successful completion; the Wine host diagnostic is
+tracked separately. E202 below verifies ordinary use of the first chain; the
+other chains, real-BIOS and DMA paths, other consumers, Linux, USA and native
+Windows remain open. No performance measurements were made.
+
+## E202 conditional row-list dataflow
+
+The source-backed E128 join identifies primary task IDs 239–246 with callback
+`08109440`; it does not by itself prove a particular ordinary execution. Wine
+disassembly `e202-selector-source-8r_6wz80` shows this callback storing the low
+byte of the task's field at `+0x14` plus 17, wrapped to a byte, in its context.
+It passes the row-list base `3a4bb0` and a separate count of four if the low
+byte of task field `+0x16` is zero, otherwise zero, to constructor `080e3f08`.
+The constructor and callbacks in `amu94h3q`, `enzv4iwu`, `_tv6i5rb`,
+`a7lzqd99` and `g_x2m5fb` pass that base and count into the list task; the
+zero-count branch does not start the list through this path.
+
+Static audit `e202-selector-dataflow-9jydyc_i` pins the relevant original
+instructions and records 30 candidate direct Thumb calls to the list constructor
+in the bounded `08000400..08160000` scan. If the row index starts at zero and
+its pointer, count and index are not subsequently modified, count four covers
+indices 0–3 before termination. The first E201 interleaved LZ row is index 6;
+the first E200 direct tilemap row is index 7. This conditional result does not
+exclude other callers, computed pointers, later writes or other contexts; the
+previously observed E179 row is separate evidence of an ordinary read, not proof
+of this initializer's complete behavior.
+
+The subsequent callback state selects a second two-row list at
+`3a4be0 + 24 * context[8]`; selector zero selects the previously observed E179
+pair and selectors 1–7 select the seven E201/E200 pairs. Source audit
+`e202-second-stage-source-_impqiwz` pins that arithmetic and the original
+constructor's store of the primary task ID into parameter `+0x14`. The E128
+source join maps IDs 239–246 to the callback, making these selectors a concrete
+lead; the mapping to an executing ordinary callback still needs a positive trace.
+
+The previously retained Blue Screw action and recorded input provide an ordinary
+EUR scene without editing a save. Wine address audit
+`e202-blue-audit-wine-dyl4e4jy` observes the first E201 and E200 rows, their
+descriptors, the E201 wrapper and the first E198 direct tilemap stream. Its
+address-only reads do not attribute those accesses to a particular callback or
+prove a task ID. The first interleaved LZ stream is consumed by HLE, so it need
+not appear as a guest bus read.
+
+Wine `e202-blue-poison-wine-9qneu93s` alters the two selected rows, both
+descriptors, the wrapper and the two corresponding streams in the decoded
+machine's ROM backing during each frame. The unmodified machine and the machine
+using extracted resources match complete state, guest clock, framebuffer, OAM,
+dispatch and nonempty audio for all 600 frames. The resource counters report
+25 interleaved-row bytes, 16 direct-row bytes, 9 interleaved-descriptor bytes,
+7 direct-descriptor bytes, 5 wrapper bytes, 4,115 direct-stream bytes and one
+HLE call for the selected decoded LZ stream. The source bytes are restored
+before each state comparison. Both Wine units pass and drain the server; their
+logs contain the separately tracked D-Bus assertion. An initial build wrapper
+`e202-blue-build-3_mw7irl` failed before compilation because its script path
+was relative to the unit work directory; `e202-blue-build-5v7yue3l` passed.
+
+Other row pairs, callback attribution, scenes, consumers, real-BIOS/DMA paths,
+Linux, USA and native Windows remain open. No performance measurements were
+performed.

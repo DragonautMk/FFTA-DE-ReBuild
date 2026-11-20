@@ -21,6 +21,26 @@ pub const TRANSFER_SPECS: [(u32, u32, &str); 3] = [
     (0x399798, 0x0839977c, "d1c81f1ecd310b05c65f35ec59458e745c667089419b4f0673609919fbfef66c"),
     (0x3997a4, 0x08399784, "d08c14b7c02d89bfe70cb58edab0318a1133d32273a62cd629ddb7e312fd33c1"),
 ];
+/// Seven separately selected rows pointing to the additional direct descriptors.
+pub const DIRECT_ROW_SPECS: [(u32, u32, &str); 7] = [
+    (0x3a4c04, 0x083a4b78, "c395e0bd8beb596ab91f1ec2f7371147325052532666137ea1a2274894b45de0"),
+    (0x3a4c1c, 0x083a4b80, "8e09b74fb9aeed703ca05683ef7735aded7ad75db5e8d7de47a1d55b4bad0ce7"),
+    (0x3a4c34, 0x083a4b88, "845a6166891dd2699be8fc387480dc1e26dbf39b2ddcc3003c34d4d205cbf75d"),
+    (0x3a4c4c, 0x083a4b90, "8e448c59fdaea1d896e671d6bd093eeba03da49373185bc0737f4b673649bfb7"),
+    (0x3a4c64, 0x083a4b98, "26934bf588438e1a541dd3702c61f707f191138b58a5117371fa9ba29a52dc02"),
+    (0x3a4c7c, 0x083a4ba0, "ea841cd574041bbaf59741872b29fdb29fb8ff4a6a9b983c3064ab41a70e2003"),
+    (0x3a4c94, 0x083a4ba8, "1eb7cd67692fc89c2a4e28fe4624e43c28a032443a6ad444f923f6ce64a83cba"),
+];
+/// Seven LZ rows interleaved with the direct tilemap rows.
+pub const INTERLEAVED_LZ_ROW_SPECS: [(u32, u32, &str); 7] = [
+    (0x3a4bf8, 0x083a4b38, "dce14adf828f18a27320d1c591eeab8f0f4a8ae96e7c96494a59e1f0fc87e4b1"),
+    (0x3a4c10, 0x083a4b40, "ba678f316795a742f51c4dd87f25c88a04dac5eaf5371f650a683233624bbb44"),
+    (0x3a4c28, 0x083a4b48, "027453dfe42579b8d1c507d80eb76fa7ccdb3d837a0568ad0ecd2734b94466c3"),
+    (0x3a4c40, 0x083a4b50, "c010c040d778ec9224d71c3f344d9931ad6574ce9beddcfcbeaa7339d1f7cb18"),
+    (0x3a4c58, 0x083a4b58, "2fc3489b3b2af5bfa158030e309aac1791109efac5c147c6ae8d5f8ac9a694ee"),
+    (0x3a4c70, 0x083a4b60, "3407be32c28f73781d05d4e1334b8d554ce473dc0fb4e1a25917bde892401df7"),
+    (0x3a4c88, 0x083a4b68, "34ff1f112fa5581ad8ede030542c120a20e326171b51ac1d8624c5240919da2f"),
+];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -62,6 +82,10 @@ pub struct ObservedTilemapRow {
     pub additional_rows: [AdditionalRow; 4],
     pub transfer_rows: [AdditionalRow; 3],
     pub list_row: AdditionalRow,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub direct_tilemap_rows: Option<[AdditionalRow; 7]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub interleaved_lz_rows: Option<[AdditionalRow; 7]>,
 }
 
 impl ObservedTilemapRow {
@@ -79,6 +103,20 @@ impl ObservedTilemapRow {
             || self.list_row.descriptor_pointer != 0x0800_0000 + observed_tilemap::RECTANGLE_CHAIN_OFFSET + 8 {
             return Err("Invalid observed rectangle list row".into());
         }
+        if let Some(rows) = &self.direct_tilemap_rows {
+            for (row, &(offset, pointer, _)) in rows.iter().zip(&DIRECT_ROW_SPECS) {
+                if row.source_offset != offset || row.descriptor_pointer != pointer {
+                    return Err("Invalid direct tilemap row".into());
+                }
+            }
+        }
+        if let Some(rows) = &self.interleaved_lz_rows {
+            for (row, &(offset, pointer, _)) in rows.iter().zip(&INTERLEAVED_LZ_ROW_SPECS) {
+                if row.source_offset != offset || row.descriptor_pointer != pointer {
+                    return Err("Invalid interleaved LZ row".into());
+                }
+            }
+        }
         Ok(())
     }
 
@@ -92,6 +130,18 @@ impl ObservedTilemapRow {
             .zip(descriptor.additional_descriptors.iter().chain(&descriptor.transfer_descriptors)) {
             if row.descriptor_pointer != 0x0800_0000 + entry.source_offset {
                 return Err("Additional tilemap row descriptor dependency mismatch".into());
+            }
+        }
+        if let Some(rows) = &self.direct_tilemap_rows {
+            let entries = descriptor.additional_tilemap_descriptors.as_ref().ok_or("Missing direct tilemap descriptor dependencies")?;
+            if rows.iter().zip(entries).any(|(row, entry)| row.descriptor_pointer != 0x0800_0000 + entry.source_offset) {
+                return Err("Direct tilemap row descriptor dependency mismatch".into());
+            }
+        }
+        if let Some(rows) = &self.interleaved_lz_rows {
+            let entries = descriptor.interleaved_lz_descriptors.as_ref().ok_or("Missing interleaved LZ descriptor dependencies")?;
+            if rows.iter().zip(entries).any(|(row, entry)| row.descriptor_pointer != 0x0800_0000 + entry.source_offset) {
+                return Err("Interleaved LZ row descriptor dependency mismatch".into());
             }
         }
         Ok(())
@@ -119,6 +169,12 @@ impl ObservedTilemapRow {
             spans.push((row.source_offset, row.source_bytes(), role));
         }
         spans.push((self.list_row.source_offset, self.list_row.source_bytes(), "rectangle-list-row"));
+        if let Some(rows) = &self.direct_tilemap_rows {
+            for row in rows { spans.push((row.source_offset, row.source_bytes(), "direct-tilemap-row")); }
+        }
+        if let Some(rows) = &self.interleaved_lz_rows {
+            for row in rows { spans.push((row.source_offset, row.source_bytes(), "interleaved-lz-row")); }
+        }
         spans
     }
 }
@@ -147,7 +203,7 @@ impl Catalog {
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOURCE_OFFSET && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
             return Err("Observed tilemap row source dependency mismatch".into());
         }
-        for &(_, pointer, _) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS) {
+        for &(_, pointer, _) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS) {
             if !descriptor.sources.iter().any(|source| source.offset == pointer - 0x0800_0000
                 && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
                 return Err("Additional tilemap row source dependency mismatch".into());
@@ -156,7 +212,7 @@ impl Catalog {
         let start = SOURCE_OFFSET as usize;
         let bytes = &rom[start..start + SOURCE_LENGTH];
         if ffta_rom::digest(bytes) != SOURCE_SHA256 { return Err("Observed tilemap row source hash mismatch".into()); }
-        for &(offset, _, hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS) {
+        for &(offset, _, hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS) {
             let at = offset as usize;
             if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash {
                 return Err("Additional observed tilemap row source hash mismatch".into());
@@ -185,6 +241,8 @@ impl Catalog {
             descriptor_pointer: u32::from_le_bytes(bytes[4..8].try_into().unwrap()),
             field8: u32::from_le_bytes(bytes[8..12].try_into().unwrap()),
             additional_rows, transfer_rows, list_row: read_row(LIST_ROW_OFFSET),
+            direct_tilemap_rows: Some(std::array::from_fn(|i| read_row(DIRECT_ROW_SPECS[i].0))),
+            interleaved_lz_rows: Some(std::array::from_fn(|i| read_row(INTERLEAVED_LZ_ROW_SPECS[i].0))),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

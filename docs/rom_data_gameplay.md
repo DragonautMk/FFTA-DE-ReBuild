@@ -3438,8 +3438,9 @@ at C5524, C5A42 and132FE6; its branch and dispatch comparisons belong to those
 callers. Original134E24/134E26 and134E40/134E42 load fields03/02 separately as
 arguments to live logic. Getter13510C reads field02. Other consumers use field00,
 field02 and field03 as indices into separate encoded code-pointer tables rooted
-at3AD638,3AD6AC and3AD72C. Those external tables and their extents are not part of
-this source contract. No ability/effect names, enums, value caps, Boolean
+at3AD638,3AD6AC and3AD72C. Those external tables and their extents were outside
+this source contract; E192 subsequently integrates the physical partitions below.
+No ability/effect names, enums, value caps, Boolean
 conversion or signed reinterpretation are introduced.
 
 The selected original loops obtain the metadata28 getter's encoded inline
@@ -7865,3 +7866,64 @@ source, not the identity of its caller or the complete
 set of consumers. The other 3,856 bytes of the E172 sample outside E173–E176
 still require classification. Linux, USA and native Windows remain pending;
 no performance measurement was performed.
+
+## E192 linked-record callback tables
+
+EUR E192-d191 extends `gameplay.linked-records4` with three original Thumb
+callback partitions at `3ad638..3ad6ac`, `3ad6ac..3ad72c` and
+`3ad72c..3ad7e4`: 29, 32 and 46 words, respectively. The next independently
+rooted table at `3ad7e4` has a different 12-byte record structure. The physical
+partitions do not bound guest indices: the original index calculation and
+callback execution remain in guest code, and reads outside the owned ranges
+continue through their existing owners or the ROM. The source data preserves
+encoded addresses and Thumb bits.
+
+Source `e192-callback-source-vgus1zn1` authenticates the 428 bytes, selected
+readers and successor; 16 bytes were observed as unowned in E172. Wine
+`e192-callback-trace-wine-i99518dm` observes one reader for each table through
+interpreter fallback. Wine `e192-callback-wine-rg_ejxyn` preserves the previous
+records4 fields and 121 other resources, rejects coherent file/hash edits,
+checks altered backing bytes and mirrored/mixed boundaries, and compares three
+original interpreter/separately compiled load-and-branch entries with matching
+full state and guest clock.
+
+Wine `e192-callback-scene-wine-ditx_b0y` compares the recorded 600-frame Red
+Spring action while all 428 backing bytes are altered in the managed machine.
+All three tables are read from the resource; full state, guest clock,
+central/wide video, OAM, dispatch and audio match every frame. Wine
+`e192-callback-cli-wine-yzo92bp7` creates, reuses and verifies 123 files matching
+the tested generation. The reader and scene logs each contain a D-Bus
+`pending != NULL` assertion before the tests complete successfully; its cause
+was not established by these checks. Other paths and consumers, revision-pinned
+records4 fixtures, Linux, USA and native Windows remain open. No performance
+measurements were made.
+
+## E193 action-callback records
+
+EUR E193-d192 extends `gameplay.linked-records4` with 93 original 12-byte
+records at `3ad7e4..3adc40`. Each record retains a Thumb callback and two
+original 32-bit words without assigning the latter invented semantics. The
+next independently rooted data begins at `3adc40`. The bounded physical
+partition does not impose a guest index limit: the original reader, selection
+and callback execution remain guest code, with reads outside the partition
+continuing through their existing owners or the ROM.
+
+Source `e193-action-source-2po3wuk9` authenticates all 1,116 bytes, selected
+readers and the distinct successor. Six bytes were sampled as unowned in E172.
+Wine `e193-action-trace-wine-fqhwgje1` observes the original callback read at
+`0813752e` and the byte read at `08137610`, both through interpreter fallback.
+Wine `e193-action-wine-jcz5bcc5` preserves previous records4 fields and 121
+other resources, rejects coherent file/hash edits, checks altered backing bytes
+and mirrored/mixed boundaries, and compares the two original interpreter and
+separately compiled readers, including the callback branch, with full state and
+guest clock equal.
+
+Wine `e193-action-scene-wine-vys970r2` compares the recorded 600-frame Red
+Spring action with all 1,116 backing bytes altered in the managed machine.
+The scene reads each of the three fields from the resource; full state, guest
+clock, central/wide video, OAM, dispatch and audio match every frame. Wine
+`e193-action-cli-wine-5zlmal_2` creates, reuses and verifies 123 files matching
+the tested generation. Reader and scene logs contain D-Bus pending-call
+assertions before the successful tests finish; their cause remains unestablished.
+Other paths and consumers, older revision-pinned records4 fixtures, Linux, USA
+and native Windows remain open. No performance measurements were made.

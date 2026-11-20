@@ -7,8 +7,10 @@ pub struct ObservedLzStats {
     pub bus_reads: u64,
     pub source_bytes: u64,
     pub hle_calls: u64,
-    /// First the E174 block, then the additional blocks in source-spec order.
+    /// First the E174 block, then the six E175 blocks in source-spec order.
     pub hle_calls_by_block: [u64; 7],
+    /// Seven interleaved row payloads added after the original seven blocks.
+    pub interleaved_hle_calls_by_block: [u64; 7],
 }
 
 pub struct ObservedLzRead { owner: Arc<RuntimeResources>, index: usize }
@@ -23,6 +25,7 @@ pub(super) struct ObservedLzResources {
     data: ObservedLzBlock,
     counters: [AtomicU64; 2],
     hle_calls: [AtomicU64; 7],
+    interleaved_hle_calls: [AtomicU64; 7],
 }
 impl ObservedLzResources {
     pub(super) fn new(data: ObservedLzBlock, sources: &[SourceRange]) -> Result<Self, String> {
@@ -33,7 +36,8 @@ impl ObservedLzResources {
                     || source.role != "observed-red-spring-lz77" || source.sha256 != ffta_rom::digest(encoded))
         { return Err("Observed LZ source binding mismatch".into()); }
         Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)),
-            hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
+            hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
+            interleaved_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn source_page(index: usize) -> bool {
         let in_page = |start: usize, len: usize|
@@ -61,8 +65,11 @@ impl ObservedLzResources {
     }
     pub(super) fn stats(&self) -> ObservedLzStats {
         let hle_calls_by_block = self.hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
+        let interleaved_hle_calls_by_block = self.interleaved_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObservedLzStats { bus_reads: self.counters[0].load(Ordering::Relaxed),
-            source_bytes: self.counters[1].load(Ordering::Relaxed), hle_calls: hle_calls_by_block.iter().sum(), hle_calls_by_block }
+            source_bytes: self.counters[1].load(Ordering::Relaxed),
+            hle_calls: hle_calls_by_block.iter().chain(&interleaved_hle_calls_by_block).sum(),
+            hle_calls_by_block, interleaved_hle_calls_by_block }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.encoded_source.capacity() + self.data.decoded.capacity()
@@ -75,7 +82,8 @@ impl RuntimeResources {
         if !matches!(source >> 24, 0x08..=0x0d) { return None; }
         let block = self.observed_lz.as_ref()?;
         let index = block.data.streams().position(|(offset, _, _)| offset == (source & 0x01ff_ffff))?;
-        block.hle_calls[index].fetch_add(1, Ordering::Relaxed);
+        if index < block.hle_calls.len() { block.hle_calls[index].fetch_add(1, Ordering::Relaxed); }
+        else { block.interleaved_hle_calls[index - block.hle_calls.len()].fetch_add(1, Ordering::Relaxed); }
         Some(ObservedLzRead { owner: self.clone(), index })
     }
 }

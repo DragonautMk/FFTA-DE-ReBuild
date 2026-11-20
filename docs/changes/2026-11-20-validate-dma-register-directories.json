@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-20",
+  "slug": "validate-dma-register-directories",
+  "title": "Validate DMA register directories on Wine",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Complete the European Wine acceptance of the staged DMA register directories: the guest retains index arithmetic and hardware operations while the bus serves two authenticated extracted directories."
+  ],
+  "validation": [
+    "Source e189-dma-source-_zu8l44g and Wine trace e189-dma-trace-wine-vgsu5kue; Wine e189-dma-wine-598qsw1v validates 16 interpreter/native readers, four DMA register writes, mixed boundaries and full-state/guest-clock equality.",
+    "Wine e189-dma-scene-wine-dgpightt matches full state, clock, video, OAM, dispatch and audio for 600 frames with all 32 backing bytes altered. Wine e189-dma-cli-wine-98p9_ms6 creates, reuses and verifies 122 matching files."
+  ],
+  "limitations": [
+    "Other DMA callers, the separate IWRAM helper vector, Linux, USA and native Windows remain pending. The trace did not identify exact instructions during native dispatch; no performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/dma_register_directories.rs",
+    "crates/gba-core/src/rom_data/runtime/dma_register_directories.rs",
+    "crates/recomp/src/rom_data/dma_register_directories_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

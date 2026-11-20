@@ -1921,8 +1921,104 @@ and normal enablement retain their existing acceptance gates.
 - EUR E188-d187 adds five [IWRAM OBJ callback words](../rom_data_runtime.md#e188-observed-iwram-obj-callback-words).
   Source `rm56pdw9`, Wine traces `sr60q_xk`/`fo65p2xu`, branches `ryj41yi9`,
   scene `ch94duvy` and CLI `3z2jda18` pass. This owns 20 more sampled bytes;
-  3,357 remain unowned in that E172 sample. Other callbacks, consumers, Linux,
-  USA and native Windows remain open.
+  3,357 remained unowned in that E172 sample at E188. Other callbacks,
+  consumers, Linux, USA and native Windows remain open.
+
+- EUR E189-d188 adds two [DMA register directories](../rom_data_runtime.md#e189-dma-register-directories).
+  Source `_zu8l44g`, Wine trace `vgsu5kue`, readers/writes `598qsw1v`, scene
+  `dgpightt` and CLI `98p9_ms6` pass. This owns 24 more sampled bytes; 3,333
+  remained unowned in that E172 sample at E189. Other DMA callers, Linux, USA
+  and native Windows remain open.
+
+- EUR E190-d189 adds the [IWRAM memory-helper vector](../rom_data_runtime.md#e190-iwram-memory-helper-vector).
+  Source `2muj949h`, Wine trace `1jrexdnx`, readers/branches `r9rce5o_`, scene
+  `94ao1rz2` and CLI `h_owgk16` pass. All 12 bytes were sampled; 3,321 remained
+  unowned in that E172 sample at E190. Other callers, live IWRAM code paths,
+  Linux, USA and native Windows remain open.
+
+- EUR E191-d190 extends [IWRAM OBJ callbacks](../rom_data_runtime.md#e191-independently-rooted-iwram-obj-callbacks).
+  Source `m460uxk9`, Wine trace `35oh5q8o`, readers `gj6h0gcr`, scene
+  `_vpbz8be` and CLI `fttzwwhr` pass. All eight bytes were sampled; 3,313
+  remained unowned in that E172 sample at E191. Other callbacks and IWRAM paths,
+  Linux, USA and native Windows remain open.
+
+- EUR E192-d191 extends [linked records4](../rom_data_gameplay.md#e192-linked-record-callback-tables)
+  with three callback partitions. Source `vgus1zn1`, Wine trace `i99518dm`,
+  readers `rg_ejxyn`, scene `ditx_b0y` and CLI `yzo92bp7` pass; reader and scene
+  logs include D-Bus assertions. Sixteen sampled bytes are newly owned; 3,297
+  remained unowned in that E172 sample at E192. Other paths, Linux, USA and
+  native Windows remain open.
+
+- EUR E193-d192 extends [linked records4](../rom_data_gameplay.md#e193-action-callback-records)
+  with 93 action-callback records. Source `2po3wuk9`, Wine trace `fqhwgje1`,
+  readers `jcz5bcc5`, scene `vys970r2` and CLI `5zlmal_2` pass; reader and scene
+  logs include D-Bus assertions. Six sampled bytes are newly owned; 3,291
+  remained unowned in that E172 sample at E193. Other paths, Linux, USA and
+  native Windows remain open.
+
+- EUR E194-d193 adds five [adjacent offset tables](../rom_data_runtime.md#e194-adjacent-offset-tables).
+  Source `r364fmf9`, Wine trace `uxtnxes3`, readers `ug76r3cd`, scene
+  `dh8ic7ya` and CLI `7ind1kk9` pass; reader and scene logs include D-Bus
+  assertions. Five sampled bytes are newly owned; 3,286 remained unowned in that
+  E172 sample at E194. Fifth-table ordinary use, Linux, USA and native Windows remain open.
+
+- EUR E195-d194 extends [observed tilemaps](../rom_data_graphics.md#e195-alternate-tilemap-rectangles)
+  with two rectangles and a selector. Source `n6nl69bd`, Wine trace `9x55uknb`,
+  readers/branches `9sclx54d`, scene `yxymrems` and CLI `3j_wfn2z` pass; the
+  scene log includes a D-Bus assertion. Eight sampled bytes are newly owned;
+  3,278 remained unowned in that E172 sample at E195. Ordinary alternate copy, Linux, USA
+  and native Windows remain open.
+
+- EUR E196-d195 extends [OBJ static lists](../rom_data_obj.md#e196-obj-layout-byte-groups)
+  with three independently rooted byte groups. Source `v9z3u37q`, Wine trace
+  `jcuo75ia`, readers `54zxpyzj`, scene `s0azwl5i` and CLI `u7pcy_df` pass;
+  reader and scene logs contain D-Bus assertions. Two sampled bytes are newly
+  owned; 3,276 remained unowned in the E172 sample. Ordinary use of the other
+  groups, other callers, Linux, USA and native Windows remain open.
+
+- EUR E197-d196 extends [observed tilemaps](../rom_data_graphics.md#e197-indexed-tilemap-pointers)
+  with eight indexed pointer words. Source `wrir7wj7`, Wine readers `i23_yk35`
+  and CLI `q7a_34j2` pass; the reader log contains a D-Bus assertion. The
+  controlled reader preserves outside indices; at E197 ordinary use, the other
+  seven targets, other consumers, Linux, USA and native Windows remained open.
+
+- EUR E198-d197 extends [observed tilemaps](../rom_data_graphics.md#e198-additional-compressed-tilemaps)
+  with seven authenticated mode-4 streams. Original decoder `nuq8mgl_`, source
+  `2llwimo3`, Wine readers `d97f6l58` and CLI `gfc_c1yi` pass. The reader log
+  contains a D-Bus assertion. Ordinary use, other consumers and tilemaps,
+  Linux, USA and native Windows remain open.
+
+- EUR E199-d198 extends [tilemap descriptors](../rom_data_graphics.md#e199-direct-tilemap-descriptors)
+  with seven direct descriptors linked to the E198 streams. Source `uottnw22`,
+  Wine readers `9ofg9nm8` and CLI `0bqdvd05` pass. Ordinary use, other rows and
+  consumers, Linux, USA and native Windows remain open.
+
+- EUR E200-d199 extends [tilemap rows](../rom_data_graphics.md#e200-direct-tilemap-rows)
+  with seven noncontiguous rows linked to the E199 descriptors. Source `u4ror4sy`,
+  Wine readers `29if0sg2` and CLI `irh5mvpj` pass; the reader log includes a
+  D-Bus assertion. At E200 ordinary use, intervening rows, other consumers,
+  Linux, USA and native Windows remained open.
+
+- EUR E201-d200 extends [interleaved LZ chains](../rom_data_graphics.md#e201-interleaved-lz-chains)
+  with seven rows, descriptors, wrappers and compressed streams. Source
+  `w13041vc`, Wine readers/HLE `0vq42lsj` and CLI `7l8ix18e` pass; the reader
+  log contains a D-Bus assertion. E202 verifies ordinary use of the first chain;
+  other chains, real-BIOS/DMA paths, other consumers, Linux, USA and native
+  Windows remain open.
+
+- EUR [E202 row-list dataflow](../rom_data_graphics.md#e202-conditional-row-list-dataflow):
+  `_impqiwz` identifies a second two-row selector. Retained Blue Screw Wine
+  audit `dyl4e4jy` observes the first E200/E201 pair, and `9qneu93s` matches
+  600 frames with their ROM backing altered and positive resource/HLE counters.
+  Address reads do not attribute the active callback. Other pairs, paths,
+  Linux, USA and native Windows remain open; both logs contain a D-Bus assertion.
+
+- The Wine 10 Bluetooth D-Bus assertion has an [opt-in local backport](ROM_DATA_VALIDATION.md#wine-bluetooth-d-bus-diagnostic):
+  `s10dafvr` builds the corrected module and `25z4y70w` validates its leased
+  wrapper and loader. The affected 600-frame scene is quiet; its split-trace
+  parser failure is reconciled by `qxfzqz9z`. The installed system module still
+  has the defect; physical Bluetooth and asynchronous property updates are
+  unverified.
 
 - EUR E172-d171 serves the [conditional primary-task compact alias](../rom_data_compact_catalog.md#conditional-primary-task-alias-for-6cb278):
   five source bytes with existing task/catalog dependencies. Wine `_5qb5ej3`
