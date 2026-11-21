@@ -24,14 +24,16 @@ Archive completed tasks; preserve closed children and other jobs.
 - Outcome: partial
 - Verified: previous runtime/report/guide/export units accepted, including shared debug guides. Command/event consoles and operation cards use English/Italian presentation; targeted tests PASS. Audit: 356 reviewed files, 9 Markdown pending; upstream decision plan translated with legacy anchors.
 - Missing: remaining documentation (ROM guide e11–e25, e28–e30, e33–e34, e37–e41, e44–e61 and e66–e76 clarified; rest pending), other dynamic report producers/metadata, helper/test modules, tools/build text, source comments and full audit across both trees. Planned-task checklist/reference translated and synchronized. Preserve optional locales, imported content and immutable history. Focus choice diagnostics follow English/Italian; preserve active DBG2 work. DBG2 checklist and TSV matched at last review; reconcile future concurrent changes. The handoff audit hash is volatile; saved ROM coverage JSON/HTML reconciled. Do not repeat the lost character diff.
-- Launcher: foundation and play/input/audio/video text reviewed in English; dynamic values/runtime/platform behavior unverified. `docs/changes/2026-11-03-review-launcher-screens-english.json`.
+- Launcher: foundation and play/input/audio/video text reviewed; dynamic values/runtime/platform unverified. `docs/changes/2026-11-03-review-launcher-screens-english.json`.
 - Resume: ENGLISH-FIRST-INVENTORY-REVIEW partial: map guide reviewed; ROM guide e26/e27/e31/e32, packet intro and extracted-files/validation clarified. Earlier inventory and remaining ROM guide sections need review. `docs/changes/2026-11-03-clarify-rom-guide-metadata-and-packets.json`.
 
 ### ROM-DATA-FULL-EUR
 
 - State: suspended
 - Outcome: partial
-- E173/E181–E201 EUR/Wine PASS (archive); E202 Blue Screw first-pair altered-source `9qneu93s` PASS. 3,276 E172-sampled bytes remain unowned.
+- Pause: user paused the goal; resume ROM exploration and Wine only on request.
+- E173/E181–E201 EUR/Wine PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 home inventory `kkbk45be` PASS. E207 has 8,544 unowned sampled bytes; E172 has 3,276 (420 prior-site matches `usda5fn4`).
+- E208 source `rwsqv1y7` authenticates three home streams and directory cells; `ROMDATA-02-E208-HOME-STREAMS` extraction/runtime/Wine remains open.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
@@ -55,7 +57,7 @@ Archive completed tasks; preserve closed children and other jobs.
 - INDEXED-DIRECT-ORDINARY: prefix `v89740hr`, legacy 8,820-frame pair `klmjn8sv`, guarded endpoint `0gj2cglj`, 11-frame guarded pair `u75gcclc` PASS; other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 4q2i907e PASS; lower priority, rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
-- Resume: on user request; [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md) selected criterion only, [inventory](ROM_DATA_INVENTORY.md). Children retain their IDs and limits:
+- Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md), [inventory](ROM_DATA_INVENTORY.md). Children retain IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: 59 writer rows js3rbve5, lists negative/inconclusive m1p_8lhy; live domain, saves, aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: text screen 78suaoix no token; generated/indirect sources open; no blind Select. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-PARAMETER-RECORDS27-ORDINARY`: source/model/runtime/CLI/full pair PASS, unknown ancestry; cheat-free proof open. Ambervale; movement/post-save A negative inl3r0yl/l_97lwxn. `docs/rom_data_gameplay.md`.
@@ -67,14 +69,6 @@ Archive completed tasks; preserve closed children and other jobs.
   - UI context e109: selector/copy catalog, templates 5/2 pairs PASS; full extent/consumers/all 11 records open. docs/rom_data_ui.md; no repeat.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
-
-### ROMDATA-01-E203-REDSPRING-CODE-SUPPORT
-
-- State: suspended
-- Outcome: partial
-- Verified: `usda5fn4` PASS: 420 B/105 prior-site words (93 literal, 12 switch); 3,276 still unowned.
-- Missing: document join; E172 PCs/other uses and parent/Linux/USA open.
-- Resume: on user request, update docs, memory, archive and checks; no replay.
 
 ### ROMDATA-05-WINE-DBUS-PENDING-CALL
 
@@ -169,11 +163,13 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### LOCAL-ARTIFACT-HYGIENE
 
-- State: interrupted
+- State: suspended
 - Outcome: partial
-- Verified: Oct 26 applied.json; later sweeps closed separately, including 2026-11-20 continuation (~2.40 GiB reclaimed); reorganization deleted nothing.
-- Missing: original Oct 26 final validation/memory closure unattested.
-- Resume: review archive 2486..2496 and `target/local-artifact-cleanup-2026-10-26/applied.json`; no reconstructive sweep.
+- Selection: Oct 26 cleanup interrupted; HDD target cutover completed.
+- Verified: copy/reconcile exit 0; bind mounted, source removed; 133 GiB free.
+- Missing: Oct 26 criteria; HDD mount requires reconnection after reboot.
+- Risks: `rg` guard skipped during cutover; prior host check saw no nested mounts. HDD required.
+- Resume: HDD `README.txt`; Oct 26 archive 2486..2496, `target/local-artifact-cleanup-2026-10-26/applied.json`.
 
 ## Blockers, dependencies and shared resources
 
@@ -188,9 +184,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: 2026-11-20 cleanup continuation completed; Oct 26 hygiene remains interrupted.
-- Last verified result: ~2.40 GiB reclaimed; 13 archives local, 54 optional test executables on HDD.
-- Remaining work: original Oct 26 closure and separately protected/active scopes remain open.
-- Errors or blockers: retained or nested leases prevent safe cleanup of some copies; U31 skipped.
-- Next action: revisit only after ownership is established or new eligible work completes.
-- References: `target/local-artifact-cleanup-20261120-continuation/final-summary.json`; `docs/development/STORAGE_CHECKLIST.md`.
+- Task: HDD target cutover complete; Oct 26 cleanup remains interrupted.
+- Last verified result: external target bound; original removed; 133 GiB free.
+- Remaining work: reconnect mount after reboot; Oct 26 criteria remain open.
+- Errors or blockers: user script skipped `rg` guard; fixed; prior host check saw no nested mounts.
+- Next action: use HDD `README.txt` to reconnect; resume Oct 26 only on request.
+- References: HDD `postcopy-results/`; `LOCAL-ARTIFACTS.md`.

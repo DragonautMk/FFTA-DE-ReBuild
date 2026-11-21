@@ -2884,6 +2884,26 @@ global coverage, classify every byte, or establish exact instruction sites.
 Other scenes and consumers, Linux, USA and native Windows remain open. No
 performance measurement was made.
 
+## E207 home-scene ROM read inventory
+
+Wine `e207-home-audit-wine-kkbk45be` inventories the first 600 recorded frames
+of the previously verified European home continuation using the E202-d201
+dataset. The ROM, recording, snapshot, compiled code, dataset, executable and
+source preimages were protected. Reference and managed machines match complete
+state, guest clock, video, OAM, dispatch and five nonempty audio streams at
+every frame. The Wine server drained and the local Bluetooth overlay avoided
+the previously observed D-Bus assertion in this run.
+
+The selected bus and host readers observed 97,551 distinct ROM bytes; 8,544
+are outside the current manifest's source spans. Of those, 6,436 are at or
+above `300000`, including 6,041 bytes in three observed intervals
+`3fb21c..3fbb52`, `3fc3b0..3fcb75` and `3fd4f0..3fdb8e` (ends exclusive).
+These are sampled read ranges, not authenticated asset boundaries. The report
+does not identify guest instruction sites, infer ownership or prove that an
+unowned byte is data; attribution requires its original reader and source
+contract. Other scenes and readers, Linux, USA and native Windows remain open.
+No performance measurement was made.
+
 ## European display-control source tables at 14d2dc
 
 Wine site observation `e170-post-indexed-lower-sites-wine-9ei8p1cy` records

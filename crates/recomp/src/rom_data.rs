@@ -478,6 +478,8 @@ mod observed_tilemap_pointers_tests;
 #[cfg(test)]
 mod observed_tilemap_streams_tests;
 #[cfg(test)]
+mod observed_tilemap_additional_rectangles_tests;
+#[cfg(test)]
 mod observed_tilemap_roots_tests;
 #[cfg(test)]
 mod observed_tilemap_list_row_tests;

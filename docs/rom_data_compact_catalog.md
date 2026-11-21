@@ -910,6 +910,24 @@ misses unselected host paths and folded constants, and unowned bytes can be
 code. Linux, USA and native Windows remain pending; no performance measurement
 was performed.
 
+### E203 cross-reference with earlier code-support observations
+
+After E201, 3,276 bytes in the E172 address sample still have no extracted
+owner. Static reconciliation `e203-redspring-code-support-usda5fn4` matches
+420 of those bytes to 105 four-byte words previously attributed to original
+instruction sites in the separate EUR/Wine lower-residue investigation:
+93 PC-relative literals and 12 entries in the `0a1150` control table. The
+reconciliation checks the original source and instruction hashes, prior site
+records and the current E201 manifest; it does not replay the game. Its
+temporary source script is no longer retained, but the PASS receipt, result and
+protected evidence remain available locally.
+
+These 420 bytes remain unowned ROM reads. The earlier instruction attribution
+comes from another scene: the Red Spring capture records addresses, not the
+executing PCs, and does not exclude other uses of those words. The other 2,856
+sampled bytes have no match in this particular prior-site set. Neither figure
+establishes full-ROM coverage or removes a runtime dependency.
+
 ## E173 Red Spring compact bank and host sprite lists
 
 The authenticated EUR bank at `6c1e78` has seven represented selectors and

@@ -11,6 +11,19 @@ pub const RECTANGLE_CHAIN_OFFSET: u32 = 0x3a4b08;
 pub const RECTANGLE_CHAIN_LENGTH: usize = 16;
 pub const RECTANGLE_TABLE_OFFSET: u32 = 0x3a4d3c;
 pub const RECTANGLE_TABLE_LENGTH: usize = 4;
+/// Seven adjacent pointer cells following the previously represented root.
+pub const ADDITIONAL_RECTANGLE_POINTER_OFFSET: u32 = 0x3a4d40;
+pub const ADDITIONAL_RECTANGLE_POINTER_COUNT: usize = 7;
+pub const ADDITIONAL_RECTANGLE_POINTER_SHA256: &str = "0a783b3b2312cb2d8c092ad00325695b6c09ad591c78d3ba0525438f2fdc88e1";
+/// Five distinct 1×12 sources selected by those seven cells.
+pub const ADDITIONAL_RECTANGLE_SPECS: [(u32, &str); 5] = [
+    (0xae7908, "530916278f19eccdf3ac9342f6506b06135967f318df813dbc744a83fb175486"),
+    (0xae7924, "217cfe61b855fa00a86a57a7afabb9d7f2dc3243540f85c484b0316983ecffa6"),
+    (0xae7940, "7ec5591cfa8636d88bb11cf93d7a34aea3d43d1348d3d3e6b9375dd4912a28ea"),
+    (0xae795c, "429b843e3c7d15756094166727b3bb20b3c47951c7e9562a012bb738ace5d728"),
+    (0xae7978, "ec71701ab4c0670d8b1e4f4810b5c50a73d2743a979754ed5381f698d0968eac"),
+];
+pub const ADDITIONAL_RECTANGLE_TARGETS: [usize; 7] = [0, 1, 2, 3, 2, 4, 3];
 pub const ALTERNATE_SELECTOR_OFFSET: u32 = 0x3a4d5c;
 pub const ALTERNATE_SELECTOR_LENGTH: usize = 8;
 /// Eight authenticated source words used by an original indexed load.
@@ -212,6 +225,11 @@ pub struct ObservedTilemap {
     /// Seven additional independently rooted mode-4 tilemaps.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub additional_streams: Option<[AdditionalStream; 7]>,
+    /// Source cells retain repeated guest pointers, rather than duplicating targets.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub additional_rectangle_pointers: Option<[u32; ADDITIONAL_RECTANGLE_POINTER_COUNT]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub additional_rectangles: Option<[Rectangle; 5]>,
 }
 
 impl ObservedTilemap {
@@ -264,6 +282,23 @@ impl ObservedTilemap {
                 }
             }
         }
+        match (&self.additional_rectangle_pointers, &self.additional_rectangles) {
+            (Some(pointers), Some(rectangles)) => {
+                for (rectangle, &(offset, _)) in rectangles.iter().zip(&ADDITIONAL_RECTANGLE_SPECS) {
+                    if (rectangle.source_offset, rectangle.height, rectangle.width) != (offset, 1, 12)
+                        || rectangle.cells.len() != 12 {
+                        return Err("Invalid additional rectangle geometry".into());
+                    }
+                }
+                for (pointer, &target) in pointers.iter().zip(&ADDITIONAL_RECTANGLE_TARGETS) {
+                    if *pointer != 0x0800_0000 + rectangles[target].source_offset {
+                        return Err("Invalid additional rectangle pointer binding".into());
+                    }
+                }
+            }
+            (None, None) => {}
+            _ => return Err("Incomplete additional rectangle projection".into()),
+        }
         if self.rectangle_roots.first_rectangle_pointer != 0x0800_0000 + self.rectangles[0].source_offset
             || self.rectangle_roots.entry_count != 1
             || self.rectangle_roots.descriptor_pointer != 0x0800_0000 + RECTANGLE_CHAIN_OFFSET
@@ -305,6 +340,12 @@ impl ObservedTilemap {
         }
         if let Some(streams) = &self.additional_streams {
             for stream in streams { spans.push((stream.source_offset, stream.source_bytes(), "tilemap-additional-stream")); }
+        }
+        if let Some(pointers) = &self.additional_rectangle_pointers {
+            spans.push((ADDITIONAL_RECTANGLE_POINTER_OFFSET, pointers.iter().flat_map(|pointer| pointer.to_le_bytes()).collect(), "tilemap-additional-rectangle-pointers"));
+        }
+        if let Some(rectangles) = &self.additional_rectangles {
+            for rectangle in rectangles { spans.push((rectangle.source_offset, rectangle.source_bytes(), "tilemap-additional-rectangle")); }
         }
         spans
     }
@@ -413,6 +454,23 @@ impl Catalog {
             return Err("Alternate tilemap selector source mismatch".into());
         }
         let alternate_selector = selector.try_into().unwrap();
+        let pointer_start = ADDITIONAL_RECTANGLE_POINTER_OFFSET as usize;
+        let pointer_source = &rom[pointer_start..pointer_start + ADDITIONAL_RECTANGLE_POINTER_COUNT * 4];
+        if ffta_rom::digest(pointer_source) != ADDITIONAL_RECTANGLE_POINTER_SHA256
+            || word(0x109518) != 0x0800_0000 + RECTANGLE_TABLE_OFFSET {
+            return Err("Additional rectangle pointer source mismatch".into());
+        }
+        let additional_rectangle_pointers = std::array::from_fn(|i| word(pointer_start + i * 4));
+        let mut extra_rectangles = Vec::new();
+        for &(offset, hash) in &ADDITIONAL_RECTANGLE_SPECS {
+            let source = &rom[offset as usize..offset as usize + 26];
+            if source[..2] != [1, 12] || ffta_rom::digest(source) != hash {
+                return Err("Additional rectangle source mismatch".into());
+            }
+            let cells = source[2..].chunks_exact(2).map(|bytes| u16::from_le_bytes([bytes[0], bytes[1]])).collect();
+            extra_rectangles.push(Rectangle { source_offset: offset, height: 1, width: 12, cells });
+        }
+        let additional_rectangles: [Rectangle; 5] = extra_rectangles.try_into().map_err(|_| "Incomplete additional rectangles")?;
         let chain = &rom[RECTANGLE_CHAIN_OFFSET as usize..RECTANGLE_CHAIN_OFFSET as usize + RECTANGLE_CHAIN_LENGTH];
         let table = &rom[RECTANGLE_TABLE_OFFSET as usize..RECTANGLE_TABLE_OFFSET as usize + RECTANGLE_TABLE_LENGTH];
         if ffta_rom::digest(chain) != "19299b60bbbc6931f613bfe31561ad5a81c3f9e23bd3eb565dd773d2b587a33a"
@@ -434,6 +492,8 @@ impl Catalog {
             alternate_rectangles: Some(alternate_rectangles), alternate_selector: Some(alternate_selector),
             indexed_pointers: Some(indexed_pointers),
             additional_streams: Some(additional_streams),
+            additional_rectangle_pointers: Some(additional_rectangle_pointers),
+            additional_rectangles: Some(additional_rectangles),
         };
         let cells = decoded.decoded_cells()?;
         if decoded.source_bytes() != bytes || ffta_rom::digest(&cells.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<_>>()) != DECODED_SHA256 {

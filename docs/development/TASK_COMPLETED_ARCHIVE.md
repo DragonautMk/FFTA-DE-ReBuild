@@ -24774,3 +24774,52 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: Wine 10 local upstream guard backport, ABI/dependencies and disassembly verified; opt-in wrapper checks both leases and module/system hashes and uses private mount; short Wine proof initializes corrected module with no assertion and drains server. Affected Blue Screw scene matches 600 frames without assertion.
 - Evidence: `wine-dbus-source-fetch-22fg5zjx`, `wine-dbus-generated-source-etyzrg_b`, `wine-dbus-local-tools-rn4bz8f0`, `wine-dbus-overlay-link-s10dafvr`, `wine-dbus-loader-proof-v50bntvr`, `wine-dbus-wrapper-proof-25z4y70w`. The scene unit `hrc9ivgq` reports FAIL on a split strace parser although gameplay passes; protected-input and trace reconciliation `qxfzqz9z` PASS. Earlier diagnostic failures retained in units `rfct0263`, `o_suitst`, `ioaox25n`, `66b2pve0`, `tv1z5xpl`, `jh8gxe_l`, `hjayvcy2`, `aqn3rlgu`. Sol `/root/sol_wine_overlay_build` requested xhigh, effective setting unconfirmed. `docs/changes/2026-11-21-provide-leased-wine-bluetooth-backport.json`.
 - Limits: system Wine is unchanged and still defective; regular commands do not use overlay. Source signature not independently authenticated; exact event and physical Bluetooth/asynchronous updates unproved. Other ROMDATA criteria, Linux/USA/native Windows remain open; no performance measurements.
+
+### ROMDATA-01-E203-REDSPRING-CODE-SUPPORT
+
+- Outcome: completed
+- Verified criteria: static join matches 420 of the 3,276 E172 sampled unowned bytes to 105 source-authenticated words (93 PC-relative literals and 12 control-table entries) with earlier execution-site evidence from a separate EUR/Wine scene.
+- Evidence: `e203-redspring-code-support-usda5fn4` PASS, `target/rom-data-bus-host-lower-residue/source-contract.json`, E172 recovery `05iu77v6` and E201 manifest; `docs/changes/2026-11-21-classify-red-spring-code-support-overlap.json`. Protected inputs remain unchanged; temporary audit script is no longer retained.
+- Limits: E172 capture has addresses only; executing PCs and alternative uses are unproved. All 3,276 bytes remain unowned, and 2,856 do not match this prior-site set. No game replay or performance measurement; parent, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-E204-BLUESCREW-RAW
+
+- Outcome: completed
+- Verified criteria: reclassify retained Blue Screw EUR/Wine address sample against E201, identify and source-authenticate an actionable unowned pointer/rectangle family and its adjacent aliases.
+- Evidence: `e204-blue-unowned-isdh6mnt` PASS identifies 29 high unowned sampled bytes; `e204-rectangle-source-t31eyd12` PASS authenticates seven pointer cells, five 1x12 rectangle targets, aliases, existing neighboring owners and original indexed reader. `docs/changes/2026-11-21-identify-blue-screw-rectangle-sources.json`.
+- Limits: 158 source bytes remain raw; Blue Screw capture is address-only and cannot attribute its PC. Extraction, runtime consumption, other paths, parent, Linux, USA and native Windows remain open. No new replay or performance measurement.
+
+### ROMDATA-02-E205-RECTANGLE-RESOURCES
+
+- Outcome: completed
+- Verified criteria: EUR E202-d201 extracts and serves seven pointer cells and five distinct rectangles (158 source bytes), preserving alias targets, gaps, previous resource fields and guest indexing outside the physical projection. Wine tests pass original interpreter/native pointer and rectangle-reader prefixes, 12-halfword DMA, boundaries/mirrors and coherent tamper rejection. Blue Screw 600-frame altered-backing comparison confirms first pointer/rectangle use with equal state, clock, video, OAM, dispatch and audio; production CLI creates, reuses and verifies 124 files.
+- Evidence: `e204-rectangle-source-t31eyd12`, `e205-rect-build-jynm1fp5`, `e205-rect-readers-wine-pf3lqjl7`, `e205-rect-scene-wine-qfr83rk5`, `e205-rect-cli-build-0o3sfddz`, `e205-rect-cli-wine-c3n9eh_b`; Wine servers drained without D-Bus assertion using the local backport. `docs/changes/2026-11-21-extract-blue-screw-rectangle-pointers.json`.
+- Limits: remaining rectangles and selectors' ordinary use, other consumers, real BIOS and lifecycle paths, older revision-pinned fixtures, parent, Linux, USA and native Windows remain open. No performance measurements.
+
+### LOCAL-ARTIFACT-HYGIENE-HDD-TARGET-CUTOVER
+
+- Outcome: completed
+- Verified criteria: user mounted the external ext4 target at the project path and removed the original internal copy; 133 GiB free, up from about 12 GiB. Copy and reconciliation previously exited 0.
+- Evidence: external `FFTARecomp-target-20261121/copy-observer-result.json`, `postcopy-results/` and `README.txt`; user's terminal output; host `findmnt`, identity and `df` checks.
+- Limits: full byte comparison was not completed at the user's request. The cutover script skipped its nested-mount guard because `rg` was absent in the user's shell; a prior host check found none. The temporary script was corrected. The external disk is required, and the bind and image require reconnection after reboot. Oct 26 cleanup remains interrupted.
+
+### ROMDATA-05-E206-RECTANGLE-LIFECYCLE
+
+- Outcome: completed
+- Verified criteria: selected EUR E202-d201 synthetic lifecycle parses the prior tilemap, rejects reattachment to an unavailable private dataset copy transactionally, retains its resource owner across Load/Undo/backup restoration/restart and serves the first pointer and rectangle with altered ROM backing after each operation. The test uses synthetic scratch saves.
+- Evidence: Windows build `e206-lifecycle-build-989hfooi` PASS; Wine child `e206-lifecycle-wine-fivnb6pa` PASS, server drained without D-Bus assertion. Original unit remains FAIL because its private-input cleanup gate refused a synthetic .sav; `e206-lifecycle-reconcile-za2m7ukk` independently verifies the child result, source/driver identity, protected-input ordering and receipt without replay. `docs/changes/2026-11-21-prepare-rectangle-lifecycle-check.json`.
+- Limits: failed unit and private scratch retained for separate review; this verifies only the selected synthetic lifecycle. Other consumers, lifecycle paths, parent, Linux, USA and native Windows remain open. No performance measurements.
+
+### ROMDATA-01-E207-HOME-INVENTORY
+
+- Outcome: completed
+- Verified criteria: EUR/Wine `e207-home-audit-wine-kkbk45be` observes the first 600 recorded home frames using E202-d201; state, clock, video, OAM, dispatch and five nonempty audio streams match each frame, inputs are protected, and Wine drains without the known D-Bus assertion.
+- Evidence: 97,551 distinct observed ROM bytes, 8,544 unowned in the current manifest; three ranges near 3fb21c, 3fc3b0 and 3fd4f0 comprise 6,041 sampled bytes. Retained report and driver are in the unit; `docs/changes/2026-11-21-inventory-european-home-rom-reads.json`.
+- Limits: Address-only sampling does not identify guest PCs, asset extents or data semantics. Other readers/scenes and Linux, USA, native Windows remain open; no performance measurements. `ROMDATA-01-E207-HOME-UNOWNED` tracks attribution.
+
+### ROMDATA-01-E208-HOME-RANGES
+
+- Outcome: completed
+- Verified criteria: static exact-EUR source audit `e208-home-source-rwsqv1y7` pins original kind-4 relative-directory resolver `0800720c`, selector `080cf298` and custom decoder `080054a0`, and verifies three selected cells and streams against E207 and the E202 manifest.
+- Evidence: directory `3d63d4` count 103; selected indices 69, 71 and 73 contain 6,041 observed compressed source bytes; source/decoded hashes, reader pins and driver are retained with the unit. `docs/changes/2026-11-21-identify-european-home-archive-streams.json`.
+- Limits: The E207 scene sample is address-only and does not identify its executing PCs. The three streams remain raw until extraction/runtime consumption; other entries/callers, Linux, USA and native Windows remain open. No new Wine replay or performance measurement.

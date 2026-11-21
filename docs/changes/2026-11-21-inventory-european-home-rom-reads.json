@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "inventory-european-home-rom-reads",
+  "title": "Inventory European home-scene ROM reads",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Record a current-revision address-only inventory of a previously verified home continuation and retain attribution as open work."
+  ],
+  "validation": [
+    "Wine e207-home-audit-wine-kkbk45be passes a 600-frame E202-d201 reference/managed pair with state, guest clock, video, OAM, dispatch and nonempty audio equality; protected inputs match, Wine drains and no Bluetooth D-Bus assertion appears.",
+    "The selected readers observe 97551 distinct ROM bytes, including 8544 outside the current source manifest; three sampled ranges near 3fb21c, 3fc3b0 and 3fd4f0 contain 6041 of those unowned bytes."
+  ],
+  "limitations": [
+    "Address-only observations do not establish the executing PCs, authenticated source extents or data semantics. Other scenes and readers, Linux, USA and native Windows remain pending; no performance measurements were made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

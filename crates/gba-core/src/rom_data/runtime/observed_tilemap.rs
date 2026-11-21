@@ -4,13 +4,13 @@ use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2], pub root_bytes: [u64; 2], pub alternate_rectangle_bytes: [u64; 2], pub alternate_selector_bytes: u64, pub indexed_pointer_bytes: u64, pub additional_stream_bytes: [u64; 7] }
+pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2], pub root_bytes: [u64; 2], pub alternate_rectangle_bytes: [u64; 2], pub alternate_selector_bytes: u64, pub indexed_pointer_bytes: u64, pub additional_stream_bytes: [u64; 7], pub additional_rectangle_bytes: [u64; 5], pub additional_rectangle_pointer_bytes: u64 }
 
 pub(super) struct ObservedTilemapResources {
     data: model::ObservedTilemap,
     reads: AtomicU64,
     bytes: AtomicU64,
-    selected_bytes: [AtomicU64; 15],
+    selected_bytes: [AtomicU64; 21],
 }
 
 impl ObservedTilemapResources {
@@ -67,6 +67,19 @@ impl ObservedTilemapResources {
             self.data.additional_streams.as_ref()?.iter().enumerate()
                 .find_map(|(which, stream)| stream.source_byte(index).map(|value| (value, Some(8 + which))))
         }).or_else(|| {
+            let at = index.checked_sub(model::ADDITIONAL_RECTANGLE_POINTER_OFFSET as usize)?;
+            let pointer = self.data.additional_rectangle_pointers.as_ref()?.get(at / 4)?;
+            Some((pointer.to_le_bytes()[at % 4], Some(20)))
+        }).or_else(|| {
+            self.data.additional_rectangles.as_ref()?.iter().enumerate().find_map(|(which, rectangle)| {
+                let at = index.checked_sub(rectangle.source_offset as usize)?;
+                let value = match at {
+                    0 => Some(rectangle.height), 1 => Some(rectangle.width),
+                    _ => rectangle.cells.get((at - 2) / 2).map(|cell| cell.to_le_bytes()[(at - 2) % 2]),
+                }?;
+                Some((value, Some(15 + which)))
+            })
+        }).or_else(|| {
             index.checked_sub(model::RECTANGLE_CHAIN_OFFSET as usize)
                 .and_then(|at| self.data.rectangle_roots.chain_bytes().get(at).copied()).map(|value| (value, Some(2)))
         }).or_else(|| {
@@ -80,7 +93,7 @@ impl ObservedTilemapResources {
         let count = cells.iter().filter(|cell| cell.is_some()).count();
         if count == 0 { return prior; }
         let result = std::array::from_fn(|i| cells[i].map(|(value, _)| value).unwrap_or_else(|| prior.as_ref().map_or_else(|| rom[index + i], |v| v[i])));
-        let mut selected = [0u64; 15];
+        let mut selected = [0u64; 21];
         for (_, index) in cells.iter().flatten() { if let Some(index) = index { selected[*index] += 1; } }
         self.reads.fetch_add(1, Ordering::Relaxed);
         self.bytes.fetch_add(count as u64, Ordering::Relaxed);
@@ -89,14 +102,16 @@ impl ObservedTilemapResources {
     }
 
     pub(super) fn stats(&self) -> ObservedTilemapStats {
-        let [rect0, rect1, root0, root1, alt0, alt1, selector, pointers, stream0, stream1, stream2, stream3, stream4, stream5, stream6] = self.selected_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
+        let [rect0, rect1, root0, root1, alt0, alt1, selector, pointers, stream0, stream1, stream2, stream3, stream4, stream5, stream6, extra0, extra1, extra2, extra3, extra4, extra_pointers] = self.selected_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
         ObservedTilemapStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: self.bytes.load(Ordering::Relaxed),
             rectangle_bytes: [rect0, rect1], root_bytes: [root0, root1], alternate_rectangle_bytes: [alt0, alt1], alternate_selector_bytes: selector, indexed_pointer_bytes: pointers,
-            additional_stream_bytes: [stream0, stream1, stream2, stream3, stream4, stream5, stream6] }
+            additional_stream_bytes: [stream0, stream1, stream2, stream3, stream4, stream5, stream6],
+            additional_rectangle_bytes: [extra0, extra1, extra2, extra3, extra4], additional_rectangle_pointer_bytes: extra_pointers }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.rectangles.iter().map(|rectangle| rectangle.cells.capacity() * std::mem::size_of::<u16>()).sum::<usize>()
             + self.data.alternate_rectangles.as_ref().map_or(0, |rectangles| rectangles.iter().map(|rectangle| rectangle.cells.capacity() * std::mem::size_of::<u16>()).sum())
+            + self.data.additional_rectangles.as_ref().map_or(0, |rectangles| rectangles.iter().map(|rectangle| rectangle.cells.capacity() * std::mem::size_of::<u16>()).sum())
             + self.data.additional_streams.as_ref().map_or(0, |streams| streams.iter().map(|stream| {
                 stream.tokens.capacity() * std::mem::size_of::<model::StreamToken>()
                     + stream.tokens.iter().map(|token| token.values.capacity() * std::mem::size_of::<u16>()).sum::<usize>()

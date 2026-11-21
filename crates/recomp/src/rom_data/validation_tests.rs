@@ -162,6 +162,7 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_tilemap_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_ROW").is_some();
     let poison_tilemap_extra_rows = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_EXTRA_ROWS").is_some();
     let poison_blue_screw_chain = std::env::var_os("FFTA_STATE_TEST_POISON_BLUE_SCREW_CHAIN").is_some();
+    let poison_additional_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_ADDITIONAL_RECTANGLES").is_some();
     #[cfg(feature = "rom-data-read-audit")]
     let compact_watch_root = std::env::var("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").ok()
         .map(|value| u32::from_str_radix(value.trim_start_matches("0x"), 16).expect("compact watch root"))
@@ -192,6 +193,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         for (index, machine) in [&mut legacy, &mut decoded].into_iter().enumerate() {
             machine.bus.keys = input.keys_at(relative);
             input.apply_mouse(&mut machine.bus, relative).unwrap();
+            if index == 1 && poison_additional_rectangles {
+                for (start, len) in additional_rectangle_test_spans() {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_blue_screw_chain {
                 for (start, len) in blue_screw_chain_test_spans() {
                     for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
@@ -370,6 +376,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_blue_screw_chain {
                 for (start, len) in blue_screw_chain_test_spans() {
+                    machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
+            if index == 1 && poison_additional_rectangles {
+                for (start, len) in additional_rectangle_test_spans() {
                     machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
                 }
             }
@@ -712,6 +723,13 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(tilemap.additional_stream_bytes[0] >= 100, "scene must consume the selected tilemap: {tilemap:?}");
         assert!(lz.interleaved_hle_calls_by_block[0] > 0, "scene must consume the selected decoded LZ block: {lz:?}");
         eprintln!("ROM_DATA_BLUE_SCREW_CHAIN_POISON rows={rows:?} descriptors={descriptors:?} tilemap={tilemap:?} lz={lz:?}");
+    }
+    if poison_additional_rectangles {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("tilemap owner");
+        assert!(stats.additional_rectangle_pointer_bytes >= 4 && stats.additional_rectangle_bytes[0] >= 25,
+            "scene must consume the observed additional pointer and rectangle: {stats:?}");
+        eprintln!("ROM_DATA_ADDITIONAL_RECTANGLES_POISON pointers={} rectangles={:?}",
+            stats.additional_rectangle_pointer_bytes, stats.additional_rectangle_bytes);
     }
     if poison_observed_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
@@ -1330,6 +1348,12 @@ fn clear_audio(machine: &mut gba_core::Machine) {
     machine.bus.psg_tap.clear();
     machine.bus.hle_tap.clear();
     machine.bus.fifo_tap.iter_mut().for_each(Vec::clear);
+}
+
+fn additional_rectangle_test_spans() -> impl Iterator<Item = (usize, usize)> {
+    use gba_core::rom_data::observed_tilemap::{ADDITIONAL_RECTANGLE_POINTER_COUNT, ADDITIONAL_RECTANGLE_POINTER_OFFSET, ADDITIONAL_RECTANGLE_SPECS};
+    std::iter::once((ADDITIONAL_RECTANGLE_POINTER_OFFSET as usize, ADDITIONAL_RECTANGLE_POINTER_COUNT * 4))
+        .chain(ADDITIONAL_RECTANGLE_SPECS.iter().map(|&(offset, _)| (offset as usize, 26)))
 }
 
 // Only the first pair was observed in the retained Blue Screw scene.

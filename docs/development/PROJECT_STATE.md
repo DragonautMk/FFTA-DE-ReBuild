@@ -2013,6 +2013,27 @@ and normal enablement retain their existing acceptance gates.
   Address reads do not attribute the active callback. Other pairs, paths,
   Linux, USA and native Windows remain open; both logs contain a D-Bus assertion.
 
+- EUR [E203 sampled code-support join](../rom_data_compact_catalog.md#e203-cross-reference-with-earlier-code-support-observations)
+  matches 420 of the 3,276 E172 unowned bytes to instruction sites observed in
+  a different scene. E172 PCs, alternate uses and raw ownership remain open.
+
+- EUR [E204 Blue Screw rectangle lead](../rom_data_graphics.md#e204-blue-screw-rectangle-source-lead):
+  `isdh6mnt`/`t31eyd12` identify 29 observed unowned bytes in a source-backed
+  pointer/rectangle pair and authenticate seven cells with five target rectangles.
+  E205 extracts and serves those 158 bytes; Wine reader `pf3lqjl7`, Blue Screw
+  scene `qfr83rk5` and CLI `c3n9eh_b` pass. E206 lifecycle child passed; unit
+  `fivnb6pa` cleanup failed on synthetic scratch and recovery `za2m7ukk` passes.
+  Other consumers and deferred platforms remain open.
+
+- EUR [E207 home-scene inventory](../rom_data_runtime.md#e207-home-scene-rom-read-inventory):
+  Wine `kkbk45be` observes 8,544 unowned bytes over 600 recorded frames with
+  per-frame state/clock/video/OAM/dispatch/audio equivalence. Reader attribution,
+  source boundaries, other scenes and deferred platforms remain open.
+
+- EUR [E208 home-scene source lead](../rom_data_graphics.md#e208-home-scene-relative-archive-streams):
+  `rwsqv1y7` authenticates three unowned custom streams and their relative
+  directory cells; extraction, runtime consumption and other entries remain open.
+
 - The Wine 10 Bluetooth D-Bus assertion has an [opt-in local backport](ROM_DATA_VALIDATION.md#wine-bluetooth-d-bus-diagnostic):
   `s10dafvr` builds the corrected module and `25z4y70w` validates its leased
   wrapper and loader. The affected 600-frame scene is quiet; its split-trace

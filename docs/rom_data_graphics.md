@@ -2569,3 +2569,97 @@ was relative to the unit work directory; `e202-blue-build-5v7yue3l` passed.
 Other row pairs, callback attribution, scenes, consumers, real-BIOS/DMA paths,
 Linux, USA and native Windows remain open. No performance measurements were
 performed.
+
+## E204 Blue Screw rectangle source lead
+
+Reclassification `e204-blue-unowned-isdh6mnt` independently compares the
+retained Blue Screw address audit with the E201 manifest. Of its 3,329 unowned
+sampled bytes, 29 lie above `370000`: a four-byte pointer at `3a4d40` and 25
+bytes at `ae7909..ae7922`. All are bus reads; the audit records addresses rather
+than instruction sites.
+
+Source audit `e204-rectangle-source-t31eyd12` authenticates seven consecutive
+pointer cells at `3a4d40..3a4d5c` and five distinct pointed 1×12 rectangles,
+each 26 bytes, including the Blue Screw address range. Two targets are repeated:
+cells 2 and 4 select `ae7940`, and cells 3 and 6 select `ae795c`. The preceding
+pointer at `3a4d3c` is already owned; the separate selector at `3a4d5c` is also
+owned. The two-byte gaps between rectangles remain raw. These physical spans
+do not restrict guest indices. Prior original-code evidence identifies the
+indexed pointer load at `081094fa`, but the address-only Blue Screw capture
+does not attribute its read to that instruction.
+
+At E204 the 158 source bytes were still raw. The source audit and its driver
+are retained; no gameplay was replayed and no performance was measured for that
+source investigation.
+
+## E205 additional rectangle pointers and targets
+
+EUR E202-d201 extends `graphics.observed-tilemap` with the seven E204 pointer
+cells and their five distinct rectangles. Repeated pointers remain repeated,
+the two-byte gaps retain their earlier owner or raw source, and addresses
+outside these physical spans continue through the original lookup path. The
+resource records both pointer and rectangle data and requires their bindings
+and geometries to agree; existing optional-field handling remains available
+for earlier datasets.
+
+Wine `e205-rect-readers-wine-pf3lqjl7` checks preservation of 122 other
+resources and all earlier tilemap fields, source reconstruction, aliases,
+incomplete and coherently edited data rejection, mirrored reads and boundaries
+with the preceding root and following selector. Ten original interpreter and
+compiled indexed-reader cases include indices outside the new projection; five
+original width-reader prefixes and one 12-halfword DMA transfer match complete
+state and guest clock with source backing altered.
+
+Wine `e205-rect-scene-wine-qfr83rk5` reuses the retained Blue Screw state and
+input. For 600 frames, complete state, guest clock, video, OAM, dispatch and
+audio match while all 158 new backing bytes are altered in the decoded machine.
+The extracted owner serves four pointer bytes and 26 bytes from the first
+rectangle; no ordinary use is claimed for the other four. The production CLI
+`e205-rect-cli-wine-c3n9eh_b` creates, reuses and verifies 124 files matching
+the tested dataset. All three Wine units use the local Bluetooth backport, drain
+the server and report no D-Bus assertion.
+
+Other selectors and consumers, real-BIOS behavior, lifecycle checks, older
+revision-pinned fixtures, Linux, USA and native Windows remain open. No
+performance measurements were performed.
+
+### E206 rectangle resource lifecycle
+
+The targeted EUR/Wine lifecycle test in `e206-lifecycle-wine-fivnb6pa` parses
+the preceding E201 tilemap file, loads an E202 dataset from a private copy and
+then makes that copy unavailable. Failed reattachment leaves the machine state
+and its existing owner intact. Slot Load and Undo, backup restoration and
+restart retain that owner; after each operation the first pointer and rectangle
+are served with their ROM backing altered. The test uses synthetic save data,
+not a personal save.
+
+The Wine test passed without the D-Bus assertion and its server drained, but
+the original unit reports **FAIL**: its cleanup safety gate refused the
+test-created `.sav` in disposable scratch. Read-only recovery
+`e206-lifecycle-reconcile-za2m7ukk` verifies the child result, source and driver
+identities, unchanged-input check and receipt without replaying Wine. The
+original failed unit and its scratch remain retained. This proves the selected
+synthetic lifecycle only; other lifecycle paths and platforms remain open.
+
+## E208 home-scene relative archive streams
+
+The exact European ROM has a kind-4 relative directory at `3d63d4` with 103
+entries. Original resolver `0800720c` compares the requested index with the
+stored count and, for this directory kind, returns `base+4+u32[index]`.
+The source-pinned path at `080cf298` obtains that directory, resolves an index
+and calls the existing custom LZ/RLE decoder `080054a0`. These static paths do
+not prove which instruction executed during the address-only home capture.
+
+Source audit `e208-home-source-rwsqv1y7` verifies that E207's three fully
+observed unowned ranges correspond to indices 69, 71 and 73. Their compressed
+extents are 2,358, 1,989 and 1,694 bytes and decode to 3,776, 3,200 and 3,072
+bytes respectively. The three relative-offset cells and the four-byte directory
+header are also outside the E202 manifest. Each compressed end follows from
+complete custom-stream decoding; the intervening alignment bytes and other
+directory entries are excluded. Source and decoded hashes, reader pins and the
+audit driver are retained in the unit.
+
+This establishes a source lead, not managed ownership or ordinary reader-PC
+attribution. The selected streams and directory cells still require extraction,
+runtime consumption and Wine equivalence checks; other entries, consumers,
+Linux, USA and native Windows remain open. No performance measurement was made.

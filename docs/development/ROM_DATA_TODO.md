@@ -288,7 +288,9 @@ bytes. E195 owns two tilemap alternatives and their selector, including another
 eight observed bytes. E196 owns three OBJ byte groups, including another two
 observed bytes. The altered-source 600-frame actions and CLI checks through
 E196 pass on Wine; 3,276 original observed unowned bytes lie outside these 24
-increments. The E192–E194 and E196 reader and scene logs and the E195 scene log
+increments. E203 matches 420 of those bytes to code-support words attributed in
+a separate earlier scene; they remain unowned, and the E172 address-only sample
+does not establish their executing PCs. The E192–E194 and E196 reader and scene logs and the E195 scene log
 contain D-Bus assertions before the successful tests.
 Other readers, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
@@ -306,6 +308,15 @@ Blue Screw scene with altered ROM backing. Other pairs and scenes, real-BIOS/DMA
 other consumers, Linux, USA and native Windows remain open. The E172 sample is
 unchanged.
 [Evidence](../rom_data_graphics.md#e197-indexed-tilemap-pointers).
+
+**ROMDATA-02-E205-RECTANGLE-RESOURCES scoped EUR/Wine:** E202-d201 extracts and
+serves seven pointer cells and five distinct rectangles, including two pointer
+aliases. Wine validates source boundaries, original readers and one DMA case;
+the retained Blue Screw action uses the first pointer/rectangle and matches for
+600 frames with their backing sources altered. The production CLI passes
+create/reuse/verify. Other selectors and consumers, real-BIOS and lifecycle
+paths, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_graphics.md#e205-additional-rectangle-pointers-and-targets).
 
 **ROMDATA-01-OBJ-6CB278-PRIMARY scoped EUR progress:** E172-d171 serves
 five conditional selector/position bytes reached by the primary task-362 alias.

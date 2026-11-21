@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "prepare-rectangle-lifecycle-check",
+  "title": "Verify rectangle resource lifecycle",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Add an opt-in test for previous tilemap parsing and retained rectangle resources across unavailable copied files, Load, Undo, backup restoration and restart using synthetic scratch saves."
+  ],
+  "validation": [
+    "Windows test build e206-lifecycle-build-989hfooi passes. The Wine child test in e206-lifecycle-wine-fivnb6pa passes old tilemap parsing, transactional failed attachment, Load/Undo/backup/restart and positive resource reads; Wine drains without a D-Bus assertion.",
+    "The original Wine unit reports FAIL because its cleanup safety gate refused a synthetic .sav. Read-only e206-lifecycle-reconcile-za2m7ukk verifies the child result, source and driver identities and unchanged-input check without replay."
+  ],
+  "limitations": [
+    "The failed Wine unit and scratch remain retained; the recovery does not change its FAIL receipt. The proof covers one synthetic lifecycle, not every scene or platform. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/observed_tilemap_additional_rectangles_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

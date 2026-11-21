@@ -45,6 +45,129 @@ Documentation: [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md)
 
 [Change record](docs/changes/2026-11-21-provide-leased-wine-bluetooth-backport.json)
 
+## 2026-11-21 — Verify rectangle resource lifecycle
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Add an opt-in test for previous tilemap parsing and retained rectangle resources across unavailable copied files, Load, Undo, backup restoration and restart using synthetic scratch saves.
+
+**Validation**
+
+- Windows test build e206-lifecycle-build-989hfooi passes. The Wine child test in e206-lifecycle-wine-fivnb6pa passes old tilemap parsing, transactional failed attachment, Load/Undo/backup/restart and positive resource reads; Wine drains without a D-Bus assertion.
+- The original Wine unit reports FAIL because its cleanup safety gate refused a synthetic .sav. Read-only e206-lifecycle-reconcile-za2m7ukk verifies the child result, source and driver identities and unchanged-input check without replay.
+
+**Limitations**
+
+- The failed Wine unit and scratch remain retained; the recovery does not change its FAIL receipt. The proof covers one synthetic lifecycle, not every scene or platform. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-prepare-rectangle-lifecycle-check.json)
+
+## 2026-11-21 — Inventory European home-scene ROM reads
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record a current-revision address-only inventory of a previously verified home continuation and retain attribution as open work.
+
+**Validation**
+
+- Wine e207-home-audit-wine-kkbk45be passes a 600-frame E202-d201 reference/managed pair with state, guest clock, video, OAM, dispatch and nonempty audio equality; protected inputs match, Wine drains and no Bluetooth D-Bus assertion appears.
+- The selected readers observe 97551 distinct ROM bytes, including 8544 outside the current source manifest; three sampled ranges near 3fb21c, 3fc3b0 and 3fd4f0 contain 6041 of those unowned bytes.
+
+**Limitations**
+
+- Address-only observations do not establish the executing PCs, authenticated source extents or data semantics. Other scenes and readers, Linux, USA and native Windows remain pending; no performance measurements were made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-21-inventory-european-home-rom-reads.json)
+
+## 2026-11-21 — Identify three European home archive streams
+
+Type: docs. Platforms: European ROM; prior Windows via Wine evidence.
+
+**Changes**
+
+- Document a source-backed relative directory, original resolver and three custom-compressed streams observed in the recorded home scene; retain extraction and runtime consumption as open work.
+
+**Validation**
+
+- Static e208-home-source-rwsqv1y7 authenticates the exact EUR ROM and original resolver/decoder instruction pins, confirms relative directory cells 69, 71 and 73, decodes 6041 sampled source bytes and verifies their hashes and disjointness from E202 owners.
+
+**Limitations**
+
+- The preceding E207 Wine capture is address-only and does not identify the instructions executed there. Extraction and runtime consumption, other entries/callers, Linux, USA and native Windows remain pending. No guest replay or performance measurement was made for E208.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-21-identify-european-home-archive-streams.json)
+
+## 2026-11-21 — Identify Blue Screw rectangle source dependencies
+
+Type: docs. Platforms: European ROM; prior Windows via Wine scene.
+
+**Changes**
+
+- Identify an observed unowned Blue Screw rectangle and seven adjacent pointer cells with five distinct rectangle targets for the next extraction increment.
+
+**Validation**
+
+- Static e204-blue-unowned-isdh6mnt reclassifies the retained E201 address audit; e204-rectangle-source-t31eyd12 authenticates the seven pointer cells, aliases, five 1x12 source spans, original indexed reader and 29 sampled bytes.
+
+**Limitations**
+
+- The retained scene is address-only and does not identify the executing PC. The 158 source bytes remain raw; other consumers, Linux, USA and native Windows remain pending. No new gameplay replay or performance measurement.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-21-identify-blue-screw-rectangle-sources.json)
+
+## 2026-11-21 — Extract Blue Screw rectangle pointers and targets
+
+Type: changed. Platforms: Windows via Wine; European ROM.
+
+**Changes**
+
+- Extend the observed tilemap resource with seven pointer cells and five distinct 1x12 rectangles, retaining alias bindings, source gaps and guest reads outside the represented spans.
+
+**Validation**
+
+- Source e204-rectangle-source-t31eyd12 authenticates 158 bytes and two pointer aliases. Wine e205-rect-readers-wine-pf3lqjl7 verifies preservation, coherent-edit rejection, mirrors, mixed-owner boundaries, ten original-interpreter/native indexed reads, five width-reader prefixes and one 12-halfword DMA with equal state and guest clock.
+- Wine e205-rect-scene-wine-qfr83rk5 matches state, guest clock, video, OAM, dispatch and audio for 600 Blue Screw frames with all 158 backing bytes altered; the first pointer and rectangle are used. Wine e205-rect-cli-wine-c3n9eh_b creates, reuses and verifies 124 files matching the tested dataset. All Wine servers drained without the D-Bus assertion using the local backport.
+
+**Limitations**
+
+- Other selectors, ordinary use of the remaining rectangles, consumers, real BIOS, lifecycle and older revision-pinned fixtures remain open. Linux, USA and native Windows remain pending; no performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-21-extract-blue-screw-rectangle-pointers.json)
+
+## 2026-11-21 — Cross-reference sampled Red Spring code-support words
+
+Type: docs. Platforms: European ROM; prior Windows via Wine evidence.
+
+**Changes**
+
+- Document the overlap between the Red Spring address-only sample and original code-support words previously attributed in another scene, preserving the distinction between unowned reads and extracted resources.
+
+**Validation**
+
+- Static e203-redspring-code-support-usda5fn4 passes: the E201 manifest leaves 3276 sampled bytes unowned, and 420 overlap 93 previously attributed literal words and 12 control-table words. Source hashes and earlier instruction sites match.
+
+**Limitations**
+
+- Prior instruction observations come from a different scene; Red Spring PCs and alternative uses remain unproved and all 3276 bytes remain unowned. The temporary audit script is no longer retained. No new Wine replay or performance measurement; Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
+
+[Change record](docs/changes/2026-11-21-classify-red-spring-code-support-overlap.json)
+
 ## 2026-11-20 — Verify the remapped Linux debug candidate in the GUI
 
 Type: docs. Platforms: Linux/Xvfb.

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "extract-blue-screw-rectangle-pointers",
+  "title": "Extract Blue Screw rectangle pointers and targets",
+  "kind": "changed",
+  "platforms": [
+    "Windows via Wine; European ROM"
+  ],
+  "changes": [
+    "Extend the observed tilemap resource with seven pointer cells and five distinct 1x12 rectangles, retaining alias bindings, source gaps and guest reads outside the represented spans."
+  ],
+  "validation": [
+    "Source e204-rectangle-source-t31eyd12 authenticates 158 bytes and two pointer aliases. Wine e205-rect-readers-wine-pf3lqjl7 verifies preservation, coherent-edit rejection, mirrors, mixed-owner boundaries, ten original-interpreter/native indexed reads, five width-reader prefixes and one 12-halfword DMA with equal state and guest clock.",
+    "Wine e205-rect-scene-wine-qfr83rk5 matches state, guest clock, video, OAM, dispatch and audio for 600 Blue Screw frames with all 158 backing bytes altered; the first pointer and rectangle are used. Wine e205-rect-cli-wine-c3n9eh_b creates, reuses and verifies 124 files matching the tested dataset. All Wine servers drained without the D-Bus assertion using the local backport."
+  ],
+  "limitations": [
+    "Other selectors, ordinary use of the remaining rectangles, consumers, real BIOS, lifecycle and older revision-pinned fixtures remain open. Linux, USA and native Windows remain pending; no performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/observed_tilemap_additional_rectangles_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

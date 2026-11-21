@@ -815,6 +815,23 @@ current evidence before running another check.
   E171 managed ownership (`8bb1ykny`). Remaining unmatched addresses may be
   executable support; the inventory alone does not prove an asset.
   [Evidence](../rom_data_runtime.md#e170-post-indexed-rom-read-inventory).
+- [x] **ROMDATA-01-E207-HOME-INVENTORY scoped EUR/Wine:** `kkbk45be` inventories
+  600 recorded home frames with the E202 dataset and equal state, clock, video,
+  OAM, dispatch and audio. Of 8,544 unowned sampled bytes, 6,436 are at or above
+  `300000`; the address-only report does not attribute PCs or asset extents.
+  [Evidence](../rom_data_runtime.md#e207-home-scene-rom-read-inventory).
+- [ ] **ROMDATA-01-E207-HOME-UNOWNED:** attribute the sampled home-scene reads to
+  original consumers and authenticate source extents before extraction; three
+  ranges near `3fb21c`, `3fc3b0` and `3fd4f0` account for 6,041 sampled bytes.
+  Other scenes and readers, Linux, USA and native Windows remain open.
+- [x] **ROMDATA-01-E208-HOME-RANGES scoped EUR source lead:** `rwsqv1y7`
+  authenticates those three ranges as custom streams selected by entries 69,
+  71 and 73 of the kind-4 directory at `3d63d4`, with a pinned original
+  resolver and decoder path. The scene's executing PCs remain unproved.
+  [Evidence](../rom_data_graphics.md#e208-home-scene-relative-archive-streams).
+- [ ] **ROMDATA-02-E208-HOME-STREAMS:** extract the selected streams and
+  directory bytes, connect runtime consumption and verify source-altered
+  ordinary use on Wine. Other entries, callers and platforms remain open.
 - [x] **ROMDATA-02-04-DISPLAY-CONTROL-TABLES scoped EUR/Wine:** model and publish the two
   four-halfword display-control arrays and four IWRAM pointers at
   `14d2dc..14d2fc`, then serve their bytes through the EUR runtime. Preserve
@@ -988,9 +1005,19 @@ current evidence before running another check.
   another 58, E183 another 86, E184 another 17, E185 another 6 and E186
   another 60, E187 another 57, E188 another 20, E189 another 24, E190 another
   12, E191 another eight, E192 another 16, E193 another six, E194 another five
-  E195 another eight and E196 another two; the other 3,276 require classification before claiming the action
-  has no remaining raw source. Other scenes,
-  consumers, Linux, USA and native Windows remain pending.
+  E195 another eight and E196 another two. E203 joins 420 of the remaining
+  3,276 bytes to code-support sites from another scene; all 3,276 remain
+  unowned, and their E172 executing PCs and alternate uses are unproved.
+  Continue classification before claiming the action has no remaining raw
+  source. Other scenes, consumers, Linux, USA and native Windows remain pending.
+- [x] **ROMDATA-01-E203-REDSPRING-CODE-SUPPORT scoped static join:** `usda5fn4`
+  verifies source hashes and earlier executed sites for 93 literal words and
+  12 control-table words overlapping the E172 sample. It does not establish
+  the E172 execution sites or remove the raw dependency. The temporary source
+  script is no longer retained. [Evidence](../rom_data_compact_catalog.md#e203-cross-reference-with-earlier-code-support-observations).
+- [ ] **ROMDATA-01-E203-REDSPRING-OTHER:** classify the remaining sampled reads
+  and establish their actual consumers and any alternative uses as needed;
+  Linux, USA and native Windows remain deferred.
 - [x] **ROMDATA-01-E172-REDSPRING-AF271C scoped EUR/Wine:** E177 identifies a 102-byte
   compressed tilemap, including 100 sampled unowned bytes. Source `yiosygyx`,
   Wine trace `r7r9ungh`, original reader/publication `798svo0e` and altered-
@@ -1010,7 +1037,7 @@ current evidence before running another check.
   USA table and readers; native Windows remains pending.
 - [ ] **ROMDATA-01-E197-TILEMAP-OTHER:** establish ordinary use and other
   consumers without imposing guest bounds. E198 owns the seven pointed-to
-  streams; their ordinary use is still open.
+  streams; ordinary use through this indexed-pointer path is still open.
 - [x] **ROMDATA-01-E198-TILEMAP-PAYLOADS-AF2780 scoped EUR/Wine:** original
   decoder `nuq8mgl_`, source `2llwimo3`, readers `d97f6l58` and CLI `gfc_c1yi`
   pass for seven streams. The reader log contains a D-Bus assertion before
@@ -1075,6 +1102,32 @@ current evidence before running another check.
   altered-backing proof on Linux when selected.
 - [ ] **ROMDATA-04-E202-INTERLEAVED-USA:** authenticate and verify corresponding
   USA data and ordinary use; native Windows remains pending.
+- [x] **ROMDATA-01-E204-BLUESCREW-RAW scoped source lead:** `isdh6mnt` and
+  `t31eyd12` identify the observed pointer and rectangle and authenticate seven
+  adjacent pointer cells with five distinct targets. The capture is address-only.
+  [Evidence](../rom_data_graphics.md#e204-blue-screw-rectangle-source-lead).
+- [x] **ROMDATA-02-E204-RECTANGLE-RESOURCES scoped EUR/Wine:** E202-d201
+  extracts and serves the seven pointer cells and five rectangles. Wine
+  `pf3lqjl7` covers original reader prefixes, aliases, boundaries and one DMA;
+  `qfr83rk5` verifies the first pointer/rectangle in the recorded 600-frame
+  Blue Screw scene with altered backing; production CLI `c3n9eh_b` passes.
+  [Evidence](../rom_data_graphics.md#e205-additional-rectangle-pointers-and-targets).
+- [ ] **ROMDATA-02-E205-RECTANGLE-OTHER:** establish ordinary use of the other
+  rectangles, other readers and selectors, real-BIOS and other lifecycle behavior;
+  update revision-pinned fixtures when their checks are selected.
+- [x] **ROMDATA-05-E206-RECTANGLE-LIFECYCLE scoped EUR/Wine:** the targeted
+  test passes Load/Undo, backup restoration and restart with an unavailable
+  private dataset copy, retaining the owner and serving the selected resources.
+  Original unit `fivnb6pa` remains FAIL because its private-input cleanup gate
+  refused a synthetic `.sav`; recovery `za2m7ukk` verifies the child PASS and
+  drained Wine without replay. [Evidence](../rom_data_graphics.md#e206-rectangle-resource-lifecycle).
+- [ ] **ROMDATA-05-E206-RETAINED-SCRATCH:** separately review the retained
+  failed unit's test-owned scratch if cleanup is later selected; preserve the
+  safety gate and do not rerun gameplay merely to retire it.
+- [ ] **ROMDATA-02-E204-RECTANGLE-LINUX:** validate extraction, readers,
+  boundaries, ordinary use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E204-RECTANGLE-USA:** authenticate corresponding USA data;
+  native Windows remains pending.
 - [x] **ROMDATA-01-E178-TILEMAP-ROW-3A4BEC scoped EUR/Wine:** E179 publishes the observed
   12-byte row selecting the E178 descriptor. Wine trace `xvj_6rmw`, source
   `cc9b5_to`, original reader/publication `fhgchuk_` and altered-source

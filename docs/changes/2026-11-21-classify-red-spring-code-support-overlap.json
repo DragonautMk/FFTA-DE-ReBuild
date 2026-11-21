@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "classify-red-spring-code-support-overlap",
+  "title": "Cross-reference sampled Red Spring code-support words",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine evidence"
+  ],
+  "changes": [
+    "Document the overlap between the Red Spring address-only sample and original code-support words previously attributed in another scene, preserving the distinction between unowned reads and extracted resources."
+  ],
+  "validation": [
+    "Static e203-redspring-code-support-usda5fn4 passes: the E201 manifest leaves 3276 sampled bytes unowned, and 420 overlap 93 previously attributed literal words and 12 control-table words. Source hashes and earlier instruction sites match."
+  ],
+  "limitations": [
+    "Prior instruction observations come from a different scene; Red Spring PCs and alternative uses remain unproved and all 3276 bytes remain unowned. The temporary audit script is no longer retained. No new Wine replay or performance measurement; Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}
