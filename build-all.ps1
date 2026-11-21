@@ -5,14 +5,14 @@ param(
 )
 
 # Android build tools are developer prerequisites, not part of the repository/payload.
-# Install Android SDK + NDK 28.2.13676358, a JDK, Python, Rust's
+# Install Android SDK 37.2, build-tools 37.0.0, NDK 30.0.16248370, JDK 25, Python, and Rust's
 # aarch64-linux-android target and a host GCC/Clang. Set JAVA_HOME/PATH as needed.
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 if (-not $SkipAndroid) {
     if (-not $AndroidSdk) { $AndroidSdk = $env:ANDROID_HOME }
-    if (-not $AndroidSdk -or -not (Test-Path -LiteralPath ([IO.Path]::Combine($AndroidSdk, 'ndk/28.2.13676358/toolchains/llvm/prebuilt/windows-x86_64/bin')))) {
-        throw 'Android SDK/NDK is required. Install NDK 28.2.13676358 and set ANDROID_SDK_ROOT or pass -AndroidSdk PATH. Also required: JDK, Python, GCC/Clang in PATH and rustup target add aarch64-linux-android. These tools are not bundled. Use -SkipAndroid for desktop builds only.'
+    if (-not $AndroidSdk -or -not (Test-Path -LiteralPath ([IO.Path]::Combine($AndroidSdk, 'ndk/30.0.16248370/toolchains/llvm/prebuilt/windows-x86_64/bin')))) {
+        throw 'Android SDK/NDK is required. Install SDK 37.2, build-tools 37.0.0 and NDK 30.0.16248370, then set ANDROID_SDK_ROOT or pass -AndroidSdk PATH. Also required: JDK 25, Python, GCC/Clang in PATH and rustup target add aarch64-linux-android. These tools are not bundled. Use -SkipAndroid for desktop builds only.'
     }
 }
 

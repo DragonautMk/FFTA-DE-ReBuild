@@ -132,15 +132,37 @@ struct SurfaceRecovery {
     failed_recoveries: u8,
 }
 
+#[derive(Debug)]
+enum SurfaceAcquireError {
+    Lost,
+    Outdated,
+    Unavailable,
+    Fatal(String),
+}
+
+struct WindowDisplay<W>(Arc<W>);
+
+impl<W> std::fmt::Debug for WindowDisplay<W> {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        formatter.debug_struct("WindowDisplay").finish_non_exhaustive()
+    }
+}
+
+impl<W: HasDisplayHandle> HasDisplayHandle for WindowDisplay<W> {
+    fn display_handle(&self) -> Result<raw_window_handle::DisplayHandle<'_>, raw_window_handle::HandleError> {
+        self.0.display_handle()
+    }
+}
+
 impl SurfaceRecovery {
     // At most one reconfigure/retry per call and three failed calls before
     // software fallback. Timeouts do not reconfigure or spin: the normal
     // event-loop pacing schedules the next attempt.
     fn acquire<T>(
         &mut self,
-        mut acquire: impl FnMut(bool) -> Result<T, wgpu::SurfaceError>,
+        mut acquire: impl FnMut(bool) -> Result<T, SurfaceAcquireError>,
     ) -> Result<Option<T>, String> {
-        use wgpu::SurfaceError::{Lost, Outdated, Timeout};
+        use SurfaceAcquireError::{Fatal, Lost, Outdated, Unavailable};
         let result = match acquire(false) {
             Err(Lost | Outdated) => acquire(true),
             result => result,
@@ -150,17 +172,16 @@ impl SurfaceRecovery {
                 self.failed_recoveries = 0;
                 Ok(Some(frame))
             }
-            Err(Timeout) => Ok(None),
+            Err(Unavailable) => Ok(None),
             Err(error @ (Lost | Outdated)) => {
                 self.failed_recoveries = self.failed_recoveries.saturating_add(1);
                 if self.failed_recoveries >= 3 {
-                    Err(format!("surface recovery exhausted: {error}"))
+                    Err(format!("surface recovery exhausted: {error:?}"))
                 } else {
                     Ok(None)
                 }
             }
-            // Memory exhaustion and unknown errors are not resize signals.
-            Err(error) => Err(error.to_string()),
+            Err(Fatal(error)) => Err(error),
         }
     }
 }
@@ -168,16 +189,15 @@ impl SurfaceRecovery {
 /// Configuration is infrequent and may fail even after capability discovery.
 /// Capture backend errors without replacing the device's uncaptured-error
 /// handler. Always pop every scope, including when a nested scope caught one.
-/// On the pinned native wgpu backend, pop_error_scope returns a ready future;
+/// On the pinned native wgpu backend, popping a scope returns a ready future;
 /// no GPU polling/readback wait is introduced here.
 fn configuration_result(device: &wgpu::Device, configure: impl FnOnce()) -> Result<(), String> {
-    for filter in [wgpu::ErrorFilter::Validation, wgpu::ErrorFilter::OutOfMemory, wgpu::ErrorFilter::Internal] {
-        device.push_error_scope(filter);
-    }
+    let scopes = [wgpu::ErrorFilter::Validation, wgpu::ErrorFilter::OutOfMemory, wgpu::ErrorFilter::Internal]
+        .map(|filter| device.push_error_scope(filter));
     configure();
     let mut error = None;
-    for _ in 0..3 {
-        if let Some(next) = pollster::block_on(device.pop_error_scope()) {
+    for scope in scopes.into_iter().rev() {
+        if let Some(next) = pollster::block_on(scope.pop()) {
             error.get_or_insert(next);
         }
     }
@@ -245,7 +265,9 @@ impl Presenter {
     ) -> Result<Presenter, String>
     where W: HasWindowHandle + HasDisplayHandle + Send + Sync + 'static,
     {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor::new_with_display_handle(
+            Box::new(WindowDisplay(window.clone())),
+        ));
         let surface = instance
             .create_surface(window.clone())
             .map_err(|e| format!("surface: {e}"))?;
@@ -256,7 +278,7 @@ impl Presenter {
                 wgpu::PowerPreference::LowPower
             },
             compatible_surface: Some(&surface),
-            force_fallback_adapter: false,
+            ..Default::default()
         }))
         .map_err(|e| format!("no graphics adapter: {e}"))?;
         let adapter_info = adapter.get_info();
@@ -288,7 +310,7 @@ impl Presenter {
         // after device loss. Error scopes still handle local configuration errors.
         let failure = Arc::new(OnceLock::new());
         let errors = failure.clone();
-        device.on_uncaptured_error(Box::new(move |error| {
+        device.on_uncaptured_error(Arc::new(move |error: wgpu::Error| {
             errors.get_or_init(|| format!("graphics error: {error}"));
         }));
         let lost = failure.clone();
@@ -323,9 +345,21 @@ impl Presenter {
         } else {
             caps.alpha_modes[0]
         };
+        // Keep macOS compositor tagging through resize and vsync reconfiguration.
+        let color_space = if cfg!(target_os = "macos")
+            && target == DisplayTarget::DisplayP3
+            && caps.format_capabilities.iter().any(|caps| {
+                caps.format == format && caps.color_spaces.contains(wgpu::SurfaceColorSpaces::DISPLAY_P3)
+            })
+        {
+            wgpu::SurfaceColorSpace::DisplayP3
+        } else {
+            wgpu::SurfaceColorSpace::Auto
+        };
         let config = wgpu::SurfaceConfiguration {
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
             format,
+            color_space,
             // Guard against a zero-sized (e.g. minimized) start; present()
             // resizes to the real window size on the first frame.
             width: (src_w * 3).max(1),
@@ -409,8 +443,8 @@ impl Presenter {
         });
         let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: Some("screen-pipeline"),
-            bind_group_layouts: &[&layout],
-            push_constant_ranges: &[],
+            bind_group_layouts: &[Some(&layout)],
+            immediate_size: 0,
         });
         let pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("screen-pipeline"),
@@ -434,7 +468,7 @@ impl Presenter {
             primitive: wgpu::PrimitiveState::default(),
             depth_stencil: None,
             multisample: wgpu::MultisampleState::default(),
-            multiview: None,
+            multiview_mask: None,
             cache: None,
         });
 
@@ -460,14 +494,6 @@ impl Presenter {
             gpu_sampling: false,
         };
         configure_surface(&p.surface, &p.device, &p.config)?;
-        // Color-match the layer to the panel (macOS only); the surface +
-        // CAMetalLayer now exist on the window's view.
-        #[cfg(target_os = "macos")]
-        macos::tag_layer_colorspace(macos::ns_view_ptr(window.as_ref()), target);
-        // macOS consumes `target` above. Elsewhere the LUT was already encoded
-        // for the resolved primaries (see `display::resolve`) and we declare
-        // nothing to the compositor — Wayland treats untagged surfaces as sRGB.
-        let _ = target;
         p.device_result()?;
         Ok(p)
     }
@@ -690,17 +716,22 @@ impl Presenter {
         }
 
         let acquire_start = self.cpu_timings.as_ref().map(|_| Instant::now());
-        let mut configuration_error = None;
         let frame = self.recovery.acquire(|reconfigure| {
             if reconfigure {
-                if let Err(error) = configure_surface(&self.surface, &self.device, &self.config) {
-                    configuration_error = Some(error);
-                    return Err(wgpu::SurfaceError::Other);
-                }
+                configure_surface(&self.surface, &self.device, &self.config)
+                    .map_err(SurfaceAcquireError::Fatal)?;
             }
-            self.surface.get_current_texture()
+            use wgpu::CurrentSurfaceTexture::*;
+            match self.surface.get_current_texture() {
+                Success(frame) | Suboptimal(frame) => Ok(frame),
+                Timeout | Occluded => Err(SurfaceAcquireError::Unavailable),
+                Lost => Err(SurfaceAcquireError::Lost),
+                Outdated => Err(SurfaceAcquireError::Outdated),
+                Validation => Err(SurfaceAcquireError::Fatal(
+                    "surface acquisition failed validation".into(),
+                )),
+            }
         });
-        let frame = configuration_error.map_or(frame, Err);
         if let (Some(times), Some(start)) = (self.cpu_timings.as_mut(), acquire_start) {
             times.acquire = Some(start.elapsed());
         }
@@ -733,7 +764,7 @@ impl Presenter {
                 })],
                 depth_stencil_attachment: None,
                 timestamp_writes: sample.map(|index| self.gpu_profile.as_ref().unwrap().writes(index)),
-                occlusion_query_set: None,
+                occlusion_query_set: None,                multiview_mask: None,
             });
             pass.set_pipeline(&self.pipeline);
             pass.set_bind_group(0, &self.bind_group, &[]);
@@ -755,7 +786,7 @@ impl Presenter {
             times.submit = Some(start.elapsed());
         }
         let present_start = self.cpu_timings.as_ref().map(|_| Instant::now());
-        frame.present();
+        self.queue.present(frame);
         if let (Some(times), Some(start)) = (self.cpu_timings.as_mut(), present_start) {
             times.present = Some(start.elapsed());
         }
@@ -783,7 +814,7 @@ mod tests {
     #[test]
     #[ignore = "requires a working graphics adapter; run explicitly"]
     fn configuration_validation_is_returned_and_error_scopes_remain_balanced() {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instance = wgpu::Instance::default();
         let adapter = pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions::default())).unwrap();
         let (device, _queue) = pollster::block_on(adapter.request_device(&wgpu::DeviceDescriptor::default())).unwrap();
         let invalid = || {
@@ -797,14 +828,14 @@ mod tests {
         };
         assert!(super::configuration_result(&device, invalid).is_err());
         // Retain an outer caller-owned scope across successful configuration.
-        device.push_error_scope(wgpu::ErrorFilter::Validation);
+        let outer_scope = device.push_error_scope(wgpu::ErrorFilter::Validation);
         assert!(super::configuration_result(&device, || {
             let _buffer = device.create_buffer(&wgpu::BufferDescriptor {
                 label: None, size: 4, usage: wgpu::BufferUsages::COPY_DST, mapped_at_creation: false,
             });
         }).is_ok());
         invalid();
-        assert!(pollster::block_on(device.pop_error_scope()).is_some());
+        assert!(pollster::block_on(outer_scope.pop()).is_some());
         assert!(super::configuration_result(&device, || {}).is_ok());
     }
 
@@ -841,7 +872,7 @@ mod tests {
         for _ in 0..120 {
             assert_eq!(recovery.acquire::<()>(|retry| {
                 assert!(!retry);
-                Err(wgpu::SurfaceError::Timeout)
+                Err(super::SurfaceAcquireError::Unavailable)
             }), Ok(None));
         }
         assert_eq!(recovery.acquire(|retry| {
@@ -857,15 +888,15 @@ mod tests {
             let mut calls = Vec::new();
             assert_eq!(recovery.acquire::<()>(|retry| {
                 calls.push(retry);
-                Err(wgpu::SurfaceError::Lost)
+                Err(super::SurfaceAcquireError::Lost)
             }), Ok(None));
             assert_eq!(calls, [false, true]);
         }
         assert_eq!(recovery.acquire(|retry| {
-            if retry { Ok(7) } else { Err(wgpu::SurfaceError::Outdated) }
+            if retry { Ok(7) } else { Err(super::SurfaceAcquireError::Outdated) }
         }), Ok(Some(7)));
         assert_eq!(recovery.failed_recoveries, 0);
-        assert_eq!(recovery.acquire::<()>(|_| Err(wgpu::SurfaceError::Lost)), Ok(None));
+        assert_eq!(recovery.acquire::<()>(|_| Err(super::SurfaceAcquireError::Lost)), Ok(None));
     }
 
     #[test]
@@ -875,7 +906,7 @@ mod tests {
         for attempt in 0..3 {
             let result = recovery.acquire::<()>(|_| {
                 calls += 1;
-                Err(wgpu::SurfaceError::Outdated)
+                Err(super::SurfaceAcquireError::Outdated)
             });
             assert_eq!(result.is_err(), attempt == 2);
         }
@@ -884,13 +915,13 @@ mod tests {
 
     #[test]
     fn fatal_surface_errors_do_not_reconfigure() {
-        for error in [wgpu::SurfaceError::OutOfMemory, wgpu::SurfaceError::Other] {
+        for error in ["surface configuration failed", "surface acquisition failed validation"] {
             let mut recovery = super::SurfaceRecovery::default();
             let mut calls = 0;
             assert!(recovery.acquire::<()>(|retry| {
                 calls += 1;
                 assert!(!retry);
-                Err(error.clone())
+                Err(super::SurfaceAcquireError::Fatal(error.into()))
             }).is_err());
             assert_eq!(calls, 1);
         }
@@ -954,58 +985,5 @@ mod tests {
         let (s, _, oy) = letterbox((1116, 720), 372, 160);
         assert_eq!(s, 3.0);
         assert!((oy - 120.0).abs() < 1e-3);
-    }
-}
-
-#[cfg(target_os = "macos")]
-mod macos {
-    //! Colorspace tagging: a bare metal layer is NOT color-matched by the
-    //! compositor — its bytes go to the panel raw, which on a P3 laptop
-    //! screen oversaturates everything (the classic "vivid emulator"
-    //! artifact). Tagging the layer with the space our LUT encodes for
-    //! makes the compositor color-match per-monitor, which is exactly the
-    //! per-user-display calibration this feature is about.
-
-    use objc2::msg_send;
-    use objc2::rc::Retained;
-    use objc2::runtime::AnyObject;
-    use objc2_core_foundation::CFString;
-    use objc2_core_graphics::CGColorSpace;
-    use objc2_quartz_core::CAMetalLayer;
-
-    use crate::profile::DisplayTarget;
-
-#[path = "gpu_timing.rs"]
-mod gpu_timing;
-pub use gpu_timing::{GpuTimingCounts, GpuTimings};
-
-    pub fn ns_view_ptr(window: &impl raw_window_handle::HasWindowHandle) -> *mut std::ffi::c_void {
-        match window.window_handle().map(|h| h.as_raw()) {
-            Ok(raw_window_handle::RawWindowHandle::AppKit(h)) => h.ns_view.as_ptr(),
-            _ => std::ptr::null_mut(),
-        }
-    }
-
-    pub fn tag_layer_colorspace(ns_view: *mut std::ffi::c_void, target: DisplayTarget) {
-        if ns_view.is_null() {
-            return;
-        }
-        unsafe {
-            let view = ns_view as *mut AnyObject;
-            let layer: Option<Retained<AnyObject>> = msg_send![&*view, layer];
-            let Some(layer) = layer else { return };
-            let Ok(layer) = layer.downcast::<CAMetalLayer>() else {
-                return;
-            };
-            let name = match target {
-                DisplayTarget::Auto | DisplayTarget::Srgb => {
-                    CFString::from_static_str("kCGColorSpaceSRGB")
-                }
-                DisplayTarget::DisplayP3 => CFString::from_static_str("kCGColorSpaceDisplayP3"),
-            };
-            if let Some(cs) = CGColorSpace::with_name(Some(&name)) {
-                layer.setColorspace(Some(&cs));
-            }
-        }
     }
 }

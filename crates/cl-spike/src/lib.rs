@@ -135,9 +135,10 @@ mod tests {
         let block = builder.create_block();
         builder.append_block_params_for_function_params(block);
         builder.switch_to_block(block);
+        builder.seal_block(block);
         let val = builder.ins().iconst(cranelift_codegen::ir::types::I32, 42);
         builder.ins().return_(&[val]);
-        builder.finalize();
+        builder.finalize(jit_module.target_config());
 
         let func_id = jit_module.declare_function("dummy_jit_fn", cranelift_module::Linkage::Export, &ctx.func.signature).unwrap();
         jit_module.define_function(func_id, &mut ctx).unwrap();

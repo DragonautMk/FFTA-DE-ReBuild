@@ -211,7 +211,7 @@ impl PlayScreen {
             i.raw
                 .dropped_files
                 .iter()
-                .filter_map(|f| f.path.clone())
+                .map(|file| file.path().to_path_buf())
                 .collect()
         });
         for path in dropped {

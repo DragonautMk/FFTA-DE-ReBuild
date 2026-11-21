@@ -10,23 +10,17 @@ default = ["gpu"]
 gpu = ["dep:wgpu", "dep:raw-window-handle", "dep:pollster"]
 
 [dependencies]
-wgpu = { version = "26", optional = true }
+wgpu = { version = "30.0.2", optional = true }
 raw-window-handle = { version = "0.6", optional = true }
-pollster = { version = "0.4", optional = true }
+pollster = { version = "1.0.3", optional = true }
 
 [dev-dependencies]
-naga = { version = "26", features = ["wgsl-in"] }
+naga = { version = "30.0.2", features = ["wgsl-in"] }
 
 # Only the ignored private device-loss regression needs a real window/fallback.
 [target.'cfg(any(target_os = "linux", target_os = "windows"))'.dev-dependencies]
 winit = "0.30"
 softbuffer = "0.4"
-
-[target.'cfg(target_os = "macos")'.dependencies]
-objc2 = "0.6"
-objc2-quartz-core = { version = "0.3", features = ["CAMetalLayer"] }
-objc2-core-graphics = "0.3"
-objc2-core-foundation = "0.3"
 
 # Linux: declare the surface's colorspace to a Wayland compositor via the
 # color-management-v1 protocol (the cross-platform analog of macOS layer

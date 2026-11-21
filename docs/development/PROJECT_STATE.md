@@ -125,6 +125,10 @@ and normal enablement retain their existing acceptance gates.
   blocks locally at publication, during explicit compaction and at the initial
   low-space admission check. The [storage checklist](STORAGE_CHECKLIST.md)
   keeps current toolchains/dependencies available and failed diagnostics local.
+  The explicitly configured Linux workstation keeps its root `target` on an
+  external ext4 image. UUID-scoped systemd activation preserves the repository
+  path and requires the external disk for builds and validation. See the
+  [mount and eject procedure](STORAGE_CHECKLIST.md#external-target-on-linux).
   `cold_storage.py batch --apply` discovers remaining eligible
   completed artifacts automatically, records exclusions/progress and skips
   cataloged paths on reruns; it does not rerun validation commands. Current,
@@ -3449,7 +3453,7 @@ shared target cache, preventing stale reuse across older source snapshots;
 coverage refreshes its archived sources. The host checkout is unaffected.
 
 - `Dockerfile.linux` and `scripts/linux/build_linux_docker.sh` build Linux amd64 using
-  Rust 1.94.0 / Debian Bookworm with ALSA/udev development dependencies inside
+  Rust 1.100.0 / Debian Bookworm with ALSA/udev development dependencies inside
   the container. BuildKit caches Cargo/target separately from the host checkout.
   The scratch export stage writes only the portable tar.gz and BUILD-INFO.txt
   to `dist/docker-linux/`; runtime GUI/system libraries remain host dependencies.

@@ -7,6 +7,6 @@ edition = "2021"
 armv4t = { path = "../armv4t" }
 gba-core = { path = "../gba-core" }
 recomp-core = { path = "../recomp-core" }
-wasm-encoder = "0.221"
-wasmi = "0.32"
-wasmtime = "29.0.0"
+wasm-encoder = "0.263.0"
+wasmi = "2.0.2"
+wasmtime = "51.0.0"

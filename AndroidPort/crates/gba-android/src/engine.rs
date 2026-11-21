@@ -37,7 +37,7 @@ pub struct Engine {
     state_history: crate::cheat_provenance::History,
 }
 pub fn verify_rom(bytes: &[u8]) -> bool {
-    let sha1=format!("{:x}", Sha1::digest(bytes));
+    let sha1: String = Sha1::digest(bytes).iter().map(|b| format!("{b:02x}")).collect();
     let sha256=gba_core::ffta_rom::digest(bytes);
     (sha1 == "4ac05441f4de70a4ec3dd932116346c61b8783d9"
         && sha256 == gba_core::ffta_rom::SHA256)

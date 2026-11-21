@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-cranelift-codegen = "0.112.3"
-cranelift-jit = "0.112.3"
-cranelift-frontend = "0.112.3"
-cranelift-native = "0.112.3"
-cranelift-module = "0.112.3"
+cranelift-codegen = "0.138.0"
+cranelift-jit = "0.138.0"
+cranelift-frontend = "0.138.0"
+cranelift-native = "0.138.0"
+cranelift-module = "0.138.0"
 armv4t = { path = "../armv4t" }
 gba-core = { path = "../gba-core" }
 recomp-core = { path = "../recomp-core" }

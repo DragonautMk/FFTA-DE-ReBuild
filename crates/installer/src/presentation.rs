@@ -35,8 +35,8 @@ impl Launch {
 
 pub fn apply(ctx:&egui::Context){
     let mut fonts=egui::FontDefinitions::default();
-    fonts.font_data.insert("Inter".into(),egui::FontData::from_static(include_bytes!("../../menu/assets/fonts/Inter.ttf")));
-    fonts.font_data.insert("Cinzel".into(),egui::FontData::from_static(include_bytes!("../../menu/assets/fonts/Cinzel.ttf")));
+    fonts.font_data.insert("Inter".into(),egui::FontData::from_static(include_bytes!("../../menu/assets/fonts/Inter.ttf")).into());
+    fonts.font_data.insert("Cinzel".into(),egui::FontData::from_static(include_bytes!("../../menu/assets/fonts/Cinzel.ttf")).into());
     fonts.families.entry(FontFamily::Proportional).or_default().insert(0,"Inter".into());
     fonts.families.insert(FontFamily::Name("Display".into()),vec!["Cinzel".into()]);
     ctx.set_fonts(fonts);
@@ -45,14 +45,14 @@ pub fn apply(ctx:&egui::Context){
     v.extreme_bg_color=CARD;v.faint_bg_color=CARD;v.hyperlink_color=MUTED;
     v.selection.bg_fill=GOLD;v.selection.stroke=Stroke::new(1.,INK);
     for widget in [&mut v.widgets.inactive,&mut v.widgets.hovered,&mut v.widgets.active,&mut v.widgets.noninteractive]{
-        widget.rounding=egui::Rounding::same(5.);widget.bg_stroke=Stroke::new(1.,GOLD);
+        widget.corner_radius=egui::CornerRadius::same(5);widget.bg_stroke=Stroke::new(1.,GOLD);
         widget.fg_stroke=Stroke::new(1.,INK);
     }
     v.widgets.inactive.weak_bg_fill=CARD;
     v.widgets.hovered.weak_bg_fill=Color32::from_rgb(242,220,161);
     v.widgets.active.weak_bg_fill=Color32::from_rgb(229,203,142);
     ctx.set_visuals(v);
-    ctx.style_mut(|s|{
+    ctx.global_style_mut(|s|{
         s.spacing.button_padding=egui::vec2(16.,10.);
         s.spacing.item_spacing=egui::vec2(10.,10.);
         s.text_styles.insert(egui::TextStyle::Body,FontId::proportional(15.));

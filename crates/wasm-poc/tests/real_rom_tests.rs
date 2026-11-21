@@ -44,8 +44,7 @@ fn setup_wasmi(wasm_bytes: &[u8], bus: MockBus, cpu: &Cpu) -> (Store<HostState>,
         addr
     }).unwrap();
 
-    let instance = linker.instantiate(&mut store, &module).unwrap()
-        .start(&mut store).unwrap();
+    let instance = linker.instantiate_and_start(&mut store, &module).unwrap();
 
     let memory = instance.get_export(&store, "memory").unwrap().into_memory().unwrap();
     let mut mem_data = vec![0u8; 68];

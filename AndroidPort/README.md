@@ -35,8 +35,9 @@ removed. Official preview builds instead pass the persistent local keystore and
 password file as BuildKit secrets; see [the signing guide](android/README.md#preview-migration-and-signing).
 Never commit, package or upload the private signing files.
 
-For a native build, you need Rust with `aarch64-linux-android`, Python 3.9 or
-later, a JDK, Android SDK with NDK 28.2.13676358, and host GCC or Clang on PATH.
+For a native build, use Rust 1.100.0 with `aarch64-linux-android`, Python 3.9 or
+later, JDK 25, Android SDK 37.2 with build-tools 37.0.0 and NDK 30.0.16248370,
+and host GCC or Clang on PATH.
 
 From this folder in PowerShell:
 

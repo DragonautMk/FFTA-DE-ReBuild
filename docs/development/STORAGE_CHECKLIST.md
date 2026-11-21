@@ -5,7 +5,9 @@
 # Project storage checklist
 
 Use this checklist before a large build and when the internal disk is running
-low. Builds and ordinary validation must work with the external disk unplugged.
+low. The default layout keeps build and validation outputs on the internal
+disk. The [external target setup](#external-target-on-linux) is a workstation
+exception that requires the selected disk for builds and validation.
 
 ## Before starting a build or validation
 
@@ -19,6 +21,44 @@ low. Builds and ordinary validation must work with the external disk unplugged.
       for frequent access. The runner retires successful scratch after verification.
 - [ ] Keep ROMs, BIOS, personal saves, recordings, source preimages and live or
       suspended sessions in their established locations.
+
+## External target on Linux
+
+On the configured workstation, a udev rule matches the external disk's
+filesystem UUID. Systemd mounts the disk, opens its ext4 image and binds the
+image's `target` directory at the root checkout's usual path. The verification
+service checks both filesystem UUIDs and read-write mount options. When the
+disk is absent, the protected empty directory remains at the project path and
+the disk rule does not start a mount job.
+[systemd device units](https://www.freedesktop.org/software/systemd/man/latest/systemd.device.html)
+
+From the root checkout on the Linux host, check that the bind exposes the
+expected ext4 filesystem with `rw` in its options.
+
+```sh
+workspace_target="$PWD/target"
+target_unit=$(systemd-escape --path --suffix=mount "$workspace_target")
+systemctl status "$target_unit" --no-pager
+findmnt --mountpoint "$workspace_target" -o TARGET,SOURCE,FSTYPE,OPTIONS
+```
+
+If the disk is attached and the mount failed, check the current boot's journal
+for the mount unit and `ffta-recomp-target-verify.service`. After correcting
+the reported error, start the bind chain with `sudo systemctl start "$target_unit"`.
+The operating system assigns the loop device name dynamically.
+
+Before ejecting the disk, close build and validation processes and stop the
+workspace bind, the ext4 image mount and the outer volume mount in that order.
+Use the installed paths from `systemctl cat "$target_unit"` and the dependency
+units. Stop if an unmount reports the device is busy. A manually attached loop
+without autoclear must be detached after unmounting the image.
+
+The installed configuration consists of the three mount units, the verification
+service, `/etc/udev/rules.d/99-ffta-recomp-target.rules` and
+`/etc/tmpfiles.d/ffta-recomp-target.conf`. To remove the automation, stop the
+mounts in the same order, remove those six configuration files, reload systemd
+with `sudo systemctl daemon-reload` and reload udev rules with
+`sudo udevadm control --reload-rules`.
 
 ## When space is low
 

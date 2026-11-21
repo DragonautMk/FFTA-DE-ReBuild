@@ -164,7 +164,7 @@ impl PathPicker {
                 let mut clicked = None;
                 egui::ScrollArea::vertical()
                     .id_salt("installer_path_entries")
-                    .max_height((ctx.screen_rect().height() - 210.0).max(80.0))
+                    .max_height((ctx.content_rect().height() - 210.0).max(80.0))
                     .auto_shrink([false, false])
                     .show(ui, |ui| {
                         if let Location::Folder(directory) = &self.location {

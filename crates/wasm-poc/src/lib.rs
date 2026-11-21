@@ -21,6 +21,15 @@ pub fn reg_addr(r: u8) -> u32 {
     REG_MEM_OFFSET + (r as u32) * 4
 }
 
+fn linear_memory(offset: u64, align: u32) -> wasm_encoder::MemArg {
+    wasm_encoder::MemArg {
+        offset,
+        align,
+        target: wasm_encoder::MemArgTarget::Memory(0),
+        ordering: None,
+    }
+}
+
 pub struct MockBus {
     pub memory: Vec<u8>,
 }
@@ -194,7 +203,7 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
             if !op.is_unary() {
                 let rn_a = reg_addr(rn);
                 func.instruction(&Instruction::I32Const(rn_a as i32));
-                func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                func.instruction(&Instruction::I32Load(linear_memory(0, 2)));
 
                 match op2 {
                     Operand2::Imm { value, .. } => {
@@ -203,7 +212,7 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
                     Operand2::Reg { rm, .. } => {
                         let rm_a = reg_addr(rm);
                         func.instruction(&Instruction::I32Const(rm_a as i32));
-                        func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Load(linear_memory(0, 2)));
                     }
                 }
 
@@ -226,7 +235,7 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
                     Operand2::Reg { rm, .. } => {
                         let rm_a = reg_addr(rm);
                         func.instruction(&Instruction::I32Const(rm_a as i32));
-                        func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Load(linear_memory(0, 2)));
                     }
                 }
             }
@@ -236,7 +245,7 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
                 let rd_a = reg_addr(rd);
                 func.instruction(&Instruction::I32Const(rd_a as i32));
                 func.instruction(&Instruction::LocalGet(0));
-                func.instruction(&Instruction::I32Store(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                func.instruction(&Instruction::I32Store(linear_memory(0, 2)));
             } else {
                 func.instruction(&Instruction::Drop);
             }
@@ -244,7 +253,7 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
         Op::Mem { load, rd, rn, offset, width, .. } => {
             let rn_a = reg_addr(rn);
             func.instruction(&Instruction::I32Const(rn_a as i32));
-            func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+            func.instruction(&Instruction::I32Load(linear_memory(0, 2)));
             let off_val = match offset {
                 MemOffset::Imm(imm) => imm as i32,
                 _ => 0,
@@ -264,36 +273,36 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
             if load {
                 match width {
                     MemWidth::Byte => {
-                        func.instruction(&Instruction::I32Load8U(wasm_encoder::MemArg { offset: 0, align: 0, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Load8U(linear_memory(0, 0)));
                     }
                     MemWidth::Half => {
-                        func.instruction(&Instruction::I32Load16U(wasm_encoder::MemArg { offset: 0, align: 1, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Load16U(linear_memory(0, 1)));
                     }
                     MemWidth::Word => {
-                        func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Load(linear_memory(0, 2)));
                     }
                 }
                 let rd_a = reg_addr(rd);
                 func.instruction(&Instruction::LocalSet(1));
                 func.instruction(&Instruction::I32Const(rd_a as i32));
                 func.instruction(&Instruction::LocalGet(1));
-                func.instruction(&Instruction::I32Store(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                func.instruction(&Instruction::I32Store(linear_memory(0, 2)));
             } else {
                 let rd_a = reg_addr(rd);
                 func.instruction(&Instruction::LocalSet(1)); // save addr
                 func.instruction(&Instruction::LocalGet(1)); // push addr
                 func.instruction(&Instruction::I32Const(rd_a as i32));
-                func.instruction(&Instruction::I32Load(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 })); // push val
+                func.instruction(&Instruction::I32Load(linear_memory(0, 2))); // push val
                 // stack now [addr, val]
                 match width {
                     MemWidth::Byte => {
-                        func.instruction(&Instruction::I32Store8(wasm_encoder::MemArg { offset: 0, align: 0, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Store8(linear_memory(0, 0)));
                     }
                     MemWidth::Half => {
-                        func.instruction(&Instruction::I32Store16(wasm_encoder::MemArg { offset: 0, align: 1, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Store16(linear_memory(0, 1)));
                     }
                     MemWidth::Word => {
-                        func.instruction(&Instruction::I32Store(wasm_encoder::MemArg { offset: 0, align: 2, memory_index: 0 }));
+                        func.instruction(&Instruction::I32Store(linear_memory(0, 2)));
                     }
                 }
             }
@@ -301,21 +310,13 @@ fn emit_instruction_fast_memory(func: &mut Function, instr: &Instr) {
         Op::Branch { target, .. } => {
             let pc_a = reg_addr(15);
             func.instruction(&Instruction::I32Const(target as i32));
-            func.instruction(&Instruction::I32Store(wasm_encoder::MemArg {
-                offset: pc_a as u64,
-                align: 2,
-                memory_index: 0,
-            }));
+            func.instruction(&Instruction::I32Store(linear_memory(pc_a as u64, 2)));
         }
         _ => {
             func.instruction(&Instruction::I32Const(instr.addr as i32));
             func.instruction(&Instruction::Call(7)); // interp_one
             let pc_a = reg_addr(15);
-            func.instruction(&Instruction::I32Store(wasm_encoder::MemArg {
-                offset: pc_a as u64,
-                align: 2,
-                memory_index: 0,
-            }));
+            func.instruction(&Instruction::I32Store(linear_memory(pc_a as u64, 2)));
         }
     }
 }

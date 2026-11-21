@@ -24823,3 +24823,24 @@ EUR White Flowers ordinary entry frames 19409–20109: separate e128 production 
 - Verified criteria: static exact-EUR source audit `e208-home-source-rwsqv1y7` pins original kind-4 relative-directory resolver `0800720c`, selector `080cf298` and custom decoder `080054a0`, and verifies three selected cells and streams against E207 and the E202 manifest.
 - Evidence: directory `3d63d4` count 103; selected indices 69, 71 and 73 contain 6,041 observed compressed source bytes; source/decoded hashes, reader pins and driver are retained with the unit. `docs/changes/2026-11-21-identify-european-home-archive-streams.json`.
 - Limits: The E207 scene sample is address-only and does not identify its executing PCs. The three streams remain raw until extraction/runtime consumption; other entries/callers, Linux, USA and native Windows remain open. No new Wine replay or performance measurement.
+
+### LOCAL-ARTIFACT-HYGIENE-EXTERNAL-TARGET-CHECK
+
+- Outcome: completed
+- Verified criteria: on 2026-11-21 the USB NTFS volume and the expected ext4 image UUID were mounted read-write on the host with about 103 GiB available inside ext4. The host project path was an empty mode-0555 directory without a bind mount, and the default sandbox exposed the image read-only. A private host bubblewrap bind preserved the repository target path. Cargo metadata used that path and a managed scratch unit compiled and executed a minimal Linux binary on the external filesystem, reported PASS and removed its scratch.
+- Evidence: host findmnt, inode comparison, sudo noninteractive check and kernel journal; external units `external-target-check-pttxssau` (PASS) and `external-target-check-r03z0354` (probe used the runner scratch directory as the repo, corrected in the retry). Existing `e209-relative-build-exso2ew8` reports a Windows GNU cross-build PASS. Reconnection instructions are on the HDD in README.txt.
+- Limits: the global bind needs interactive sudo and was not changed. The first unit waited about a minute on ext4 journal writes; the retry passed. No new project build, Wine execution, throughput measurement or full copy comparison. The separate Oct 26 and ROM work remains outside this check.
+
+### HDD-TARGET-SYSTEMD
+
+- Outcome: completed
+- Verified criteria: installed a Linux systemd chain for the selected external volume, ext4 image and workspace bind. A udev rule requests the chain on the expected disk UUID. The verification service checks both mounted UUIDs and read-write options. The device-bound dependencies link the mounts to the selected storage. Host installation reused the previously mounted NTFS and ext4 filesystems. The live workspace path is the expected writable ext4 directory and is also visible to the current sandbox.
+- Evidence: host systemd unit verification, udev rule verification, tmpfiles dry run and activation journal. Managed validation `external-target-systemd-hdsyriif` reports PASS, writer UID 1000 and removed scratch. A udev add simulation supplied the verified disk UUID and an unrelated UUID separately; only the expected UUID requested the target unit. See `docs/development/STORAGE_CHECKLIST.md#external-target-on-linux`.
+- Limits: no reboot, physical disconnect or cold remount performed. External disk remains required for this local layout. No cleanup, ROM work or Wine run selected.
+
+### DEPS-2026-11-21
+
+- Outcome: completed
+- Verified criteria: updated both Rust workspaces and Android projects, pinned Rust and build tools, and refreshed the Linux installer workflow. Linux full workspace check, 90 targeted Linux tests, Windows MinGW cross-check, 54 Android Rust host tests, both Android ARM64 Rust checks, both Android Gradle Kotlin/test builds and 14 Docker helper tests passed.
+- Evidence: `docs/changes/2026-11-21-refresh-project-dependencies.json`; Linux `0udghodw`, prototypes `qy9c1ioq`, Windows `k43y2ens`, host bridges `f_ew2phv`, Android cross checks `tuif0y06` (port leg) and `3z2axr57` (root), Gradle `i9tojv1y`.
+- Limits: NDK r30 transfer timeouts blocked native APK packaging verification. Windows execution, device playback and macOS presentation were outside the selected checks. Gradle reported Compose deprecations. The unrelated ROM work was preserved.

@@ -310,7 +310,7 @@ report has no scene inventory. See [scene coverage](development/ROM_COVERAGE.md#
 
 ## Environment and compatibility
 
-`Dockerfile.windows` copies the pinned Rust 1.94.0 toolchain from the same
+`Dockerfile.windows` copies the pinned Rust 1.100.0 toolchain from the same
 image used by the Linux builder into a digest-pinned Debian Trixie build stage.
 This reuses the compiler download while providing newer MinGW/Wine packages
 for modern Windows APIs. It installs the
@@ -333,7 +333,7 @@ the container; host Wine drivers still use `validation_unit.py --wine-host`.
 Windows target caches are separate from Linux target caches; Cargo downloads
 are shared. See Rust's [Windows GNU target support](https://doc.rust-lang.org/nightly/rustc/platform-support/windows-gnu.html).
 
-`Dockerfile.linux` selects Rust 1.94.0 on Debian Bookworm and installs its native
+`Dockerfile.linux` selects Rust 1.100.0 on Debian Bookworm and installs its native
 build dependencies. `Cargo.lock` is enforced for builds and tests. This avoids
 linking releases against the developer host's Ubuntu 26.04 libc. The base image is
 pinned by digest, including the Rust version and distribution. Debian package repositories can still

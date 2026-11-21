@@ -8,6 +8,9 @@ pub use roots::{
 };
 pub const MAX_OUTPUT: usize = 32 * 1024;
 pub const MAX_ENCODED: usize = 128 * 1024;
+/// Physical EUR directory reached by the original 080cf298 selector.
+pub const RELATIVE_ARCHIVE_OFFSET: u32 = 0x3d63d4;
+pub const RELATIVE_ARCHIVE_COUNT: usize = 103;
 const ROM_LIMIT: u32 = 32 * 1024 * 1024;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -85,11 +88,57 @@ impl PointerTable {
             .collect())
     }
 }
+
+/// The kind-4 directory uses offsets relative to the byte after its header.
+/// Gaps between streams remain outside this representation and the owner.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct RelativeArchive {
+    pub source_offset: u32,
+    pub kind: u8,
+    pub reserved: u8,
+    pub banks: Vec<Graphic>,
+}
+
+impl RelativeArchive {
+    pub fn source_bytes(&self) -> Result<Vec<u8>, String> {
+        if self.source_offset != RELATIVE_ARCHIVE_OFFSET || self.kind != 4
+            || self.banks.len() != RELATIVE_ARCHIVE_COUNT
+        {
+            return Err("Invalid relative custom graphics directory".into());
+        }
+        let base = self.source_offset.checked_add(4).ok_or("Relative directory overflow")?;
+        let end = base.checked_add((self.banks.len() * 4) as u32).ok_or("Relative directory overflow")?;
+        let mut bytes = vec![self.kind, self.reserved];
+        bytes.extend_from_slice(&(self.banks.len() as u16).to_le_bytes());
+        for bank in &self.banks {
+            if bank.source_offset < end || bank.source_offset >= ROM_LIMIT {
+                return Err("Invalid relative custom graphics target".into());
+            }
+            bytes.extend_from_slice(&(bank.source_offset - base).to_le_bytes());
+        }
+        Ok(bytes)
+    }
+
+    pub fn validate(&self) -> Result<(), String> {
+        self.source_bytes()?;
+        for bank in &self.banks { bank.validate()?; }
+        if self.banks.windows(2).any(|pair| {
+            pair[0].source_offset as usize + pair[0].encoded_source.len() > pair[1].source_offset as usize
+        }) {
+            return Err("Unordered or overlapping relative graphics streams".into());
+        }
+        Ok(())
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Graphics {
     pub banks: Vec<Graphic>,
     pub pointer_tables: Vec<PointerTable>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub relative_archive: Option<RelativeArchive>,
 }
 impl Graphics {
     pub fn validate(&self) -> Result<(), String> {
@@ -122,6 +171,11 @@ impl Graphics {
                 return Err("OBJ graphics selector has no matching bank".into());
             }
             spans.push((table.source_offset, bytes.len()));
+        }
+        if let Some(archive) = &self.relative_archive {
+            archive.validate()?;
+            spans.push((archive.source_offset, archive.source_bytes()?.len()));
+            spans.extend(archive.banks.iter().map(|bank| (bank.source_offset, bank.encoded_source.len())));
         }
         spans.sort_unstable();
         if spans
@@ -196,6 +250,18 @@ impl Catalog {
             literal(rom, r.reader, r.literal, 0x08000000 + r.table_offset)?;
             call(rom, r.call, 0x54a0)?;
         }
+        literal(rom, 0xcf29e, 0xcf2bc, 0x08000000 + RELATIVE_ARCHIVE_OFFSET)?;
+        call(rom, 0xcf2d2, 0x720c)?;
+        call(rom, 0xcf2da, 0x54a0)?;
+        call(rom, 0x7216, 0x7248)?;
+        for (at, expected) in [
+            (0x721a, 0x0400), (0x721c, 0x0c00), (0x721e, 0x4285),
+            (0x7220, 0xd301), (0x7226, 0x7820), (0x7228, 0x2802),
+            (0x7238, 0x1d20), (0x723a, 0x00b1), (0x723c, 0x1809),
+            (0x723e, 0x6809), (0x7240, 0x1840), (0x7248, 0x8840),
+        ] {
+            if half(rom, at)? != expected { return Err("Relative graphics original reader mismatch".into()); }
+        }
         let mut banks = Vec::new();
         for &at in BANK_ROOTS {
             banks.push(Graphic::decode(
@@ -216,9 +282,26 @@ impl Catalog {
                     .collect::<Result<_, String>>()?,
             });
         }
+        let directory = RELATIVE_ARCHIVE_OFFSET as usize;
+        let header = rom.get(directory..directory + 4).ok_or("Truncated relative graphics header")?;
+        if header[0] != 4 || u16::from_le_bytes([header[2], header[3]]) as usize != RELATIVE_ARCHIVE_COUNT {
+            return Err("Unexpected relative graphics directory".into());
+        }
+        let table_base = RELATIVE_ARCHIVE_OFFSET + 4;
+        let mut relative_banks = Vec::with_capacity(RELATIVE_ARCHIVE_COUNT);
+        for i in 0..RELATIVE_ARCHIVE_COUNT {
+            let offset = word(rom, table_base + i as u32 * 4)?;
+            let target = table_base.checked_add(offset).ok_or("Relative graphics target overflow")?;
+            relative_banks.push(Graphic::decode(
+                rom.get(target as usize..).ok_or("Truncated relative graphics target")?, target,
+            )?);
+        }
         let decoded = Graphics {
             banks,
             pointer_tables,
+            relative_archive: Some(RelativeArchive {
+                source_offset: RELATIVE_ARCHIVE_OFFSET, kind: header[0], reserved: header[1], banks: relative_banks,
+            }),
         };
         decoded.validate()?;
         let mut sources = Vec::new();
@@ -243,6 +326,23 @@ impl Catalog {
                 sha256: ffta_rom::digest(&bytes),
                 role: format!("obj-graphics-selector/{:08x}", table.source_offset),
             });
+        }
+        if let Some(archive) = &decoded.relative_archive {
+            let bytes = archive.source_bytes()?;
+            if rom.get(directory..directory + bytes.len()) != Some(bytes.as_slice()) {
+                return Err("Relative graphics directory projection mismatch".into());
+            }
+            sources.push(SourceRange {
+                offset: archive.source_offset, length: bytes.len() as u32,
+                sha256: ffta_rom::digest(&bytes), role: "obj-relative-directory".into(),
+            });
+            for bank in &archive.banks {
+                sources.push(SourceRange {
+                    offset: bank.source_offset, length: bank.encoded_source.len() as u32,
+                    sha256: ffta_rom::digest(&bank.encoded_source),
+                    role: format!("obj-relative-bank/{:08x}", bank.source_offset),
+                });
+            }
         }
         Ok(Self { decoded, sources })
     }

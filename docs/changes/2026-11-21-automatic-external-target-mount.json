@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "automatic-external-target-mount",
+  "title": "Activate the external target automatically on Linux",
+  "kind": "changed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Installed a workstation-specific systemd mount chain and a UUID-scoped udev rule for the external target. The rule starts the chain when the disk appears, and the verification service checks the mounted disk and ext4 image before binding the checkout target.",
+    "Documented how to check, recover, eject and remove the Linux host setup."
+  ],
+  "validation": [
+    "Systemd, udev, and tmpfiles configuration checks passed. Installed units mounted the expected live ext4 directory, and managed validation external-target-systemd-hdsyriif wrote as the ordinary user and removed its scratch.",
+    "The udev add simulation started the expected unit only for the matching UUID. The current sandbox sees the writable target."
+  ],
+  "limitations": [
+    "The host activation reused the existing disk and image mounts. A cold boot and physical unplug/replug were not performed."
+  ],
+  "files": [
+    "docs/development/STORAGE_CHECKLIST.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/STORAGE_CHECKLIST.md"
+  ]
+}

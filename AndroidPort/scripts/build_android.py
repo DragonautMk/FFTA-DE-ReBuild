@@ -113,7 +113,7 @@ def build(sdk, ndk, native_only=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--sdk', default=os.environ.get('ANDROID_SDK_ROOT') or os.environ.get('ANDROID_HOME'))
-    parser.add_argument('--ndk', default='28.2.13676358')
+    parser.add_argument('--ndk', default='30.0.16248370')
     parser.add_argument('--native-only', action='store_true')
     args = parser.parse_args()
     if not args.sdk:

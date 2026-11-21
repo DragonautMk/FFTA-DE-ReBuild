@@ -12,18 +12,18 @@ fn guarded(action: impl FnOnce() -> Result<i32, String>) -> i32 {
 
 unsafe fn string(env: *mut JNIEnv, value: jstring) -> Result<String, String> {
     if value.is_null() { return Err("Missing path".into()); }
-    let api = &**env;
-    let len = api.GetStringLength.unwrap()(env,value) as usize;
-    let data = api.GetStringChars.unwrap()(env,value,std::ptr::null_mut());
+    let api = &(**env).v1_4;
+    let len = (api.GetStringLength)(env,value) as usize;
+    let data = (api.GetStringChars)(env,value,std::ptr::null_mut());
     if data.is_null() { return Err("Cannot read Java string".into()); }
     let text = String::from_utf16(std::slice::from_raw_parts(data,len)).map_err(|e|e.to_string());
-    api.ReleaseStringChars.unwrap()(env,value,data);
+    (api.ReleaseStringChars)(env,value,data);
     text
 }
 
 unsafe fn java_string(env: *mut JNIEnv, text: &str) -> jstring {
     let utf16: Vec<_> = text.encode_utf16().collect();
-    (&**env).NewString.unwrap()(env,utf16.as_ptr(),utf16.len() as i32)
+    ((**env).v1_4.NewString)(env,utf16.as_ptr(),utf16.len() as i32)
 }
 
 #[no_mangle]
@@ -35,11 +35,11 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaScreenLut
         if !darken.is_finite() || !(-1.0..=1.0).contains(&darken) {
             return Err("Invalid screen darkening".into());
         }
-        let api = &**env;
-        if output.is_null() || api.GetDirectBufferCapacity.unwrap()(env,output)<(32768*4) as i64 {
+        let api = &(**env).v1_4;
+        if output.is_null() || (api.GetDirectBufferCapacity)(env,output)<(32768*4) as i64 {
             return Err("Invalid screen color buffer".into());
         }
-        let target=api.GetDirectBufferAddress.unwrap()(env,output) as *mut u8;
+        let target=(api.GetDirectBufferAddress)(env,output) as *mut u8;
         if target.is_null() { return Err("Expected a direct color buffer".into()); }
         let settings=crate::lut::ColorSettings {
             screen, darken: if darken<0.0 { f64::NAN } else { darken as f64 },
@@ -57,12 +57,12 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
 ) -> jint {
     guarded(|| {
         if bytes.is_null() { return Err("No ROM bytes".into()); }
-        let api = &**env;
-        let len = api.GetArrayLength.unwrap()(env,bytes);
+        let api = &(**env).v1_4;
+        let len = (api.GetArrayLength)(env,bytes);
         if !(192..=32*1024*1024).contains(&len) { return Err("Invalid ROM size".into()); }
         let mut rom = vec![0u8;len as usize];
-        api.GetByteArrayRegion.unwrap()(env,bytes,0,len,rom.as_mut_ptr() as *mut _);
-        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot read ROM array".into()); }
+        (api.GetByteArrayRegion)(env,bytes,0,len,rom.as_mut_ptr() as *mut _);
+        if (api.ExceptionCheck)(env) { return Err("Cannot read ROM array".into()); }
         if !engine::verify_rom(&rom) { return Err("ROM SHA1/SHA256 mismatch: exact FFTA USA or Europe is required".into()); }
         let save = PathBuf::from(string(env,save_path)?);
         let mut loaded = Engine::new(rom);
@@ -74,7 +74,7 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
             }
         }
         loaded.save_path = Some(save);
-        loaded.saves_beside_rom=saves_beside_rom!=0;
+        loaded.saves_beside_rom=saves_beside_rom;
         loaded.cache_dir = Some(PathBuf::from(string(env,cache_path)?));
         *ENGINE.lock().map_err(|_|"Engine mutex poisoned")? = Some(loaded);
         KEYS.store(0x3ff,Ordering::Relaxed);
@@ -105,43 +105,43 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaFrame(
             || !(0..=gba_core::mem::MAX_EXTRA_Y as i32).contains(&extra_y)
             || !(1..=8).contains(&frames) { return Err("Invalid render configuration".into()); }
         KEYS.store(keys as u32 & 0x3ff,Ordering::Relaxed);
-        let api = &**env;
+        let api = &(**env).v1_4;
         let size = (240+2*extra_x)*(160+2*extra_y);
-        if api.GetDirectBufferCapacity.unwrap()(env,pixels)<size as i64*4 || api.GetArrayLength.unwrap()(env,audio)<4096 {
+        if (api.GetDirectBufferCapacity)(env,pixels)<size as i64*4 || (api.GetArrayLength)(env,audio)<4096 {
             return Err("Frame buffer size mismatch".into());
         }
-        let target = api.GetDirectBufferAddress.unwrap()(env,pixels) as *mut i32;
+        let target = (api.GetDirectBufferAddress)(env,pixels) as *mut i32;
         if target.is_null() { return Err("Expected a direct pixel buffer".into()); }
         let mut lock = ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
         let engine = lock.as_mut().ok_or("ROM not loaded")?;
-        engine.configure_touch(touch!=0,base_width,ui_size,ui_length);
+        engine.configure_touch(touch,base_width,ui_size,ui_length);
         if screen_width<=0 || screen_height<=0 {return Err("Invalid screen size".into());}
         engine.ui_window=(screen_width as u32,screen_height as u32);
         let sx=screen_width as f32/(240+extra_x*2) as f32;
         let sy=screen_height as f32/(160+extra_y*2) as f32;
-        let scale=if fill!=0{sx.max(sy)}else{sx.min(sy)};
+        let scale=if fill{sx.max(sy)}else{sx.min(sy)};
         let width=((240+extra_x*2) as f32*scale) as i32;
         let height=((160+extra_y*2) as f32*scale) as i32;
         engine.world_rect=[((screen_width-width)/2) as f32,((screen_height-height)/2) as f32,width as f32,height as f32];
         engine.frame_audio(frames as usize, extra_x as usize, extra_y as usize,
-            if sound==0{0}else if audio_mode==2{2}else{1})?;
+            if !sound{0}else if audio_mode==2{2}else{1})?;
         std::ptr::copy_nonoverlapping(engine.pixels.as_ptr(),target,size as usize);
         if ui.is_null() || ui_background.is_null() || ui_params.is_null()
-            || api.GetDirectBufferCapacity.unwrap()(env,ui)<(480*160*4*2) as i64
-            || api.GetDirectBufferCapacity.unwrap()(env,ui_background)<size as i64*4
-            || api.GetArrayLength.unwrap()(env,ui_params)<18 {return Err("Invalid UI buffers".into());}
-        let ui_ptr=api.GetDirectBufferAddress.unwrap()(env,ui) as *mut u8;
-        let bg_ptr=api.GetDirectBufferAddress.unwrap()(env,ui_background) as *mut i32;
+            || (api.GetDirectBufferCapacity)(env,ui)<(480*160*4*2) as i64
+            || (api.GetDirectBufferCapacity)(env,ui_background)<size as i64*4
+            || (api.GetArrayLength)(env,ui_params)<18 {return Err("Invalid UI buffers".into());}
+        let ui_ptr=(api.GetDirectBufferAddress)(env,ui) as *mut u8;
+        let bg_ptr=(api.GetDirectBufferAddress)(env,ui_background) as *mut i32;
         if ui_ptr.is_null()||bg_ptr.is_null(){return Err("Expected direct UI buffers".into());}
         let mut params=[0f32;18];
         let ui_start=engine.machine.bus.ffta_dialogue.profile.enabled.then(std::time::Instant::now);
         engine.export_ui(std::slice::from_raw_parts_mut(ui_ptr,480*160*4*2),&mut params,
             std::slice::from_raw_parts_mut(bg_ptr,size as usize));
         if let Some(start)=ui_start {engine.ui_export_ns=start.elapsed().as_nanos() as u64;}
-        api.SetFloatArrayRegion.unwrap()(env,ui_params,0,18,params.as_ptr());
+        (api.SetFloatArrayRegion)(env,ui_params,0,18,params.as_ptr());
         let count = engine.audio.len().min(4096) as i32;
-        if count > 0 { api.SetShortArrayRegion.unwrap()(env,audio,0,count,engine.audio.as_ptr()); }
-        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot copy frame data".into()); }
+        if count > 0 { (api.SetShortArrayRegion)(env,audio,0,count,engine.audio.as_ptr()); }
+        if (api.ExceptionCheck)(env) { return Err("Cannot copy frame data".into()); }
         Ok(count)
     })
 }
@@ -149,43 +149,43 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaFrame(
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaUiProfile(_: *mut JNIEnv,_:jobject,enabled:jboolean,reference:jboolean){
     if let Ok(mut lock)=ENGINE.lock(){if let Some(engine)=lock.as_mut(){
-        engine.machine.bus.ffta_dialogue.profile.enabled=enabled!=0;
-        engine.machine.bus.ffta_dialogue.reference_capture=reference!=0;
+        engine.machine.bus.ffta_dialogue.profile.enabled=enabled;
+        engine.machine.bus.ffta_dialogue.reference_capture=reference;
     }}
 }
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaPreferPerformanceCpu(_: *mut JNIEnv,_:jobject)->jboolean {
-    crate::scheduling::prefer_performance_cpus() as jboolean
+    crate::scheduling::prefer_performance_cpus()
 }
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaReferenceDialogue(_: *mut JNIEnv,_:jobject,reference:jboolean){
     if let Ok(mut lock)=ENGINE.lock(){if let Some(engine)=lock.as_mut(){
-        engine.machine.bus.ffta_dialogue.reference_dialogue=reference!=0;
+        engine.machine.bus.ffta_dialogue.reference_dialogue=reference;
     }}
 }
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaReferenceFrame(_: *mut JNIEnv,_:jobject,reference:jboolean){
     if let Ok(mut lock)=ENGINE.lock(){if let Some(engine)=lock.as_mut(){
-        engine.machine.bus.ffta_dialogue.reference_frame=reference!=0;
+        engine.machine.bus.ffta_dialogue.reference_frame=reference;
     }}
 }
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaUiTimings(env:*mut JNIEnv,_:jobject,out:jlongArray){
     if out.is_null(){return;}
-    let api=&**env;
-    if api.GetArrayLength.unwrap()(env,out)<7{return;}
+    let api=&(**env).v1_4;
+    if (api.GetArrayLength)(env,out)<7{return;}
     if let Ok(lock)=ENGINE.lock(){if let Some(engine)=lock.as_ref(){
         let p=&engine.machine.bus.ffta_dialogue.profile;
         let values=[p.capture_ns as i64,p.setup_ns as i64,engine.ui_export_ns as i64,p.rows as i64,
             engine.machine.bus.ffta_dialogue.layer().is_some() as i64,p.raster_ns as i64,p.zoom_ns as i64];
-        api.SetLongArrayRegion.unwrap()(env,out,0,7,values.as_ptr());
+        (api.SetLongArrayRegion)(env,out,0,7,values.as_ptr());
     }}
 }
 
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaTap(_: *mut JNIEnv,_:jobject,x:jfloat,y:jfloat,back:jboolean){
     guarded(||{
-        if let Some(engine)=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_mut(){engine.tap(x,y,back!=0);}
+        if let Some(engine)=ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_mut(){engine.tap(x,y,back);}
         Ok(1)
     });
 }
@@ -233,7 +233,7 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStateAction(_: *
         let mut lock = ENGINE.lock().map_err(|_| "Engine mutex poisoned")?;
         let engine = lock.as_mut().ok_or("ROM not loaded")?;
         match action {
-            0 if (1..=9).contains(&slot) => engine.state_save(slot as u8, overwrite != 0)?,
+            0 if (1..=9).contains(&slot) => engine.state_save(slot as u8, overwrite)?,
             1 if (1..=9).contains(&slot) => engine.state_load(slot as u8)?,
             2 => engine.state_undo()?,
             _ => return Err("Invalid save-state action".into()),
@@ -247,13 +247,13 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaStateAction(_: *
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportState(env: *mut JNIEnv, _: jobject, slot: jint, input: jbyteArray, overwrite: jboolean) -> jint {
     guarded(|| {
         if !(1..=9).contains(&slot) || input.is_null() { return Err("Invalid save-state import".into()); }
-        let api = &**env;
-        let len = api.GetArrayLength.unwrap()(env, input);
+        let api = &(**env).v1_4;
+        let len = (api.GetArrayLength)(env, input);
         if len < 0 || len as usize > crate::save_states::MAX_SLOT_BYTES { return Err("Save state exceeds the size limit".into()); }
         let mut bytes = vec![0u8; len as usize];
-        api.GetByteArrayRegion.unwrap()(env, input, 0, len, bytes.as_mut_ptr() as *mut _);
-        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot read save-state bytes".into()); }
-        ENGINE.lock().map_err(|_| "Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.state_import(slot as u8, &bytes, overwrite != 0)?;
+        (api.GetByteArrayRegion)(env, input, 0, len, bytes.as_mut_ptr() as *mut _);
+        if (api.ExceptionCheck)(env) { return Err("Cannot read save-state bytes".into()); }
+        ENGINE.lock().map_err(|_| "Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.state_import(slot as u8, &bytes, overwrite)?;
         Ok(1)
     })
 }
@@ -262,13 +262,13 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportSta
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaImportCartridge(env: *mut JNIEnv, _: jobject, input: jbyteArray, overwrite: jboolean) -> jint {
     guarded(|| {
         if input.is_null() {return Err("Invalid cartridge save".into());}
-        let api=&**env;
-        let len=api.GetArrayLength.unwrap()(env,input);
+        let api=&(**env).v1_4;
+        let len=(api.GetArrayLength)(env,input);
         if len<0 || len as usize>128*1024 {return Err("Cartridge save exceeds 128 KiB".into());}
         let mut bytes=vec![0u8;len as usize];
-        api.GetByteArrayRegion.unwrap()(env,input,0,len,bytes.as_mut_ptr() as *mut _);
-        if api.ExceptionCheck.unwrap()(env)!=0 {return Err("Cannot read cartridge-save bytes".into());}
-        ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.import_cartridge(&bytes,overwrite!=0)?;
+        (api.GetByteArrayRegion)(env,input,0,len,bytes.as_mut_ptr() as *mut _);
+        if (api.ExceptionCheck)(env) {return Err("Cannot read cartridge-save bytes".into());}
+        ENGINE.lock().map_err(|_|"Engine mutex poisoned")?.as_mut().ok_or("ROM not loaded")?.import_cartridge(&bytes,overwrite)?;
         engine::status("Cartridge save imported");
         Ok(1)
     })
@@ -283,9 +283,9 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaExportSta
         Ok(1)
     });
     if code < 0 { return std::ptr::null_mut(); }
-    let api = &**env;
-    let output = api.NewByteArray.unwrap()(env, bytes.len() as jint);
-    if !output.is_null() { api.SetByteArrayRegion.unwrap()(env, output, 0, bytes.len() as jint, bytes.as_ptr() as *const _); }
+    let api = &(**env).v1_4;
+    let output = (api.NewByteArray)(env, bytes.len() as jint);
+    if !output.is_null() { (api.SetByteArrayRegion)(env, output, 0, bytes.len() as jint, bytes.as_ptr() as *const _); }
     output
 }
 
@@ -345,24 +345,24 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaCamera(_: *mut J
 
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaParallelZoom(_: *mut JNIEnv,_:jobject,enabled:jboolean){
-    gba_core::ppu::set_parallel_zoom(enabled!=0);
+    gba_core::ppu::set_parallel_zoom(enabled);
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaNormalAudioReader(_: *mut JNIEnv,_:jobject,enabled:jboolean){crate::normal_audio::set_external_reader(enabled!=0);}
+pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaNormalAudioReader(_: *mut JNIEnv,_:jobject,enabled:jboolean){crate::normal_audio::set_external_reader(enabled);}
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaPullNormalAudio(env:*mut JNIEnv,_:jobject,audio:jshortArray)->jint{
     guarded(||{
         if audio.is_null(){return Err("Missing audio buffer".into());}
         let mut samples=[0i16;2048];
-        let capacity=(&**env).GetArrayLength.unwrap()(env,audio).max(0) as usize;
+        let capacity=((**env).v1_4.GetArrayLength)(env,audio).max(0) as usize;
         let count=crate::normal_audio::pull(&mut samples[..capacity.min(2048)]).map_err(|e|e.to_string())?;
-        if count>0{(&**env).SetShortArrayRegion.unwrap()(env,audio,0,count as i32,samples.as_ptr());}
+        if count>0{((**env).v1_4.SetShortArrayRegion)(env,audio,0,count as i32,samples.as_ptr());}
         Ok(count as i32)
     })
 }
 #[no_mangle]
-pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaCharacterMetrics(_: *mut JNIEnv,_:jobject,enabled:jboolean){gba_core::ffta_sprites::set_character_metrics(enabled!=0);}
+pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaCharacterMetrics(_: *mut JNIEnv,_:jobject,enabled:jboolean){gba_core::ffta_sprites::set_character_metrics(enabled);}
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaCharacters(env:*mut JNIEnv,_:jobject)->jstring{
     let lock=ENGINE.lock().unwrap_or_else(|e|e.into_inner());

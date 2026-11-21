@@ -2,8 +2,8 @@
 # BuildKit's bundled frontend avoids an extra syntax-image download.
 ARG FFTA_TOOLCHAIN=toolchain
 ARG FFTA_ANDROID_SDK_SOURCE=sdk-clean
-FROM rust:1.94.0-slim-bookworm@sha256:a86cada82e36ebd7a9bffed7548792c55a952fdb20718eea9278a936bcb76e62 AS rust
-FROM eclipse-temurin:25-jdk-noble@sha256:7247bd8d2aeec64efe908dc72396d88101417d24ce3642703728382d96afb965 AS sdk-tools
+FROM rust:1.100.0-slim-bookworm@sha256:7c7d4eb4d05b7781187a327809466cfddf29753f6defdc3d19a0e291951b7a37 AS rust
+FROM eclipse-temurin:25-jdk-noble@sha256:4ddc1a8bdaf283421df5487411aff10b797ccf1e06a339041005114c8f489b5c AS sdk-tools
 
 COPY --from=rust /usr/local/rustup /usr/local/rustup
 COPY --from=rust /usr/local/cargo /usr/local/cargo
@@ -19,11 +19,11 @@ RUN test "$(dpkg --print-architecture)" = amd64 \
     && rm -rf /var/lib/apt/lists/* \
     && rustup target add aarch64-linux-android
 
-# Official Android command-line tools; URL and SHA256 from developer.android.com/studio.
+# Official Android command-line tools, verified against the SDK repository catalog.
 RUN curl --fail --location --retry 3 \
-        https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip \
+        https://dl.google.com/android/repository/commandlinetools-linux-16111833_latest.zip \
         -o /tmp/android-tools.zip \
-    && echo '4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  /tmp/android-tools.zip' | sha256sum --check - \
+    && echo '0877a1d048fe4a24efe2eff536ca4223f7adeb58648bb81909d33c446918cfa8  /tmp/android-tools.zip' | sha256sum --check - \
     && mkdir -p /opt/android-sdk/cmdline-tools /tmp/android-tools \
     && unzip -q /tmp/android-tools.zip -d /tmp/android-tools \
     && mv /tmp/android-tools/cmdline-tools /opt/android-sdk/cmdline-tools/latest \
@@ -37,16 +37,16 @@ RUN curl --fail --location --retry 3 \
     && chmod 0755 /usr/local/bin/ffta-android-cli
 FROM sdk-tools AS sdk-clean
 RUN yes | ffta-android-cli --no-metrics --sdk="$ANDROID_HOME" sdk install \
-        platforms/android-35 build-tools/35.0.0 ndk/28.2.13676358 \
-        platform-tools build-tools/36.0.0 \
+        platforms/android-37.2 ndk/30.0.16248370 \
+        platform-tools build-tools/37.0.0 \
     && test -x "$ANDROID_HOME/platform-tools/adb"
 # An explicitly selected existing toolchain can seed a local migration. The
 # default builds the same SDK from the pinned CLI when no seed is supplied.
 FROM ${FFTA_ANDROID_SDK_SOURCE} AS toolchain
 COPY --from=sdk-tools /usr/local/bin/ffta-android-cli /usr/local/bin/ffta-android-cli
-RUN test -d "$ANDROID_HOME/platforms/android-35" \
-    && test -x "$ANDROID_HOME/build-tools/36.0.0/aapt" \
-    && test -x "$ANDROID_HOME/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" \
+RUN test -d "$ANDROID_HOME/platforms/android-37.2" \
+    && test -x "$ANDROID_HOME/build-tools/37.0.0/aapt" \
+    && test -x "$ANDROID_HOME/ndk/30.0.16248370/toolchains/llvm/prebuilt/linux-x86_64/bin/clang" \
     && test -x "$ANDROID_HOME/platform-tools/adb" \
     && rustc --version
 
@@ -63,7 +63,7 @@ RUN --mount=type=cache,id=ffta-android-cargo-registry,target=/usr/local/cargo/re
     --mount=type=cache,id=ffta-android-cargo-git,target=/usr/local/cargo/git,sharing=locked \
     --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-target,target=/workspace/target,sharing=locked \
     find crates -type f -exec touch {} + \
-    && python3 "$BUILD_SCRIPT" --native-only --sdk "$ANDROID_HOME" --ndk 28.2.13676358
+    && python3 "$BUILD_SCRIPT" --native-only --sdk "$ANDROID_HOME" --ndk 30.0.16248370
 
 FROM native AS build
 COPY project/android/ android/
@@ -91,13 +91,13 @@ RUN --mount=type=cache,id=ffta-android-${CACHE_SCOPE}-gradle,target=/root/.gradl
     && if [ "$FFTA_PREVIEW_SIGNING" = 1 ]; then \
         expected="$(keytool -exportcert -keystore /run/secrets/ffta_preview_keystore -alias ffta-preview \
             -storepass:file /run/secrets/ffta_preview_password | sha256sum | cut -d ' ' -f 1)" \
-        && report="$("$ANDROID_HOME/build-tools/36.0.0/apksigner" -J-enable-native-access=ALL-UNNAMED verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk)" \
+        && report="$("$ANDROID_HOME/build-tools/37.0.0/apksigner" -J-enable-native-access=ALL-UNNAMED verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk)" \
         && printf '%s\n' "$report" | grep -F "Signer #1 certificate SHA-256 digest: $expected"; \
     fi \
     && python3 /opt/ffta/export_android.py android/app/build/outputs/apk/debug/app-debug.apk /artifacts \
     && rm -rf android/app/build android/build android/.gradle android/.kotlin \
     && { rustc --version; cargo --version; java -version 2>&1; \
-         printf '\nSDK35 / build-tools36.0.0 / NDK28.2.13676358 / ARM64 / API24\n'; \
+         printf '\nSDK37.2 / build-tools37.0.0 / NDK30.0.16248370 / ARM64 / API24\n'; \
          cat "$ANDROID_HOME/platform-tools/source.properties"; \
        } >> /artifacts/BUILD-INFO.txt
 

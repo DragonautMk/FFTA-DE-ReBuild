@@ -26,7 +26,8 @@ pub struct Engine {
     pub cache_hit: bool,
 }
 pub fn verify_rom(bytes: &[u8]) -> bool {
-    format!("{:x}", Sha1::digest(bytes)) == "4ac05441f4de70a4ec3dd932116346c61b8783d9"
+    let sha1: String = Sha1::digest(bytes).iter().map(|b| format!("{b:02x}")).collect();
+    sha1 == "4ac05441f4de70a4ec3dd932116346c61b8783d9"
         && gba_core::ffta_rom::digest(bytes) == gba_core::ffta_rom::SHA256
 }
 impl Engine {

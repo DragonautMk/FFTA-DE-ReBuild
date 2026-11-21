@@ -181,8 +181,8 @@ tarball, `-Platform android` for the maintained AndroidPort APK, or
 The Android launcher uses Python 3.9+ on the host. Docker supplies the SDK,
 NDK, Rust and Java. See [Docker builds](docs/docker.md).
 
-For native builds without Docker, install Rust with a working linker for its
-selected target, Python 3.11+ and GCC/Clang for TinyCC. On Linux also install
+For native builds without Docker, use Rust 1.100.0 to match the pinned
+containers, a linker for the selected target, Python 3.11+, and GCC or Clang for TinyCC. On Linux also install
 pkg-config and the ALSA/udev development headers.
 
 From the checkout root, build the **Windows desktop package only**:

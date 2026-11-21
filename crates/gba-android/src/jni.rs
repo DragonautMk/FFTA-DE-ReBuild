@@ -12,18 +12,18 @@ fn guarded(action: impl FnOnce() -> Result<i32, String>) -> i32 {
 
 unsafe fn string(env: *mut JNIEnv, value: jstring) -> Result<String, String> {
     if value.is_null() { return Err("Missing path".into()); }
-    let api = &**env;
-    let len = api.GetStringLength.unwrap()(env,value) as usize;
-    let data = api.GetStringChars.unwrap()(env,value,std::ptr::null_mut());
+    let api = &(**env).v1_4;
+    let len = (api.GetStringLength)(env,value) as usize;
+    let data = (api.GetStringChars)(env,value,std::ptr::null_mut());
     if data.is_null() { return Err("Cannot read Java string".into()); }
     let text = String::from_utf16(std::slice::from_raw_parts(data,len)).map_err(|e|e.to_string());
-    api.ReleaseStringChars.unwrap()(env,value,data);
+    (api.ReleaseStringChars)(env,value,data);
     text
 }
 
 unsafe fn java_string(env: *mut JNIEnv, text: &str) -> jstring {
     let utf16: Vec<_> = text.encode_utf16().collect();
-    (&**env).NewString.unwrap()(env,utf16.as_ptr(),utf16.len() as i32)
+    ((**env).v1_4.NewString)(env,utf16.as_ptr(),utf16.len() as i32)
 }
 
 #[no_mangle]
@@ -32,12 +32,12 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaLoadRom(
 ) -> jint {
     guarded(|| {
         if bytes.is_null() { return Err("No ROM bytes".into()); }
-        let api = &**env;
-        let len = api.GetArrayLength.unwrap()(env,bytes);
+        let api = &(**env).v1_4;
+        let len = (api.GetArrayLength)(env,bytes);
         if !(192..=32*1024*1024).contains(&len) { return Err("Invalid ROM size".into()); }
         let mut rom = vec![0u8;len as usize];
-        api.GetByteArrayRegion.unwrap()(env,bytes,0,len,rom.as_mut_ptr() as *mut _);
-        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot read ROM array".into()); }
+        (api.GetByteArrayRegion)(env,bytes,0,len,rom.as_mut_ptr() as *mut _);
+        if (api.ExceptionCheck)(env) { return Err("Cannot read ROM array".into()); }
         if !engine::verify_rom(&rom) { return Err("ROM SHA1/SHA256 mismatch: exact FFTA USA is required".into()); }
         let save = PathBuf::from(string(env,save_path)?);
         let mut loaded = Engine::new(rom);
@@ -74,21 +74,21 @@ pub unsafe extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaFrame(
             || !(0..=gba_core::mem::MAX_EXTRA_Y as i32).contains(&extra_y)
             || !(1..=8).contains(&frames) { return Err("Invalid render configuration".into()); }
         KEYS.store(keys as u32 & 0x3ff,Ordering::Relaxed);
-        let api = &**env;
+        let api = &(**env).v1_4;
         let size = (240+2*extra_x)*(160+2*extra_y);
-        if api.GetDirectBufferCapacity.unwrap()(env,pixels)<size as i64*4 || api.GetArrayLength.unwrap()(env,audio)<4096 {
+        if (api.GetDirectBufferCapacity)(env,pixels)<size as i64*4 || (api.GetArrayLength)(env,audio)<4096 {
             return Err("Frame buffer size mismatch".into());
         }
-        let target = api.GetDirectBufferAddress.unwrap()(env,pixels) as *mut i32;
+        let target = (api.GetDirectBufferAddress)(env,pixels) as *mut i32;
         if target.is_null() { return Err("Expected a direct pixel buffer".into()); }
         let mut lock = ENGINE.lock().map_err(|_|"Engine mutex poisoned")?;
         let engine = lock.as_mut().ok_or("ROM not loaded")?;
         engine.frame_audio(frames as usize, extra_x as usize, extra_y as usize,
-            if sound==0{0}else if audio_mode==2{2}else{1})?;
+            if !sound{0}else if audio_mode==2{2}else{1})?;
         std::ptr::copy_nonoverlapping(engine.pixels.as_ptr(),target,size as usize);
         let count = engine.audio.len().min(4096) as i32;
-        if count > 0 { api.SetShortArrayRegion.unwrap()(env,audio,0,count,engine.audio.as_ptr()); }
-        if api.ExceptionCheck.unwrap()(env) != 0 { return Err("Cannot copy frame data".into()); }
+        if count > 0 { (api.SetShortArrayRegion)(env,audio,0,count,engine.audio.as_ptr()); }
+        if (api.ExceptionCheck)(env) { return Err("Cannot copy frame data".into()); }
         Ok(count)
     })
 }
@@ -133,5 +133,5 @@ pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaCamera(_: *mut J
 
 #[no_mangle]
 pub extern "system" fn Java_com_fftarecomp_port_NativeBridge_gbaParallelZoom(_: *mut JNIEnv,_:jobject,enabled:jboolean){
-    gba_core::ppu::set_parallel_zoom(enabled!=0);
+    gba_core::ppu::set_parallel_zoom(enabled);
 }

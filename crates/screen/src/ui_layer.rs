@@ -383,8 +383,8 @@ impl Gpu {
         });
         let pl = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: Some("native-ui"),
-            bind_group_layouts: &[&layout],
-            push_constant_ranges: &[],
+            bind_group_layouts: &[Some(&layout)],
+            immediate_size: 0,
         });
         let pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("native-ui"),
@@ -408,7 +408,7 @@ impl Gpu {
             primitive: Default::default(),
             depth_stencil: None,
             multisample: Default::default(),
-            multiview: None,
+            multiview_mask: None,
             cache: None,
         });
         Self {
@@ -802,7 +802,7 @@ mod tests {
                 })],
                 depth_stencil_attachment: None,
                 timestamp_writes: None,
-                occlusion_query_set: None,
+                occlusion_query_set: None,                multiview_mask: None,
             });
             gpu.draw(&mut pass, size);
         }
@@ -833,9 +833,9 @@ mod tests {
         slice.map_async(wgpu::MapMode::Read, move |result| {
             tx.send(result).unwrap();
         });
-        device.poll(wgpu::PollType::Wait).unwrap();
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
         rx.recv().unwrap().unwrap();
-        let mapped = slice.get_mapped_range();
+        let mapped = slice.get_mapped_range().expect("mapped readback");
         let pixels = mapped.chunks_exact(stride as usize).flat_map(|row| row[..size.0 as usize * 4].iter().copied()).collect();
         drop(mapped);
         read.unmap();

@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-dirs = "6"
+dirs = "7.0.0"
 input-config = { path = "../input-config" }
-rfd = "0.15"
+rfd = "0.18.0"
 tempfile = "3"
 
 [build-dependencies]

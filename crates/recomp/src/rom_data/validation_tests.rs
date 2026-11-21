@@ -163,6 +163,14 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_tilemap_extra_rows = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_EXTRA_ROWS").is_some();
     let poison_blue_screw_chain = std::env::var_os("FFTA_STATE_TEST_POISON_BLUE_SCREW_CHAIN").is_some();
     let poison_additional_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_ADDITIONAL_RECTANGLES").is_some();
+    let poison_relative_graphics = std::env::var_os("FFTA_STATE_TEST_POISON_RELATIVE_GRAPHICS").is_some();
+    let relative_graphics_spans = if poison_relative_graphics {
+        let archive = source.obj_graphics.as_ref().unwrap().decoded.relative_archive.as_ref().unwrap();
+        std::iter::once((archive.source_offset as usize, archive.source_bytes().unwrap().len()))
+            .chain([69usize, 71, 73].into_iter().map(|i| {
+                let bank = &archive.banks[i]; (bank.source_offset as usize, bank.encoded_source.len())
+            })).collect::<Vec<_>>()
+    } else { Vec::new() };
     #[cfg(feature = "rom-data-read-audit")]
     let compact_watch_root = std::env::var("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").ok()
         .map(|value| u32::from_str_radix(value.trim_start_matches("0x"), 16).expect("compact watch root"))
@@ -195,6 +203,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             input.apply_mouse(&mut machine.bus, relative).unwrap();
             if index == 1 && poison_additional_rectangles {
                 for (start, len) in additional_rectangle_test_spans() {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_relative_graphics {
+                for &(start, len) in &relative_graphics_spans {
                     for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
                 }
             }
@@ -381,6 +394,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_additional_rectangles {
                 for (start, len) in additional_rectangle_test_spans() {
+                    machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
+            if index == 1 && poison_relative_graphics {
+                for &(start, len) in &relative_graphics_spans {
                     machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
                 }
             }
@@ -730,6 +748,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "scene must consume the observed additional pointer and rectangle: {stats:?}");
         eprintln!("ROM_DATA_ADDITIONAL_RECTANGLES_POISON pointers={} rectangles={:?}",
             stats.additional_rectangle_pointer_bytes, stats.additional_rectangle_bytes);
+    }
+    if poison_relative_graphics {
+        let stats = decoded.bus.rom_resources().unwrap().obj_graphics_stats().expect("custom graphics owner");
+        let expected = (1u64 << (69 - 64)) | (1u64 << (71 - 64)) | (1u64 << (73 - 64));
+        assert!(stats.relative_directory_bytes > 0 && stats.relative_bank_bytes > 0
+            && stats.relative_literal_bytes > 0 && stats.relative_banks_used[1] & expected == expected,
+            "home scene must consume all three observed relative streams and directory: {stats:?}");
+        eprintln!("ROM_DATA_RELATIVE_GRAPHICS_POISON directory_bytes={} bank_bytes={} literal_bytes={} banks={:?}",
+            stats.relative_directory_bytes, stats.relative_bank_bytes, stats.relative_literal_bytes, stats.relative_banks_used);
     }
     if poison_observed_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");

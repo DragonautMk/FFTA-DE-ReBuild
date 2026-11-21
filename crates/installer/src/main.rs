@@ -1,6 +1,6 @@
 #![cfg_attr(windows, windows_subsystem = "windows")]
 
-use eframe::egui::{self, Align2, Color32, FontId, RichText, Rounding, Sense, Stroke, Vec2};
+use eframe::egui::{self, Align2, Color32, CornerRadius, FontId, RichText, Sense, Stroke, Vec2};
 mod rom_policy;
 mod presentation;
 mod platform;
@@ -376,8 +376,8 @@ fn accent_button(ui: &mut egui::Ui, text: &str, enabled: bool, width: f32) -> eg
         ACCENT
     };
     let text_color = if enabled { presentation::HIGHLIGHT } else { TEXT_DIM };
-    ui.painter().rect_filled(rect, Rounding::same(8.0), fill);
-    ui.painter().rect_stroke(rect, Rounding::same(8.0), Stroke::new(1.0,presentation::GOLD));
+    ui.painter().rect_filled(rect, CornerRadius::same(8), fill);
+    ui.painter().rect_stroke(rect, CornerRadius::same(8), Stroke::new(1.0,presentation::GOLD), egui::StrokeKind::Middle);
     ui.painter().text(rect.center(), Align2::CENTER_CENTER, text, FontId::proportional(15.0), text_color);
     if enabled { resp.on_hover_cursor(egui::CursorIcon::PointingHand) } else { resp }
 }
@@ -401,16 +401,16 @@ fn rich(ui: &mut egui::Ui, parts: &[(&str, bool)]) {
 }
 
 fn card(ui: &mut egui::Ui, add: impl FnOnce(&mut egui::Ui)) {
-    egui::Frame::none()
+    egui::Frame::NONE
         .fill(PANEL)
         .stroke(Stroke::new(1.0,presentation::GOLD))
-        .rounding(Rounding::same(8.0))
+        .corner_radius(CornerRadius::same(8))
         .inner_margin(16.0)
         .show(ui, |ui| { ui.set_width(ui.available_width()); add(ui) });
 }
 
 impl eframe::App for App {
-    fn update(&mut self, ctx: &egui::Context, _: &mut eframe::Frame) {
+    fn logic(&mut self, _: &egui::Context, _: &mut eframe::Frame) {
         self.poll();
         if let Some((kind, rx)) = &self.native_picker {
             if let Ok(result) = rx.try_recv() {
@@ -429,21 +429,24 @@ impl eframe::App for App {
                 }
             }
         }
+    }
 
+    fn ui(&mut self, ui: &mut egui::Ui, _: &mut eframe::Frame) {
+        let ctx = ui.ctx().clone();
         if matches!(self.screen, Screen::Rom) && self.rx.is_none() {
-            let dropped = ctx.input(|i| i.raw.dropped_files.first().and_then(|f| f.path.clone()));
+            let dropped = ctx.input(|i| i.raw.dropped_files.first().map(|file| file.path().to_path_buf()));
             if let Some(p) = dropped { self.set_rom(p); }
         }
 
         egui::CentralPanel::default()
-            .frame(egui::Frame::none().fill(BG).inner_margin(20.0))
-            .show(ctx, |ui| {
+            .frame(egui::Frame::NONE.fill(BG).inner_margin(20.0))
+            .show(ui, |ui| {
                 let width=ui.available_width().min(880.0);
                 let inset=(ui.available_width()-width)*0.5;
                 let rect=egui::Rect::from_min_size(ui.max_rect().min+egui::vec2(inset,0.0),egui::vec2(width,ui.available_height()));
-                ui.allocate_new_ui(egui::UiBuilder::new().max_rect(rect),|ui|{
-                    egui::Frame::none().fill(presentation::PAPER)
-                        .stroke(Stroke::new(2.0,presentation::GOLD)).rounding(Rounding::same(10.0))
+                ui.scope_builder(egui::UiBuilder::new().max_rect(rect),|ui|{
+                    egui::Frame::NONE.fill(presentation::PAPER)
+                        .stroke(Stroke::new(2.0,presentation::GOLD)).corner_radius(CornerRadius::same(10))
                         .inner_margin(24.0).show(ui,|ui|{
                             ui.set_min_height(ui.available_height());
                             ui.horizontal_wrapped(|ui|{
@@ -456,14 +459,14 @@ impl eframe::App for App {
                             ui.separator();ui.add_space(8.0);
                             match self.screen {
                                 Screen::Intro=>self.ui_intro(ui),
-                                Screen::Rom=>self.ui_rom(ui,ctx),
+                                Screen::Rom=>self.ui_rom(ui,&ctx),
                                 Screen::Done=>self.ui_done(ui),
                             }
                         });
                 });
             });
         if let Some(picker) = &mut self.path_picker {
-            if let Some(result) = picker.show(ctx) {
+            if let Some(result) = picker.show(&ctx) {
                 self.path_picker = None;
                 match result {
                     path_picker::Selection::Rom(path) => self.set_rom(path),
@@ -551,7 +554,7 @@ impl App {
                 self.progress
             };
             ctx.request_repaint_after(Duration::from_millis(200));
-            ui.add(egui::ProgressBar::new(shown).fill(ACCENT).rounding(Rounding::same(8.0)));
+            ui.add(egui::ProgressBar::new(shown).fill(ACCENT).corner_radius(CornerRadius::same(8)));
             ui.label(RichText::new(&self.status).color(TEXT_DIM));
         }
         if let Some(e) = &self.error {

@@ -720,6 +720,8 @@ mod ui_palette_runtime_tests;
 #[cfg(test)]
 mod obj_graphics_runtime_tests;
 #[cfg(test)]
+mod obj_relative_graphics_tests;
+#[cfg(test)]
 mod obj_animation_runtime_tests;
 #[cfg(test)]
 mod font_keyboard_runtime_tests;

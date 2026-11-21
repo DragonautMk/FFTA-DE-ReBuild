@@ -52,8 +52,7 @@ fn setup_wasmi(wasm_bytes: &[u8], bus: MockBus, cpu: &Cpu) -> (Store<HostState>,
         addr
     }).unwrap();
 
-    let instance = linker.instantiate(&mut store, &module).unwrap()
-        .start(&mut store).unwrap();
+    let instance = linker.instantiate_and_start(&mut store, &module).unwrap();
 
     let memory = instance.get_export(&store, "memory").unwrap().into_memory().unwrap();
     let mut mem_data = vec![0u8; 68];
@@ -89,7 +88,7 @@ fn test_1_wasm_ceiling() {
     let engine_wi = Engine::default();
     let module_wi = Module::new(&engine_wi, &wasm_bytes).unwrap();
     let mut store_wi = Store::new(&engine_wi, ());
-    let instance_wi = Linker::new(&engine_wi).instantiate(&mut store_wi, &module_wi).unwrap().start(&mut store_wi).unwrap();
+    let instance_wi = Linker::new(&engine_wi).instantiate_and_start(&mut store_wi, &module_wi).unwrap();
     let ceiling_wi = instance_wi.get_export(&store_wi, "ceiling").unwrap().into_func().unwrap().typed::<(), i32>(&store_wi).unwrap();
 
     let start_wi = Instant::now();

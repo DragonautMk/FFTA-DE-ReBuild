@@ -24,6 +24,34 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-21-verify-blue-screw-interleaved-chains.json)
 
+## 2026-11-21 — Refresh Rust and Android dependencies and build tooling
+
+Type: changed. Platforms: Windows, Linux, Android, macOS.
+
+**Changes**
+
+- Update the stable Rust dependencies in both workspaces and regenerate both lockfiles. Migrate the GPU, audio, desktop UI, JNI and experimental Wasm/Cranelift code to the new APIs. Use wgpu surface color configuration for macOS Display P3.
+- Move both Android builds to Gradle 9.9.2, AGP 9.5.2, Kotlin 2.4.21, updated AndroidX and Compose libraries, SDK 37.2, build-tools 37.0.0, and NDK r30. Refresh the Docker SDK command-line tools to revision 23 and use the version catalogs throughout both Gradle projects.
+- Pin Rust 1.100.0 in both workspaces, Docker and CI, and refresh the Linux installer workflow action pins.
+
+**Validation**
+
+- Both Cargo lockfiles resolved. The Android Rust bridge suites passed 54 host tests with four ignored.
+- Rust 1.100.0 checked both aarch64-linux-android bridges and the runtime, launcher and installer for x86_64-pc-windows-gnu in the MinGW toolchain.
+- The full Linux workspace passed cargo check --locked --all-targets. The screen, game database and input configuration libraries passed 88 tests with eight ignored.
+- The 14 Android Docker helper tests passed. The Gradle distribution and both wrapper JARs matched the official SHA-256 checksums. The Android platform, build-tools and SDK CLI archives matched the official catalog checksums.
+- The targeted Cranelift JIT execution test and Wasm equivalence test passed in the Linux builder.
+- The root Android project and AndroidPort both passed compileDebugKotlin and testDebugUnitTest with Gradle 9.9.2 and the verified SDK 37.2.
+
+**Limitations**
+
+- End-to-end APK packaging with NDK r30 was not verified because the NDK archive transfer failed. Windows was cross-checked with MinGW. Windows execution and macOS display behavior were not exercised.
+- The Android Gradle builds report deprecation warnings for existing Compose Slider overloads.
+
+Documentation: [docker.md](docs/docker.md), [README.md](AndroidPort/android/README.md).
+
+[Change record](docs/changes/2026-11-21-refresh-project-dependencies.json)
+
 ## 2026-11-21 — Provide a leased Wine Bluetooth backport
 
 Type: added. Platforms: Windows via Wine; European ROM.
@@ -167,6 +195,28 @@ Type: docs. Platforms: European ROM; prior Windows via Wine evidence.
 Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-21-classify-red-spring-code-support-overlap.json)
+
+## 2026-11-21 — Activate the external target automatically on Linux
+
+Type: changed. Platforms: Linux.
+
+**Changes**
+
+- Installed a workstation-specific systemd mount chain and a UUID-scoped udev rule for the external target. The rule starts the chain when the disk appears, and the verification service checks the mounted disk and ext4 image before binding the checkout target.
+- Documented how to check, recover, eject and remove the Linux host setup.
+
+**Validation**
+
+- Systemd, udev, and tmpfiles configuration checks passed. Installed units mounted the expected live ext4 directory, and managed validation external-target-systemd-hdsyriif wrote as the ordinary user and removed its scratch.
+- The udev add simulation started the expected unit only for the matching UUID. The current sandbox sees the writable target.
+
+**Limitations**
+
+- The host activation reused the existing disk and image mounts. A cold boot and physical unplug/replug were not performed.
+
+Documentation: [STORAGE_CHECKLIST.md](docs/development/STORAGE_CHECKLIST.md).
+
+[Change record](docs/changes/2026-11-21-automatic-external-target-mount.json)
 
 ## 2026-11-20 — Verify the remapped Linux debug candidate in the GUI
 

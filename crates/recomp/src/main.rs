@@ -1664,7 +1664,7 @@ fn start_audio(streams: std::sync::Arc<std::sync::Mutex<AudioStreams>>) -> Optio
             let _ = stream.play();
             eprintln!(
                 "audio: {} Hz, {} ch, {fmt:?}",
-                cfg.sample_rate().0,
+                cfg.sample_rate(),
                 cfg.channels()
             );
             Some(stream)
@@ -1686,10 +1686,10 @@ fn build_stream<T: cpal::SizedSample + cpal::FromSample<f32> + debug_audio::Outp
     streams: std::sync::Arc<std::sync::Mutex<AudioStreams>>,
 ) -> Result<cpal::Stream, String> {
     use cpal::traits::DeviceTrait;
-    let mut output = output_callback::<T>(cfg.sample_rate().0 as f64, cfg.channels() as usize, streams.clone());
+    let mut output = output_callback::<T>(cfg.sample_rate() as f64, cfg.channels() as usize, streams.clone());
     device
         .build_output_stream(
-            &cfg.config(),
+            cfg.config(),
             move |out: &mut [T], _| output(out),
             move |e| {
                 eprintln!("audio error: {e}");

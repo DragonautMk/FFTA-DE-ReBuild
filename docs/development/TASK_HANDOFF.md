@@ -29,11 +29,11 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Pause: user paused the goal; resume ROM exploration and Wine only on request.
-- E173/E181–E201 EUR/Wine PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 home inventory `kkbk45be` PASS. E207 has 8,544 unowned sampled bytes; E172 has 3,276 (420 prior-site matches `usda5fn4`).
-- E208 source `rwsqv1y7` authenticates three home streams and directory cells; `ROMDATA-02-E208-HOME-STREAMS` extraction/runtime/Wine remains open.
+- ROMDATA-TARGET-REATTACH: systemd host bind verified; check mount before use. Private bwrap remains available.
+- E173/E181–E201 PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 `kkbk45be` Wine PASS. E172: 3,276 raw, 420 overlaps `usda5fn4`.
+- ROMDATA-02-E208-HOME-STREAMS active: EUR/Wine, no metrics/space. E208 `rwsqv1y7`; 103 streams disjoint. Build `exso2ew8` PASS; leased Wine test running handle 45072. Prior path/nodev/Bus-import failures retained. Next poisoned scene/CLI; other scenes/readers, Linux/USA/parent open.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
@@ -167,7 +167,7 @@ Archive completed tasks; preserve closed children and other jobs.
 - Outcome: partial
 - Selection: Oct 26 cleanup interrupted; HDD target cutover completed.
 - Verified: copy/reconcile exit 0; bind mounted, source removed; 133 GiB free.
-- Missing: Oct 26 criteria; HDD mount requires reconnection after reboot.
+- Missing: Oct 26 criteria; HDD requires connection; systemd mounts it by UUID.
 - Risks: `rg` guard skipped during cutover; prior host check saw no nested mounts. HDD required.
 - Resume: HDD `README.txt`; Oct 26 archive 2486..2496, `target/local-artifact-cleanup-2026-10-26/applied.json`.
 
@@ -184,9 +184,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: HDD target cutover complete; Oct 26 cleanup remains interrupted.
-- Last verified result: external target bound; original removed; 133 GiB free.
-- Remaining work: reconnect mount after reboot; Oct 26 criteria remain open.
-- Errors or blockers: user script skipped `rg` guard; fixed; prior host check saw no nested mounts.
-- Next action: use HDD `README.txt` to reconnect; resume Oct 26 only on request.
-- References: HDD `postcopy-results/`; `LOCAL-ARTIFACTS.md`.
+- Task: DEPS-2026-11-21 complete.
+- Last verified result: Linux, Windows cross, Android Rust and both Gradle builds pass.
+- Remaining work: native APK packaging unverified.
+- Errors or blockers: NDK r30 transfer timeouts.
+- Next action: none in this selection.
+- References: 2026-11-21-refresh-project-dependencies.json; archive DEPS-2026-11-21.

@@ -115,17 +115,22 @@ impl GpuProfiler {
         for (index, slot) in self.slots.iter().enumerate() {
             match slot.state.load(Ordering::Acquire) {
                 READY => {
-                    let bytes = slot.readback.slice(..).get_mapped_range();
-                    let begin = u64::from_ne_bytes(bytes[..8].try_into().unwrap());
-                    let end = u64::from_ne_bytes(bytes[8..16].try_into().unwrap());
-                    let sample = duration(begin, end, self.period);
-                    drop(bytes);
+                    let sample = slot.readback.slice(..).get_mapped_range().map(|bytes| {
+                        let begin = u64::from_ne_bytes(bytes[..8].try_into().unwrap());
+                        let end = u64::from_ne_bytes(bytes[8..16].try_into().unwrap());
+                        duration(begin, end, self.period)
+                    });
                     slot.readback.unmap();
-                    if let Some(sample) = sample {
-                        self.batch.samples[index] = Some(sample);
-                        self.batch.counts.completed += 1;
-                    } else {
-                        self.batch.counts.invalid += 1;
+                    match sample {
+                        Ok(Some(sample)) => {
+                            self.batch.samples[index] = Some(sample);
+                            self.batch.counts.completed += 1;
+                        }
+                        Ok(None) => self.batch.counts.invalid += 1,
+                        Err(_) => {
+                            self.batch.counts.failed += 1;
+                            self.stopped = true;
+                        }
                     }
                     slot.state.store(IDLE, Ordering::Release);
                 }
@@ -235,7 +240,7 @@ mod tests {
     #[test]
     #[ignore = "requires a working timestamp-capable graphics adapter; run explicitly"]
     fn deferred_readback_bounds_work_and_preserves_rendered_pixels() {
-        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor::default());
+        let instance = wgpu::Instance::default();
         let adapter =
             pollster::block_on(instance.request_adapter(&wgpu::RequestAdapterOptions::default()))
                 .unwrap();
@@ -328,9 +333,9 @@ mod tests {
                     sender.send(result).unwrap()
                 });
             // Blocking is confined to this explicit correctness test.
-            device.poll(wgpu::PollType::Wait).unwrap();
+            device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
             receiver.recv().unwrap().unwrap();
-            let data = buffer.slice(..).get_mapped_range();
+            let data = buffer.slice(..).get_mapped_range().expect("mapped readback");
             let pixels = [data[..8].to_vec(), data[256..264].to_vec()].concat();
             drop(data);
             buffer.unmap();
@@ -347,7 +352,7 @@ mod tests {
         }
         // Even already-ready callbacks cannot free a slot before it is drained.
         assert!(profile.reserve().is_none());
-        device.poll(wgpu::PollType::Wait).unwrap();
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
         profile.poll(&device);
         let batch = profile.take();
         assert_eq!(
@@ -372,7 +377,7 @@ mod tests {
         let index = profile.reserve().unwrap();
         draw(Some((&profile, index)));
         assert!(profile.reserve().is_none());
-        device.poll(wgpu::PollType::Wait).unwrap();
+        device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
         profile.poll(&device);
         let batch = profile.take();
         assert_eq!(

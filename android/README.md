@@ -40,8 +40,8 @@ see [Android Docker builds](../docs/android_docker.md). From the repository root
 `AndroidPort/` tree; add `--project-dir . --output dist/docker-android-root` to
 build this root-workspace Android app explicitly.
 
-Requires Rust with `aarch64-linux-android`, Android SDK 35 and NDK
-28.2.13676358, Java compatible with Gradle 9.5, Python, and a host gcc/clang
+Requires Rust 1.100.0 with `aarch64-linux-android`, Android SDK 37.2,
+build-tools 37.0.0, NDK 30.0.16248370, JDK 25 for Gradle 9.9.2, Python, and a host gcc/clang
 for TinyCC's small build-time header generator. The Gradle wrapper and build
 scripts are included. Specify your actual SDK and Java paths:
 
