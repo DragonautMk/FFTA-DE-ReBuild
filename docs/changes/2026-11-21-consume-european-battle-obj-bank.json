@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-battle-obj-bank",
+  "title": "Consume European battle OBJ bank",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend E207-d206 OBJ animation resources with the source-authenticated battle context bank: 17 lists, 43 objects, 16 frames and two empty sequence headers across 442 bytes, preserving adjacent owners and original guest indexing.",
+    "Project the new typed fields through guest, native, DMA and host-list paths, with dedicated bank read counts and the previous OBJ resources unchanged."
+  ],
+  "validation": [
+    "Windows test build 78qil0q2 and Wine drtfh3ff pass prior-resource preservation, all selected bytes, mixed boundaries and mirrors, original interpreter and generated reader, 17 host lists, DMA/CpuSet/CpuFastSet and snapshot-owner retention.",
+    "Wine 5op6sk14 compares 600 recorded EUR Llednar frames with the selected ROM backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match, with 3118 selected source bytes served. The separate focused test covers host lists, which this scene did not read.",
+    "Production Windows build n8sgfqs9 and Wine CLI h524hpqf pass create, reuse and verify for 124 matching files. Source reclassification 5fwjo98g leaves 3857 of the earlier 4281 sampled bytes unowned, including 29 high."
+  ],
+  "limitations": [
+    "The selected battle checkpoint has unknown earlier save ancestry; no new cheat or state forcing was used. Other consumers, scene PCs, index domains, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows remain to be verified. No performance comparison was performed.",
+    "The initial Wine reader attempts h81kx04y and mz13sddn failed on test setup and remain retained; the corrected Wine retry passed. The production build preceded test-only corrections; other guarded source inputs and the executable hash were unchanged. Wine servers drained and the local Bluetooth overlay avoided the known assertion."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_animations.rs",
+    "crates/gba-core/src/rom_data/obj_animations/roots.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_obj_bank_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

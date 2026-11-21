@@ -12,12 +12,24 @@ pub const ARCHIVES: [u32; 20] = [
 const COUNTS: [usize; 20] = [
     30, 30, 30, 30, 30, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 85, 91, 93, 91, 99,
 ];
+pub const BASE_PROGRAM_COUNT: usize = 649;
 const SIZES: [u16; 4] = [192, 7168, 3840, 64];
 const ROM_LIMIT: usize = 0x1000000;
 pub const SOURCE_SHA256: &str = "9681595c842ad6b53ecf3841f8aca0ef10e6665b05ccdfb7f17694945f37c955";
 pub const CONTEXT_SOURCE: u32 = 0x3710d4;
 pub const CONTEXT_RECORDS: usize = 33;
 pub const CONTEXT_SHA256: &str = "3461a0d663b5f2a27d74ecaaf4670d3519a7e3eaad4f4161d41202866807d593";
+/// Independently rooted archives selected by the original color-mode path.
+pub const COLOR_ARCHIVE_ROOTS: [u32; 3] = [0x3cad94, 0x3ce9d4, 0x3d26d8];
+pub const COLOR_ARCHIVE_LENGTHS: [usize; 3] = [15421, 15618, 15611];
+pub const COLOR_ARCHIVE_SHA256: [&str; 3] = [
+    "a3d2ccdd74d9a7dcd406d5bcc2e0a9f1f45780944415191de39ecc44e072032f",
+    "c6b9a167dcb84299937c6d4bda9a086f91e36fb39594212e9cef16a930d4fdeb",
+    "b8f295e5dd0c694d50a1eb957e2f66dade6d48c163a7fdf6e35808200bd9fd3a",
+];
+/// Already owned by the FFFF directory-word resource; keep its physical owner.
+pub const COLOR_ARCHIVE_SHARED_START: u32 = 0x3d4830;
+pub const COLOR_ARCHIVE_SHARED_END: u32 = 0x3d4834;
 pub type SourceSpan = (u32, Vec<u8>, String);
 fn invalid() -> String {
     "Invalid declared indexed graphics archive".into()
@@ -310,6 +322,8 @@ pub struct IndexedGraphics {
     pub contexts: Vec<ContextRecord>,
     pub groups: Vec<PointerGroup>,
     pub archives: Vec<Archive>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub color_archives: Option<Vec<Archive>>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -345,6 +359,35 @@ impl IndexedGraphics {
                 archive.source_bytes()?,
                 format!("indexed-archive/{:x}", archive.source_offset),
             ));
+        }
+        if self.archives.iter().map(|archive| archive.programs.len()).sum::<usize>() != BASE_PROGRAM_COUNT {
+            return Err(invalid());
+        }
+        if let Some(archives) = &self.color_archives {
+            if archives.len() != COLOR_ARCHIVE_ROOTS.len() {
+                return Err(invalid());
+            }
+            for (i, archive) in archives.iter().enumerate() {
+                if archive.source_offset != COLOR_ARCHIVE_ROOTS[i]
+                    || archive.programs.len() != 165
+                    || archive.fixed_decoded_bytes != 96
+                {
+                    return Err(invalid());
+                }
+                let bytes = archive.source_bytes()?;
+                if bytes.len() != COLOR_ARCHIVE_LENGTHS[i] {
+                    return Err(invalid());
+                }
+                if i == 2 {
+                    let first = (COLOR_ARCHIVE_SHARED_START - archive.source_offset) as usize;
+                    let last = (COLOR_ARCHIVE_SHARED_END - archive.source_offset) as usize;
+                    if first >= last || last >= bytes.len() { return Err(invalid()); }
+                    spans.push((archive.source_offset, bytes[..first].to_vec(), "color-indexed-archive/2-before".into()));
+                    spans.push((COLOR_ARCHIVE_SHARED_END, bytes[last..].to_vec(), "color-indexed-archive/2-after".into()));
+                } else {
+                    spans.push((archive.source_offset, bytes, format!("color-indexed-archive/{i}")));
+                }
+            }
         }
         spans.sort_by_key(|v| v.0);
         for pair in spans.windows(2) {
@@ -411,15 +454,27 @@ impl Catalog {
             index: i as u8, value: row[0], secondary_program: row[1],
             primary_program: row[2], opaque: row[3],
         }).collect();
-        let decoded = IndexedGraphics { contexts, groups, archives };
-        let spans = decoded.source_spans()?;
-        let source: Vec<u8> = spans
+        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None };
+        let source: Vec<u8> = decoded.source_spans()?
             .iter()
             .flat_map(|(_, b, _)| b.iter().copied())
             .collect();
         if ffta_rom::digest(&source) != SOURCE_SHA256 {
             return Err("Indexed archive source fingerprint mismatch".into());
         }
+        if ffta_rom::digest(&rom[0xcf304..0xcf358]) != "c125fbe080999f60075216d575ed9626239339ec77082ac50fd4f413240cc1e1" {
+            return Err("Color-mode indexed caller fingerprint mismatch".into());
+        }
+        let color_archives = COLOR_ARCHIVE_ROOTS.iter().enumerate().map(|(i, &at)| {
+            let archive = Archive::from_source(&rom[at as usize..], at)?;
+            let bytes = archive.source_bytes()?;
+            if bytes.len() != COLOR_ARCHIVE_LENGTHS[i] || ffta_rom::digest(&bytes) != COLOR_ARCHIVE_SHA256[i] {
+                return Err("Color-mode indexed archive fingerprint mismatch".into());
+            }
+            Ok(archive)
+        }).collect::<Result<Vec<_>, String>>()?;
+        decoded.color_archives = Some(color_archives);
+        let spans = decoded.source_spans()?;
         let sources = spans
             .into_iter()
             .map(|(offset, bytes, role)| SourceRange {

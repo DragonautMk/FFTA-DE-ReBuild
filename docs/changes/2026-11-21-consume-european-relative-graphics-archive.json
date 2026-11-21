@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-relative-graphics-archive",
+  "title": "Consume European relative graphics archive",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extract and consume all 103 custom-compressed streams and the relative directory at 3d63d4 in E203-d202, retaining encoded control bytes and decoded words while leaving guest selection and decompression intact.",
+    "Preserve previous graphics data and raw alignment gaps, verify exact source bindings, and expose per-archive usage counters for observed scene validation."
+  ],
+  "validation": [
+    "Windows test build e210-relative-build-e6jcspzc and EUR Wine reader e210-relative-wine-af7l9c_2 pass against the current dependency lock: 103 streams, every owned source byte and boundary, eight original interpreter/translated resolver cases, three decoder cases, source authentication and owner reload checks.",
+    "Wine e210-home-scene-wine-deee1ha0 matches full state, guest clock, video, OAM, dispatch and audio for 600 recorded home frames with the directory and streams 69, 71 and 73 altered in the managed ROM. All three are consumed by the file-backed owner.",
+    "Windows production build e210-cli-build-wi7wdfrn and Wine e210-relative-cli-wine-473fvdeq pass create/reuse/verify with 124 files matching the tested dataset. All Wine servers drain, with no D-Bus assertion using the local overlay. Static e210-home-residual-4j77xxqi leaves 2488 of the prior 8544 sampled bytes unowned."
+  ],
+  "limitations": [
+    "Other indices and scenes, indirect consumers, real-BIOS behavior and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance measurements were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_graphics.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_custom_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/obj_relative_graphics_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

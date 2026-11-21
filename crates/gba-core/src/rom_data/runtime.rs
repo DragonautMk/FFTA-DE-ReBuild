@@ -185,6 +185,27 @@ pub use iwram_memory_helpers::IwramMemoryHelpersStats;
 mod adjacent_offset_tables;
 use adjacent_offset_tables::AdjacentOffsetTablesResources;
 pub use adjacent_offset_tables::AdjacentOffsetTablesStats;
+mod indexed_records16;
+use indexed_records16::IndexedRecords16Resources;
+pub use indexed_records16::IndexedRecords16Stats;
+mod indexed_words_3959;
+use indexed_words_3959::IndexedWords3959Resources;
+pub use indexed_words_3959::IndexedWords3959Stats;
+mod thumb_switch_tables;
+use thumb_switch_tables::ThumbSwitchTablesResources;
+pub use thumb_switch_tables::ThumbSwitchTablesStats;
+mod thumb_pc_literals;
+use thumb_pc_literals::ThumbPcLiteralsResources;
+pub use thumb_pc_literals::ThumbPcLiteralsStats;
+mod copied_halfword_lookups;
+use copied_halfword_lookups::CopiedHalfwordLookupsResources;
+pub use copied_halfword_lookups::CopiedHalfwordLookupsStats;
+mod indexed_halfwords_39a5;
+use indexed_halfwords_39a5::IndexedHalfwords39a5Resources;
+pub use indexed_halfwords_39a5::IndexedHalfwords39a5Stats;
+mod script_byte_lookup_3ad;
+use script_byte_lookup_3ad::ScriptByteLookup3adResources;
+pub use script_byte_lookup_3ad::ScriptByteLookup3adStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -369,6 +390,10 @@ use std::sync::{
 pub struct ResourceStats {
     pub bus_reads: u64,
     pub bus_source_mask: u8,
+    pub derived_bus_reads: u64,
+    pub derived_source_bytes: u64,
+    pub derived_table_mask: u8,
+    pub derived_rows_mask: [u16; 2],
     pub host_rom_reads: u64,
     pub host_ram_reads: u64,
     pub dynamic_ram_reads: u64,
@@ -382,8 +407,13 @@ pub struct RuntimeResources {
     version: Version,
     dimensions: ObjDimensions,
     projection: [u8; 48],
+    derived_projection: [[u8; 48]; 2],
     bus_reads: AtomicU64,
     bus_source_mask: AtomicU64,
+    derived_bus_reads: AtomicU64,
+    derived_source_bytes: AtomicU64,
+    derived_table_mask: AtomicU64,
+    derived_rows_mask: [AtomicU64; 2],
     host_rom_reads: AtomicU64,
     host_ram_reads: AtomicU64,
     dynamic_ram_reads: AtomicU64,
@@ -445,6 +475,13 @@ pub struct RuntimeResources {
     dma_register_directories: Option<Box<DmaRegisterDirectoriesResources>>,
     iwram_memory_helpers: Option<Box<IwramMemoryHelpersResources>>,
     adjacent_offset_tables: Option<Box<AdjacentOffsetTablesResources>>,
+    indexed_records16: Option<Box<IndexedRecords16Resources>>,
+    indexed_words_3959: Option<Box<IndexedWords3959Resources>>,
+    thumb_switch_tables: Option<Box<ThumbSwitchTablesResources>>,
+    thumb_pc_literals: Option<Box<ThumbPcLiteralsResources>>,
+    copied_halfword_lookups: Option<Box<CopiedHalfwordLookupsResources>>,
+    indexed_halfwords_39a5: Option<Box<IndexedHalfwords39a5Resources>>,
+    script_byte_lookup_3ad: Option<Box<ScriptByteLookup3adResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -767,6 +804,27 @@ impl RuntimeResources {
         if let Some((data, _)) = files.adjacent_offset_tables {
             resources.adjacent_offset_tables = Some(Box::new(AdjacentOffsetTablesResources::new(data.clone(), &source.adjacent_offset_tables.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.indexed_records16 {
+            resources.indexed_records16 = Some(Box::new(IndexedRecords16Resources::new(data.clone(), &source.indexed_records16.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.indexed_words_3959 {
+            resources.indexed_words_3959 = Some(Box::new(IndexedWords3959Resources::new(data.clone(), &source.indexed_words_3959.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.thumb_switch_tables {
+            resources.thumb_switch_tables = Some(Box::new(ThumbSwitchTablesResources::new(data.clone(), &source.thumb_switch_tables.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.thumb_pc_literals {
+            resources.thumb_pc_literals = Some(Box::new(ThumbPcLiteralsResources::new(data.clone(), &source.thumb_pc_literals.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.copied_halfword_lookups {
+            resources.copied_halfword_lookups = Some(Box::new(CopiedHalfwordLookupsResources::new(data.clone(), &source.copied_halfword_lookups.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.indexed_halfwords_39a5 {
+            resources.indexed_halfwords_39a5 = Some(Box::new(IndexedHalfwords39a5Resources::new(data.clone(), &source.indexed_halfwords_39a5.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.script_byte_lookup_3ad {
+            resources.script_byte_lookup_3ad = Some(Box::new(ScriptByteLookup3adResources::new(data.clone(), &source.script_byte_lookup_3ad.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -967,6 +1025,7 @@ impl RuntimeResources {
         dimensions: ObjDimensions,
     ) -> Self {
         let projection = dimensions.source_bytes();
+        let derived_projection = super::obj_derived_dimensions::projections(&dimensions);
         Self {
             source_sha256,
             dataset_sha256,
@@ -974,8 +1033,13 @@ impl RuntimeResources {
             version,
             dimensions,
             projection,
+            derived_projection,
             bus_reads: AtomicU64::new(0),
             bus_source_mask: AtomicU64::new(0),
+            derived_bus_reads: AtomicU64::new(0),
+            derived_source_bytes: AtomicU64::new(0),
+            derived_table_mask: AtomicU64::new(0),
+            derived_rows_mask: std::array::from_fn(|_| AtomicU64::new(0)),
             host_rom_reads: AtomicU64::new(0),
             host_ram_reads: AtomicU64::new(0),
             dynamic_ram_reads: AtomicU64::new(0),
@@ -1037,6 +1101,13 @@ impl RuntimeResources {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1186,6 +1257,13 @@ impl RuntimeResources {
             + self.dma_register_directories.as_ref().map_or(0, |i| i.resident_bytes())
             + self.iwram_memory_helpers.as_ref().map_or(0, |i| i.resident_bytes())
             + self.adjacent_offset_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.indexed_records16.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.indexed_words_3959.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.thumb_switch_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.thumb_pc_literals.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.copied_halfword_lookups.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.indexed_halfwords_39a5.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.script_byte_lookup_3ad.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1360,6 +1438,13 @@ impl RuntimeResources {
     pub fn dma_register_directories_stats(&self) -> Option<DmaRegisterDirectoriesStats> { self.dma_register_directories.as_ref().map(|m| m.stats()) }
     pub fn iwram_memory_helpers_stats(&self) -> Option<IwramMemoryHelpersStats> { self.iwram_memory_helpers.as_ref().map(|m| m.stats()) }
     pub fn adjacent_offset_tables_stats(&self) -> Option<AdjacentOffsetTablesStats> { self.adjacent_offset_tables.as_ref().map(|m| m.stats()) }
+    pub fn indexed_records16_stats(&self) -> Option<IndexedRecords16Stats> { self.indexed_records16.as_ref().map(|m| m.stats()) }
+    pub fn indexed_words_3959_stats(&self) -> Option<IndexedWords3959Stats> { self.indexed_words_3959.as_ref().map(|m| m.stats()) }
+    pub fn thumb_switch_tables_stats(&self) -> Option<ThumbSwitchTablesStats> { self.thumb_switch_tables.as_ref().map(|m| m.stats()) }
+    pub fn thumb_pc_literals_stats(&self) -> Option<ThumbPcLiteralsStats> { self.thumb_pc_literals.as_ref().map(|m| m.stats()) }
+    pub fn copied_halfword_lookups_stats(&self) -> Option<CopiedHalfwordLookupsStats> { self.copied_halfword_lookups.as_ref().map(|m| m.stats()) }
+    pub fn indexed_halfwords_39a5_stats(&self) -> Option<IndexedHalfwords39a5Stats> { self.indexed_halfwords_39a5.as_ref().map(|m| m.stats()) }
+    pub fn script_byte_lookup_3ad_stats(&self) -> Option<ScriptByteLookup3adStats> { self.script_byte_lookup_3ad.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1459,11 +1544,42 @@ impl RuntimeResources {
         ResourceStats {
             bus_reads: self.bus_reads.load(Ordering::Relaxed),
             bus_source_mask: self.bus_source_mask.load(Ordering::Relaxed) as u8,
+            derived_bus_reads: self.derived_bus_reads.load(Ordering::Relaxed),
+            derived_source_bytes: self.derived_source_bytes.load(Ordering::Relaxed),
+            derived_table_mask: self.derived_table_mask.load(Ordering::Relaxed) as u8,
+            derived_rows_mask: self.derived_rows_mask.each_ref().map(|v| v.load(Ordering::Relaxed) as u16),
             host_rom_reads: self.host_rom_reads.load(Ordering::Relaxed),
             host_ram_reads: self.host_ram_reads.load(Ordering::Relaxed),
             dynamic_ram_reads: self.dynamic_ram_reads.load(Ordering::Relaxed),
             validation_reads: self.validation_reads.load(Ordering::Relaxed),
         }
+    }
+
+    fn derived_guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
+        if self.version != Version::Europe { return prior; }
+        let cells: [_; N] = std::array::from_fn(|i| {
+            let at = index + i;
+            super::obj_derived_dimensions::TABLE_OFFSETS.iter().enumerate().find_map(|(table, &base)| {
+                let relative = at.checked_sub(base as usize)?;
+                self.derived_projection[table].get(relative).map(|&byte| (byte, table, relative / 4))
+            })
+        });
+        if cells.iter().all(Option::is_none) { return prior; }
+        let (mut count, mut mask, mut rows) = (0u64, 0u64, [0u64; 2]);
+        let result = std::array::from_fn(|i| match cells[i] {
+            Some((byte, table, row)) => {
+                count += 1;
+                mask |= 1 << table;
+                rows[table] |= 1 << row;
+                byte
+            }
+            None => prior.as_ref().map_or_else(|| rom[index + i], |bytes| bytes[i]),
+        });
+        self.derived_bus_reads.fetch_add(1, Ordering::Relaxed);
+        self.derived_source_bytes.fetch_add(count, Ordering::Relaxed);
+        self.derived_table_mask.fetch_or(mask, Ordering::Relaxed);
+        for (counter, bits) in self.derived_rows_mask.iter().zip(rows) { counter.fetch_or(bits, Ordering::Relaxed); }
+        Some(result)
     }
 
     // This is a fixed regional mapping, never a manifest/range catalog search.
@@ -1707,6 +1823,34 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.indexed_records16 {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.indexed_words_3959 {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.thumb_switch_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.thumb_pc_literals {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.copied_halfword_lookups {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.indexed_halfwords_39a5 {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.script_byte_lookup_3ad {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -1874,7 +2018,8 @@ impl RuntimeResources {
             let prior = match &self.octonary_compact_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.ui_context_templates {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
             let prior = match &self.compact_obj_catalog {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
-            return match &self.layered_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            let prior = match &self.layered_obj_animations {Some(data)=>data.guest_read(index,rom,prior),None=>prior};
+            return self.derived_guest_read(index, rom, prior);
         };
         self.bus_reads.fetch_add(1, Ordering::Relaxed);
         let source_bit = if matches!(base, 0x149510 | 0x14ced8) {
@@ -2014,7 +2159,7 @@ impl crate::MemMap {
 
     #[inline]
     pub(crate) fn resource_page(index: usize) -> bool {
-        matches!(index >> 12, 0x149 | 0x14c | 0xa39 | 0xd97
+        matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97
             | 0x569..=0x56c | 0x766..=0x769)
             || PaletteResources::source_page(index)
             || AlternatePaletteResources::source_page(index)
@@ -2104,6 +2249,13 @@ impl crate::MemMap {
             || DmaRegisterDirectoriesResources::source_page(index)
             || IwramMemoryHelpersResources::source_page(index)
             || AdjacentOffsetTablesResources::source_page(index)
+            || IndexedRecords16Resources::source_page(index)
+            || IndexedWords3959Resources::source_page(index)
+            || ThumbSwitchTablesResources::source_page(index)
+            || ThumbPcLiteralsResources::source_page(index)
+            || CopiedHalfwordLookupsResources::source_page(index)
+            || IndexedHalfwords39a5Resources::source_page(index)
+            || ScriptByteLookup3adResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

@@ -6,6 +6,10 @@ use serde::{Deserialize, Serialize};
 pub const PHASE_SOURCE: u32 = 0x371064;
 pub const BATTLE_PHASE_SOURCE: u32 = 0x37101c;
 pub const BATTLE_DRAW_SEQUENCE_SOURCE: u32 = 0x370ffc;
+/// A physical projection of the original uncapped byte-indexed signed lookup.
+pub const SIGNED_LOOKUP_SOURCE: u32 = 0x371020;
+pub const SIGNED_LOOKUP_BYTES: usize = 4;
+pub const SIGNED_LOOKUP_SHA256: &str = "108926562b2303b9fffdfaa34f5aeeaf701a785231d1de42a2c9d5948fc6bc3e";
 /// Conditional phases in the original wrap sequence, not a prelookup guest cap.
 pub const PHASE_COUNT: usize = 3;
 pub const VERTICAL_SOURCE: u32 = 0x394e14;
@@ -123,6 +127,9 @@ pub struct ObservedTaskParameters {
     /// Values for the conditional post-mask draw sequence; first index is uncapped.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub battle_draw_sequence: Option<[u8; 32]>,
+    /// Four represented bytes; the original guest index is not restricted to them.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub signed_lookup_projection: Option<[i8; 4]>,
 }
 impl ObservedTaskParameters {
     pub fn validate(&self) -> Result<(), String> {
@@ -135,6 +142,7 @@ impl ObservedTaskParameters {
             .or_else(|| self.vertical_corrections.byte_at(offset))
             .or_else(|| self.battle_phase_thresholds.as_ref()?.get(offset.checked_sub(BATTLE_PHASE_SOURCE)? as usize).copied())
             .or_else(|| self.battle_draw_sequence.as_ref()?.get(offset.checked_sub(BATTLE_DRAW_SEQUENCE_SOURCE)? as usize).copied())
+            .or_else(|| self.signed_lookup_projection.as_ref()?.get(offset.checked_sub(SIGNED_LOOKUP_SOURCE)? as usize).map(|&value| value as u8))
     }
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
         let mut spans = self.phase_thresholds.source_spans()?;
@@ -144,6 +152,9 @@ impl ObservedTaskParameters {
         }
         if let Some(sequence) = &self.battle_draw_sequence {
             spans.push((BATTLE_DRAW_SEQUENCE_SOURCE, sequence.to_vec(), "battle-draw-sequence".into()));
+        }
+        if let Some(values) = &self.signed_lookup_projection {
+            spans.push((SIGNED_LOOKUP_SOURCE, values.iter().map(|&value| value as u8).collect(), "signed-task-lookup-projection".into()));
         }
         Ok(spans)
     }
@@ -181,12 +192,15 @@ impl Catalog {
             ),
             (0x131b8, 0x1320c, "63818f5802278ef13d944cdc09da0539f0332a7cc5ac63577327a8941b2caeb6"),
             (0x13130, 0x131b8, "2da1654a2753c0c840798f3a1be2cb23b4757423dbd6becfa85933095f620451"),
+            (0x1240c, 0x1241a, "6c0b76940bd87eb96317706850172724593be2ca53a19e516201ff2efc09d6cd"),
+            (0x12834, 0x1284a, "4894e037be1b42251c42b475fa27b7383be032db79d2e1a8bdbe99ebc4f61a9c"),
+            (0x12fdc, 0x12fea, "6c0b76940bd87eb96317706850172724593be2ca53a19e516201ff2efc09d6cd"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != sha {
                 return Err("Original task-parameter reader fingerprint mismatch".into());
             }
         }
-        for (literal, expected) in [(0x18df4, 0x08371064u32), (0x26534, 0x08394e0cu32), (0x13258, 0x0837101cu32), (0x131b0, 0x08370ffcu32)] {
+        for (literal, expected) in [(0x18df4, 0x08371064u32), (0x26534, 0x08394e0cu32), (0x13258, 0x0837101cu32), (0x131b0, 0x08370ffcu32), (0x12424, 0x08371020u32), (0x12880, 0x08371020u32), (0x12ff4, 0x08371020u32)] {
             if u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap()) != expected {
                 return Err("Original task-parameter source literal mismatch".into());
             }
@@ -195,8 +209,10 @@ impl Catalog {
         let vertical = &rom[VERTICAL_SOURCE as usize..VERTICAL_SOURCE as usize + 12];
         let battle = &rom[BATTLE_PHASE_SOURCE as usize..BATTLE_PHASE_SOURCE as usize + 3];
         let draw = &rom[BATTLE_DRAW_SEQUENCE_SOURCE as usize..BATTLE_DRAW_SEQUENCE_SOURCE as usize + 32];
+        let signed = &rom[SIGNED_LOOKUP_SOURCE as usize..SIGNED_LOOKUP_SOURCE as usize + SIGNED_LOOKUP_BYTES];
         if ffta_rom::digest(phases) != PHASE_SHA256 || ffta_rom::digest(vertical) != VERTICAL_SHA256 || ffta_rom::digest(battle) != PHASE_SHA256
             || ffta_rom::digest(draw) != "8352f94c00b26d3b0834df0b3f1f16de59302e3dc4edf92de8625902dbdc12cc"
+            || ffta_rom::digest(signed) != SIGNED_LOOKUP_SHA256
         {
             return Err("Observed task-parameter source fingerprint mismatch".into());
         }
@@ -225,6 +241,7 @@ impl Catalog {
             },
             battle_phase_thresholds: Some(battle.try_into().unwrap()),
             battle_draw_sequence: Some(draw.try_into().unwrap()),
+            signed_lookup_projection: Some(std::array::from_fn(|i| signed[i] as i8)),
         };
         let sources = decoded
             .source_spans()?

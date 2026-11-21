@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-battle-obj-support",
+  "title": "Consume European battle OBJ support fields",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend E208-d207 OBJ static resources with seven independently rooted IWRAM callback words and four additional actor lookup entries while preserving prior fields, source ownership, original guest indexing and mutable guest code.",
+    "Authenticate each selected original literal, pointer load, branch bridge and copied-code prefix; keep the neighboring 397fb4 word raw pending a source-backed consumer."
+  ],
+  "validation": [
+    "Windows test build gn2scklt and Wine _pxxvoql pass all 36 source bytes, poisoned mixed boundaries and mirrors, 122 preserved resources, 14 original interpreter/generated callback cases, 22 original lookup cases and snapshot-owner retention.",
+    "Wine sk5simea compares 600 recorded EUR Llednar frames with selected ROM backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match. It serves 28 additional actor bytes and 80/372 bytes from the two observed callback words.",
+    "Windows production build rihbwg96 and Wine CLI ayi5qr7q pass create, reuse and verify with 124 matching files. Reclassification rvzvbu0u leaves 3841 previously unowned sampled bytes, including 13 high."
+  ],
+  "limitations": [
+    "The recorded battle lookup counter is aggregate; the earlier address audit sampled all four added entries. The earlier save ancestry is unknown; no new cheat or state forcing was used. Other callbacks, the neighboring word, actor indices, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/obj_lists.rs",
+    "crates/gba-core/src/rom_data/obj_lists/conditional_markers.rs",
+    "crates/gba-core/src/rom_data/obj_lists/constructor_animation.rs",
+    "crates/gba-core/src/rom_data/obj_lists/context_selector.rs",
+    "crates/gba-core/src/rom_data/obj_lists/observed.rs",
+    "crates/gba-core/src/rom_data/runtime/obj_lists.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/battle_obj_support_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_obj.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

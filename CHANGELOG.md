@@ -94,6 +94,30 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALI
 
 [Change record](docs/changes/2026-11-21-prepare-rectangle-lifecycle-check.json)
 
+## 2026-11-21 — Inventory European Llednar battle ROM reads
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Inventory selected ROM reads during a retained final-battle continuation against the E206-d205 manifest, identifying candidate dependencies for subsequent source and consumer analysis.
+- Preserve the full address-only report and distinguish sampled addresses from authenticated asset boundaries and executing instruction sites.
+
+**Validation**
+
+- EUR Wine child e215-llednar-audit-wine-31k333ug passes a 600-frame raw/managed pair for complete state, guest clock, video, OAM, dispatch and five nonempty audio streams; its Wine server drained and the local overlay avoided the D-Bus assertion.
+- The original unit was retained as FAIL by the scratch guard because it contained a generated neutral input. Recovery e215-llednar-audit-recovery-nocdwh09 independently rechecks 37 protected inputs, the child log and report hash, and reconciles all sampled addresses with the E206 manifest without replay.
+- The recovered inventory reports 255853 distinct selected ROM bytes, 4281 unowned sampled bytes and 453 at or above 300000; the largest high sampled spans begin at 416254, 41142c and 4161e0.
+
+**Limitations**
+
+- The audit is address-only, selected readers are incomplete and original PCs or complete asset extents are not established. The earlier supplied save ancestry is unknown. Other scenes and consumers, Linux, USA and native Windows remain open.
+- The original failed unit remains retained; no gameplay replay or performance comparison was performed during recovery.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-21-inventory-european-llednar-battle-rom-reads.json)
+
 ## 2026-11-21 — Inventory European home-scene ROM reads
 
 Type: docs. Platforms: European ROM; Windows via Wine.
@@ -135,6 +159,27 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-21-identify-european-home-archive-streams.json)
 
+## 2026-11-21 — Identify European color-mode indexed archives
+
+Type: docs. Platforms: European ROM; previous Windows via Wine observation.
+
+**Changes**
+
+- Document three source-pinned color-mode indexed archives and the original mode selection, keeping language selection separate.
+
+**Validation**
+
+- Static e211-home-indexed-source-mwuqtdap verifies the original caller and wrapper, 495 programs, 96-byte outputs and dictionary extents against the exact EUR ROM. The E207 home sample includes 362 unowned bytes in the first archive.
+- The third archive overlaps four bytes at 3d4830..3d4834 already owned by graphics.unit-obj-ffff-reader-fields; the source audit preserves and reports this overlap instead of claiming disjointness.
+
+**Limitations**
+
+- The address-only sample does not identify executing PCs. The archives are not yet extracted or served; other modes and readers, Linux, USA and native Windows remain open. No new guest execution or performance measurement.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-21-identify-european-color-mode-indexed-archives.json)
+
 ## 2026-11-21 — Identify Blue Screw rectangle source dependencies
 
 Type: docs. Platforms: European ROM; prior Windows via Wine scene.
@@ -175,6 +220,483 @@ Type: changed. Platforms: Windows via Wine; European ROM.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-21-extract-blue-screw-rectangle-pointers.json)
+
+## 2026-11-21 — Consume European Thumb switch tables
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish 23 authenticated guarded Thumb switch tables, their 696 destinations and root words as engine.thumb-switch-tables, preserving original guest guards, same-state control flow and prior/raw fallback outside the physical spans.
+- Bind the decoded resources to guest, generated-prefix and DMA/BIOS reads, enforce file and source validation, and preserve 125 previous resources and the adjacent text-reader owner.
+
+**Validation**
+
+- Windows test build b824mmtm and Wine 83yciuax verify 2876 source bytes, 125 preserved resources, mixed boundaries and mirrors, 92 original interpreted/generated-prefix cases with interpreted MOV PC, 46 outside-load cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine 01z89owc compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; all 23 roots and destination tables are used.
+- Windows production build y0drl4tm and Wine CLI lr21g7ro pass create, reuse and verify with 127 matching files. Static reclassification sxj55u1f attributes 500 sampled bytes and leaves 3331 unowned, including three high.
+
+**Limitations**
+
+- Initial Wine unit nwvu89dw failed because chained generated test blocks passed its stop; the corrected test passes. The production build preceded this test-only correction; guarded production inputs and executable were unchanged.
+- The address-only battle audit does not identify executing PCs; earlier save ancestry is unknown, with no new cheat or state forcing. Other tables, indices, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-thumb-switch-tables.json)
+
+## 2026-11-21 — Consume European Thumb PC-relative literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish 326 authenticated Thumb PC-relative words with original-reader witnesses as engine.thumb-pc-literals, preserving their exact bits and guest behavior without inventing pointed-to asset meanings.
+- Bind decoded literal values to guest and generated readers, preserve previous owners and raw fallback, and enforce source and file authentication.
+
+**Validation**
+
+- Windows test build h_xizw2v and Wine e3auifw5 verify 1304 source bytes, 126 preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine qct03qw7 compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; 239 distinct literals are used.
+- Windows production build ym2ih9nr and Wine CLI t5x79vsh pass create, reuse and verify with 128 matching files. Static reclassification 2bz86_ck attributes 956 sampled bytes and leaves 2375 unowned; join so67hagh shows all 105 E203 selected prior-site words now owned.
+
+**Limitations**
+
+- The source set combines 153 Bank static-reader witnesses, 100 F09 executed sites and 73 E170 instruction-scope observations whose opcode, width and effective address were checked; E215 and E172 samples are address-only and do not identify executing PCs.
+- Earlier save ancestry is unknown, with no new cheat or state forcing. Other words, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-thumb-pc-literals.json)
+
+## 2026-11-21 — Consume European signed task lookup projection
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the authenticated four-byte signed projection at 371020..371024 in E206-d205 while leaving the original unsigned guest index uncapped and composing with adjacent owners.
+- Preserve previous task parameter fields and usage counters; separately track the represented lookup bytes and indices.
+
+**Validation**
+
+- Windows test build e214-signed-build-ybvdt2ef and EUR Wine e214-signed-wine-qo5za07r pass every represented byte, mixed boundaries and mirrors, 122 preserved resources, authenticated source, owner retention, and 24 interpreter/generated-dispatch reader cases across 12 indices including 255.
+- EUR Wine e214-home-scene-wine-aj4omulx matches full state, guest clock, video, OAM, dispatch and five nonempty audio streams across 600 recorded home frames with the projected ROM backing altered; indices 1 and 2 are served.
+- Windows production build e214-cli-build-3fbjudfd and EUR Wine e214-signed-cli-wine-yozdoyrs pass create/reuse/verify with 124 files matching the tested dataset. Static e214-home-residual-jd33pjgk leaves 2108 of the original 8544 sampled bytes unowned, all below 300000.
+
+**Limitations**
+
+- Only four physical bytes are projected, not a complete inferred guest table. Other indices, consumers, executing PCs in the scene, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance comparison was performed.
+- Earlier linear reader-window evidence 7zra4rc1 contains a D-Bus assertion. New Wine tests use the local overlay, show no such assertion and drain their servers.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-signed-task-lookup-projection.json)
+
+## 2026-11-21 — Consume European script byte lookup window
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the authenticated six-byte physical window between the script-command and selector directories plus a second original root as a typed runtime resource.
+- Preserve guest subtraction and index behavior, including underflow into the previous owner and reads into the following owner or raw fallback.
+
+**Validation**
+
+- Retained Wine source scope qyrfym7w and original windows rit3fxua identify the sampled byte and two original reader roots.
+- Windows test build dd1n8nny and Wine cu0__ocg verify ten source bytes, 129 prior resources, both adjacent owners and the prior root, coherent edit rejection, mixed/mirrored boundaries, 40 interpreted/generated reader prefixes, transfers and snapshot ownership.
+- Wine frcsvz7a compares 600 retained European battle frames with selected backing altered; the observed lookup byte is read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Production build wmqqy5ac and Wine CLI a2w8hrj6 pass create, reuse and verify with 131 matching files. Static reconciliation 3blfucoi assigns all 4281 previously unowned bytes in the earlier address-only sample.
+
+**Limitations**
+
+- The physical window does not establish the full semantic lookup domain; the battle did not read the second root. Other callers, scenes, real-BIOS and UI save/Load remain open.
+- The address-only sample does not prove full ROM coverage. Earlier save ancestry is unknown; no new cheat or state forcing was used.
+- Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-script-byte-lookup-3ad16e.json)
+
+## 2026-11-21 — Consume European relative graphics archive
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extract and consume all 103 custom-compressed streams and the relative directory at 3d63d4 in E203-d202, retaining encoded control bytes and decoded words while leaving guest selection and decompression intact.
+- Preserve previous graphics data and raw alignment gaps, verify exact source bindings, and expose per-archive usage counters for observed scene validation.
+
+**Validation**
+
+- Windows test build e210-relative-build-e6jcspzc and EUR Wine reader e210-relative-wine-af7l9c_2 pass against the current dependency lock: 103 streams, every owned source byte and boundary, eight original interpreter/translated resolver cases, three decoder cases, source authentication and owner reload checks.
+- Wine e210-home-scene-wine-deee1ha0 matches full state, guest clock, video, OAM, dispatch and audio for 600 recorded home frames with the directory and streams 69, 71 and 73 altered in the managed ROM. All three are consumed by the file-backed owner.
+- Windows production build e210-cli-build-wi7wdfrn and Wine e210-relative-cli-wine-473fvdeq pass create/reuse/verify with 124 files matching the tested dataset. All Wine servers drain, with no D-Bus assertion using the local overlay. Static e210-home-residual-4j77xxqi leaves 2488 of the prior 8544 sampled bytes unowned.
+
+**Limitations**
+
+- Other indices and scenes, indirect consumers, real-BIOS behavior and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance measurements were performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-relative-graphics-archive.json)
+
+## 2026-11-21 — Consume European indexed word lookup
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish 30 authenticated little-endian words as gameplay.indexed-words-3959a4 with their independently rooted successor; preserve guest index arithmetic and raw fallback outside the physical projection.
+- Bind the decoded source to guest, generated-native and DMA/BIOS reads, enforce file and source validation, and retain the previous resources and their order.
+
+**Validation**
+
+- Windows test build pgeent6b and Wine hdglegnr verify 120 bytes, 124 preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, out-of-projection indices, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine des5bafu compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; record 29 is served once.
+- Windows production build lcnhfgdg and Wine CLI snb6pezg pass create, reuse and verify with 126 matching files. Static reclassification v236zapk leaves 3831 previously unowned sampled bytes, including three high.
+
+**Limitations**
+
+- The address-only battle audit does not identify executing PCs; earlier save ancestry is unknown, with no new cheat or state forcing. Other value meanings, indices, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-indexed-words-3959a4.json)
+
+## 2026-11-21 — Consume European indexed 16-byte records
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the authenticated 86-record, 1376-byte EUR source as gameplay.indexed-records16 with typed physical fields and the original internal record-82 alias; do not impose a new guest index bound.
+- Bind the decoded resource to guest, generated-native and DMA/BIOS reads, enforce per-file and aggregate validation, and retain the previous resource order and source identities.
+
+**Validation**
+
+- Windows test build __n_1_jb and Wine 68wakt20 verify all source bytes, 123 preserved resources, poisoned mixed boundaries and mirrors, 36 original interpreter/generated byte and halfword reader cases including outside indices, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine z_mmhop1 compares 600 recorded EUR Llednar frames with selected ROM backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match. It serves 36 source bytes from six records and two physical fields.
+- Windows production build vvxiue1h and Wine CLI r1aazv8q pass create, reuse and verify with 125 matching files. Reclassification aijf3pxc leaves 3832 earlier unowned sampled bytes, including four high.
+
+**Limitations**
+
+- The recorded battle audit is address-only and does not identify executing PCs; earlier save ancestry is unknown, with no new cheat or state forcing. Other field meanings, indices, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-indexed-records16.json)
+
+## 2026-11-21 — Consume European indexed halfwords at 39a5c8
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish three authenticated EUR indexed halfwords as a typed runtime resource while retaining the previously owned reader root and all earlier resources.
+- Preserve original guest indexing and compose outside-range reads with existing owners or raw fallback.
+
+**Validation**
+
+- Wine source disassembly iptx2__f identifies the original local selector and indexed halfword load.
+- Windows test build zpk3zrya and Wine ebfw8yn_ verify six bytes, 128 prior resources, the prior root, coherent edit rejection, mixed/mirrored boundaries, ten interpreter/generated reader prefixes including outside indices, transfers and snapshot ownership.
+- Wine jv5_43gi compares 600 retained European battle frames with the backing altered; the first value is read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Production build zd6ouzoi and Wine CLI w3f33_xp pass create, reuse and verify with 130 matching files. Static reconciliation l5w20wvc leaves one high byte in the earlier address-only sample.
+
+**Limitations**
+
+- The battle samples the first value only; other callers, selector paths, scenes, real-BIOS and UI save/Load remain open. Earlier save ancestry is unknown; no new cheat or state forcing was used.
+- Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+- Two parallel unit admissions were refused while the artifact lease was held; both were admitted after it was released.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-indexed-halfwords-39a5c8.json)
+
+## 2026-11-21 — Consume European home-scene observed code support
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 40 observed-scope words and the switch resource with two original destination arrays of 28 and seven words.
+- Preserve prior literals, tables, original guest guards and out-of-range behavior while routing the new physical sources through the extracted dataset.
+
+**Validation**
+
+- Wine site capture zmsp5rfg observes all 172 remaining sampled bytes and matches 40 original Thumb literal readers; disassembly 5i77x__r identifies both original bounded switch arrays.
+- Windows test build c0z9530s and Wine gwh_mblj verify 300 source bytes, prior literal and switch groups and 128 other resources, coherent edit rejection, mixed/mirrored boundaries, 80 interpreted/generated literal cases, eight guarded switch cases, eight outside cases, transfers and snapshot ownership.
+- Wine 18841zsj compares 600 recorded European home frames with new backing altered; all 40 literal words and both switch arrays are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build ro1aypjc and Wine CLI q0do0j4t pass create, reuse and verify with 131 matching files. Static reconciliation dnr49xgd assigns the final 172 bytes in the E207 address-only sample.
+
+**Limitations**
+
+- Initial Wine reader zp_otq7h failed because the second switch-table expected hash was mistyped; it was corrected before the passing build.
+- Execution scopes may include nested accesses; the sampled home inventory does not prove other callers, full literal pools or complete ROM coverage. The indirect MOV-PC remains interpreter fallback in the controlled switch test.
+- Other scenes, real-BIOS, UI save/Load, Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-home-observed-code-support.json)
+
+## 2026-11-21 — Consume European home-scene anchored Thumb literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 25 words sampled during the EUR home continuation and statically linked to original readers and translated blocks.
+- Preserve the 886 previous words, existing masks, prior owners and raw fallback; retain the original word bits without inferring pointed-to assets.
+
+**Validation**
+
+- Static source plan 1j0fo_ra authenticates the EUR ROM, translation cache, 25 Thumb readers and straight-line anchor paths for 100 sampled bytes.
+- Windows test build ji4fe7wn and Wine yc40amn_ verify the 100 bytes, prior literal groups and 129 other resources, coherent edit rejection, mixed/mirrored boundaries, 48 interpreter/generated reader cases, transfers and snapshot ownership.
+- Wine 29mql8p4 compares 600 recorded European home frames with all 25 backing words altered; all are read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Production build 0fx28clc and Wine CLI __imn0tp pass create, reuse and verify with 131 matching files. Static reconciliation ypnkepk0 leaves 172 previously unowned bytes in the E207 address-only sample.
+
+**Limitations**
+
+- The source anchors are static and do not prove the executing PCs or full literal pools; other readers, scenes, real-BIOS and UI save/Load remain open.
+- The address-only home sample does not prove full ROM coverage. Linux, USA and native Windows require separate verification.
+- Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-home-anchored-thumb-literals.json)
+
+## 2026-11-21 — Consume European eight-row tilemap lookup
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the 16 authenticated signed bytes at 371024..371034 as four rows in E205-d204, preserving original guest drawing and composition with the adjacent task-cycle owner.
+- Keep the original six-group usage counter independent from the four added lookup rows while preserving prior tilemap data and other resources.
+- Clarify that earlier sampled-byte counts describe their historical dataset revisions, while the E205 residual is the current scoped result.
+
+**Validation**
+
+- Windows test build e213-tilemap-build-o0fm9ebq and EUR Wine e213-tilemap-wine-y3wk6uev pass all source bytes, mixed boundaries, prior-resource preservation, owner retention and five original interpreter/generated-dispatch drawing cases.
+- EUR Wine e213-home-scene-wine-7fmxa2bo matches full state, guest clock, video, OAM, dispatch and audio for 600 recorded home frames with the lookup backing altered; all four rows are consumed.
+- Windows production build e213-cli-build-b8ddhxlv and EUR Wine e213-tilemap-cli-wine-ga0p99vm pass create/reuse/verify with 124 files matching the tested dataset. Static e213-home-residual-d9rkhtks leaves 2110 of the prior 8544 sampled bytes unowned.
+- After a diagnostic-only correction to legacy group counting, Windows test build e213-counter-build-eeuj2yvs and Wine e213-counter-wine-li2pps9d verify the six old groups separately from the four added rows. Earlier reader, scene and offline CLI paths did not depend on that counter.
+
+**Limitations**
+
+- Other consumers, alternate entries, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance comparisons were performed.
+- The first scene launch was refused before Wine started while an artifact lease was active; the retry after release passed. Wine servers drained, and the local overlay avoided the D-Bus assertion.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-eight-row-tilemap-lookup.json)
+
+## 2026-11-21 — Consume European derived OBJ dimension views
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated OBJ dimensions source bindings with two twelve-record EUR views reconstructed from the existing unchanged dimensions file.
+- Compose the derived bytes with the adjacent display-control owner and raw fallback, preserving the original reserved-shape physical reads without adding guest bounds.
+
+**Validation**
+
+- Retained Wine scope qyrfym7w and original windows rit3fxua identify the sampled byte reads and original shape/size reader.
+- Windows test build 2aefh61b and Wine riylj8n_ verify 96 new bytes, unchanged dimensions file and 126 other resources, coherent edit rejection, mixed/mirrored boundaries, 32 interpreter/generated prefixes including reserved shape, transfers and owner retention.
+- Wine o9_mw7ee compares 600 retained European battle frames with both new backing views altered: both are read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match every frame.
+- Production build hbubspau and Wine CLI e_jxiaof pass create, reuse and verify with 128 matching files. Static reconciliation 53vwjg84 leaves 11 previously unowned sampled bytes, including three high.
+
+**Limitations**
+
+- Execution scopes may include nested HLE/DMA reads and do not prove every caller or all scene paths; reserved shape follows original physical addresses rather than an added cap.
+- Earlier save ancestry is unknown; no new cheat or state forcing. Other bytes, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-derived-obj-dimension-views.json)
+
+## 2026-11-21 — Consume European copied halfword lookups
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish two authenticated four-halfword EUR lookup tables and two PC-relative root words as a typed runtime resource, retaining all previous resources and the earlier separately owned root.
+- Route reads and transfers through the extracted tables while preserving the original guest copy, stack indexing and outside-index behavior.
+
+**Validation**
+
+- Retained Wine scope qyrfym7w and original-code disassembly u0b955k1 identify sampled reads and the original readers, copy helper and source spans.
+- Windows test build nkbn7myx and Wine j75qi78l verify 24 bytes, 127 prior resources, coherent edit rejection, mixed/mirrored boundaries, ten interpreter/generated prefixes, 18 complete interpreter cases including outside indices, transfers and snapshot ownership.
+- Wine jv89wjir compares 600 retained European battle frames with selected backing altered; the first table is read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Production build seb61478 and Wine CLI if6d22yl pass create, reuse and verify with 129 matching files. Static reconciliation u6ti5mxt leaves three high bytes in the earlier address-only sample.
+
+**Limitations**
+
+- The initial build kcmxyfda failed on an edited test argument syntax error; it was fixed before the passing build.
+- The battle samples one table and no new root; other callers, index domains, scenes, real-BIOS and UI save/Load remain open. Earlier save ancestry is unknown; no new cheat or state forcing was used.
+- Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-copied-halfword-lookups.json)
+
+## 2026-11-21 — Consume European color-mode indexed archives
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish three authenticated color-mode indexed archives in E204-d203, preserving guest selection and decoding and retaining the existing physical owner of four overlapping bytes.
+- Bind the split source ranges to the existing indexed graphics resource and preserve all prior resources and the prior indexed data.
+
+**Validation**
+
+- Windows test build e212-indexed-build-9a9mmz_a and Wine e212-indexed-wine-d88bld36 pass: 495 programs, all source bytes, mixed boundaries and mirrors, five original interpreted and translated reader cases, authentication and retained-owner checks.
+- Wine e212-home-scene-wine-t6q5y978 matches full state, guest clock, video, OAM, dispatch and audio across 600 recorded home frames with the first archive altered; programs 125, 127 and 129 are consumed.
+- Windows production build e212-cli-build-lg3nx6if and Wine e212-indexed-cli-wine-vnsgav7l pass create/reuse/verify with 124 files matching the tested dataset. Wine servers drain and the local overlay avoids the D-Bus assertion. Static e212-home-residual-ucws8f95 leaves 2126 of 8544 sampled bytes unowned.
+
+**Limitations**
+
+- Other consumers, color modes and scenes, real-BIOS and UI save/Load paths remain open. Linux, USA and native Windows require separate verification. No performance comparisons were performed.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-color-mode-indexed-archives.json)
+
+## 2026-11-21 — Consume European battle switch destinations
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend engine.thumb-switch-tables with four original battle switch destination arrays and 163 decoded targets while retaining their separately owned literal roots.
+- Preserve previous switch masks and resources, authenticate source and original readers, and compose accesses beyond the projection with other owners or original backing without adding guest index guards.
+
+**Validation**
+
+- Wine scoped trace qyrfym7w sees all 135 remaining sampled bytes and original-code windows rit3fxua identify four switch readers; the fourth table was outside the interpreter scope.
+- Windows test build co8nrtac and Wine 6k14siel verify 652 new bytes, existing roots, 23 old tables and masks, 126 other resources, coherent edit rejection, mixed/mirrored boundaries, 16 interpreted/generated guarded prefixes, eight out-of-range load sequences, transfers and owner retention.
+- Wine lzpuxs2a compares 600 retained European battle frames with the new backing altered: all four arrays are read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match every frame.
+- Production build f4xz16wj and Wine CLI 4j66od25 pass create, reuse and verify with 128 matching files. Static reconciliation 03amsoxp leaves 27 previously unowned sampled bytes, including three high.
+
+**Limitations**
+
+- Scope can include nested HLE/DMA accesses and does not prove every caller. Generated-prefix tests use the interpreter fallback for indirect MOV pc; the 0960da out-of-range helper may return and no guest cap is added.
+- Earlier save ancestry is unknown; no new cheat or state forcing. Other bytes, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-battle-switch-destinations.json)
+
+## 2026-11-21 — Consume European battle-observed Thumb literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend engine.thumb-pc-literals by 443 exact EUR words with scoped original Thumb LDR evidence, preserving the 443 existing words, masks and previous resources without inferring pointed-to assets.
+- Authenticate source instructions and offsets, compose guest reads with prior and original owners, and expose a separate observed coverage mask. Extend the existing test-only site capture while preserving its defaults.
+
+**Validation**
+
+- Wine scope capture 744c5av7 covers 600 retained battle frames and matches opcode, address and four-byte width for 443 candidates; scoped accesses may be nested.
+- Windows test build c4yhfgcu and Wine qeb1_wme verify 1772 new bytes, 443 preserved words and masks, 126 other resources, coherent edit rejection, mixed/mirrored boundaries, 32 original interpreter/generated readers, transfers and owner retention.
+- Wine v5vdxrct compares 600 retained EUR battle frames with all 443 new backing words altered; all are read and state, clock, video, OAM, dispatch and five nonempty audio streams match every frame.
+- Production build fbx5uf3o and Wine CLI 73o_xfzb pass create, reuse and verify with 128 matching files. Static reconciliation _lf4p19t leaves 135 previously unowned sampled bytes, including three high.
+
+**Limitations**
+
+- Execution scopes may include nested HLE/DMA accesses and do not prove every access came directly from the scoped PC, complete pools, all callers or pointed-to assets.
+- Earlier save ancestry is unknown; no new cheat or state forcing. Other words, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+- Capture rv5lkw9c failed from a missing TinyCC path and 9663ynlq failed when a 12-frame batch had no matches; the full 600-frame capture passed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-battle-observed-thumb-literals.json)
+
+## 2026-11-21 — Consume European battle OBJ support fields
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend E208-d207 OBJ static resources with seven independently rooted IWRAM callback words and four additional actor lookup entries while preserving prior fields, source ownership, original guest indexing and mutable guest code.
+- Authenticate each selected original literal, pointer load, branch bridge and copied-code prefix; keep the neighboring 397fb4 word raw pending a source-backed consumer.
+
+**Validation**
+
+- Windows test build gn2scklt and Wine _pxxvoql pass all 36 source bytes, poisoned mixed boundaries and mirrors, 122 preserved resources, 14 original interpreter/generated callback cases, 22 original lookup cases and snapshot-owner retention.
+- Wine sk5simea compares 600 recorded EUR Llednar frames with selected ROM backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match. It serves 28 additional actor bytes and 80/372 bytes from the two observed callback words.
+- Windows production build rihbwg96 and Wine CLI ayi5qr7q pass create, reuse and verify with 124 matching files. Reclassification rvzvbu0u leaves 3841 previously unowned sampled bytes, including 13 high.
+
+**Limitations**
+
+- The recorded battle lookup counter is aggregate; the earlier address audit sampled all four added entries. The earlier save ancestry is unknown; no new cheat or state forcing was used. Other callbacks, the neighboring word, actor indices, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-battle-obj-support.json)
+
+## 2026-11-21 — Consume European battle OBJ bank
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend E207-d206 OBJ animation resources with the source-authenticated battle context bank: 17 lists, 43 objects, 16 frames and two empty sequence headers across 442 bytes, preserving adjacent owners and original guest indexing.
+- Project the new typed fields through guest, native, DMA and host-list paths, with dedicated bank read counts and the previous OBJ resources unchanged.
+
+**Validation**
+
+- Windows test build 78qil0q2 and Wine drtfh3ff pass prior-resource preservation, all selected bytes, mixed boundaries and mirrors, original interpreter and generated reader, 17 host lists, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine 5op6sk14 compares 600 recorded EUR Llednar frames with the selected ROM backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match, with 3118 selected source bytes served. The separate focused test covers host lists, which this scene did not read.
+- Production Windows build n8sgfqs9 and Wine CLI h524hpqf pass create, reuse and verify for 124 matching files. Source reclassification 5fwjo98g leaves 3857 of the earlier 4281 sampled bytes unowned, including 29 high.
+
+**Limitations**
+
+- The selected battle checkpoint has unknown earlier save ancestry; no new cheat or state forcing was used. Other consumers, scene PCs, index domains, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows remain to be verified. No performance comparison was performed.
+- The initial Wine reader attempts h81kx04y and mz13sddn failed on test setup and remain retained; the corrected Wine retry passed. The production build preceded test-only corrections; other guarded source inputs and the executable hash were unchanged. Wine servers drained and the local Bluetooth overlay avoided the known assertion.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-battle-obj-bank.json)
+
+## 2026-11-21 — Consume additional European Thumb literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend engine.thumb-pc-literals with 117 exact EUR words whose original readers have statically authenticated straight-line paths from exported translation blocks, without inventing pointed-to asset meanings.
+- Preserve the original 326 literal entries and coverage mask, compose the extension with prior/raw owners, and authenticate both source and file contents.
+
+**Validation**
+
+- Source gzj3f255 verifies 117 original LDR operands, code paths and anchors against the exact EUR ROM and existing translation; the E215 address inventory samples all 468 new source bytes.
+- Windows test build bex8n6wm and Wine 0qe1983j verify 468 new bytes, 326 preserved literals and legacy mask, 126 other preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.
+- Wine osmbx9xm compares 600 retained European battle frames with the new backing words altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; all 117 additional literals are used.
+- Windows production build 1ekx5_i7 and Wine CLI ajwb625v pass create, reuse and verify with 128 matching files. Static reclassification f73ffu_6 leaves 1907 previously unowned sampled bytes, including three high.
+
+**Limitations**
+
+- The source anchors and E215 inventory are static/address-only evidence and do not identify executing PCs or prove complete literal pools, other callers or pointed-to assets.
+- Earlier save ancestry is unknown, with no new cheat or state forcing. Other words, consumers, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-anchored-thumb-literals.json)
 
 ## 2026-11-21 — Cross-reference sampled Red Spring code-support words
 

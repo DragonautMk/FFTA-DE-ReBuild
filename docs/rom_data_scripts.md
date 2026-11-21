@@ -22,8 +22,10 @@ literals `1263c4/126468`. This bounds the 115 command records without inferring 
 extent from the appearance of callback pointers. An initial 116-record candidate
 ending at the existing selector root `3ad174` was rejected before the source plan
 or model was created: its last record would include the distinct byte lookup.
-The lookup and intervening bytes remain outside this projection; its complete
-semantic domain has not been established.
+The lookup and intervening bytes remain outside this command projection; its
+complete semantic domain has not been established. E219-d218 separately serves
+the bounded physical window and second root, with original outside-window
+behavior. [Evidence](rom_data_runtime.md#e228-script-byte-lookup-window).
 
 Relative commands 0 and 1 separately read the same advance field, add their stream
 operand and truncate the target to 16 bits before the original call. These readers

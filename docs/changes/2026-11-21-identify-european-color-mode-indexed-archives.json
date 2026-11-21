@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "identify-european-color-mode-indexed-archives",
+  "title": "Identify European color-mode indexed archives",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; previous Windows via Wine observation"
+  ],
+  "changes": [
+    "Document three source-pinned color-mode indexed archives and the original mode selection, keeping language selection separate."
+  ],
+  "validation": [
+    "Static e211-home-indexed-source-mwuqtdap verifies the original caller and wrapper, 495 programs, 96-byte outputs and dictionary extents against the exact EUR ROM. The E207 home sample includes 362 unowned bytes in the first archive.",
+    "The third archive overlaps four bytes at 3d4830..3d4834 already owned by graphics.unit-obj-ffff-reader-fields; the source audit preserves and reports this overlap instead of claiming disjointness."
+  ],
+  "limitations": [
+    "The address-only sample does not identify executing PCs. The archives are not yet extracted or served; other modes and readers, Linux, USA and native Windows remain open. No new guest execution or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

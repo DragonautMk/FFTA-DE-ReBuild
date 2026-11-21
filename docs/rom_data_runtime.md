@@ -1401,10 +1401,13 @@ Unused target values and branch bodies were not decoded into an asset model.
 
 Together with the separately authenticated high-offset hardware/branch support,
 all676observed unowned bytes have these scoped static code-support witnesses.
-They still remain outside the65managed owner plans, and the original ROM/code
-support dependency remains. No new game asset, decoder, resource, owner or
-revision is inferred; no whole-game/ROM completeness or coverage of interpreter,
-HLE, DMA, folded constants and other scenes is claimed.
+At that milestone they remained outside the65managed owner plans, and no new
+game asset, decoder, resource, owner or revision was inferred. E211 later owns
+the five switch tables and the separately observed `0a1150` table; E212 owns the
+153 previously unowned literal words in this witness set, as described below.
+Other code-support dependencies and whole-game/ROM coverage remain open;
+no global coverage of interpreter, HLE, DMA, folded constants or other scenes
+is claimed.
 
 Exact source ROM, static tool and retained address-report/summary hash-mtime
 guards pass; implementation is unchanged. No build, guest execution, test,
@@ -2827,6 +2830,47 @@ Other readers and index domains, broader Wine regression checks, Linux, USA and
 native Windows remain open. No performance measurement was made.
 
 
+## E213 European eight-row tile lookup
+
+E205-d204 extends `graphics.tilemap-geometry` with the 16 signed bytes at
+`371024..371034`, arranged as four physical rows. The original routine at
+`08017708` uses these values in its eight-row drawing paths, including the two
+horizontal orientations. Nonnegative values select tile offsets; the original
+negative-value branches remain guest work. The following byte belongs to the
+existing task-cycle resource. The new source projection imposes no new guest
+index bound and does not claim other consumers or alternate entries.
+
+Earlier source inspection `bounded-range-geometry-windows-rm4e5mhp` establishes
+the conditional dimensions and both lookup loops. The exact reader window and
+the 16-byte source are authenticated during extraction; the lookup SHA-256 is
+`22b8321c6014682807e4102853d6cd15cd56652bda09f45215746eb84f4d2acf`.
+
+Wine `e213-tilemap-wine-y3wk6uev` verifies every source byte, mixed boundaries
+and ROM mirrors, the adjacent task-cycle owner, 122 unchanged resources,
+source authentication, owner retention and five original interpreter and
+generated-dispatch cases. The non-eight-row case makes no lookup reads;
+generated dispatch may use interpreter fallback. Wine
+`e213-home-scene-wine-7fmxa2bo` matches state, guest clock, video, OAM,
+dispatch and audio on every frame of a 600-frame recorded home continuation
+with the lookup's managed ROM backing altered. It serves 1,048 lookup bytes
+across all four rows; that counter is an aggregate, not a unique-byte count
+or PC attribution. Wine CLI `e213-tilemap-cli-wine-ga0p99vm` passes create,
+reuse and verify with all 124 files matching the tested dataset.
+
+The reader, scene and offline CLI proofs preceded a diagnostic-only correction
+that preserves the existing six-group counter. Their data and guest execution
+paths did not change. Wine `e213-counter-wine-li2pps9d` checks the final counter
+behavior: the new rows do not change the legacy group count, and all six old
+groups remain countable. The initial scene launch was refused before Wine
+started because the artifact lease was active during a concurrent build; the
+retry followed its release and passed. The Wine servers drained and the local
+overlay avoided the previously observed D-Bus assertion.
+
+Static inventory `e213-home-residual-d9rkhtks` leaves 2,110 of the 8,544
+originally unowned E207 sample bytes outside E205 source ownership. Other
+consumers, scenes, real-BIOS and UI save/Load paths remain open; Linux, USA and
+native Windows are deferred. No performance comparison was performed.
+
 ## E162 bounded European scene equivalence
 
 Wine `e162-scene-matrix-wine-ig6dmb65` compares the unmodified ROM path
@@ -2895,14 +2939,52 @@ every frame. The Wine server drained and the local Bluetooth overlay avoided
 the previously observed D-Bus assertion in this run.
 
 The selected bus and host readers observed 97,551 distinct ROM bytes; 8,544
-are outside the current manifest's source spans. Of those, 6,436 are at or
+were outside the E202 manifest's source spans. Of those, 6,436 are at or
 above `300000`, including 6,041 bytes in three observed intervals
 `3fb21c..3fbb52`, `3fc3b0..3fcb75` and `3fd4f0..3fdb8e` (ends exclusive).
 These are sampled read ranges, not authenticated asset boundaries. The report
 does not identify guest instruction sites, infer ownership or prove that an
 unowned byte is data; attribution requires its original reader and source
-contract. Other scenes and readers, Linux, USA and native Windows remain open.
+contract. The E206 reconciliation left 2,108 sampled bytes; later ownership
+reduced this to 272 at E219 and 172 at E220. E221 owns the remaining 172
+(`e230-home-residual-dnr49xgd`): all 8,544 addresses in this earlier sample now
+have owners. Other scenes and readers, Linux, USA and native Windows remain open.
 No performance measurement was made.
+
+## E215 Llednar battle ROM read inventory
+
+Wine `e215-llednar-audit-wine-31k333ug` compares 600 neutral frames from a
+retained European Llednar battle checkpoint, guest frames 30924–31524, using
+the E206-d205 dataset. The checkpoint and neutral continuation match the
+retained plan and its protected inventory. The supplied save's earlier ancestry
+is unknown; no new cheat or state forcing was used in this continuation.
+Reference and managed machines match complete state, guest clock, video, OAM,
+dispatch and five nonempty audio streams at every frame. This does not assert
+equality with the earlier helper's separately recorded endpoint.
+
+The selected bus and host readers report 255,853 distinct physical ROM bytes,
+of which 4,281 are outside the E206 manifest. Of those, 453 are at or above
+`300000` and 3,828 below it. The largest high intervals observed are
+`416254..41634a` (246 bytes), `41142c..41146e` (66 bytes), and
+`4161e0..416220` (64 bytes), with exclusive ends. They are sampled addresses,
+not authenticated asset boundaries, and the audit does not identify executing
+PCs. Instruction fetches, folded constants, unselected host readers and other
+scenes remain outside its scope.
+
+The Wine child passed and its server drained without the D-Bus assertion
+using the local overlay. The original unit was marked FAIL during scratch
+retention because its generated neutral `.input` file was treated as private;
+the entire failed unit remains retained. Recovery
+`e215-llednar-audit-recovery-nocdwh09` independently rechecks all 37 protected
+input paths, the Wine log, neutral input, full report hash and address ownership
+against the E206 manifest, without replaying the game. It preserves the full
+address report and passes its own validation unit. E216 attributes 424 sampled
+bytes, E217 owns another 16, E218 another nine, E219 one more, E220 another
+500, E221 another 956, E222 another 468, E223 another 1,772, E224 another
+108, E225 another 16 and E226 another eight lower bytes. E227 covers two high
+bytes and E228 the last high byte: all 4,281 sampled bytes now have E219 source
+owners (`e228-llednar-residual-3blfucoi`). Other scenes, consumers, Linux, USA and
+native Windows remain open; no performance comparison was made.
 
 ## European display-control source tables at 14d2dc
 
@@ -3098,3 +3180,397 @@ open. No performance measurements were made.
 
 EUR E195-d194 also serves [two tilemap alternatives and their selector](rom_data_graphics.md#e195-alternate-tilemap-rectangles)
 through the existing observed-tilemap resource.
+
+## E220 European Thumb switch-table resources
+
+EUR E211-d210 publishes `engine.thumb-switch-tables`: 23 physical tables with
+696 even Thumb destinations and their 23 table-root words, covering 2,876
+authenticated source bytes. Twenty-two use a guarded unsigned comparison and
+common word-load/`MOV pc` sequence; the reader rooted at `0cbef4` instead uses
+its original byte-sized selector and compare loop. Source windows, root
+literals, bounds, all destinations and previous-owner disjointness are checked
+against the exact EUR ROM. The physical table extents are not new guest input
+limits: the original comparisons, exceptional paths, state and branches remain
+unchanged, and outside reads continue through previous owners or raw ROM. The
+existing text-reader owner immediately before `0191a4` is preserved.
+
+Wine `e220-thumb-switches-wine-83yciuax` verifies every source byte, preserves
+125 previous resources, rejects coherent edits, checks mixed and mirrored
+boundaries, DMA/CpuSet/CpuFastSet and snapshot-owner retention. It compares 92
+guarded original interpreter/generated-prefix cases plus 46 direct load-sequence
+cases outside the physical ranges. The test uses interpreter execution for the
+indirect `MOV pc`; it does not claim that instruction was natively generated.
+Initial unit `e220-thumb-switches-wine-nwvu89dw` failed because generated blocks
+chained past a test stop; the corrected test passes, and the failed unit remains
+retained. The production build predates this test-only correction; its guarded
+production inputs and executable were unchanged.
+
+Wine `e220-llednar-switches-wine-01z89owc` compares 600 retained European
+Llednar battle frames with all 2,876 ROM backing bytes altered. All 23 roots and
+23 destination tables are read from the extracted resource; state, guest clock,
+video, OAM, dispatch and five nonempty audio streams match every frame. Counts
+are aggregate reads, not unique entries or executing-PC attribution. The earlier
+save ancestry is unknown; no new cheat or state forcing was used. Wine production
+CLI `e220-thumb-switches-cli-wine-lr21g7ro` creates, reuses and verifies 127
+files matching the tested dataset. The Wine servers drained using the local
+Bluetooth overlay without the known assertion.
+
+Static reconciliation `e220-llednar-residual-sxj55u1f` attributes 500 more
+previously unowned sampled bytes, leaving 3,331, including three at or above
+`300000`. These address samples do not prove executing PCs, other uses or
+complete ROM coverage. Other tables, index domains, consumers and scenes,
+real-BIOS, UI save/Load, Linux, USA and native Windows remain open. No
+performance comparison was performed.
+
+## E221 European Thumb PC-relative literals
+
+EUR E212-d211 publishes `engine.thumb-pc-literals`: 326 independently located,
+aligned little-endian words (1,304 bytes), each paired with an original Thumb
+PC-relative `LDR` source witness. The model preserves each word's exact bits,
+without assuming that an address-shaped value is dereferenced or identifying
+any pointed-to asset. The original instruction, guest control flow and all
+reads outside the selected words remain unchanged. Source authentication checks
+the exact EUR ROM, the original opcode and its computed literal address, and
+disjointness from previous owners.
+
+The source set combines 153 previously unowned words from the earlier Bank
+static-reader witnesses, 100 from F09 executed literal sites and 73 from E170
+instruction-scoped observations. Each selected E170 opcode, width and effective
+address was checked, but instruction scope alone can include nested accesses.
+The earlier Bank contexts were static witnesses rather than dynamic PC traces.
+The five remaining Bank literal roots and F09 root `0a114c` were already owned
+by E211 switch tables; the new source does not replace those owners.
+
+Wine `e221-thumb-literals-wine-e3auifw5` verifies all 1,304 source bytes and
+126 unchanged previous resources, coherent-edit rejection, mixed and mirrored
+boundaries including the adjacent switch owners, DMA/CpuSet/CpuFastSet and
+snapshot-owner retention. It compares 32 original interpreter/generated reader
+cases across 16 representative literals, preserving complete state and guest
+clock. Wine `e221-llednar-literals-wine-qct03qw7` compares 600 retained EUR
+battle frames with every selected ROM backing word altered. The resource serves
+239 distinct selected literals; state, guest clock, video, OAM, dispatch and
+five nonempty audio streams match each frame. The battle audit identifies
+addresses rather than executing PCs. The earlier save's ancestry is unknown; no
+new cheat or state forcing was used.
+
+Wine production CLI `e221-thumb-literals-cli-wine-t5x79vsh` creates, reuses and
+verifies 128 files matching the tested dataset. Static reconciliation
+`e221-llednar-residual-2bz86_ck` attributes 956 more sampled bytes and leaves
+2,375 unowned, including three at or above `300000`. Another static join,
+`e221-redspring-prior-sites-so67hagh`, shows that all 105 selected E203 prior
+site words are now owned. It does not reclassify all Red Spring addresses or
+prove executing PCs in that scene. Other literals, instruction paths, scenes,
+real-BIOS, UI save/Load, Linux, USA and native Windows remain open. Wine servers
+drained using the local Bluetooth overlay without the known assertion; no
+performance comparison was performed.
+
+## E222 additional statically anchored Thumb literals
+
+EUR E213-d212 extends `engine.thumb-pc-literals` with 117 aligned four-byte
+words (468 bytes), preserving the original 326 literal entries and their
+coverage mask. The new entries preserve exact word bits and original Thumb
+PC-relative reader locations; no pointed-to asset or guest meaning is inferred.
+The source plan `e222-literal-source-gzj3f255` authenticates the exact EUR ROM
+and existing translation, checks the original LDR operand, and anchors each
+reader to an exported translated block through a conservative straight-line
+original-instruction path of at most 96 bytes. The anchors and E215 addresses
+are static evidence, not proof of the executing PC in the battle. All source
+spans are disjoint from earlier owners, and original control flow and outside
+reads remain unchanged.
+
+Wine `e222-literal-extension-wine-0qe1983j` verifies all 468 additional source
+bytes, the 326 prior literal values and source bindings, the legacy coverage
+mask and 126 other unchanged resources. It rejects coherent edits and checks
+mixed and mirrored boundaries, 32 original interpreter/generated reader cases,
+DMA/CpuSet/CpuFastSet and snapshot-owner retention. Wine
+`e222-llednar-extra-literals-wine-osmbx9xm` compares 600 retained EUR battle
+frames with all 117 new ROM backing words altered. All 117 are served by the
+resource; state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Earlier save ancestry is unknown; no new cheat or
+state forcing was used.
+
+Wine production CLI `e222-literal-extension-cli-wine-ajwb625v` creates, reuses
+and verifies 128 files matching the tested dataset. Static reconciliation
+`e222-llednar-residual-f73ffu_6` attributes 468 more sampled bytes and leaves
+1,907 unowned, including three at or above `300000`. Other literals, callers,
+scenes, real-BIOS, UI save/Load, Linux, USA and native Windows remain open.
+The Wine servers drained using the local Bluetooth overlay without the known
+assertion; no performance comparison was performed.
+
+## E223 battle-observed Thumb literal words
+
+EUR E214-d213 extends `engine.thumb-pc-literals` with 443 aligned four-byte
+words, preserving the existing 443 words, both previous masks and all other
+resources. The authenticated original Thumb LDR instruction, PC-relative
+address and source bytes are checked before publishing. Values remain plain
+words: the resource does not infer pointed-to assets or replace guest control
+flow. Reads compose with prior owners and original backing bytes.
+
+Wine capture `e223-llednar-full-sites-744c5av7` filters these 443 previously
+sampled candidate words over 600 retained battle frames. It records 473 reads
+inside interpreter execution scopes and matches the original LDR opcode,
+effective address and four-byte width. Scopes can include nested HLE or DMA
+accesses, so this evidence does not prove every access was made directly by the
+scoped instruction, identify all callers, or establish complete literal pools.
+The initial capture `rv5lkw9c` failed from a missing TinyCC path and batch
+capture `9663ynlq` failed because its final 12-frame filter had no matches;
+both Wine servers drained. The full capture supersedes neither limitation.
+
+Windows test build `c4yhfgcu` and Wine `qeb1_wme` verify all 1,772 new source
+bytes, the 443 preserved words and masks, 126 unchanged resources, coherent edit
+rejection, mixed and mirrored boundaries, 32 original interpreter/generated
+reader cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention. Wine battle
+`v5vdxrct` compares 600 retained EUR frames with all 443 new backing words
+altered. Each word is consumed; state, guest clock, video, OAM, dispatch and
+five nonempty audio streams match every frame. Earlier save ancestry is unknown;
+no new cheat or state forcing was used.
+
+Windows production build `fbx5uf3o` and Wine CLI `73o_xfzb` create, reuse and
+verify 128 files matching the tested dataset. Static reconciliation `_lf4p19t`
+attributes 1,772 more sampled bytes and leaves 135, including three at or above
+`300000`. Other literals, readers, scenes, real-BIOS, UI save/Load, Linux, USA
+and native Windows remain open. Wine servers drained using the local Bluetooth
+overlay without the known assertion; no performance comparison was performed.
+
+## E224 additional battle switch destinations
+
+EUR E215-d214 extends `engine.thumb-switch-tables` with four destination arrays:
+127 words at `0960f0`, 12 at `09bad0`, five at `0ac2e8` and 19 at `0ce214`.
+The 163 even Thumb targets (652 bytes) are decoded from the authenticated EUR
+source, while their four root words remain owned by `engine.thumb-pc-literals`.
+The previous 23 switch tables and their masks, and all 126 other resources,
+remain unchanged. Original guest instructions and selection behavior remain in
+control; reads beyond the projected destinations still use prior owners or the
+original backing ROM. In particular, the `0960da` out-of-range helper may
+return, so the projection is not an added guest index guard.
+
+Wine capture `e224-llednar-residual-sites-qyrfym7w` observed all 135 bytes left
+by E214 over 600 retained battle frames; three switch load instructions have
+interpreter scopes and the fourth table was read outside such a scope. Wine
+original-code windows `e224-llednar-reader-disassembly-rit3fxua` establish the
+four root literals, selector comparisons, load sequences and destination counts.
+Execution scopes may include nested accesses; the observation alone does not
+prove every caller or all other scene paths.
+
+Windows test build `co8nrtac` and Wine `6k14siel` verify all new destination
+bytes, the already-owned roots, 23 preserved switch tables and masks, 126 other
+unchanged resources, coherent edit rejection, mixed/mirrored boundaries, 16
+original interpreter/generated guarded prefixes, eight out-of-range original
+load sequences, DMA/CpuSet/CpuFastSet and snapshot-owner retention. The indirect
+`MOV pc` remains on the interpreter fallback in these tests. Wine battle
+`lzpuxs2a` compares 600 retained EUR frames with all 652 new backing bytes
+altered; all four arrays are consumed and state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. The earlier save
+ancestry is unknown; no new cheat or state forcing was used.
+
+Windows production build `f4xz16wj` and Wine CLI `4j66od25` create, reuse and
+verify 128 matching files. Static reconciliation `03amsoxp` attributes 108 of
+the 135 previously unowned sampled bytes, leaving 27, including three high.
+Other destinations, callers, scenes, real-BIOS, UI save/Load, Linux, USA and
+native Windows remain open. Wine servers drained with the local Bluetooth
+overlay; no performance comparison was performed.
+
+## E225 derived OBJ dimension views
+
+EUR E216-d215 extends the source bindings of `graphics.obj-dimensions` with
+12 four-byte records at `14d2fc` and another 12 at `14d32c`. The first view
+contains base-two width and height exponents in eight-pixel units; the second
+contains pixel widths and heights. Both are reconstructed from the existing
+validated shape/size dimensions, with two authenticated zero bytes per record.
+The dimensions file and all 126 other resources remain unchanged. Exact source
+bytes, hashes, original reader instructions and root literals are verified
+before publication; no raw-ROM shadow or inferred asset is added.
+
+The original reader at `0801fb2a..0801fb4c` indexes both views. Its reserved
+shape can address into the second view and beyond it; the runtime composes
+physical bytes from the selected view, adjacent prior owner, or original backing
+without imposing a new shape guard. The preceding display-control source is a
+separate owner, and mixed reads across its boundary preserve both projections.
+Wine site evidence `qyrfym7w` and original-code windows `rit3fxua` identify the
+sampled reads and reader. Execution scopes may include nested accesses and do
+not establish all callers.
+
+Windows test build `2aefh61b` and Wine `riylj8n_` verify 96 source bytes, the
+unchanged dimensions file and 126 other resources, coherent edit rejection,
+mixed/mirrored boundaries including the previous owner and raw fallback, all
+16 original shape/size combinations in interpreted and generated prefixes,
+DMA/CpuSet/CpuFastSet and snapshot-owner retention. Wine battle `o9_mw7ee`
+compares 600 retained EUR frames with both backing views altered; both views
+are consumed and state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match each frame. Earlier save ancestry is unknown; no new cheat
+or state forcing was used.
+
+Windows production build `hbubspau` and Wine CLI `e_jxiaof` create, reuse and
+verify 128 matching files. Static reconciliation `53vwjg84` attributes 16 of
+the 27 previously unowned sampled bytes, leaving 11 in three intervals. Other
+readers, scenes, real-BIOS, UI save/Load, Linux, USA and native Windows remain
+open. Wine servers drained with the local Bluetooth overlay; no performance
+comparison was performed.
+
+## E226 copied halfword lookup tables
+
+EUR E217-d216 publishes `engine.copied-halfword-lookups`: two authenticated
+four-halfword tables at `14cf18` and `14cf20`, plus two four-byte PC-relative
+root words at `3658` and `3680`. The first root at `3630` remains owned by
+`engine.thumb-pc-literals`. The resource models 24 source bytes without embedding
+their values or changing the other 127 resources.
+
+The original routines at `0800360c`, `08003634` and `0800365c` copy eight
+bytes onto the guest stack, then index that copy using a zero-extended byte.
+The runtime preserves the original copy and stack behavior without adding a
+selector guard: indices beyond the four copied entries continue to read the
+original stack. Wine disassembly `e226-bitmask-reader-disassembly-u0b955k1`
+authenticates the original readers, copy helper, roots and tables. Earlier Wine
+observation `e224-llednar-residual-sites-qyrfym7w` saw the first table outside
+an interpreter scope; it does not establish all callers.
+
+Windows test build `nkbn7myx` and Wine reader `j75qi78l` verify all 24 source
+bytes, unchanged prior resources and root ownership, coherent edit rejection,
+mixed/mirrored boundaries, ten original interpreted/generated prefixes and
+18 full original interpreter cases across all three routines, including indices
+4 and 255. DMA/CpuSet/CpuFastSet, state and clock, and dataset/snapshot owner
+retention also pass. An initial build `kcmxyfda` failed on a test argument
+syntax error that was corrected before the passing build.
+
+Wine battle `jv89wjir` compares 600 retained EUR frames with the selected raw
+backing altered; the first table is read, while no new root read was observed.
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+each frame. Earlier save ancestry is unknown; no new cheat or state forcing was
+used. Windows production build `seb61478` and Wine CLI `if6d22yl` create, reuse
+and verify 129 matching files. Static reconciliation `u6ti5mxt` attributes
+eight of the 11 previously unowned sampled bytes, leaving three high bytes.
+Other readers, index domains, scenes, real-BIOS, UI save/Load, Linux, USA and
+native Windows remain open. Wine servers drained with the local Bluetooth
+overlay; no performance comparison was performed.
+
+## E227 indexed halfwords at 39a5c8
+
+EUR E218-d217 publishes `gameplay.indexed-halfwords-39a5c8`, three authenticated
+little-endian halfwords at `39a5c8..39a5ce`. The source values are decoded from
+the authenticated ROM; the original root word at `0e21f4` remains owned by
+`engine.thumb-pc-literals`. All 128 earlier resources and files remain unchanged.
+
+Wine disassembly `e227-halfword-reader-disassembly-iptx2__f` shows the original
+path initializes r4 to zero and may set it to one or two before the indexed
+halfword load at `080e21e4`. The runtime projects six physical bytes without
+adding an index guard: later addresses follow prior ownership or raw fallback.
+The local selection is not a claim about all callers or the full guest ABI.
+
+Windows test build `zpk3zrya` and Wine reader `ebfw8yn_` verify all six source
+bytes, the previous root, all 128 prior resources, coherent edit rejection,
+mixed/mirrored boundaries, and ten interpreted/generated original reader
+prefixes for indices 0, 1, 2, 3 and 255. DMA/CpuSet/CpuFastSet, state and
+clock, and dataset/snapshot owner retention also pass. Wine battle `jv5_43gi`
+compares 600 retained EUR frames with the six raw backing bytes altered. The
+first halfword is read; state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame. Earlier save ancestry is unknown; no
+new cheat or state forcing was used.
+
+Windows production build `zd6ouzoi` and Wine CLI `w3f33_xp` create, reuse and
+verify 130 matching files. Static reconciliation `l5w20wvc` attributes two of
+the three previously unowned sampled bytes, leaving one high byte. Other
+readers, selector paths, scenes, real-BIOS, UI save/Load, Linux, USA and native
+Windows remain open. Wine servers drained with the local Bluetooth overlay;
+no performance comparison was performed.
+
+## E228 script byte lookup window
+
+EUR E219-d218 publishes `engine.script-byte-lookup-3ad16e`: the six physical
+bytes between the existing script-command directory ending at `3ad16e` and
+the selector directory beginning at `3ad174`, plus the four-byte second root
+at `126468`. The first root at `1263c4` remains owned by
+`engine.thumb-pc-literals`. All 129 earlier resources and files remain
+unchanged. This bounded physical window does not assert a complete semantic
+lookup domain or classify the trailing bytes as valid selectors.
+
+Original readers at `081263b2..081263ba` and `08126454..0812645c` subtract
+one from a guest byte and read at the resulting physical address. The runtime
+adds no selector guard: zero reaches the prior command directory, and later
+addresses compose with the existing selector directory or raw fallback. Wine
+source-site capture `qyrfym7w` observed a byte in this window in the retained
+battle; original windows `rit3fxua` identify both readers and roots.
+
+Windows test build `dd1n8nny` and Wine reader `cu0__ocg` verify all ten source
+bytes, 129 prior resources, both adjacent owners, the prior root, coherent edit
+rejection and mixed/mirrored boundaries. Forty original interpreted/generated
+prefixes cover both readers and selectors 0 through 8 and 255, including
+underflow and outside-window behavior. DMA/CpuSet/CpuFastSet, state and clock,
+and dataset/snapshot owner retention also pass. Wine battle `frcsvz7a` compares
+600 retained EUR frames with the selected source backing altered; the observed
+lookup byte is consumed and state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame. Earlier save ancestry is unknown; no
+new cheat or state forcing was used.
+
+Windows production build `wmqqy5ac` and Wine CLI `a2w8hrj6` create, reuse and
+verify 131 matching files. Static reconciliation `3blfucoi` attributes the last
+previously unowned sampled byte. This is an address-only inventory, not proof
+that other scenes, readers, source domains or the whole ROM are covered.
+Real-BIOS, UI save/Load, Linux, USA and native Windows remain open. Wine servers
+drained with the local Bluetooth overlay; no performance comparison was performed.
+
+## E229 home-scene anchored Thumb literals
+
+EUR E220-d219 extends `engine.thumb-pc-literals` with 25 aligned words
+(100 bytes) sampled in the E207 home continuation. The old 886 words, their
+source bindings and masks, and 129 other resource files remain unchanged.
+Values are decoded as original word bits without inferring pointed-to assets
+or replacing guest control flow.
+
+Source plan `e229-home-literal-source-1j0fo_ra` authenticates the EUR ROM and
+translation cache, each PC-relative Thumb LDR, and an at-most-96-byte
+straight-line original path from an exported translated block to the reader.
+These are static anchors: the home address inventory and original scopes do
+not prove which instruction executed or establish a complete literal pool.
+Source ranges are disjoint from previous owners.
+
+Windows test build `ji4fe7wn` and Wine reader `yc40amn_` verify the 100 source
+bytes, previous literals/masks and other resources, coherent edit rejection,
+mixed/mirrored boundaries, 48 original interpreted/generated reader cases,
+DMA/CpuSet/CpuFastSet and dataset/snapshot owner retention. Wine home scene
+`29mql8p4` compares 600 recorded EUR frames with all 25 new backing words
+altered; all 25 are consumed, and state, guest clock, video, OAM, dispatch and
+five nonempty audio streams match each frame.
+
+Windows production build `0fx28clc` and Wine CLI `__imn0tp` create, reuse and
+verify 131 matching files. Static reconciliation `ypnkepk0` attributes 100
+of the 272 previously unowned sampled bytes, leaving 172. This address-only
+inventory does not establish global coverage; other readers, scenes, real-BIOS,
+UI save/Load, Linux, USA and native Windows remain open. Wine servers drained
+with the local Bluetooth overlay; no performance comparison was performed.
+
+## E230 home-scene observed literals and switch destinations
+
+EUR E221-d220 extends `engine.thumb-pc-literals` with 40 observed-scope words
+(160 bytes) and `engine.thumb-switch-tables` with two destination arrays at
+`09eff0..09f060` and `09f07c..09f098` (35 words, 140 bytes). Their two root
+words are among the new literal sources. The earlier 911 literal words, 27
+switch tables and 128 other resource files retain their prior contents.
+
+Wine site capture `e230-home-residual-sites-zmsp5rfg` observes all 172 bytes
+left by E220 in the 600-frame E207 home continuation. Forty words match original
+Thumb PC-relative LDR opcodes, effective addresses and four-byte reads; three
+other words match indexed loads. Original windows
+`e230-indirect-reader-disassembly-5i77x__r` identify the two switch arrays and
+their original comparisons: the first accepts indices 0..27 on this path; the
+second subtracts one and compares against six. Runtime ownership projects exact
+physical bytes without adding a guest selector guard or replacing guest control
+flow. Execution scopes may include nested HLE/DMA accesses and do not prove
+every caller or complete literal pools.
+
+Windows test build `c0z9530s` and Wine reader `gwh_mblj` verify all 300 source
+bytes, prior values/masks and other resources, coherent edit rejection, mixed
+and mirrored boundaries, 80 interpreted/generated literal cases, eight guarded
+switch cases, four outside-guard and four outside-load cases, transfers and
+dataset/snapshot owner retention. The indirect MOV-PC uses interpreter fallback.
+An initial Wine reader `zp_otq7h` failed because the expected hash for the
+second table was mistyped; the hash was corrected before the passing build.
+
+Wine home scene `18841zsj` compares 600 recorded EUR frames with all new literal
+and switch backing bytes altered; all 40 words and both arrays are consumed,
+and state, guest clock, video, OAM, dispatch and five nonempty audio streams
+match each frame. Windows production build `ro1aypjc` and Wine CLI `q0do0j4t`
+create, reuse and verify 131 matching files. Static reconciliation `dnr49xgd`
+attributes the remaining 172 sampled bytes. The address-only inventory does not
+prove full ROM coverage; other readers, scenes, real-BIOS, UI save/Load, Linux,
+USA and native Windows remain open. Wine servers drained with the local
+Bluetooth overlay; no performance comparison was performed.

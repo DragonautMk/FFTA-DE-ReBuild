@@ -1255,6 +1255,77 @@ and normal enablement retain their existing acceptance gates.
   managed bytes across two aggregate groups and matches 1,800 framebuffer/OAM
   frames and final state (`mr5vn2od`, audit `db6l43_0`). Group identities, other
   domains and deferred platforms remain open.
+- EUR [E205 eight-row tile lookup](../rom_data_runtime.md#e213-european-eight-row-tile-lookup)
+  adds 16 signed source bytes to the existing geometry resource. Original
+  readers, adjacent-owner boundaries, a 600-frame home scene and CLI pass on
+  Wine; the historical six-group counter remains separate from the new rows.
+  Other paths and deferred platforms remain open.
+- EUR [E206 signed task lookup](../rom_data_gameplay.md#e214-european-signed-task-lookup-projection)
+  adds four physical bytes without limiting the original guest index. Wine
+  verifies original reader examples, adjacent owners, a 600-frame home scene
+  and CLI. Other paths and deferred platforms remain open.
+- EUR [E215 Llednar battle inventory](../rom_data_runtime.md#e215-llednar-battle-rom-read-inventory)
+  matches 600 E206 frames on Wine. E219 owns all 453 sampled high bytes and
+  3,828 lower bytes; other readers and scenes remain open.
+- EUR [E216 battle OBJ bank](../rom_data_obj.md#e216-european-battle-number-obj-bank)
+  adds 17 lists and three sequence headers to the extracted runtime. Wine
+  verifies readers, host lists, transfers and the altered-source battle scene;
+  other paths and deferred platforms remain open.
+- EUR [E217 battle OBJ support](../rom_data_obj.md#e217-european-battle-obj-support-fields)
+  adds seven guest callback words and four actor lookup entries. Wine validates
+  original readers/branches and a 600-frame altered-source battle continuation;
+  other paths and deferred platforms remain open.
+- EUR [E218 indexed 16-byte records](../rom_data_gameplay.md#e218-european-indexed-16-byte-records)
+  adds 86 source-authenticated records and preserves the record-82 alias. Wine
+  validates original readers, transfers and an altered-source battle scene;
+  broader semantics, other paths and deferred platforms remain open.
+- EUR [E219 indexed word lookup](../rom_data_gameplay.md#e219-european-indexed-word-lookup)
+  adds 30 authenticated words without limiting guest indices. Wine validates
+  original readers, transfers and a 600-frame altered-source battle; other
+  meanings, paths and deferred platforms remain open.
+- EUR [E220 Thumb switch tables](../rom_data_runtime.md#e220-european-thumb-switch-table-resources)
+  adds 23 guarded tables/696 destinations and their roots. Wine validates
+  original readers, interpreter-fallback indirect branches, transfers and a
+  600-frame altered-source battle; other control sources and platforms remain open.
+- EUR [E221 Thumb PC literals](../rom_data_runtime.md#e221-european-thumb-pc-relative-literals)
+  adds 326 exact words with original-reader witnesses, without inferring pointed
+  assets. Wine validates readers, transfers and a 600-frame altered-source battle;
+  other code sources and deferred platforms remain open.
+- EUR [E222 anchored Thumb literals](../rom_data_runtime.md#e222-additional-statically-anchored-thumb-literals)
+  adds 117 words with statically anchored original readers, preserving the prior
+  entries and coverage mask. Wine validates readers, transfers and a 600-frame
+  altered-source battle; other sources and deferred platforms remain open.
+- EUR [E223 battle-observed Thumb literals](../rom_data_runtime.md#e223-battle-observed-thumb-literal-words)
+  adds 443 authenticated words with scoped reader evidence, preserving previous
+  words and masks. Wine validates readers, transfers and a 600-frame altered-
+  source battle; other sources, callers and deferred platforms remain open.
+- EUR [E224 battle switch destinations](../rom_data_runtime.md#e224-additional-battle-switch-destinations)
+  adds four arrays/163 authenticated targets using separately owned literal
+  roots. Wine validates readers, transfers and a 600-frame altered-source battle;
+  other sources and deferred platforms remain open.
+- EUR [E225 derived OBJ dimension views](../rom_data_runtime.md#e225-derived-obj-dimension-views)
+  projects two authenticated 12-record views from the existing dimensions file.
+  Wine validates readers, reserved-shape behavior, transfers and a 600-frame
+  altered-source battle; other callers and deferred platforms remain open.
+- EUR [E226 copied halfword lookup tables](../rom_data_runtime.md#e226-copied-halfword-lookup-tables)
+  publishes two copied tables and two roots while retaining original stack
+  indexing. Wine validates readers, transfers and a 600-frame altered-source
+  battle; other callers and deferred platforms remain open.
+- EUR [E227 indexed halfwords](../rom_data_runtime.md#e227-indexed-halfwords-at-39a5c8)
+  publishes three original values with unchanged outside-range behavior. Wine
+  validates readers, transfers and a 600-frame altered-source battle; other
+  callers and deferred platforms remain open.
+- EUR [E228 script lookup window](../rom_data_runtime.md#e228-script-byte-lookup-window)
+  serves six physical bytes and a second root while retaining adjacent owners.
+  Wine validates readers, transfers and a 600-frame altered-source battle; the
+  full semantic domain and deferred platforms remain open.
+- EUR [E229 home-anchored Thumb literals](../rom_data_runtime.md#e229-home-scene-anchored-thumb-literals)
+  adds 25 words to the extracted literal resource. Wine validates readers,
+  transfers and 600 altered-source home frames; other readers and deferred
+  platforms remain open.
+- EUR [E230 home observed code support](../rom_data_runtime.md#e230-home-scene-observed-literals-and-switch-destinations)
+  adds 40 literal words and two switch arrays. Wine validates readers, transfers
+  and 600 altered-source home frames; other paths and deferred platforms remain open.
 
 - The [optional bus/host ROM audit](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit)
   Cargo feature is absent by default. Scoped TLS collects successful bus and
@@ -2019,7 +2090,8 @@ and normal enablement retain their existing acceptance gates.
 
 - EUR [E203 sampled code-support join](../rom_data_compact_catalog.md#e203-cross-reference-with-earlier-code-support-observations)
   matches 420 of the 3,276 E172 unowned bytes to instruction sites observed in
-  a different scene. E172 PCs, alternate uses and raw ownership remain open.
+  a different scene. E212 owns all 105 matched words; remaining E172 ownership,
+  PCs and alternate uses remain open.
 
 - EUR [E204 Blue Screw rectangle lead](../rom_data_graphics.md#e204-blue-screw-rectangle-source-lead):
   `isdh6mnt`/`t31eyd12` identify 29 observed unowned bytes in a source-backed
@@ -2031,12 +2103,20 @@ and normal enablement retain their existing acceptance gates.
 
 - EUR [E207 home-scene inventory](../rom_data_runtime.md#e207-home-scene-rom-read-inventory):
   Wine `kkbk45be` observes 8,544 unowned bytes over 600 recorded frames with
-  per-frame state/clock/video/OAM/dispatch/audio equivalence. Reader attribution,
-  source boundaries, other scenes and deferred platforms remain open.
+  per-frame state/clock/video/OAM/dispatch/audio equivalence. E221 owns all
+  previously unowned sampled bytes; other readers and scenes remain open.
 
 - EUR [E208 home-scene source lead](../rom_data_graphics.md#e208-home-scene-relative-archive-streams):
   `rwsqv1y7` authenticates three unowned custom streams and their relative
-  directory cells; extraction, runtime consumption and other entries remain open.
+  directory cells. E203-d202 now publishes all 103 directory entries and
+  streams; Wine reader `af7l9c_2` and 600-frame altered-source home scene
+  `deee1ha0` pass, as does production CLI `473fvdeq`. Broader consumers and
+  deferred platforms remain open.
+
+- EUR [E212 color-mode indexed archives](../rom_data_indexed_graphics.md#e212-european-color-mode-archive-publication):
+  E204-d203 publishes three 165-program archives while retaining the existing
+  four-byte owner. Original readers, a 600-frame home continuation and CLI
+  pass on Wine. Other consumers, scenes and deferred platforms remain open.
 
 - The Wine 10 Bluetooth D-Bus assertion has an [opt-in local backport](ROM_DATA_VALIDATION.md#wine-bluetooth-d-bus-diagnostic):
   `s10dafvr` builds the corrected module and `25z4y70w` validates its leased

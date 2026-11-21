@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-signed-task-lookup-projection",
+  "title": "Consume European signed task lookup projection",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish the authenticated four-byte signed projection at 371020..371024 in E206-d205 while leaving the original unsigned guest index uncapped and composing with adjacent owners.",
+    "Preserve previous task parameter fields and usage counters; separately track the represented lookup bytes and indices."
+  ],
+  "validation": [
+    "Windows test build e214-signed-build-ybvdt2ef and EUR Wine e214-signed-wine-qo5za07r pass every represented byte, mixed boundaries and mirrors, 122 preserved resources, authenticated source, owner retention, and 24 interpreter/generated-dispatch reader cases across 12 indices including 255.",
+    "EUR Wine e214-home-scene-wine-aj4omulx matches full state, guest clock, video, OAM, dispatch and five nonempty audio streams across 600 recorded home frames with the projected ROM backing altered; indices 1 and 2 are served.",
+    "Windows production build e214-cli-build-3fbjudfd and EUR Wine e214-signed-cli-wine-yozdoyrs pass create/reuse/verify with 124 files matching the tested dataset. Static e214-home-residual-jd33pjgk leaves 2108 of the original 8544 sampled bytes unowned, all below 300000."
+  ],
+  "limitations": [
+    "Only four physical bytes are projected, not a complete inferred guest table. Other indices, consumers, executing PCs in the scene, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance comparison was performed.",
+    "Earlier linear reader-window evidence 7zra4rc1 contains a D-Bus assertion. New Wine tests use the local overlay, show no such assertion and drain their servers."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/task_signed_lookup_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

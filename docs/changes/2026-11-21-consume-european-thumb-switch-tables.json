@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-thumb-switch-tables",
+  "title": "Consume European Thumb switch tables",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish 23 authenticated guarded Thumb switch tables, their 696 destinations and root words as engine.thumb-switch-tables, preserving original guest guards, same-state control flow and prior/raw fallback outside the physical spans.",
+    "Bind the decoded resources to guest, generated-prefix and DMA/BIOS reads, enforce file and source validation, and preserve 125 previous resources and the adjacent text-reader owner."
+  ],
+  "validation": [
+    "Windows test build b824mmtm and Wine 83yciuax verify 2876 source bytes, 125 preserved resources, mixed boundaries and mirrors, 92 original interpreted/generated-prefix cases with interpreted MOV PC, 46 outside-load cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.",
+    "Wine 01z89owc compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; all 23 roots and destination tables are used.",
+    "Windows production build y0drl4tm and Wine CLI lr21g7ro pass create, reuse and verify with 127 matching files. Static reclassification sxj55u1f attributes 500 sampled bytes and leaves 3331 unowned, including three high."
+  ],
+  "limitations": [
+    "Initial Wine unit nwvu89dw failed because chained generated test blocks passed its stop; the corrected test passes. The production build preceded this test-only correction; guarded production inputs and executable were unchanged.",
+    "The address-only battle audit does not identify executing PCs; earlier save ancestry is unknown, with no new cheat or state forcing. Other tables, indices, consumers, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

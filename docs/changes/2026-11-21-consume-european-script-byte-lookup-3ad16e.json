@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-script-byte-lookup-3ad16e",
+  "title": "Consume European script byte lookup window",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish the authenticated six-byte physical window between the script-command and selector directories plus a second original root as a typed runtime resource.",
+    "Preserve guest subtraction and index behavior, including underflow into the previous owner and reads into the following owner or raw fallback."
+  ],
+  "validation": [
+    "Retained Wine source scope qyrfym7w and original windows rit3fxua identify the sampled byte and two original reader roots.",
+    "Windows test build dd1n8nny and Wine cu0__ocg verify ten source bytes, 129 prior resources, both adjacent owners and the prior root, coherent edit rejection, mixed/mirrored boundaries, 40 interpreted/generated reader prefixes, transfers and snapshot ownership.",
+    "Wine frcsvz7a compares 600 retained European battle frames with selected backing altered; the observed lookup byte is read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.",
+    "Production build wmqqy5ac and Wine CLI a2w8hrj6 pass create, reuse and verify with 131 matching files. Static reconciliation 3blfucoi assigns all 4281 previously unowned bytes in the earlier address-only sample."
+  ],
+  "limitations": [
+    "The physical window does not establish the full semantic lookup domain; the battle did not read the second root. Other callers, scenes, real-BIOS and UI save/Load remain open.",
+    "The address-only sample does not prove full ROM coverage. Earlier save ancestry is unknown; no new cheat or state forcing was used.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/script_byte_lookup_3ad.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/script_byte_lookup_3ad.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_scripts.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

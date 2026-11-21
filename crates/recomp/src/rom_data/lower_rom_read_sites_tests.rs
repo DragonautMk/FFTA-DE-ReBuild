@@ -83,8 +83,18 @@ fn european_lower_rom_words_record_interpreter_sites() {
         &fs::read(std::env::var_os("FFTA_STATE_TEST_LOWER_SITE_WORDS").unwrap()).unwrap(),
     )
     .unwrap();
-    assert_eq!(words.len(), 113);
-    assert_eq!(words.iter().copied().collect::<BTreeSet<_>>().len(), 113);
+    let expected_words: usize = std::env::var("FFTA_STATE_TEST_LOWER_SITE_COUNT")
+        .ok()
+        .map(|value| value.parse().expect("valid target-word count"))
+        .unwrap_or(113);
+    let frames: u64 = std::env::var("FFTA_STATE_TEST_LOWER_SITE_FRAMES")
+        .ok()
+        .map(|value| value.parse().expect("valid frame count"))
+        .unwrap_or(12);
+    assert!((1..=4096).contains(&expected_words));
+    assert!((1..=600).contains(&frames));
+    assert_eq!(words.len(), expected_words);
+    assert_eq!(words.iter().copied().collect::<BTreeSet<_>>().len(), expected_words);
     probe_sites(&rom);
     let native = std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap();
     let (_library, table) = crate::load_native(std::path::Path::new(&native)).unwrap();
@@ -106,7 +116,7 @@ fn european_lower_rom_words_record_interpreter_sites() {
     let first = m.bus.frames;
     let capture = SiteCapture::start(words.iter().copied());
     let mut dispatch = [0u64; 2];
-    for relative in 0..12 {
+    for relative in 0..frames {
         m.bus.keys = input.keys_at(relative);
         input.apply_mouse(&mut m.bus, relative).unwrap();
         let pointer = &mut m as *mut gba_core::Machine as *mut std::ffi::c_void;
@@ -133,7 +143,7 @@ fn european_lower_rom_words_record_interpreter_sites() {
     let with_scope = sites.iter().filter(|row| row.instruction.is_some()).count();
     let outside_scope = sites.len() - with_scope;
     let report = serde_json::json!({
-        "task":"ROMDATA-01-BUS-HOST-LOWER-RESIDUE", "frames":12,"first_guest_frame":first,"last_guest_frame":m.bus.frames,
+        "task":"ROMDATA-01-BUS-HOST-LOWER-RESIDUE", "frames":frames,"first_guest_frame":first,"last_guest_frame":m.bus.frames,
         "site_probes":"PASS/cached-uncached original ThumbLDR/outsideNone/drop/address-key preservation",
         "target_words":words.len(),"observed_words":observed.len(),"reads_with_instruction_scope":with_scope,"reads_outside_instruction_scope":outside_scope,
         "dispatch_coverage_only":dispatch,"sites":sites,
@@ -145,5 +155,5 @@ fn european_lower_rom_words_record_interpreter_sites() {
         serde_json::to_vec_pretty(&report).unwrap(),
     )
     .unwrap();
-    eprintln!("ROM_DATA_LOWER_SITES target_words=113 observed_words={} instruction_scoped={with_scope} outside_scoped={outside_scope} PASS", observed.len());
+    eprintln!("ROM_DATA_LOWER_SITES target_words={} observed_words={} instruction_scoped={with_scope} outside_scoped={outside_scope} PASS", words.len(), observed.len());
 }

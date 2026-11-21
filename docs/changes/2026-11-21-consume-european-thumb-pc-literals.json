@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-thumb-pc-literals",
+  "title": "Consume European Thumb PC-relative literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish 326 authenticated Thumb PC-relative words with original-reader witnesses as engine.thumb-pc-literals, preserving their exact bits and guest behavior without inventing pointed-to asset meanings.",
+    "Bind decoded literal values to guest and generated readers, preserve previous owners and raw fallback, and enforce source and file authentication."
+  ],
+  "validation": [
+    "Windows test build h_xizw2v and Wine e3auifw5 verify 1304 source bytes, 126 preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.",
+    "Wine qct03qw7 compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; 239 distinct literals are used.",
+    "Windows production build ym2ih9nr and Wine CLI t5x79vsh pass create, reuse and verify with 128 matching files. Static reclassification 2bz86_ck attributes 956 sampled bytes and leaves 2375 unowned; join so67hagh shows all 105 E203 selected prior-site words now owned."
+  ],
+  "limitations": [
+    "The source set combines 153 Bank static-reader witnesses, 100 F09 executed sites and 73 E170 instruction-scope observations whose opcode, width and effective address were checked; E215 and E172 samples are address-only and do not identify executing PCs.",
+    "Earlier save ancestry is unknown, with no new cheat or state forcing. Other words, consumers, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

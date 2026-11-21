@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-color-mode-indexed-archives",
+  "title": "Consume European color-mode indexed archives",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish three authenticated color-mode indexed archives in E204-d203, preserving guest selection and decoding and retaining the existing physical owner of four overlapping bytes.",
+    "Bind the split source ranges to the existing indexed graphics resource and preserve all prior resources and the prior indexed data."
+  ],
+  "validation": [
+    "Windows test build e212-indexed-build-9a9mmz_a and Wine e212-indexed-wine-d88bld36 pass: 495 programs, all source bytes, mixed boundaries and mirrors, five original interpreted and translated reader cases, authentication and retained-owner checks.",
+    "Wine e212-home-scene-wine-t6q5y978 matches full state, guest clock, video, OAM, dispatch and audio across 600 recorded home frames with the first archive altered; programs 125, 127 and 129 are consumed.",
+    "Windows production build e212-cli-build-lg3nx6if and Wine e212-indexed-cli-wine-vnsgav7l pass create/reuse/verify with 124 files matching the tested dataset. Wine servers drain and the local overlay avoids the D-Bus assertion. Static e212-home-residual-ucws8f95 leaves 2126 of 8544 sampled bytes unowned."
+  ],
+  "limitations": [
+    "Other consumers, color modes and scenes, real-BIOS and UI save/Load paths remain open. Linux, USA and native Windows require separate verification. No performance comparisons were performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/color_indexed_graphics_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

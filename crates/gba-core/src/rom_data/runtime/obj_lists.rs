@@ -15,11 +15,13 @@ pub struct ObjListStats {
     pub iwram_callback_bytes: [u64; 5],
     pub iwram_extra_callback_bytes: [u64; 2],
     pub layout_offset_bytes: [u64; 3],
+    pub iwram_additional_callback_bytes: [u64; 7],
+    pub actor_lookup_extension_bytes: u64,
 }
 
 pub(super) struct ObjListResources {
     lists: Lists,
-    counts: [AtomicU64; 16],
+    counts: [AtomicU64; 24],
     host_reads: AtomicU64,
     used: Vec<[AtomicBool; 2]>,
 }
@@ -58,6 +60,13 @@ impl ObjListResources {
                 }
             }
         }
+        if let Some(callbacks) = &self.lists.iwram_additional_callbacks {
+            for (slot, &root) in crate::rom_data::obj_lists::IWRAM_ADDITIONAL_CALLBACK_ROOTS.iter().enumerate() {
+                if let Some(relative) = index.checked_sub(root as usize).filter(|&relative| relative < 4) {
+                    return Some((callbacks[slot].to_le_bytes()[relative], 16 + slot));
+                }
+            }
+        }
         if let Some(callbacks) = &self.lists.iwram_draw_callbacks {
             if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::IWRAM_DRAW_CALLBACKS_ROOT as usize) {
                 if let Some(pointer) = callbacks.get(relative / 4) {
@@ -75,6 +84,11 @@ impl ObjListResources {
         if let Some(words) = &self.lists.actor_lookup {
             if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::ACTOR_LOOKUP_ROOT as usize) {
                 if let Some(word) = words.get(relative / 2) { return Some((word.to_le_bytes()[relative % 2], 5)); }
+            }
+        }
+        if let Some(words) = &self.lists.actor_lookup_extension {
+            if let Some(relative) = index.checked_sub(crate::rom_data::obj_lists::ACTOR_LOOKUP_EXTENSION_ROOT as usize) {
+                if let Some(word) = words.get(relative / 2) { return Some((word.to_le_bytes()[relative % 2], 23)); }
             }
         }
         if let Some(byte) = self.lists.battle_directory.as_ref()
@@ -138,7 +152,7 @@ impl ObjListResources {
         if !Self::source_page(index) {
             return prior;
         }
-        let mut counts = [0; 16];
+        let mut counts = [0; 24];
         let bytes = std::array::from_fn(|i| match self.byte(index + i) {
             Some((byte, kind)) => {
                 counts[1] += 1;
@@ -159,7 +173,8 @@ impl ObjListResources {
 
     pub(super) fn stats(&self) -> ObjListStats {
         let [bus_reads, source_bytes, count_bytes, attribute_bytes, directory_bytes, actor_lookup_bytes,
-             callback0, callback1, callback2, callback3, callback4, extra0, extra1, layout0, layout1, layout2] =
+             callback0, callback1, callback2, callback3, callback4, extra0, extra1, layout0, layout1, layout2,
+             additional0, additional1, additional2, additional3, additional4, additional5, additional6, actor_extension] =
             self.counts.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObjListStats {
             bus_reads,
@@ -172,6 +187,8 @@ impl ObjListResources {
             iwram_callback_bytes: [callback0, callback1, callback2, callback3, callback4],
             iwram_extra_callback_bytes: [extra0, extra1],
             layout_offset_bytes: [layout0, layout1, layout2],
+            iwram_additional_callback_bytes: [additional0, additional1, additional2, additional3, additional4, additional5, additional6],
+            actor_lookup_extension_bytes: actor_extension,
         }
     }
 

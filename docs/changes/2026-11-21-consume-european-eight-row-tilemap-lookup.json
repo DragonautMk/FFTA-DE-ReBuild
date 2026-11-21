@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-eight-row-tilemap-lookup",
+  "title": "Consume European eight-row tilemap lookup",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish the 16 authenticated signed bytes at 371024..371034 as four rows in E205-d204, preserving original guest drawing and composition with the adjacent task-cycle owner.",
+    "Keep the original six-group usage counter independent from the four added lookup rows while preserving prior tilemap data and other resources.",
+    "Clarify that earlier sampled-byte counts describe their historical dataset revisions, while the E205 residual is the current scoped result."
+  ],
+  "validation": [
+    "Windows test build e213-tilemap-build-o0fm9ebq and EUR Wine e213-tilemap-wine-y3wk6uev pass all source bytes, mixed boundaries, prior-resource preservation, owner retention and five original interpreter/generated-dispatch drawing cases.",
+    "EUR Wine e213-home-scene-wine-7fmxa2bo matches full state, guest clock, video, OAM, dispatch and audio for 600 recorded home frames with the lookup backing altered; all four rows are consumed.",
+    "Windows production build e213-cli-build-b8ddhxlv and EUR Wine e213-tilemap-cli-wine-ga0p99vm pass create/reuse/verify with 124 files matching the tested dataset. Static e213-home-residual-d9rkhtks leaves 2110 of the prior 8544 sampled bytes unowned.",
+    "After a diagnostic-only correction to legacy group counting, Windows test build e213-counter-build-eeuj2yvs and Wine e213-counter-wine-li2pps9d verify the six old groups separately from the four added rows. Earlier reader, scene and offline CLI paths did not depend on that counter."
+  ],
+  "limitations": [
+    "Other consumers, alternate entries, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows require separate verification. No performance comparisons were performed.",
+    "The first scene launch was refused before Wine started while an artifact lease was active; the retry after release passed. Wine servers drained, and the local overlay avoided the D-Bus assertion."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/tilemap_geometry.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_geometry.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_eight_row_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_indexed_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

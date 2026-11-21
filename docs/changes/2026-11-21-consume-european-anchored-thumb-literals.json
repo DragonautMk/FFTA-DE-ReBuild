@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-anchored-thumb-literals",
+  "title": "Consume additional European Thumb literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend engine.thumb-pc-literals with 117 exact EUR words whose original readers have statically authenticated straight-line paths from exported translation blocks, without inventing pointed-to asset meanings.",
+    "Preserve the original 326 literal entries and coverage mask, compose the extension with prior/raw owners, and authenticate both source and file contents."
+  ],
+  "validation": [
+    "Source gzj3f255 verifies 117 original LDR operands, code paths and anchors against the exact EUR ROM and existing translation; the E215 address inventory samples all 468 new source bytes.",
+    "Windows test build bex8n6wm and Wine 0qe1983j verify 468 new bytes, 326 preserved literals and legacy mask, 126 other preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and snapshot-owner retention.",
+    "Wine osmbx9xm compares 600 retained European battle frames with the new backing words altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; all 117 additional literals are used.",
+    "Windows production build 1ekx5_i7 and Wine CLI ajwb625v pass create, reuse and verify with 128 matching files. Static reclassification f73ffu_6 leaves 1907 previously unowned sampled bytes, including three high."
+  ],
+  "limitations": [
+    "The source anchors and E215 inventory are static/address-only evidence and do not identify executing PCs or prove complete literal pools, other callers or pointed-to assets.",
+    "Earlier save ancestry is unknown, with no new cheat or state forcing. Other words, consumers, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

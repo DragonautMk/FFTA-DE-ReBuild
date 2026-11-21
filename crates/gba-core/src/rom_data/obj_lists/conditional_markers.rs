@@ -37,7 +37,7 @@ impl ConditionalMarkers {
         Lists {
             lists: self.lists.clone(),
             battle_directory: None,
-            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, layout_offsets: None,
+            actor_lookup: None, actor_lookup_extension: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, iwram_additional_callbacks: None, layout_offsets: None,
         }
         .validate()
     }

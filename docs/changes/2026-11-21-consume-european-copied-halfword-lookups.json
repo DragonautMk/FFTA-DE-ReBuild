@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-copied-halfword-lookups",
+  "title": "Consume European copied halfword lookups",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish two authenticated four-halfword EUR lookup tables and two PC-relative root words as a typed runtime resource, retaining all previous resources and the earlier separately owned root.",
+    "Route reads and transfers through the extracted tables while preserving the original guest copy, stack indexing and outside-index behavior."
+  ],
+  "validation": [
+    "Retained Wine scope qyrfym7w and original-code disassembly u0b955k1 identify sampled reads and the original readers, copy helper and source spans.",
+    "Windows test build nkbn7myx and Wine j75qi78l verify 24 bytes, 127 prior resources, coherent edit rejection, mixed/mirrored boundaries, ten interpreter/generated prefixes, 18 complete interpreter cases including outside indices, transfers and snapshot ownership.",
+    "Wine jv89wjir compares 600 retained European battle frames with selected backing altered; the first table is read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.",
+    "Production build seb61478 and Wine CLI if6d22yl pass create, reuse and verify with 129 matching files. Static reconciliation u6ti5mxt leaves three high bytes in the earlier address-only sample."
+  ],
+  "limitations": [
+    "The initial build kcmxyfda failed on an edited test argument syntax error; it was fixed before the passing build.",
+    "The battle samples one table and no new root; other callers, index domains, scenes, real-BIOS and UI save/Load remain open. Earlier save ancestry is unknown; no new cheat or state forcing was used.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,5 +1,60 @@
 # Indexed graphics archives
 
+## E212 European color-mode archive publication
+
+E204-d203 publishes the three color-mode archives as part of
+`graphics.indexed-archives`: 495 programs, 46,650 source bytes and 47,520
+decoded bytes. Original guest selection and decoding remain in place. The
+third archive's four shared bytes remain owned by
+`graphics.unit-obj-ffff-reader-fields`; its other bytes are projected in two
+disjoint spans. The resource declares that existing owner as a dependency.
+
+Wine reader `e212-indexed-wine-d88bld36` verifies all source bytes, mixed
+boundary reads on ROM mirrors, the existing owner's four-byte overlap, source
+authentication, 122 unchanged resources and five original interpreter and
+translated-reader cases. It also checks owner retention across an unavailable
+dataset and a restored snapshot. Wine scene `e212-home-scene-wine-t6q5y978`
+matches state, guest clock, video, OAM, dispatch and audio across 600 recorded
+home frames while the first archive's ROM backing is altered; programs 125,
+127 and 129 are consumed. The address-only capture does not independently
+attribute their executing PCs. Wine production CLI
+`e212-indexed-cli-wine-vnsgav7l` passes create, reuse and verify with 124 files
+matching the tested dataset. The Wine servers drained and logs contain no
+D-Bus assertion with the local overlay.
+
+Static inventory `e212-home-residual-ucws8f95` left 2,126 of the 8,544
+originally unowned E207 sample bytes outside E204 source ownership. E205 covers
+another 16 bytes, leaving 2,110 (`e213-home-residual-d9rkhtks`). Other
+consumers, scenes, real-BIOS and UI save/Load paths remain open; Linux, USA and
+native Windows are deferred. No performance comparison was performed.
+
+## E211 European color-mode archive source contract
+
+The original path at `080cf304` selects one of three independently rooted
+indexed archives using the low two color-mode bits at `02002fc2`: values 0/3
+select `3cad94`, 1 selects `3ce9d4`, and 2 selects `3d26d8`. Each branch calls
+the original wrapper `0800537c` for one selected program. This is color-mode
+selection; it does not establish another language-selection point.
+
+Static source audit `e211-home-indexed-source-mwuqtdap` authenticates the
+caller and decoder path, all 495 programs and their mode-0/width-5 dictionaries.
+Each program yields 96 bytes. The three source extents are `3cad94..3ce9d1`,
+`3ce9d4..3d26d6` and `3d26d8..3d63d3` (ends exclusive); the intervening gaps
+are separate. Their source SHA-256 values, in the same order, are
+`a3d2ccdd74d9a7dcd406d5bcc2e0a9f1f45780944415191de39ecc44e072032f`,
+`c6b9a167dcb84299937c6d4bda9a086f91e36fb39594212e9cef16a930d4fdeb` and
+`b8f295e5dd0c694d50a1eb957e2f66dade6d48c163a7fdf6e35808200bd9fd3a`.
+The third extent includes four bytes at `3d4830..3d4834` already owned by
+`graphics.unit-obj-ffff-reader-fields`; the E204 runtime projection composes
+with that existing owner.
+
+The E207 home audit observes programs 125, 127 and 129 from the first archive
+and 362 bytes of that archive were outside E203 ownership. Its address-only
+capture does not identify the executing PCs; ordinary use of the other two
+archives remains unproved. The E204 publication and remaining regional and
+platform limits are described above. This source audit ran no gameplay or
+performance measurement.
+
 ## European source contract
 
 `ROMDATA-01-INDEXED-GRAPHICS-ARCHIVES` classifies four independently rooted

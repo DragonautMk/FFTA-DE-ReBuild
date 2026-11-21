@@ -21,6 +21,9 @@ pub struct ObjAnimationStats {
     pub localized_selector_bytes: u64,
     pub localized_source_bytes: u64,
     pub localized_host_reads: u64,
+    /// Bytes from the separately rooted battle-number bank.
+    pub battle_source_bytes: u64,
+    pub battle_host_reads: u64,
 }
 pub(super) struct ObjAnimationResources {
     banks: Banks,
@@ -29,6 +32,7 @@ pub(super) struct ObjAnimationResources {
     zero_count_selector_bytes: AtomicU64,
     zero_count_host_reads: AtomicU64,
     localized_counts: [AtomicU64; 3],
+    battle_counts: [AtomicU64; 2],
 }
 impl ObjAnimationResources {
     pub(super) fn new(banks: Banks) -> Result<Self, String> {
@@ -40,10 +44,11 @@ impl ObjAnimationResources {
             zero_count_selector_bytes: AtomicU64::new(0),
             zero_count_host_reads: AtomicU64::new(0),
             localized_counts: std::array::from_fn(|_| AtomicU64::new(0)),
+            battle_counts: std::array::from_fn(|_| AtomicU64::new(0)),
         })
     }
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x395 | 0xb4b..=0xb4f | 0xb93..=0xb94)
+        matches!(index >> 12, 0x395 | 0x411 | 0x416 | 0xb4b..=0xb4f | 0xb93..=0xb94)
     }
 
     fn localized(&self, bank: &Bank) -> bool {
@@ -53,6 +58,9 @@ impl ObjAnimationResources {
             .any(|t| t.object_roots.contains(&bank.object_root))
     }
     fn owned_byte(&self, bank: &Bank, byte: u8, kind: usize) -> Option<(u8, usize)> {
+        if bank.object_root == crate::rom_data::obj_animations::BATTLE_OBJECT_ROOT {
+            self.battle_counts[0].fetch_add(1, Ordering::Relaxed);
+        }
         if self.localized(bank) {
             self.localized_counts[1].fetch_add(1, Ordering::Relaxed);
         }
@@ -66,6 +74,9 @@ impl ObjAnimationResources {
                 .binary_search_by_key(&offset, |l| l.source_offset)
             {
                 self.host_reads.fetch_add(1, Ordering::Relaxed);
+                if bank.object_root == crate::rom_data::obj_animations::BATTLE_OBJECT_ROOT {
+                    self.battle_counts[1].fetch_add(1, Ordering::Relaxed);
+                }
                 if self.localized(bank) {
                     self.localized_counts[2].fetch_add(1, Ordering::Relaxed);
                 }
@@ -200,6 +211,8 @@ impl ObjAnimationResources {
             localized_selector_bytes: self.localized_counts[0].load(Ordering::Relaxed),
             localized_source_bytes: self.localized_counts[1].load(Ordering::Relaxed),
             localized_host_reads: self.localized_counts[2].load(Ordering::Relaxed),
+            battle_source_bytes: self.battle_counts[0].load(Ordering::Relaxed),
+            battle_host_reads: self.battle_counts[1].load(Ordering::Relaxed),
         }
     }
     pub(super) fn resident_bytes(&self) -> usize {

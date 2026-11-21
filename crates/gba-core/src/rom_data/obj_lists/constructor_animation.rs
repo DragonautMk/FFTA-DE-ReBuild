@@ -204,7 +204,7 @@ impl Catalog {
                 role: "static-obj-list".into(),
             });
         }
-        let lists = Lists { lists, battle_directory: None, actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, layout_offsets: None };
+        let lists = Lists { lists, battle_directory: None, actor_lookup: None, actor_lookup_extension: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, iwram_additional_callbacks: None, layout_offsets: None };
         decoded.validate_lists(&lists)?;
         sources.sort_by_key(|source| source.offset);
         Ok(Self {

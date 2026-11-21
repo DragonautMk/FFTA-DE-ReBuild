@@ -2659,7 +2659,43 @@ complete custom-stream decoding; the intervening alignment bytes and other
 directory entries are excluded. Source and decoded hashes, reader pins and the
 audit driver are retained in the unit.
 
-This establishes a source lead, not managed ownership or ordinary reader-PC
-attribution. The selected streams and directory cells still require extraction,
-runtime consumption and Wine equivalence checks; other entries, consumers,
+At this source-audit boundary the streams and directory cells were still raw;
+the E210 integration below subsequently publishes all 103 entries. The E207
+capture still does not attribute its reads to particular instructions. Other
+consumers, Linux, USA and native Windows remain open.
+
+## E210 relative graphics archive publication
+
+EUR E203-d202 extends `graphics.obj-custom-banks` with the kind-4 directory
+and all 103 custom-compressed streams. The typed directory retains its header,
+reserved byte and relative targets; each stream retains its encoded controls
+and decoded words. The runtime reconstructs original source bytes from these
+fields while leaving original index checks, decompression and writes in guest
+code. The 416 directory bytes and 224,516 encoded stream bytes are owned;
+alignment gaps and neighboring sources remain separate. Previous bank and
+selector records are preserved, and the earlier E202 graphics file still parses.
+
+Wine `e210-relative-wine-af7l9c_2` confirms all source bytes and boundaries,
+preservation of the other 122 resources, rejection of malformed and coherent
+source edits, eight original resolver cases in interpreter and translated
+execution, and three original decompressor cases with altered ROM backing. A
+missing dataset copy is rejected without replacing the active owner, which
+also survives machine-state loading. The last new stream touches the earlier
+`40d300` owner; a mixed read spanning that boundary matches the ROM.
+
+Wine `e210-home-scene-wine-deee1ha0` compares 600 recorded home frames while
+the directory and streams 69, 71 and 73 have altered backing in the managed
+machine. Complete state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match at each frame. The typed owner serves 28 directory bytes,
+8,030 stream bytes and 3,859 decoded literal bytes, including all three
+observed streams. Static reconciliation `e210-home-residual-4j77xxqi` finds
+6,056 of E207's previously unowned sampled bytes covered by E203; 2,488 were
+unowned at that revision. Those address-only reads can include executable support.
+
+Production Wine CLI `e210-relative-cli-wine-473fvdeq` creates, reuses and
+verifies 124 files matching the tested dataset; reuse and verification leave
+the generation and files unchanged. The three Wine units drain their server and
+show no Bluetooth D-Bus assertion with the local backport.
+
+Other scenes, consumers and ordinary indices, real-BIOS paths, UI save/Load,
 Linux, USA and native Windows remain open. No performance measurement was made.

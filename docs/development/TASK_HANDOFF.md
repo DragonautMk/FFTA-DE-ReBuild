@@ -31,9 +31,10 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: active
 - Outcome: partial
-- ROMDATA-TARGET-REATTACH: systemd host bind verified; check mount before use. Private bwrap remains available.
-- E173/E181–E201 PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 `kkbk45be` Wine PASS. E172: 3,276 raw, 420 overlaps `usda5fn4`.
-- ROMDATA-02-E208-HOME-STREAMS active: EUR/Wine, no metrics/space. E208 `rwsqv1y7`; 103 streams disjoint. Build `exso2ew8` PASS; leased Wine test running handle 45072. Prior path/nodev/Bus-import failures retained. Next poisoned scene/CLI; other scenes/readers, Linux/USA/parent open.
+- E203–E220 Wine PASS; E215 sampled residual 0 (`3blfucoi`), E207 home 172 (`ypnkepk0`).
+- E230 active ROMDATA-01-E207-HOME-UNOWNED: EUR/Wine; `zp_otq7h` typo FAIL fixed; reader `gwh_mblj`, home `18841zsj`, residue `dnr49xgd` PASS. CLI `q0do0j4t`/33839 running. Linux/USA open.
+- TARGET-REATTACH: host bind verified; check mount. Private bwrap available.
+- E173/E181–E201 PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 `kkbk45be` Wine PASS; E172 raw overlap `usda5fn4`.
 - E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
@@ -184,9 +185,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: DEPS-2026-11-21 complete.
-- Last verified result: Linux, Windows cross, Android Rust and both Gradle builds pass.
-- Remaining work: native APK packaging unverified.
-- Errors or blockers: NDK r30 transfer timeouts.
-- Next action: none in this selection.
-- References: 2026-11-21-refresh-project-dependencies.json; archive DEPS-2026-11-21.
+- Task: E230 active; ROM-DATA-FULL-EUR partial.
+- Last verified result: E229 reader `yc40amn_`, home `29mql8p4`, CLI `__imn0tp`; residual `ypnkepk0` PASS.
+- Remaining work: E207 home 172 sampled bytes, other readers/scenes/families, Linux/USA/06/07; DEPS APK unverified.
+- Errors or blockers: other literal/control readers open; DEPS NDK r30 timeouts.
+- Next action: await CLI 33839; document and close E230.
+- References: `docs/rom_data_runtime.md` E229; archive E229 and DEPS-2026-11-21.

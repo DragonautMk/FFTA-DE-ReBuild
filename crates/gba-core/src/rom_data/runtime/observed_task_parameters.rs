@@ -11,12 +11,14 @@ pub struct ObservedTaskParametersStats {
     pub vertical_correction_bytes: u64,
     pub battle_phase_threshold_bytes: u64,
     pub battle_draw_sequence_bytes: u64,
+    pub signed_lookup_bytes: u64,
+    pub signed_lookup_indices_mask: u64,
     pub phases_used: u64,
     pub corrections_used: u64,
 }
 pub(super) struct ObservedTaskParametersResources {
     data: model::ObservedTaskParameters,
-    counts: [AtomicU64; 6],
+    counts: [AtomicU64; 7],
     used: AtomicU64,
 }
 impl ObservedTaskParametersResources {
@@ -59,6 +61,10 @@ impl ObservedTaskParametersResources {
             .and_then(|values| values.get(at.checked_sub(model::BATTLE_PHASE_SOURCE)? as usize)) {
             self.used.fetch_or(1 << (9 + at - model::BATTLE_PHASE_SOURCE), Ordering::Relaxed);
             Some((*value, 4))
+        } else if let Some(value) = self.data.signed_lookup_projection.as_ref()
+            .and_then(|values| values.get(at.checked_sub(model::SIGNED_LOOKUP_SOURCE)? as usize)) {
+            self.used.fetch_or(1 << (12 + at - model::SIGNED_LOOKUP_SOURCE), Ordering::Relaxed);
+            Some((*value as u8, 6))
         } else {
             let value = self.data.vertical_corrections.byte_at(at)?;
             self.used.fetch_or(
@@ -77,7 +83,7 @@ impl ObservedTaskParametersResources {
         if !Self::source_page(index) {
             return prior;
         }
-        let mut counts = [0u64; 6];
+        let mut counts = [0u64; 7];
         let fields: [_; N] = std::array::from_fn(|i| self.byte(index + i));
         if fields.iter().all(Option::is_none) {
             return prior;
@@ -97,7 +103,7 @@ impl ObservedTaskParametersResources {
         Some(bytes)
     }
     pub(super) fn stats(&self) -> ObservedTaskParametersStats {
-        let [bus_reads, source_bytes, phase_threshold_bytes, vertical_correction_bytes, battle_phase_threshold_bytes, battle_draw_sequence_bytes] =
+        let [bus_reads, source_bytes, phase_threshold_bytes, vertical_correction_bytes, battle_phase_threshold_bytes, battle_draw_sequence_bytes, signed_lookup_bytes] =
             self.counts.each_ref().map(|i| i.load(Ordering::Relaxed));
         let used = self.used.load(Ordering::Relaxed);
         ObservedTaskParametersStats {
@@ -107,6 +113,8 @@ impl ObservedTaskParametersResources {
             vertical_correction_bytes,
             battle_phase_threshold_bytes,
             battle_draw_sequence_bytes,
+            signed_lookup_bytes,
+            signed_lookup_indices_mask: (used >> 12) & 15,
             phases_used: u64::from((used & ((1 << model::PHASE_COUNT) - 1)).count_ones()),
             corrections_used: u64::from(((used >> model::PHASE_COUNT) & 0x3f).count_ones()),
         }

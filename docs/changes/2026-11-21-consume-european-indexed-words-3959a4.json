@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-indexed-words-3959a4",
+  "title": "Consume European indexed word lookup",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish 30 authenticated little-endian words as gameplay.indexed-words-3959a4 with their independently rooted successor; preserve guest index arithmetic and raw fallback outside the physical projection.",
+    "Bind the decoded source to guest, generated-native and DMA/BIOS reads, enforce file and source validation, and retain the previous resources and their order."
+  ],
+  "validation": [
+    "Windows test build pgeent6b and Wine hdglegnr verify 120 bytes, 124 preserved resources, mixed boundaries and mirrors, 32 original interpreted/generated reader cases, out-of-projection indices, DMA/CpuSet/CpuFastSet and snapshot-owner retention.",
+    "Wine des5bafu compares 600 retained European battle frames with selected backing altered: state, guest clock, video, OAM, dispatch and five nonempty audio streams match; record 29 is served once.",
+    "Windows production build lcnhfgdg and Wine CLI snb6pezg pass create, reuse and verify with 126 matching files. Static reclassification v236zapk leaves 3831 previously unowned sampled bytes, including three high."
+  ],
+  "limitations": [
+    "The address-only battle audit does not identify executing PCs; earlier save ancestry is unknown, with no new cheat or state forcing. Other value meanings, indices, consumers, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_words_3959.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_words_3959.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

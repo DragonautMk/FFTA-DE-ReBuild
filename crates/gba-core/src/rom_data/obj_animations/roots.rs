@@ -2,6 +2,8 @@
 use super::RootReference;
 
 pub const BANK_ROOTS: &[(u32, u32)] = &[
+    // This battle context stores the two roots directly; see Catalog::from_rom.
+    (0x4161dc, 0x411420),
     (0xb4bc84, 0xb4bd10),
     (0xb4bc98, 0xb4bd24),
     (0xb4bcb8, 0xb4bd38),

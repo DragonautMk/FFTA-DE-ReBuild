@@ -87,6 +87,13 @@ use gba_core::rom_data::{
     dma_register_directories::DmaRegisterDirectories, DMA_REGISTER_DIRECTORIES_ID, DMA_REGISTER_DIRECTORIES_FILE, MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES,
     iwram_memory_helpers::IwramMemoryHelpers, IWRAM_MEMORY_HELPERS_ID, IWRAM_MEMORY_HELPERS_FILE, MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES,
     adjacent_offset_tables::AdjacentOffsetTables, ADJACENT_OFFSET_TABLES_ID, ADJACENT_OFFSET_TABLES_FILE, MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES,
+    indexed_records16::IndexedRecords16, INDEXED_RECORDS16_ID, INDEXED_RECORDS16_FILE, MAX_INDEXED_RECORDS16_FILE_BYTES,
+    indexed_words_3959::IndexedWords3959, INDEXED_WORDS_3959_ID, INDEXED_WORDS_3959_FILE, MAX_INDEXED_WORDS_3959_FILE_BYTES,
+    thumb_switch_tables::ThumbSwitchTables, THUMB_SWITCH_TABLES_ID, THUMB_SWITCH_TABLES_FILE, MAX_THUMB_SWITCH_TABLES_FILE_BYTES,
+    thumb_pc_literals::ThumbPcLiterals, THUMB_PC_LITERALS_ID, THUMB_PC_LITERALS_FILE, MAX_THUMB_PC_LITERALS_FILE_BYTES,
+    copied_halfword_lookups::CopiedHalfwordLookups, COPIED_HALFWORD_LOOKUPS_ID, COPIED_HALFWORD_LOOKUPS_FILE, MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES,
+    indexed_halfwords_39a5::IndexedHalfwords39a5, INDEXED_HALFWORDS_39A5_ID, INDEXED_HALFWORDS_39A5_FILE, MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES,
+    script_byte_lookup_3ad::ScriptByteLookup3ad, SCRIPT_BYTE_LOOKUP_3AD_ID, SCRIPT_BYTE_LOOKUP_3AD_FILE, MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -247,6 +254,32 @@ mod dma_register_directories_tests;
 mod iwram_memory_helpers_tests;
 #[cfg(test)]
 mod adjacent_offset_tables_tests;
+#[cfg(test)]
+mod indexed_records16_tests;
+#[cfg(test)]
+mod indexed_words_3959_tests;
+#[cfg(test)]
+mod thumb_switch_tables_tests;
+#[cfg(test)]
+mod thumb_switch_tables_additional_tests;
+#[cfg(test)]
+mod obj_derived_dimensions_tests;
+#[cfg(test)]
+mod copied_halfword_lookups_tests;
+#[cfg(test)]
+mod indexed_halfwords_39a5_tests;
+#[cfg(test)]
+mod script_byte_lookup_3ad_tests;
+#[cfg(test)]
+mod thumb_pc_literals_tests;
+#[cfg(test)]
+mod thumb_pc_literals_additional_tests;
+#[cfg(test)]
+mod thumb_pc_literals_observed_tests;
+#[cfg(test)]
+mod thumb_pc_literals_home_tests;
+#[cfg(test)]
+mod home_residual_code_support_tests;
 #[cfg(test)]
 mod obj_animation_tests;
 #[cfg(test)]
@@ -528,6 +561,10 @@ mod world_node_runtime_tests;
 #[cfg(test)]
 mod word_task_obj_runtime_tests;
 #[cfg(test)]
+mod battle_obj_bank_tests;
+#[cfg(test)]
+mod battle_obj_support_tests;
+#[cfg(test)]
 mod unit_obj_alternate_battle_model_tests;
 #[cfg(test)]
 mod color_mode_palette_model_tests;
@@ -658,6 +695,10 @@ mod range_lookup_tests;
 #[cfg(test)]
 mod tilemap_geometry_tests;
 #[cfg(test)]
+mod tilemap_eight_row_tests;
+#[cfg(test)]
+mod task_signed_lookup_tests;
+#[cfg(test)]
 mod script39_registry_poses_tests;
 #[cfg(test)]
 mod script39_special_poses_tests;
@@ -673,6 +714,8 @@ mod script39_action13_callee_tests;
 mod direct_indexed_graphics_tests;
 #[cfg(test)]
 mod direct_indexed_dictionary_tests;
+#[cfg(test)]
+mod color_indexed_graphics_tests;
 #[cfg(test)]
 mod context_callback_descriptor_tests;
 #[cfg(test)]
@@ -1160,6 +1203,13 @@ fn parse_observed_tilemap_row(bytes: &[u8]) -> Result<ObservedTilemapRow, String
 fn parse_dma_register_directories(bytes: &[u8]) -> Result<DmaRegisterDirectories, String> { let value: DmaRegisterDirectories = serde_json::from_slice(bytes).map_err(|e| format!("Invalid dma_register_directories: {e}"))?; value.validate()?; Ok(value) }
 fn parse_iwram_memory_helpers(bytes: &[u8]) -> Result<IwramMemoryHelpers, String> { let value: IwramMemoryHelpers = serde_json::from_slice(bytes).map_err(|e| format!("Invalid iwram_memory_helpers: {e}"))?; value.validate()?; Ok(value) }
 fn parse_adjacent_offset_tables(bytes: &[u8]) -> Result<AdjacentOffsetTables, String> { let value: AdjacentOffsetTables = serde_json::from_slice(bytes).map_err(|e| format!("Invalid adjacent_offset_tables: {e}"))?; value.validate()?; Ok(value) }
+fn parse_indexed_records16(bytes: &[u8]) -> Result<IndexedRecords16, String> { let value: IndexedRecords16 = serde_json::from_slice(bytes).map_err(|e| format!("Invalid indexed_records16: {e}"))?; value.validate()?; Ok(value) }
+fn parse_indexed_words_3959(bytes: &[u8]) -> Result<IndexedWords3959, String> { let value: IndexedWords3959 = serde_json::from_slice(bytes).map_err(|e| format!("Invalid indexed_words_3959: {e}"))?; value.validate()?; Ok(value) }
+fn parse_thumb_switch_tables(bytes: &[u8]) -> Result<ThumbSwitchTables, String> { let value: ThumbSwitchTables = serde_json::from_slice(bytes).map_err(|e| format!("Invalid thumb_switch_tables: {e}"))?; value.validate()?; Ok(value) }
+fn parse_thumb_pc_literals(bytes: &[u8]) -> Result<ThumbPcLiterals, String> { let value: ThumbPcLiterals = serde_json::from_slice(bytes).map_err(|e| format!("Invalid thumb_pc_literals: {e}"))?; value.validate()?; Ok(value) }
+fn parse_copied_halfword_lookups(bytes: &[u8]) -> Result<CopiedHalfwordLookups, String> { let value: CopiedHalfwordLookups = serde_json::from_slice(bytes).map_err(|e| format!("Invalid copied_halfword_lookups: {e}"))?; value.validate()?; Ok(value) }
+fn parse_indexed_halfwords_39a5(bytes: &[u8]) -> Result<IndexedHalfwords39a5, String> { let value: IndexedHalfwords39a5 = serde_json::from_slice(bytes).map_err(|e| format!("Invalid indexed_halfwords_39a5: {e}"))?; value.validate()?; Ok(value) }
+fn parse_script_byte_lookup_3ad(bytes: &[u8]) -> Result<ScriptByteLookup3ad, String> { let value: ScriptByteLookup3ad = serde_json::from_slice(bytes).map_err(|e| format!("Invalid script_byte_lookup_3ad: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1194,6 +1244,13 @@ fn encode_observed_tilemap_row(value: &ObservedTilemapRow) -> Result<Vec<u8>, St
 fn encode_dma_register_directories(value: &DmaRegisterDirectories) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode dma_register_directories: {e}")) }
 fn encode_iwram_memory_helpers(value: &IwramMemoryHelpers) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode iwram_memory_helpers: {e}")) }
 fn encode_adjacent_offset_tables(value: &AdjacentOffsetTables) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode adjacent_offset_tables: {e}")) }
+fn encode_indexed_records16(value: &IndexedRecords16) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode indexed_records16: {e}")) }
+fn encode_indexed_words_3959(value: &IndexedWords3959) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode indexed_words_3959: {e}")) }
+fn encode_thumb_switch_tables(value: &ThumbSwitchTables) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode thumb_switch_tables: {e}")) }
+fn encode_thumb_pc_literals(value: &ThumbPcLiterals) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode thumb_pc_literals: {e}")) }
+fn encode_copied_halfword_lookups(value: &CopiedHalfwordLookups) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode copied_halfword_lookups: {e}")) }
+fn encode_indexed_halfwords_39a5(value: &IndexedHalfwords39a5) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode indexed_halfwords_39a5: {e}")) }
+fn encode_script_byte_lookup_3ad(value: &ScriptByteLookup3ad) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode script_byte_lookup_3ad: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1488,6 +1545,13 @@ struct Dataset {
     dma_register_directories: Option<DmaRegisterDirectories>,
     iwram_memory_helpers: Option<IwramMemoryHelpers>,
     adjacent_offset_tables: Option<AdjacentOffsetTables>,
+    indexed_records16: Option<IndexedRecords16>,
+    indexed_words_3959: Option<IndexedWords3959>,
+    thumb_switch_tables: Option<ThumbSwitchTables>,
+    thumb_pc_literals: Option<ThumbPcLiterals>,
+    copied_halfword_lookups: Option<CopiedHalfwordLookups>,
+    indexed_halfwords_39a5: Option<IndexedHalfwords39a5>,
+    script_byte_lookup_3ad: Option<ScriptByteLookup3ad>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1593,6 +1657,13 @@ struct Dataset {
     dma_register_directories_bytes: Option<Vec<u8>>,
     iwram_memory_helpers_bytes: Option<Vec<u8>>,
     adjacent_offset_tables_bytes: Option<Vec<u8>>,
+    indexed_records16_bytes: Option<Vec<u8>>,
+    indexed_words_3959_bytes: Option<Vec<u8>>,
+    thumb_switch_tables_bytes: Option<Vec<u8>>,
+    thumb_pc_literals_bytes: Option<Vec<u8>>,
+    copied_halfword_lookups_bytes: Option<Vec<u8>>,
+    indexed_halfwords_39a5_bytes: Option<Vec<u8>>,
+    script_byte_lookup_3ad_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1724,6 +1795,13 @@ impl Dataset {
             dma_register_directories: self.dma_register_directories.as_ref().zip(self.dma_register_directories_bytes.as_deref()),
             iwram_memory_helpers: self.iwram_memory_helpers.as_ref().zip(self.iwram_memory_helpers_bytes.as_deref()),
             adjacent_offset_tables: self.adjacent_offset_tables.as_ref().zip(self.adjacent_offset_tables_bytes.as_deref()),
+            indexed_records16: self.indexed_records16.as_ref().zip(self.indexed_records16_bytes.as_deref()),
+            indexed_words_3959: self.indexed_words_3959.as_ref().zip(self.indexed_words_3959_bytes.as_deref()),
+            thumb_switch_tables: self.thumb_switch_tables.as_ref().zip(self.thumb_switch_tables_bytes.as_deref()),
+            thumb_pc_literals: self.thumb_pc_literals.as_ref().zip(self.thumb_pc_literals_bytes.as_deref()),
+            copied_halfword_lookups: self.copied_halfword_lookups.as_ref().zip(self.copied_halfword_lookups_bytes.as_deref()),
+            indexed_halfwords_39a5: self.indexed_halfwords_39a5.as_ref().zip(self.indexed_halfwords_39a5_bytes.as_deref()),
+            script_byte_lookup_3ad: self.script_byte_lookup_3ad.as_ref().zip(self.script_byte_lookup_3ad_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -1923,6 +2001,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let dma_register_directories_bytes=manifest.coverage.iter().any(|id|id==DMA_REGISTER_DIRECTORIES_ID).then(||read_bounded(&path.join(DMA_REGISTER_DIRECTORIES_FILE),MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES)).transpose()?;
     let iwram_memory_helpers_bytes=manifest.coverage.iter().any(|id|id==IWRAM_MEMORY_HELPERS_ID).then(||read_bounded(&path.join(IWRAM_MEMORY_HELPERS_FILE),MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES)).transpose()?;
     let adjacent_offset_tables_bytes=manifest.coverage.iter().any(|id|id==ADJACENT_OFFSET_TABLES_ID).then(||read_bounded(&path.join(ADJACENT_OFFSET_TABLES_FILE),MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES)).transpose()?;
+    let indexed_records16_bytes=manifest.coverage.iter().any(|id|id==INDEXED_RECORDS16_ID).then(||read_bounded(&path.join(INDEXED_RECORDS16_FILE),MAX_INDEXED_RECORDS16_FILE_BYTES)).transpose()?;
+    let indexed_words_3959_bytes=manifest.coverage.iter().any(|id|id==INDEXED_WORDS_3959_ID).then(||read_bounded(&path.join(INDEXED_WORDS_3959_FILE),MAX_INDEXED_WORDS_3959_FILE_BYTES)).transpose()?;
+    let thumb_switch_tables_bytes=manifest.coverage.iter().any(|id|id==THUMB_SWITCH_TABLES_ID).then(||read_bounded(&path.join(THUMB_SWITCH_TABLES_FILE),MAX_THUMB_SWITCH_TABLES_FILE_BYTES)).transpose()?;
+    let thumb_pc_literals_bytes=manifest.coverage.iter().any(|id|id==THUMB_PC_LITERALS_ID).then(||read_bounded(&path.join(THUMB_PC_LITERALS_FILE),MAX_THUMB_PC_LITERALS_FILE_BYTES)).transpose()?;
+    let copied_halfword_lookups_bytes=manifest.coverage.iter().any(|id|id==COPIED_HALFWORD_LOOKUPS_ID).then(||read_bounded(&path.join(COPIED_HALFWORD_LOOKUPS_FILE),MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES)).transpose()?;
+    let indexed_halfwords_39a5_bytes=manifest.coverage.iter().any(|id|id==INDEXED_HALFWORDS_39A5_ID).then(||read_bounded(&path.join(INDEXED_HALFWORDS_39A5_FILE),MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES)).transpose()?;
+    let script_byte_lookup_3ad_bytes=manifest.coverage.iter().any(|id|id==SCRIPT_BYTE_LOOKUP_3AD_ID).then(||read_bounded(&path.join(SCRIPT_BYTE_LOOKUP_3AD_FILE),MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2074,6 +2159,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         dma_register_directories_bytes.as_ref().map_or(0, Vec::len),
         iwram_memory_helpers_bytes.as_ref().map_or(0, Vec::len),
         adjacent_offset_tables_bytes.as_ref().map_or(0, Vec::len),
+        indexed_records16_bytes.as_ref().map_or(0, Vec::len),
+        indexed_words_3959_bytes.as_ref().map_or(0, Vec::len),
+        thumb_switch_tables_bytes.as_ref().map_or(0, Vec::len),
+        thumb_pc_literals_bytes.as_ref().map_or(0, Vec::len),
+        copied_halfword_lookups_bytes.as_ref().map_or(0, Vec::len),
+        indexed_halfwords_39a5_bytes.as_ref().map_or(0, Vec::len),
+        script_byte_lookup_3ad_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2180,6 +2272,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let dma_register_directories=dma_register_directories_bytes.as_deref().map(parse_dma_register_directories).transpose()?;
     let iwram_memory_helpers=iwram_memory_helpers_bytes.as_deref().map(parse_iwram_memory_helpers).transpose()?;
     let adjacent_offset_tables=adjacent_offset_tables_bytes.as_deref().map(parse_adjacent_offset_tables).transpose()?;
+    let indexed_records16=indexed_records16_bytes.as_deref().map(parse_indexed_records16).transpose()?;
+    let indexed_words_3959=indexed_words_3959_bytes.as_deref().map(parse_indexed_words_3959).transpose()?;
+    let thumb_switch_tables=thumb_switch_tables_bytes.as_deref().map(parse_thumb_switch_tables).transpose()?;
+    let thumb_pc_literals=thumb_pc_literals_bytes.as_deref().map(parse_thumb_pc_literals).transpose()?;
+    let copied_halfword_lookups=copied_halfword_lookups_bytes.as_deref().map(parse_copied_halfword_lookups).transpose()?;
+    let indexed_halfwords_39a5=indexed_halfwords_39a5_bytes.as_deref().map(parse_indexed_halfwords_39a5).transpose()?;
+    let script_byte_lookup_3ad=script_byte_lookup_3ad_bytes.as_deref().map(parse_script_byte_lookup_3ad).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2336,6 +2435,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         dma_register_directories,
         iwram_memory_helpers,
         adjacent_offset_tables,
+        indexed_records16,
+        indexed_words_3959,
+        thumb_switch_tables,
+        thumb_pc_literals,
+        copied_halfword_lookups,
+        indexed_halfwords_39a5,
+        script_byte_lookup_3ad,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2441,6 +2547,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         dma_register_directories_bytes,
         iwram_memory_helpers_bytes,
         adjacent_offset_tables_bytes,
+        indexed_records16_bytes,
+        indexed_words_3959_bytes,
+        thumb_switch_tables_bytes,
+        thumb_pc_literals_bytes,
+        copied_halfword_lookups_bytes,
+        indexed_halfwords_39a5_bytes,
+        script_byte_lookup_3ad_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2574,6 +2687,13 @@ fn check_dataset_budget(
     dma_register_directories: usize,
     iwram_memory_helpers: usize,
     adjacent_offset_tables: usize,
+    indexed_records16: usize,
+    indexed_words_3959: usize,
+    thumb_switch_tables: usize,
+    thumb_pc_literals: usize,
+    copied_halfword_lookups: usize,
+    indexed_halfwords_39a5: usize,
+    script_byte_lookup_3ad: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -2695,6 +2815,13 @@ fn check_dataset_budget(
         || dma_register_directories as u64 > MAX_DMA_REGISTER_DIRECTORIES_FILE_BYTES
         || iwram_memory_helpers as u64 > MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES
         || adjacent_offset_tables as u64 > MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES
+        || indexed_records16 as u64 > MAX_INDEXED_RECORDS16_FILE_BYTES
+        || indexed_words_3959 as u64 > MAX_INDEXED_WORDS_3959_FILE_BYTES
+        || thumb_switch_tables as u64 > MAX_THUMB_SWITCH_TABLES_FILE_BYTES
+        || thumb_pc_literals as u64 > MAX_THUMB_PC_LITERALS_FILE_BYTES
+        || copied_halfword_lookups as u64 > MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES
+        || indexed_halfwords_39a5 as u64 > MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES
+        || script_byte_lookup_3ad as u64 > MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -2822,6 +2949,13 @@ fn check_dataset_budget(
         .saturating_add(dma_register_directories)
         .saturating_add(iwram_memory_helpers)
         .saturating_add(adjacent_offset_tables)
+        .saturating_add(indexed_records16)
+        .saturating_add(indexed_words_3959)
+        .saturating_add(thumb_switch_tables)
+        .saturating_add(thumb_pc_literals)
+        .saturating_add(copied_halfword_lookups)
+        .saturating_add(indexed_halfwords_39a5)
+        .saturating_add(script_byte_lookup_3ad)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3041,6 +3175,13 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if dataset.dma_register_directories.is_some() {eprintln!("ROM_DATA runtime=decoded resource={DMA_REGISTER_DIRECTORIES_ID} file={} directories=2",dataset.manifest.resources[120].sha256);}
     if dataset.iwram_memory_helpers.is_some() {eprintln!("ROM_DATA runtime=decoded resource={IWRAM_MEMORY_HELPERS_ID} file={} helpers=3",dataset.manifest.resources[121].sha256);}
     if dataset.adjacent_offset_tables.is_some() {eprintln!("ROM_DATA runtime=decoded resource={ADJACENT_OFFSET_TABLES_ID} file={} tables=5",dataset.manifest.resources[122].sha256);}
+    if let Some(data)=&dataset.indexed_records16 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_RECORDS16_ID} file={} records={}",dataset.manifest.resources[123].sha256,data.records.len());}
+    if let Some(data)=&dataset.indexed_words_3959 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_WORDS_3959_ID} file={} records={}",dataset.manifest.resources[124].sha256,data.records.len());}
+    if let Some(data)=&dataset.thumb_switch_tables {eprintln!("ROM_DATA runtime=decoded resource={THUMB_SWITCH_TABLES_ID} file={} tables={} additional={}",dataset.manifest.resources[125].sha256,data.tables.len(),data.additional_tables.len());}
+    if let Some(data)=&dataset.thumb_pc_literals {eprintln!("ROM_DATA runtime=decoded resource={THUMB_PC_LITERALS_ID} file={} literals={} additional={} observed={} home_anchored={} home_observed={}",dataset.manifest.resources[126].sha256,data.literals.len(),data.additional.len(),data.observed.len(),data.home_anchored.len(),data.home_observed.len());}
+    if let Some(data)=&dataset.copied_halfword_lookups {eprintln!("ROM_DATA runtime=decoded resource={COPIED_HALFWORD_LOOKUPS_ID} file={} tables={}",dataset.manifest.resources[127].sha256,data.tables.len());}
+    if let Some(data)=&dataset.indexed_halfwords_39a5 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_HALFWORDS_39A5_ID} file={} values={}",dataset.manifest.resources[128].sha256,data.values.len());}
+    if let Some(data)=&dataset.script_byte_lookup_3ad {eprintln!("ROM_DATA runtime=decoded resource={SCRIPT_BYTE_LOOKUP_3AD_ID} file={} values={}",dataset.manifest.resources[129].sha256,data.values.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3130,6 +3271,8 @@ pub fn report_usage(machine: &gba_core::Machine) {
         eprintln!("ROM_DATA_USE resource={} dataset={} bus_reads={} host_rom_reads={} host_ram_reads={} dynamic_ram_reads={} validation_reads={} bus_source_mask={}",
             resources.resource_id(), resources.dataset_sha256(), stats.bus_reads, stats.host_rom_reads,
             stats.host_ram_reads, stats.dynamic_ram_reads, stats.validation_reads, stats.bus_source_mask);
+        eprintln!("ROM_DATA_USE resource=graphics.obj-dimensions-derived dataset={} bus_reads={} source_bytes={} tables={} rows={:?}",
+            resources.dataset_sha256(), stats.derived_bus_reads, stats.derived_source_bytes, stats.derived_table_mask, stats.derived_rows_mask);
         if let Some(bg) = resources.background_stats() {
             eprintln!("ROM_DATA_USE resource={BG_DESCRIPTORS_ID} dataset={} bus_reads={} projected_bytes={}",
                 resources.dataset_sha256(),bg.bus_reads,bg.projected_bytes);
@@ -3215,6 +3358,13 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.dma_register_directories_stats() {eprintln!("ROM_DATA_USE resource={DMA_REGISTER_DIRECTORIES_ID} dataset={} bus_reads={} directory_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.directory_bytes);}
         if let Some(i)=resources.iwram_memory_helpers_stats() {eprintln!("ROM_DATA_USE resource={IWRAM_MEMORY_HELPERS_ID} dataset={} bus_reads={} helper_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.helper_bytes);}
         if let Some(i)=resources.adjacent_offset_tables_stats() {eprintln!("ROM_DATA_USE resource={ADJACENT_OFFSET_TABLES_ID} dataset={} bus_reads={} table_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.table_bytes);}
+        if let Some(i)=resources.indexed_records16_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_RECORDS16_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask);}
+        if let Some(i)=resources.indexed_words_3959_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_WORDS_3959_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask);}
+        if let Some(i)=resources.thumb_switch_tables_stats() {eprintln!("ROM_DATA_USE resource={THUMB_SWITCH_TABLES_ID} dataset={} bus_reads={} source_bytes={} roots_mask={} destinations_mask={} additional_source_bytes={} additional_destinations_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.roots_mask,i.destinations_mask,i.additional_source_bytes,i.additional_destinations_mask);}
+        if let Some(i)=resources.thumb_pc_literals_stats() {eprintln!("ROM_DATA_USE resource={THUMB_PC_LITERALS_ID} dataset={} bus_reads={} source_bytes={} literals_mask={:?} additional_source_bytes={} additional_mask={:?} observed_source_bytes={} observed_mask={:?} home_anchored_bytes={} home_anchored_mask={} home_observed_bytes={} home_observed_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literals_mask,i.additional_source_bytes,i.additional_mask,i.observed_source_bytes,i.observed_mask,i.home_anchored_bytes,i.home_anchored_mask,i.home_observed_bytes,i.home_observed_mask);}
+        if let Some(i)=resources.copied_halfword_lookups_stats() {eprintln!("ROM_DATA_USE resource={COPIED_HALFWORD_LOOKUPS_ID} dataset={} bus_reads={} table_bytes={} root_bytes={} tables={} roots={}",resources.dataset_sha256(),i.bus_reads,i.table_bytes,i.root_bytes,i.table_mask,i.root_mask);}
+        if let Some(i)=resources.indexed_halfwords_39a5_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_HALFWORDS_39A5_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
+        if let Some(i)=resources.script_byte_lookup_3ad_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT_BYTE_LOOKUP_3AD_ID} dataset={} bus_reads={} table_bytes={} root_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.table_bytes,i.root_bytes,i.values_mask);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3626,6 +3776,13 @@ fn write_dataset_inner(
     let dma_register_directories_data=source.dma_register_directories.as_ref().map(|c|encode_dma_register_directories(&c.decoded)).transpose()?;
     let iwram_memory_helpers_data=source.iwram_memory_helpers.as_ref().map(|c|encode_iwram_memory_helpers(&c.decoded)).transpose()?;
     let adjacent_offset_tables_data=source.adjacent_offset_tables.as_ref().map(|c|encode_adjacent_offset_tables(&c.decoded)).transpose()?;
+    let indexed_records16_data=source.indexed_records16.as_ref().map(|c|encode_indexed_records16(&c.decoded)).transpose()?;
+    let indexed_words_3959_data=source.indexed_words_3959.as_ref().map(|c|encode_indexed_words_3959(&c.decoded)).transpose()?;
+    let thumb_switch_tables_data=source.thumb_switch_tables.as_ref().map(|c|encode_thumb_switch_tables(&c.decoded)).transpose()?;
+    let thumb_pc_literals_data=source.thumb_pc_literals.as_ref().map(|c|encode_thumb_pc_literals(&c.decoded)).transpose()?;
+    let copied_halfword_lookups_data=source.copied_halfword_lookups.as_ref().map(|c|encode_copied_halfword_lookups(&c.decoded)).transpose()?;
+    let indexed_halfwords_39a5_data=source.indexed_halfwords_39a5.as_ref().map(|c|encode_indexed_halfwords_39a5(&c.decoded)).transpose()?;
+    let script_byte_lookup_3ad_data=source.script_byte_lookup_3ad.as_ref().map(|c|encode_script_byte_lookup_3ad(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -3763,6 +3920,13 @@ fn write_dataset_inner(
     if let Some(bytes)=&dma_register_directories_data {files.push(bytes);}
     if let Some(bytes)=&iwram_memory_helpers_data {files.push(bytes);}
     if let Some(bytes)=&adjacent_offset_tables_data {files.push(bytes);}
+    if let Some(bytes)=&indexed_records16_data {files.push(bytes);}
+    if let Some(bytes)=&indexed_words_3959_data {files.push(bytes);}
+    if let Some(bytes)=&thumb_switch_tables_data {files.push(bytes);}
+    if let Some(bytes)=&thumb_pc_literals_data {files.push(bytes);}
+    if let Some(bytes)=&copied_halfword_lookups_data {files.push(bytes);}
+    if let Some(bytes)=&indexed_halfwords_39a5_data {files.push(bytes);}
+    if let Some(bytes)=&script_byte_lookup_3ad_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -3891,6 +4055,13 @@ fn write_dataset_inner(
         dma_register_directories_data.as_ref().map_or(0, Vec::len),
         iwram_memory_helpers_data.as_ref().map_or(0, Vec::len),
         adjacent_offset_tables_data.as_ref().map_or(0, Vec::len),
+        indexed_records16_data.as_ref().map_or(0, Vec::len),
+        indexed_words_3959_data.as_ref().map_or(0, Vec::len),
+        thumb_switch_tables_data.as_ref().map_or(0, Vec::len),
+        thumb_pc_literals_data.as_ref().map_or(0, Vec::len),
+        copied_halfword_lookups_data.as_ref().map_or(0, Vec::len),
+        indexed_halfwords_39a5_data.as_ref().map_or(0, Vec::len),
+        script_byte_lookup_3ad_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4012,6 +4183,13 @@ fn write_dataset_inner(
     if let Some(bytes)=&dma_register_directories_data {write(&path.join(DMA_REGISTER_DIRECTORIES_FILE),bytes)?;}
     if let Some(bytes)=&iwram_memory_helpers_data {write(&path.join(IWRAM_MEMORY_HELPERS_FILE),bytes)?;}
     if let Some(bytes)=&adjacent_offset_tables_data {write(&path.join(ADJACENT_OFFSET_TABLES_FILE),bytes)?;}
+    if let Some(bytes)=&indexed_records16_data {write(&path.join(INDEXED_RECORDS16_FILE),bytes)?;}
+    if let Some(bytes)=&indexed_words_3959_data {write(&path.join(INDEXED_WORDS_3959_FILE),bytes)?;}
+    if let Some(bytes)=&thumb_switch_tables_data {write(&path.join(THUMB_SWITCH_TABLES_FILE),bytes)?;}
+    if let Some(bytes)=&thumb_pc_literals_data {write(&path.join(THUMB_PC_LITERALS_FILE),bytes)?;}
+    if let Some(bytes)=&copied_halfword_lookups_data {write(&path.join(COPIED_HALFWORD_LOOKUPS_FILE),bytes)?;}
+    if let Some(bytes)=&indexed_halfwords_39a5_data {write(&path.join(INDEXED_HALFWORDS_39A5_FILE),bytes)?;}
+    if let Some(bytes)=&script_byte_lookup_3ad_data {write(&path.join(SCRIPT_BYTE_LOOKUP_3AD_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4359,6 +4537,13 @@ mod tests {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4686,8 +4871,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

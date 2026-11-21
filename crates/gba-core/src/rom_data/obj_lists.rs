@@ -12,6 +12,8 @@ pub mod conditional_markers;
 pub mod context_selector;
 
 pub const ACTOR_LOOKUP_ROOT: u32 = 0x398df0;
+pub const ACTOR_LOOKUP_EXTENSION_ROOT: u32 = ACTOR_LOOKUP_ROOT + 4;
+pub const ACTOR_LOOKUP_EXTENSION_SHA256: &str = "cdd3d0cb62d5d9450779b8cd7378b02ccdc126cb53e17d542dc1abec20565f91";
 pub const LAYOUT_OFFSETS_ROOT: u32 = 0x398de8;
 pub const LAYOUT_OFFSETS_LENGTH: usize = 8;
 pub const LAYOUT_OFFSETS_SHA256: &str = "1bd03f2982e14e5c256e49cf9432f967e48d3aa69b863e120a1d1d3589e4909a";
@@ -24,6 +26,10 @@ pub const IWRAM_EXTRA_CALLBACK_ROOTS: [u32; 2] = [0x397fa4, 0x397fb8];
 pub const IWRAM_EXTRA_CALLBACK_SHA256: [&str; 2] = [
     "c5059998b08db05ec6cfe0b8d7263dfb32447670eebfb269712a55e6dc24799c",
     "6f64a62b102700d15e8548ad7f43d998c60bc5d2160e7c4834f47ed378749f1b",
+];
+/// Independently rooted guest callbacks; the intervening 397fb4 word remains raw.
+pub const IWRAM_ADDITIONAL_CALLBACK_ROOTS: [u32; 7] = [
+    0x397f94, 0x397f98, 0x397f9c, 0x397fa0, 0x397fa8, 0x397fac, 0x397fb0,
 ];
 pub const TITLE_OPENING_DIRECTORY_ROOT: u32 = 0x3ade64;
 pub const TITLE_OPENING_DIRECTORY_COUNT: usize = 19;
@@ -251,6 +257,9 @@ pub struct Lists {
     /// Two observed unsigned lookup entries for the Llednar actor callback.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub actor_lookup: Option<[u16; 2]>,
+    /// Four further physical entries observed in a separate battle continuation.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub actor_lookup_extension: Option<[u16; 4]>,
     /// Absolute ROM pointers copied into the EUR title-opening records.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_opening_directory: Option<Vec<u32>>,
@@ -260,6 +269,9 @@ pub struct Lists {
     /// Independently rooted Thumb callbacks into mutable guest IWRAM.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub iwram_extra_callbacks: Option<[u32; 2]>,
+    /// Independently rooted guest pointers; not a complete callback table.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub iwram_additional_callbacks: Option<[u32; 7]>,
     /// Original bytes used by the independently rooted OBJ readers.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub layout_offsets: Option<LayoutOffsets>,
@@ -286,6 +298,10 @@ impl Lists {
         if self.actor_lookup.is_some() && self.lists.iter().any(|list|
             list.source_offset < ACTOR_LOOKUP_ROOT + 4 && ACTOR_LOOKUP_ROOT < list.source_offset + list.source_len() as u32) {
             return Err("Actor lookup overlaps an OBJ list".into());
+        }
+        if self.actor_lookup_extension.is_some() && self.lists.iter().any(|list|
+            list.source_offset < ACTOR_LOOKUP_EXTENSION_ROOT + 8 && ACTOR_LOOKUP_EXTENSION_ROOT < list.source_offset + list.source_len() as u32) {
+            return Err("Actor lookup extension overlaps an OBJ list".into());
         }
         if let Some(directory) = &self.title_opening_directory {
             if directory.len() != TITLE_OPENING_DIRECTORY_COUNT || directory.iter().any(|&pointer| {
@@ -317,6 +333,15 @@ impl Lists {
                     || self.lists.iter().any(|list| list.source_offset < root + 4
                         && root < list.source_offset + list.source_len() as u32) {
                     return Err("Invalid extra IWRAM OBJ callback projection".into());
+                }
+            }
+        }
+        if let Some(callbacks) = &self.iwram_additional_callbacks {
+            for (&root, &pointer) in IWRAM_ADDITIONAL_CALLBACK_ROOTS.iter().zip(callbacks) {
+                if pointer & 1 == 0 || !(0x0300_5f28..0x0300_6d68).contains(&(pointer & !1))
+                    || self.lists.iter().any(|list| list.source_offset < root + 4
+                        && root < list.source_offset + list.source_len() as u32) {
+                    return Err("Invalid additional IWRAM OBJ callback projection".into());
                 }
             }
         }
@@ -510,7 +535,7 @@ impl Catalog {
             || ffta_rom::digest(&new_list_bytes) != "934b25f8b031dbd8282f69f30d121c6f55ad7c25b25e9bbee12c11a7f9142973" {
             return Err("Battle directory list source projection mismatch".into());
         }
-        // Only the two entries observed in the actor callback are declared.
+        // Only the physical entries observed in battle are declared.
         // The signed guest index is not capped or normalized by this fragment.
         for (start, end, hash) in [
             (0xa3070, 0xa3080, "d4e671f2f2e3a848368c21ef842d7fd6d35efb838825ddf5e4416035214cef8a"),
@@ -525,6 +550,15 @@ impl Catalog {
         }
         let actor_lookup = Some([u16::from_le_bytes([raw[0], raw[1]]), u16::from_le_bytes([raw[2], raw[3]])]);
         sources.push(SourceRange { offset: ACTOR_LOOKUP_ROOT, length: 4, sha256: ffta_rom::digest(raw), role: "actor-lookup".into() });
+        let start = ACTOR_LOOKUP_EXTENSION_ROOT as usize;
+        let raw = &rom[start..start + 8];
+        if ffta_rom::digest(raw) != ACTOR_LOOKUP_EXTENSION_SHA256 {
+            return Err("Actor lookup extension source identity mismatch".into());
+        }
+        let actor_lookup_extension = Some(std::array::from_fn(|i|
+            u16::from_le_bytes([raw[i * 2], raw[i * 2 + 1]])));
+        sources.push(SourceRange { offset: ACTOR_LOOKUP_EXTENSION_ROOT, length: 8,
+            sha256: ACTOR_LOOKUP_EXTENSION_SHA256.into(), role: "actor-lookup-extension".into() });
         // The original initializer copies these absolute pointers into 19
         // title records. The eleven distinct targets are counted OBJ lists.
         if ffta_rom::digest(&rom[0x13a1e0..0x13a274]) != "3f65e94b48916c97b18030f28a12ebd4a5b9aad20a47d653ce0856a40c7379ce"
@@ -604,6 +638,46 @@ impl Catalog {
             sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(raw), role: "iwram-obj-extra-callback".into() });
         }
         let iwram_extra_callbacks = Some(extra);
+        // Each pointer has its own literal, original load, branch bridge and
+        // copied IWRAM code prefix. This does not imply a complete vector.
+        let references = [
+            (0x9d8f4, 0x9d828, 0x9d82e, 0x6822, 0x9d830, 0x145c10, "5cc79cc3c0fcba2bbeadeb9751b1c2a204a69e21a801ecc509a29b64ceaaee11", "a101cad40c61ebff12d6aebbbfea292f2e6061c11447772e0983fd5399ff24bf"),
+            (0xa2088, 0xa206a, 0xa2074, 0x680c, 0xa207a, 0x145c18, "ef8ac5f858f2d22912f9236972839a1d141aaec814dd42e454adee06b5a6a6b7", "700452420c11ce8115790b63abb1b1f794346d3f6280502ed3dc1a3320ba5385"),
+            (0x9d8f8, 0x9d8e6, 0x9d8ec, 0x6812, 0x9d8ee, 0x145c10, "9c9450edeb76f56ba69f125cc300d40f1e1ede97d43ffb3e50fad307eb059256", "98f2114a7fa17de43345e793a66a36074400db65d0c30f23d1cf0adfafc3d80d"),
+            (0x9601c, 0x96000, 0x96008, 0x6809, 0x9600a, 0x145c0c, "9f8e60597a5c9ee28a3778ad25d1e114f8f0f2cab56a3df108c3553cc74e04a4", "7af689057d9df7f2274bed7283f59b51c56de176a8b67773086ded36c384c0a3"),
+            (0xac7e4, 0xac7a4, 0xac7c8, 0x6824, 0xac7cc, 0x145c18, "bb774155c8f1bb95df88dce51a72a77d0694b25a1daee62234a0e9ea964efa9c", "9d5d8f6db8821d4361a3a3d5818b3b30175bf7d15c933ab6283ebd39caaa5845"),
+            (0x9dd78, 0x9dd5c, 0x9dd60, 0x682a, 0x9dd64, 0x145c10, "37ce8ecbf4d2cda0a2b579c8374308920a78ed9bb5e3506ceaee0fb40a6c4ce0", "9475930b7ce05de58ff78317d3ebb264467b12c48c61ccfc5dca983b3882d7f3"),
+            (0xd6d14, 0xd6cc0, 0xd6cc8, 0x681b, 0xd6cca, 0x145c14, "f034d982df59525b5a303373c24268f2b2284410ff5c3b85eff02ed0dd60c765", "5dbf50228d3a5ed7a6bc87249ab288d0b91a3b9412e2fd610a4ba07f99effda5"),
+        ];
+        let mut additional = [0u32; 7];
+        for (index, &(literal, reader, load, load_opcode, call, bridge, reader_hash, target_hash)) in references.iter().enumerate() {
+            let root = IWRAM_ADDITIONAL_CALLBACK_ROOTS[index];
+            let opcode = word(reader)? as u16;
+            let halves = word(call)?;
+            let (hi, lo) = (halves as u16, (halves >> 16) as u16);
+            let displacement = (((u32::from(hi & 2047) << 12) | (u32::from(lo & 2047) << 1)) as i32) << 9 >> 9;
+            let pointer = word(root)?;
+            let target = (pointer & !1).checked_sub(0x0300_5f28)
+                .and_then(|offset| offset.checked_add(0xd968e8))
+                .filter(|&at| at + 16 <= 0xd97728)
+                .ok_or("Additional callback outside copied IWRAM")? as usize;
+            if opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != literal
+                || word(literal)? != 0x0800_0000 + root
+                || word(load)? as u16 != load_opcode
+                || hi & 0xf800 != 0xf000 || lo & 0xf800 != 0xf800
+                || call.wrapping_add(4).wrapping_add_signed(displacement) != bridge
+                || pointer & 1 == 0
+                || ffta_rom::digest(&rom[reader as usize..call as usize + 4]) != reader_hash
+                || ffta_rom::digest(&rom[target..target + 16]) != target_hash {
+                return Err("Additional IWRAM callback reader or copied-code mismatch".into());
+            }
+            additional[index] = pointer;
+            sources.push(SourceRange { offset: root, length: 4,
+                sha256: ffta_rom::digest(&rom[root as usize..root as usize + 4]),
+                role: "iwram-obj-additional-callback".into() });
+        }
+        let iwram_additional_callbacks = Some(additional);
         for (start, end, expected) in [
             (0x9ae58, 0x9ae90, "3a6689a01f7bd7bd9665e81cc693ac5c7260d0c6ee9dc655d34bff015f87cf44"),
             (0x9bfdc, 0x9c038, "07912b37f8837e18ec9266c55d4e2d938b330c34dbd22966c812054b0ff38ea6"),
@@ -626,7 +700,9 @@ impl Catalog {
             sha256: ffta_rom::digest(bytes), role: "obj-layout-offsets".into() });
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
-        let decoded = Lists { lists, battle_directory, actor_lookup, title_opening_directory: Some(title_opening_directory), iwram_draw_callbacks, iwram_extra_callbacks, layout_offsets };
+        let decoded = Lists { lists, battle_directory, actor_lookup, actor_lookup_extension,
+            title_opening_directory: Some(title_opening_directory), iwram_draw_callbacks,
+            iwram_extra_callbacks, iwram_additional_callbacks, layout_offsets };
         decoded.validate()?;
         Ok(Self { decoded, sources })
     }
@@ -663,7 +739,7 @@ mod tests {
         assert!(Lists {
             lists: vec![list.clone(), empty],
             battle_directory: None,
-            actor_lookup: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, layout_offsets: None,
+            actor_lookup: None, actor_lookup_extension: None, title_opening_directory: None, iwram_draw_callbacks: None, iwram_extra_callbacks: None, iwram_additional_callbacks: None, layout_offsets: None,
         }
         .validate()
         .is_err());

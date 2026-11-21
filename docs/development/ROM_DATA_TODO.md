@@ -318,6 +318,152 @@ create/reuse/verify. Other selectors and consumers, real-BIOS and lifecycle
 paths, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_graphics.md#e205-additional-rectangle-pointers-and-targets).
 
+**ROMDATA-02-E208-HOME-STREAMS scoped EUR/Wine:** E203-d202 publishes a
+103-entry relative directory and its custom-compressed streams. Wine validates
+source bytes and boundaries, original readers and the production CLI; a
+600-frame home continuation reads entries 69, 71 and 73 with their ROM backing
+altered. Other ordinary indices, consumers, real-BIOS and lifecycle paths,
+Linux, USA and native Windows remain open.
+[Evidence](../rom_data_graphics.md#e210-relative-graphics-archive-publication).
+
+**ROMDATA-02-E211-HOME-INDEXED scoped EUR/Wine:** E204-d203 publishes three
+color-mode archives containing 495 programs, retaining the existing owner of
+four shared bytes. Wine verifies source and mixed boundary reads, original
+interpreted and translated readers, a 600-frame altered-source home scene and
+the production CLI. Other consumers, modes and scenes, real-BIOS, UI save/Load,
+Linux, USA and native Windows remain open.
+[Evidence](../rom_data_indexed_graphics.md#e212-european-color-mode-archive-publication).
+
+**ROMDATA-02-E213-TILEMAP-LOOKUP scoped EUR/Wine:** E205-d204 publishes the
+16-byte signed lookup used by the original eight-row drawing routine. Wine
+checks original readers, mixed boundaries and legacy counters, and a recorded
+600-frame home continuation consumes all four rows with the ROM backing altered.
+The production CLI passes create/reuse/verify. Other consumers, scenes,
+real-BIOS, UI save/Load, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e213-european-eight-row-tile-lookup).
+
+**ROMDATA-02-E214-SIGNED-LOOKUP scoped EUR/Wine:** E206-d205 publishes four
+physical signed lookup bytes while preserving the original uncapped byte index
+and the adjacent owners. Wine validates original reader examples, mixed
+boundaries, a 600-frame altered-source home continuation and the production
+CLI. Other indices, consumers, scenes, real-BIOS, UI save/Load, Linux, USA and
+native Windows remain open.
+[Evidence](../rom_data_gameplay.md#e214-european-signed-task-lookup-projection).
+
+**ROMDATA-01-E207-HOME-UNOWNED scoped EUR/Wine progress:** E220-d219 serves
+25 statically anchored Thumb literal words sampled in the home continuation.
+Wine verifies readers, boundaries, transfers, 600 altered-source home frames
+and CLI create/reuse/verify. At E220, static reconciliation left 172 unowned
+sampled bytes; E221 covers those as described below. Other scenes, readers,
+Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e229-home-scene-anchored-thumb-literals).
+
+**ROMDATA-01-E207-HOME-UNOWNED scoped EUR/Wine completion:** E221-d220 adds 40
+observed-scope literal words and two switch arrays, covering the remaining
+172 bytes of this address-only sample. Wine verifies readers, boundaries,
+transfers, 600 altered-source home frames and CLI create/reuse/verify. Other
+scenes, readers, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e230-home-scene-observed-literals-and-switch-destinations).
+
+**ROMDATA-01-E215-LLEDNAR-RAW scoped EUR/Wine:** a retained 600-frame final
+battle continuation matches state, clock, video, OAM, dispatch and audio with
+E206 data. Its independently recovered address inventory finds 4,281 unowned
+sampled bytes, including 453 at or above `300000`. E216–E228 now cover all 4,281
+sampled bytes. Other readers and extents, scenes, Linux and USA remain open.
+[Evidence](../rom_data_runtime.md#e215-llednar-battle-rom-read-inventory).
+
+**ROMDATA-02-E216-BATTLE-OBJ scoped EUR/Wine:** E207-d206 publishes the battle
+context's 17 OBJ lists and three sequence headers. Wine checks source and
+adjacent boundaries, original interpreter/generated reads, host lists, transfers,
+a 600-frame altered-source battle continuation and CLI create/reuse/verify.
+Other consumers, scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_obj.md#e216-european-battle-number-obj-bank).
+
+**ROMDATA-02-E217-BATTLE-OBJ-SUPPORT scoped EUR/Wine:** E208-d207 publishes
+seven independently rooted OBJ callback words and four actor lookup entries.
+Wine verifies source, original reader/branch ABI, adjacent boundaries, a
+600-frame altered-source battle continuation and CLI create/reuse/verify.
+Other consumers and index domains, the unclassified neighboring word, Linux,
+USA and native Windows remain open.
+[Evidence](../rom_data_obj.md#e217-european-battle-obj-support-fields).
+
+**ROMDATA-02-E218-INDEXED-RECORDS16 scoped EUR/Wine:** E209-d208 extracts 86
+physical records and retains the internal record-82 alias. Wine verifies source,
+original byte/halfword readers and out-of-projection indices, boundaries,
+transfers, a 600-frame altered-source battle continuation and CLI
+create/reuse/verify. Other consumers, scenes, Linux, USA and native Windows
+remain open.
+[Evidence](../rom_data_gameplay.md#e218-european-indexed-16-byte-records).
+
+**ROMDATA-04-3959A4 scoped EUR/Wine:** E210-d209 publishes 30 authenticated
+indexed words and preserves out-of-projection guest reads. Wine verifies original
+readers, transfers, a 600-frame altered-source battle and CLI create/reuse/verify.
+Other meanings, readers, scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_gameplay.md#e219-european-indexed-word-lookup).
+
+**ROMDATA-04-THUMB-SWITCHES scoped EUR/Wine:** E211-d210 extracts and serves
+23 guarded Thumb control tables, including 696 destinations and their roots.
+Wine verifies original readers, interpreter-fallback branches, transfers, a
+600-frame altered-source battle and CLI create/reuse/verify. Other control
+sources, scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e220-european-thumb-switch-table-resources).
+
+**ROMDATA-04-THUMB-LITERALS scoped EUR/Wine:** E212-d211 publishes 326 exact
+Thumb PC-relative literal words with original-reader witnesses. Wine validates
+original readers, mixed boundaries, transfers, a 600-frame altered-source battle
+and CLI create/reuse/verify. Other words, scenes, Linux, USA and native Windows
+remain open.
+[Evidence](../rom_data_runtime.md#e221-european-thumb-pc-relative-literals).
+
+**ROMDATA-04-THUMB-LITERALS-ANCHORED scoped EUR/Wine:** E213-d212 extends the
+literal resource with 117 statically anchored words, preserving the prior 326.
+Wine verifies original readers, mixed boundaries, transfers, a 600-frame
+altered-source battle and CLI create/reuse/verify. Other words, scenes, Linux,
+USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e222-additional-statically-anchored-thumb-literals).
+
+**ROMDATA-04-LLEDNAR-LITERAL-SITES scoped EUR/Wine:** E214-d213 extends the
+literal resource by 443 battle-observed candidate words, preserving prior words
+and masks. Wine verifies source, original-reader examples, mixed boundaries,
+transfers, a 600-frame altered-source battle and CLI create/reuse/verify.
+Scope can include nested accesses; other words, callers, scenes, Linux, USA and
+native Windows remain open.
+[Evidence](../rom_data_runtime.md#e223-battle-observed-thumb-literal-words).
+
+**ROMDATA-01-E215-LLEDNAR-RESIDUE-READERS scoped EUR/Wine:** E215-d214 serves
+163 destinations from four original Thumb switch tables while preserving their
+already-owned roots. Wine verifies readers, mixed boundaries, transfers, a
+600-frame altered-source battle and CLI create/reuse/verify. Remaining bytes,
+callers, scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e224-additional-battle-switch-destinations).
+
+**ROMDATA-04-EUR-OBJ-DERIVED-TABLES scoped EUR/Wine:** E216-d215 serves two
+12-record views derived from the existing OBJ dimensions, without changing its
+file or adding a guest shape guard. Wine verifies original readers, mixed
+boundaries, transfers, a 600-frame altered-source battle and CLI create/reuse/
+verify. Remaining bytes, callers, scenes, Linux, USA and native Windows remain
+open. [Evidence](../rom_data_runtime.md#e225-derived-obj-dimension-views).
+
+**ROMDATA-04-EUR-14CF18-MASKS scoped EUR/Wine:** E217-d216 serves two
+four-halfword copied lookup tables and two additional root words, preserving
+the original stack behavior for outside indices. Wine verifies original
+readers, boundaries, transfers, a 600-frame altered-source battle and CLI
+create/reuse/verify. Other callers, scenes, Linux, USA and native Windows remain
+open. [Evidence](../rom_data_runtime.md#e226-copied-halfword-lookup-tables).
+
+**ROMDATA-04-EUR-39A5C8 scoped EUR/Wine:** E218-d217 serves three indexed
+halfwords with their prior root and unchanged outside-range fallback. Wine
+verifies original readers, boundaries, transfers, a 600-frame altered-source
+battle and CLI create/reuse/verify. Other callers, scenes, Linux, USA and native
+Windows remain open. [Evidence](../rom_data_runtime.md#e227-indexed-halfwords-at-39a5c8).
+
+**ROMDATA-04-EUR-3AD16E-LOOKUP scoped EUR/Wine:** E219-d218 serves the six-byte
+physical window between script commands and selectors and the second root.
+Wine verifies both original reader prefixes, adjacent owners, transfers, a
+600-frame altered-source battle and CLI create/reuse/verify. Its full semantic
+domain, other callers, scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e228-script-byte-lookup-window).
+
 **ROMDATA-01-OBJ-6CB278-PRIMARY scoped EUR progress:** E172-d171 serves
 five conditional selector/position bytes reached by the primary task-362 alias.
 Wine verifies prior-resource preservation, mixed boundaries and ten original

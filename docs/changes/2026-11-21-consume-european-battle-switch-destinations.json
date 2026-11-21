@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-battle-switch-destinations",
+  "title": "Consume European battle switch destinations",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend engine.thumb-switch-tables with four original battle switch destination arrays and 163 decoded targets while retaining their separately owned literal roots.",
+    "Preserve previous switch masks and resources, authenticate source and original readers, and compose accesses beyond the projection with other owners or original backing without adding guest index guards."
+  ],
+  "validation": [
+    "Wine scoped trace qyrfym7w sees all 135 remaining sampled bytes and original-code windows rit3fxua identify four switch readers; the fourth table was outside the interpreter scope.",
+    "Windows test build co8nrtac and Wine 6k14siel verify 652 new bytes, existing roots, 23 old tables and masks, 126 other resources, coherent edit rejection, mixed/mirrored boundaries, 16 interpreted/generated guarded prefixes, eight out-of-range load sequences, transfers and owner retention.",
+    "Wine lzpuxs2a compares 600 retained European battle frames with the new backing altered: all four arrays are read and state, guest clock, video, OAM, dispatch and five nonempty audio streams match every frame.",
+    "Production build f4xz16wj and Wine CLI 4j66od25 pass create, reuse and verify with 128 matching files. Static reconciliation 03amsoxp leaves 27 previously unowned sampled bytes, including three high."
+  ],
+  "limitations": [
+    "Scope can include nested HLE/DMA accesses and does not prove every caller. Generated-prefix tests use the interpreter fallback for indirect MOV pc; the 0960da out-of-range helper may return and no guest cap is added.",
+    "Earlier save ancestry is unknown; no new cheat or state forcing. Other bytes, consumers, scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained and the local Bluetooth overlay avoided the known assertion. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

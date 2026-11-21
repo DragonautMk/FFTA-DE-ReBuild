@@ -18,6 +18,10 @@ pub struct IndexedGraphicsStats {
     pub archives_used: u64,
     pub programs_used: u64,
     pub groups_used: u64,
+    pub color_source_bytes: u64,
+    /// Physical color archive and program masks, in source order.
+    pub color_archives_mask: u64,
+    pub color_programs_mask: [u64; 8],
 }
 #[derive(Clone, Copy)]
 struct Byte {
@@ -38,7 +42,9 @@ pub(super) struct IndexedGraphicsResources {
     fields: [AtomicU64; 8],
     banks: AtomicU64,
     groups: AtomicU64,
-    programs: [AtomicU64; 11],
+    programs: [AtomicU64; 18],
+    color_bytes: AtomicU64,
+    color_programs: [AtomicU64; 8],
 }
 impl IndexedGraphicsResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -83,23 +89,28 @@ impl IndexedGraphicsResources {
                     cell.group = group as u8;
                 }
             } else {
-                let bank = data
-                    .archives
-                    .iter()
-                    .position(|a| a.source_offset == *offset)
-                    .ok_or("Missing indexed graphics archive")?;
-                let archive = &data.archives[bank];
-                for cell in &mut cells {
-                    cell.bank = bank as u8;
-                }
-                let first_program: usize =
-                    data.archives[..bank].iter().map(|a| a.programs.len()).sum();
-                for cell in &mut cells[..8] {
+                let (bank, archive, first_program) = if let Some(bank) = data.archives.iter().position(|a| a.source_offset == *offset) {
+                    (bank, &data.archives[bank], data.archives[..bank].iter().map(|a| a.programs.len()).sum::<usize>())
+                } else {
+                    let archives = data.color_archives.as_ref().ok_or("Missing color indexed graphics")?;
+                    let color = model::COLOR_ARCHIVE_ROOTS.iter().enumerate().find_map(|(i, &root)| {
+                        let end = root.checked_add(model::COLOR_ARCHIVE_LENGTHS[i] as u32)?;
+                        (*offset >= root && offset.checked_add(bytes.len() as u32)? <= end).then_some(i)
+                    }).ok_or("Missing indexed graphics archive")?;
+                    let first = data.archives.iter().map(|a| a.programs.len()).sum::<usize>()
+                        + archives[..color].iter().map(|a| a.programs.len()).sum::<usize>();
+                    (data.archives.len() + color, &archives[color], first)
+                };
+                let complete = archive.source_bytes()?;
+                let mut archive_cells: Vec<_> = complete.iter().map(|&value| Byte {
+                    value, field: 255, bank: bank as u8, group: 255, program: u16::MAX,
+                }).collect();
+                for cell in &mut archive_cells[..8] {
                     cell.field = 1;
                 }
                 for (i, program) in archive.programs.iter().enumerate() {
                     let id = (first_program + i) as u16;
-                    for cell in &mut cells[8 + i * 4..12 + i * 4] {
+                    for cell in &mut archive_cells[8 + i * 4..12 + i * 4] {
                         cell.field = 2;
                         cell.program = id;
                     }
@@ -109,13 +120,13 @@ impl IndexedGraphicsResources {
                             model::Packet::Literal { .. } => 1,
                             model::Packet::Dictionary { .. } => 2,
                         };
-                        for cell in &mut cells[at..at + token_length] {
+                        for cell in &mut archive_cells[at..at + token_length] {
                             cell.field = 3;
                             cell.program = id;
                         }
                         at += token_length;
                         if let model::Packet::Literal { bytes } = packet {
-                            for cell in &mut cells[at..at + bytes.len()] {
+                            for cell in &mut archive_cells[at..at + bytes.len()] {
                                 cell.field = 4;
                                 cell.program = id;
                             }
@@ -124,11 +135,17 @@ impl IndexedGraphicsResources {
                     }
                 }
                 let dict = archive.dictionary_relative_offset as usize;
-                for cell in &mut cells[dict..dict + 4] {
+                for cell in &mut archive_cells[dict..dict + 4] {
                     cell.field = 5;
                 }
-                for cell in &mut cells[dict + 4..] {
+                for cell in &mut archive_cells[dict + 4..] {
                     cell.field = 6;
+                }
+                let start = (*offset - archive.source_offset) as usize;
+                cells = archive_cells.get(start..start + bytes.len())
+                    .ok_or("Indexed graphics split outside archive")?.to_vec();
+                if cells.iter().map(|cell| cell.value).ne(bytes.iter().copied()) {
+                    return Err("Indexed graphics split source mismatch".into());
                 }
             }
             if cells.iter().any(|b| b.field == 255) {
@@ -147,6 +164,8 @@ impl IndexedGraphicsResources {
             banks: AtomicU64::new(0),
             groups: AtomicU64::new(0),
             programs: std::array::from_fn(|_| AtomicU64::new(0)),
+            color_bytes: AtomicU64::new(0),
+            color_programs: std::array::from_fn(|_| AtomicU64::new(0)),
         })
     }
     fn byte(&self, index: usize) -> Option<Byte> {
@@ -167,12 +186,20 @@ impl IndexedGraphicsResources {
         if values.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 8], 0u64, 0u64, [0u64; 11]);
+        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 8], 0u64, 0u64, [0u64; 18]);
+        let (mut color_bytes, mut color_programs) = (0u64, [0u64; 8]);
         let result = std::array::from_fn(|i| match values[i] {
             Some(cell) => {
                 fields[cell.field as usize] += 1;
                 if cell.bank != 255 {
                     banks |= 1 << cell.bank;
+                    if usize::from(cell.bank) >= model::ARCHIVES.len() {
+                        color_bytes += 1;
+                        if cell.program != u16::MAX {
+                            let color_program = usize::from(cell.program) - model::BASE_PROGRAM_COUNT;
+                            color_programs[color_program / 64] |= 1 << (color_program % 64);
+                        }
+                    }
                 }
                 if cell.group != 255 {
                     groups |= 1 << cell.group;
@@ -192,6 +219,10 @@ impl IndexedGraphicsResources {
         self.banks.fetch_or(banks, Ordering::Relaxed);
         self.groups.fetch_or(groups, Ordering::Relaxed);
         for (counter, mask) in self.programs.iter().zip(programs) {
+            counter.fetch_or(mask, Ordering::Relaxed);
+        }
+        self.color_bytes.fetch_add(color_bytes, Ordering::Relaxed);
+        for (counter, mask) in self.color_programs.iter().zip(color_programs) {
             counter.fetch_or(mask, Ordering::Relaxed);
         }
         Some(result)
@@ -215,6 +246,9 @@ impl IndexedGraphicsResources {
             context_bytes: v[7],
             archives_used: u64::from(self.banks.load(Ordering::Relaxed).count_ones()),
             groups_used: u64::from(self.groups.load(Ordering::Relaxed).count_ones()),
+            color_source_bytes: self.color_bytes.load(Ordering::Relaxed),
+            color_archives_mask: (self.banks.load(Ordering::Relaxed) >> model::ARCHIVES.len()) & 7,
+            color_programs_mask: self.color_programs.each_ref().map(|v| v.load(Ordering::Relaxed)),
             programs_used: self
                 .programs
                 .iter()
@@ -233,6 +267,9 @@ impl IndexedGraphicsResources {
 // Source pages only; the exact byte membership is determined by the immutable spans.
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
     (model::CONTEXT_SOURCE as usize, model::CONTEXT_RECORDS * 4),
+    (model::COLOR_ARCHIVE_ROOTS[0] as usize, model::COLOR_ARCHIVE_LENGTHS[0]),
+    (model::COLOR_ARCHIVE_ROOTS[1] as usize, model::COLOR_ARCHIVE_LENGTHS[1]),
+    (model::COLOR_ARCHIVE_ROOTS[2] as usize, model::COLOR_ARCHIVE_LENGTHS[2]),
     (0x430248, 2580),
     (0x4334c4, 3923),
     (0x434418, 5067),

@@ -164,6 +164,34 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_blue_screw_chain = std::env::var_os("FFTA_STATE_TEST_POISON_BLUE_SCREW_CHAIN").is_some();
     let poison_additional_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_ADDITIONAL_RECTANGLES").is_some();
     let poison_relative_graphics = std::env::var_os("FFTA_STATE_TEST_POISON_RELATIVE_GRAPHICS").is_some();
+    let poison_color_indexed = std::env::var_os("FFTA_STATE_TEST_POISON_COLOR_INDEXED").is_some();
+    let poison_eight_row_lookup = std::env::var_os("FFTA_STATE_TEST_POISON_EIGHT_ROW_LOOKUP").is_some();
+    let poison_task_signed_lookup = std::env::var_os("FFTA_STATE_TEST_POISON_TASK_SIGNED_LOOKUP").is_some();
+    let poison_battle_obj = std::env::var_os("FFTA_STATE_TEST_POISON_BATTLE_OBJ").is_some();
+    let poison_battle_obj_support = std::env::var_os("FFTA_STATE_TEST_POISON_BATTLE_OBJ_SUPPORT").is_some();
+    let poison_indexed_records16 = std::env::var_os("FFTA_STATE_TEST_POISON_INDEXED_RECORDS16").is_some();
+    let poison_indexed_words_3959 = std::env::var_os("FFTA_STATE_TEST_POISON_INDEXED_WORDS_3959").is_some();
+    let poison_thumb_switch_tables = std::env::var_os("FFTA_STATE_TEST_POISON_THUMB_SWITCH_TABLES").is_some();
+    let poison_obj_derived_dimensions = std::env::var_os("FFTA_STATE_TEST_POISON_OBJ_DERIVED_DIMENSIONS").is_some();
+    let poison_copied_halfword_lookups = std::env::var_os("FFTA_STATE_TEST_POISON_COPIED_HALFWORD_LOOKUPS").is_some();
+    let poison_indexed_halfwords_39a5 = std::env::var_os("FFTA_STATE_TEST_POISON_INDEXED_HALFWORDS_39A5").is_some();
+    let poison_script_byte_lookup_3ad = std::env::var_os("FFTA_STATE_TEST_POISON_SCRIPT_BYTE_LOOKUP_3AD").is_some();
+    let poison_additional_thumb_switches = std::env::var_os("FFTA_STATE_TEST_POISON_ADDITIONAL_THUMB_SWITCHES").is_some();
+    let poison_thumb_pc_literals = std::env::var_os("FFTA_STATE_TEST_POISON_THUMB_PC_LITERALS").is_some();
+    let poison_additional_thumb_literals = std::env::var_os("FFTA_STATE_TEST_POISON_ADDITIONAL_THUMB_LITERALS").is_some();
+    let poison_observed_thumb_literals = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_THUMB_LITERALS").is_some();
+    let poison_home_anchored_thumb_literals = std::env::var_os("FFTA_STATE_TEST_POISON_HOME_ANCHORED_THUMB_LITERALS").is_some();
+    let poison_home_residual_code_support = std::env::var_os("FFTA_STATE_TEST_POISON_HOME_RESIDUAL_CODE_SUPPORT").is_some();
+    let battle_obj_spans = if poison_battle_obj {
+        source.obj_animations.as_ref().unwrap().decoded.banks.iter()
+            .find(|bank| bank.object_root == gba_core::rom_data::obj_animations::BATTLE_OBJECT_ROOT)
+            .expect("battle OBJ bank").spans().into_iter()
+            .map(|(start, len, _)| (start as usize, len)).collect::<Vec<_>>()
+    } else { Vec::new() };
+    let color_indexed_span = if poison_color_indexed {
+        let archive = &source.indexed_graphics.as_ref().unwrap().decoded.color_archives.as_ref().unwrap()[0];
+        Some((archive.source_offset as usize, archive.source_bytes().unwrap().len()))
+    } else { None };
     let relative_graphics_spans = if poison_relative_graphics {
         let archive = source.obj_graphics.as_ref().unwrap().decoded.relative_archive.as_ref().unwrap();
         std::iter::once((archive.source_offset as usize, archive.source_bytes().unwrap().len()))
@@ -209,6 +237,96 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_relative_graphics {
                 for &(start, len) in &relative_graphics_spans {
                     for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 {
+                if let Some((start, len)) = color_indexed_span {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_eight_row_lookup {
+                for at in 0x371024..0x371034 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_task_signed_lookup {
+                for at in 0x371020..0x371024 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_battle_obj {
+                for &(start, len) in &battle_obj_spans {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_battle_obj_support {
+                for start in gba_core::rom_data::obj_lists::IWRAM_ADDITIONAL_CALLBACK_ROOTS {
+                    for at in start as usize..start as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+                for at in 0x398df4..0x398dfc { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_indexed_records16 {
+                let start = gba_core::rom_data::indexed_records16::SOURCE_OFFSET as usize;
+                let end = gba_core::rom_data::indexed_records16::END_OFFSET as usize;
+                for at in start..end { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_indexed_words_3959 {
+                let start = gba_core::rom_data::indexed_words_3959::SOURCE_OFFSET as usize;
+                let end = gba_core::rom_data::indexed_words_3959::END_OFFSET as usize;
+                for at in start..end { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_thumb_switch_tables {
+                for spec in gba_core::rom_data::thumb_switch_tables::TABLES {
+                    for at in spec.root as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_additional_thumb_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[..4].iter().copied() {
+                    for at in spec.start() as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_obj_derived_dimensions {
+                for start in gba_core::rom_data::obj_derived_dimensions::TABLE_OFFSETS {
+                    for at in start as usize..start as usize + 48 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_copied_halfword_lookups {
+                use gba_core::rom_data::copied_halfword_lookups::{ADDITIONAL_ROOTS, TABLE_OFFSETS};
+                for start in TABLE_OFFSETS { for at in start as usize..start as usize + 8 { machine.bus.rom[at] = !rom[at]; } }
+                for start in ADDITIONAL_ROOTS { for at in start as usize..start as usize + 4 { machine.bus.rom[at] = !rom[at]; } }
+            }
+            if index == 1 && poison_indexed_halfwords_39a5 {
+                use gba_core::rom_data::indexed_halfwords_39a5::{SOURCE_BYTES, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                for at in start..start + SOURCE_BYTES { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_script_byte_lookup_3ad {
+                use gba_core::rom_data::script_byte_lookup_3ad::{ADDITIONAL_ROOT, SOURCE_BYTES, SOURCE_OFFSET};
+                for at in SOURCE_OFFSET as usize..SOURCE_OFFSET as usize + SOURCE_BYTES { machine.bus.rom[at] = !rom[at]; }
+                for at in ADDITIONAL_ROOT as usize..ADDITIONAL_ROOT as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_thumb_pc_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::LITERALS {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_additional_thumb_literals {
+                for (offset, _, _, _, _) in gba_core::rom_data::thumb_pc_literals::ADDITIONAL {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_observed_thumb_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_home_anchored_thumb_literals {
+                for (offset, _, _, _, _) in gba_core::rom_data::thumb_pc_literals::HOME_ANCHORED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_home_residual_code_support {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::HOME_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[4..].iter().copied() {
+                    for at in spec.start() as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
                 }
             }
             if index == 1 && poison_blue_screw_chain {
@@ -400,6 +518,106 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_relative_graphics {
                 for &(start, len) in &relative_graphics_spans {
                     machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
+            if index == 1 {
+                if let Some((start, len)) = color_indexed_span {
+                    machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
+            if index == 1 && poison_eight_row_lookup {
+                machine.bus.rom[0x371024..0x371034].copy_from_slice(&rom[0x371024..0x371034]);
+            }
+            if index == 1 && poison_task_signed_lookup {
+                machine.bus.rom[0x371020..0x371024].copy_from_slice(&rom[0x371020..0x371024]);
+            }
+            if index == 1 && poison_battle_obj {
+                for &(start, len) in &battle_obj_spans {
+                    machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
+                }
+            }
+            if index == 1 && poison_battle_obj_support {
+                for start in gba_core::rom_data::obj_lists::IWRAM_ADDITIONAL_CALLBACK_ROOTS {
+                    let start = start as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+                machine.bus.rom[0x398df4..0x398dfc].copy_from_slice(&rom[0x398df4..0x398dfc]);
+            }
+            if index == 1 && poison_indexed_records16 {
+                let start = gba_core::rom_data::indexed_records16::SOURCE_OFFSET as usize;
+                let end = gba_core::rom_data::indexed_records16::END_OFFSET as usize;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
+            if index == 1 && poison_indexed_words_3959 {
+                let start = gba_core::rom_data::indexed_words_3959::SOURCE_OFFSET as usize;
+                let end = gba_core::rom_data::indexed_words_3959::END_OFFSET as usize;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
+            if index == 1 && poison_thumb_switch_tables {
+                for spec in gba_core::rom_data::thumb_switch_tables::TABLES {
+                    let start = spec.root as usize; let end = spec.end() as usize;
+                    machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+                }
+            }
+            if index == 1 && poison_additional_thumb_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[..4].iter().copied() {
+                    machine.bus.rom[spec.start() as usize..spec.end() as usize].copy_from_slice(&rom[spec.start() as usize..spec.end() as usize]);
+                }
+            }
+            if index == 1 && poison_obj_derived_dimensions {
+                for start in gba_core::rom_data::obj_derived_dimensions::TABLE_OFFSETS {
+                    let start = start as usize;
+                    machine.bus.rom[start..start + 48].copy_from_slice(&rom[start..start + 48]);
+                }
+            }
+            if index == 1 && poison_copied_halfword_lookups {
+                use gba_core::rom_data::copied_halfword_lookups::{ADDITIONAL_ROOTS, TABLE_OFFSETS};
+                for start in TABLE_OFFSETS { let start = start as usize; machine.bus.rom[start..start + 8].copy_from_slice(&rom[start..start + 8]); }
+                for start in ADDITIONAL_ROOTS { let start = start as usize; machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]); }
+            }
+            if index == 1 && poison_indexed_halfwords_39a5 {
+                use gba_core::rom_data::indexed_halfwords_39a5::{SOURCE_BYTES, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_BYTES].copy_from_slice(&rom[start..start + SOURCE_BYTES]);
+            }
+            if index == 1 && poison_script_byte_lookup_3ad {
+                use gba_core::rom_data::script_byte_lookup_3ad::{ADDITIONAL_ROOT, SOURCE_BYTES, SOURCE_OFFSET};
+                let start = SOURCE_OFFSET as usize;
+                machine.bus.rom[start..start + SOURCE_BYTES].copy_from_slice(&rom[start..start + SOURCE_BYTES]);
+                let root = ADDITIONAL_ROOT as usize;
+                machine.bus.rom[root..root + 4].copy_from_slice(&rom[root..root + 4]);
+            }
+            if index == 1 && poison_thumb_pc_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::LITERALS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_additional_thumb_literals {
+                for (offset, _, _, _, _) in gba_core::rom_data::thumb_pc_literals::ADDITIONAL {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_observed_thumb_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_home_anchored_thumb_literals {
+                for (offset, _, _, _, _) in gba_core::rom_data::thumb_pc_literals::HOME_ANCHORED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_home_residual_code_support {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::HOME_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[4..].iter().copied() {
+                    machine.bus.rom[spec.start() as usize..spec.end() as usize].copy_from_slice(&rom[spec.start() as usize..spec.end() as usize]);
                 }
             }
             if index == 1 && poison_constructor64 {
@@ -757,6 +975,136 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "home scene must consume all three observed relative streams and directory: {stats:?}");
         eprintln!("ROM_DATA_RELATIVE_GRAPHICS_POISON directory_bytes={} bank_bytes={} literal_bytes={} banks={:?}",
             stats.relative_directory_bytes, stats.relative_bank_bytes, stats.relative_literal_bytes, stats.relative_banks_used);
+    }
+    if poison_color_indexed {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_graphics_stats().expect("indexed graphics owner");
+        let expected = (1u64 << (125 - 64)) | (1u64 << (127 - 64));
+        assert!(stats.color_source_bytes > 0 && stats.color_archives_mask & 1 != 0
+            && stats.color_programs_mask[1] & expected == expected
+            && stats.color_programs_mask[2] & (1 << (129 - 128)) != 0,
+            "home scene must consume the observed color archive programs: {stats:?}");
+        eprintln!("ROM_DATA_COLOR_INDEXED_POISON source_bytes={} archives={} programs={:?}",
+            stats.color_source_bytes, stats.color_archives_mask, stats.color_programs_mask);
+    }
+    if poison_eight_row_lookup {
+        let stats = decoded.bus.rom_resources().unwrap().tilemap_geometry_stats().expect("tilemap geometry owner");
+        assert!(stats.eight_row_lookup_bytes > 0 && stats.eight_row_lookup_rows == 4,
+            "home scene must consume all observed eight-row lookup rows: {stats:?}");
+        eprintln!("ROM_DATA_EIGHT_ROW_LOOKUP_POISON source_bytes={} rows={}",
+            stats.eight_row_lookup_bytes, stats.eight_row_lookup_rows);
+    }
+    if poison_task_signed_lookup {
+        let stats = decoded.bus.rom_resources().unwrap().observed_task_parameters_stats().expect("task parameter owner");
+        assert!(stats.signed_lookup_bytes > 0 && stats.signed_lookup_indices_mask & 6 == 6,
+            "home scene must consume the two observed signed lookup indices: {stats:?}");
+        eprintln!("ROM_DATA_TASK_SIGNED_LOOKUP_POISON source_bytes={} indices={}",
+            stats.signed_lookup_bytes, stats.signed_lookup_indices_mask);
+    }
+    if poison_battle_obj {
+        let stats = decoded.bus.rom_resources().unwrap().obj_animation_stats().expect("OBJ animation owner");
+        assert!(stats.battle_source_bytes > 0, "battle must consume the selected OBJ bank: {stats:?}");
+        eprintln!("ROM_DATA_BATTLE_OBJ_POISON source_bytes={} host_reads={}",
+            stats.battle_source_bytes, stats.battle_host_reads);
+    }
+    if poison_battle_obj_support {
+        let stats = decoded.bus.rom_resources().unwrap().obj_list_stats().expect("OBJ list owner");
+        assert!(stats.actor_lookup_extension_bytes > 0
+            && stats.iwram_additional_callback_bytes[3] > 0
+            && stats.iwram_additional_callback_bytes[4] > 0,
+            "battle must consume the observed lookup entries and callback words: {stats:?}");
+        eprintln!("ROM_DATA_BATTLE_OBJ_SUPPORT_POISON lookup_bytes={} callback_bytes={:?}",
+            stats.actor_lookup_extension_bytes, stats.iwram_additional_callback_bytes);
+    }
+    if poison_indexed_records16 {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_records16_stats().expect("indexed records owner");
+        assert!(stats.source_bytes > 0, "battle must consume indexed record fields: {stats:?}");
+        eprintln!("ROM_DATA_INDEXED_RECORDS16_POISON source_bytes={} fields={} records={:?}",
+            stats.source_bytes, stats.fields_mask, stats.record_mask);
+    }
+    if poison_indexed_words_3959 {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_words_3959_stats().expect("indexed words owner");
+        assert!(stats.source_bytes > 0, "battle must consume indexed word fields: {stats:?}");
+        eprintln!("ROM_DATA_INDEXED_WORDS_3959_POISON source_bytes={} fields={} records={:?}",
+            stats.source_bytes, stats.fields_mask, stats.record_mask);
+    }
+    if poison_thumb_switch_tables {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
+        assert!(stats.source_bytes > 0 && stats.roots_mask != 0 && stats.destinations_mask != 0,
+            "battle must consume Thumb switch roots and destinations: {stats:?}");
+        eprintln!("ROM_DATA_THUMB_SWITCH_TABLES_POISON source_bytes={} roots={} destinations={}",
+            stats.source_bytes, stats.roots_mask, stats.destinations_mask);
+    }
+    if poison_additional_thumb_switches {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
+        assert!(stats.additional_source_bytes > 0 && stats.additional_destinations_mask & 0xf == 0xf,
+            "battle must consume all four additional Thumb switch tables: {stats:?}");
+        eprintln!("ROM_DATA_ADDITIONAL_THUMB_SWITCHES_POISON source_bytes={} tables={}",
+            stats.additional_source_bytes, stats.additional_destinations_mask);
+    }
+    if poison_copied_halfword_lookups {
+        let stats = decoded.bus.rom_resources().unwrap().copied_halfword_lookups_stats().expect("copied halfword owner");
+        assert!(stats.table_bytes > 0 && stats.table_mask & 1 != 0,
+            "battle must consume the first copied halfword table: {stats:?}");
+        eprintln!("ROM_DATA_COPIED_HALFWORD_LOOKUPS_POISON table_bytes={} root_bytes={} tables={} roots={}",
+            stats.table_bytes, stats.root_bytes, stats.table_mask, stats.root_mask);
+    }
+    if poison_indexed_halfwords_39a5 {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_halfwords_39a5_stats().expect("indexed halfword owner");
+        assert!(stats.source_bytes > 0 && stats.values_mask != 0,
+            "battle must consume an indexed halfword: {stats:?}");
+        eprintln!("ROM_DATA_INDEXED_HALFWORDS_39A5_POISON source_bytes={} values={}", stats.source_bytes, stats.values_mask);
+    }
+    if poison_script_byte_lookup_3ad {
+        let stats = decoded.bus.rom_resources().unwrap().script_byte_lookup_3ad_stats().expect("script byte lookup owner");
+        assert!(stats.table_bytes > 0 && stats.values_mask & 2 != 0,
+            "battle must consume the observed script lookup entry: {stats:?}");
+        eprintln!("ROM_DATA_SCRIPT_BYTE_LOOKUP_3AD_POISON table_bytes={} root_bytes={} values={}", stats.table_bytes, stats.root_bytes, stats.values_mask);
+    }
+    if poison_obj_derived_dimensions {
+        let stats = decoded.bus.rom_resources().unwrap().stats();
+        assert!(stats.derived_source_bytes > 0 && stats.derived_table_mask == 3 && stats.derived_rows_mask.iter().all(|&m| m != 0),
+            "battle must consume both derived OBJ dimension tables: {stats:?}");
+        eprintln!("ROM_DATA_OBJ_DERIVED_DIMENSIONS_POISON source_bytes={} tables={} rows={:?}",
+            stats.derived_source_bytes, stats.derived_table_mask, stats.derived_rows_mask);
+    }
+    if poison_thumb_pc_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.source_bytes > 0 && stats.literals_mask.iter().any(|&mask| mask != 0),
+            "battle must consume Thumb PC literals: {stats:?}");
+        eprintln!("ROM_DATA_THUMB_PC_LITERALS_POISON source_bytes={} literals={:?}",
+            stats.source_bytes, stats.literals_mask);
+    }
+    if poison_additional_thumb_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.additional_source_bytes > 0 && stats.additional_mask.iter().any(|&mask| mask != 0),
+            "battle must consume additional Thumb literals: {stats:?}");
+        eprintln!("ROM_DATA_ADDITIONAL_THUMB_LITERALS_POISON source_bytes={} literals={:?}",
+            stats.additional_source_bytes, stats.additional_mask);
+    }
+    if poison_observed_thumb_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.observed_source_bytes > 0 && stats.observed_mask.iter().any(|&mask| mask != 0),
+            "battle must consume observed Thumb literals: {stats:?}");
+        eprintln!("ROM_DATA_OBSERVED_THUMB_LITERALS_POISON source_bytes={} literals={:?}",
+            stats.observed_source_bytes, stats.observed_mask);
+    }
+    if poison_home_anchored_thumb_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.home_anchored_bytes > 0 && stats.home_anchored_mask == (1u64 << 25) - 1,
+            "home scene must consume the sampled anchored literals: {stats:?}");
+        eprintln!("ROM_DATA_HOME_ANCHORED_THUMB_LITERALS_POISON source_bytes={} literals={}",
+            stats.home_anchored_bytes, stats.home_anchored_mask);
+    }
+    if poison_home_residual_code_support {
+        let owner = decoded.bus.rom_resources().unwrap();
+        let literals = owner.thumb_pc_literals_stats().expect("Thumb literal owner");
+        let switches = owner.thumb_switch_tables_stats().expect("Thumb switch owner");
+        assert!(literals.home_observed_bytes > 0 && literals.home_observed_mask == (1u64 << 40) - 1,
+            "home scene must consume the scoped literals: {literals:?}");
+        assert!(switches.additional_source_bytes > 0 && switches.additional_destinations_mask & 0x30 == 0x30,
+            "home scene must consume both scoped switch tables: {switches:?}");
+        eprintln!("ROM_DATA_HOME_RESIDUAL_CODE_SUPPORT_POISON literal_bytes={} literals={} switch_bytes={} switches={}",
+            literals.home_observed_bytes, literals.home_observed_mask, switches.additional_source_bytes, switches.additional_destinations_mask);
     }
     if poison_observed_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");

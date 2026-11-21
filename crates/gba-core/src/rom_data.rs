@@ -9,6 +9,7 @@ pub mod read_audit;
 pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, ObservedLzRead, ObservedLzStats, PacketRead, PacketStats, PaletteRead, PaletteStats, ResourceStats, RuntimeResources, TransferStats, TextStats, TextCatalogStats, FontKeyboardStats, ObjListStats, ObjAnimationStats};
 pub use runtime::{CompactObjStats, SecondaryCompactObjStats, TertiaryCompactObjStats};
 pub use runtime::{LayeredObjStats, AudioExtendedDispatchStats, ConditionalItemParametersStats};
+pub use runtime::IndexedRecords16Stats;
 pub mod bg_descriptors;
 pub mod bg_packets;
 pub mod bg_packet_data;
@@ -69,6 +70,14 @@ pub mod observed_tilemap_row;
 pub mod dma_register_directories;
 pub mod iwram_memory_helpers;
 pub mod adjacent_offset_tables;
+pub mod indexed_records16;
+pub mod indexed_words_3959;
+pub mod thumb_switch_tables;
+pub mod thumb_pc_literals;
+pub mod obj_derived_dimensions;
+pub mod copied_halfword_lookups;
+pub mod indexed_halfwords_39a5;
+pub mod script_byte_lookup_3ad;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -134,8 +143,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 203;
-pub const DECODER_REV: u32 = 202;
+pub const EXTRACTOR_REV: u32 = 221;
+pub const DECODER_REV: u32 = 220;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -488,6 +497,34 @@ pub const IWRAM_MEMORY_HELPERS_FORMAT: &str = "iwram-memory-helpers-v1-json";
 pub const ADJACENT_OFFSET_TABLES_FORMAT: &str = "adjacent-offset-tables-v1-json";
 pub const MAX_IWRAM_MEMORY_HELPERS_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_ADJACENT_OFFSET_TABLES_FILE_BYTES: u64 = 1024 * 1024;
+pub const INDEXED_RECORDS16_ID: &str = "gameplay.indexed-records16";
+pub const INDEXED_WORDS_3959_ID: &str = "gameplay.indexed-words-3959a4";
+pub const THUMB_SWITCH_TABLES_ID: &str = "engine.thumb-switch-tables";
+pub const THUMB_PC_LITERALS_ID: &str = "engine.thumb-pc-literals";
+pub const COPIED_HALFWORD_LOOKUPS_ID: &str = "engine.copied-halfword-lookups";
+pub const INDEXED_HALFWORDS_39A5_ID: &str = "gameplay.indexed-halfwords-39a5c8";
+pub const SCRIPT_BYTE_LOOKUP_3AD_ID: &str = "engine.script-byte-lookup-3ad16e";
+pub const INDEXED_RECORDS16_FILE: &str = "indexed-records16.json";
+pub const INDEXED_WORDS_3959_FILE: &str = "indexed-words-3959a4.json";
+pub const THUMB_SWITCH_TABLES_FILE: &str = "thumb-switch-tables.json";
+pub const THUMB_PC_LITERALS_FILE: &str = "thumb-pc-literals.json";
+pub const COPIED_HALFWORD_LOOKUPS_FILE: &str = "copied-halfword-lookups.json";
+pub const INDEXED_HALFWORDS_39A5_FILE: &str = "indexed-halfwords-39a5c8.json";
+pub const SCRIPT_BYTE_LOOKUP_3AD_FILE: &str = "script-byte-lookup-3ad16e.json";
+pub const INDEXED_RECORDS16_FORMAT: &str = "indexed-records16-v1-json";
+pub const INDEXED_WORDS_3959_FORMAT: &str = "indexed-words-3959a4-v1-json";
+pub const THUMB_SWITCH_TABLES_FORMAT: &str = "thumb-switch-tables-v1-json";
+pub const THUMB_PC_LITERALS_FORMAT: &str = "thumb-pc-literals-v1-json";
+pub const COPIED_HALFWORD_LOOKUPS_FORMAT: &str = "copied-halfword-lookups-v1-json";
+pub const INDEXED_HALFWORDS_39A5_FORMAT: &str = "indexed-halfwords-39a5c8-v1-json";
+pub const SCRIPT_BYTE_LOOKUP_3AD_FORMAT: &str = "script-byte-lookup-3ad16e-v1-json";
+pub const MAX_INDEXED_RECORDS16_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_INDEXED_WORDS_3959_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_THUMB_SWITCH_TABLES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_THUMB_PC_LITERALS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -849,6 +886,13 @@ pub struct Extraction {
     pub dma_register_directories: Option<dma_register_directories::Catalog>,
     pub iwram_memory_helpers: Option<iwram_memory_helpers::Catalog>,
     pub adjacent_offset_tables: Option<adjacent_offset_tables::Catalog>,
+    pub indexed_records16: Option<indexed_records16::Catalog>,
+    pub indexed_words_3959: Option<indexed_words_3959::Catalog>,
+    pub thumb_switch_tables: Option<thumb_switch_tables::Catalog>,
+    pub thumb_pc_literals: Option<thumb_pc_literals::Catalog>,
+    pub copied_halfword_lookups: Option<copied_halfword_lookups::Catalog>,
+    pub indexed_halfwords_39a5: Option<indexed_halfwords_39a5::Catalog>,
+    pub script_byte_lookup_3ad: Option<script_byte_lookup_3ad::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -978,6 +1022,13 @@ pub struct BaseFiles<'a> {
     pub dma_register_directories: Option<(&'a dma_register_directories::DmaRegisterDirectories, &'a [u8])>,
     pub iwram_memory_helpers: Option<(&'a iwram_memory_helpers::IwramMemoryHelpers, &'a [u8])>,
     pub adjacent_offset_tables: Option<(&'a adjacent_offset_tables::AdjacentOffsetTables, &'a [u8])>,
+    pub indexed_records16: Option<(&'a indexed_records16::IndexedRecords16, &'a [u8])>,
+    pub indexed_words_3959: Option<(&'a indexed_words_3959::IndexedWords3959, &'a [u8])>,
+    pub thumb_switch_tables: Option<(&'a thumb_switch_tables::ThumbSwitchTables, &'a [u8])>,
+    pub thumb_pc_literals: Option<(&'a thumb_pc_literals::ThumbPcLiterals, &'a [u8])>,
+    pub copied_halfword_lookups: Option<(&'a copied_halfword_lookups::CopiedHalfwordLookups, &'a [u8])>,
+    pub indexed_halfwords_39a5: Option<(&'a indexed_halfwords_39a5::IndexedHalfwords39a5, &'a [u8])>,
+    pub script_byte_lookup_3ad: Option<(&'a script_byte_lookup_3ad::ScriptByteLookup3ad, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1000,6 +1051,11 @@ impl Extraction {
         let alternates = bg_alternate_palettes::Catalog::from_rom(rom)?;
         let packet_programs = bg_packet_data::Catalog::from_rom(rom)?;
         let mut result = Self::from_ranges(rom, hash, profile, ranges, DIMENSIONS_SHA256)?;
+        if profile == "europe" {
+            result.manifest.resources[0].sources.extend(
+                obj_derived_dimensions::source_ranges(rom, &result.dimensions)?
+            );
+        }
         result.background = Some(catalog.decoded);
         result.manifest.coverage.push(BG_DESCRIPTORS_ID.into());
         result.manifest.resources.push(Resource {
@@ -1574,7 +1630,7 @@ impl Extraction {
             result.world_records38 = Some(metadata);
             let metadata = indexed_graphics::Catalog::from_rom(rom)?;
             result.manifest.coverage.push(INDEXED_GRAPHICS_ID.into());
-            result.manifest.resources.push(Resource {id:INDEXED_GRAPHICS_ID.into(),path:INDEXED_GRAPHICS_FILE.into(),format:INDEXED_GRAPHICS_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
+            result.manifest.resources.push(Resource {id:INDEXED_GRAPHICS_ID.into(),path:INDEXED_GRAPHICS_FILE.into(),format:INDEXED_GRAPHICS_FORMAT.into(),sha256:String::new(),dependencies:vec![UNIT_OBJ_FFFF_READER_FIELDS_ID.into()],sources:metadata.sources.clone()});
             result.indexed_graphics = Some(metadata);
             let metadata = ui_raw_transfers::Catalog::from_rom(rom)?;
             result.manifest.coverage.push(UI_RAW_TRANSFERS_ID.into());
@@ -1824,6 +1880,62 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.adjacent_offset_tables = Some(metadata);
+            let metadata = indexed_records16::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(INDEXED_RECORDS16_ID.into());
+            result.manifest.resources.push(Resource {
+                id: INDEXED_RECORDS16_ID.into(), path: INDEXED_RECORDS16_FILE.into(),
+                format: INDEXED_RECORDS16_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.indexed_records16 = Some(metadata);
+            let metadata = indexed_words_3959::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(INDEXED_WORDS_3959_ID.into());
+            result.manifest.resources.push(Resource {
+                id: INDEXED_WORDS_3959_ID.into(), path: INDEXED_WORDS_3959_FILE.into(),
+                format: INDEXED_WORDS_3959_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.indexed_words_3959 = Some(metadata);
+            let metadata = thumb_switch_tables::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(THUMB_SWITCH_TABLES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: THUMB_SWITCH_TABLES_ID.into(), path: THUMB_SWITCH_TABLES_FILE.into(),
+                format: THUMB_SWITCH_TABLES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.thumb_switch_tables = Some(metadata);
+            let metadata = thumb_pc_literals::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(THUMB_PC_LITERALS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: THUMB_PC_LITERALS_ID.into(), path: THUMB_PC_LITERALS_FILE.into(),
+                format: THUMB_PC_LITERALS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.thumb_pc_literals = Some(metadata);
+            let metadata = copied_halfword_lookups::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(COPIED_HALFWORD_LOOKUPS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: COPIED_HALFWORD_LOOKUPS_ID.into(), path: COPIED_HALFWORD_LOOKUPS_FILE.into(),
+                format: COPIED_HALFWORD_LOOKUPS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.copied_halfword_lookups = Some(metadata);
+            let metadata = indexed_halfwords_39a5::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(INDEXED_HALFWORDS_39A5_ID.into());
+            result.manifest.resources.push(Resource {
+                id: INDEXED_HALFWORDS_39A5_ID.into(), path: INDEXED_HALFWORDS_39A5_FILE.into(),
+                format: INDEXED_HALFWORDS_39A5_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.indexed_halfwords_39a5 = Some(metadata);
+            let metadata = script_byte_lookup_3ad::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SCRIPT_BYTE_LOOKUP_3AD_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SCRIPT_BYTE_LOOKUP_3AD_ID.into(), path: SCRIPT_BYTE_LOOKUP_3AD_FILE.into(),
+                format: SCRIPT_BYTE_LOOKUP_3AD_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.script_byte_lookup_3ad = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -1981,6 +2093,13 @@ impl Extraction {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2139,6 +2258,13 @@ impl Extraction {
             || self.observed_tilemap_row.is_some() != self.dma_register_directories.is_some()
             || self.dma_register_directories.is_some() != self.iwram_memory_helpers.is_some()
             || self.iwram_memory_helpers.is_some() != self.adjacent_offset_tables.is_some()
+            || self.adjacent_offset_tables.is_some() != self.indexed_records16.is_some()
+            || self.indexed_records16.is_some() != self.indexed_words_3959.is_some()
+            || self.indexed_words_3959.is_some() != self.thumb_switch_tables.is_some()
+            || self.thumb_switch_tables.is_some() != self.thumb_pc_literals.is_some()
+            || self.thumb_pc_literals.is_some() != self.copied_halfword_lookups.is_some()
+            || self.copied_halfword_lookups.is_some() != self.indexed_halfwords_39a5.is_some()
+            || self.indexed_halfwords_39a5.is_some() != self.script_byte_lookup_3ad.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3103,6 +3229,69 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected adjacent_offset_tables".into()),
         }
+        match (&self.indexed_records16, files.indexed_records16) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_INDEXED_RECORDS16_FILE_BYTES { return Err("Indexed records file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[123].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected indexed_records16".into()),
+        }
+        match (&self.indexed_words_3959, files.indexed_words_3959) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_INDEXED_WORDS_3959_FILE_BYTES { return Err("Indexed words file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[124].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected indexed_words_3959".into()),
+        }
+        match (&self.thumb_switch_tables, files.thumb_switch_tables) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_THUMB_SWITCH_TABLES_FILE_BYTES { return Err("Thumb switch tables file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[125].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected thumb_switch_tables".into()),
+        }
+        match (&self.thumb_pc_literals, files.thumb_pc_literals) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_THUMB_PC_LITERALS_FILE_BYTES { return Err("Thumb PC literals file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[126].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected thumb_pc_literals".into()),
+        }
+        match (&self.copied_halfword_lookups, files.copied_halfword_lookups) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES { return Err("Copied halfword lookups file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[127].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected copied_halfword_lookups".into()),
+        }
+        match (&self.indexed_halfwords_39a5, files.indexed_halfwords_39a5) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES { return Err("Indexed halfwords 39a5c8 file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[128].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected indexed_halfwords_39a5".into()),
+        }
+        match (&self.script_byte_lookup_3ad, files.script_byte_lookup_3ad) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES { return Err("Script byte lookup 3ad16e file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[129].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected script_byte_lookup_3ad".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3701,6 +3890,34 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded adjacent_offset_tables differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.indexed_records16, files.indexed_records16) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded indexed_records16 differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.indexed_words_3959, files.indexed_words_3959) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded indexed_words_3959 differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.thumb_switch_tables, files.thumb_switch_tables) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded thumb_switch_tables differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.thumb_pc_literals, files.thumb_pc_literals) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded thumb_pc_literals differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.copied_halfword_lookups, files.copied_halfword_lookups) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded copied_halfword_lookups differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.indexed_halfwords_39a5, files.indexed_halfwords_39a5) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded indexed_halfwords_39a5 differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.script_byte_lookup_3ad, files.script_byte_lookup_3ad) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded script_byte_lookup_3ad differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -3835,6 +4052,13 @@ impl Extraction {
             + usize::from(self.dma_register_directories.is_some())
             + usize::from(self.iwram_memory_helpers.is_some())
             + usize::from(self.adjacent_offset_tables.is_some())
+            + usize::from(self.indexed_records16.is_some())
+            + usize::from(self.indexed_words_3959.is_some())
+            + usize::from(self.thumb_switch_tables.is_some())
+            + usize::from(self.thumb_pc_literals.is_some())
+            + usize::from(self.copied_halfword_lookups.is_some())
+            + usize::from(self.indexed_halfwords_39a5.is_some())
+            + usize::from(self.script_byte_lookup_3ad.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4012,6 +4236,13 @@ mod tests {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4142,6 +4373,13 @@ mod tests {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4282,6 +4520,13 @@ mod tests {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4411,6 +4656,13 @@ mod tests {
             dma_register_directories: None,
             iwram_memory_helpers: None,
             adjacent_offset_tables: None,
+            indexed_records16: None,
+            indexed_words_3959: None,
+            thumb_switch_tables: None,
+            thumb_pc_literals: None,
+            copied_halfword_lookups: None,
+            indexed_halfwords_39a5: None,
+            script_byte_lookup_3ad: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4434,17 +4686,23 @@ mod tests {
     fn regional_extractions_are_independent_and_roundtrip() {
         for (env, version, ranges) in [
             ("FFTA_TEST_ROM_USA", Version::Usa, 2),
-            ("FFTA_TEST_ROM_EUR", Version::Europe, 2),
+            ("FFTA_TEST_ROM_EUR", Version::Europe, 4),
         ] {
             let rom = std::fs::read(std::env::var(env).unwrap()).unwrap();
             let extraction = Extraction::from_rom(&rom).unwrap();
             assert_eq!(extraction.version(), version);
             assert_eq!(extraction.manifest.resources[0].sources.len(), ranges);
-            for source in &extraction.manifest.resources[0].sources {
+            for source in &extraction.manifest.resources[0].sources[..2] {
                 assert_eq!(
                     &rom[source.offset as usize..source.offset as usize + 48],
                     &extraction.dimensions.source_bytes()
                 );
+            }
+            if version == Version::Europe {
+                let projections = obj_derived_dimensions::projections(&extraction.dimensions);
+                for (source, bytes) in extraction.manifest.resources[0].sources[2..].iter().zip(projections) {
+                    assert_eq!(&rom[source.offset as usize..source.offset as usize + 48], &bytes);
+                }
             }
             let mut changed = rom;
             changed[0] ^= 1;

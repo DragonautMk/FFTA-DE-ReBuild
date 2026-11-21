@@ -820,18 +820,241 @@ current evidence before running another check.
   OAM, dispatch and audio. Of 8,544 unowned sampled bytes, 6,436 are at or above
   `300000`; the address-only report does not attribute PCs or asset extents.
   [Evidence](../rom_data_runtime.md#e207-home-scene-rom-read-inventory).
-- [ ] **ROMDATA-01-E207-HOME-UNOWNED:** attribute the sampled home-scene reads to
-  original consumers and authenticate source extents before extraction; three
-  ranges near `3fb21c`, `3fc3b0` and `3fd4f0` account for 6,041 sampled bytes.
-  Other scenes and readers, Linux, USA and native Windows remain open.
+- [x] **ROMDATA-01-E207-HOME-UNOWNED scoped EUR/Wine:** E221 owns all 8,544
+  bytes previously unowned in this address-only sample (`dnr49xgd`).
+- [ ] **ROMDATA-01-E207-HOME-OTHER:** establish other readers, source domains,
+  scenes, real-BIOS and UI save/Load; this sample does not prove full coverage.
+- [ ] **ROMDATA-01-E207-HOME-LINUX:** validate affected readers, transfers,
+  home scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E207-HOME-USA:** identify and authenticate corresponding USA
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-HOME-OBSERVED-CODE scoped EUR/Wine:** E221-d220 adds 40
+  literal words and two switch arrays. Reader `gwh_mblj`, 600 altered-source
+  home frames `18841zsj`, CLI `q0do0j4t` and reconciliation `dnr49xgd` pass.
+  [Evidence](../rom_data_runtime.md#e230-home-scene-observed-literals-and-switch-destinations).
+- [ ] **ROMDATA-04-EUR-HOME-OBSERVED-CODE-OTHER:** establish other callers,
+  selectors, scenes, real-BIOS and UI save/Load; scopes may include nested reads.
+- [ ] **ROMDATA-04-EUR-HOME-OBSERVED-CODE-LINUX:** validate publication, readers,
+  boundaries, transfers, home scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-HOME-OBSERVED-CODE-USA:** identify and authenticate the
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-HOME-THUMB-LITERALS scoped EUR/Wine:** E220-d219 adds
+  25 anchored words. Reader `yc40amn_`, 600 altered-source home frames
+  `29mql8p4`, CLI `__imn0tp` and reconciliation `ypnkepk0` pass.
+  [Evidence](../rom_data_runtime.md#e229-home-scene-anchored-thumb-literals).
+- [ ] **ROMDATA-04-EUR-HOME-THUMB-LITERALS-OTHER:** establish other readers,
+  scenes, literal pools, real-BIOS and UI save/Load; anchors are static.
+- [ ] **ROMDATA-04-EUR-HOME-THUMB-LITERALS-LINUX:** validate publication, readers,
+  boundaries, transfers, home scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-HOME-THUMB-LITERALS-USA:** identify and authenticate the
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-01-E215-LLEDNAR-RAW scoped EUR/Wine:** E206 600-frame Llednar
+  continuation matches state, clock, video, OAM, dispatch and audio. The Wine
+  child passed but its unit retained generated input as private; independent
+  recovery `nocdwh09` verifies the inputs and address inventory without replay.
+  [Evidence](../rom_data_runtime.md#e215-llednar-battle-rom-read-inventory).
+- [x] **ROMDATA-01-E215-LLEDNAR-UNOWNED scoped EUR/Wine:** E216–E228 own all
+  4,281 previously unowned bytes in this address-only sample (`3blfucoi`).
+  Other readers, scenes and source extents remain open.
+- [ ] **ROMDATA-01-E215-LLEDNAR-LINUX:** validate the selected battle path and
+  any migrated consumers on Linux when selected; USA remains unverified.
+- [x] **ROMDATA-02-E216-BATTLE-OBJ scoped EUR/Wine:** E207-d206 consumes 442
+  authenticated bytes in 17 lists and three sequences. Original reader,
+  boundaries, host lists and transfers pass `drtfh3ff`; the altered-source
+  600-frame battle continuation passes `5op6sk14`, and the production CLI
+  create/reuse/verify passes `h524hpqf`.
+  [Evidence](../rom_data_obj.md#e216-european-battle-number-obj-bank).
+- [ ] **ROMDATA-02-E216-BATTLE-OBJ-OTHER:** establish remaining readers,
+  sequence/index domains, scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-02-E216-BATTLE-OBJ-LINUX:** validate publication, readers,
+  boundaries, host/transfer paths, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E216-BATTLE-OBJ-USA:** identify and authenticate any
+  corresponding USA source; native Windows remains unverified.
+- [x] **ROMDATA-02-E217-BATTLE-OBJ-SUPPORT scoped EUR/Wine:** E208-d207 consumes
+  seven callback words and four additional actor lookup entries. Original
+  interpreter/generated readers and mixed boundaries pass `_pxxvoql`; the
+  altered-source 600-frame battle passes `sk5simea` and production CLI
+  create/reuse/verify passes `ayi5qr7q`.
+  [Evidence](../rom_data_obj.md#e217-european-battle-obj-support-fields).
+- [ ] **ROMDATA-02-E217-BATTLE-OBJ-SUPPORT-OTHER:** identify the `397fb4` word,
+  other callback/lookup consumers, index domains, scenes, real-BIOS and UI save/Load.
+- [ ] **ROMDATA-02-E217-BATTLE-OBJ-SUPPORT-LINUX:** validate publication,
+  reader/branch ABI, boundaries, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E217-BATTLE-OBJ-SUPPORT-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-02-E218-INDEXED-RECORDS16 scoped EUR/Wine:** E209-d208 serves
+  all 86 authenticated records; original byte/halfword readers, adjacent/raw
+  boundaries and transfers pass `68wakt20`, and the altered-source 600-frame
+  battle continuation passes `z_mmhop1`. Production CLI create/reuse/verify
+  passes `r1aazv8q`.
+  [Evidence](../rom_data_gameplay.md#e218-european-indexed-16-byte-records).
+- [ ] **ROMDATA-02-E218-INDEXED-RECORDS16-OTHER:** establish remaining field
+  meanings, readers, index domains, scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-02-E218-INDEXED-RECORDS16-LINUX:** validate publication,
+  readers, boundaries, transfers, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E218-INDEXED-RECORDS16-USA:** identify and authenticate
+  corresponding USA records; native Windows remains unverified.
+- [x] **ROMDATA-04-3959A4 scoped EUR/Wine:** E210-d209 serves 30 words;
+  source, original readers, transfers and boundaries pass `hdglegnr`, the
+  altered-source 600-frame battle passes `des5bafu`, and CLI create/reuse/verify
+  passes `snb6pezg`.
+  [Evidence](../rom_data_gameplay.md#e219-european-indexed-word-lookup).
+- [ ] **ROMDATA-04-3959A4-OTHER:** establish value meanings, remaining guest
+  indices/readers and scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-3959A4-LINUX:** validate publication, original readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-3959A4-USA:** identify and authenticate any corresponding
+  USA source; native Windows remains unverified.
+- [x] **ROMDATA-04-THUMB-SWITCHES scoped EUR/Wine:** E211-d210 serves 23
+  authenticated tables/696 destinations and roots. Source, original readers,
+  boundaries and transfers pass `83yciuax`, 600 altered-source battle frames
+  pass `01z89owc`, and production CLI create/reuse/verify passes `lr21g7ro`.
+  [Evidence](../rom_data_runtime.md#e220-european-thumb-switch-table-resources).
+- [ ] **ROMDATA-04-THUMB-SWITCHES-OTHER:** attribute other control tables and
+  literals, additional indices/consumers/scenes, real-BIOS and UI save/Load.
+- [ ] **ROMDATA-04-THUMB-SWITCHES-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-THUMB-SWITCHES-USA:** identify and authenticate corresponding
+  USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-THUMB-LITERALS scoped EUR/Wine:** E212-d211 serves 326
+  original PC-relative words. Source, original readers, mixed boundaries and
+  transfers pass `e3auifw5`; 600 altered-source battle frames pass `qct03qw7`;
+  production CLI create/reuse/verify passes `t5x79vsh`.
+  [Evidence](../rom_data_runtime.md#e221-european-thumb-pc-relative-literals).
+- [ ] **ROMDATA-04-THUMB-LITERALS-OTHER:** attribute other literal words,
+  consumers, scenes, real-BIOS and UI save/Load; do not infer pointed-to assets.
+- [ ] **ROMDATA-04-THUMB-LITERALS-LINUX:** validate publication, readers,
+  mixed boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-THUMB-LITERALS-USA:** identify and authenticate corresponding
+  USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-THUMB-LITERALS-ANCHORED scoped EUR/Wine:** E213-d212 serves
+  117 additional words. Source `gzj3f255`, readers and boundaries `0qe1983j`,
+  600 altered-source battle frames `osmbx9xm`, and production CLI `ajwb625v`
+  pass. [Evidence](../rom_data_runtime.md#e222-additional-statically-anchored-thumb-literals).
+- [ ] **ROMDATA-04-THUMB-LITERALS-ANCHORED-OTHER:** attribute other literal
+  words, consumers, scenes, real-BIOS and UI save/Load; static anchors do not
+  prove executing PCs in E215 or identify pointed-to assets.
+- [ ] **ROMDATA-04-THUMB-LITERALS-ANCHORED-LINUX:** validate publication,
+  readers, boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-THUMB-LITERALS-ANCHORED-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-LLEDNAR-LITERAL-SITES scoped EUR/Wine:** E214-d213 adds 443
+  words. Scope `744c5av7`, readers/boundaries `qeb1_wme`, 600 altered-source
+  battle frames `v5vdxrct` and CLI `73o_xfzb` pass.
+  [Evidence](../rom_data_runtime.md#e223-battle-observed-thumb-literal-words).
+- [ ] **ROMDATA-04-LLEDNAR-LITERAL-SITES-OTHER:** attribute remaining words,
+  readers, scenes, real-BIOS and UI save/Load; scoped observations can include
+  nested accesses and do not establish complete pools or pointed-to assets.
+- [ ] **ROMDATA-04-LLEDNAR-LITERAL-SITES-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-LLEDNAR-LITERAL-SITES-USA:** identify and authenticate the
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-01-E215-LLEDNAR-RESIDUE-READERS scoped EUR/Wine:** E215-d214
+  adds four switch arrays/163 destinations. Trace `qyrfym7w`, original windows
+  `rit3fxua`, readers `6k14siel`, 600 altered-source battle frames `lzpuxs2a`,
+  production CLI `4j66od25` and residual reconciliation `03amsoxp` pass.
+  [Evidence](../rom_data_runtime.md#e224-additional-battle-switch-destinations).
+- [ ] **ROMDATA-01-E215-LLEDNAR-RESIDUE-OTHER:** establish remaining source
+  domains and other callers, scenes, real-BIOS and UI save/Load. The completed
+  address-only sample does not prove full coverage. Do not impose a guest cap.
+- [ ] **ROMDATA-01-E215-LLEDNAR-RESIDUE-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-01-E215-LLEDNAR-RESIDUE-USA:** identify and authenticate the
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-OBJ-DERIVED-TABLES scoped EUR/Wine:** E216-d215 adds
+  two dimension-derived views. Readers `riylj8n_`, 600 altered-source battle
+  frames `o9_mw7ee`, production CLI `e_jxiaof` and reconciliation `53vwjg84`
+  pass. [Evidence](../rom_data_runtime.md#e225-derived-obj-dimension-views).
+- [ ] **ROMDATA-04-EUR-OBJ-DERIVED-TABLES-OTHER:** verify other readers, scenes,
+  real-BIOS and UI save/Load; preserve reserved-shape physical reads.
+- [ ] **ROMDATA-04-EUR-OBJ-DERIVED-TABLES-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-OBJ-DERIVED-TABLES-USA:** identify and authenticate the
+  corresponding USA views; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-14CF18-MASKS scoped EUR/Wine:** E217-d216 serves two
+  copied halfword tables and two roots. Reader `j75qi78l`, 600 altered-source
+  battle frames `jv89wjir`, CLI `if6d22yl` and reconciliation `u6ti5mxt` pass.
+  [Evidence](../rom_data_runtime.md#e226-copied-halfword-lookup-tables).
+- [ ] **ROMDATA-04-EUR-14CF18-MASKS-OTHER:** verify other callers, index domains,
+  scenes, real-BIOS and UI save/Load; preserve original outside-index behavior.
+- [ ] **ROMDATA-04-EUR-14CF18-MASKS-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-14CF18-MASKS-USA:** identify and authenticate the
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-39A5C8 scoped EUR/Wine:** E218-d217 serves three
+  indexed halfwords. Reader `ebfw8yn_`, 600 altered-source battle frames
+  `jv5_43gi`, CLI `w3f33_xp` and reconciliation `l5w20wvc` pass.
+  [Evidence](../rom_data_runtime.md#e227-indexed-halfwords-at-39a5c8).
+- [ ] **ROMDATA-04-EUR-39A5C8-OTHER:** verify other callers, selector paths,
+  scenes, real-BIOS and UI save/Load; preserve original outside-range behavior.
+- [ ] **ROMDATA-04-EUR-39A5C8-LINUX:** validate publication, readers, boundaries,
+  transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-39A5C8-USA:** identify and authenticate the corresponding
+  USA source; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-3AD16E-LOOKUP scoped EUR/Wine:** E219-d218 serves the
+  bounded physical window and second root. Readers `cu0__ocg`, 600 altered-source
+  battle frames `frcsvz7a`, CLI `a2w8hrj6` and reconciliation `3blfucoi` pass.
+  [Evidence](../rom_data_runtime.md#e228-script-byte-lookup-window).
+- [ ] **ROMDATA-04-EUR-3AD16E-LOOKUP-OTHER:** establish semantic domain and other
+  callers, scenes, real-BIOS and UI save/Load; retain outside-window behavior.
+- [ ] **ROMDATA-04-EUR-3AD16E-LOOKUP-LINUX:** validate publication, readers,
+  boundaries, transfers, battle scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-3AD16E-LOOKUP-USA:** identify and authenticate the
+  corresponding USA source; native Windows remains unverified.
+- [x] **ROMDATA-02-E214-SIGNED-LOOKUP scoped EUR/Wine:** E206-d205 serves four
+  physical signed lookup bytes without limiting the original guest byte index.
+  Reader and mixed boundaries `qo5za07r`, altered home scene `aj4omulx` and
+  production CLI `yozdoyrs` pass.
+  [Evidence](../rom_data_gameplay.md#e214-european-signed-task-lookup-projection).
+- [ ] **ROMDATA-02-E214-SIGNED-LOOKUP-OTHER:** establish remaining indices,
+  consumers, ordinary reader PCs, scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-02-E214-SIGNED-LOOKUP-LINUX:** validate publication, readers,
+  boundaries, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E214-SIGNED-LOOKUP-USA:** identify and authenticate any
+  corresponding USA source; native Windows remains unverified.
+- [x] **ROMDATA-02-E213-TILEMAP-LOOKUP scoped EUR/Wine:** E205-d204 serves the
+  signed eight-row tile lookup and composes with the adjacent task-cycle owner.
+  Original readers `y3wk6uev`, altered home scene `7fmxa2bo`, production CLI
+  `ga0p99vm` and legacy-counter check `li2pps9d` pass.
+  [Evidence](../rom_data_runtime.md#e213-european-eight-row-tile-lookup).
+- [ ] **ROMDATA-02-E213-TILEMAP-LOOKUP-OTHER:** establish other consumers,
+  alternate entries, scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-02-E213-TILEMAP-LOOKUP-LINUX:** validate publication, original
+  drawing, boundaries, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E213-TILEMAP-LOOKUP-USA:** identify and authenticate any
+  corresponding USA source; native Windows remains unverified.
+- [x] **ROMDATA-01-E211-HOME-INDEXED-SOURCE scoped EUR:** `mwuqtdap` verifies
+  the three source roots, original caller, 495 programs, decoded lengths and
+  dictionary prefixes. The third archive overlaps the previously owned four
+  bytes at `3d4830..3d4834`; the scene capture remains address-only.
+  [Evidence](../rom_data_indexed_graphics.md#e211-european-color-mode-archive-source-contract).
+- [x] **ROMDATA-02-E211-HOME-INDEXED scoped EUR/Wine:** E204-d203 extracts
+  three color-mode archives and composes with the existing four-byte owner.
+  Original readers and mixed boundaries `d88bld36`, altered home scene
+  `t6q5y978` and production CLI `vnsgav7l` pass.
+  [Evidence](../rom_data_indexed_graphics.md#e212-european-color-mode-archive-publication).
+- [ ] **ROMDATA-02-E211-HOME-INDEXED-OTHER:** establish additional ordinary
+  consumers, modes and scenes, real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-02-E211-HOME-INDEXED-LINUX:** validate publication, original
+  readers, mixed boundaries, scene use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E211-HOME-INDEXED-USA:** identify and authenticate any
+  corresponding USA archives; native Windows remains unverified.
 - [x] **ROMDATA-01-E208-HOME-RANGES scoped EUR source lead:** `rwsqv1y7`
   authenticates those three ranges as custom streams selected by entries 69,
   71 and 73 of the kind-4 directory at `3d63d4`, with a pinned original
   resolver and decoder path. The scene's executing PCs remain unproved.
   [Evidence](../rom_data_graphics.md#e208-home-scene-relative-archive-streams).
-- [ ] **ROMDATA-02-E208-HOME-STREAMS:** extract the selected streams and
-  directory bytes, connect runtime consumption and verify source-altered
-  ordinary use on Wine. Other entries, callers and platforms remain open.
+- [x] **ROMDATA-02-E208-HOME-STREAMS scoped EUR/Wine:** E203-d202 extracts and
+  serves the full 103-entry directory. Reader `af7l9c_2`, altered-source home
+  scene `deee1ha0` and production CLI `473fvdeq` pass; the scene reads entries
+  69, 71 and 73. [Evidence](../rom_data_graphics.md#e210-relative-graphics-archive-publication).
+- [ ] **ROMDATA-02-E210-RELATIVE-GRAPHICS-OTHER:** establish ordinary use of
+  other indices and scenes, remaining callers, real-BIOS paths and UI save/Load.
+- [ ] **ROMDATA-02-E210-RELATIVE-GRAPHICS-LINUX:** validate publication, readers,
+  boundaries, ordinary use and CLI on Linux when selected.
+- [ ] **ROMDATA-02-E210-RELATIVE-GRAPHICS-USA:** identify and authenticate any
+  corresponding USA directory and streams when regional work resumes; native
+  Windows remains pending.
 - [x] **ROMDATA-02-04-DISPLAY-CONTROL-TABLES scoped EUR/Wine:** model and publish the two
   four-halfword display-control arrays and four IWRAM pointers at
   `14d2dc..14d2fc`, then serve their bytes through the EUR runtime. Preserve

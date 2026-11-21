@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "inventory-european-llednar-battle-rom-reads",
+  "title": "Inventory European Llednar battle ROM reads",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Inventory selected ROM reads during a retained final-battle continuation against the E206-d205 manifest, identifying candidate dependencies for subsequent source and consumer analysis.",
+    "Preserve the full address-only report and distinguish sampled addresses from authenticated asset boundaries and executing instruction sites."
+  ],
+  "validation": [
+    "EUR Wine child e215-llednar-audit-wine-31k333ug passes a 600-frame raw/managed pair for complete state, guest clock, video, OAM, dispatch and five nonempty audio streams; its Wine server drained and the local overlay avoided the D-Bus assertion.",
+    "The original unit was retained as FAIL by the scratch guard because it contained a generated neutral input. Recovery e215-llednar-audit-recovery-nocdwh09 independently rechecks 37 protected inputs, the child log and report hash, and reconciles all sampled addresses with the E206 manifest without replay.",
+    "The recovered inventory reports 255853 distinct selected ROM bytes, 4281 unowned sampled bytes and 453 at or above 300000; the largest high sampled spans begin at 416254, 41142c and 4161e0."
+  ],
+  "limitations": [
+    "The audit is address-only, selected readers are incomplete and original PCs or complete asset extents are not established. The earlier supplied save ancestry is unknown. Other scenes and consumers, Linux, USA and native Windows remain open.",
+    "The original failed unit remains retained; no gameplay replay or performance comparison was performed during recovery."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

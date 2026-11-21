@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-home-observed-code-support",
+  "title": "Consume European home-scene observed code support",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the authenticated Thumb literal resource with 40 observed-scope words and the switch resource with two original destination arrays of 28 and seven words.",
+    "Preserve prior literals, tables, original guest guards and out-of-range behavior while routing the new physical sources through the extracted dataset."
+  ],
+  "validation": [
+    "Wine site capture zmsp5rfg observes all 172 remaining sampled bytes and matches 40 original Thumb literal readers; disassembly 5i77x__r identifies both original bounded switch arrays.",
+    "Windows test build c0z9530s and Wine gwh_mblj verify 300 source bytes, prior literal and switch groups and 128 other resources, coherent edit rejection, mixed/mirrored boundaries, 80 interpreted/generated literal cases, eight guarded switch cases, eight outside cases, transfers and snapshot ownership.",
+    "Wine 18841zsj compares 600 recorded European home frames with new backing altered; all 40 literal words and both switch arrays are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.",
+    "Production build ro1aypjc and Wine CLI q0do0j4t pass create, reuse and verify with 131 matching files. Static reconciliation dnr49xgd assigns the final 172 bytes in the E207 address-only sample."
+  ],
+  "limitations": [
+    "Initial Wine reader zp_otq7h failed because the second switch-table expected hash was mistyped; it was corrected before the passing build.",
+    "Execution scopes may include nested accesses; the sampled home inventory does not prove other callers, full literal pools or complete ROM coverage. The indirect MOV-PC remains interpreter fallback in the controlled switch test.",
+    "Other scenes, real-BIOS, UI save/Load, Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

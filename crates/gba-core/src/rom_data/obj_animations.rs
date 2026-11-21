@@ -10,6 +10,10 @@ pub use selectors::{SelectorReference, SelectorTables, SELECTOR_REFERENCES};
 const MAX_ENTRIES: usize = 4096;
 const MAX_SOURCE: u32 = 32 * 1024 * 1024;
 
+/// Roots stored by the EUR battle-number context initializer at 0xac44e.
+pub const BATTLE_OBJECT_ROOT: u32 = 0x4161dc;
+pub const BATTLE_SEQUENCE_ROOT: u32 = 0x411420;
+
 #[derive(Clone, Copy, Debug)]
 pub struct RootReference {
     pub call: u32,
@@ -392,7 +396,27 @@ impl Catalog {
                 return Err("OBJ animation original constructor call mismatch".into());
             }
         }
-        let banks = BANK_ROOTS
+        // Unlike REFERENCES, this initializer stores the two roots directly in
+        // the context and resolves sequence zero locally, without a shared
+        // animation-constructor call. Authenticate that distinct code path.
+        if ffta_rom::digest(source(rom, 0xac400, 0xc8)?)
+            != "0addc3b139ca759bd6e908f97fadf2b0ab9087b1bab1110f13a0372010ccd085"
+        {
+            return Err("Battle OBJ initializer fingerprint mismatch".into());
+        }
+        for (reader, literal, root) in [
+            (0xac44e, 0xac4c0, BATTLE_SEQUENCE_ROOT),
+            (0xac452, 0xac4c4, BATTLE_OBJECT_ROOT),
+        ] {
+            let opcode = halfword(rom, reader)?;
+            if opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != literal
+                || word(rom, literal)? != root + 0x08000000
+            {
+                return Err("Battle OBJ initializer literal mismatch".into());
+            }
+        }
+        let banks: Vec<Bank> = BANK_ROOTS
             .iter()
             .map(|&(objects, sequences)| {
                 if (objects, sequences) == (0xb4d8e8, 0xb4f4e8) {
@@ -402,6 +426,13 @@ impl Catalog {
                 }
             })
             .collect::<Result<_, _>>()?;
+        let battle = banks.first().ok_or("Missing battle OBJ bank")?;
+        if (battle.object_root, battle.sequence_root) != (BATTLE_OBJECT_ROOT, BATTLE_SEQUENCE_ROOT)
+            || battle.lists.len() != 17
+            || battle.sequences.iter().map(|sequence| sequence.frames.len()).collect::<Vec<_>>() != [16, 0, 0]
+        {
+            return Err("Invalid battle OBJ bank shape".into());
+        }
         let decoded = Banks {
             banks,
             selector_tables: selectors::decode_europe(rom)?,

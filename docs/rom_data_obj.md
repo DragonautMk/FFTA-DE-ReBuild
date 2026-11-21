@@ -1254,6 +1254,49 @@ while this unit remains partial. Linux/USA/native Windows/new32:9 remain pending
 with no measurements or previous acceptance replay.
 
 
+## E216 European battle-number OBJ bank
+
+EUR `v1/e207-d206` extends `graphics.obj-animation-banks` with the separately
+rooted object and sequence indexes at `4161dc` and `411420`. The original
+context initializer stores those roots at `080ac44e` and `080ac452` and resolves
+sequence zero at `080ac4b4`; unlike the u16-task banks below, this setup does
+not call their shared constructor. The exact EUR source and the initializer's
+instruction window are authenticated. Its decimal decomposition and the
+recorded battle use support the number-display interpretation; the address-only
+scene audit does not identify the executing PC.
+
+The relative indexes describe 17 lists with 43 objects, one sequence with 16
+frames and two zero-count sequence headers. The 22 typed source spans cover 442
+bytes, excluding padding and the immediately adjacent u16-task banks. Original
+guest indexing and timing remain unchanged; empty headers do not invent frames,
+and no global index cap or use of the other sequences is inferred.
+
+Wine `e216-battle-obj-wine-drtfh3ff` verifies all 442 source bytes with the ROM
+backing altered, mixed boundaries and mirrors, the adjacent owners, all 17 host
+lists, DMA/CpuSet/CpuFastSet, source authentication, retained snapshot ownership,
+and the original sequence reader in both interpreter and generated dispatch.
+It preserves the prior banks and selectors and the other 122 resource files.
+Wine `e216-llednar-obj-wine-5op6sk14` compares 600 recorded EUR Llednar battle
+frames with the new spans altered in the managed ROM: complete state, guest
+clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+The new owner serves 3,118 guest source bytes; this scene records zero host-list
+reads, which are independently covered by the focused Wine proof. The earlier
+save ancestry is unknown and no new cheat or state forcing was used.
+Wine production CLI `e216-battle-obj-cli-wine-h524hpqf` creates, reuses and
+verifies the 124-file dataset, matching the tested files. The production build
+preceded corrections confined to the `#[cfg(test)]` reader-test module;
+its other guarded source inputs and executable hash remained unchanged.
+
+Reclassification `e216-llednar-residual-5fwjo98g` matches 424 of the 4,281
+previously unowned sampled bytes to this bank, leaving 3,857: 3,828 below and
+29 at or above `300000`. This is a reclassification of the previous address
+inventory, not a new PC attribution or a whole-game coverage claim. The first
+two reader test units, `h81kx04y` and `mz13sddn`, remain failed and retained:
+their test setup respectively assumed one instruction per native dispatch and
+omitted the required guest IWRAM routine. The passing retry corrects both.
+Other callers, scenes, index domains, real-BIOS and UI save/Load remain open;
+Linux, USA and native Windows are deferred. No performance comparison was made.
+
 ## European OBJ banks with u16 task counters
 
 `word_task_obj_animations::Catalog` authenticates four direct-producer pairs for
@@ -3533,6 +3576,44 @@ Linux, USA and native Windows remain open. No performance was measured.
 Production Wine CLI `e153-llednar-lookup-cli-wine-29056g3o` passes create,
 no-write reuse, verification and one-frame managed startup, reporting 12
 actor-lookup source bytes and preserving 102 unrelated E152 resource files.
+
+## E217 European battle OBJ support fields
+
+EUR `v1/e208-d207` extends `graphics.obj-static-lists` with four physical actor
+lookup entries at `398df4..398dfc` and seven separately rooted Thumb callback
+words at `397f94`, `397f98`, `397f9c`, `397fa0`, `397fa8`, `397fac` and
+`397fb0`. These 36 source bytes were not owned by E207. The actor lookup at
+`080a3070` remains unguarded and accepts the original signed index; the
+projection does not impose a guest bound. The callback words remain guest
+pointers into mutable IWRAM, and neither callback dispatch nor the copied code
+is replaced. The intervening word at `397fb4` has no authenticated consumer
+in this unit and remains raw.
+
+Extraction authenticates the exact EUR ROM, each selected literal load,
+pointer dereference and original branch bridge, plus each referenced copied-code
+prefix. The original five callback words, two prior extra words, first two
+actor entries, adjacent owners and all 122 other resources are preserved.
+Wine `e217-battle-support-wine-_pxxvoql` checks the 36 bytes with altered ROM
+backing, mixed boundaries and mirrors, 14 original interpreter/generated
+callback cases, 22 lookup cases including negative and out-of-projection
+indices, source authentication and snapshot-owner retention.
+
+Wine `e217-llednar-support-wine-sk5simea` matches state, guest clock, video,
+OAM, dispatch and five nonempty audio streams for 600 recorded Llednar battle
+frames with the selected backing bytes altered. It serves 28 additional-lookup
+bytes and, respectively, 80 and 372 bytes from the `397fa0` and `397fa8`
+callbacks. Lookup usage is an aggregate; the earlier address-only E215 audit
+sampled all four additional halfwords, but does not identify executing PCs.
+The source save's earlier ancestry is unknown; this continuation used no new
+cheat or state forcing. Reclassification `e217-llednar-residual-rvzvbu0u`
+leaves 3,841 of the earlier unowned sampled bytes, including 13 at or above
+`300000`. It does not establish global reader or scene coverage.
+Wine production CLI `e217-battle-support-cli-wine-ayi5qr7q` creates, reuses and
+verifies the 124-file dataset, matching the tested generation.
+
+Other callback consumers, the `397fb4` word, actor indices, scenes, real-BIOS
+and UI save/Load paths remain open. Linux, USA and native Windows are deferred.
+No performance comparison was made.
 
 
 ## Bounded EUR language-byte writer inventory

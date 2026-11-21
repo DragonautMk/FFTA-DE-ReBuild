@@ -922,11 +922,14 @@ records and the current E201 manifest; it does not replay the game. Its
 temporary source script is no longer retained, but the PASS receipt, result and
 protected evidence remain available locally.
 
-These 420 bytes remain unowned ROM reads. The earlier instruction attribution
+At E201 these 420 bytes remained unowned ROM reads. E211 owns the `0a1150`
+control table and its `0a114c` root, and E212 owns all 105 words in this prior-site
+set (`e221-redspring-prior-sites-so67hagh`). The remaining E172 ownership has
+not been fully reclassified against E212. The earlier instruction attribution
 comes from another scene: the Red Spring capture records addresses, not the
-executing PCs, and does not exclude other uses of those words. The other 2,856
-sampled bytes have no match in this particular prior-site set. Neither figure
-establishes full-ROM coverage or removes a runtime dependency.
+executing PCs, and does not exclude other uses of those words. At E201 the other
+2,856 sampled bytes had no match in this particular prior-site set; neither
+figure establishes full-ROM coverage.
 
 ## E173 Red Spring compact bank and host sprite lists
 
