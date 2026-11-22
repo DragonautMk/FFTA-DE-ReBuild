@@ -59,6 +59,15 @@ pub const ADDITIONAL_SPECS: &[StreamSpec] = &[
     StreamSpec { offset: 0xb0fdf0, encoded_length: 553, decoded_length: 768,
         source_sha256: "dfd73dd24d80f051e6ccb6e8c24a6cf080b65cfa5bd4af1c794dddae1b3205e8",
         decoded_sha256: "9574c9c8e5db19d8b5a614241c45cf76dc3f5719177845575f48e7a1b2b033d3" },
+    StreamSpec { offset: 0xaff6e0, encoded_length: 1033, decoded_length: 1224,
+        source_sha256: "9e12133e01e35394e54029a0e98f6c0708c679c9124763df2c043a8699b028c2",
+        decoded_sha256: "117aacce4f44dbf46040c17d6387cc1aa135ee7c57dbd02c6a67f9549be2b1b8" },
+    StreamSpec { offset: 0xb0b4e4, encoded_length: 231, decoded_length: 320,
+        source_sha256: "58b66de0c2864fcd3f5d6d8bd9be38ff7fa722900d81ef8a9ac55ebacc2d10fe",
+        decoded_sha256: "e64b8f75c635e66dbeff9a9bc29455bc1751e35c4edc1df7b0f210ec4e5bec39" },
+    StreamSpec { offset: 0xb0dd10, encoded_length: 71, decoded_length: 96,
+        source_sha256: "ea50a89b8ad6c573045b85625fde713dd17ef3e2b462f922609b6d12f8774301",
+        decoded_sha256: "5ffa4d8b812c1ca23e7c2be5fe5f5cc84037b4daf326c3168181d3a9c46539b3" },
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

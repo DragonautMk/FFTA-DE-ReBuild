@@ -78,6 +78,12 @@ pub mod obj_derived_dimensions;
 pub mod copied_halfword_lookups;
 pub mod indexed_halfwords_39a5;
 pub mod script_byte_lookup_3ad;
+pub mod soil_scene_records;
+pub mod soil_indirect_records;
+pub mod soil_indexed_bytes;
+pub mod soil_compact_record;
+pub mod soil_scoped_values;
+pub mod soil_remaining_rectangles;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -143,8 +149,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 221;
-pub const DECODER_REV: u32 = 220;
+pub const EXTRACTOR_REV: u32 = 248;
+pub const DECODER_REV: u32 = 247;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -399,7 +405,7 @@ pub const UI_CONTEXT_TEMPLATES_FORMAT: &str = "ui-context-templates-v1-json";
 pub const MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const COMPACT_OBJ_CATALOG_ID: &str = "graphics.conditional-compact-obj-catalog";
 pub const COMPACT_OBJ_CATALOG_FILE: &str = "compact-obj-catalog.json";
-pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v12-json";
+pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v13-json";
 pub const MAX_COMPACT_OBJ_CATALOG_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const CONDITIONAL_ITEM_PARAMETERS_ID: &str = "gameplay.conditional-item-parameters";
 pub const CONDITIONAL_ITEM_PARAMETERS_FILE: &str = "conditional-item-parameters.json";
@@ -504,6 +510,12 @@ pub const THUMB_PC_LITERALS_ID: &str = "engine.thumb-pc-literals";
 pub const COPIED_HALFWORD_LOOKUPS_ID: &str = "engine.copied-halfword-lookups";
 pub const INDEXED_HALFWORDS_39A5_ID: &str = "gameplay.indexed-halfwords-39a5c8";
 pub const SCRIPT_BYTE_LOOKUP_3AD_ID: &str = "engine.script-byte-lookup-3ad16e";
+pub const SOIL_SCENE_RECORDS_ID: &str = "engine.soil-scene-records";
+pub const SOIL_INDIRECT_RECORDS_ID: &str = "engine.soil-indirect-records";
+pub const SOIL_INDEXED_BYTES_ID: &str = "engine.soil-indexed-bytes";
+pub const SOIL_COMPACT_RECORD_ID: &str = "graphics.soil-compact-record";
+pub const SOIL_SCOPED_VALUES_ID: &str = "engine.soil-scoped-values";
+pub const SOIL_REMAINING_RECTANGLES_ID: &str = "graphics.soil-remaining-rectangles";
 pub const INDEXED_RECORDS16_FILE: &str = "indexed-records16.json";
 pub const INDEXED_WORDS_3959_FILE: &str = "indexed-words-3959a4.json";
 pub const THUMB_SWITCH_TABLES_FILE: &str = "thumb-switch-tables.json";
@@ -511,6 +523,12 @@ pub const THUMB_PC_LITERALS_FILE: &str = "thumb-pc-literals.json";
 pub const COPIED_HALFWORD_LOOKUPS_FILE: &str = "copied-halfword-lookups.json";
 pub const INDEXED_HALFWORDS_39A5_FILE: &str = "indexed-halfwords-39a5c8.json";
 pub const SCRIPT_BYTE_LOOKUP_3AD_FILE: &str = "script-byte-lookup-3ad16e.json";
+pub const SOIL_SCENE_RECORDS_FILE: &str = "soil-scene-records.json";
+pub const SOIL_INDIRECT_RECORDS_FILE: &str = "soil-indirect-records.json";
+pub const SOIL_INDEXED_BYTES_FILE: &str = "soil-indexed-bytes.json";
+pub const SOIL_COMPACT_RECORD_FILE: &str = "soil-compact-record.json";
+pub const SOIL_SCOPED_VALUES_FILE: &str = "soil-scoped-values.json";
+pub const SOIL_REMAINING_RECTANGLES_FILE: &str = "soil-remaining-rectangles.json";
 pub const INDEXED_RECORDS16_FORMAT: &str = "indexed-records16-v1-json";
 pub const INDEXED_WORDS_3959_FORMAT: &str = "indexed-words-3959a4-v1-json";
 pub const THUMB_SWITCH_TABLES_FORMAT: &str = "thumb-switch-tables-v1-json";
@@ -518,6 +536,12 @@ pub const THUMB_PC_LITERALS_FORMAT: &str = "thumb-pc-literals-v1-json";
 pub const COPIED_HALFWORD_LOOKUPS_FORMAT: &str = "copied-halfword-lookups-v1-json";
 pub const INDEXED_HALFWORDS_39A5_FORMAT: &str = "indexed-halfwords-39a5c8-v1-json";
 pub const SCRIPT_BYTE_LOOKUP_3AD_FORMAT: &str = "script-byte-lookup-3ad16e-v1-json";
+pub const SOIL_SCENE_RECORDS_FORMAT: &str = "soil-scene-records-v1-json";
+pub const SOIL_INDIRECT_RECORDS_FORMAT: &str = "soil-indirect-records-v1-json";
+pub const SOIL_INDEXED_BYTES_FORMAT: &str = "soil-indexed-bytes-v1-json";
+pub const SOIL_COMPACT_RECORD_FORMAT: &str = "soil-compact-record-v1-json";
+pub const SOIL_SCOPED_VALUES_FORMAT: &str = "soil-scoped-values-v1-json";
+pub const SOIL_REMAINING_RECTANGLES_FORMAT: &str = "soil-remaining-rectangles-v1-json";
 pub const MAX_INDEXED_RECORDS16_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_INDEXED_WORDS_3959_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_THUMB_SWITCH_TABLES_FILE_BYTES: u64 = 1024 * 1024;
@@ -525,6 +549,12 @@ pub const MAX_THUMB_PC_LITERALS_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_SCENE_RECORDS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_INDIRECT_RECORDS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_INDEXED_BYTES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_COMPACT_RECORD_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_SCOPED_VALUES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -893,6 +923,12 @@ pub struct Extraction {
     pub copied_halfword_lookups: Option<copied_halfword_lookups::Catalog>,
     pub indexed_halfwords_39a5: Option<indexed_halfwords_39a5::Catalog>,
     pub script_byte_lookup_3ad: Option<script_byte_lookup_3ad::Catalog>,
+    pub soil_scene_records: Option<soil_scene_records::Catalog>,
+    pub soil_indirect_records: Option<soil_indirect_records::Catalog>,
+    pub soil_indexed_bytes: Option<soil_indexed_bytes::Catalog>,
+    pub soil_compact_record: Option<soil_compact_record::Catalog>,
+    pub soil_scoped_values: Option<soil_scoped_values::Catalog>,
+    pub soil_remaining_rectangles: Option<soil_remaining_rectangles::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1029,6 +1065,12 @@ pub struct BaseFiles<'a> {
     pub copied_halfword_lookups: Option<(&'a copied_halfword_lookups::CopiedHalfwordLookups, &'a [u8])>,
     pub indexed_halfwords_39a5: Option<(&'a indexed_halfwords_39a5::IndexedHalfwords39a5, &'a [u8])>,
     pub script_byte_lookup_3ad: Option<(&'a script_byte_lookup_3ad::ScriptByteLookup3ad, &'a [u8])>,
+    pub soil_scene_records: Option<(&'a soil_scene_records::SoilSceneRecords, &'a [u8])>,
+    pub soil_indirect_records: Option<(&'a soil_indirect_records::SoilIndirectRecords, &'a [u8])>,
+    pub soil_indexed_bytes: Option<(&'a soil_indexed_bytes::SoilIndexedBytes, &'a [u8])>,
+    pub soil_compact_record: Option<(&'a soil_compact_record::SoilCompactRecord, &'a [u8])>,
+    pub soil_scoped_values: Option<(&'a soil_scoped_values::SoilScopedValues, &'a [u8])>,
+    pub soil_remaining_rectangles: Option<(&'a soil_remaining_rectangles::SoilRemainingRectangles, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1698,7 +1740,7 @@ impl Extraction {
             result.ui_context_templates = Some(metadata);
             let metadata = compact_obj_catalog::Catalog::from_rom(rom)?;
             result.manifest.coverage.push(COMPACT_OBJ_CATALOG_ID.into());
-            result.manifest.resources.push(Resource {id:COMPACT_OBJ_CATALOG_ID.into(),path:COMPACT_OBJ_CATALOG_FILE.into(),format:COMPACT_OBJ_CATALOG_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
+            result.manifest.resources.push(Resource {id:COMPACT_OBJ_CATALOG_ID.into(),path:COMPACT_OBJ_CATALOG_FILE.into(),format:COMPACT_OBJ_CATALOG_FORMAT.into(),sha256:String::new(),dependencies:vec![OBJ_STATIC_LISTS_ID.into()],sources:metadata.sources.clone()});
             result.compact_obj_catalog = Some(metadata);
             let metadata = layered_obj_animations::Catalog::from_rom(rom)?;
             result.manifest.coverage.push(LAYERED_OBJ_ANIMATIONS_ID.into());
@@ -1917,7 +1959,7 @@ impl Extraction {
             result.manifest.resources.push(Resource {
                 id: COPIED_HALFWORD_LOOKUPS_ID.into(), path: COPIED_HALFWORD_LOOKUPS_FILE.into(),
                 format: COPIED_HALFWORD_LOOKUPS_FORMAT.into(), sha256: String::new(),
-                dependencies: vec![], sources: metadata.sources.clone(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
             });
             result.copied_halfword_lookups = Some(metadata);
             let metadata = indexed_halfwords_39a5::Catalog::from_rom(rom, &result.manifest.resources)?;
@@ -1936,6 +1978,54 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.script_byte_lookup_3ad = Some(metadata);
+            let metadata = soil_scene_records::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_SCENE_RECORDS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_SCENE_RECORDS_ID.into(), path: SOIL_SCENE_RECORDS_FILE.into(),
+                format: SOIL_SCENE_RECORDS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_scene_records = Some(metadata);
+            let metadata = soil_indirect_records::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_INDIRECT_RECORDS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_INDIRECT_RECORDS_ID.into(), path: SOIL_INDIRECT_RECORDS_FILE.into(),
+                format: SOIL_INDIRECT_RECORDS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_indirect_records = Some(metadata);
+            let metadata = soil_indexed_bytes::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_INDEXED_BYTES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_INDEXED_BYTES_ID.into(), path: SOIL_INDEXED_BYTES_FILE.into(),
+                format: SOIL_INDEXED_BYTES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_indexed_bytes = Some(metadata);
+            let metadata = soil_compact_record::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_COMPACT_RECORD_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_COMPACT_RECORD_ID.into(), path: SOIL_COMPACT_RECORD_FILE.into(),
+                format: SOIL_COMPACT_RECORD_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into(), COMPACT_OBJ_CATALOG_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_compact_record = Some(metadata);
+            let metadata = soil_scoped_values::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_SCOPED_VALUES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_SCOPED_VALUES_ID.into(), path: SOIL_SCOPED_VALUES_FILE.into(),
+                format: SOIL_SCOPED_VALUES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_scoped_values = Some(metadata);
+            let metadata = soil_remaining_rectangles::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(SOIL_REMAINING_RECTANGLES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: SOIL_REMAINING_RECTANGLES_ID.into(), path: SOIL_REMAINING_RECTANGLES_FILE.into(),
+                format: SOIL_REMAINING_RECTANGLES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.soil_remaining_rectangles = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -2100,6 +2190,12 @@ impl Extraction {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2265,6 +2361,12 @@ impl Extraction {
             || self.thumb_pc_literals.is_some() != self.copied_halfword_lookups.is_some()
             || self.copied_halfword_lookups.is_some() != self.indexed_halfwords_39a5.is_some()
             || self.indexed_halfwords_39a5.is_some() != self.script_byte_lookup_3ad.is_some()
+            || self.script_byte_lookup_3ad.is_some() != self.soil_scene_records.is_some()
+            || self.soil_scene_records.is_some() != self.soil_indirect_records.is_some()
+            || self.soil_indirect_records.is_some() != self.soil_indexed_bytes.is_some()
+            || self.soil_indexed_bytes.is_some() != self.soil_compact_record.is_some()
+            || self.soil_compact_record.is_some() != self.soil_scoped_values.is_some()
+            || self.soil_scoped_values.is_some() != self.soil_remaining_rectangles.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3292,6 +3394,60 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected script_byte_lookup_3ad".into()),
         }
+        match (&self.soil_scene_records, files.soil_scene_records) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_SCENE_RECORDS_FILE_BYTES { return Err("Soil scene records file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[130].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_scene_records".into()),
+        }
+        match (&self.soil_indirect_records, files.soil_indirect_records) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_INDIRECT_RECORDS_FILE_BYTES { return Err("Soil indirect records file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[131].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_indirect_records".into()),
+        }
+        match (&self.soil_indexed_bytes, files.soil_indexed_bytes) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_INDEXED_BYTES_FILE_BYTES { return Err("Soil indexed bytes file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[132].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_indexed_bytes".into()),
+        }
+        match (&self.soil_compact_record, files.soil_compact_record) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_COMPACT_RECORD_FILE_BYTES { return Err("Soil compact record file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[133].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_compact_record".into()),
+        }
+        match (&self.soil_scoped_values, files.soil_scoped_values) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_SCOPED_VALUES_FILE_BYTES { return Err("Soil scoped values file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[134].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_scoped_values".into()),
+        }
+        match (&self.soil_remaining_rectangles, files.soil_remaining_rectangles) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES { return Err("Soil remaining rectangles file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[135].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected soil_remaining_rectangles".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -3918,6 +4074,30 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded script_byte_lookup_3ad differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_scene_records, files.soil_scene_records) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_scene_records differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_indirect_records, files.soil_indirect_records) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_indirect_records differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_indexed_bytes, files.soil_indexed_bytes) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_indexed_bytes differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_compact_record, files.soil_compact_record) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_compact_record differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_scoped_values, files.soil_scoped_values) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_scoped_values differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.soil_remaining_rectangles, files.soil_remaining_rectangles) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded soil_remaining_rectangles differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -4059,6 +4239,12 @@ impl Extraction {
             + usize::from(self.copied_halfword_lookups.is_some())
             + usize::from(self.indexed_halfwords_39a5.is_some())
             + usize::from(self.script_byte_lookup_3ad.is_some())
+            + usize::from(self.soil_scene_records.is_some())
+            + usize::from(self.soil_indirect_records.is_some())
+            + usize::from(self.soil_indexed_bytes.is_some())
+            + usize::from(self.soil_compact_record.is_some())
+            + usize::from(self.soil_scoped_values.is_some())
+            + usize::from(self.soil_remaining_rectangles.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4243,6 +4429,12 @@ mod tests {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4380,6 +4572,12 @@ mod tests {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4527,6 +4725,12 @@ mod tests {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4663,6 +4867,12 @@ mod tests {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

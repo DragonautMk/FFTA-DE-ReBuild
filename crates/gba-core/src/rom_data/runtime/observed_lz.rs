@@ -11,6 +11,9 @@ pub struct ObservedLzStats {
     pub hle_calls_by_block: [u64; 7],
     /// Seven interleaved row payloads added after the original seven blocks.
     pub interleaved_hle_calls_by_block: [u64; 7],
+    /// Three streams observed in the Soil Evidence scene.
+    pub soil_source_bytes_by_block: [u64; 3],
+    pub soil_hle_calls_by_block: [u64; 3],
 }
 
 pub struct ObservedLzRead { owner: Arc<RuntimeResources>, index: usize }
@@ -26,6 +29,8 @@ pub(super) struct ObservedLzResources {
     counters: [AtomicU64; 2],
     hle_calls: [AtomicU64; 7],
     interleaved_hle_calls: [AtomicU64; 7],
+    soil_source_bytes: [AtomicU64; 3],
+    soil_hle_calls: [AtomicU64; 3],
 }
 impl ObservedLzResources {
     pub(super) fn new(data: ObservedLzBlock, sources: &[SourceRange]) -> Result<Self, String> {
@@ -37,7 +42,9 @@ impl ObservedLzResources {
         { return Err("Observed LZ source binding mismatch".into()); }
         Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)),
             hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
-            interleaved_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
+            interleaved_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
+            soil_source_bytes: std::array::from_fn(|_| AtomicU64::new(0)),
+            soil_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn source_page(index: usize) -> bool {
         let in_page = |start: usize, len: usize|
@@ -51,25 +58,35 @@ impl ObservedLzResources {
             index < start + encoded.len() && index.saturating_add(N) > start
         }) { return prior; }
         let mut served = 0;
+        let mut soil_bytes = [0u64; 3];
         let result = std::array::from_fn(|i| {
             let at = index + i;
             if let Some(byte) = self.data.streams().find_map(|(offset, encoded, _)|
                 at.checked_sub(offset as usize).and_then(|n| encoded.get(n)).copied()) {
                 served += 1;
+                for (group, spec) in observed_lz::ADDITIONAL_SPECS[13..16].iter().enumerate() {
+                    let start = spec.offset as usize;
+                    if (start..start + spec.encoded_length).contains(&at) { soil_bytes[group] += 1; }
+                }
                 byte
             } else { prior.as_ref().map_or_else(|| rom[at], |bytes| bytes[i]) }
         });
         self.counters[0].fetch_add(1, Ordering::Relaxed);
         self.counters[1].fetch_add(served, Ordering::Relaxed);
+        for (counter, count) in self.soil_source_bytes.iter().zip(soil_bytes) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
         Some(result)
     }
     pub(super) fn stats(&self) -> ObservedLzStats {
         let hle_calls_by_block = self.hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
         let interleaved_hle_calls_by_block = self.interleaved_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
+        let soil_source_bytes_by_block = self.soil_source_bytes.each_ref().map(|c| c.load(Ordering::Relaxed));
+        let soil_hle_calls_by_block = self.soil_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObservedLzStats { bus_reads: self.counters[0].load(Ordering::Relaxed),
             source_bytes: self.counters[1].load(Ordering::Relaxed),
-            hle_calls: hle_calls_by_block.iter().chain(&interleaved_hle_calls_by_block).sum(),
-            hle_calls_by_block, interleaved_hle_calls_by_block }
+            hle_calls: hle_calls_by_block.iter().chain(&interleaved_hle_calls_by_block).chain(&soil_hle_calls_by_block).sum(),
+            hle_calls_by_block, interleaved_hle_calls_by_block, soil_source_bytes_by_block, soil_hle_calls_by_block }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.encoded_source.capacity() + self.data.decoded.capacity()
@@ -83,7 +100,11 @@ impl RuntimeResources {
         let block = self.observed_lz.as_ref()?;
         let index = block.data.streams().position(|(offset, _, _)| offset == (source & 0x01ff_ffff))?;
         if index < block.hle_calls.len() { block.hle_calls[index].fetch_add(1, Ordering::Relaxed); }
-        else { block.interleaved_hle_calls[index - block.hle_calls.len()].fetch_add(1, Ordering::Relaxed); }
+        else if index < block.hle_calls.len() + block.interleaved_hle_calls.len() {
+            block.interleaved_hle_calls[index - block.hle_calls.len()].fetch_add(1, Ordering::Relaxed);
+        } else {
+            block.soil_hle_calls[index - block.hle_calls.len() - block.interleaved_hle_calls.len()].fetch_add(1, Ordering::Relaxed);
+        }
         Some(ObservedLzRead { owner: self.clone(), index })
     }
 }

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-indirect-records",
+  "title": "Identify European Soil indirect records",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate five observed eight-byte records, compatible original reader and initializer links, and existing literal and adjacent source owners."
+  ],
+  "validation": [
+    "Wine disassemblies u03116_g, 8lucbl5h and ezcwvq_7 plus protected plan e293-soil-indirect-records-source-plan-tcv9a6zh verify 40 unowned source bytes including 35 sampled bytes."
+  ],
+  "limitations": [
+    "Static source links do not establish the actual ancestry of the sampled reads; arbitrary guest indices, neighboring bytes, runtime ownership, other callers and scenes remain open.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

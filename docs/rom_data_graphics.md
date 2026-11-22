@@ -2699,3 +2699,95 @@ show no Bluetooth D-Bus assertion with the local backport.
 
 Other scenes, consumers and ordinary indices, real-BIOS paths, UI save/Load,
 Linux, USA and native Windows remain open. No performance measurement was made.
+
+
+## E261 Soil Evidence LZ77 source plan
+
+Protected static unit `e261-soil-evidence-lz-plan-frkft5lf` authenticates
+three complete EUR LZ77 streams observed on the bus during E260 Soil Evidence:
+`aff6e0..affae9`, `b0b4e4..b0b5cb` and `b0dd10..b0dd57`. All 1,335 encoded
+bytes were sampled outside E231 source owners; the streams decode to 1,640
+bytes and do not overlap an existing owner. The plan records exact source and
+decoded hashes and publishes no resource.
+
+The bounded decode and address inventory do not establish the game-level
+asset identities, original HLE call sites, selectors, other scenes or every
+consumer. E262 subsequently integrates the three sources; the remaining E260
+sampled bytes are separate work. Linux, USA and native Windows remain open;
+no performance comparison was made.
+
+
+## E262 Soil Evidence LZ77 runtime sources
+
+EUR E232-d231 extends the existing observed LZ resource with the three E261
+streams. Its authenticated source views serve 1,335 encoded bytes on guest bus
+reads; the LZ77 HLE can consume the 1,640 decoded bytes without reading those
+bytes from the original ROM. The prior fourteen streams and 129 other resource
+files are preserved; no original guest address, control flow or machine token
+changes.
+
+Wine reader `e262-soil-lz-readers-wine-v7ya7ht6` verifies publication and reuse, source authentication,
+coherent file/hash edit rejection, prior resources, poisoned mirrored and
+boundary reads, three original SWI cases, nine DMA/CpuSet/CpuFastSet cases and
+snapshot owner retention. Wine scene `e262-soil-lz-scene-wine-knhlea70` compares 600 recorded Soil
+Evidence frames with all three sources altered in the managed backing ROM.
+Direct source byte counts were [0, 0, 0]; HLE call counts were [1, 1, 1]. All
+three streams were consumed and state, guest clock, video, OAM, dispatch and
+five nonempty audio streams matched each frame. Wine CLI `e262-soil-lz-cli-wine-6ld8ewbe` creates,
+reuses and verifies 131 matching files. Static join `e262-soil-lz-sample-residual-twyv42n7` finds 1,731 of
+the E260 sampled bytes still outside declared E232 sources. The Wine server
+drained with the local Bluetooth overlay.
+
+This is one recorded continuation, not complete ROM coverage. Asset identity,
+other scenes and consumers, real-BIOS behavior and UI save/Load remain open.
+Linux, USA and native Windows remain unverified; no performance comparison
+was made.
+
+
+## E300 Soil Evidence remaining rectangle plan
+
+Wine disassembly `e300-soil-remaining-rectangle-roots-wine-n7djp8r7`,
+earlier E289/E298 disassemblies and protected plan
+`e300-soil-remaining-rectangles-source-plan-kcr8eper` authenticate a 7×7
+rectangle at `ae7810..ae7874` and a 1×3 rectangle at `ae7874..ae787c`. Their
+headers and 52 little-endian cells total 108 bytes; together they contain
+all 22 bytes left in the selected E247 Soil Evidence sample. Original code
+loads their addresses through existing Thumb literals and passes compatible
+pointers to the established rectangle reader.
+
+Another original load at `e60c8` uses the previously unowned literal word
+`e60d8` to reference the smaller rectangle. It is separately authenticated
+for the runtime integration, making 112 candidate source bytes in total.
+The two existing literal owners stay separate. These static links do not
+prove the actual pointer ancestry of each sampled call; scopes can contain
+nested reads. The plan installs no runtime owner and does not establish all
+callers, guest bounds or scenes. Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+
+## E301 Soil Evidence remaining rectangle runtime
+
+EUR E248-d247 serves the two E300 rectangles and one alternate literal
+through `graphics.soil-remaining-rectangles`. It preserves their dimensions
+and 52 typed halfword cells, keeps the two earlier Thumb literal owners
+separate, and serves the independently authenticated alternative pointer.
+Unselected addresses retain prior-owner or ROM fallback.
+
+Wine reader `e301-soil-remaining-rectangles-readers-wine-ibf9tm98` verifies preparation and reuse, all 135 prior resource
+definitions and files, coherent-edit rejection, poisoned mirrors and mixed
+boundaries, snapshot ownership, 18 original interpreter/generated reader and
+root cases, and four DMA/CpuSet cases. Wine scene `e301-soil-remaining-rectangles-scene-wine-1o7mbmv_` compares 600
+retained Soil Evidence frames with all 112 source bytes altered and verifies
+reads of both rectangles. The alternate literal was exercised by the reader
+check but was not read in this continuation. State, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e301-soil-remaining-rectangles-cli-wine-vcu4hnwd` creates, reuses
+and verifies 137 matching files. Static join `e301-soil-remaining-rectangles-sample-residual-a7umgmlt` leaves zero bytes
+outside E248 declared sources in this E260 sampled continuation. This is
+not full-ROM coverage. `e301-soil-sample-provenance-6eq5zu9w` independently
+checks that the E285 captured addresses equal the previous E260 residual.
+Wine drained using the local Bluetooth overlay.
+
+Actual sampled pointer ancestry, arbitrary guest bounds, other callers and
+scenes, real BIOS and UI save/Load remain open. Older revision-sensitive
+fixtures were updated but not rerun; Linux, USA and native Windows remain
+pending. No performance comparison was made.

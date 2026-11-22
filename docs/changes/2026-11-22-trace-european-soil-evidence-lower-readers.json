@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "trace-european-soil-evidence-lower-readers",
+  "title": "Trace European Soil Evidence lower readers",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Capture instruction-scoped source sites for the 193 previously unowned lower words observed in Soil Evidence, retaining exact opcode and source-hash evidence."
+  ],
+  "validation": [
+    "Wine unit e264-soil-lower-sites-wine-bdta3t36 observes all 193 words across 600 E232 frames; 135 distinct words have matching original PC-relative Thumb literal-load witnesses. Of 203 selected reads, 182 have an instruction scope and 21 do not."
+  ],
+  "limitations": [
+    "Interpreter scopes may contain nested accesses; this observation publishes no owner and does not prove every caller, full source extent or scene equivalence. The other 58 lower words and the upper residual remain open.",
+    "Linux, USA and native Windows remain pending. Wine drained with the local Bluetooth overlay; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

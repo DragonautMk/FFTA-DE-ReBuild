@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-soil-compact-record",
+  "title": "Consume European Soil compact record",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Serve one EUR Soil compact record and its observed indexed pointer, preserving existing bank and literal owners and unselected pointer fallback.",
+    "Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource."
+  ],
+  "validation": [
+    "Wine reader e297-soil-compact-record-readers-wine-5w49a8bi verifies all 133 previous resources, poisoned boundaries, unowned fallback, coherent edit rejection and 28 original interpreted/generated cases.",
+    "Wine scene e297-soil-compact-record-scene-wine-1ti7yhlx compares 600 altered-source frames while the record and pointer are consumed; state, guest clock, video, OAM, dispatch and audio agree.",
+    "Wine CLI e297-soil-compact-record-cli-wine-fr1p_15v creates, reuses and verifies 135 matching files; static join e297-soil-compact-record-sample-residual-_hg2aqh0 leaves 38 sampled bytes unowned."
+  ],
+  "limitations": [
+    "The ancestry of sampled reads, complete pointer table, other callers, neighboring bytes, scenes, real BIOS and UI save/Load remain open.",
+    "Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/soil_compact_record.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/soil_compact_record.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/soil_compact_record_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "crates/recomp/src/rom_data/bank_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_copy_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "crates/recomp/src/rom_data/soil_146_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/soil_a83c2_switch_tests.rs",
+    "crates/recomp/src/rom_data/soil_compact_metadata_tests.rs",
+    "crates/recomp/src/rom_data/soil_copied_halfwords_tests.rs",
+    "crates/recomp/src/rom_data/soil_e3838_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_lz_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/soil_indexed_bytes_tests.rs",
+    "crates/recomp/src/rom_data/soil_indirect_records_tests.rs",
+    "crates/recomp/src/rom_data/soil_other_transfer_tests.rs",
+    "crates/recomp/src/rom_data/soil_remaining_switch_tests.rs",
+    "crates/recomp/src/rom_data/soil_scene_records_tests.rs",
+    "crates/recomp/src/rom_data/soil_sprite_lists_tests.rs",
+    "crates/recomp/src/rom_data/soil_transfer_records_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

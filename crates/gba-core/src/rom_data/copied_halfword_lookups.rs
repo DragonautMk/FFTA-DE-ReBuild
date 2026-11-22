@@ -3,12 +3,17 @@ use super::{script39_registry_poses::PriorSources, Resource, SourceRange};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
-pub const TABLE_OFFSETS: [u32; 2] = [0x14cf18, 0x14cf20];
+pub const TABLE_OFFSETS: [u32; 3] = [0x14cf18, 0x14cf20, 0x14d84c];
 pub const ADDITIONAL_ROOTS: [u32; 2] = [0x3658, 0x3680];
 pub const TABLE_BYTES: usize = 8;
-const SOURCE_HASHES: [&str; 2] = [
+/// The root at 0f0558 is owned by the Thumb PC-literal resource.
+pub const SOIL_EVIDENCE_OFFSET: u32 = 0x14d6d8;
+pub const SOIL_EVIDENCE_ROOT: u32 = 0x0f0558;
+pub const SOIL_EVIDENCE_SHA256: &str = "245bbd9d484dcf27c714e2690cd6544973de5d54aa9cd82eab23d6046a65faa8";
+const SOURCE_HASHES: [&str; 3] = [
     "2305fc2744df53d32db7b3015b54bef236ea42d3bc9eddf7e7f259b88b1613cb",
     "3d9f65f630695e727bd27f9037a20f7c693469ce276bbf5e17f5d8ad23f2d61b",
+    "d89bb2241d6d843bd754c4c66c76c5fe5b419c25104a32bb352ec4c5872756d0",
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -21,7 +26,9 @@ pub struct HalfwordTable {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CopiedHalfwordLookups {
-    pub tables: [HalfwordTable; 2],
+    pub tables: [HalfwordTable; 3],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_evidence_table: Option<HalfwordTable>,
 }
 
 impl CopiedHalfwordLookups {
@@ -34,13 +41,16 @@ impl CopiedHalfwordLookups {
         {
             return Err("Invalid EUR copied halfword lookup sources or order".into());
         }
+        if self.soil_evidence_table.as_ref().map(|table| table.source_offset) != Some(SOIL_EVIDENCE_OFFSET) {
+            return Err("Invalid Soil Evidence copied halfword source".into());
+        }
         Ok(())
     }
 
     pub fn source_spans(&self) -> Result<Vec<(u32, Vec<u8>, &'static str)>, String> {
         self.validate()?;
         let mut spans = Vec::new();
-        for (i, table) in self.tables.iter().enumerate() {
+        for (i, table) in self.tables.iter().take(2).enumerate() {
             spans.push((
                 table.source_offset,
                 table
@@ -64,6 +74,16 @@ impl CopiedHalfwordLookups {
                 "second-lookup-root",
             ));
         }
+        let table = &self.tables[2];
+        spans.push((
+            table.source_offset,
+            table.values.iter().flat_map(|value| value.to_le_bytes()).collect(),
+            "third-halfword-lookup",
+        ));
+        let table = self.soil_evidence_table.as_ref().unwrap();
+        spans.push((table.source_offset,
+            table.values.iter().flat_map(|value| value.to_le_bytes()).collect(),
+            "soil-evidence-halfword-lookup"));
         Ok(spans)
     }
 
@@ -79,6 +99,13 @@ impl CopiedHalfwordLookups {
                     i,
                     false,
                 ));
+            }
+        }
+        if let Some(table) = self.soil_evidence_table.as_ref() {
+            if let Some(n) = offset.checked_sub(table.source_offset) {
+                if n < TABLE_BYTES as u32 {
+                    return Some((table.values[(n / 2) as usize].to_le_bytes()[(n % 2) as usize], 3, false));
+                }
             }
         }
         for (i, root) in ADDITIONAL_ROOTS.into_iter().enumerate() {
@@ -131,10 +158,17 @@ impl Catalog {
                 "45cd85d76d89ab4727cdf730347d83d114ff66a7937929162b0d2bcdd0fc00df",
             ),
             (
+                0x109630,
+                0x10963a,
+                "71b8eee172a10bed08be917b72e18bc353a622d14100556943344b4714bbbf1b",
+            ),
+            (
                 0x147dc0,
                 0x147e22,
                 "aa822d873bad381a62e3c3e07b06003a41beea59bc3edc791f7e316eb08b7ebb",
             ),
+            (0x0f042c, 0x0f0436, "12450bc298e85922ede38e633cdf1651e8eb33caa9f9ea5fa8e73eb99cbe1831"),
+            (0x0f04d2, 0x0f04dc, "88d40952b4a654aada37c2303601a8b07c0db893e6b2b6ac3ecc87cdbfcf9a77"),
         ] {
             if ffta_rom::digest(&rom[start..end]) != expected {
                 return Err("Copied halfword lookup original reader mismatch".into());
@@ -144,6 +178,8 @@ impl Catalog {
             (0x3616u32, 0x3630u32, TABLE_OFFSETS[0]),
             (0x363e, 0x3658, TABLE_OFFSETS[1]),
             (0x3666, 0x3680, TABLE_OFFSETS[1]),
+            (0x109630, 0x109710, TABLE_OFFSETS[2]),
+            (0x0f042c, SOIL_EVIDENCE_ROOT, SOIL_EVIDENCE_OFFSET),
         ] {
             let opcode = u16::from_le_bytes(
                 rom[reader as usize..reader as usize + 2]
@@ -171,7 +207,12 @@ impl Catalog {
                 }),
             }
         });
-        let decoded = CopiedHalfwordLookups { tables };
+        let start = SOIL_EVIDENCE_OFFSET as usize;
+        let soil_evidence_table = Some(HalfwordTable {
+            source_offset: SOIL_EVIDENCE_OFFSET,
+            values: std::array::from_fn(|i| u16::from_le_bytes(rom[start + i * 2..start + i * 2 + 2].try_into().unwrap())),
+        });
+        let decoded = CopiedHalfwordLookups { tables, soil_evidence_table };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();
         for (offset, bytes, role) in decoded.source_spans()? {
@@ -187,6 +228,9 @@ impl Catalog {
                 if sha256 != SOURCE_HASHES[i] {
                     return Err("Copied halfword lookup source hash mismatch".into());
                 }
+            }
+            if offset == SOIL_EVIDENCE_OFFSET && sha256 != SOIL_EVIDENCE_SHA256 {
+                return Err("Soil Evidence copied halfword source hash mismatch".into());
             }
             sources.push(SourceRange {
                 offset,

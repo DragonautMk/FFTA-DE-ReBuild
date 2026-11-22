@@ -97,7 +97,24 @@ fn european_lower_rom_words_record_interpreter_sites() {
     assert_eq!(words.iter().copied().collect::<BTreeSet<_>>().len(), expected_words);
     probe_sites(&rom);
     let native = std::env::var_os("FFTA_STATE_TEST_NATIVE").unwrap();
-    let (_library, table) = crate::load_native(std::path::Path::new(&native)).unwrap();
+    let (_library, mut table) = crate::load_native(std::path::Path::new(&native)).unwrap();
+    // Attribute reads from this selected code window without changing the
+    // production dispatch table or interpreting unrelated ROM code.
+    let force_interpreter_146 = std::env::var_os("FFTA_STATE_TEST_FORCE_INTERP_146").is_some();
+    let force_interpreter_147 = std::env::var_os("FFTA_STATE_TEST_FORCE_INTERP_147").is_some();
+    let mut disabled_rom_blocks = 0usize;
+    for (enabled, start, end) in [(force_interpreter_146, 0x146000, 0x147000),
+        (force_interpreter_147, 0x147000, 0x148000)] {
+        if !enabled { continue; }
+        for index in start..end {
+            if let Some(entry) = table.rom.get_mut(index) {
+                disabled_rom_blocks += usize::from(entry.take().is_some());
+            }
+        }
+    }
+    if force_interpreter_146 || force_interpreter_147 {
+        assert!(disabled_rom_blocks > 0, "selected native window must contain translated entries");
+    }
     let input = crate::InputScript::load(&std::env::var("FFTA_STATE_TEST_INPUT").unwrap()).unwrap();
     let mut m = crate::make_machine(rom, None);
     super::attach_from_directory(
@@ -116,12 +133,24 @@ fn european_lower_rom_words_record_interpreter_sites() {
     let first = m.bus.frames;
     let capture = SiteCapture::start(words.iter().copied());
     let mut dispatch = [0u64; 2];
+    let mut copy_contexts = BTreeSet::new();
     for relative in 0..frames {
         m.bus.keys = input.keys_at(relative);
         input.apply_mouse(&mut m.bus, relative).unwrap();
         let pointer = &mut m as *mut gba_core::Machine as *mut std::ffi::c_void;
-        let (native, fallback) =
-            crate::run_frame_native(&mut m, &table, pointer, crate::FRAME_STEP_GUARD);
+        let (native, fallback) = if force_interpreter_147 {
+            crate::run_frame_native_traced(&mut m, &table, pointer, crate::FRAME_STEP_GUARD,
+                |machine, kind| {
+                    let source = machine.cpu.regs[3] & 0x01ff_ffff;
+                    if kind == crate::NativeDispatch::Missing && machine.cpu.regs[15] == 0x0814_7e0c
+                        && (0x14d6d8..0x14d6e0).contains(&source) {
+                        copy_contexts.insert((machine.cpu.regs[14], machine.cpu.regs[3],
+                            machine.cpu.regs[4], machine.cpu.regs[2]));
+                    }
+                }, |_, _, _| {})
+        } else {
+            crate::run_frame_native(&mut m, &table, pointer, crate::FRAME_STEP_GUARD)
+        };
         dispatch[0] += native;
         dispatch[1] += fallback;
         assert_eq!(m.bus.frames, first + relative + 1);
@@ -147,6 +176,8 @@ fn european_lower_rom_words_record_interpreter_sites() {
         "site_probes":"PASS/cached-uncached original ThumbLDR/outsideNone/drop/address-key preservation",
         "target_words":words.len(),"observed_words":observed.len(),"reads_with_instruction_scope":with_scope,"reads_outside_instruction_scope":outside_scope,
         "dispatch_coverage_only":dispatch,"sites":sites,
+        "force_interpreter_146":force_interpreter_146,"force_interpreter_147":force_interpreter_147,
+        "disabled_rom_blocks":disabled_rom_blocks,"copy_contexts":copy_contexts,
         "scope":"single currentdecoded source-site observation only; interpreter execution/HLE scope may include nested accesses, opcode/address validation required; native/host outside scope staysNone; no old scene equivalence acceptance",
         "linux":"pending","USA":"pending","nativeWindows":"pending","performance_measurements":false
     });

@@ -166,16 +166,72 @@ impl Bank {
     }
 }
 
+/// One observed compact sequence and its list offsets. List payloads remain
+/// owned by the static OBJ resource; this projection owns metadata only.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SoilEvidenceMetadata {
+    pub flags: u16,
+    pub sequence_relative_offset: u16,
+    pub list_offsets: Vec<u16>,
+    pub selector0_relative_offset: u16,
+    pub frames: Vec<Frame>,
+}
+
+pub const SOIL_EVIDENCE_ROOT: u32 = 0x6c173c;
+pub const SOIL_EVIDENCE_SEQUENCE_ROOT: u32 = 0x6c19b4;
+pub const SOIL_EVIDENCE_METADATA_RANGES: [(u32, u32); 2] = [
+    (SOIL_EVIDENCE_ROOT, 0x6c1768), (SOIL_EVIDENCE_SEQUENCE_ROOT, 0x6c19e0),
+];
+
+impl SoilEvidenceMetadata {
+    pub fn validate(&self) -> Result<(), String> {
+        if self.flags != 12 || self.sequence_relative_offset != 0x278
+            || self.selector0_relative_offset != 2 || self.list_offsets.len() != 20 || self.frames.len() != 20
+            || self.list_offsets.iter().zip(obj_lists::SOIL_EVIDENCE_LISTS).any(|(relative, (offset, _, _))|
+                SOIL_EVIDENCE_ROOT + 4 + u32::from(*relative) != offset)
+            || self.frames.iter().enumerate().any(|(index, frame)| usize::from(frame.list) != index || frame.duration == 0)
+        { return Err("Invalid Soil Evidence compact metadata or list links".into()); }
+        Ok(())
+    }
+
+    pub fn source_pieces(&self) -> Result<[(u32, Vec<u8>); 2], String> {
+        self.validate()?;
+        let mut header = self.flags.to_le_bytes().to_vec();
+        header.extend(self.sequence_relative_offset.to_le_bytes());
+        for value in &self.list_offsets { header.extend(value.to_le_bytes()); }
+        let mut sequence = self.selector0_relative_offset.to_le_bytes().to_vec();
+        sequence.extend((self.frames.len() as u16).to_le_bytes());
+        for frame in &self.frames { sequence.extend([frame.list, frame.duration]); }
+        Ok([(SOIL_EVIDENCE_ROOT, header), (SOIL_EVIDENCE_SEQUENCE_ROOT, sequence)])
+    }
+
+    pub fn byte_at(&self, offset: u32) -> Option<u8> {
+        if let Some(relative) = offset.checked_sub(SOIL_EVIDENCE_ROOT) {
+            let at = relative as usize;
+            if at < 2 { return Some(self.flags.to_le_bytes()[at]); }
+            if at < 4 { return Some(self.sequence_relative_offset.to_le_bytes()[at - 2]); }
+            if at < 44 { return self.list_offsets.get((at - 4) / 2).map(|value| value.to_le_bytes()[(at - 4) % 2]); }
+        }
+        let at = offset.checked_sub(SOIL_EVIDENCE_SEQUENCE_ROOT)? as usize;
+        if at < 2 { return Some(self.selector0_relative_offset.to_le_bytes()[at]); }
+        if at < 4 { return Some((self.frames.len() as u16).to_le_bytes()[at - 2]); }
+        self.frames.get((at - 4) / 2).map(|frame| if at & 1 == 0 { frame.list } else { frame.duration })
+    }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CompactObjCatalog {
     pub banks: Vec<Bank>,
     // Historical v1 evidence can still be decoded for bank identity comparison.
-    // Current v11 validation requires all fourteen source-authenticated tables.
+    // Current validation requires all fourteen source-authenticated tables.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub selector_tables: Option<selector_tables::SelectorTables>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub red_spring_records: Option<[RedSpringRecord; 3]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_evidence_metadata: Option<SoilEvidenceMetadata>,
 }
 
 impl CompactObjCatalog {
@@ -224,6 +280,7 @@ impl CompactObjCatalog {
                 return Err("Invalid Red Spring compact record binding".into());
             }
         }
+        self.soil_evidence_metadata.as_ref().ok_or("Missing Soil Evidence compact metadata")?.validate()?;
         Ok(())
     }
 
@@ -232,6 +289,7 @@ impl CompactObjCatalog {
         let mut pieces: Vec<_> = self.banks.iter().map(Bank::source_pieces).collect::<Result<Vec<_>, _>>()?.into_iter().flatten().collect();
         pieces.extend(self.selector_tables.as_ref().unwrap().source_pieces());
         pieces.extend(self.red_spring_records.as_ref().unwrap().iter().map(|record| (record.source_offset, record.source_bytes().to_vec())));
+        pieces.extend(self.soil_evidence_metadata.as_ref().unwrap().source_pieces()?);
         let spans = merge_pieces(pieces)?;
         if spans.len() != SOURCE_SPANS.len() || spans.iter().zip(SOURCE_SPANS).any(|((at, bytes), &(start, end))| *at != start || bytes.len() != (end - start) as usize) {
             return Err("Invalid compact catalog source union".into());
@@ -245,6 +303,7 @@ impl CompactObjCatalog {
             .or_else(|| self.red_spring_records.as_ref()?.iter().find_map(|record| {
                 offset.checked_sub(record.source_offset).and_then(|at| record.source_bytes().get(at as usize).copied())
             }))
+            .or_else(|| self.soil_evidence_metadata.as_ref()?.byte_at(offset))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
@@ -305,7 +364,24 @@ impl Catalog {
                 bank_pointer: u32::from_le_bytes(rom[start..start + 4].try_into().unwrap()),
                 halfwords: std::array::from_fn(|index| half(offset + 4 + index as u32 * 2)), }
         });
-        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)), red_spring_records: Some(red_spring_records) };
+        for (start, end, expected) in [
+            (0x6c173c, 0x6c1768, "5c110e015c1a947f9a9cfd203c290decfa8e0dcc3980c26d072fea8513d73b9d"),
+            (0x6c19b4, 0x6c19e0, "033d9442a96b97430edc149c1513c68e4d01e06ea4a2ae637aa4bc9645a15c76"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected { return Err("Soil Evidence compact metadata source mismatch".into()); }
+        }
+        let soil_evidence_metadata = SoilEvidenceMetadata {
+            flags: half(SOIL_EVIDENCE_ROOT),
+            sequence_relative_offset: half(SOIL_EVIDENCE_ROOT + 2),
+            list_offsets: (0..20).map(|index| half(SOIL_EVIDENCE_ROOT + 4 + index * 2)).collect(),
+            selector0_relative_offset: half(SOIL_EVIDENCE_SEQUENCE_ROOT),
+            frames: (0..20).map(|index| {
+                let at = SOIL_EVIDENCE_SEQUENCE_ROOT as usize + 4 + index * 2;
+                Frame { list: rom[at], duration: rom[at + 1] }
+            }).collect(),
+        };
+        if half(SOIL_EVIDENCE_SEQUENCE_ROOT + 2) != 20 { return Err("Soil Evidence compact frame count mismatch".into()); }
+        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)), red_spring_records: Some(red_spring_records), soil_evidence_metadata: Some(soil_evidence_metadata) };
         let sources = decoded.source_spans()?.into_iter().map(|(offset, bytes, role)| SourceRange {
             offset, length: bytes.len() as u32, sha256: ffta_rom::digest(&bytes), role,
         }).collect();

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "reconcile-european-f09-historical-inventory",
+  "title": "Reconcile European F09 historical inventory",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine"
+  ],
+  "changes": [
+    "Reconcile the retained F09 address sample against the current E228 manifest and preserve its scoped remaining-reader and platform checklist."
+  ],
+  "validation": [
+    "Static unit __2ozlaa restores the archived F09 report under lease, verifies its retained hash, the exact EUR ROM and 251 intersecting source hashes, and finds all 1146 previously unowned sampled bytes declared in E228. The restored input was retired unchanged."
+  ],
+  "limitations": [
+    "The address-only join does not establish current runtime service, executing PCs, other readers, scenes or complete ROM coverage.",
+    "Linux, USA and native Windows remain pending; no game replay or performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

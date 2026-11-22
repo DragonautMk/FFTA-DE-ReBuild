@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "reconcile-european-post-indexed-lower-sample",
+  "title": "Reconcile European post-indexed lower-ROM sample",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine"
+  ],
+  "changes": [
+    "Reconcile the 568 lower-ROM sample bytes without earlier source witnesses against the current E226 manifest, and update the remaining source-attribution checklist."
+  ],
+  "validation": [
+    "Static unit wxrezwcp verifies the exact EUR ROM, retained Wine inventory and prior reconciliation, plus 107 current source-span hashes: 460 sampled bytes are declared and 108 remain outside declared ranges. No game was replayed."
+  ],
+  "limitations": [
+    "This one 12-frame address sample does not establish executing PCs, asset boundaries, all callers or complete ROM coverage; the other 500 prior-witness bytes and high copied-IWRAM block are outside this subset.",
+    "Source attribution and runtime ownership for the remaining 108 bytes, other scenes, Linux, USA and native Windows remain open. No performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

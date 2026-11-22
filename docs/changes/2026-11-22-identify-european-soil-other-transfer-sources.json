@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-other-transfer-sources",
+  "title": "Identify European Soil type-2 and type-4 transfer sources",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate selected type-2 list, rectangle and type-4 descriptor/header/run sources and their original readers."
+  ],
+  "validation": [
+    "Wine disassembly e289-soil-other-transfer-readers-disassembly-wine-9u2bzss8 and e289-soil-type4-nested-disassembly-wine-hluvg778 plus protected plan e289-soil-other-transfer-source-plan-3fd5j3nj verify 104 unowned source bytes, including 78 sampled bytes."
+  ],
+  "limitations": [
+    "The two-byte gap and its relationship to the adjacent owned tilemap remain unproved; runtime ownership, complete guest index domains, other consumers and scenes are not established.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

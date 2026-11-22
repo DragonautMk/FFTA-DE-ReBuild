@@ -2,7 +2,25 @@
 use super::*;
 use gba_core::{capi::RT_API, rom_data::copied_halfword_lookups as model, Bus, Machine};
 use recomp_core::analyze::{Analysis, Block, View};
-use std::{collections::BTreeSet, sync::Arc};
+use std::{collections::BTreeSet, path::Path, sync::Arc};
+
+pub(super) fn assert_previous_copied_halfwords_preserved(
+    previous: &Path,
+    current_directory: &Path,
+    prior: &gba_core::rom_data::Resource,
+    current: &gba_core::rom_data::Resource,
+) {
+    assert_eq!((&current.id, &current.path, &current.format), (&prior.id, &prior.path, &prior.format));
+    let mut dependencies = prior.dependencies.clone();
+    if !dependencies.iter().any(|id| id == THUMB_PC_LITERALS_ID) { dependencies.push(THUMB_PC_LITERALS_ID.into()); }
+    assert_eq!(current.dependencies, dependencies);
+    assert_eq!(&current.sources[..prior.sources.len()], prior.sources.as_slice());
+    let old: serde_json::Value = serde_json::from_slice(&fs::read(previous.join(&prior.path)).unwrap()).unwrap();
+    let new: serde_json::Value = serde_json::from_slice(&fs::read(current_directory.join(&current.path)).unwrap()).unwrap();
+    let old_tables = old["tables"].as_array().unwrap();
+    let new_tables = new["tables"].as_array().unwrap();
+    assert_eq!(old_tables.as_slice(), &new_tables[..old_tables.len()]);
+}
 
 fn setup(machine: &mut Machine, start: u32, selector: u32) {
     machine.bus.ffta_sprites.enabled = false;
@@ -51,7 +69,7 @@ fn european_copied_halfword_lookups_and_original_consumers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (221, 220, 130)
+        (248, 247, 136)
     );
     for prior in &old.resources {
         let current = source
@@ -66,6 +84,24 @@ fn european_copied_halfword_lookups_and_original_consumers() {
         } else if prior.id == THUMB_SWITCH_TABLES_ID {
             super::thumb_switch_tables_additional_tests::assert_previous_switch_tables_preserved(
                 &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == INDEXED_WORDS_3959_ID {
+            super::soil_e3838_tests::assert_previous_indexed_words_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COMPACT_OBJ_CATALOG_ID {
+            super::soil_compact_metadata_tests::assert_previous_compact_catalog_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COPIED_HALFWORD_LOOKUPS_ID {
+            super::copied_halfword_lookups_tests::assert_previous_copied_halfwords_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_TILEMAP_ROW_ID || prior.id == OBSERVED_TILEMAP_DESCRIPTOR_ID || prior.id == OBSERVED_TILEMAP_ID {
+            super::soil_transfer_records_tests::assert_previous_soil_transfer_resource_preserved(
+                &previous, &prepared.directory, prior, current);
         } else {
             assert_eq!(current, prior);
             assert_eq!(
@@ -75,7 +111,8 @@ fn european_copied_halfword_lookups_and_original_consumers() {
         }
     }
     let data = &source.copied_halfword_lookups.as_ref().unwrap().decoded;
-    let spans = data.source_spans().unwrap();
+    let spans: Vec<_> = data.source_spans().unwrap().into_iter()
+        .filter(|(offset, _, _)| *offset != model::TABLE_OFFSETS[2] && *offset != model::SOIL_EVIDENCE_OFFSET).collect();
     assert_eq!(spans.len(), 4);
     assert_eq!(
         spans.iter().map(|(_, bytes, _)| bytes.len()).sum::<usize>(),
@@ -258,7 +295,7 @@ fn european_copied_halfword_lookups_and_original_consumers() {
                 "root reader {reader:x}, native={native}"
             );
         }
-        for (i, &start) in model::TABLE_OFFSETS.iter().enumerate() {
+        for (i, &start) in model::TABLE_OFFSETS.iter().take(2).enumerate() {
             for machine in [&mut raw, &mut managed] {
                 machine.load_state(&initial).unwrap();
                 setup(machine, 0x147e0c, 0);
@@ -408,8 +445,8 @@ fn european_copied_halfword_lookups_and_original_consumers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[221,220], "tables":2, "entries_per_table":4, "source_bytes":24,
-        "prior_other_resources_unchanged":125, "prior_switch_tables_preserved":true, "prior_thumb_literals_preserved":true, "prior_literal_root_preserved":true,
+        "status":"PASS", "revision":[248,247], "tables":2, "entries_per_table":4, "source_bytes":24,
+        "prior_other_resources_unchanged":117, "previous_copied_halfwords_preserved":true, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_switch_tables_preserved":true, "prior_thumb_literals_preserved":true, "prior_literal_root_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_generated_prefix_cases":10,
         "original_full_interpreter_cases":18, "outside_indices_preserve_original_stack":true,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

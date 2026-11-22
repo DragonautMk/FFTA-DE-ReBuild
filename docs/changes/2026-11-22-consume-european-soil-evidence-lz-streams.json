@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-soil-evidence-lz-streams",
+  "title": "Consume European Soil Evidence LZ streams",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend authenticated observed LZ source views and decoded HLE blocks with three Soil Evidence streams, serving 1,335 original source bytes and 1,640 decoded bytes.",
+    "Preserve the fourteen previous streams, 129 other resource files and existing counter groups; update revision-sensitive test expectations."
+  ],
+  "validation": [
+    "Windows test build 9lp7r13_ and Wine reader e262-soil-lz-readers-wine-v7ya7ht6 verify prior resources, coherent edit rejection, mirrored and boundary reads, three original SWI cases, nine transfers and snapshot ownership.",
+    "Wine scene e262-soil-lz-scene-wine-knhlea70 compares 600 recorded frames with the new sources altered; all three are consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.",
+    "Wine CLI build 7keqayrr and CLI e262-soil-lz-cli-wine-6ld8ewbe create, reuse and verify 131 matching files; static join e262-soil-lz-sample-residual-twyv42n7 leaves 1,731 E260 sampled bytes outside E232 source owners."
+  ],
+  "limitations": [
+    "One sampled continuation does not establish asset identity, all readers or complete ROM coverage; other scenes, real BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_lz_tests.rs",
+    "crates/recomp/src/rom_data/interleaved_lz_chain_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_copy_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

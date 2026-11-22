@@ -2113,9 +2113,10 @@ copy advances one neutral frame; all six new raw counters0, registration only.
 
 The retained 12-frame F09 bus and selected-host audit was collected under
 e71-d70. Reclassifying its 1,146 distinct then-unowned bytes against the
-accepted e95-d94 source intervals finds 74 bytes now covered by managed owners
-and 1,072 still outside them. This is a comparison of historical addresses,
-not a new execution or an assertion that all those reads occur today.
+accepted e95-d94 source intervals found 74 bytes covered by managed owners
+and 1,072 still outside them at e95. E249 later reconciles all 1,146 against
+E228. These are comparisons of historical addresses, not new execution or an
+assertion that all those reads occur today.
 
 All 1,072 remaining bytes match earlier scoped code-support evidence: literal
 or switch-table readers, hardware control words, and IWRAM branch pointers.
@@ -3574,3 +3575,1331 @@ attributes the remaining 172 sampled bytes. The address-only inventory does not
 prove full ROM coverage; other readers, scenes, real-BIOS, UI save/Load, Linux,
 USA and native Windows remain open. Wine servers drained with the local
 Bluetooth overlay; no performance comparison was performed.
+
+## E233 Red Spring observed Thumb literals
+
+EUR E222-d221 extends `engine.thumb-pc-literals` with 196 observed-scope
+words (784 bytes). The previous 951 literal words and all 129 other resource
+files retain their contents. The ROM digest, original Thumb LDR opcode and
+effective source address are checked; source bytes are hashed and published
+without inferring their meaning or imposing a guest bound.
+
+Wine capture `e232-redspring-residual-sites-av1hj_7p` observes these words in
+the retained 600-frame Red Spring continuation. Scopes may contain nested
+HLE/DMA accesses and do not establish all direct callers. Windows test build
+`e233-redspring-literals-build-lbz9wa2n` and Wine reader
+`e233-redspring-literals-wine-4sf2ed90` verify all 784 bytes, previous literal
+values and masks, the other 129 resources, coherent edit rejection, mixed and
+mirrored boundaries, all 196 original interpreter and generated reader cases
+(392 total), DMA/CpuSet/CpuFastSet and dataset/snapshot owner retention.
+
+Wine scene `e233-redspring-literals-scene-wine-8ze5sj_t` compares 600 recorded
+frames with all 196 new backing words altered. Every new word is consumed;
+state, guest clock, video, OAM, dispatch and five nonempty audio streams match
+each frame. Windows production build `e233-redspring-literals-cli-build-5kb4mqhv`
+and Wine CLI `e233-redspring-literals-cli-wine-wdd7lpip` create, reuse and
+verify 131 matching files. Static reconciliation `e233-redspring-residual-pz3zxelt`
+reduces the E172 address-sample residual from 952 bytes to 168 (42 words).
+
+The address-only sample does not prove complete source extents or full-ROM
+coverage. The other 42 words were unowned at E233 and are served by later
+E223–E226 increments. Other scenes/readers, real-BIOS, UI save/Load, Linux,
+USA and native Windows remain open. Wine servers drained with the local
+Bluetooth overlay; no performance comparison was performed.
+
+## E234 Red Spring indirect switch source plan
+
+Wine disassembly `e234-redspring-indirect-reader-disassembly-3ubkkgml`
+inspects ten original Thumb readers scoped by the E232 Red Spring capture.
+Each loads a word from an indexed destination array and moves it to PC; the
+original compare and branch guard the represented path. Static plan
+`e234-redspring-switch-source-plan-rtqw8txm` authenticates ten distinct roots,
+148 destinations and 592 source bytes against the exact EUR ROM and E222
+manifest. Every root is already owned by the Thumb literal resource; none of
+the destination spans overlaps a declared E222 owner. The plan fingerprints
+the relevant code and source bytes and confirms same-state destination form.
+
+Sixteen words (64 bytes) in these tables overlap the 168 unowned E172 sample
+bytes. This is a source plan: none of the 592 destination bytes is newly
+published here. Scopes may include nested HLE/DMA accesses, and the original
+guards describe these particular paths, not a global guest selector bound.
+Consumption, other uses, the remaining 104 sampled bytes, Linux, USA and
+native Windows remain open. Wine drained with the local Bluetooth overlay;
+no performance comparison was made.
+
+## E235 Red Spring switch destinations
+
+EUR E223-d222 extends `engine.thumb-switch-tables` with the ten E234 guarded
+destination arrays: 148 words and 592 source bytes. Their root words remain
+owned by `engine.thumb-pc-literals`; 29 previous switch tables and all 129
+other resource files retain their contents. The original code and source
+fingerprints, root pointers and target form are validated. Runtime ownership
+projects the physical array bytes without adding a guest selector guard or
+replacing the original branch.
+
+Windows test build `e235-redspring-switches-build-244xn28h` and Wine reader
+`e235-redspring-switches-wine-wd1z4xka` verify all destination bytes, prior
+table values/masks and other resources, coherent edit rejection, mixed and
+mirrored boundaries, 40 original guarded interpreter/generated cases, 20
+outside-guard and 20 outside-load cases, DMA/CpuSet/CpuFastSet and dataset/
+snapshot owner retention. Indirect MOV-PC uses interpreter fallback in these
+controlled checks.
+
+Wine scene `e235-redspring-switches-scene-wine-hg3vf9nv` compares 600 recorded
+Red Spring frames with all ten new backing arrays altered. Each array is
+consumed, and state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame; the test does not claim that every destination is
+used during normal play. Windows production build
+`e235-redspring-switches-cli-build-dqkl2h_0` and Wine CLI
+`e235-redspring-switches-cli-wine-fzyln36o` create, reuse and verify 131
+matching files. Static reconciliation `e235-redspring-residual-c_2f3g_b`
+reduces the E172 address-sample residual from 168 to 104 bytes.
+
+The address-only sample and instruction scopes do not prove every caller,
+selector, scene or full-ROM coverage. The other 26 sampled words were unowned at
+E235 and are served by later E224–E226 increments. Real-BIOS, UI save/Load,
+Linux, USA and native Windows remain open. Wine servers drained with the local
+Bluetooth overlay; no performance comparison was performed.
+
+## E236 Red Spring unscoped literal anchors
+
+Static unit `e236-redspring-literal-anchors-rlq73_nk` checks the 104 E172
+sampled bytes still outside the E223 manifest against the exact EUR ROM and
+the retained translated-code block roots. It finds 22 complete literal words
+(88 bytes) whose original Thumb PC-relative LDRs have straight-line paths
+from exported native block roots at most 96 bytes earlier. Their source and
+path hashes are recorded, and their bytes are outside existing declared
+source ranges. Four other sampled words have no eligible match in this scan.
+
+These anchors are static: E232 observed the addresses outside an instruction
+scope, so the scan does not prove the E172 executing PCs, complete literal
+pools or all callers. This unit publishes no new owner. E237 subsequently serves
+the 22 anchored words, and E239/E240 serve the other four sampled words. Other
+scenes, Linux, USA and native Windows remain open; no performance comparison was
+made.
+
+## E237 Red Spring anchored Thumb literals
+
+EUR E224-d223 extends `engine.thumb-pc-literals` with 22 statically anchored
+words (88 bytes). The previous 1,147 literal words and all 129 other resource
+files retain their contents. Extraction authenticates the exact ROM, original
+LDR opcode, effective address and straight-line anchor path. Runtime ownership
+serves the exact source bytes without adding a guest selector guard.
+
+Source plan `e236-redspring-literal-anchors-rlq73_nk` uses exported native
+block roots and original instruction paths; the E172 address capture did not
+attribute an executing PC. Windows test build `e237-redspring-anchored-build-yw_b5x53`
+and Wine reader `e237-redspring-anchored-wine-d0vf7iwd` verify all 88 source
+bytes, previous values/masks and other resources, coherent edit rejection,
+mixed and mirrored boundaries, 44 original interpreted/generated reader cases,
+DMA/CpuSet/CpuFastSet and dataset/snapshot owner retention.
+
+Wine scene `e237-redspring-anchored-scene-wine-ao5jx0xh` compares 600 recorded
+Red Spring frames with all 22 new backing words altered. Every new word is
+consumed; state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Windows production build
+`e237-redspring-anchored-cli-build-lruh4cdc` and Wine CLI
+`e237-redspring-anchored-cli-wine-dl95px1f` create, reuse and verify 131
+matching files. Static reconciliation `e237-redspring-residual-55zvsm8r`
+reduces the E172 address-sample residual from 104 to 16 bytes.
+
+The static anchors do not prove executed PCs, complete literal pools or all
+callers. The other four sampled words were unowned at E237 and are served by
+E239/E240. Other scenes, real-BIOS, UI save/Load, Linux, USA and native Windows
+remain open. Wine servers drained with the local Bluetooth overlay; no
+performance comparison was performed.
+
+
+## E238 Red Spring remaining-source plan
+
+Wine disassembly `e238-redspring-source-disassembly-jqg8wh29` identifies two
+original guarded switch readers at `080148c6` and `08015276`, with already-owned
+root words at `148cc` and `1527c`. Their original unsigned comparisons describe
+89 and 88 destination entries respectively; the target sampled words belong
+to entry 82 of each. No guest selector limit is added by this observation.
+
+Wine disassembly `e238-redspring-byte-disassembly-56f3ef_x` shows the original
+reader at `08109630` loads an already-owned root at `109710`, sets a copy
+length of eight bytes and calls the original copy helper with source
+`14d84c..14d854` and a guest stack destination. Static source plan
+`e238-redspring-source-plan-b39y_6rn` authenticates the exact EUR ROM, code,
+roots, helper and all three currently unowned source spans against the E224
+manifest. The two arrays contain 177 destinations (708 bytes); the copy source
+is eight bytes. Together, their spans include all 16 still-unowned E172 sampled
+bytes. No source values are embedded here.
+
+The E172 capture was outside instruction scopes: the overlapping addresses do
+not prove which PCs executed or rule out other callers. This is a source plan,
+not extracted or consumed data, and the sample is not a complete ROM inventory.
+At E238, publishing all three sources remained open. E239 and E240 subsequently
+publish and validate them for the selected EUR/Wine continuation. Other paths,
+Linux, USA and native Windows remain open. Wine servers drained with the Bluetooth
+overlay; no performance comparison was made.
+
+
+## E239 final Red Spring switch arrays
+
+EUR E225-d224 extends `engine.thumb-switch-tables` with the two E238 guarded
+destination arrays: 177 words and 708 source bytes. Their root words remain
+owned by `engine.thumb-pc-literals`; 39 previous switch tables and all 129
+other resource files retain their contents. The exact ROM, original reader
+and source fingerprints, root pointers and destination forms are authenticated.
+Runtime ownership projects these physical bytes without adding a selector guard
+or changing the original branch.
+
+Windows test build `e239-redspring-final-switch-build-80mq3upk` and Wine reader
+`e239-redspring-final-switch-wine-2zdfj3c8` verify all destination bytes,
+previous resources and masks, coherent edit rejection, mixed and mirrored
+boundaries, eight original guarded interpreter/generated cases, four
+outside-guard and four outside-load cases, DMA/CpuSet/CpuFastSet and dataset/
+snapshot owner retention. Indirect MOV-PC uses interpreter fallback in these
+controlled checks.
+
+Wine scene `e239-redspring-final-switch-scene-wine-6vjw7n51` compares 600
+recorded Red Spring frames with both new backing arrays altered. Both arrays
+are consumed, and state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match each frame; this does not establish every selector.
+Windows production build `e239-redspring-final-switch-cli-build-vsbf1rc3` and
+Wine CLI `e239-redspring-final-switch-cli-wine-q_skv5h9` create, reuse and
+verify 131 matching files. Static reconciliation `e239-redspring-residual-n1l57jp6`
+reduces the E172 address-sample residual from 16 to eight bytes.
+
+The address-only sample does not prove its executing PCs, other callers,
+selectors, scenes or full-ROM coverage. At E239, the eight-byte copy source remained open; E240 subsequently publishes
+it. Real-BIOS, UI save/Load, Linux, USA and native Windows remain open. Wine servers drained
+with the local Bluetooth overlay; no performance comparison was made.
+
+
+## E240 final Red Spring copy source
+
+EUR E226-d225 extends `engine.copied-halfword-lookups` with the eight source
+bytes at `14d84c..14d854`. The existing two tables and their two additional
+roots retain their values and source order; the root at `109710` remains owned
+by `engine.thumb-pc-literals`, and all 129 other resource files remain unchanged.
+The exact EUR ROM, original copy reader, root, copy helper and source bytes are
+authenticated. The runtime supplies physical source bytes without changing the
+original copy, stack indexing or guest control flow.
+
+Windows test build `e240-redspring-final-copy-build-nt28u8wp` and Wine reader
+`e240-redspring-final-copy-wine-e2rslaz3` verify the new bytes and earlier
+resources, coherent edit rejection, mixed and mirrored boundaries, the original
+copy with interpreted/generated prefixes, DMA/CpuSet/CpuFastSet and dataset/
+snapshot owner retention. The copy helper runs through the original guest path.
+
+Wine scene `e240-redspring-final-copy-scene-wine-xwjchks1` compares 600 recorded
+Red Spring frames with the new backing bytes altered. The new source is consumed,
+and state, guest clock, video, OAM, dispatch and five nonempty audio streams
+match each frame. Windows production build `e240-redspring-final-copy-cli-build-gjzrae6s`
+and Wine CLI `e240-redspring-final-copy-cli-wine-_jk7dwh3` create, reuse and
+verify 131 matching files. Static reconciliation `e240-redspring-residual-_z04mity`
+finds no unowned bytes among the retained E172 address sample.
+
+This is one sampled continuation, not a complete ROM inventory or proof of
+executing PCs, all consumers, scenes or later accesses. Other scenes/readers,
+real-BIOS, UI save/Load, Linux, USA and native Windows remain open. Wine servers
+drained with the local Bluetooth overlay; no performance comparison was made.
+
+
+## E241 post-indexed lower-source reconciliation
+
+Static unit `e241-post-indexed-lower-reconcile-wxrezwcp` joins the 568 bytes
+without prior witnesses in the retained 12-frame E170 post-indexed sample to the
+E226 manifest. It protects the original inventory, prior reconciliation, exact
+EUR ROM and current dataset, verifies all 107 intersecting declared source
+spans against the ROM and performs no replay. E226 declares 460 of those
+sampled bytes: 408 Thumb literal bytes, 20 switch-table bytes and the 32
+display-control bytes published at E171. The remaining 108 bytes form 14
+ranges and were observed by the bus reader.
+
+These figures apply only to that previously unmatched subset. The other 500
+bytes with prior witnesses and the high copied-IWRAM block are outside this
+comparison. A declared source range or sampled address does not prove the
+executing PC, complete callers, asset boundaries or global coverage. At E241, source
+attribution and ownership for 108 bytes remained open. E243 serves 36 and E245
+serves the remaining 72. Other scenes, Linux, USA and native Windows remain open;
+no performance comparison was made.
+
+
+## E242 post-indexed lower reader sites
+
+Wine unit `e242-post-indexed-lower-sites-qpmxbv2e` follows the retained E170
+post-indexed continuation for 12 frames using E226, filtering the 27 complete
+words that contain the 108 bytes outside its declared source ranges. All 108
+bytes are observed. Nine instruction-scoped read records match original Thumb
+PC-relative LDR opcodes and effective source addresses for nine words (36
+bytes). Nineteen distinct read records have no instruction scope; one source
+word also has a scoped witness. The matching sites and source offsets are
+recorded for a subsequent authenticated extraction; this capture publishes
+no new source.
+
+Execution scopes may include nested HLE or DMA reads. The capture does not
+prove every caller, source extent or complete scene equivalence. The other 72
+bytes were subsequently attributed to statically anchored readers and served
+at E245. Other scenes, Linux, USA and native Windows remain open. Wine drained with the local Bluetooth overlay; no
+performance comparison was made.
+
+
+## E243 post-indexed observed Thumb literals
+
+EUR E227-d226 extends `engine.thumb-pc-literals` with the nine E242 observed
+words (36 source bytes). The previous 1,169 literal words and all 129 other
+resource files retain their contents. Extraction authenticates the exact EUR
+ROM, original Thumb LDR opcode and effective address. Runtime ownership serves
+the exact bytes without changing guest instructions or control flow.
+
+Windows test build `e243-post-indexed-literals-build-3nzwlkqc` and Wine reader
+`e243-post-indexed-literals-wine-6gxwak7q` verify all nine words, prior resources
+and masks, coherent edit rejection, mixed and mirrored boundaries, 18 original
+interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and dataset/snapshot
+owner retention.
+
+Wine scene `e243-post-indexed-literals-scene-wine-fbe_qfgm` compares 12 recorded
+post-indexed frames with all nine backing words altered. Every new word is
+consumed; state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Windows production build
+`e243-post-indexed-literals-cli-build-058ktp2c` and Wine CLI
+`e243-post-indexed-literals-cli-wine-uydq8tce` create, reuse and verify 131
+matching files. Static reconciliation `e243-post-indexed-lower-residual-n2okilgf`
+reduces the E170 previously unmatched sample residual from 108 to 72 bytes.
+
+Instruction scopes can include nested HLE/DMA accesses and do not prove every
+caller, source extent or complete ROM coverage. The other 72 sampled bytes were
+served at E245. Other scenes, real-BIOS, UI save/Load, Linux, USA and native
+Windows remain open. Wine servers drained with the Bluetooth overlay; no
+performance comparison was made.
+
+
+## E244 post-indexed unscoped literal anchors
+
+Static unit `e244-post-indexed-literal-anchors-0uvhmsty` checks the 72 E170
+sampled bytes outside the E227 manifest against the exact EUR ROM and retained
+E170 translated-code block roots. It finds all 18 complete words have original
+Thumb PC-relative LDRs with straight-line paths from exported native block roots
+at most 96 bytes earlier. The scan records opcode, source and path hashes and
+checks that the words do not overlap declared E227 sources.
+
+The E242 reads were outside instruction scopes: static anchors do not prove
+the executing PCs, complete literal pools or all callers. This unit publishes
+no new owner. E245 subsequently extracts and serves these words; other scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E245 post-indexed anchored Thumb literals
+
+EUR E228-d227 extends `engine.thumb-pc-literals` with the 18 E244 statically
+anchored words (72 source bytes). The previous 1,178 literal words and all 129
+other resource files retain their contents. Extraction authenticates the exact
+EUR ROM, original LDR opcode, effective address and straight-line anchor path.
+Runtime ownership serves the exact bytes without changing guest instructions.
+
+Windows test build `e245-post-indexed-anchored-build-lbnmn2rn` and Wine reader
+`e245-post-indexed-anchored-wine-nssz0c5s` verify all 18 words, prior resources
+and masks, coherent edit rejection, mixed and mirrored boundaries, 36 original
+interpreted/generated reader cases, DMA/CpuSet/CpuFastSet and dataset/snapshot
+owner retention.
+
+Wine scene `e245-post-indexed-anchored-scene-wine-fc5v9tzl` compares 12 recorded
+post-indexed frames with all 18 backing words altered. Every new word is
+consumed; state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Windows production build
+`e245-post-indexed-anchored-cli-build-f_2qgtvi` and Wine CLI
+`e245-post-indexed-anchored-cli-wine-i52g_6ot` create, reuse and verify 131
+matching files. Static reconciliation `e245-post-indexed-lower-residual-rhmbe_o9`
+finds no unowned bytes in the 568-byte E170 lower subset that lacked previous
+witnesses.
+
+The E242 reads were unscoped; static anchors do not prove executing PCs, all
+callers, literal pools or complete ROM coverage. The 500 bytes with earlier
+witnesses and high copied-IWRAM block were outside this subset's reconciliation;
+E246 subsequently reconciles the full E170 inventory. Other scenes, real-BIOS,
+UI save/Load, Linux, USA and native Windows remain
+open. Wine servers drained with the Bluetooth overlay; no performance
+comparison was made.
+
+
+## E246 full post-indexed inventory reconciliation
+
+Static unit `e246-post-indexed-full-reconcile-aqz4qh3s` compares all 4,680
+bytes outside E170 manifest sources in the retained 12-frame inventory with
+E228. It protects the original evidence and exact EUR ROM and verifies all 259
+intersecting source-span hashes. E228 declares 1,080 sampled bytes: all 1,068
+lower bytes, including the 500 with prior witnesses, and 12 high hardware/helper
+bytes. The remaining 3,600 sampled bytes fall inside the documented copied
+IWRAM source block at `d968e8..d97728`. The 48-byte metadata alias inside that
+block already has an owner; the remaining source block contains executable
+support and is retained in ROM under the existing
+[inventory contract](development/ROM_DATA_INVENTORY.md).
+
+The address join does not classify each byte as an instruction or asset, prove
+its executing PC, cover every reader or establish full-ROM coverage. Other
+scenes, source domains, Linux, USA and native Windows remain open. No game was
+replayed and no performance comparison was made.
+
+
+## E248 title and opening inventory reconciliation
+
+Static unit `e248-title-inventory-reconcile-d83mbwp2` joins three retained
+EUR/Wine title and opening inventories to the E228 manifest and authenticates
+the intersecting source spans against the exact ROM. All 62 bytes previously
+unowned in the title-language sample now have declared owners: 58 in layered
+OBJ animation data and four in IWRAM helper metadata. All eight previously
+unowned bytes in each of the main-title and opening samples also have declared
+owners. The samples overlap and together contain 70 distinct bytes.
+
+Earlier Wine route `e155-title-cursor-languages-wine-yx3vvt5x` already exercises
+the five cursor choices on the title selector with the relevant backing source
+altered. The selector is documented in the title frontend shown at startup;
+these observations do not rule out another access path elsewhere. The static
+join performs no replay and does not prove current runtime dispatch, every
+reader or complete scene/ROM coverage. Other scenes, Linux, USA and native
+Windows remain open; no performance comparison was made.
+
+
+## E249 historical F09 inventory reconciliation
+
+Static unit `e249-f09-historical-reconcile-__2ozlaa` joins all 1,146 bytes
+that lay outside E71 source ranges in the retained 12-frame EUR F09 bus and
+selected-host inventory to the E228 manifest. It restores the archived report
+under the validation lease, verifies its retained hash and exact EUR ROM, and
+authenticates all 251 intersecting source spans. E228 declares every sampled
+byte: 952 Thumb literal bytes, 84 switch-table bytes, 20 hardware/helper bytes,
+80 OBJ-list bytes and ten task-parameter bytes. The restored report was
+retired unchanged after the unit passed.
+
+This address-only join performs no replay and does not prove current runtime
+service, executing PCs, other readers, scenes or complete ROM coverage. Earlier
+scoped source witnesses retain their original limits. Linux, USA and native
+Windows remain pending; no performance comparison was made.
+
+
+## E250 Bank observed Thumb literals
+
+EUR E229-d228 extends `engine.thumb-pc-literals` with 77 source-authenticated
+words (308 bytes) from the retained E76 Bank sample. Extraction validates the
+exact EUR ROM, each original LDR opcode and its effective address; runtime
+reads use the extracted values without changing guest instructions. The previous
+1,196 literal words and all 129 other resource files retain their contents.
+The captured scopes can include nested HLE or DMA reads and do not establish
+every executing caller.
+
+Windows test build `e250-bank-observed-build-ucbajerz` and Wine reader
+`e250-bank-observed-wine-biu5a8ky` verify the new words, old resources and
+masks, coherent edit rejection, mixed and mirrored boundaries, 154 original
+interpreted/generated reader cases, transfers and snapshot ownership. Wine
+scene `e250-bank-observed-scene-wine-fwu8_cee` compares 12 recorded Bank frames
+starting at guest frame 3660 with all new backing words altered: all 77 are
+consumed and state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Production build `e250-bank-observed-cli-build-d3g9inrv`
+and Wine CLI `e250-bank-observed-cli-wine-g8lsy8kq` create, reuse and verify
+131 matching files. Wine servers drained using the local Bluetooth overlay.
+
+Static join `e250-bank-observed-residual-duj05bki` finds 308 of 320 previously
+unowned E76 sample bytes now declared. Three four-byte words at `2abc4`,
+`2bfb8` and `5b6ac` remained unowned at E229; E254 subsequently serves them.
+This is an address-only sample, not complete ROM coverage. Other readers, scenes, real
+BIOS, UI save/Load, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E251 Bank unscoped literal anchor scan
+
+Static unit `e251-bank-literal-anchors-hfew8swv` examines the three E250
+unowned words against the exact EUR ROM, the E229 manifest and the retained
+Bank native translation. It finds no PC-relative Thumb LDR candidate anchored
+to an exported translated block by a straight-line path of at most 96 bytes
+without crossing a declared data source. The scan covers the first 2 MiB,
+where a PC-relative reader for these offsets would lie.
+
+This negative bounded scan does not exclude other instruction forms, indirect
+reads, other control paths or a different execution site. It publishes no new
+owner and does not attribute the sampled reads. The three words remained unowned
+at E229; E254 subsequently serves them. Other scenes, Linux, USA and native
+Windows remain open; no replay or performance comparison was performed.
+
+
+## E252 Bank residual read sites
+
+Protected unit `e252-bank-other-sites-rm1pwc1a` restores the archived E76
+Bank site capture under lease, checks its retained digest and the exact EUR
+ROM, and inspects the three E250 residual words. Each has one captured 32-bit
+Bus read in the 12-frame sample. The captured Thumb instruction scopes are
+`2abb4`, `2bfaa` and `5b642`, respectively, and each instruction decodes as
+`LDR r0, [r0]` (`6800`). The capture is compatible with an indirect word
+reader, but nested HLE/DMA scopes mean the scope alone does not establish
+that instruction as the direct cause or determine the input register value.
+The archived report was retired unchanged after PASS.
+
+E253 traces the indexed address construction and E254 serves the arrays. Other
+scenes and readers, Linux, USA and native Windows remain open; no replay or
+performance comparison was performed.
+
+
+## E253 Bank switch source plan
+
+Wine disassembly `e253-bank-site-disassembly-wine-9uc90bfb` and protected
+source plan `e253-bank-switch-source-plan-in0jqgky` trace the three E252
+instruction scopes to indexed Thumb switch readers. Each loads an existing
+Thumb-literal table root, scales a byte selector by four, reads a destination
+and branches through the original `MOV pc, r0`. The first two original unsigned
+comparisons admit five and eight entries; the third selector is loaded by
+`LDRB` and can address 256 entries. No additional runtime selector guard is
+inferred.
+
+The roots at `2abbc`, `2bfb4` and `5b648` already belong to the literal
+resource. Their 269 destination words cover 1,076 bytes, including the three
+E250 residual words at indices 1, 0 and 24. The plan authenticates original
+code and source hashes against the exact EUR ROM, checks all target addresses
+and finds no E229 owner overlap for the destination arrays. Wine drained.
+
+Captured scopes can include nested reads; this static plan does not prove all
+callers, scenes or full-ROM coverage and publishes no owner. E254 subsequently
+serves and validates these arrays in the sampled Bank scene. Other readers and
+scenes, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+
+## E254 Bank switch destinations
+
+EUR E230-d229 extends `engine.thumb-switch-tables` with the three E253
+destination arrays: 269 words and 1,076 authenticated source bytes. Their
+previously owned roots, all 41 earlier switch tables and the other 129 resource
+files retain their contents. Original selector checks and indirect `MOV pc`
+semantics remain unchanged; the 256-entry table covers the full byte selector.
+
+Windows test build and Wine reader `e254-bank-switch-wine-retry-akk2y3mv` verify
+the sources and previous resources, tamper rejection, boundaries and mirrors,
+original interpreted and generated readers, indirect branch, transfers and snapshot ownership. Wine
+scene `e254-bank-switch-scene-wine-hcng484s` compares 12 recorded Bank frames
+with all three destination arrays altered in the backing ROM. All three are
+read; state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame. Wine CLI
+`e254-bank-switch-cli-wine-oxj8x5e8` creates, reuses and verifies 131 matching
+files. Static join `e254-bank-sample-residual-re_5dymo` finds no unowned bytes
+in the previously residual E76 Bank sample. Wine drained with the local Bluetooth overlay.
+
+The first Wine reader attempt `e254-bank-switch-wine-2kzl5orn` failed because
+a synthetic selector value of 256 cannot arise from the original `LDRB`, and
+the generated native chain passed a test-only stop inside the helper path.
+The corrected test retains the direct out-of-array read check; the failure
+was in the test stop, with no runtime data mismatch observed. Other callers,
+scenes, real-BIOS, UI save/Load, Linux, USA and native Windows remain open. This sample is not complete ROM coverage;
+no performance comparison was made.
+
+
+## E255 Blue Screw ROM read inventory
+
+Wine unit `e255-blue-screw-audit-wine-jyhm2s_n` compares 600 frames of the
+retained EUR Blue Screw confirmation route against E230-d229, from guest frame
+7673 to 8273. The recorded state, input, translation, ROM, loader and dataset
+were protected. Complete state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame; Wine drained with the local Bluetooth
+overlay.
+
+The address-only selected-reader audit records 287,028 distinct requests
+covering 164,591 ROM bytes. Of those bytes, 24 were outside the E230 manifest,
+all below `300000`; E259 subsequently serves them. These are observed
+addresses, not proven data extents or executing PCs. The retained report is the input for separate source tracing.
+Other scenes and readers, Linux, USA and native Windows remain open; no
+performance comparison was made.
+
+
+## E256 Blue Screw literal anchor scan
+
+Protected static unit `e256-blue-screw-literal-anchors-0iwncua_` checks the
+six E255 sampled words against the exact EUR ROM, E230 manifest and retained
+translated-block roots. It finds no PC-relative Thumb LDR with a straight-line
+root anchor within 96 bytes and without crossing a declared source. No new
+owner is published; instruction scopes were not collected by E255.
+
+Other reader forms and control paths remain possible. The six words were
+unowned at E230; E259 subsequently serves them. Other scenes and readers, Linux, USA and native Windows remain open. No replay or
+performance comparison was performed.
+
+
+## E257 Blue Screw residual read sites
+
+Wine unit `e257-blue-screw-sites-wine-m3aveg4f` follows the retained E255
+Blue Screw continuation with a filtered source-site capture. All six sampled
+words are observed in instruction scopes. Three have matching original Thumb
+PC-relative LDR opcode/address witnesses; the other three share a Thumb
+`LDR r0, [r0]` scope. This complements E256: the scoped readers need not have
+a qualifying exported-block anchor in the static scan.
+
+Scopes can include nested HLE/DMA accesses; the capture does not prove every
+caller or a complete indirect table extent, and publishes no owner. E258
+classifies the indirect source and E259 serves both groups. Other scenes, Linux, USA and native Windows remain open; no performance comparison
+was made. Wine drained with the local Bluetooth overlay.
+
+
+## E258 Blue Screw source plan
+
+Wine disassembly `e258-blue-screw-disassembly-wine-__998l61` and protected
+plan `e258-blue-screw-source-plan-jkaucm5o` authenticate three E257
+PC-relative literals and an indirect 15-destination switch array. Its root
+is one of the three literal words. The original reader subtracts one from its
+selector, compares the result unsigned against 14, then reads the selected
+word and uses `MOV pc, r0`; no additional guest index guard is inferred.
+
+The three literals occupy 12 bytes, while the switch destinations occupy 60
+nonoverlapping bytes. The plan accounts for all 24 E255 sampled bytes, checks
+all destination shapes and validates the code/source hashes against the exact
+EUR ROM and E230 manifest. The plan publishes no owner; E259 subsequently
+serves the sources. Captured scopes may nest, and other callers, scenes, Linux, USA and native Windows remain open. Wine
+drained with the local Bluetooth overlay; no performance comparison was made.
+
+
+## E259 Blue Screw literal and switch sources
+
+EUR E231-d230 serves the three E258 Thumb literals and the 15-entry switch
+array through the existing decoded resources. The 72 authenticated source
+bytes include all 24 E255 sampled residual bytes. The original subtraction,
+unsigned comparison and indirect `MOV pc` stay unchanged. Earlier literal
+and switch sources and all 128 other resource files retain their contents.
+
+Wine reader unit `e259-blue-screw-readers-wine-t4cf550o` verifies both groups,
+previous resources, coherent edit rejection, boundaries and mirrors, original interpreted/generated reader
+cases, guarded and out-of-array behavior, transfers and snapshot ownership.
+Wine scene `e259-blue-screw-scene-wine-dk9h50xm` compares 600 retained Blue
+Screw frames with both new sources altered in the backing ROM: all three literals and the switch array
+are read; state, clock, video, OAM, dispatch and five nonempty audio streams
+match each frame. Wine CLI `e259-blue-screw-cli-wine-9fermhwm` creates, reuses
+and verifies 131 matching files. Static join
+`e259-blue-screw-sample-residual-uo47n9gw` finds no unowned E255 sampled bytes.
+Wine drained with the local Bluetooth overlay.
+
+Captured scopes may include nested reads; this scene does not establish all
+callers, source domains or complete ROM coverage. Other scenes, real-BIOS, UI
+save/Load, Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+
+## E260 Soil Evidence ROM read inventory
+
+Wine unit `e260-soil-evidence-audit-wine-tfe8gnqy` compares 600 frames of the
+retained EUR Soil Evidence confirmation route against E231-d230, from guest
+frame 8033 to 8633. The recorded state, input, translation, ROM, loader and
+dataset were protected. Complete state, guest clock, video, OAM, dispatch and
+five nonempty audio streams match each frame; Wine drained with the local
+Bluetooth overlay.
+
+The address-only selected-reader audit records 424,583 distinct requests
+covering 241,192 ROM bytes. Of those bytes, 3,066 are outside the
+E231 manifest: 772 below and 2,294 at or above `300000`. E262 serves 1,335
+of these addresses and leaves 1,731 outside E232 declared sources. These are
+observed addresses, not proven data extents or executing PCs. Other scenes and
+readers, Linux, USA and native Windows remain open; no performance comparison
+was made.
+
+
+## E263 Soil Evidence sampled residual classification
+
+Protected static unit `e263-soil-residual-classification-ehljhoa2` joins the
+E260 address inventory to E232 without replay. The 1,731 bytes still outside
+declared sources form 149 disjoint ranges: 772 bytes below `300000` and 959 at
+or above it. Bus reads cover all 1,731; observed SpritePeek requests overlap
+some of those bytes. The 193 fully sampled aligned lower words include 151
+with at least one statically matching Thumb literal-load bit pattern. No
+complete, fully sampled aligned LZ stream candidate was found in the upper
+residual by this bounded scan.
+
+These are address-based candidates, not proof of executing PCs, code, asset
+identities, full source extents or ownership. The scan does not publish a
+resource and does not establish full ROM coverage. Other readers, scenes,
+Linux, USA and native Windows remain open; no performance comparison was made.
+
+
+## E264 Soil Evidence lower source-reader sites
+
+Wine unit `e264-soil-lower-sites-wine-bdta3t36` captures filtered reader sites
+for the 193 E263 lower words on the retained E232 Soil Evidence continuation,
+frames 8033–8633. All 193 words and 772 sampled bytes appear again. Of 203
+recorded selected reads, 182 have an interpreter instruction scope and 21 are
+outside one. Authenticated original Thumb opcode/address checks identify 135
+distinct words with a matching PC-relative literal-load witness. The full
+filtered source-site plan and capture remain in the unit's evidence; Wine
+drained with the local Bluetooth overlay.
+
+An instruction scope can contain nested HLE/DMA reads, and outside-scope
+reads have no executing PC here. This capture publishes no owner, does not
+prove every caller or full source extents, and does not repeat the E262
+raw/managed scene equivalence proof. The 58 other words, upper residual,
+other scenes and consumers, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+
+## E265 Soil Evidence literal source plan
+
+Protected static unit `e265-soil-literal-source-plan-3f25m75o` authenticates
+the 135 distinct E264 PC-relative Thumb literal words against the EUR ROM and
+E232 manifest. It verifies 139 instruction witnesses and exact opcode, source
+hash and address relationships. The selected 135 words cover 540 bytes, do not
+overlap E232 declared sources or previous/candidate reader instructions, and
+retain one clean witness each. The plan publishes no resource; E266 later
+integrates these sources.
+
+Interpreter scopes may contain nested accesses; these witnesses do not prove
+every caller, complete source extents or all scenes. Other sampled words and
+upper bytes, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E266 Soil Evidence observed literal sources
+
+EUR E233-d232 extends the authenticated Thumb literal resource with the
+135 E265 observed words, serving 540 source bytes through the runtime without
+changing guest instructions. The previous 1,276 literal words and 129 other
+resource files are preserved.
+
+Wine reader `e266-soil-literals-readers-wine-itca7x6l` verifies all prior sources, coherent edit rejection,
+mirrors and mixed boundaries, 270 original interpreted/generated reader cases,
+DMA/CpuSet/CpuFastSet transfers and snapshot owner retention. Wine scene
+`e266-soil-literals-scene-wine-8wxjny7m` compares 600 recorded Soil Evidence frames with all 135 literal
+sources altered in the managed backing ROM: all words are consumed (31784
+source bytes counted), and state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame. Wine CLI `e266-soil-literals-cli-wine-ptvqd89o` creates, reuses and
+verifies 131 matching files. Static join `e266-soil-literal-sample-residual-u2vrc_4i` leaves 1,191 E260 sampled
+bytes outside E233 declared sources. Wine drained with the local Bluetooth
+overlay.
+
+Captured scopes may contain nested reads; other callers, source domains,
+scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows
+are unverified. Older revision-sensitive tests were updated but not rerun; no
+performance comparison was made.
+
+
+## E267 Soil Evidence remaining lower reader groups
+
+Protected static unit `e267-soil-remaining-sites-classification-olse67o1`
+joins the E264 site capture with E233 owners. All 58 remaining lower words
+(232 bytes) appear in 64 filtered read rows: 43 within interpreter scope and
+21 outside it. The largest group has 30 distinct words in the scope of Thumb
+instruction `e3838` (`6800`); the next outside-scope width-four group covers
+13 words. Source and available instruction hashes were rechecked against the
+EUR ROM. The retained report lists all reader groups and sampled offsets.
+
+Scopes may contain nested reads. Opcode bits and grouping alone do not prove
+the effective addresses, table extents, consumers or ownership; outside-scope
+reads have no PC here. No owner or new replay was published. Other bytes,
+scenes, Linux, USA and native Windows remain open; no performance comparison
+was made.
+
+
+## E268 Soil Evidence e3838 indexed source plan
+
+Wine disassembly `e268-soil-e3838-disassembly-wine-l8md6ii5` and protected
+static plan `e268-soil-e3838-source-plan-dvwif_zm` authenticate the original
+Thumb sequence at `e382e..e383c`. It reads a signed halfword from RAM, shifts
+it by two and loads a word from base `14d580`; its root literal `e3854` is
+already owned by the Thumb literal resource. The E267 scope witnesses 30
+distinct unowned source words, 120 bytes, at sampled indices between 1 and 32.
+The plan records their exact offsets and hashes and publishes no owner; E269
+subsequently integrates these selected words.
+
+No guard or complete index domain is established in this code window. A
+runtime integration must preserve the original signed arithmetic and raw
+fallback for every unselected address, including negative indices; it must
+not infer a table bound from the sample. The instruction scope may contain
+nested accesses. Writers, other consumers and scenes, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E269 Soil Evidence sparse indexed words
+
+EUR E234-d233 adds the 30 E268 observed words (120 source bytes) to the
+existing indexed-word resource under a separate Soil Evidence group. The
+original signed index arithmetic and root stay in guest code. Only the
+authenticated sampled words are intercepted; unselected addresses retain
+the previous managed-or-raw behavior. The original 30 indexed records and
+129 other resource files are preserved. The resource keeps its existing ID
+and filename for compatibility.
+
+Wine reader `e269-soil-e3838-readers-wine-dpssxyfq` verifies old and new sources, coherent edit rejection,
+mirrors and mixed boundaries, 74 interpreted/generated cases covering each
+selected word and seven unselected indices including negative values,
+DMA/CpuSet/CpuFastSet transfers and snapshot owner retention. Wine scene
+`e269-soil-e3838-scene-wine-t22ztsv4` compares 600 recorded Soil Evidence frames with all 30 selected
+words altered in the managed backing ROM: all are consumed (120 source
+bytes counted), and state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match each frame. Wine CLI `e269-soil-e3838-cli-wine-oon2tik4` creates, reuses and verifies
+131 matching files. Static join `e269-soil-e3838-sample-residual-5aymku00` leaves 1,071 E260 sampled bytes
+outside E234 declared sources. Wine drained with the local Bluetooth overlay.
+
+The sample is not a guest bound; index writers, full domain, other readers,
+scenes, real BIOS and UI save/Load remain open. Linux, USA and native Windows
+are unverified. Older revision-sensitive tests were updated but not rerun; no
+performance comparison was made.
+
+
+## E270 Soil Evidence SpritePeek list candidates
+
+Protected static unit `e270-soil-sprite-list-candidates-16di9jl9` compares
+E260 selected reads with E234 sources. It finds 20 distinct count-shaped
+SpritePeek reads with matching six-byte-per-object payload requests. Each
+complete candidate range is sampled and outside E234 owners; together they
+cover 586 bytes, with no candidate range overlap. Their exact offsets, counts
+and source hashes are retained in the plan; E271 later integrates the selected
+lists.
+
+The address-only audit does not prove the temporal pairing, call site,
+producer or complete asset domain. These are candidates, not published
+resources. Validate typed list consumption and the original scene before
+claiming ownership. Other bytes, scenes, Linux, USA and native Windows remain
+open; no performance comparison was made.
+
+
+## E271 Soil Evidence typed sprite lists
+
+EUR E235-d234 adds the 20 E270 selected lists to the authenticated static OBJ
+resource: 91 typed objects and 586 original source bytes. The original 204
+lists and 129 other resource files are preserved. Guest bus reads and host
+OBJ decoding consume the typed data; unselected sources retain prior behavior.
+
+Wine reader `e271-soil-sprite-lists-readers-wine-gywh4sti` verifies prior sources, coherent edit rejection,
+mirrors and mixed boundaries, three original interpreter/host publication
+comparisons, transfers and snapshot owner retention. Wine scene `e271-soil-sprite-lists-scene-wine-b3g8olpn`
+compares 600 recorded Soil Evidence frames with all 20 backing lists altered:
+the host consumes all 20 (20 are also seen on the guest bus), and state,
+guest clock, video, OAM, dispatch and five nonempty audio streams match each
+frame. Wine CLI `e271-soil-sprite-lists-cli-wine-duz93oci` creates, reuses and verifies 131 matching files.
+Static join `e271-soil-sprite-list-sample-residual-ki3vs5jv` leaves 485 E260 sampled bytes outside E235 declared
+sources. Wine drained with the local Bluetooth overlay.
+
+The scene establishes consumption on this continuation, not the full pointer
+producer, archive domain, every reader or other scenes. Real BIOS, UI
+save/Load, Linux, USA and native Windows remain open. Older revision-sensitive
+tests were updated but not rerun; no performance comparison was made.
+
+
+## E272 Soil Evidence E235 sampled residual
+
+Protected static unit `e272-soil-e235-residual-classification-jae45q7h`
+joins the E260 selected-reader inventory to E235 without replay. The 485
+sampled bytes outside declared sources form 69 disjoint intervals: 112 bytes
+below `300000` and 373 at or above it. All remaining selected requests are
+Bus reads; no SpritePeek request remains in this address-only residual. Of
+28 fully sampled aligned lower words, 13 have possible static Thumb literal
+bit patterns. The bounded upper scan finds no complete fully sampled aligned
+LZ stream candidate.
+
+Two upper intervals `6c173c..6c1768` and `6c19b4..6c19e0` each contain 44
+sampled bytes; proximity to E271 lists does not establish a format or producer.
+Static bit patterns and read addresses do not prove executing PCs, source
+extents, consumers or ownership. Other scenes, Linux, USA and native Windows
+remain open; no performance comparison was made.
+
+
+## E273 Soil Evidence list-adjacent layout
+
+Protected static unit `e273-soil-list-adjacent-layout-rsm1ehul` authenticates
+the two 44-byte E272 Bus intervals beside the E271 lists against the EUR ROM
+and E235 manifest. In `6c173c..6c1768`, 20 halfwords added to base `6c1740`
+match all 20 E271 list starts; the retained layout records the exact values
+and hashes. The second interval `6c19b4..6c19e0` has no such base match under
+this bounded scan.
+
+The arithmetic relationship is compatible with the project's compact bank
+layout but does not establish the executing reader, selector domain, producer
+or ownership. The other interval's format remains unproved. No new replay or
+owner was published. Other ranges and scenes, Linux, USA and native Windows
+remain open; no performance comparison was made.
+
+
+## E276 Soil Evidence a83c2 switch source plan
+
+Wine disassembly `e276-soil-a83c2-disassembly-wine-ps_64nk8` and protected
+static plan `e276-soil-a83c2-switch-plan-6jwzeppl` authenticate the EUR Thumb
+dispatch at `0a83b6..0a83c6`. An unsigned comparison bounds its index to 0–14;
+the PC-relative root at `0a83c8` is already owned by `engine.thumb-pc-literals`
+and points to 15 even Thumb destinations at `0a83cc..0a8408` (60 bytes).
+E267 observed reads of indices 0, 1 and 14 in the retained Soil Evidence
+continuation. The destination range has no E236 owner; the root must not be
+declared twice.
+
+The sample does not establish all selector writers, caller paths or scenes;
+interpreter scopes may contain nested reads. The plan publishes no runtime
+owner. Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+
+## E277 Soil Evidence a83c2 switch runtime
+
+EUR E237-d236 adds the 15 E276 authenticated Thumb destinations (60 source
+bytes) to the existing switch-table resource. The PC-relative root remains
+owned by the Thumb literal resource and the original guest guard remains in
+control. The previous 45 switch tables and 129 other resource files are
+preserved. Unselected addresses retain the earlier managed or ROM behavior.
+
+Wine reader `e277-soil-a83c2-switch-readers-wine-syjfuorl` verifies source binding, coherent edit rejection,
+mirrors and mixed boundaries, the observed indices and outside-guard/fallback
+cases through original interpreted and generated instructions, transfers and
+snapshot ownership. The final indirect `MOV pc` uses interpreter fallback.
+Wine scene `e277-soil-a83c2-switch-scene-wine-76pzfrqd` compares 600 recorded Soil Evidence frames with all 15
+destinations altered: the switch resource is consumed and state, guest clock,
+video, OAM, dispatch and five nonempty audio streams match each frame. Wine
+CLI `e277-soil-a83c2-switch-cli-wine-bx2ywffb` creates, reuses and verifies 131 matching files. Static join
+`e277-soil-a83c2-switch-sample-residual-ab5klphb` leaves 385 E260 sampled bytes outside E237 declared sources. Wine
+drained with the local Bluetooth overlay.
+
+This continuation does not establish all selector writers, callers or other
+scenes; real BIOS, UI save/Load, Linux, USA and native Windows remain open.
+Older revision-sensitive tests were updated but not rerun; no performance
+comparison was made.
+
+
+## E278 Soil Evidence remaining switch source plan
+
+Wine disassembly `e278-soil-remaining-disassembly-wine-i0v9h91a` and protected
+static plan `e278-soil-remaining-switch-plan-8059c_wi` authenticate nine
+additional EUR Thumb dispatch windows scoped in E267. Their original unsigned
+guards bound 120 destinations across nine tables (480 source bytes), with no
+E237 destination-owner overlap. Each root is already owned by the Thumb
+literal resource. E267 scoped reads cover ten destination words (40 bytes);
+the rest of each guarded table is authenticated against the source, not
+claimed as observed during the retained continuation.
+
+The sample does not establish all selector writers, caller paths or scenes;
+interpreter scopes may contain nested reads. This plan publishes no runtime
+owner. Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+
+## E279 Soil Evidence remaining switch runtime
+
+EUR E238-d237 adds the nine E278 authenticated Thumb destination arrays: 120
+destinations and 480 source bytes. Their PC-relative roots remain owned by the
+Thumb literal resource and the original guest guards remain in control. The
+previous 46 switch tables and 129 other resource files are preserved.
+Unselected addresses retain the earlier managed or ROM behavior.
+
+Wine reader `e279-soil-remaining-switches-readers-wine-tvvu9o31` verifies source binding, coherent edit rejection,
+mirrors and mixed boundaries, observed indices and outside-guard/fallback cases
+through original interpreted and generated instructions, transfers and
+snapshot ownership. The final indirect `MOV pc` uses interpreter fallback.
+Wine scene `e279-soil-remaining-switches-scene-wine-tgdwq7za` compares 600 recorded Soil Evidence frames with all nine
+destination arrays altered: each selected switch is consumed and state, guest
+clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+Wine CLI `e279-soil-remaining-switches-cli-wine-7oaysfzd` creates, reuses and verifies 131 matching files. Static join
+`e279-soil-remaining-switches-sample-residual-vdq2xyeo` leaves 345 E260 sampled bytes outside E238 declared sources. Wine
+drained with the local Bluetooth overlay.
+
+This continuation does not establish all selector writers, callers or other
+scenes; real BIOS, UI save/Load, Linux, USA and native Windows remain open.
+Older revision-sensitive tests were updated but not rerun; no performance
+comparison was made.
+
+
+## E280 Soil Evidence 146xxx original literal sites
+
+Wine capture `e280-soil-146-sites-wine-q_rr8tp1` resumes the retained EUR
+Soil Evidence scene for 600 E238 frames while a test-only table disables
+translated entries in `146000..147000`. All 13 E272 candidate words are
+observed under interpreter instruction scopes; each original Thumb
+PC-relative load and effective source address matches the earlier static
+candidate. The capture retains original opcodes and source hashes. No
+outside-scope read is reported for these words.
+
+This is source attribution for one modified-dispatch continuation, not a
+state/clock/video equivalence proof, a complete caller census or a runtime
+owner. Interpreter scopes can contain nested accesses; opcode/address matches
+limit that ambiguity. Other scenes, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+
+## E281 Soil Evidence 146xxx literal runtime
+
+EUR E239-d238 extends the authenticated Thumb literal resource with 13 E280
+observed words (52 source bytes). Static plan
+`e281-soil-146-literal-plan-cpvihoiy` verifies the original opcodes, effective
+addresses and absence of resource or reader-instruction overlaps. The 1,411
+previous literal words and 129 other resource files are preserved.
+
+Wine reader `e281-soil-146-literals-readers-wine-h8dj_z7q` verifies exact sources, coherent edit rejection,
+mirrors and mixed boundaries, all 13 original interpreted and generated
+readers, transfers and snapshot ownership. Wine scene `e281-soil-146-literals-scene-wine-fivwh4bx` compares 600
+recorded Soil Evidence frames with all 13 backing words altered: all selected
+words are consumed and state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame. Wine CLI `e281-soil-146-literals-cli-wine-f80mzg0p` creates, reuses and
+verifies 131 matching files. Static join `e281-soil-146-literals-sample-residual-anz9pb_y` leaves 293 E260 sampled
+bytes outside E239 declared sources. Wine drained with the local Bluetooth
+overlay. The initial scene driver `jc5t3ros` stopped on a syntax error before
+Wine launched; its logs were retained and the corrected retry passed.
+
+The selected continuation does not establish every caller or scene; real
+BIOS, UI save/Load, Linux, USA and native Windows remain open. Older
+revision-sensitive tests were updated but not rerun; no performance comparison
+was made.
+
+
+## E282 Soil Evidence 14d6d8 native read contexts
+
+Wine capture `e282-soil-14d6d8-sites-wine-7mza_q21` resumes 600 EUR E239
+Soil Evidence frames with a test-only native read API observer filtered to
+`14d6d8..14d6e0`. All eight sampled bytes appear as separate native byte reads;
+the bus-site capture reports all eight outside interpreter scopes. The outer
+translated dispatch is `08147dc1`; the exported guest PCs are `08147e0a` and
+`08147e0c`. These are contexts only: native block chains and synchronization
+can make the exported PC stale, so they do not identify an exact instruction.
+
+The first Windows test build `m6dd0jue` failed on a test-only integer
+conversion; build `3___wn__` passed after correction. Wine attempt `dxkh8rfg`
+stopped because its driver omitted the TinyCC path; it drained and the
+corrected capture passed. Both failures retain their diagnostics.
+
+The capture does not establish source format, an exact reader instruction,
+state/clock/video equivalence, a runtime owner, other scenes or complete
+callers. Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+
+## E283 Soil Evidence copied halfword source plan
+
+Wine disassembly `e283-soil-14d6d8-disassembly-wine-p9uxyh0n` identifies a
+generic byte-copy loop. Wine capture `e283-soil-14d6d8-reader-wine-kg1o5ej2`
+executes a test-only interpreter window and attributes all eight bytes at
+`14d6d8..14d6e0` to its `147e0c` byte load, with return address `080f0437`.
+Caller disassembly `e283-soil-14d6d8-caller-disassembly-wine-84wwsn66` and
+protected plan `e283-soil-14d6d8-halfword-plan-_nouuxnz` authenticate the
+original eight-byte copy to the stack and subsequent halfword indexing. The
+four-halfword source has no E239 owner; its pointer at `0f0558` is already
+owned by the Thumb literal resource.
+
+The copy size is established, but no guest index bound is inferred from the
+four copied values. The modified-dispatch trace does not establish state
+equivalence, complete callers, source domain or other scenes. The plan
+publishes no owner. Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E284 Soil Evidence copied halfword runtime
+
+EUR E240-d239 extends `engine.copied-halfword-lookups` with the E283 observed
+four-halfword table (eight source bytes). Its separately owned pointer remains
+in the Thumb literal resource, now declared as a dependency. The previous
+three tables and 129 other resource files are preserved. Guest copying and
+indexing retain their original control flow, including out-of-range reads from
+the existing stack rather than an invented four-entry guard.
+
+Wine reader `e284-soil-copied-halfwords-readers-wine-r9a1m88c` verifies exact sources, coherent edit rejection,
+mirrors and mixed boundaries, original interpreted and generated root/copy/
+index instructions, outside-index behavior, transfers and snapshot owner
+retention. Wine scene `e284-soil-copied-halfwords-scene-wine-6xd5_pj5` compares 600 recorded Soil Evidence frames
+with all eight backing bytes altered: every selected byte is consumed and
+state, guest clock, video, OAM, dispatch and five nonempty audio streams match
+each frame. Wine CLI `e284-soil-copied-halfwords-cli-wine-af_b0kli` creates, reuses and verifies 131 matching files.
+Static join `e284-soil-copied-halfwords-sample-residual-z7jjst5p` leaves 285 E260 sampled bytes outside E240 declared
+sources, with no sampled bytes below `300000` remaining. Wine drained with
+the local Bluetooth overlay. The first reader fixture `vi786noo` failed in
+its generated-block dispatch loop; its logs were retained and the corrected
+retry passed.
+
+The selected continuation does not establish every caller or scene; real
+BIOS, UI save/Load, Linux, USA and native Windows remain open. Older
+revision-sensitive tests were updated but not rerun; no performance comparison
+was made.
+
+
+## E285 Soil Evidence upper residual reader sites
+
+Wine capture `e285-soil-upper-sites-wine-wgddtcdt` observes all 285 E240
+upper residual bytes during 600 retained EUR Soil Evidence frames. The 278
+selected read rows include 238 inside interpreter scopes and 40 outside them.
+The scoped groups cover 245 distinct sampled bytes; the outside-scope group
+covers 40 other bytes in `ae71be..ae787c`. The retained plan records reader
+widths, scoped PCs/opcodes, source offsets and hashes for classification.
+
+Instruction scopes can contain nested HLE/DMA reads, while outside-scope reads
+have no attributed PC. This is an address/site inventory, not proof of exact
+readers, source formats, extents, state equivalence or ownership. Other
+continuations, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E286 Soil Evidence twelve-byte record plan
+
+Wine disassembly `e286-soil-record-readers-disassembly-wine-cve18bko` and
+protected plan `e286-soil-12byte-record-plan-3otuwzz3` identify six E285
+scoped EUR records with a 12-byte stride, 72 source bytes and 66 sampled
+bytes. The original reader computes the stride from a guest byte index and
+branches on the first field; four selected records take type 3, one type 2
+and one type 4. The candidate source spans do not overlap E240 owners.
+
+The plan records linked pointer candidates for later verification; it does
+not establish all pointed-to formats, complete extents, guest index domains,
+other readers/scenes or runtime ownership. Interpreter scopes may contain
+nested reads. Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E287 Soil Evidence type-3 source links
+
+The protected source plan `e287-soil-type3-linked-source-plan-hukink1w` joins
+the E285 Wine reader scopes and E286 reader disassembly to four selected
+type-3 rows, four eight-byte descriptors and their four LZ wrappers. The
+original reader follows the row's descriptor pointer, reads its wrapper
+pointer, tests wrapper flags and passes the following payload to the LZ path.
+All four compressed streams already belong to `graphics.observed-lz-block`;
+one wrapper is already owned by `graphics.observed-tilemap-descriptor`.
+
+The four rows, four descriptors and three previously unowned wrappers occupy
+92 distinct source bytes, including 74 E285 sampled bytes. The shared wrapper
+and the four compressed streams must remain owned once. This plan does not
+install runtime ownership or establish the complete guest index domain, other
+readers or scenes. Interpreter scopes may include nested reads. Linux, USA
+and native Windows remain open; no performance comparison was made.
+
+
+## E288 Soil Evidence type-3 transfer runtime
+
+EUR E241-d240 extends the existing observed tilemap row and descriptor
+resources with four E287 type-3 rows, four linked descriptors and three new
+wrappers (92 source bytes). A fourth wrapper remains owned by the existing
+descriptor; all four LZ streams remain owned by the existing LZ resource.
+The previous fields and source spans are preserved, and no guest indexing
+bound is introduced.
+
+Wine reader `e288-soil-transfer-readers-wine-3f10sxyc` validates publication and reload, unchanged prior
+fields and other resources, unique shared ownership, altered-source mirrors
+and mixed boundaries, coherent-edit rejection and 32 original interpreter/
+generated reader cases. Wine scene `e288-soil-transfer-scene-wine-ixp_q9mt` compares 600 retained Soil
+Evidence frames while all 92 new bytes and the shared wrapper are altered:
+all four rows/descriptors and three new wrappers are consumed, while state,
+guest clock, video, OAM, dispatch and five nonempty audio streams match each
+frame. Wine CLI `e288-soil-transfer-cli-wine-ztjvp9z5` creates, reuses and verifies 131 matching files.
+The static join `e288-soil-transfer-sample-residual-tn85nxvm` leaves 211 E260 sampled bytes outside E241 declared
+sources, with none below `300000`. The previous copied-halfword fixture passes
+on Wine as `e288-soil-copied-regression-wine-5_4m68dh` after the revision-sensitive fixture updates. Wine drained
+with the local Bluetooth overlay.
+
+The first test build `_v5ux2rq` failed on a missing test `Bus` import; the
+corrected build passed. A reader preflight initially referenced the wrong
+predecessor unit and stopped before launching Wine; the corrected retry passed.
+Other old revision-sensitive Wine fixtures were updated but not rerun. This
+single continuation does not establish other types, callers, scenes or all
+source domains. Real BIOS, UI save/Load, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+
+## E289 Soil Evidence type-2 and type-4 source plan
+
+Wine disassembly `e289-soil-other-transfer-readers-disassembly-wine-9u2bzss8`
+and `e289-soil-type4-nested-disassembly-wine-hluvg778`, together with the
+protected plan `e289-soil-other-transfer-source-plan-3fd5j3nj`, identify
+104 currently unowned source bytes in the E286 selected EUR rows. The type-2
+path comprises a 12-byte row, an eight-byte list header, two eight-byte
+descriptors and two source rectangles of 30 and eight bytes. The original
+reader follows the two entries and calls the rectangle copy routine; the E285
+scopes include both descriptors and each rectangle's width read.
+
+The type-4 path comprises a 12-byte row, an eight-byte descriptor, a six-byte
+mode-7 header and one observed four-byte compressed run. The original dispatch
+selects the mode-7 reader, which passes the bytes after the header to a nested
+reader. Together the candidate spans include 78 bytes from the 211-byte E241
+residual sample. The two bytes at `af2716..af2718` remain unclassified; an
+already owned tilemap starts at `af2718`, but a relationship to the type-4
+source has not been established. No source ownership was installed by this
+plan. Interpreter scopes can contain nested reads; complete guest index
+domains, other consumers and scenes remain open. Linux, USA and native
+Windows remain pending; no performance comparison was made.
+
+
+## E290 Soil Evidence type-2 and type-4 runtime sources
+
+EUR E242-d241 serves the E289 selected type-2 row, list header, two
+descriptors and two rectangles, plus the selected type-4 row, descriptor,
+mode-7 header and first witnessed compressed run. The 104 source bytes extend
+the existing tilemap, descriptor and row resources while preserving prior
+fields and bindings. The two bytes at `af2716..af2718` remain ROM-backed,
+and the adjacent existing tilemap keeps its own source. No full guest-index
+range or relationship across that gap is inferred.
+
+Wine reader `e290-soil-types24-readers-wine-oan65r_2` checks extraction/reuse, previous resource fields,
+coherent-edit rejection, poisoned mirrors and mixed boundaries, the unowned
+gap, retained snapshot ownership and 36 original interpreted/generated
+reader cases with equal complete state and guest clock. Wine scene `e290-soil-types24-scene-wine-lrcwewjg`
+compares 600 retained Soil Evidence frames with all 104 backing bytes altered:
+both rows and the selected list, descriptors, rectangles, header and run are
+consumed, while state, clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Wine CLI `e290-soil-types24-cli-wine-okzybzbi` creates, reuses and verifies 131
+matching files. Static join `e290-soil-types24-sample-residual-tmqi3aq8` leaves 133 E260 sampled bytes outside
+E242 declared sources, none below `300000`. Wine drained with the local
+Bluetooth overlay.
+
+The first reader unit `vily3m21` failed because the generated fixture joined
+two adjacent loads while its interpreter comparison stopped after one; the
+fixture was aligned to the same explicit endpoint and the retry passed.
+Older revision-sensitive fixtures were updated but not rerun. This selected
+continuation does not establish the unclassified gap, other consumers, full
+guest domains or other scenes. Real BIOS, UI save/Load, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E291 Soil Evidence indexed four-byte record plan
+
+Wine disassembly `e291-soil-39e1-readers-disassembly-wine-enhec_9u` and
+`e291-soil-39e1-init-disassembly-wine-7v1qng1c`, together with protected plan
+`e291-soil-39e1-source-plan-v65i8w_f`, authenticate five four-byte range
+records at `39e124..39e138` and eleven four-byte sequence records at
+`39e138..39e164`. The original reader indexes the first table with a byte from
+the second. The sequence reader compares its incremented state to 11, and an
+independently referenced source begins at `39e164`. The existing Thumb
+literal resource owns the pointer words used by these readers.
+
+The 64 candidate bytes include 30 bytes in the E242 residual sample: all
+fields of six sequence records and the first two bytes of three range records.
+The plan installs no runtime owner. The compare does not establish a bound for
+arbitrary guest indices or initialization on every caller; other consumers,
+continuations and scenes remain open. Interpreter scopes may contain nested
+reads. Linux, USA and native Windows remain pending; no performance
+comparison was made.
+
+
+## E292 Soil Evidence indexed scene record runtime
+
+EUR E243-d242 serves the five E291 range records and eleven sequence records
+through `engine.soil-scene-records`. The resource owns precisely 64 original
+bytes and depends on the separately owned Thumb literal roots. Neighboring
+compact OBJ records keep their previous owner; accesses outside these spans
+retain the ordinary prior-owner or ROM fallback. No runtime limit on guest
+indices is introduced.
+
+Wine reader `e292-soil-scene-records-readers-wine-3ob0bs_v` verifies preparation and reuse, all 130 prior
+resource definitions and files, poisoned mirrors and mixed boundaries,
+rejection of a coherently edited file, retained snapshot ownership and 30
+original interpreter/generated reader cases, including out-of-range indices.
+Wine scene `e292-soil-scene-records-scene-wine-vg1kiwv5` compares 600 retained Soil Evidence frames with all
+64 source bytes altered and verifies actual reads from both record groups.
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+each frame. Wine CLI `e292-soil-scene-records-cli-wine-xhag7oue` creates, reuses and verifies 132 matching files.
+Static join `e292-soil-scene-records-sample-residual-xzombbo8` leaves 103 E260 sampled bytes outside E243 sources,
+none below `300000`. Wine drained using the local Bluetooth overlay.
+
+The first build `5_mtfneb` identified three budget-test calls missing the new
+argument; these were corrected before the successful build. Other callers,
+initial guest state, source domains, scenes, real BIOS and UI save/Load remain
+open. Older revision-sensitive fixtures were updated but not rerun; Linux,
+USA and native Windows remain pending. No performance comparison was made.
+
+
+## E293 Soil Evidence indirect eight-byte record plan
+
+Wine disassemblies `e293-soil-indirect-readers-disassembly-wine-u03116_g`,
+`e293-soil-indirect-roots-disassembly-wine-8lucbl5h` and
+`e293-soil-indirect-init-disassembly-wine-ezcwvq_7`, together with protected
+plan `e293-soil-indirect-records-source-plan-tcv9a6zh`, authenticate five
+eight-byte records at `39aaac`, `39aad4`, `39ab5c`, `39e214` and `39e21c`.
+The reader uses an eight-byte stride, a halfword at offset zero, two bytes
+at offsets two and three, and two halfwords at offsets four and six. The
+40 candidate bytes include 35 of the E243 residual sample. The compact OBJ
+source immediately before `39e214` and the existing Thumb literal owners
+remain separate.
+
+Five source-backed call sites pass pointers compatible with these records to
+the original initializer; one can reach `39aad4` with a byte index of four.
+Each of these call sites supplies a count of one. This static correspondence
+does not establish the ancestry of the sampled reads, bound arbitrary guest
+indices or prove that other callers use the same count. Nested reader scopes
+are possible. The plan installs no runtime owner; other callers, neighboring
+bytes, scenes, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E294 Soil Evidence indirect record runtime
+
+EUR E244-d243 serves the five E293 indirect records through
+`engine.soil-indirect-records`. The resource owns precisely 40 authenticated
+bytes and depends on the separately owned Thumb literal roots. Neighboring
+compact OBJ data retains its existing owner; accesses outside the five spans
+retain prior-owner or ROM fallback. No runtime guest-pointer bound is added.
+
+Wine reader `e294-soil-indirect-records-readers-wine-cp1uz_wj` verifies preparation and reuse, all 131 prior
+resource definitions and files, poisoned mirrors and mixed boundaries,
+rejection of a coherently edited file, retained snapshot ownership and 76
+original interpreter/generated cases, including out-of-range reads and the
+existing pointer literals. Wine scene `e294-soil-indirect-records-scene-wine-y9ussbh4` compares 600 retained Soil
+Evidence frames with all 40 source bytes altered and verifies reads from all
+five records. State, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Wine CLI `e294-soil-indirect-records-cli-wine-ahnerpan` creates, reuses and verifies 133
+matching files. Static join `e294-soil-indirect-records-sample-residual-vrbl28sb` leaves 68 E260 sampled bytes outside
+E244 sources, none below `300000`. Wine drained using the local Bluetooth
+overlay.
+
+The static pointer links do not establish actual ancestry of the sampled
+reads or complete guest domains. Other callers, neighboring bytes, scenes,
+real BIOS and UI save/Load remain open. Older revision-sensitive fixtures
+were updated but not rerun; Linux, USA and native Windows remain pending.
+No performance comparison was made.
+
+
+## E295 Soil Evidence indexed byte runtime
+
+EUR E245-d244 serves the six E285 witnessed bytes at `39e224..39e22a`
+through `engine.soil-indexed-bytes`. Original code at `080f05c6..080f05ce`
+loads the already-owned literal `f05fc`, adds a guest-provided byte index,
+reads the byte and compares it to zero. The source begins immediately after
+the E244 indirect record; the two resources keep separate ownership.
+Unselected indices continue through prior-owner or ROM fallback. Six observed
+bytes do not establish the complete original table or guest index domain.
+
+Wine reader `e295-soil-indexed-bytes-readers-wine-eb4g2qel` verifies preparation and reuse, all 132 prior
+resource definitions and files, poisoned mirrors and mixed boundaries,
+rejection of a coherently edited file, retained snapshot ownership and 18
+original interpreter/generated cases including indices 6, 7 and 255. Wine
+scene `e295-soil-indexed-bytes-scene-wine-_fgc_4sp` compares 600 retained Soil Evidence frames with all six
+source bytes altered and verifies reads at all six indices. State, guest
+clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+Wine CLI `e295-soil-indexed-bytes-cli-wine-ttlz5pdo` creates, reuses and verifies 134 matching files. Static
+join `e295-soil-indexed-bytes-sample-residual-hgpyj2zs` leaves 62 E260 sampled bytes outside E245 sources, none
+below `300000`. Wine drained using the local Bluetooth overlay.
+
+The previous indirect-record fixture's fallback probe was moved beyond the
+new source. Other callers, indices, neighboring bytes, scenes, real BIOS and
+UI save/Load remain open. Older revision-sensitive fixtures were updated but
+not rerun; Linux, USA and native Windows remain pending. No performance
+comparison was made.
+
+
+## E298 Soil Evidence scoped indexed values plan
+
+Wine disassembly `e298-soil-remaining-readers-disassembly-wine-0c4y0luh`,
+earlier disassembly `e293-soil-indirect-roots-disassembly-wine-8lucbl5h`,
+and protected plan `e298-soil-scoped-values-source-plan-bk3xxzcf` identify
+six individually observed values at `39a498`, `39a828`, `39a878`, `39abf4`,
+`39ac14` and `39aa84`. Their widths are respectively four, four, one, four,
+two and one bytes; all 16 bytes are in the E246 residual sample. The
+corresponding original readers reach them through existing Thumb literal
+owners. The value at `39abf4` is a Thumb code pointer; its low bit must be
+preserved, and this static observation does not establish invocation.
+
+The plan authenticates only these physical entries and installs no runtime
+owner. It does not establish the complete tables, guest indices, caller
+ancestry or callback execution, and scoped reads may include nested accesses.
+Other scenes, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E299 Soil Evidence scoped indexed values runtime
+
+EUR E247-d246 serves the six E298 observed values through
+`engine.soil-scoped-values`. The resource owns exactly the 16 authenticated
+source bytes, with their original one-, two- or four-byte widths. The Thumb
+mode bit of the code pointer is preserved. Existing Thumb literal roots keep
+their owner; unselected indices and neighboring bytes use prior-owner or ROM
+fallback. This does not establish complete tables or callback invocation.
+
+Wine reader `e299-soil-scoped-values-readers-wine-4zlbm5q6` verifies preparation and reuse, all 134 prior
+resource definitions and files, poisoned mirrors and mixed boundaries,
+rejection of a coherently edited file, retained snapshot ownership and 36
+original interpreter/generated load cases including unowned fallback and
+previously owned pointer roots. Wine scene `e299-soil-scoped-values-scene-wine-qeu3cp12` compares 600 retained
+Soil Evidence frames with all 16 backing bytes altered and verifies reads of
+all six values. State, guest clock, video, OAM, dispatch and five nonempty
+audio streams match each frame. Wine CLI `e299-soil-scoped-values-cli-wine-r4c7x_zi` creates, reuses and verifies
+136 matching files. Static join `e299-soil-scoped-values-sample-residual-248p0qae` leaves 22 E260 sampled bytes outside
+E247 sources, none below `300000`. Wine drained using the local Bluetooth
+overlay.
+
+The first reader `67sxyper` stopped after one interpreter instruction while
+the generated block combined two adjacent loads. The fixture now compares at
+one shared endpoint; its retry passed. Other indices, actual callback
+invocation and ancestry, scenes, real BIOS and UI save/Load remain open. Older revision-sensitive fixtures were updated
+but not rerun; Linux, USA and native Windows remain pending. No performance
+comparison was made.

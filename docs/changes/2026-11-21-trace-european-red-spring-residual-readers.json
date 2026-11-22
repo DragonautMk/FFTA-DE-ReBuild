@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "trace-european-red-spring-residual-readers",
+  "title": "Trace European Red Spring residual readers",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Identify source-site evidence for the remaining E172 Red Spring sample and record a concrete extraction follow-up for original Thumb literal reads."
+  ],
+  "validation": [
+    "Wine unit e232-redspring-residual-sites-av1hj_7p observes all 238 E221-unowned words during the retained 600 frames; 196 match original Thumb LDR opcodes and effective addresses. It protects the existing E221 dataset, ROM, state, input and native cache; Wine drains with the local Bluetooth overlay."
+  ],
+  "limitations": [
+    "Instruction scopes may include nested HLE/DMA accesses; this is not proof of all callers, source extents, scene equivalence or consumption. The other 42 words, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

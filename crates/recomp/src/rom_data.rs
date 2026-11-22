@@ -94,6 +94,12 @@ use gba_core::rom_data::{
     copied_halfword_lookups::CopiedHalfwordLookups, COPIED_HALFWORD_LOOKUPS_ID, COPIED_HALFWORD_LOOKUPS_FILE, MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES,
     indexed_halfwords_39a5::IndexedHalfwords39a5, INDEXED_HALFWORDS_39A5_ID, INDEXED_HALFWORDS_39A5_FILE, MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES,
     script_byte_lookup_3ad::ScriptByteLookup3ad, SCRIPT_BYTE_LOOKUP_3AD_ID, SCRIPT_BYTE_LOOKUP_3AD_FILE, MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES,
+    soil_scene_records::SoilSceneRecords, SOIL_SCENE_RECORDS_ID, SOIL_SCENE_RECORDS_FILE, MAX_SOIL_SCENE_RECORDS_FILE_BYTES,
+    soil_indirect_records::SoilIndirectRecords, SOIL_INDIRECT_RECORDS_ID, SOIL_INDIRECT_RECORDS_FILE, MAX_SOIL_INDIRECT_RECORDS_FILE_BYTES,
+    soil_indexed_bytes::SoilIndexedBytes, SOIL_INDEXED_BYTES_ID, SOIL_INDEXED_BYTES_FILE, MAX_SOIL_INDEXED_BYTES_FILE_BYTES,
+    soil_compact_record::SoilCompactRecord, SOIL_COMPACT_RECORD_ID, SOIL_COMPACT_RECORD_FILE, MAX_SOIL_COMPACT_RECORD_FILE_BYTES,
+    soil_scoped_values::SoilScopedValues, SOIL_SCOPED_VALUES_ID, SOIL_SCOPED_VALUES_FILE, MAX_SOIL_SCOPED_VALUES_FILE_BYTES,
+    soil_remaining_rectangles::SoilRemainingRectangles, SOIL_REMAINING_RECTANGLES_ID, SOIL_REMAINING_RECTANGLES_FILE, MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -259,6 +265,34 @@ mod indexed_records16_tests;
 #[cfg(test)]
 mod indexed_words_3959_tests;
 #[cfg(test)]
+mod soil_e3838_tests;
+#[cfg(test)]
+mod soil_sprite_lists_tests;
+#[cfg(test)]
+mod soil_compact_metadata_tests;
+#[cfg(test)]
+mod soil_a83c2_switch_tests;
+#[cfg(test)]
+mod soil_remaining_switch_tests;
+#[cfg(test)]
+mod soil_copied_halfwords_tests;
+#[cfg(test)]
+mod soil_transfer_records_tests;
+#[cfg(test)]
+mod soil_other_transfer_tests;
+#[cfg(test)]
+mod soil_scene_records_tests;
+#[cfg(test)]
+mod soil_indirect_records_tests;
+#[cfg(test)]
+mod soil_indexed_bytes_tests;
+#[cfg(test)]
+mod soil_compact_record_tests;
+#[cfg(test)]
+mod soil_scoped_values_tests;
+#[cfg(test)]
+mod soil_remaining_rectangles_tests;
+#[cfg(test)]
 mod thumb_switch_tables_tests;
 #[cfg(test)]
 mod thumb_switch_tables_additional_tests;
@@ -266,6 +300,8 @@ mod thumb_switch_tables_additional_tests;
 mod obj_derived_dimensions_tests;
 #[cfg(test)]
 mod copied_halfword_lookups_tests;
+#[cfg(test)]
+mod red_spring_final_copy_tests;
 #[cfg(test)]
 mod indexed_halfwords_39a5_tests;
 #[cfg(test)]
@@ -280,6 +316,30 @@ mod thumb_pc_literals_observed_tests;
 mod thumb_pc_literals_home_tests;
 #[cfg(test)]
 mod home_residual_code_support_tests;
+#[cfg(test)]
+mod red_spring_observed_literals_tests;
+#[cfg(test)]
+mod red_spring_switch_tables_tests;
+#[cfg(test)]
+mod red_spring_final_switch_tables_tests;
+#[cfg(test)]
+mod red_spring_anchored_literals_tests;
+#[cfg(test)]
+mod post_indexed_observed_literals_tests;
+#[cfg(test)]
+mod post_indexed_anchored_literals_tests;
+#[cfg(test)]
+mod bank_observed_literals_tests;
+#[cfg(test)]
+mod bank_switch_tables_tests;
+#[cfg(test)]
+mod blue_screw_observed_literals_tests;
+#[cfg(test)]
+mod soil_evidence_observed_literals_tests;
+#[cfg(test)]
+mod soil_146_observed_literals_tests;
+#[cfg(test)]
+mod blue_screw_switch_tables_tests;
 #[cfg(test)]
 mod obj_animation_tests;
 #[cfg(test)]
@@ -496,6 +556,8 @@ mod compact_redspring_tests;
 mod redspring_lz_source_tests;
 #[cfg(test)]
 mod observed_lz_tests;
+#[cfg(test)]
+mod soil_evidence_lz_tests;
 #[cfg(test)]
 mod interleaved_lz_chain_tests;
 #[cfg(test)]
@@ -1210,6 +1272,12 @@ fn parse_thumb_pc_literals(bytes: &[u8]) -> Result<ThumbPcLiterals, String> { le
 fn parse_copied_halfword_lookups(bytes: &[u8]) -> Result<CopiedHalfwordLookups, String> { let value: CopiedHalfwordLookups = serde_json::from_slice(bytes).map_err(|e| format!("Invalid copied_halfword_lookups: {e}"))?; value.validate()?; Ok(value) }
 fn parse_indexed_halfwords_39a5(bytes: &[u8]) -> Result<IndexedHalfwords39a5, String> { let value: IndexedHalfwords39a5 = serde_json::from_slice(bytes).map_err(|e| format!("Invalid indexed_halfwords_39a5: {e}"))?; value.validate()?; Ok(value) }
 fn parse_script_byte_lookup_3ad(bytes: &[u8]) -> Result<ScriptByteLookup3ad, String> { let value: ScriptByteLookup3ad = serde_json::from_slice(bytes).map_err(|e| format!("Invalid script_byte_lookup_3ad: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_scene_records(bytes: &[u8]) -> Result<SoilSceneRecords, String> { let value: SoilSceneRecords = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_scene_records: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_indirect_records(bytes: &[u8]) -> Result<SoilIndirectRecords, String> { let value: SoilIndirectRecords = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_indirect_records: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_indexed_bytes(bytes: &[u8]) -> Result<SoilIndexedBytes, String> { let value: SoilIndexedBytes = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_indexed_bytes: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_compact_record(bytes: &[u8]) -> Result<SoilCompactRecord, String> { let value: SoilCompactRecord = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_compact_record: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_scoped_values(bytes: &[u8]) -> Result<SoilScopedValues, String> { let value: SoilScopedValues = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_scoped_values: {e}"))?; value.validate()?; Ok(value) }
+fn parse_soil_remaining_rectangles(bytes: &[u8]) -> Result<SoilRemainingRectangles, String> { let value: SoilRemainingRectangles = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_remaining_rectangles: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1251,6 +1319,12 @@ fn encode_thumb_pc_literals(value: &ThumbPcLiterals) -> Result<Vec<u8>, String> 
 fn encode_copied_halfword_lookups(value: &CopiedHalfwordLookups) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode copied_halfword_lookups: {e}")) }
 fn encode_indexed_halfwords_39a5(value: &IndexedHalfwords39a5) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode indexed_halfwords_39a5: {e}")) }
 fn encode_script_byte_lookup_3ad(value: &ScriptByteLookup3ad) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode script_byte_lookup_3ad: {e}")) }
+fn encode_soil_scene_records(value: &SoilSceneRecords) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_scene_records: {e}")) }
+fn encode_soil_indirect_records(value: &SoilIndirectRecords) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_indirect_records: {e}")) }
+fn encode_soil_indexed_bytes(value: &SoilIndexedBytes) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_indexed_bytes: {e}")) }
+fn encode_soil_compact_record(value: &SoilCompactRecord) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_compact_record: {e}")) }
+fn encode_soil_scoped_values(value: &SoilScopedValues) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_scoped_values: {e}")) }
+fn encode_soil_remaining_rectangles(value: &SoilRemainingRectangles) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_remaining_rectangles: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1552,6 +1626,12 @@ struct Dataset {
     copied_halfword_lookups: Option<CopiedHalfwordLookups>,
     indexed_halfwords_39a5: Option<IndexedHalfwords39a5>,
     script_byte_lookup_3ad: Option<ScriptByteLookup3ad>,
+    soil_scene_records: Option<SoilSceneRecords>,
+    soil_indirect_records: Option<SoilIndirectRecords>,
+    soil_indexed_bytes: Option<SoilIndexedBytes>,
+    soil_compact_record: Option<SoilCompactRecord>,
+    soil_scoped_values: Option<SoilScopedValues>,
+    soil_remaining_rectangles: Option<SoilRemainingRectangles>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1664,6 +1744,12 @@ struct Dataset {
     copied_halfword_lookups_bytes: Option<Vec<u8>>,
     indexed_halfwords_39a5_bytes: Option<Vec<u8>>,
     script_byte_lookup_3ad_bytes: Option<Vec<u8>>,
+    soil_scene_records_bytes: Option<Vec<u8>>,
+    soil_indirect_records_bytes: Option<Vec<u8>>,
+    soil_indexed_bytes_bytes: Option<Vec<u8>>,
+    soil_compact_record_bytes: Option<Vec<u8>>,
+    soil_scoped_values_bytes: Option<Vec<u8>>,
+    soil_remaining_rectangles_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1802,6 +1888,12 @@ impl Dataset {
             copied_halfword_lookups: self.copied_halfword_lookups.as_ref().zip(self.copied_halfword_lookups_bytes.as_deref()),
             indexed_halfwords_39a5: self.indexed_halfwords_39a5.as_ref().zip(self.indexed_halfwords_39a5_bytes.as_deref()),
             script_byte_lookup_3ad: self.script_byte_lookup_3ad.as_ref().zip(self.script_byte_lookup_3ad_bytes.as_deref()),
+            soil_scene_records: self.soil_scene_records.as_ref().zip(self.soil_scene_records_bytes.as_deref()),
+            soil_indirect_records: self.soil_indirect_records.as_ref().zip(self.soil_indirect_records_bytes.as_deref()),
+            soil_indexed_bytes: self.soil_indexed_bytes.as_ref().zip(self.soil_indexed_bytes_bytes.as_deref()),
+            soil_compact_record: self.soil_compact_record.as_ref().zip(self.soil_compact_record_bytes.as_deref()),
+            soil_scoped_values: self.soil_scoped_values.as_ref().zip(self.soil_scoped_values_bytes.as_deref()),
+            soil_remaining_rectangles: self.soil_remaining_rectangles.as_ref().zip(self.soil_remaining_rectangles_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2008,6 +2100,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let copied_halfword_lookups_bytes=manifest.coverage.iter().any(|id|id==COPIED_HALFWORD_LOOKUPS_ID).then(||read_bounded(&path.join(COPIED_HALFWORD_LOOKUPS_FILE),MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES)).transpose()?;
     let indexed_halfwords_39a5_bytes=manifest.coverage.iter().any(|id|id==INDEXED_HALFWORDS_39A5_ID).then(||read_bounded(&path.join(INDEXED_HALFWORDS_39A5_FILE),MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES)).transpose()?;
     let script_byte_lookup_3ad_bytes=manifest.coverage.iter().any(|id|id==SCRIPT_BYTE_LOOKUP_3AD_ID).then(||read_bounded(&path.join(SCRIPT_BYTE_LOOKUP_3AD_FILE),MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES)).transpose()?;
+    let soil_scene_records_bytes=manifest.coverage.iter().any(|id|id==SOIL_SCENE_RECORDS_ID).then(||read_bounded(&path.join(SOIL_SCENE_RECORDS_FILE),MAX_SOIL_SCENE_RECORDS_FILE_BYTES)).transpose()?;
+    let soil_indirect_records_bytes=manifest.coverage.iter().any(|id|id==SOIL_INDIRECT_RECORDS_ID).then(||read_bounded(&path.join(SOIL_INDIRECT_RECORDS_FILE),MAX_SOIL_INDIRECT_RECORDS_FILE_BYTES)).transpose()?;
+    let soil_indexed_bytes_bytes=manifest.coverage.iter().any(|id|id==SOIL_INDEXED_BYTES_ID).then(||read_bounded(&path.join(SOIL_INDEXED_BYTES_FILE),MAX_SOIL_INDEXED_BYTES_FILE_BYTES)).transpose()?;
+    let soil_compact_record_bytes=manifest.coverage.iter().any(|id|id==SOIL_COMPACT_RECORD_ID).then(||read_bounded(&path.join(SOIL_COMPACT_RECORD_FILE),MAX_SOIL_COMPACT_RECORD_FILE_BYTES)).transpose()?;
+    let soil_scoped_values_bytes=manifest.coverage.iter().any(|id|id==SOIL_SCOPED_VALUES_ID).then(||read_bounded(&path.join(SOIL_SCOPED_VALUES_FILE),MAX_SOIL_SCOPED_VALUES_FILE_BYTES)).transpose()?;
+    let soil_remaining_rectangles_bytes=manifest.coverage.iter().any(|id|id==SOIL_REMAINING_RECTANGLES_ID).then(||read_bounded(&path.join(SOIL_REMAINING_RECTANGLES_FILE),MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2166,6 +2264,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         copied_halfword_lookups_bytes.as_ref().map_or(0, Vec::len),
         indexed_halfwords_39a5_bytes.as_ref().map_or(0, Vec::len),
         script_byte_lookup_3ad_bytes.as_ref().map_or(0, Vec::len),
+        soil_scene_records_bytes.as_ref().map_or(0, Vec::len),
+        soil_indirect_records_bytes.as_ref().map_or(0, Vec::len),
+        soil_indexed_bytes_bytes.as_ref().map_or(0, Vec::len),
+        soil_compact_record_bytes.as_ref().map_or(0, Vec::len),
+        soil_scoped_values_bytes.as_ref().map_or(0, Vec::len),
+        soil_remaining_rectangles_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2279,6 +2383,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let copied_halfword_lookups=copied_halfword_lookups_bytes.as_deref().map(parse_copied_halfword_lookups).transpose()?;
     let indexed_halfwords_39a5=indexed_halfwords_39a5_bytes.as_deref().map(parse_indexed_halfwords_39a5).transpose()?;
     let script_byte_lookup_3ad=script_byte_lookup_3ad_bytes.as_deref().map(parse_script_byte_lookup_3ad).transpose()?;
+    let soil_scene_records=soil_scene_records_bytes.as_deref().map(parse_soil_scene_records).transpose()?;
+    let soil_indirect_records=soil_indirect_records_bytes.as_deref().map(parse_soil_indirect_records).transpose()?;
+    let soil_indexed_bytes=soil_indexed_bytes_bytes.as_deref().map(parse_soil_indexed_bytes).transpose()?;
+    let soil_compact_record=soil_compact_record_bytes.as_deref().map(parse_soil_compact_record).transpose()?;
+    let soil_scoped_values=soil_scoped_values_bytes.as_deref().map(parse_soil_scoped_values).transpose()?;
+    let soil_remaining_rectangles=soil_remaining_rectangles_bytes.as_deref().map(parse_soil_remaining_rectangles).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2442,6 +2552,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         copied_halfword_lookups,
         indexed_halfwords_39a5,
         script_byte_lookup_3ad,
+        soil_scene_records,
+        soil_indirect_records,
+        soil_indexed_bytes,
+        soil_compact_record,
+        soil_scoped_values,
+        soil_remaining_rectangles,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2554,6 +2670,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         copied_halfword_lookups_bytes,
         indexed_halfwords_39a5_bytes,
         script_byte_lookup_3ad_bytes,
+        soil_scene_records_bytes,
+        soil_indirect_records_bytes,
+        soil_indexed_bytes_bytes,
+        soil_compact_record_bytes,
+        soil_scoped_values_bytes,
+        soil_remaining_rectangles_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2694,6 +2816,12 @@ fn check_dataset_budget(
     copied_halfword_lookups: usize,
     indexed_halfwords_39a5: usize,
     script_byte_lookup_3ad: usize,
+    soil_scene_records: usize,
+    soil_indirect_records: usize,
+    soil_indexed_bytes: usize,
+    soil_compact_record: usize,
+    soil_scoped_values: usize,
+    soil_remaining_rectangles: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -2822,6 +2950,12 @@ fn check_dataset_budget(
         || copied_halfword_lookups as u64 > MAX_COPIED_HALFWORD_LOOKUPS_FILE_BYTES
         || indexed_halfwords_39a5 as u64 > MAX_INDEXED_HALFWORDS_39A5_FILE_BYTES
         || script_byte_lookup_3ad as u64 > MAX_SCRIPT_BYTE_LOOKUP_3AD_FILE_BYTES
+        || soil_scene_records as u64 > MAX_SOIL_SCENE_RECORDS_FILE_BYTES
+        || soil_indirect_records as u64 > MAX_SOIL_INDIRECT_RECORDS_FILE_BYTES
+        || soil_indexed_bytes as u64 > MAX_SOIL_INDEXED_BYTES_FILE_BYTES
+        || soil_compact_record as u64 > MAX_SOIL_COMPACT_RECORD_FILE_BYTES
+        || soil_scoped_values as u64 > MAX_SOIL_SCOPED_VALUES_FILE_BYTES
+        || soil_remaining_rectangles as u64 > MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -2956,6 +3090,12 @@ fn check_dataset_budget(
         .saturating_add(copied_halfword_lookups)
         .saturating_add(indexed_halfwords_39a5)
         .saturating_add(script_byte_lookup_3ad)
+        .saturating_add(soil_scene_records)
+        .saturating_add(soil_indirect_records)
+        .saturating_add(soil_indexed_bytes)
+        .saturating_add(soil_compact_record)
+        .saturating_add(soil_scoped_values)
+        .saturating_add(soil_remaining_rectangles)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3176,12 +3316,18 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if dataset.iwram_memory_helpers.is_some() {eprintln!("ROM_DATA runtime=decoded resource={IWRAM_MEMORY_HELPERS_ID} file={} helpers=3",dataset.manifest.resources[121].sha256);}
     if dataset.adjacent_offset_tables.is_some() {eprintln!("ROM_DATA runtime=decoded resource={ADJACENT_OFFSET_TABLES_ID} file={} tables=5",dataset.manifest.resources[122].sha256);}
     if let Some(data)=&dataset.indexed_records16 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_RECORDS16_ID} file={} records={}",dataset.manifest.resources[123].sha256,data.records.len());}
-    if let Some(data)=&dataset.indexed_words_3959 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_WORDS_3959_ID} file={} records={}",dataset.manifest.resources[124].sha256,data.records.len());}
+    if let Some(data)=&dataset.indexed_words_3959 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_WORDS_3959_ID} file={} records={} soil_e3838_records={}",dataset.manifest.resources[124].sha256,data.records.len(),data.soil_e3838_records.len());}
     if let Some(data)=&dataset.thumb_switch_tables {eprintln!("ROM_DATA runtime=decoded resource={THUMB_SWITCH_TABLES_ID} file={} tables={} additional={}",dataset.manifest.resources[125].sha256,data.tables.len(),data.additional_tables.len());}
-    if let Some(data)=&dataset.thumb_pc_literals {eprintln!("ROM_DATA runtime=decoded resource={THUMB_PC_LITERALS_ID} file={} literals={} additional={} observed={} home_anchored={} home_observed={}",dataset.manifest.resources[126].sha256,data.literals.len(),data.additional.len(),data.observed.len(),data.home_anchored.len(),data.home_observed.len());}
+    if let Some(data)=&dataset.thumb_pc_literals {eprintln!("ROM_DATA runtime=decoded resource={THUMB_PC_LITERALS_ID} file={} literals={} additional={} observed={} home_anchored={} home_observed={} red_spring_observed={} red_spring_anchored={} post_indexed_observed={} post_indexed_anchored={} bank_observed={} blue_screw_observed={} soil_evidence_observed={} soil_146_observed={}",dataset.manifest.resources[126].sha256,data.literals.len(),data.additional.len(),data.observed.len(),data.home_anchored.len(),data.home_observed.len(),data.red_spring_observed.len(),data.red_spring_anchored.len(),data.post_indexed_observed.len(),data.post_indexed_anchored.len(),data.bank_observed.len(),data.blue_screw_observed.len(),data.soil_evidence_observed.len(),data.soil_146_observed.len());}
     if let Some(data)=&dataset.copied_halfword_lookups {eprintln!("ROM_DATA runtime=decoded resource={COPIED_HALFWORD_LOOKUPS_ID} file={} tables={}",dataset.manifest.resources[127].sha256,data.tables.len());}
     if let Some(data)=&dataset.indexed_halfwords_39a5 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_HALFWORDS_39A5_ID} file={} values={}",dataset.manifest.resources[128].sha256,data.values.len());}
     if let Some(data)=&dataset.script_byte_lookup_3ad {eprintln!("ROM_DATA runtime=decoded resource={SCRIPT_BYTE_LOOKUP_3AD_ID} file={} values={}",dataset.manifest.resources[129].sha256,data.values.len());}
+    if let Some(data)=&dataset.soil_scene_records {eprintln!("ROM_DATA runtime=decoded resource={SOIL_SCENE_RECORDS_ID} file={} ranges={} sequence={}",dataset.manifest.resources[130].sha256,data.ranges.len(),data.sequence.len());}
+    if let Some(data)=&dataset.soil_indirect_records {eprintln!("ROM_DATA runtime=decoded resource={SOIL_INDIRECT_RECORDS_ID} file={} records={}",dataset.manifest.resources[131].sha256,data.records.len());}
+    if let Some(data)=&dataset.soil_indexed_bytes {eprintln!("ROM_DATA runtime=decoded resource={SOIL_INDEXED_BYTES_ID} file={} values={}",dataset.manifest.resources[132].sha256,data.values.len());}
+    if let Some(data)=&dataset.soil_compact_record {eprintln!("ROM_DATA runtime=decoded resource={SOIL_COMPACT_RECORD_ID} file={} record_offset={}",dataset.manifest.resources[133].sha256,data.record_offset);}
+    if let Some(_data)=&dataset.soil_scoped_values {eprintln!("ROM_DATA runtime=decoded resource={SOIL_SCOPED_VALUES_ID} file={} values={}",dataset.manifest.resources[134].sha256,gba_core::rom_data::soil_scoped_values::SPANS.len());}
+    if let Some(data)=&dataset.soil_remaining_rectangles {eprintln!("ROM_DATA runtime=decoded resource={SOIL_REMAINING_RECTANGLES_ID} file={} rectangles={}",dataset.manifest.resources[135].sha256,data.rectangles.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3350,7 +3496,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.conditional_substitution_words_stats() {eprintln!("ROM_DATA_USE resource={CONDITIONAL_SUBSTITUTION_WORDS_ID} dataset={} bus_reads={} source_bytes={} literal_bytes={} word_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_bytes,i.word_bytes);}
         if let Some(i)=resources.display_control_tables_stats() {eprintln!("ROM_DATA_USE resource={DISPLAY_CONTROL_TABLES_ID} dataset={} bus_reads={} source_bytes={} halfword_bytes={} pointer_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.halfword_bytes,i.pointer_bytes);}
         if let Some(i)=resources.compact_primary_alias_stats() {eprintln!("ROM_DATA_USE resource={COMPACT_PRIMARY_ALIAS_ID} dataset={} bus_reads={} source_bytes={} selector_bytes={} position_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.selector_bytes,i.position_bytes);}
-        if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls);}
+        if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={} soil_source_bytes={:?} soil_hle_calls={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls,i.soil_source_bytes_by_block,i.soil_hle_calls_by_block);}
         if let Some(i)=resources.constructor_template64_stats() {eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_TEMPLATE64_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.observed_tilemap_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ID} dataset={} bus_reads={} source_bytes={} rectangle_bytes={:?} root_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.rectangle_bytes,i.root_bytes);}
         if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} wrapper_bytes={} transfer_descriptor_bytes={} transfer_wrapper_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.descriptor_bytes,i.wrapper_bytes,i.transfer_descriptor_bytes,i.transfer_wrapper_bytes);}
@@ -3359,12 +3505,18 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.iwram_memory_helpers_stats() {eprintln!("ROM_DATA_USE resource={IWRAM_MEMORY_HELPERS_ID} dataset={} bus_reads={} helper_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.helper_bytes);}
         if let Some(i)=resources.adjacent_offset_tables_stats() {eprintln!("ROM_DATA_USE resource={ADJACENT_OFFSET_TABLES_ID} dataset={} bus_reads={} table_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.table_bytes);}
         if let Some(i)=resources.indexed_records16_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_RECORDS16_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask);}
-        if let Some(i)=resources.indexed_words_3959_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_WORDS_3959_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask);}
+        if let Some(i)=resources.indexed_words_3959_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_WORDS_3959_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?} soil_e3838_source_bytes={} soil_e3838_record_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask,i.soil_e3838_source_bytes,i.soil_e3838_record_mask);}
         if let Some(i)=resources.thumb_switch_tables_stats() {eprintln!("ROM_DATA_USE resource={THUMB_SWITCH_TABLES_ID} dataset={} bus_reads={} source_bytes={} roots_mask={} destinations_mask={} additional_source_bytes={} additional_destinations_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.roots_mask,i.destinations_mask,i.additional_source_bytes,i.additional_destinations_mask);}
-        if let Some(i)=resources.thumb_pc_literals_stats() {eprintln!("ROM_DATA_USE resource={THUMB_PC_LITERALS_ID} dataset={} bus_reads={} source_bytes={} literals_mask={:?} additional_source_bytes={} additional_mask={:?} observed_source_bytes={} observed_mask={:?} home_anchored_bytes={} home_anchored_mask={} home_observed_bytes={} home_observed_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literals_mask,i.additional_source_bytes,i.additional_mask,i.observed_source_bytes,i.observed_mask,i.home_anchored_bytes,i.home_anchored_mask,i.home_observed_bytes,i.home_observed_mask);}
-        if let Some(i)=resources.copied_halfword_lookups_stats() {eprintln!("ROM_DATA_USE resource={COPIED_HALFWORD_LOOKUPS_ID} dataset={} bus_reads={} table_bytes={} root_bytes={} tables={} roots={}",resources.dataset_sha256(),i.bus_reads,i.table_bytes,i.root_bytes,i.table_mask,i.root_mask);}
+        if let Some(i)=resources.thumb_pc_literals_stats() {eprintln!("ROM_DATA_USE resource={THUMB_PC_LITERALS_ID} dataset={} bus_reads={} source_bytes={} literals_mask={:?} additional_source_bytes={} additional_mask={:?} observed_source_bytes={} observed_mask={:?} home_anchored_bytes={} home_anchored_mask={} home_observed_bytes={} home_observed_mask={} red_spring_observed_bytes={} red_spring_observed_mask={:?} red_spring_anchored_bytes={} red_spring_anchored_mask={} post_indexed_observed_bytes={} post_indexed_observed_mask={} post_indexed_anchored_bytes={} post_indexed_anchored_mask={} bank_observed_bytes={} bank_observed_mask={:?} blue_screw_observed_bytes={} blue_screw_observed_mask={} soil_evidence_observed_bytes={} soil_evidence_observed_mask={:?} soil_146_observed_bytes={} soil_146_observed_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literals_mask,i.additional_source_bytes,i.additional_mask,i.observed_source_bytes,i.observed_mask,i.home_anchored_bytes,i.home_anchored_mask,i.home_observed_bytes,i.home_observed_mask,i.red_spring_observed_bytes,i.red_spring_observed_mask,i.red_spring_anchored_bytes,i.red_spring_anchored_mask,i.post_indexed_observed_bytes,i.post_indexed_observed_mask,i.post_indexed_anchored_bytes,i.post_indexed_anchored_mask,i.bank_observed_bytes,i.bank_observed_mask,i.blue_screw_observed_bytes,i.blue_screw_observed_mask,i.soil_evidence_observed_bytes,i.soil_evidence_observed_mask,i.soil_146_observed_bytes,i.soil_146_observed_mask);}
+        if let Some(i)=resources.copied_halfword_lookups_stats() {eprintln!("ROM_DATA_USE resource={COPIED_HALFWORD_LOOKUPS_ID} dataset={} bus_reads={} table_bytes={} root_bytes={} tables={} roots={} soil_source_mask={}",resources.dataset_sha256(),i.bus_reads,i.table_bytes,i.root_bytes,i.table_mask,i.root_mask,i.soil_source_mask);}
         if let Some(i)=resources.indexed_halfwords_39a5_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_HALFWORDS_39A5_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
         if let Some(i)=resources.script_byte_lookup_3ad_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT_BYTE_LOOKUP_3AD_ID} dataset={} bus_reads={} table_bytes={} root_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.table_bytes,i.root_bytes,i.values_mask);}
+        if let Some(i)=resources.soil_scene_records_stats() {eprintln!("ROM_DATA_USE resource={SOIL_SCENE_RECORDS_ID} dataset={} bus_reads={} range_bytes={} sequence_bytes={} range_mask={} sequence_mask={}",resources.dataset_sha256(),i.bus_reads,i.range_bytes,i.sequence_bytes,i.range_mask,i.sequence_mask);}
+        if let Some(i)=resources.soil_indirect_records_stats() {eprintln!("ROM_DATA_USE resource={SOIL_INDIRECT_RECORDS_ID} dataset={} bus_reads={} source_bytes={} record_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.record_mask);}
+        if let Some(i)=resources.soil_indexed_bytes_stats() {eprintln!("ROM_DATA_USE resource={SOIL_INDEXED_BYTES_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
+        if let Some(i)=resources.soil_compact_record_stats() {eprintln!("ROM_DATA_USE resource={SOIL_COMPACT_RECORD_ID} dataset={} bus_reads={} record_bytes={} pointer_bytes={}",resources.dataset_sha256(),i.bus_reads,i.record_bytes,i.pointer_bytes);}
+        if let Some(i)=resources.soil_scoped_values_stats() {eprintln!("ROM_DATA_USE resource={SOIL_SCOPED_VALUES_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
+        if let Some(i)=resources.soil_remaining_rectangles_stats() {eprintln!("ROM_DATA_USE resource={SOIL_REMAINING_RECTANGLES_ID} dataset={} bus_reads={} literal_bytes={} rectangle_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.literal_bytes,i.rectangle_bytes);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3783,6 +3935,12 @@ fn write_dataset_inner(
     let copied_halfword_lookups_data=source.copied_halfword_lookups.as_ref().map(|c|encode_copied_halfword_lookups(&c.decoded)).transpose()?;
     let indexed_halfwords_39a5_data=source.indexed_halfwords_39a5.as_ref().map(|c|encode_indexed_halfwords_39a5(&c.decoded)).transpose()?;
     let script_byte_lookup_3ad_data=source.script_byte_lookup_3ad.as_ref().map(|c|encode_script_byte_lookup_3ad(&c.decoded)).transpose()?;
+    let soil_scene_records_data=source.soil_scene_records.as_ref().map(|c|encode_soil_scene_records(&c.decoded)).transpose()?;
+    let soil_indirect_records_data=source.soil_indirect_records.as_ref().map(|c|encode_soil_indirect_records(&c.decoded)).transpose()?;
+    let soil_indexed_bytes_data=source.soil_indexed_bytes.as_ref().map(|c|encode_soil_indexed_bytes(&c.decoded)).transpose()?;
+    let soil_compact_record_data=source.soil_compact_record.as_ref().map(|c|encode_soil_compact_record(&c.decoded)).transpose()?;
+    let soil_scoped_values_data=source.soil_scoped_values.as_ref().map(|c|encode_soil_scoped_values(&c.decoded)).transpose()?;
+    let soil_remaining_rectangles_data=source.soil_remaining_rectangles.as_ref().map(|c|encode_soil_remaining_rectangles(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -3927,6 +4085,12 @@ fn write_dataset_inner(
     if let Some(bytes)=&copied_halfword_lookups_data {files.push(bytes);}
     if let Some(bytes)=&indexed_halfwords_39a5_data {files.push(bytes);}
     if let Some(bytes)=&script_byte_lookup_3ad_data {files.push(bytes);}
+    if let Some(bytes)=&soil_scene_records_data {files.push(bytes);}
+    if let Some(bytes)=&soil_indirect_records_data {files.push(bytes);}
+    if let Some(bytes)=&soil_indexed_bytes_data {files.push(bytes);}
+    if let Some(bytes)=&soil_compact_record_data {files.push(bytes);}
+    if let Some(bytes)=&soil_scoped_values_data {files.push(bytes);}
+    if let Some(bytes)=&soil_remaining_rectangles_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4062,6 +4226,12 @@ fn write_dataset_inner(
         copied_halfword_lookups_data.as_ref().map_or(0, Vec::len),
         indexed_halfwords_39a5_data.as_ref().map_or(0, Vec::len),
         script_byte_lookup_3ad_data.as_ref().map_or(0, Vec::len),
+        soil_scene_records_data.as_ref().map_or(0, Vec::len),
+        soil_indirect_records_data.as_ref().map_or(0, Vec::len),
+        soil_indexed_bytes_data.as_ref().map_or(0, Vec::len),
+        soil_compact_record_data.as_ref().map_or(0, Vec::len),
+        soil_scoped_values_data.as_ref().map_or(0, Vec::len),
+        soil_remaining_rectangles_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4190,6 +4360,12 @@ fn write_dataset_inner(
     if let Some(bytes)=&copied_halfword_lookups_data {write(&path.join(COPIED_HALFWORD_LOOKUPS_FILE),bytes)?;}
     if let Some(bytes)=&indexed_halfwords_39a5_data {write(&path.join(INDEXED_HALFWORDS_39A5_FILE),bytes)?;}
     if let Some(bytes)=&script_byte_lookup_3ad_data {write(&path.join(SCRIPT_BYTE_LOOKUP_3AD_FILE),bytes)?;}
+    if let Some(bytes)=&soil_scene_records_data {write(&path.join(SOIL_SCENE_RECORDS_FILE),bytes)?;}
+    if let Some(bytes)=&soil_indirect_records_data {write(&path.join(SOIL_INDIRECT_RECORDS_FILE),bytes)?;}
+    if let Some(bytes)=&soil_indexed_bytes_data {write(&path.join(SOIL_INDEXED_BYTES_FILE),bytes)?;}
+    if let Some(bytes)=&soil_compact_record_data {write(&path.join(SOIL_COMPACT_RECORD_FILE),bytes)?;}
+    if let Some(bytes)=&soil_scoped_values_data {write(&path.join(SOIL_SCOPED_VALUES_FILE),bytes)?;}
+    if let Some(bytes)=&soil_remaining_rectangles_data {write(&path.join(SOIL_REMAINING_RECTANGLES_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4544,6 +4720,12 @@ mod tests {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4871,8 +5053,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

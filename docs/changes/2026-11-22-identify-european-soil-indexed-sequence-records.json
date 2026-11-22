@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-indexed-sequence-records",
+  "title": "Identify European Soil indexed sequence records",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate five indexed range records and eleven sequence records, their original readers and separately owned pointer literals."
+  ],
+  "validation": [
+    "Wine disassembly e291-soil-39e1-readers-disassembly-wine-enhec_9u and e291-soil-39e1-init-disassembly-wine-7v1qng1c plus protected plan e291-soil-39e1-source-plan-v65i8w_f verify 64 unowned source bytes, including 30 sampled bytes."
+  ],
+  "limitations": [
+    "The original comparison does not bound arbitrary guest indices or establish initialization for every caller; runtime ownership, other consumers and scenes remain open.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -95,7 +95,7 @@ fn european_additional_switch_destinations_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (221, 220, 130)
+        (248, 247, 136)
     );
     for prior in &old.resources {
         let current = source
@@ -111,6 +111,24 @@ fn european_additional_switch_destinations_and_original_readers() {
                 &previous, &prepared.directory, prior, current);
         } else if prior.id == THUMB_PC_LITERALS_ID {
             super::thumb_pc_literals_home_tests::assert_previous_thumb_literals_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COPIED_HALFWORD_LOOKUPS_ID {
+            super::copied_halfword_lookups_tests::assert_previous_copied_halfwords_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == INDEXED_WORDS_3959_ID {
+            super::soil_e3838_tests::assert_previous_indexed_words_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COMPACT_OBJ_CATALOG_ID {
+            super::soil_compact_metadata_tests::assert_previous_compact_catalog_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_TILEMAP_ROW_ID || prior.id == OBSERVED_TILEMAP_DESCRIPTOR_ID || prior.id == OBSERVED_TILEMAP_ID {
+            super::soil_transfer_records_tests::assert_previous_soil_transfer_resource_preserved(
                 &previous, &prepared.directory, prior, current);
         } else {
             assert_eq!(current, prior);
@@ -475,8 +493,8 @@ fn european_additional_switch_destinations_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[221,220], "additional_tables":4, "destinations":163, "source_bytes":652,
-        "prior_tables_preserved":23, "prior_other_resources_unchanged":124, "prior_thumb_literals_preserved":true, "prior_obj_dimensions_preserved":true, "legacy_masks_preserved":true,
+        "status":"PASS", "revision":[248,247], "additional_tables":4, "destinations":163, "source_bytes":652,
+        "prior_tables_preserved":23, "prior_other_resources_unchanged":117, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_thumb_literals_preserved":true, "prior_obj_dimensions_preserved":true, "legacy_masks_preserved":true,
         "existing_literal_roots_preserved":true, "poisoned_mixed_boundaries_and_mirrors":true,
         "original_guarded_interpreter_generated_prefix_cases":16, "indirect_mov_interpreter_fallback":true, "outside_load_sequence_cases":8,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

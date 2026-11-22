@@ -1687,16 +1687,539 @@ pub const HOME_OBSERVED: [(u32, u32, u16); HOME_OBSERVED_COUNT] = [
     (0x12b6cc, 0x12b6b8, 0x4804),
 ];
 
-pub const SOURCE_PAGES: [usize; 100] = [
+// Original LDR scopes observed in the retained EUR Red Spring continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const RED_SPRING_OBSERVED_COUNT: usize = 196;
+pub const RED_SPRING_OBSERVED: [(u32, u32, u16); RED_SPRING_OBSERVED_COUNT] = [
+    (0x003698, 0x003688, 0x4b03),
+    (0x00369c, 0x00368c, 0x4903),
+    (0x005ba0, 0x005b90, 0x4803),
+    (0x005bb8, 0x005ba8, 0x4803),
+    (0x01070c, 0x010708, 0x4800),
+    (0x010ac8, 0x010a88, 0x4a0f),
+    (0x010acc, 0x010a8c, 0x4e0f),
+    (0x010ad0, 0x010a8e, 0x4910),
+    (0x010d94, 0x010d62, 0x4b0c),
+    (0x010dc4, 0x010db0, 0x4804),
+    (0x011548, 0x011544, 0x4b00),
+    (0x014a48, 0x014a38, 0x4803),
+    (0x017bd4, 0x017b68, 0x4c1a),
+    (0x017bd8, 0x017baa, 0x490b),
+    (0x018644, 0x0185f0, 0x4c14),
+    (0x018648, 0x0185f2, 0x4d15),
+    (0x01ca5c, 0x01ca0a, 0x4c14),
+    (0x01caa4, 0x01ca80, 0x4a08),
+    (0x01cd50, 0x01cd2a, 0x4f09),
+    (0x01ce00, 0x01cd54, 0x482a),
+    (0x01cf28, 0x01cf20, 0x4801),
+    (0x01eea0, 0x01ee76, 0x490a),
+    (0x01eed4, 0x01eeb4, 0x4907),
+    (0x0266dc, 0x0266b6, 0x4809),
+    (0x0266e0, 0x0266d4, 0x4902),
+    (0x0268dc, 0x0268b0, 0x4a0a),
+    (0x0268e0, 0x0268c2, 0x4b07),
+    (0x02692c, 0x026900, 0x480a),
+    (0x026930, 0x026914, 0x4906),
+    (0x026990, 0x026974, 0x4906),
+    (0x026994, 0x026986, 0x4903),
+    (0x026dc0, 0x026d80, 0x490f),
+    (0x026dc4, 0x026dac, 0x4c05),
+    (0x026eb0, 0x026e90, 0x4807),
+    (0x026eec, 0x026ec8, 0x4808),
+    (0x027040, 0x026fe8, 0x4915),
+    (0x027044, 0x026ff0, 0x4a14),
+    (0x027048, 0x027036, 0x4904),
+    (0x02716c, 0x02712a, 0x4810),
+    (0x027170, 0x027134, 0x490e),
+    (0x028648, 0x0285b6, 0x4924),
+    (0x028f68, 0x028f50, 0x4805),
+    (0x028f6c, 0x028f5e, 0x4903),
+    (0x02905c, 0x028fe4, 0x4c1d),
+    (0x029060, 0x028ff0, 0x481b),
+    (0x029064, 0x029008, 0x4816),
+    (0x029068, 0x02901e, 0x4a12),
+    (0x02906c, 0x029036, 0x4a0d),
+    (0x029070, 0x029052, 0x4907),
+    (0x0292b0, 0x029282, 0x490b),
+    (0x0292b4, 0x029288, 0x4a0a),
+    (0x02950c, 0x0294ea, 0x4808),
+    (0x02954c, 0x02951e, 0x4b0b),
+    (0x02a3e4, 0x02a3cc, 0x4d05),
+    (0x02a408, 0x02a3f2, 0x4c05),
+    (0x02a47c, 0x02a442, 0x4d0e),
+    (0x02a480, 0x02a444, 0x4c0e),
+    (0x02a4d8, 0x02a4b8, 0x4807),
+    (0x02a548, 0x02a522, 0x4f09),
+    (0x02a588, 0x02a570, 0x4805),
+    (0x02a5b4, 0x02a594, 0x4f07),
+    (0x02a5dc, 0x02a5ce, 0x4803),
+    (0x02a638, 0x02a620, 0x4e05),
+    (0x02a65c, 0x02a646, 0x4e05),
+    (0x02a69c, 0x02a68c, 0x4803),
+    (0x02a760, 0x02a750, 0x4803),
+    (0x02b54c, 0x02b51a, 0x4a0c),
+    (0x02b550, 0x02b51e, 0x480c),
+    (0x02b5a8, 0x02b554, 0x4814),
+    (0x02e9a8, 0x02e994, 0x4804),
+    (0x02e9d8, 0x02e9ce, 0x4902),
+    (0x02ea04, 0x02e9fc, 0x4801),
+    (0x02ea14, 0x02ea08, 0x4802),
+    (0x09a1dc, 0x09a1ce, 0x4903),
+    (0x09a244, 0x09a1e0, 0x4918),
+    (0x09d470, 0x09d456, 0x4906),
+    (0x09d474, 0x09d462, 0x4904),
+    (0x09dec4, 0x09de9a, 0x480a),
+    (0x09dec8, 0x09dea6, 0x4808),
+    (0x09decc, 0x09deb2, 0x4906),
+    (0x0a6678, 0x0a65b8, 0x492f),
+    (0x0a667c, 0x0a662e, 0x4813),
+    (0x0a6848, 0x0a679c, 0x482a),
+    (0x0a6bcc, 0x0a6b70, 0x4d16),
+    (0x0a6bd0, 0x0a6b72, 0x4f17),
+    (0x0a6cc8, 0x0a6bdc, 0x4b3a),
+    (0x0a6db8, 0x0a6d66, 0x4814),
+    (0x0a7090, 0x0a6ff2, 0x4a27),
+    (0x0a7094, 0x0a7020, 0x481c),
+    (0x0a7110, 0x0a70a4, 0x481a),
+    (0x0a7114, 0x0a70b0, 0x4918),
+    (0x0a75ac, 0x0a74ca, 0x4a38),
+    (0x0a7770, 0x0a7728, 0x4811),
+    (0x0a9a1c, 0x0a999a, 0x4b20),
+    (0x0a9a20, 0x0a99aa, 0x491d),
+    (0x0aa0c4, 0x0aa0b4, 0x4903),
+    (0x0aa120, 0x0aa0f0, 0x4d0b),
+    (0x0aa158, 0x0aa140, 0x4c05),
+    (0x0aa16c, 0x0aa15c, 0x4803),
+    (0x0aa198, 0x0aa18e, 0x4902),
+    (0x0aa1fc, 0x0aa1f4, 0x4901),
+    (0x0aa4a4, 0x0aa48a, 0x4906),
+    (0x0b7c24, 0x0b7c1a, 0x4902),
+    (0x0b97b8, 0x0b97ae, 0x4902),
+    (0x0b981c, 0x0b980e, 0x4a03),
+    (0x0b9820, 0x0b9814, 0x4802),
+    (0x0b9e18, 0x0b9dfc, 0x4a06),
+    (0x0b9e1c, 0x0b9e0e, 0x4803),
+    (0x0b9e7c, 0x0b9e5e, 0x4a07),
+    (0x0b9e80, 0x0b9e6c, 0x4904),
+    (0x0c084c, 0x0c0804, 0x4c11),
+    (0x0c0850, 0x0c0816, 0x4a0e),
+    (0x0c0854, 0x0c0842, 0x4804),
+    (0x0c088c, 0x0c086a, 0x4808),
+    (0x0d07ec, 0x0d07e2, 0x4902),
+    (0x0d0f54, 0x0d0f42, 0x4804),
+    (0x0d706c, 0x0d705a, 0x4904),
+    (0x0d70d8, 0x0d709a, 0x490f),
+    (0x0d70dc, 0x0d70aa, 0x4b0c),
+    (0x0d740c, 0x0d73c6, 0x4811),
+    (0x0d7410, 0x0d73dc, 0x4d0c),
+    (0x0d7424, 0x0d7416, 0x4803),
+    (0x0d753c, 0x0d7526, 0x4805),
+    (0x0d76d4, 0x0d76ae, 0x4809),
+    (0x0d8108, 0x0d8102, 0x4801),
+    (0x0d8164, 0x0d810e, 0x4815),
+    (0x0d8168, 0x0d8132, 0x480d),
+    (0x0d9c20, 0x0d9c0c, 0x4804),
+    (0x0da194, 0x0da162, 0x490c),
+    (0x0da3f0, 0x0da39a, 0x4815),
+    (0x0da574, 0x0da56c, 0x4901),
+    (0x0db4d4, 0x0db4c6, 0x4803),
+    (0x0db4d8, 0x0db4cc, 0x4a02),
+    (0x0e15cc, 0x0e15c2, 0x4802),
+    (0x0e2000, 0x0e1fe6, 0x4806),
+    (0x0e36e0, 0x0e36ba, 0x4b09),
+    (0x0e38e4, 0x0e38d0, 0x4804),
+    (0x0e3f50, 0x0e3f28, 0x4909),
+    (0x0e3f54, 0x0e3f36, 0x4907),
+    (0x0e3f58, 0x0e3f46, 0x4904),
+    (0x0e4024, 0x0e4004, 0x4807),
+    (0x0e4028, 0x0e4008, 0x4907),
+    (0x0e4368, 0x0e4356, 0x4804),
+    (0x0e4388, 0x0e4378, 0x4803),
+    (0x0e43b8, 0x0e4394, 0x4a08),
+    (0x0e43bc, 0x0e439c, 0x4c07),
+    (0x0e43c0, 0x0e43a2, 0x4a07),
+    (0x0e4490, 0x0e43e6, 0x482a),
+    (0x0e4494, 0x0e43f4, 0x4827),
+    (0x0e4498, 0x0e43fc, 0x4826),
+    (0x0e449c, 0x0e442a, 0x4c1c),
+    (0x0e4524, 0x0e44ba, 0x481a),
+    (0x0e4598, 0x0e4566, 0x4c0c),
+    (0x0e5f14, 0x0e5ef0, 0x4808),
+    (0x109474, 0x109452, 0x4808),
+    (0x10948c, 0x109478, 0x4804),
+    (0x109514, 0x1094e0, 0x490c),
+    (0x109518, 0x1094f2, 0x4909),
+    (0x10951c, 0x109510, 0x4802),
+    (0x10953c, 0x109522, 0x4a06),
+    (0x10957c, 0x109562, 0x4a06),
+    (0x109628, 0x1095fc, 0x4a0a),
+    (0x109710, 0x109630, 0x4937),
+    (0x109714, 0x10969a, 0x481e),
+    (0x109718, 0x1096a4, 0x491c),
+    (0x10971c, 0x1096bc, 0x4817),
+    (0x1307f4, 0x1307ec, 0x4901),
+    (0x130d18, 0x130cf4, 0x4808),
+    (0x130f64, 0x130f30, 0x490c),
+    (0x132f24, 0x132ed6, 0x4813),
+    (0x132f28, 0x132f14, 0x4904),
+    (0x132f50, 0x132f40, 0x4803),
+    (0x132fcc, 0x132fb0, 0x4a06),
+    (0x132fd0, 0x132fc2, 0x4903),
+    (0x132fdc, 0x132fd4, 0x4901),
+    (0x132ffc, 0x132fe2, 0x4a06),
+    (0x133034, 0x133024, 0x4a03),
+    (0x134c7c, 0x134c52, 0x490a),
+    (0x134c80, 0x134c68, 0x4c05),
+    (0x134cb4, 0x134c98, 0x4906),
+    (0x134cc0, 0x134cb8, 0x4801),
+    (0x135050, 0x13500e, 0x4d10),
+    (0x135100, 0x1350ce, 0x4a0c),
+    (0x135104, 0x1350d0, 0x480c),
+    (0x1357ac, 0x13579a, 0x4d04),
+    (0x1357e4, 0x1357b0, 0x490c),
+    (0x137590, 0x137506, 0x4c22),
+    (0x137594, 0x13750a, 0x4822),
+    (0x137598, 0x137520, 0x4d1d),
+    (0x1375fc, 0x1375ec, 0x4a03),
+    (0x137618, 0x137600, 0x4805),
+    (0x13761c, 0x137602, 0x4a06),
+    (0x137664, 0x137652, 0x4b04),
+    (0x14b7e0, 0x14b790, 0x4813),
+    (0x14b7e4, 0x14b7a0, 0x4910),
+    (0x14b7e8, 0x14b7b4, 0x490c),
+];
+
+// Original LDRs statically anchored to translated EUR Red Spring blocks.
+// The anchors do not by themselves prove executed PCs in the sampled scene.
+pub const RED_SPRING_ANCHORED_COUNT: usize = 22;
+pub const RED_SPRING_ANCHORED: [(u32, u32, u16, u32, &str); RED_SPRING_ANCHORED_COUNT] = [
+    (0x0136c0, 0x0136a0, 0x4a07, 0x013680, "093872e76df362d1e823c87e4d592c2d0545c23f22c26f5532add58cb42df7b4"),
+    (0x0136c4, 0x0136b2, 0x4a04, 0x0136a6, "7401667923df9923e1e60dee9e6967f2ac806e0bd0f4355dbc64eea745f31dc7"),
+    (0x0148ac, 0x014894, 0x4a05, 0x01488c, "02e36a096d16adaa0e269f792a252133684e3b714ff920836c232be44a214f29"),
+    (0x0148cc, 0x0148c2, 0x4902, 0x0148c0, "3aebf922637a9ce195abc589604505fdf6e4f4724a17e727402a3f036e5d9d8a"),
+    (0x01525c, 0x01524a, 0x4a04, 0x015244, "872c1b4c96bdcd51f835c59c6cf19165feae7a88d8a14b8315e431daf7b87065"),
+    (0x01527c, 0x015272, 0x4902, 0x015270, "3aebf922637a9ce195abc589604505fdf6e4f4724a17e727402a3f036e5d9d8a"),
+    (0x0165a4, 0x01658c, 0x4805, 0x016588, "3dd2ad25536b4fbcb1f762a758447aac3e7222b15057419b801e99031a8b7603"),
+    (0x0165a8, 0x01658e, 0x4a06, 0x016588, "9518876c5a1592114f64c9598572c9fbdc08ff86db2957088f9cfd5496920383"),
+    (0x0165e4, 0x0165d8, 0x4802, 0x0165d8, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+    (0x018720, 0x0186c2, 0x4817, 0x01866c, "319fd74f669e2998ad9804fcde617741cf328fac032ac461f660b18c7a7d142b"),
+    (0x018914, 0x0188aa, 0x4e1a, 0x0188aa, "86204ea7564204113bccdde8551604138812c2766961b79376bf4ea4c1d34528"),
+    (0x01898c, 0x018922, 0x4b1a, 0x01891c, "c548baa122d5ba70d8c305e8837d80902fd6b1ba3491b2f65a84753ef9dc866f"),
+    (0x018f14, 0x018f06, 0x4803, 0x018f06, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+    (0x09d444, 0x09d42a, 0x4906, 0x09d420, "89330d6383c3ba2e86bac5ae9dc36a8084b0c8a91452f547c08fa8134598c450"),
+    (0x09d448, 0x09d436, 0x4904, 0x09d420, "52c4435528388ca50f29e4c6b4336748e366bd223453c5ed30f1a81852da3cee"),
+    (0x0cf500, 0x0cf4ea, 0x4805, 0x0cf4e4, "89ce4a7206fffdfe95226493a5af05087c0420b6d70f1def8a6d692842b596b6"),
+    (0x0cf504, 0x0cf4ec, 0x4a05, 0x0cf4e4, "be60f9715ef22e0fe2d02152de786d34b51d59dd10f675af3c64903342379ae1"),
+    (0x0cf508, 0x0cf4fc, 0x4902, 0x0cf4fa, "8ea6bce760637b0b7c4433b6759c218e776c640563e16c15522528489663dce9"),
+    (0x135844, 0x135834, 0x4903, 0x135830, "5605ece056dbc87d15b26be85638ba418d8f8d33c74d75a3c2aac53458de7a31"),
+    (0x144f7c, 0x144f60, 0x4a06, 0x144f60, "234072b7e754ae5e6db0d30160f75c1d909eaa795a6d24ea00cf1d0409e3686e"),
+    (0x149ea4, 0x149e92, 0x4a04, 0x149e88, "0818f1ccae6fec5a09ef218a113a342097985e5e0544b641dd02bc74fe510106"),
+    (0x14be8c, 0x14be7c, 0x4803, 0x14be7c, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+];
+
+// Original LDR scopes observed in the EUR post-indexed continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const POST_INDEXED_OBSERVED_COUNT: usize = 9;
+pub const POST_INDEXED_OBSERVED: [(u32, u32, u16); POST_INDEXED_OBSERVED_COUNT] = [
+    (0x125b94, 0x125b86, 0x4803),
+    (0x126854, 0x126846, 0x4803),
+    (0x126870, 0x126860, 0x4903),
+    (0x1273b0, 0x127394, 0x4806),
+    (0x1273b4, 0x127396, 0x4b07),
+    (0x1273b8, 0x127398, 0x4d07),
+    (0x1273e8, 0x1273ce, 0x4806),
+    (0x1273ec, 0x1273d0, 0x4906),
+    (0x1493d4, 0x1493a4, 0x4b0b),
+];
+
+// Original LDRs statically anchored to translated EUR post-indexed blocks.
+// The anchors do not by themselves prove executed PCs in the sampled scene.
+pub const POST_INDEXED_ANCHORED_COUNT: usize = 18;
+pub const POST_INDEXED_ANCHORED: [(u32, u32, u16, u32, &str); POST_INDEXED_ANCHORED_COUNT] = [
+    (0x003538, 0x00352e, 0x4802, 0x00352e, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+    (0x003548, 0x003540, 0x4801, 0x003540, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+    (0x00a10c, 0x00a104, 0x4801, 0x00a104, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+    (0x023998, 0x023986, 0x4904, 0x023986, "039f2c519d87eaa01db07c3792baf082572cbe04e34da945aee4a8aad839e869"),
+    (0x025190, 0x025140, 0x4c13, 0x025140, "c9bbb0e31ea3c0fcb5574c7b51f409a47a3a1c0e37562e95e7483d3648c44b5d"),
+    (0x025194, 0x025142, 0x4914, 0x025140, "74e35219b212c913a7677b18a4208abc228c3dee7db9890647aafc8530c56bf2"),
+    (0x025198, 0x025144, 0x4a14, 0x025140, "5cb6d3e70868244cd527c46c1b56267027e6a108b6389812d25ca66a53464681"),
+    (0x02519c, 0x02514e, 0x4a13, 0x02514e, "cd73e6ea11e77e975b2a3055264442c34551904b1a5c472ea7509cceb60a3df4"),
+    (0x0251a0, 0x025158, 0x4a11, 0x025158, "ca70f639c8b990a6a20e419a66912e7c7f112973836a13b114b17d7fd393713c"),
+    (0x0251a4, 0x025162, 0x4910, 0x025162, "bb28bb69ba51db6766467a272587579d5753a397f406ea7d7288db1525c88176"),
+    (0x0251a8, 0x02516e, 0x490e, 0x025162, "0328939c525ee0df4d0958b20bce8e93ef31f580f4eeb4d393daa69d3743c481"),
+    (0x0251ac, 0x025170, 0x4c0e, 0x025162, "b0e374408dc08ee0cdd85ba123a1e6c8cf47e232b06577b4d7c46b6a7783d7a2"),
+    (0x092500, 0x0924ea, 0x4a05, 0x0924e8, "ee7dfed3388e01e7698ea4ad309609a5130076340cf2b503cdca5acfddcbadc8"),
+    (0x092504, 0x0924ec, 0x4805, 0x0924e8, "de984e42bdb02f7af2dd1211913c32fe616f2ebf9e15448617584238a18458f2"),
+    (0x092508, 0x0924f0, 0x4905, 0x0924e8, "fae5f85d466350e4b67cfdab92f0b5ec19ea53f3416ce53f70c2a22fdd1cae97"),
+    (0x0ccf28, 0x0ccf1c, 0x4a02, 0x0ccf18, "55d4614d8d3e0bd7959393bf272ae3bb3abe825a9bec35a6094dad15d042a128"),
+    (0x0ccf2c, 0x0ccf1e, 0x4b03, 0x0ccf18, "f8dac16b2db8378daca31fb574dde302687767ad9bac7da2b913fa218a40ef86"),
+    (0x148798, 0x14877a, 0x4b07, 0x14877a, "08a3e2cbce599d75b970e99c39d71b418e7d1e96af3cbfc300253575a28ccc8c"),
+];
+
+// Original LDR scopes observed in the retained EUR Bank continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const BANK_OBSERVED_COUNT: usize = 77;
+pub const BANK_OBSERVED: [(u32, u32, u16); BANK_OBSERVED_COUNT] = [
+    (0x018bcc, 0x018b72, 0x4816),
+    (0x018bd0, 0x018b9a, 0x4a0d),
+    (0x018e58, 0x018e1c, 0x4a0e),
+    (0x019044, 0x019014, 0x480b),
+    (0x0190e4, 0x0190b8, 0x480a),
+    (0x0190e8, 0x0190c8, 0x4b07),
+    (0x02abb8, 0x02aba2, 0x4905),
+    (0x02abbc, 0x02abb0, 0x4902),
+    (0x02acf0, 0x02acd8, 0x4905),
+    (0x02ad80, 0x02ad2e, 0x4a14),
+    (0x02ad84, 0x02ad4e, 0x4b0d),
+    (0x02ad88, 0x02ad58, 0x490b),
+    (0x02ada8, 0x02ad90, 0x4805),
+    (0x02ae00, 0x02adbc, 0x4a10),
+    (0x02ae04, 0x02add6, 0x4b0b),
+    (0x02ae6c, 0x02ae58, 0x4904),
+    (0x02af00, 0x02ae86, 0x481e),
+    (0x02af04, 0x02ae8e, 0x491d),
+    (0x02af08, 0x02ae96, 0x4a1c),
+    (0x02af0c, 0x02ae9c, 0x4b1b),
+    (0x02af10, 0x02aea2, 0x491b),
+    (0x02af70, 0x02af68, 0x4901),
+    (0x02afe8, 0x02af9c, 0x4812),
+    (0x02b250, 0x02b1fa, 0x4a15),
+    (0x02b2d0, 0x02b282, 0x4a13),
+    (0x02b434, 0x02b3fa, 0x4d0e),
+    (0x02bfb0, 0x02bf98, 0x4905),
+    (0x02bfb4, 0x02bfa6, 0x4903),
+    (0x05a9cc, 0x05a9b4, 0x4c05),
+    (0x05a9d0, 0x05a9b8, 0x4905),
+    (0x05a9d4, 0x05a9c2, 0x4b04),
+    (0x05aa28, 0x05aa0e, 0x4806),
+    (0x05aa30, 0x05aa16, 0x4b06),
+    (0x05b5f8, 0x05b5ce, 0x490a),
+    (0x05b5fc, 0x05b5d8, 0x4a08),
+    (0x05b600, 0x05b5dc, 0x4e08),
+    (0x05b604, 0x05b5e8, 0x4806),
+    (0x05b648, 0x05b63e, 0x4902),
+    (0x05bdbc, 0x05bd8c, 0x4a0b),
+    (0x05c294, 0x05c1ec, 0x4d29),
+    (0x05c298, 0x05c1fe, 0x4a26),
+    (0x05c29c, 0x05c202, 0x4a26),
+    (0x05c2a0, 0x05c204, 0x4b26),
+    (0x05c2a4, 0x05c22e, 0x4a1d),
+    (0x05c2a8, 0x05c24a, 0x4917),
+    (0x05c2ac, 0x05c254, 0x4c15),
+    (0x05c2b0, 0x05c26c, 0x4b10),
+    (0x05c2b4, 0x05c27c, 0x4a0d),
+    (0x05c2b8, 0x05c286, 0x4b0c),
+    (0x05e6b0, 0x05e648, 0x4d19),
+    (0x05e6b4, 0x05e666, 0x4913),
+    (0x05e6b8, 0x05e66a, 0x4b13),
+    (0x05e6bc, 0x05e674, 0x4911),
+    (0x05e6c0, 0x05e67e, 0x4b10),
+    (0x05e6ec, 0x05e6d4, 0x4805),
+    (0x05e6f0, 0x05e6d8, 0x4905),
+    (0x05e6f4, 0x05e6dc, 0x4905),
+    (0x05e6f8, 0x05e6de, 0x4a06),
+    (0x05ec3c, 0x05eb5c, 0x4c37),
+    (0x05ec40, 0x05eb6a, 0x4b35),
+    (0x05ec44, 0x05eb78, 0x4832),
+    (0x05ec48, 0x05eb7c, 0x4932),
+    (0x05ec4c, 0x05eb88, 0x4b30),
+    (0x05ec50, 0x05eb92, 0x482f),
+    (0x05ec54, 0x05eba2, 0x4a2c),
+    (0x05ec58, 0x05ebe2, 0x4a1d),
+    (0x05ec5c, 0x05ec1e, 0x480f),
+    (0x05eccc, 0x05ecac, 0x4807),
+    (0x05ecd0, 0x05ecb2, 0x4a07),
+    (0x05f078, 0x05efa0, 0x4c35),
+    (0x05f07c, 0x05efb0, 0x4d32),
+    (0x05f080, 0x05efb8, 0x4e31),
+    (0x05f084, 0x05efdc, 0x4a29),
+    (0x05f088, 0x05f010, 0x4e1d),
+    (0x05f08c, 0x05f034, 0x4b15),
+    (0x0d0584, 0x0d056e, 0x4905),
+    (0x0d05a4, 0x0d058e, 0x4905),
+];
+
+// Original LDR scopes observed in the retained EUR Blue Screw continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const BLUE_SCREW_OBSERVED_COUNT: usize = 3;
+pub const BLUE_SCREW_OBSERVED: [(u32, u32, u16); BLUE_SCREW_OBSERVED_COUNT] = [
+    (0x1323a8, 0x13238e, 0x4806),
+    (0x1323ac, 0x1323a0, 0x4902),
+    (0x134384, 0x134374, 0x4c03),
+];
+
+// Original LDR scopes observed in the retained EUR Soil Evidence continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const SOIL_EVIDENCE_OBSERVED_COUNT: usize = 135;
+pub const SOIL_EVIDENCE_OBSERVED: [(u32, u32, u16); SOIL_EVIDENCE_OBSERVED_COUNT] = [
+    (0x01118c, 0x011188, 0x4a00),
+    (0x01be40, 0x01be10, 0x4c0b),
+    (0x01be44, 0x01be16, 0x4b0b),
+    (0x01bea4, 0x01be90, 0x4904),
+    (0x01c0cc, 0x01c0ae, 0x4d07),
+    (0x01c110, 0x01c0ec, 0x4a08),
+    (0x01c164, 0x01c13c, 0x4909),
+    (0x01c1c4, 0x01c19c, 0x4909),
+    (0x01c4c0, 0x01c480, 0x4a0f),
+    (0x01c550, 0x01c512, 0x4b0f),
+    (0x01c664, 0x01c62a, 0x4c0e),
+    (0x01c6f8, 0x01c6b6, 0x4c10),
+    (0x01c740, 0x01c72a, 0x4805),
+    (0x01c828, 0x01c7ba, 0x481b),
+    (0x01c82c, 0x01c7c6, 0x4819),
+    (0x01c830, 0x01c7ce, 0x4818),
+    (0x01c834, 0x01c7f8, 0x480e),
+    (0x01c9f4, 0x01c9e8, 0x4a02),
+    (0x01f324, 0x01f2c2, 0x4e18),
+    (0x01f78c, 0x01f780, 0x4b02),
+    (0x01f79c, 0x01f790, 0x4b02),
+    (0x01f7d4, 0x01f7c8, 0x4802),
+    (0x09259c, 0x092594, 0x4901),
+    (0x0a684c, 0x0a6840, 0x4902),
+    (0x0a8228, 0x0a8210, 0x4905),
+    (0x0a82d8, 0x0a82a6, 0x4c0c),
+    (0x0a82dc, 0x0a82d0, 0x4902),
+    (0x0a83c8, 0x0a83be, 0x4902),
+    (0x0ac138, 0x0ac120, 0x4805),
+    (0x0d67f4, 0x0d67dc, 0x4905),
+    (0x0d67f8, 0x0d67de, 0x4a06),
+    (0x0d67fc, 0x0d67e8, 0x4a04),
+    (0x0d772c, 0x0d76e6, 0x4f11),
+    (0x0d77ac, 0x0d779a, 0x4804),
+    (0x0d77c0, 0x0d77b0, 0x4803),
+    (0x0d7880, 0x0d7856, 0x4a0a),
+    (0x0d78cc, 0x0d78c2, 0x4802),
+    (0x0d7904, 0x0d78d0, 0x480c),
+    (0x0d79cc, 0x0d79bc, 0x4803),
+    (0x0da3ec, 0x0da31e, 0x4f33),
+    (0x0dadcc, 0x0dad60, 0x481a),
+    (0x0dadd0, 0x0dad6e, 0x4818),
+    (0x0dadd4, 0x0dad8a, 0x4a12),
+    (0x0e0830, 0x0e0828, 0x4901),
+    (0x0e1678, 0x0e1672, 0x4801),
+    (0x0e3820, 0x0e3818, 0x4801),
+    (0x0e3854, 0x0e382e, 0x4909),
+    (0x0e3874, 0x0e385c, 0x4805),
+    (0x0e3898, 0x0e388a, 0x4803),
+    (0x0e4020, 0x0e3ff6, 0x480a),
+    (0x0e414c, 0x0e4142, 0x4802),
+    (0x0e49cc, 0x0e49b4, 0x4805),
+    (0x0e49fc, 0x0e49da, 0x4808),
+    (0x0e4a20, 0x0e4a12, 0x4803),
+    (0x0e4b7c, 0x0e4ae4, 0x4b25),
+    (0x0e4b80, 0x0e4af4, 0x4b22),
+    (0x0e4b84, 0x0e4b10, 0x491c),
+    (0x0e4b88, 0x0e4b22, 0x4819),
+    (0x0e4b8c, 0x0e4b3c, 0x4813),
+    (0x0e4b90, 0x0e4b46, 0x4812),
+    (0x0e4c40, 0x0e4be0, 0x4a17),
+    (0x0e4c44, 0x0e4c06, 0x4c0f),
+    (0x0e4c48, 0x0e4c0a, 0x4a0f),
+    (0x0e4c4c, 0x0e4c1e, 0x4a0b),
+    (0x0e4c50, 0x0e4c28, 0x4909),
+    (0x0e4c54, 0x0e4c2a, 0x4a0a),
+    (0x0e4c84, 0x0e4c64, 0x4807),
+    (0x0e4c88, 0x0e4c6e, 0x4806),
+    (0x0e4cb4, 0x0e4ca4, 0x4803),
+    (0x0e5ee8, 0x0e5ed4, 0x4804),
+    (0x0e5f84, 0x0e5f6a, 0x4f06),
+    (0x0e5f88, 0x0e5f7a, 0x4903),
+    (0x0e5ff0, 0x0e5fe8, 0x4801),
+    (0x0e6184, 0x0e617e, 0x4901),
+    (0x0e61e8, 0x0e61c4, 0x4908),
+    (0x0e61ec, 0x0e61d2, 0x4806),
+    (0x0e6238, 0x0e6214, 0x4a08),
+    (0x0e623c, 0x0e621e, 0x4a07),
+    (0x0f0270, 0x0f0230, 0x480f),
+    (0x0f0274, 0x0f023e, 0x480d),
+    (0x0f02e4, 0x0f0278, 0x481a),
+    (0x0f02e8, 0x0f02b2, 0x480d),
+    (0x0f039c, 0x0f0392, 0x4b02),
+    (0x0f03f8, 0x0f03e2, 0x4a05),
+    (0x0f0424, 0x0f0404, 0x4b07),
+    (0x0f0428, 0x0f0416, 0x4a04),
+    (0x0f0558, 0x0f042c, 0x494a),
+    (0x0f055c, 0x0f0454, 0x4941),
+    (0x0f0560, 0x0f04be, 0x4828),
+    (0x0f0564, 0x0f04fa, 0x481a),
+    (0x0f05f0, 0x0f0578, 0x481d),
+    (0x0f05f4, 0x0f0584, 0x481b),
+    (0x0f05f8, 0x0f0588, 0x481b),
+    (0x0f05fc, 0x0f05c6, 0x490d),
+    (0x0f0600, 0x0f05d2, 0x480b),
+    (0x0f0604, 0x0f05e0, 0x4a08),
+    (0x0f06ac, 0x0f063a, 0x491c),
+    (0x0f06b0, 0x0f064a, 0x4919),
+    (0x0f06b4, 0x0f0696, 0x4a07),
+    (0x0f07c8, 0x0f06b8, 0x4943),
+    (0x0f07cc, 0x0f06c8, 0x4940),
+    (0x0f07d0, 0x0f06da, 0x493d),
+    (0x0f07d4, 0x0f0718, 0x4a2e),
+    (0x0f07d8, 0x0f0722, 0x482d),
+    (0x0f07dc, 0x0f0734, 0x4829),
+    (0x0f07e0, 0x0f0746, 0x4a26),
+    (0x0f07e4, 0x0f075c, 0x4b21),
+    (0x0f07e8, 0x0f0770, 0x4c1d),
+    (0x0f0858, 0x0f081e, 0x480e),
+    (0x0f0898, 0x0f086e, 0x4b0a),
+    (0x0f08f4, 0x0f08d4, 0x4807),
+    (0x0f0988, 0x0f0968, 0x4907),
+    (0x0f0a1c, 0x0f09e4, 0x480d),
+    (0x0f0a20, 0x0f09f4, 0x480a),
+    (0x0f0a24, 0x0f0a02, 0x4808),
+    (0x0f0a50, 0x0f0a36, 0x4806),
+    (0x0f0aa0, 0x0f0a6e, 0x490c),
+    (0x1335cc, 0x1335c2, 0x4902),
+    (0x133914, 0x13390a, 0x4902),
+    (0x133f40, 0x133f38, 0x4901),
+    (0x1343e0, 0x1343d6, 0x4902),
+    (0x1357e8, 0x1357da, 0x4903),
+    (0x145190, 0x14514e, 0x4a10),
+    (0x145194, 0x14514c, 0x4b11),
+    (0x14519c, 0x14515a, 0x4810),
+    (0x1451a0, 0x145166, 0x490e),
+    (0x1451a4, 0x145176, 0x490b),
+    (0x1451a8, 0x145182, 0x4909),
+    (0x146288, 0x146274, 0x4904),
+    (0x147438, 0x147412, 0x4809),
+    (0x14743c, 0x147416, 0x4809),
+    (0x147440, 0x147422, 0x4807),
+    (0x147444, 0x14742a, 0x4806),
+    (0x147814, 0x1477bc, 0x4815),
+    (0x149b48, 0x149af6, 0x4814),
+];
+
+// Original 146xxx LDR scopes observed in the EUR Soil Evidence continuation.
+// Scopes may include nested accesses; opcode and effective address are checked.
+pub const SOIL_146_OBSERVED_COUNT: usize = 13;
+pub const SOIL_146_OBSERVED: [(u32, u32, u16); SOIL_146_OBSERVED_COUNT] = [
+    (0x146454, 0x1463f2, 0x4818),
+    (0x146620, 0x14660c, 0x4804),
+    (0x146640, 0x146632, 0x4803),
+    (0x146670, 0x146648, 0x4809),
+    (0x1466e4, 0x14667c, 0x4819),
+    (0x1466e8, 0x1466a2, 0x4a11),
+    (0x1466ec, 0x1466a8, 0x4910),
+    (0x1466f0, 0x1466b2, 0x490f),
+    (0x1466f4, 0x1466ba, 0x480e),
+    (0x146780, 0x14676c, 0x4804),
+    (0x1467c8, 0x1467a2, 0x4909),
+    (0x1467cc, 0x1467b6, 0x4a05),
+    (0x1467d0, 0x1467b8, 0x4b05),
+];
+
+pub const SOURCE_PAGES: [usize; 123] = [
     0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0x10,
-    0x11, 0x12, 0x13, 0x14, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e,
-    0x1f, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x29, 0x2a, 0x2c, 0x2e, 0x37,
-    0x3a, 0x91, 0x92, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
-    0xa0, 0xa1, 0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac,
-    0xb7, 0xb8, 0xb9, 0xbb, 0xbe, 0xbf, 0xc0, 0xcb, 0xcc, 0xce, 0xcf, 0xd0,
-    0xd2, 0xd6, 0xd7, 0xdb, 0xe2, 0xe3, 0x125, 0x126, 0x127, 0x128, 0x129, 0x12a,
-    0x12b, 0x130, 0x132, 0x133, 0x134, 0x137, 0x138, 0x139, 0x13f, 0x144, 0x147, 0x148,
-    0x149, 0x14a, 0x14b, 0x14c,
+    0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c,
+    0x1d, 0x1e, 0x1f, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29,
+    0x2a, 0x2b, 0x2c, 0x2e, 0x37, 0x3a, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x91,
+    0x92, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0, 0xa1,
+    0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7, 0xb8,
+    0xb9, 0xbb, 0xbe, 0xbf, 0xc0, 0xcb, 0xcc, 0xce, 0xcf, 0xd0, 0xd2, 0xd6,
+    0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6,
+    0xf0, 0x109, 0x125, 0x126, 0x127, 0x128, 0x129, 0x12a, 0x12b, 0x130, 0x132, 0x133,
+    0x134, 0x135, 0x137, 0x138, 0x139, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149,
+    0x14a, 0x14b, 0x14c,
 ];
 
 /// A literal operand and the original PC-relative LDR that can read it.
@@ -1717,6 +2240,14 @@ pub struct ThumbPcLiterals {
     pub observed: Vec<LiteralWord>,
     pub home_anchored: Vec<LiteralWord>,
     pub home_observed: Vec<LiteralWord>,
+    pub red_spring_observed: Vec<LiteralWord>,
+    pub red_spring_anchored: Vec<LiteralWord>,
+    pub post_indexed_observed: Vec<LiteralWord>,
+    pub post_indexed_anchored: Vec<LiteralWord>,
+    pub bank_observed: Vec<LiteralWord>,
+    pub blue_screw_observed: Vec<LiteralWord>,
+    pub soil_evidence_observed: Vec<LiteralWord>,
+    pub soil_146_observed: Vec<LiteralWord>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -1767,6 +2298,62 @@ impl ThumbPcLiterals {
         {
             return Err("Invalid home-observed EUR Thumb literal source, reader or order".into());
         }
+        if self.red_spring_observed.len() != RED_SPRING_OBSERVED_COUNT
+            || self.red_spring_observed.iter().zip(RED_SPRING_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Red Spring observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.red_spring_anchored.len() != RED_SPRING_ANCHORED_COUNT
+            || self.red_spring_anchored.iter().zip(RED_SPRING_ANCHORED).any(|(v, (offset, reader, _, _, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Red Spring anchored EUR Thumb literal source, reader or order".into());
+        }
+        if self.post_indexed_observed.len() != POST_INDEXED_OBSERVED_COUNT
+            || self.post_indexed_observed.iter().zip(POST_INDEXED_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid post-indexed observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.post_indexed_anchored.len() != POST_INDEXED_ANCHORED_COUNT
+            || self.post_indexed_anchored.iter().zip(POST_INDEXED_ANCHORED).any(|(v, (offset, reader, _, _, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid post-indexed anchored EUR Thumb literal source, reader or order".into());
+        }
+        if self.bank_observed.len() != BANK_OBSERVED_COUNT
+            || self.bank_observed.iter().zip(BANK_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Bank observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.blue_screw_observed.len() != BLUE_SCREW_OBSERVED_COUNT
+            || self.blue_screw_observed.iter().zip(BLUE_SCREW_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Blue Screw observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.soil_evidence_observed.len() != SOIL_EVIDENCE_OBSERVED_COUNT
+            || self.soil_evidence_observed.iter().zip(SOIL_EVIDENCE_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Soil Evidence observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.soil_146_observed.len() != SOIL_146_OBSERVED_COUNT
+            || self.soil_146_observed.iter().zip(SOIL_146_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Soil 146 observed EUR Thumb literal source, reader or order".into());
+        }
         Ok(())
     }
 
@@ -1797,8 +2384,32 @@ impl ThumbPcLiterals {
         if let Ok(index) = self.home_anchored.binary_search_by_key(&base, |v| v.source_offset) {
             return Some((self.home_anchored[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + index));
         }
-        let index = self.home_observed.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        Some((self.home_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + index))
+        if let Ok(index) = self.home_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.home_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + index));
+        }
+        if let Ok(index) = self.red_spring_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.red_spring_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.red_spring_anchored.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.red_spring_anchored[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.post_indexed_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.post_indexed_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + index));
+        }
+        if let Ok(index) = self.post_indexed_anchored.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.post_indexed_anchored[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.bank_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.bank_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + index));
+        }
+        if let Ok(index) = self.blue_screw_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.blue_screw_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.soil_evidence_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.soil_evidence_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + index));
+        }
+        let index = self.soil_146_observed.binary_search_by_key(&base, |v| v.source_offset).ok()?;
+        Some((self.soil_146_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + index))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -1821,7 +2432,7 @@ impl Catalog {
         }
         let prior = PriorSources::new(previous)?;
         let mut literals = Vec::with_capacity(LITERAL_COUNT);
-        let mut sources = Vec::with_capacity(LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT);
+        let mut sources = Vec::with_capacity(LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT);
         for (offset, reader, expected_opcode) in LITERALS {
             let at = reader as usize;
             let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
@@ -1962,12 +2573,236 @@ impl Catalog {
                 value: u32::from_le_bytes(bytes.try_into().unwrap()) });
             sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
         }
+        let mut red_spring_observed = Vec::with_capacity(RED_SPRING_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in RED_SPRING_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Red Spring observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Red Spring observed Thumb literal already has an owner".into());
+            }
+            red_spring_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut red_spring_anchored = Vec::with_capacity(RED_SPRING_ANCHORED_COUNT);
+        for (offset, reader, expected_opcode, anchor, expected_path_sha256) in RED_SPRING_ANCHORED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || anchor > reader || reader - anchor > 96 || (reader - anchor) & 1 != 0
+                || ffta_rom::digest(&rom[anchor as usize..at + 2]) != expected_path_sha256
+                || (anchor..reader).step_by(2).any(|pc| {
+                    let at = pc as usize;
+                    !straight_line_thumb(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()))
+                })
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Red Spring anchored Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Red Spring anchored Thumb literal already has an owner".into());
+            }
+            red_spring_anchored.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut post_indexed_observed = Vec::with_capacity(POST_INDEXED_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in POST_INDEXED_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Post-indexed observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Post-indexed observed Thumb literal already has an owner".into());
+            }
+            post_indexed_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut post_indexed_anchored = Vec::with_capacity(POST_INDEXED_ANCHORED_COUNT);
+        for (offset, reader, expected_opcode, anchor, expected_path_sha256) in POST_INDEXED_ANCHORED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || anchor > reader || reader - anchor > 96 || (reader - anchor) & 1 != 0
+                || ffta_rom::digest(&rom[anchor as usize..at + 2]) != expected_path_sha256
+                || (anchor..reader).step_by(2).any(|pc| {
+                    let at = pc as usize;
+                    !straight_line_thumb(u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()))
+                })
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Post-indexed anchored Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Post-indexed anchored Thumb literal already has an owner".into());
+            }
+            post_indexed_anchored.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut bank_observed = Vec::with_capacity(BANK_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in BANK_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Bank observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Bank observed Thumb literal already has an owner".into());
+            }
+            bank_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut blue_screw_observed = Vec::with_capacity(BLUE_SCREW_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in BLUE_SCREW_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Blue Screw observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Blue Screw observed Thumb literal already has an owner".into());
+            }
+            blue_screw_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut soil_evidence_observed = Vec::with_capacity(SOIL_EVIDENCE_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in SOIL_EVIDENCE_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Soil Evidence observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Soil Evidence observed Thumb literal already has an owner".into());
+            }
+            soil_evidence_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut soil_146_observed = Vec::with_capacity(SOIL_146_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in SOIL_146_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Soil 146 observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Soil 146 observed Thumb literal already has an owner".into());
+            }
+            soil_146_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
         let decoded = ThumbPcLiterals {
             literals,
             additional,
             observed,
             home_anchored,
             home_observed,
+            red_spring_observed,
+            red_spring_anchored,
+            post_indexed_observed,
+            post_indexed_anchored,
+            bank_observed,
+            blue_screw_observed,
+            soil_evidence_observed,
+            soil_146_observed,
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

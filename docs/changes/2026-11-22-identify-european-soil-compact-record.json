@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-compact-record",
+  "title": "Identify European Soil compact record",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate one 24-byte Soil compact record, one observed indexed pointer, and their links to the existing Soil bank and Thumb literal owners."
+  ],
+  "validation": [
+    "Protected source plan e296-soil-compact-record-source-plan-vrirvg0i combines E285 selected Wine reads, prior Wine disassembly and E186/E274 evidence; 28 bytes include 24 sampled bytes."
+  ],
+  "limitations": [
+    "Static links do not establish actual sampled caller ancestry or the complete pointer table; runtime ownership, other callers and scenes remain open.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

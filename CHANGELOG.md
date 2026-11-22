@@ -3,6 +3,1421 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-22 — Trace European Soil upper reader sites
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record filtered reader-site evidence for the remaining sampled EUR Soil Evidence upper ROM reads.
+
+**Validation**
+
+- Wine capture e285-soil-upper-sites-wine-wgddtcdt observes all 285 E240 residual bytes over 600 retained frames; 245 bytes occur in interpreter scopes and 40 remain outside those scopes.
+
+**Limitations**
+
+- The inventory does not prove exact readers, source formats, extents, state equivalence or ownership; interpreter scopes can include nested reads.
+- Other continuations, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-soil-upper-reader-sites.json)
+
+## 2026-11-22 — Trace European Soil Evidence lower readers
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Capture instruction-scoped source sites for the 193 previously unowned lower words observed in Soil Evidence, retaining exact opcode and source-hash evidence.
+
+**Validation**
+
+- Wine unit e264-soil-lower-sites-wine-bdta3t36 observes all 193 words across 600 E232 frames; 135 distinct words have matching original PC-relative Thumb literal-load witnesses. Of 203 selected reads, 182 have an instruction scope and 21 do not.
+
+**Limitations**
+
+- Interpreter scopes may contain nested accesses; this observation publishes no owner and does not prove every caller, full source extent or scene equivalence. The other 58 lower words and the upper residual remain open.
+- Linux, USA and native Windows remain pending. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-soil-evidence-lower-readers.json)
+
+## 2026-11-22 — Trace European Soil 14d6d8 native contexts
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Add an opt-in test-only filtered native API context capture for two unowned Soil Evidence words.
+
+**Validation**
+
+- Windows build 3___wn__ and Wine capture e282-soil-14d6d8-sites-wine-7mza_q21 observe all eight bytes as native byte reads in one dispatch context over 600 EUR frames.
+
+**Limitations**
+
+- The exported PC and outer dispatch are not exact instruction sites; source format, state equivalence, other callers/scenes and runtime ownership remain unproven.
+- Build m6dd0jue failed on a test-only conversion and was fixed; Wine dxkh8rfg omitted TinyCC, drained and the corrected retry passed. Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-soil-14d6d8-native-contexts.json)
+
+## 2026-11-22 — Trace European Soil 146xxx literal sites
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Add an opt-in test-only interpreter window to attribute reads previously emitted outside an interpreter scope.
+
+**Validation**
+
+- Windows build ls1s3sdz and Wine capture e280-soil-146-sites-wine-q_rr8tp1 observe all 13 candidate words under matching original Thumb PC-relative instructions across the retained 600-frame EUR continuation.
+
+**Limitations**
+
+- The modified-dispatch capture does not establish state equivalence, complete callers, other scenes or runtime ownership; instruction scopes can include nested accesses.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-soil-146-literal-sites.json)
+
+## 2026-11-22 — Trace European post-indexed lower reader sites
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record original reader-site witnesses for the 108 post-indexed sampled bytes outside E226 and create a pending extraction and consumption checklist for the matching literals.
+
+**Validation**
+
+- Wine site capture qpmxbv2e observes all 27 targeted words in the retained 12-frame E170 continuation; nine instruction-scoped read records match original Thumb LDR opcode/address pairs, and 19 distinct reads are outside instruction scopes. Wine drained.
+
+**Limitations**
+
+- Scopes may include nested HLE or DMA reads; witnesses do not establish every caller, full source extents or complete scene equivalence. The capture publishes no source and 72 other sampled bytes remain unattributed.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-post-indexed-lower-reader-sites.json)
+
+## 2026-11-22 — Trace European Blue Screw read sites
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record source-site observations for six Blue Screw words; literal integration and indirect-source attribution remain open.
+
+**Validation**
+
+- Protected Wine unit m3aveg4f captures all six words across the retained 600-frame scene; three have matching original Thumb PC-relative LDR opcode/address witnesses and three share an indirect LDR scope. Wine drained.
+
+**Limitations**
+
+- Instruction scopes can include nested HLE/DMA reads; source extents, all callers, other scenes, Linux, USA and native Windows remain unverified. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-trace-european-blue-screw-read-sites.json)
+
+## 2026-11-22 — Scan European Blue Screw literal anchors
+
+Type: docs. Platforms: European ROM; static analysis.
+
+**Changes**
+
+- Record a negative bounded literal-anchor scan for the six Blue Screw sample words and keep their source attribution open.
+
+**Validation**
+
+- Protected unit 0iwncua_ authenticates the retained E255 audit, exact EUR ROM, E230 dataset and native translation, finding no qualifying straight-line Thumb LDR anchors.
+
+**Limitations**
+
+- Other reader forms, control paths, executing PCs, scenes, Linux, USA and native Windows remain unverified. No replay or performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-scan-european-blue-screw-literal-anchors.json)
+
+## 2026-11-22 — Scan European Bank unscoped literal anchors
+
+Type: docs. Platforms: European ROM; static analysis.
+
+**Changes**
+
+- Record a negative bounded translated-block anchor scan for the three remaining Bank sample words and keep their source attribution open.
+
+**Validation**
+
+- Protected unit hfew8swv authenticates the EUR ROM, E229 dataset and retained Bank native translation and finds no qualifying straight-line Thumb LDR anchors for the three words.
+
+**Limitations**
+
+- Other reader forms, control paths, executing PCs, scenes, Linux, USA and native Windows remain unverified. No replay or performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-scan-european-bank-unscoped-literal-anchors.json)
+
+## 2026-11-22 — Reconcile Red Spring remaining checklist
+
+Type: docs. Platforms: European ROM; existing Wine evidence.
+
+**Changes**
+
+- Correct stale Red Spring checklist and feature prose that treated sampled bytes as still unowned after later E223–E226 integrations, while retaining open callers, source domains, scenes and platforms.
+
+**Validation**
+
+- Existing static reconciliation _z04mity finds zero unowned bytes in the retained E172 sample; earlier reader, altered-source scene and production CLI Wine receipts remain unchanged.
+
+**Limitations**
+
+- The sample does not establish every executing PC, caller, scene or full ROM coverage. Linux, USA and native Windows remain pending; no game or performance test was rerun.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-reconcile-red-spring-remaining-checklist.json)
+
+## 2026-11-22 — Reconcile European title and opening inventories
+
+Type: docs. Platforms: European ROM; prior Windows via Wine.
+
+**Changes**
+
+- Reconcile retained title-language, main-title and opening address inventories with E228 and record the existing ordinary five-choice title-selector Wine evidence.
+
+**Validation**
+
+- Static unit d83mbwp2 checks the exact EUR ROM and current source hashes; all 62, 8 and 8 previously unowned sample bytes respectively now have declared owners. The three samples contain 70 distinct bytes.
+- Earlier Wine yx3vvt5x covers all five title-selector cursor choices with poisoned backing; no navigation or game replay was repeated.
+
+**Limitations**
+
+- Declared source ownership does not prove current runtime dispatch, execution PCs, complete scene coverage or absence of another language-selection route.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-reconcile-european-title-inventories.json)
+
+## 2026-11-22 — Reconcile European post-indexed lower-ROM sample
+
+Type: docs. Platforms: European ROM; prior Windows via Wine.
+
+**Changes**
+
+- Reconcile the 568 lower-ROM sample bytes without earlier source witnesses against the current E226 manifest, and update the remaining source-attribution checklist.
+
+**Validation**
+
+- Static unit wxrezwcp verifies the exact EUR ROM, retained Wine inventory and prior reconciliation, plus 107 current source-span hashes: 460 sampled bytes are declared and 108 remain outside declared ranges. No game was replayed.
+
+**Limitations**
+
+- This one 12-frame address sample does not establish executing PCs, asset boundaries, all callers or complete ROM coverage; the other 500 prior-witness bytes and high copied-IWRAM block are outside this subset.
+- Source attribution and runtime ownership for the remaining 108 bytes, other scenes, Linux, USA and native Windows remain open. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-reconcile-european-post-indexed-lower-sample.json)
+
+## 2026-11-22 — Reconcile European post-indexed full inventory
+
+Type: docs. Platforms: European ROM; prior Windows via Wine.
+
+**Changes**
+
+- Reconcile the entire previously unowned E170 address sample against E228 and distinguish current data owners from the retained copied-IWRAM code-support block.
+
+**Validation**
+
+- Static unit aqz4qh3s verifies the exact EUR ROM, retained Wine inventory and 259 intersecting E228 source hashes: 1080 sampled bytes now have declared owners and 3600 remain in the documented copied IWRAM source block. No game was replayed.
+
+**Limitations**
+
+- The block contains executable support, but address overlap does not classify each byte as an instruction or asset or establish executing PCs, all readers, other scenes or full ROM coverage.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_INVENTORY.md](docs/development/ROM_DATA_INVENTORY.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-reconcile-european-post-indexed-full-inventory.json)
+
+## 2026-11-22 — Reconcile European F09 historical inventory
+
+Type: docs. Platforms: European ROM; prior Windows via Wine.
+
+**Changes**
+
+- Reconcile the retained F09 address sample against the current E228 manifest and preserve its scoped remaining-reader and platform checklist.
+
+**Validation**
+
+- Static unit __2ozlaa restores the archived F09 report under lease, verifies its retained hash, the exact EUR ROM and 251 intersecting source hashes, and finds all 1146 previously unowned sampled bytes declared in E228. The restored input was retired unchanged.
+
+**Limitations**
+
+- The address-only join does not establish current runtime service, executing PCs, other readers, scenes or complete ROM coverage.
+- Linux, USA and native Windows remain pending; no game replay or performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-reconcile-european-f09-historical-inventory.json)
+
+## 2026-11-22 — Inventory European Soil Evidence ROM reads
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record an E231 selected-reader inventory of the existing Soil Evidence route and track the 3066 sampled bytes outside declared sources.
+
+**Validation**
+
+- Protected Wine unit tfe8gnqy compares 600 retained frames with matching state, clock, video, OAM, dispatch and five nonempty audio streams, and records 424583 distinct selected-reader requests over 241192 ROM bytes. Wine drained.
+
+**Limitations**
+
+- The address-only audit does not identify executing PCs, distinguish code from data or establish source extents, all readers or other scenes. Linux, USA and native Windows remain unverified; no performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-inventory-european-soil-evidence-rom-reads.json)
+
+## 2026-11-22 — Inventory European Blue Screw ROM reads
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record an E230 selected-reader inventory of the existing Blue Screw route and track the 24 sampled bytes outside declared sources.
+
+**Validation**
+
+- Protected Wine unit jyhm2s_n compares 600 retained frames with matching state, clock, video, OAM, dispatch and five nonempty audio streams, and records 287028 distinct selected-reader requests over 164591 ROM bytes. Wine drained.
+
+**Limitations**
+
+- The address-only audit does not identify executing PCs, distinguish code from data or establish source extents, all readers or other scenes. Linux, USA and native Windows remain unverified; no performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-inventory-european-blue-screw-rom-reads.json)
+
+## 2026-11-22 — Inspect European Soil list-adjacent layout
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Inspect the two sampled Bus intervals adjacent to the Soil Evidence sprite lists for source relationships.
+
+**Validation**
+
+- Protected static unit e273-soil-list-adjacent-layout-rsm1ehul authenticates both 44-byte ranges and finds 20 halfword-relative matches from base 6c1740 to all E271 list roots.
+
+**Limitations**
+
+- Arithmetic matches do not establish executing readers, complete format, selector domain, producer or ownership; the second interval remains unclassified. No replay or owner was published.
+- Other ranges and scenes, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-inspect-european-soil-list-adjacent-layout.json)
+
+## 2026-11-22 — Inspect European Bank residual read sites
+
+Type: docs. Platforms: European ROM; retained Wine capture.
+
+**Changes**
+
+- Record the retained Bank read-site evidence for the three remaining unowned words and keep their address provenance and runtime ownership open.
+
+**Validation**
+
+- Protected unit rm1pwc1a restores the archived capture under lease, verifies its hash and the exact EUR ROM, finds one captured 32-bit Bus read for each word, and retires the report unchanged.
+
+**Limitations**
+
+- Each captured scope contains a Thumb LDR r0, [r0], but nested HLE/DMA accesses can inherit instruction scope. Other scenes, readers, Linux, USA and native Windows remain unverified. No replay or performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-inspect-european-bank-residual-read-sites.json)
+
+## 2026-11-22 — Identify remaining European Red Spring source spans
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record a source plan for the remaining 16 sampled Red Spring bytes: two original guarded switch tables and one eight-byte stack-copy source, with explicit pending implementation and platform checklists.
+
+**Validation**
+
+- Wine disassembly jqg8wh29 and 56f3ef_x identifies original guards and the eight-byte copy; both Wine servers drained.
+- Static source plan b39y_6rn authenticates original code, roots, helper and source ranges against the exact EUR ROM and E224 manifest; these spans account for all 16 remaining sample bytes.
+
+**Limitations**
+
+- The capture is address-only and does not establish executing PCs, all callers or complete ROM coverage; the plan does not publish or consume resources.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-red-spring-final-source-spans.json)
+
+## 2026-11-22 — Identify European Soil type-3 source links
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate four observed type-3 transfer records and their linked descriptors, wrappers and pre-existing LZ streams.
+
+**Validation**
+
+- Protected plan e287-soil-type3-linked-source-plan-hukink1w joins prior Wine reader evidence to 92 distinct unowned bytes, including 74 sampled bytes, while confirming one shared wrapper and four owned streams.
+
+**Limitations**
+
+- The plan does not install runtime ownership or bound guest indices, other readers or scenes; interpreter scopes may include nested reads.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-type3-source-links.json)
+
+## 2026-11-22 — Identify European Soil sprite list candidates
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Identify count-shaped SpritePeek reads with matching six-byte-per-object payload requests in the retained Soil Evidence inventory.
+
+**Validation**
+
+- Protected static unit e270-soil-sprite-list-candidates-16di9jl9 finds 20 complete, non-overlapping candidate ranges and 586 sampled bytes outside E234 source owners.
+
+**Limitations**
+
+- Address-only evidence does not establish temporal pairing, call site, producer, ownership or complete asset domain. The plan publishes no resource and no new replay.
+- Other bytes and scenes, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-sprite-list-candidates.json)
+
+## 2026-11-22 — Identify European Soil scoped indexed values
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate six individually observed indexed source values and their original readers and separately owned literal roots.
+
+**Validation**
+
+- Wine disassembly e298-soil-remaining-readers-disassembly-wine-0c4y0luh and protected source plan e298-soil-scoped-values-source-plan-bk3xxzcf verify 16 previously unowned sampled bytes.
+
+**Limitations**
+
+- The values do not establish table extents, arbitrary guest index domains, callback invocation or sampled caller ancestry; runtime ownership and other scenes remain open.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-scoped-indexed-values.json)
+
+## 2026-11-22 — Identify remaining European Soil switches
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate nine guarded Thumb switches linked to already owned literal roots.
+
+**Validation**
+
+- Wine disassembly e278-soil-remaining-disassembly-wine-i0v9h91a and static plan e278-soil-remaining-switch-plan-8059c_wi verify nine guarded tables, 120 destinations, root ownership and ten sampled words in the retained scene.
+
+**Limitations**
+
+- No runtime owner is published; selector writers, complete callers and other scenes remain unproven. Instruction scopes may contain nested reads.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-remaining-switches.json)
+
+## 2026-11-22 — Identify remaining European Soil rectangles
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate two source-backed Soil Evidence rectangles and one previously unowned alternate literal while retaining separate existing literal owners.
+
+**Validation**
+
+- Wine disassembly e300-soil-remaining-rectangle-roots-wine-n7djp8r7 and protected plan e300-soil-remaining-rectangles-source-plan-kcr8eper verify 112 candidate bytes, including the 22 remaining sampled bytes.
+
+**Limitations**
+
+- Static links do not establish sampled caller ancestry, arbitrary guest bounds, runtime ownership or all scenes.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-remaining-rectangles.json)
+
+## 2026-11-22 — Identify European Soil type-2 and type-4 transfer sources
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate selected type-2 list, rectangle and type-4 descriptor/header/run sources and their original readers.
+
+**Validation**
+
+- Wine disassembly e289-soil-other-transfer-readers-disassembly-wine-9u2bzss8 and e289-soil-type4-nested-disassembly-wine-hluvg778 plus protected plan e289-soil-other-transfer-source-plan-3fd5j3nj verify 104 unowned source bytes, including 78 sampled bytes.
+
+**Limitations**
+
+- The two-byte gap and its relationship to the adjacent owned tilemap remain unproved; runtime ownership, complete guest index domains, other consumers and scenes are not established.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-other-transfer-sources.json)
+
+## 2026-11-22 — Identify European Soil indirect records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate five observed eight-byte records, compatible original reader and initializer links, and existing literal and adjacent source owners.
+
+**Validation**
+
+- Wine disassemblies u03116_g, 8lucbl5h and ezcwvq_7 plus protected plan e293-soil-indirect-records-source-plan-tcv9a6zh verify 40 unowned source bytes including 35 sampled bytes.
+
+**Limitations**
+
+- Static source links do not establish the actual ancestry of the sampled reads; arbitrary guest indices, neighboring bytes, runtime ownership, other callers and scenes remain open.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-indirect-records.json)
+
+## 2026-11-22 — Identify European Soil indexed sequence records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate five indexed range records and eleven sequence records, their original readers and separately owned pointer literals.
+
+**Validation**
+
+- Wine disassembly e291-soil-39e1-readers-disassembly-wine-enhec_9u and e291-soil-39e1-init-disassembly-wine-7v1qng1c plus protected plan e291-soil-39e1-source-plan-v65i8w_f verify 64 unowned source bytes, including 30 sampled bytes.
+
+**Limitations**
+
+- The original comparison does not bound arbitrary guest indices or establish initialization for every caller; runtime ownership, other consumers and scenes remain open.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-indexed-sequence-records.json)
+
+## 2026-11-22 — Identify European Soil Evidence LZ streams
+
+Type: docs. Platforms: European ROM; static analysis.
+
+**Changes**
+
+- Record source contracts for three complete Soil Evidence LZ77 streams; runtime ownership and other sampled bytes remain open.
+
+**Validation**
+
+- Protected unit frkft5lf authenticates the retained E260 audit and exact EUR ROM, decodes 1335 entirely sampled encoded bytes to 1640 bytes, and verifies hashes and absence of E231 owner overlaps.
+
+**Limitations**
+
+- The offline plan does not establish asset identity, original HLE call sites, other consumers or scenes and publishes no owner. Linux, USA and native Windows remain unverified; no replay or performance comparison was performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-evidence-lz-streams.json)
+
+## 2026-11-22 — Identify European Soil Evidence literal sources
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Authenticate a source plan for 135 Soil Evidence PC-relative Thumb literal words observed under Wine.
+
+**Validation**
+
+- Protected static unit e265-soil-literal-source-plan-3f25m75o verifies 139 original opcode/address/hash witnesses, 135 distinct words and 540 source bytes, excluding overlaps with E232 sources and previous or candidate reader instructions.
+
+**Limitations**
+
+- Instruction scopes may include nested reads; the plan publishes no owner and does not establish every caller, full source extents or all scenes.
+- The other sampled words, upper residual, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-evidence-literal-sources.json)
+
+## 2026-11-22 — Identify European Soil indexed source words
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate the original e3838 reader sequence, root and 30 observed indexed source words without imposing a new guest index bound.
+
+**Validation**
+
+- Wine disassembly e268-soil-e3838-disassembly-wine-l8md6ii5 and protected static plan e268-soil-e3838-source-plan-dvwif_zm verify the signed RAM index, base 14d580, existing root literal and 30 sampled words/120 bytes at observed indices 1 through 32.
+
+**Limitations**
+
+- No complete index domain or guard is established; preserve raw fallback for unselected and negative indices. Scopes may contain nested accesses and the plan publishes no owner.
+- Index writers, other consumers, scenes, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-e3838-indexed-sources.json)
+
+## 2026-11-22 — Identify European Soil copied halfwords
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the opt-in test-only interpreter capture to record selected byte-copy reader and caller contexts.
+- Authenticate a four-halfword copied source with a separately owned pointer.
+
+**Validation**
+
+- Wine capture e283-soil-14d6d8-reader-wine-kg1o5ej2 identifies all eight source bytes at the original byte-load instruction and its return context; caller disassembly 84wwsn66 and static plan _nouuxnz verify the eight-byte copy and subsequent halfword indexing.
+
+**Limitations**
+
+- No guest index bound, state equivalence, complete callers, other scenes or runtime ownership is inferred.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-copied-halfwords.json)
+
+## 2026-11-22 — Identify European Soil compact record
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate one 24-byte Soil compact record, one observed indexed pointer, and their links to the existing Soil bank and Thumb literal owners.
+
+**Validation**
+
+- Protected source plan e296-soil-compact-record-source-plan-vrirvg0i combines E285 selected Wine reads, prior Wine disassembly and E186/E274 evidence; 28 bytes include 24 sampled bytes.
+
+**Limitations**
+
+- Static links do not establish actual sampled caller ancestry or the complete pointer table; runtime ownership, other callers and scenes remain open.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-compact-record.json)
+
+## 2026-11-22 — Identify European Soil compact metadata
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate a compact metadata projection linked to the 20 already owned Soil Evidence sprite lists.
+
+**Validation**
+
+- Wine source-site capture e274-soil-compact-sites-wine-d95mdss3 observes all 88 metadata bytes over 600 E235 frames; static plan e274-soil-compact-metadata-plan-tmxn23ol verifies 20 list references, selector 0 and 20 frame references without overlapping existing owners.
+
+**Limitations**
+
+- The projection does not establish producer, complete selector/index domain, all readers or scenes; instruction scopes may include nested accesses. The plan publishes no owner and existing list bytes must not be declared twice.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-compact-metadata.json)
+
+## 2026-11-22 — Identify European Soil a83c2 switch
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate a guarded 15-entry Thumb switch linked to an already owned literal root.
+
+**Validation**
+
+- Wine disassembly e276-soil-a83c2-disassembly-wine-ps_64nk8 and static plan e276-soil-a83c2-switch-plan-6jwzeppl verify its code, 60 destination bytes, root ownership and three indices observed in the retained scene.
+
+**Limitations**
+
+- No runtime owner is published; selector writers, complete callers and other scenes remain unproven. Instruction scopes may contain nested reads.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-a83c2-switch.json)
+
+## 2026-11-22 — Identify European Soil twelve-byte records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate six observed 12-byte transfer-command candidates and their original stride and branch window.
+
+**Validation**
+
+- Wine disassembly e286-soil-record-readers-disassembly-wine-cve18bko and static plan e286-soil-12byte-record-plan-3otuwzz3 verify six nonoverlapping E240 rows (72 bytes), 66 sampled bytes and type distribution 4/1/1.
+
+**Limitations**
+
+- Linked pointer targets are candidates; no complete guest index domain, all callers, other scenes or runtime ownership established. Interpreter scopes may include nested reads.
+- Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-soil-12byte-records.json)
+
+## 2026-11-22 — Identify European post-indexed anchored literals
+
+Type: docs. Platforms: European ROM; prior Windows via Wine.
+
+**Changes**
+
+- Record static original-reader anchors for all 18 unowned words in the selected post-indexed address sample, with an explicit pending extraction and consumption checklist.
+
+**Validation**
+
+- Static unit 0uvhmsty authenticates the exact EUR ROM and retained E170 translated block roots, checking original PC-relative LDRs and straight-line paths for 18 words (72 bytes) outside the E227 manifest.
+
+**Limitations**
+
+- The E242 reads were outside instruction scopes; static anchors do not prove executing PCs, complete literal pools, all callers or full ROM coverage. The scan publishes no source.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-post-indexed-anchored-literals.json)
+
+## 2026-11-22 — Identify European Blue Screw source plan
+
+Type: docs. Platforms: European ROM; Windows via Wine and static analysis.
+
+**Changes**
+
+- Record source contracts for three observed literals and a 15-entry switch array covering the Blue Screw sample residual; runtime ownership remains open.
+
+**Validation**
+
+- Wine disassembly __998l61 and protected source plan jkaucm5o authenticate original opcodes, root and selector path, 72 disjoint source bytes, target shapes and all 24 sampled bytes. Wine drained.
+
+**Limitations**
+
+- Captured scopes can include nested reads; other callers and scenes remain open. Linux, USA and native Windows remain unverified. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-blue-screw-source-plan.json)
+
+## 2026-11-22 — Identify European Bank switch arrays
+
+Type: docs. Platforms: European ROM; Windows via Wine and static analysis.
+
+**Changes**
+
+- Record three indexed switch-array source contracts covering the remaining Bank sample words; extraction and runtime ownership remain open.
+
+**Validation**
+
+- Wine disassembly 9uc90bfb and protected source plan in0jqgky authenticate original instructions, 269 destinations across 1076 source bytes, three existing roots, target shapes and the absence of current owner overlaps.
+
+**Limitations**
+
+- The retained capture can include nested read scopes and does not prove all callers or scenes. Linux, USA and native Windows remain unverified. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-bank-switch-arrays.json)
+
+## 2026-11-22 — Consume final European Red Spring switch arrays
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb switch resource with two original guarded destination arrays and route their 708 exact source bytes through the runtime while preserving prior roots and guest branches.
+- Preserve the 39 earlier switch tables and all 129 other resource files; increment the extraction and decoder revisions.
+
+**Validation**
+
+- Source plan b39y_6rn authenticates original EUR code, roots and destination ranges against E224.
+- Windows test build 80mq3upk and Wine reader 2zdfj3c8 validate 177 destinations, previous resources, edit rejection, boundaries, eight original interpreted/generated guarded cases, outside cases, transfers and snapshot ownership.
+- Wine scene 6vjw7n51 compares 600 recorded Red Spring frames with both backing arrays altered; both are consumed and state, clock, video, OAM, dispatch and five nonempty audio streams agree each frame.
+- Production build vsbf1rc3 and Wine CLI q_skv5h9 create, reuse and verify 131 matching files; static reconciliation n1l57jp6 leaves eight unowned E172 sampled bytes.
+
+**Limitations**
+
+- The address-only capture does not prove executing PCs, all callers, selectors, scenes or full ROM coverage. The eight-byte copy source, other scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-final-european-red-spring-switch-arrays.json)
+
+## 2026-11-22 — Consume final European Red Spring copy source
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated copied-halfword resource with the original eight-byte Red Spring copy source and serve its exact bytes through the runtime while retaining the original root, helper and stack behavior.
+- Preserve prior tables and source order, all 129 other resource files and original guest control flow; increment extraction and decoder revisions.
+
+**Validation**
+
+- Source plan b39y_6rn authenticates the exact EUR ROM, original copy reader, root, helper and eight-byte span.
+- Windows test build nt28u8wp and Wine reader e2rslaz3 verify the source, previous resources, coherent edit rejection, boundaries, original interpreted/generated copy prefixes, transfers and snapshot ownership.
+- Wine scene xwjchks1 compares 600 recorded Red Spring frames with the new backing source altered; it is consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams agree each frame.
+- Production build gjzrae6s and Wine CLI _jk7dwh3 create, reuse and verify 131 matching files; static reconciliation _z04mity finds zero unowned bytes in the retained E172 address sample.
+
+**Limitations**
+
+- The address-only sample does not prove its executing PCs, all callers, other scenes or full-ROM coverage. Real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-final-european-red-spring-copy-source.json)
+
+## 2026-11-22 — Consume European Soil transfer records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve four authenticated Soil Evidence type-3 transfer rows, four descriptors and three new wrappers from the existing extracted resources while preserving the shared wrapper, LZ owners and unbounded guest indexing.
+- Update prior revision-sensitive fixtures to verify their original fields and source spans across the E241 extension.
+
+**Validation**
+
+- Wine reader e288-soil-transfer-readers-wine-3f10sxyc verifies publication, unique ownership, altered-source boundaries, rejection and 32 original interpreter/generated cases.
+- Wine scene e288-soil-transfer-scene-wine-ixp_q9mt compares 600 altered-source frames with all four rows and descriptors and three new wrappers consumed; state, clock, video, OAM, dispatch and audio agree.
+- Wine CLI e288-soil-transfer-cli-wine-ztjvp9z5 creates, reuses and verifies the same 131 files; static join e288-soil-transfer-sample-residual-tn85nxvm leaves 211 sampled bytes unowned.
+- Windows test rebuild e288-soil-transfer-fixtures-build-mm38j6_s passes; one prior copied-halfword fixture passes on Wine as e288-soil-copied-regression-wine-5_4m68dh.
+
+**Limitations**
+
+- Other transfer types, callers, scenes, guest index domains, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-transfer-records.json)
+
+## 2026-11-22 — Consume European Soil sprite lists
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend authenticated static OBJ lists with 20 Soil Evidence lists, 91 typed objects and 586 source bytes, serving guest and host paths.
+- Preserve the previous 204 lists, 129 other resource files and existing resource identifiers.
+
+**Validation**
+
+- Windows build 2p05a3d6 and Wine reader e271-soil-sprite-lists-readers-wine-gywh4sti verify previous/new sources, coherent edit rejection, mixed boundaries/mirrors, three original interpreter/host publication comparisons, transfers and snapshot ownership.
+- Wine scene e271-soil-sprite-lists-scene-wine-b3g8olpn compares 600 recorded frames with all 20 backing lists altered; the host consumes every list and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e271-soil-sprite-lists-cli-wine-duz93oci creates, reuses and verifies 131 matching files; static join e271-soil-sprite-list-sample-residual-ki3vs5jv leaves 485 E260 sampled bytes outside E235 source owners.
+
+**Limitations**
+
+- The selected continuation does not establish pointer producers, complete asset domain, every reader, other scenes, real BIOS or UI save/Load.
+- Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-sprite-lists.json)
+
+## 2026-11-22 — Consume European Soil scoped indexed values
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve six witnessed EUR Soil indexed values at their original widths, preserving the Thumb pointer bit, existing literal owners and unselected-index fallback.
+- Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource.
+
+**Validation**
+
+- Wine reader e299-soil-scoped-values-readers-wine-4zlbm5q6 verifies all 134 previous resources, poisoned boundaries, unowned fallback, coherent edit rejection and 36 original interpreted/generated load cases.
+- Wine scene e299-soil-scoped-values-scene-wine-qeu3cp12 compares 600 altered-source frames while all six values are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e299-soil-scoped-values-cli-wine-r4c7x_zi creates, reuses and verifies 136 matching files; static join e299-soil-scoped-values-sample-residual-248p0qae leaves 22 sampled bytes unowned.
+
+**Limitations**
+
+- Complete tables, guest indices, actual callback invocation and ancestry, other scenes, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-scoped-indexed-values.json)
+
+## 2026-11-22 — Consume European Soil remaining switches
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb switch resource with 120 authenticated Soil Evidence destinations in nine tables, preserving the separately owned literal roots and guest guards.
+- Preserve 46 prior switch tables and 129 other resource files.
+
+**Validation**
+
+- Windows build 5f5gjmpj and Wine reader e279-soil-remaining-switches-readers-wine-tvvu9o31 verify source binding, edited-source rejection, mirrors and mixed boundaries, guarded and outside-guard interpreted/generated readers, transfers and snapshot ownership.
+- Wine scene e279-soil-remaining-switches-scene-wine-tgdwq7za compares 600 recorded frames with the switch destinations altered and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e279-soil-remaining-switches-cli-wine-7oaysfzd creates, reuses and verifies 131 matching files; static join e279-soil-remaining-switches-sample-residual-vdq2xyeo leaves 345 E260 sampled bytes outside E238 source owners.
+
+**Limitations**
+
+- The final indirect MOV uses interpreter fallback; the continuation does not establish all selector writers, callers, other scenes, real BIOS or UI save/Load.
+- Linux, USA and native Windows remain pending; older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-remaining-switches.json)
+
+## 2026-11-22 — Consume remaining European Soil rectangles
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve two authenticated EUR Soil rectangles and one alternative literal through a typed resource while preserving existing literal owners and fallback.
+- Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource.
+
+**Validation**
+
+- Wine reader e301-soil-remaining-rectangles-readers-wine-ibf9tm98 verifies 135 prior resources, poisoned boundaries, coherent edit rejection, 18 original reader cases and four DMA/CpuSet cases.
+- Wine scene e301-soil-remaining-rectangles-scene-wine-1o7mbmv_ compares 600 altered-source frames while both rectangles are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e301-soil-remaining-rectangles-cli-wine-vcu4hnwd creates, reuses and verifies 137 matching files; static join e301-soil-remaining-rectangles-sample-residual-a7umgmlt and provenance e301-soil-sample-provenance-6eq5zu9w leave no unowned bytes in the selected sample.
+
+**Limitations**
+
+- The alternate literal was exercised by the reader but not read in the selected scene. Sampled pointer ancestry, arbitrary guest bounds, other callers and scenes, real BIOS and UI save/Load remain open; zero applies only to the selected sample.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-remaining-rectangles.json)
+
+## 2026-11-22 — Consume European Soil type-2 and type-4 sources
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve the selected Soil Evidence type-2 list, rectangles and type-4 header and witnessed run through existing typed resources, preserving the unclassified gap and adjacent owner.
+- Update prior revision-sensitive fixtures to verify the original resource fields and spans across the E242 extension.
+
+**Validation**
+
+- Wine reader e290-soil-types24-readers-wine-oan65r_2 verifies publication, previous fields, poisoned boundaries, the unowned gap, coherent-edit rejection and 36 original interpreted/generated reader cases.
+- Wine scene e290-soil-types24-scene-wine-lrcwewjg compares 600 altered-source frames while both rows and all selected source groups are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e290-soil-types24-cli-wine-okzybzbi creates, reuses and verifies 131 matching files; static join e290-soil-types24-sample-residual-tmqi3aq8 leaves 133 sampled bytes unowned.
+
+**Limitations**
+
+- The unclassified two-byte gap, other callers and scenes, complete guest domains, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-other-transfer-sources.json)
+
+## 2026-11-22 — Consume European Soil indirect records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve five authenticated EUR Soil indirect records through a typed resource while preserving existing literal owners, adjacent resource boundaries and arbitrary guest-pointer fallback.
+- Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource.
+
+**Validation**
+
+- Wine reader e294-soil-indirect-records-readers-wine-cp1uz_wj verifies all previous resource fields, poisoned boundaries, unowned fallback, coherent edit rejection and 76 original interpreted/generated cases.
+- Wine scene e294-soil-indirect-records-scene-wine-y9ussbh4 compares 600 altered-source frames while all five records are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e294-soil-indirect-records-cli-wine-ahnerpan creates, reuses and verifies 133 matching files; static join e294-soil-indirect-records-sample-residual-vrbl28sb leaves 68 sampled bytes unowned.
+
+**Limitations**
+
+- The ancestry of sampled reads, other callers, complete guest domains, neighboring bytes, other scenes, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-indirect-records.json)
+
+## 2026-11-22 — Consume European Soil indexed sequence records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve five authenticated EUR Soil range records and eleven sequence records through a typed resource while preserving existing literal owners, adjacent resource boundaries and unrestricted guest indexing.
+- Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource.
+
+**Validation**
+
+- Wine reader e292-soil-scene-records-readers-wine-3ob0bs_v verifies all previous resource fields, poisoned boundaries, unowned fallback, coherent edit rejection and 30 original interpreted/generated reader cases.
+- Wine scene e292-soil-scene-records-scene-wine-vg1kiwv5 compares 600 altered-source frames while selected range and sequence records are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e292-soil-scene-records-cli-wine-xhag7oue creates, reuses and verifies 132 matching files; static join e292-soil-scene-records-sample-residual-xzombbo8 leaves 103 sampled bytes unowned.
+
+**Limitations**
+
+- Other callers, initial guest state, complete guest domains, other scenes, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-indexed-sequence-records.json)
+
+## 2026-11-22 — Consume European Soil indexed bytes
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve six witnessed EUR Soil indexed bytes through a typed resource, preserving the existing literal owner, adjacent indirect record and unrestricted guest-index fallback.
+- Update revision-sensitive fixtures and dataset size checks; move the previous indirect-record fallback probe past the newly owned bytes.
+
+**Validation**
+
+- Wine reader e295-soil-indexed-bytes-readers-wine-eb4g2qel verifies all 132 previous resources, poisoned mixed boundaries, unowned fallback, coherent edit rejection and 18 original interpreted/generated cases.
+- Wine scene e295-soil-indexed-bytes-scene-wine-_fgc_4sp compares 600 altered-source frames while all six bytes are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e295-soil-indexed-bytes-cli-wine-ttlz5pdo creates, reuses and verifies 134 matching files; static join e295-soil-indexed-bytes-sample-residual-hgpyj2zs leaves 62 sampled bytes unowned.
+
+**Limitations**
+
+- The full table and guest index domain, other callers, neighboring bytes, other scenes, real BIOS and UI save/Load remain open.
+- Other updated older fixtures including the relocated fallback probe, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-indexed-bytes.json)
+
+## 2026-11-22 — Consume European Soil Evidence LZ streams
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend authenticated observed LZ source views and decoded HLE blocks with three Soil Evidence streams, serving 1,335 original source bytes and 1,640 decoded bytes.
+- Preserve the fourteen previous streams, 129 other resource files and existing counter groups; update revision-sensitive test expectations.
+
+**Validation**
+
+- Windows test build 9lp7r13_ and Wine reader e262-soil-lz-readers-wine-v7ya7ht6 verify prior resources, coherent edit rejection, mirrored and boundary reads, three original SWI cases, nine transfers and snapshot ownership.
+- Wine scene e262-soil-lz-scene-wine-knhlea70 compares 600 recorded frames with the new sources altered; all three are consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI build 7keqayrr and CLI e262-soil-lz-cli-wine-6ld8ewbe create, reuse and verify 131 matching files; static join e262-soil-lz-sample-residual-twyv42n7 leaves 1,731 E260 sampled bytes outside E232 source owners.
+
+**Limitations**
+
+- One sampled continuation does not establish asset identity, all readers or complete ROM coverage; other scenes, real BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-evidence-lz-streams.json)
+
+## 2026-11-22 — Consume European Soil Evidence literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource and runtime with 135 Soil Evidence words, serving 540 original source bytes without changing guest instructions.
+- Preserve 1,276 previous literal words and 129 other resource files, and update revision-sensitive test expectations.
+
+**Validation**
+
+- Windows build s8dj8xkv and Wine reader e266-soil-literals-readers-wine-itca7x6l verify earlier resources, coherent edit rejection, mixed boundaries, mirrors, 270 original interpreted/generated reader cases, transfers and snapshot ownership.
+- Wine scene e266-soil-literals-scene-wine-8wxjny7m compares 600 recorded frames with all 135 managed sources altered; each word is consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Windows CLI build db0f8q9l and Wine CLI e266-soil-literals-cli-wine-ptvqd89o create, reuse and verify 131 matching files; static join e266-soil-literal-sample-residual-u2vrc_4i leaves 1,191 E260 sampled bytes outside E233 source owners.
+
+**Limitations**
+
+- Captured instruction scopes can include nested accesses; other readers, source domains, scenes, real BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-evidence-literals.json)
+
+## 2026-11-22 — Consume European Soil indexed words
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the indexed-word resource with 30 separate, source-authenticated Soil Evidence words and preserve original signed index arithmetic and fallback for unselected addresses.
+- Preserve the previous indexed records, their counters, all 129 other resource files and the existing resource ID and filename.
+
+**Validation**
+
+- Windows build gh1jui6g and Wine reader e269-soil-e3838-readers-wine-dpssxyfq verify previous and new sources, coherent edit rejection, mixed boundaries/mirrors, 74 original interpreted/generated cases including negative and unselected indices, transfers and snapshot ownership.
+- Wine scene e269-soil-e3838-scene-wine-t22ztsv4 compares 600 recorded frames with the 30 managed words altered; all are consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e269-soil-e3838-cli-wine-oon2tik4 creates, reuses and verifies 131 matching files; static join e269-soil-e3838-sample-residual-5aymku00 leaves 1,071 E260 sampled bytes outside E234 source owners.
+
+**Limitations**
+
+- Observed indices are not a guest bound; index writers, full domain, other consumers and scenes, real BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-e3838-indexed-words.json)
+
+## 2026-11-22 — Consume European Soil copied halfwords
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing copied-halfword resource with four authenticated Soil Evidence values and a dependency on the separately owned literal root.
+- Preserve three prior tables and 129 other resource files; leave guest indexing and stack behavior unchanged.
+
+**Validation**
+
+- Windows build 58fcz5po and Wine reader e284-soil-copied-halfwords-readers-wine-r9a1m88c verify source binding, edited-source rejection, mirrors and mixed boundaries, original interpreted/generated copy/index cases including outside indices, transfers and snapshot ownership.
+- Wine scene e284-soil-copied-halfwords-scene-wine-6xd5_pj5 compares 600 recorded frames with all eight source bytes altered; every byte is consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e284-soil-copied-halfwords-cli-wine-af_b0kli creates, reuses and verifies 131 matching files; static join e284-soil-copied-halfwords-sample-residual-z7jjst5p leaves 285 E260 sampled bytes outside E240 source owners, all above 300000.
+
+**Limitations**
+
+- No full guest index bound or complete callers, other scenes, real BIOS or UI save/Load are established.
+- Linux, USA and native Windows remain pending; older revision-sensitive tests were updated but not rerun. First reader vi786noo failed in the test dispatch loop; corrected retry passed. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-copied-halfwords.json)
+
+## 2026-11-22 — Consume European Soil compact record
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Serve one EUR Soil compact record and its observed indexed pointer, preserving existing bank and literal owners and unselected pointer fallback.
+- Update revision-sensitive fixtures and aggregate dataset size checks for the additional resource.
+
+**Validation**
+
+- Wine reader e297-soil-compact-record-readers-wine-5w49a8bi verifies all 133 previous resources, poisoned boundaries, unowned fallback, coherent edit rejection and 28 original interpreted/generated cases.
+- Wine scene e297-soil-compact-record-scene-wine-1ti7yhlx compares 600 altered-source frames while the record and pointer are consumed; state, guest clock, video, OAM, dispatch and audio agree.
+- Wine CLI e297-soil-compact-record-cli-wine-fr1p_15v creates, reuses and verifies 135 matching files; static join e297-soil-compact-record-sample-residual-_hg2aqh0 leaves 38 sampled bytes unowned.
+
+**Limitations**
+
+- The ancestry of sampled reads, complete pointer table, other callers, neighboring bytes, scenes, real BIOS and UI save/Load remain open.
+- Other updated older fixtures, Linux, USA and native Windows remain unverified; no performance comparison was performed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-compact-record.json)
+
+## 2026-11-22 — Consume European Soil compact metadata
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the conditional compact OBJ catalog with 88 authenticated Soil Evidence metadata bytes and references to 20 existing typed lists.
+- Keep list payloads under their existing owner, preserve prior catalog fields and 129 other resource files.
+
+**Validation**
+
+- Windows build sxcs7le0 and Wine reader e275-soil-compact-readers-wine-myffsalx verify source binding, list links, mixed boundaries, 16 interpreted/generated reader cases, six transfer cases and snapshot ownership.
+- Wine scene e275-soil-compact-scene-wine-gmfuh78b compares 600 recorded frames with both metadata spans altered; all 88 bytes are consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e275-soil-compact-cli-wine-jak27la2 creates, reuses and verifies 131 matching files; static join e275-soil-compact-sample-residual-j6x30g5v leaves 397 E260 sampled bytes outside E236 source owners.
+
+**Limitations**
+
+- The selected continuation does not establish metadata producers, full selector domain, every reader, other scenes, real BIOS or UI save/Load.
+- Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-compact-metadata.json)
+
+## 2026-11-22 — Consume European Soil a83c2 switch
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb switch resource with 15 authenticated Soil Evidence destinations, preserving the separately owned literal root and guest guard.
+- Preserve 45 prior switch tables and 129 other resource files.
+
+**Validation**
+
+- Windows build knz37j12 and Wine reader e277-soil-a83c2-switch-readers-wine-syjfuorl verify source binding, edited-source rejection, mirrors and mixed boundaries, guarded and outside-guard interpreted/generated readers, transfers and snapshot ownership.
+- Wine scene e277-soil-a83c2-switch-scene-wine-76pzfrqd compares 600 recorded frames with the switch destinations altered and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e277-soil-a83c2-switch-cli-wine-bx2ywffb creates, reuses and verifies 131 matching files; static join e277-soil-a83c2-switch-sample-residual-ab5klphb leaves 385 E260 sampled bytes outside E237 source owners.
+
+**Limitations**
+
+- The final indirect MOV uses interpreter fallback; the continuation does not establish all selector writers, callers, other scenes, real BIOS or UI save/Load.
+- Linux, USA and native Windows remain pending; older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-a83c2-switch.json)
+
+## 2026-11-22 — Consume European Soil 146xxx literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 13 observed Soil Evidence words and their original reader bindings.
+- Preserve 1,411 prior literal words and 129 other resource files.
+
+**Validation**
+
+- Windows build 3o9yc23g and Wine reader e281-soil-146-literals-readers-wine-h8dj_z7q verify source binding, edited-source rejection, mirrors and mixed boundaries, 26 original interpreted/generated reader cases, transfers and snapshot ownership.
+- Wine scene e281-soil-146-literals-scene-wine-fivwh4bx compares 600 recorded frames with all 13 source words altered; each word is consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e281-soil-146-literals-cli-wine-f80mzg0p creates, reuses and verifies 131 matching files; static join e281-soil-146-literals-sample-residual-anz9pb_y leaves 293 E260 sampled bytes outside E239 source owners.
+
+**Limitations**
+
+- The continuation does not establish all callers, other scenes, real BIOS or UI save/Load.
+- Linux, USA and native Windows remain pending; older revision-sensitive tests were updated but not rerun. First scene driver jc5t3ros stopped on syntax before Wine; corrected retry passed. Wine drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-soil-146-literals.json)
+
+## 2026-11-22 — Consume European post-indexed observed literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with nine post-indexed sample words whose original readers have scoped LDR witnesses, and serve their exact bytes through the existing runtime owner.
+- Preserve the prior 1169 literals and 129 other resource files, original guest behavior and separate usage counters.
+
+**Validation**
+
+- Wine site capture qpmxbv2e matches nine source words to original Thumb LDR opcode/address witnesses in the retained E170 continuation.
+- Windows test build 3nzwlkqc and Wine reader 6gxwak7q validate 36 source bytes, previous resources and masks, coherent edit rejection, boundaries, 18 interpreted/generated original-reader cases, transfers and snapshot ownership.
+- Wine scene fbe_qfgm compares 12 recorded post-indexed frames with all new backing words altered; all nine are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build 058ktp2c and Wine CLI uydq8tce create, reuse and verify 131 matching files; static reconciliation n2okilgf leaves 72 unowned E170 sampled bytes.
+
+**Limitations**
+
+- Instruction scopes may include nested HLE or DMA reads and do not prove all callers, source extents, other scenes or full ROM coverage. Real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-post-indexed-observed-literals.json)
+
+## 2026-11-22 — Consume European post-indexed anchored literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 18 post-indexed sample words whose original readers have static translated-block anchors, and route their exact bytes through the existing runtime owner.
+- Preserve the prior 1178 literals and all 129 other resource files, original guest behavior and separate usage counters.
+
+**Validation**
+
+- Static source plan 0uvhmsty verifies the exact EUR ROM and E170 native block roots, original LDR opcodes, source words and straight-line path hashes.
+- Windows test build lbnmn2rn and Wine reader nssz0c5s validate 72 source bytes, previous resources and masks, coherent edit rejection, boundaries, 36 interpreted/generated original-reader cases, transfers and snapshot ownership.
+- Wine scene fc5v9tzl compares 12 recorded post-indexed frames with all new backing words altered; all 18 are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build f_2qgtvi and Wine CLI i52g_6ot create, reuse and verify 131 matching files; static reconciliation rhmbe_o9 finds zero unowned bytes in the previously unmatched 568-byte E170 lower subset.
+
+**Limitations**
+
+- Static anchors do not prove E170 executing PCs, all callers, complete literal pools or full ROM coverage. The other 500 prior-witness bytes and high copied-IWRAM block are outside that subset; other scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-post-indexed-anchored-literals.json)
+
+## 2026-11-22 — Consume European Blue Screw sources
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend authenticated Thumb literal and switch resources with three Blue Screw literals and one 15-entry destination array, serving 72 original source bytes without changing the original subtraction, guard or branch.
+- Preserve previously decoded literal and switch sources and all 128 other resource files.
+
+**Validation**
+
+- Windows build 86f02lme and Wine reader e259-blue-screw-readers-wine-t4cf550o verify both source families, previous resources, tamper rejection, boundaries, original interpreted/generated readers, transfers and snapshots.
+- Wine scene e259-blue-screw-scene-wine-dk9h50xm compares 600 recorded Blue Screw frames with both new sources altered; all are consumed and state, clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e259-blue-screw-cli-wine-9fermhwm creates, reuses and verifies 131 matching files; static join e259-blue-screw-sample-residual-uo47n9gw finds no unowned bytes in the E255 sample residual.
+
+**Limitations**
+
+- Captured scopes may include nested reads; other callers, source domains, scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-blue-screw-sources.json)
+
+## 2026-11-22 — Consume European Bank switch destinations
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb switch resource with three Bank destination arrays: 269 entries and 1076 source bytes. Preserve original byte selectors, bounds, indirect branching and previously owned roots.
+- Preserve the prior 41 switch tables and all 129 other resource files while serving the new destinations from the extracted dataset.
+
+**Validation**
+
+- Windows test build gt5hymv0 and Wine reader e254-bank-switch-wine-retry-akk2y3mv validate all source bytes, old resources, masks, coherent edit rejection, boundaries, original interpreted/generated readers, out-of-range behavior, transfers and snapshot ownership.
+- Wine scene e254-bank-switch-scene-wine-hcng484s compares 12 recorded Bank frames with all new backing arrays altered; all three are consumed and state, clock, video, OAM, dispatch and five nonempty audio streams match each frame.
+- Wine CLI e254-bank-switch-cli-wine-oxj8x5e8 creates, reuses and verifies 131 matching files; static join e254-bank-sample-residual-re_5dymo finds no unowned bytes in the previous E76 Bank sample residual.
+
+**Limitations**
+
+- The first Wine reader attempt 2kzl5orn failed on an impossible synthetic byte-selector value of 256 after native chaining passed a test stop. The corrected test retains direct out-of-array read coverage; no runtime mismatch was observed.
+- Captured instruction scopes can nest; other callers, scenes, real-BIOS and UI save/Load remain open. Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-bank-switch-destinations.json)
+
+## 2026-11-22 — Consume European Bank observed literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 77 Bank sample words with original LDR witnesses, and route their exact bytes through the existing runtime owner.
+- Preserve the prior 1196 literals and all 129 other resource files, original guest behavior and separate usage counters.
+
+**Validation**
+
+- Static source plan hpsqpff9 authenticates the exact EUR ROM, earlier source hashes, original opcodes and effective addresses; static reconciliation duj05bki finds 12 bytes still unowned among the 320 sampled bytes.
+- Windows test build ucbajerz and Wine reader biu5a8ky validate 308 source bytes, previous resources and masks, coherent edit rejection, boundaries, 154 interpreted/generated original-reader cases, transfers and snapshot ownership.
+- Wine scene fwu8_cee compares 12 recorded Bank frames with all new backing words altered; all 77 are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build d3g9inrv and Wine CLI g8lsy8kq create, reuse and verify 131 matching files.
+
+**Limitations**
+
+- Instruction scopes can include nested HLE/DMA reads; the address sample does not prove all callers, source extents or full-ROM coverage. Three sampled words, other scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-bank-observed-literals.json)
+
+## 2026-11-22 — Classify remaining European Soil reader sites
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Group remaining Soil Evidence lower-word observations by captured reader scope and preserve a source-backed next investigation.
+
+**Validation**
+
+- Protected static unit e267-soil-remaining-sites-classification-olse67o1 verifies 58 remaining words in 64 retained rows: 43 instruction-scoped and 21 outside scope. The largest scope at e3838 contains 30 distinct words.
+
+**Limitations**
+
+- Interpreter scope can contain nested accesses; grouping does not prove effective addresses, table extent, consumers or ownership, and outside-scope reads have no captured PC. No replay or owner is claimed.
+- Other bytes and scenes, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-classify-remaining-european-soil-reader-sites.json)
+
+## 2026-11-22 — Classify European Soil Evidence residual reads
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Classify the remaining E260 sampled addresses against E232 source owners by reader, width and contiguous ranges, and record bounded static source candidates.
+
+**Validation**
+
+- Protected static unit e263-soil-residual-classification-ehljhoa2 joins the authenticated E260 Wine inventory and E232 manifest: 1,731 residual bytes in 149 ranges, 151 of 193 complete lower words have possible Thumb literal bit patterns, and the bounded upper scan finds no complete fully sampled aligned LZ stream candidate.
+
+**Limitations**
+
+- Address-only observations and static bit patterns do not prove executing PCs, resource ownership, asset identity or full extents; no new runtime replay or owner is claimed.
+- Linux, USA and native Windows remain pending; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-classify-european-soil-evidence-residual.json)
+
+## 2026-11-22 — Classify European Soil E235 residual
+
+Type: changed. Platforms: European ROM; existing Windows Wine evidence.
+
+**Changes**
+
+- Classify the remaining E260 sampled reads after E235 by reader, width and address range.
+
+**Validation**
+
+- Protected static unit e272-soil-e235-residual-classification-jae45q7h finds 485 unowned sampled bytes in 69 ranges, 112 lower and 373 upper; all remaining selected requests are Bus reads.
+
+**Limitations**
+
+- Addresses and static bit patterns do not establish executing PCs, source formats, extents, consumers or ownership; no replay or new owner is claimed.
+- Other scenes, Linux, USA and native Windows remain open; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-classify-european-soil-e235-residual.json)
+
 ## 2026-11-21 — Verify extracted tilemap chains in Blue Screw
 
 Type: changed. Platforms: Windows via Wine; European ROM.
@@ -23,6 +1438,26 @@ Type: changed. Platforms: Windows via Wine; European ROM.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-21-verify-blue-screw-interleaved-chains.json)
+
+## 2026-11-21 — Trace European Red Spring residual readers
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Identify source-site evidence for the remaining E172 Red Spring sample and record a concrete extraction follow-up for original Thumb literal reads.
+
+**Validation**
+
+- Wine unit e232-redspring-residual-sites-av1hj_7p observes all 238 E221-unowned words during the retained 600 frames; 196 match original Thumb LDR opcodes and effective addresses. It protects the existing E221 dataset, ROM, state, input and native cache; Wine drains with the local Bluetooth overlay.
+
+**Limitations**
+
+- Instruction scopes may include nested HLE/DMA accesses; this is not proof of all callers, source extents, scene equivalence or consumption. The other 42 words, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-trace-european-red-spring-residual-readers.json)
 
 ## 2026-11-21 — Refresh Rust and Android dependencies and build tooling
 
@@ -51,6 +1486,26 @@ Type: changed. Platforms: Windows, Linux, Android, macOS.
 Documentation: [docker.md](docs/docker.md), [README.md](AndroidPort/android/README.md).
 
 [Change record](docs/changes/2026-11-21-refresh-project-dependencies.json)
+
+## 2026-11-21 — Reconcile European Red Spring E221 source ownership
+
+Type: docs. Platforms: European ROM; prior Windows via Wine sample.
+
+**Changes**
+
+- Reconcile the retained 600-frame Red Spring source-address inventory against the current E221 manifest, updating the open recovery checklist without implying complete ROM coverage.
+
+**Validation**
+
+- Static unit e231-redspring-e221-reconcile-wt2lyljd passes with the ROM, original report, manifests and affected source hashes checked and inputs protected. It confirms 3276 E201 residual bytes, 2324 newly declared by E221 and 952 still unowned in 166 ranges; all 420 prior-site bytes are now declared.
+
+**Limitations**
+
+- The address-only sample and manifest spans do not establish executing PCs, runtime ownership dispatch, other consumers or complete ROM coverage. No game replay or performance measurement was performed; Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-reconcile-european-red-spring-e221-ownership.json)
 
 ## 2026-11-21 — Provide a leased Wine Bluetooth backport
 
@@ -138,6 +1593,46 @@ Type: docs. Platforms: European ROM; Windows via Wine.
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
 
 [Change record](docs/changes/2026-11-21-inventory-european-home-rom-reads.json)
+
+## 2026-11-21 — Identify European Red Spring switch arrays
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Identify and authenticate ten guarded switch destination arrays corresponding to 16 remaining sampled Red Spring words, preparing a concrete runtime-consumption increment.
+
+**Validation**
+
+- Wine disassembly 3ubkkgml and static source plan rtqw8txm verify ten roots, original guards, 148 same-state destinations and 592 source bytes; their roots are already owned, their destination spans do not overlap E222 sources, and 64 bytes overlap the remaining E172 sample.
+
+**Limitations**
+
+- Instruction scopes can include nested accesses; no destination ownership, guest-domain bound or complete caller coverage is claimed. Consumption, the other 104 sampled bytes, Linux, USA and native Windows remain open. Wine drained with the local overlay; no performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-identify-european-red-spring-switch-arrays.json)
+
+## 2026-11-21 — Identify European Red Spring anchored literals
+
+Type: docs. Platforms: European ROM; prior Windows via Wine sample.
+
+**Changes**
+
+- Identify original Thumb literal reader anchors for 22 unowned Red Spring sample words, preparing a concrete runtime-consumption increment.
+
+**Validation**
+
+- Static unit e236-redspring-literal-anchors-rlq73_nk verifies exact EUR ROM and translated-cache hashes, E223 ownership, original opcodes, 22 source words and straight-line paths from exported native block roots.
+
+**Limitations**
+
+- The sampled reads were outside an instruction scope; static anchors do not prove executing PCs, all callers or complete pools. No source owner or gameplay equivalence is claimed. Four sampled words, other scenes, Linux, USA and native Windows remain open; no performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-identify-european-red-spring-anchored-literals.json)
 
 ## 2026-11-21 — Identify three European home archive streams
 
@@ -343,6 +1838,81 @@ Type: added. Platforms: European ROM; Windows via Wine.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-21-consume-european-relative-graphics-archive.json)
+
+## 2026-11-21 — Consume European Red Spring switch destinations
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb switch resource with ten original destination arrays while retaining their existing literal roots and the original guest control flow.
+- Preserve the prior 29 switch tables and other resources while serving 148 newly authenticated destination words through the runtime owner.
+
+**Validation**
+
+- Wine disassembly 3ubkkgml and source plan rtqw8txm authenticate the original guards, roots, 148 destinations and 592 disjoint source bytes.
+- Windows test build 244xn28h and Wine reader wd1z4xka validate all source bytes, prior tables and 129 other resources, coherent edit rejection, boundaries/mirrors, 40 guarded interpreted/generated cases, 20 outside-guard and 20 outside-load cases, transfers and owner retention.
+- Wine scene hg3vf9nv compares 600 recorded Red Spring frames with the ten backing arrays altered; each array is consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build dqkl2h_0 and Wine CLI fzyln36o pass create, reuse and verify with 131 matching files; static reconciliation c_2f3g_b leaves 104 unowned E172 sampled bytes.
+
+**Limitations**
+
+- Original guard paths and instruction scopes do not prove every selector, caller, destination use or complete ROM coverage. Indirect MOV-PC uses interpreter fallback in the controlled reader checks.
+- The other 26 sampled words, other scenes, real-BIOS, UI save/Load, Linux, USA and native Windows remain open. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-red-spring-switch-destinations.json)
+
+## 2026-11-21 — Consume European Red Spring observed Thumb literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 196 original source words observed in the retained Red Spring continuation, and route their exact physical bytes through the existing runtime owner.
+- Retain the 951 prior literals and previous resources, preserve original guest behavior, and expose separate counters for the new sources.
+
+**Validation**
+
+- Wine source capture av1hj_7p observes all 238 residual words and matches 196 original Thumb LDR opcodes and effective addresses.
+- Windows test build lbz9wa2n and Wine reader 4sf2ed90 validate 784 source bytes, prior masks and 129 unchanged resources, coherent edit rejection, mixed and mirrored boundaries, 392 interpreted/generated original-reader cases, transfers and snapshot ownership.
+- Wine scene 8ze5sj_t compares 600 recorded Red Spring frames with all new backing altered; all 196 words are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build 5kb4mqhv and Wine CLI wdd7lpip pass create, reuse and verify with 131 matching files; static reconciliation pz3zxelt leaves 168 unowned E172 sampled bytes.
+
+**Limitations**
+
+- Instruction scopes can include nested HLE/DMA accesses; this sample does not prove every caller, complete source extents or full ROM coverage. The other 42 sampled words, other scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-red-spring-observed-literals.json)
+
+## 2026-11-21 — Consume European Red Spring anchored Thumb literals
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb literal resource with 22 Red Spring sample words whose original readers have static translated-block anchors, and route their exact bytes through the existing runtime owner.
+- Preserve the prior 1147 literals and other resources, original guest behavior and separate usage counters.
+
+**Validation**
+
+- Source plan rlq73_nk verifies the exact EUR ROM and native block roots, original opcodes, source words and straight-line path hashes.
+- Windows test build yw_b5x53 and Wine reader d0vf7iwd validate 88 source bytes, previous masks and 129 other resources, coherent edit rejection, boundaries/mirrors, 44 interpreted/generated original-reader cases, transfers and snapshot ownership.
+- Wine scene ao5jx0xh compares 600 recorded Red Spring frames with all new backing altered; all 22 words are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.
+- Production build lruh4cdc and Wine CLI dl95px1f pass create, reuse and verify with 131 matching files; static reconciliation 55zvsm8r leaves 16 unowned E172 sampled bytes.
+
+**Limitations**
+
+- Static anchors do not prove the E172 executing PCs, all callers, complete literal pools or full ROM coverage. The other four sampled words, other scenes, real-BIOS and UI save/Load remain open.
+- Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-21-consume-european-red-spring-anchored-literals.json)
 
 ## 2026-11-21 — Consume European indexed word lookup
 

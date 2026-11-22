@@ -206,6 +206,24 @@ pub use indexed_halfwords_39a5::IndexedHalfwords39a5Stats;
 mod script_byte_lookup_3ad;
 use script_byte_lookup_3ad::ScriptByteLookup3adResources;
 pub use script_byte_lookup_3ad::ScriptByteLookup3adStats;
+mod soil_scene_records;
+use soil_scene_records::SoilSceneRecordsResources;
+pub use soil_scene_records::SoilSceneRecordsStats;
+mod soil_indirect_records;
+use soil_indirect_records::SoilIndirectRecordsResources;
+pub use soil_indirect_records::SoilIndirectRecordsStats;
+mod soil_indexed_bytes;
+use soil_indexed_bytes::SoilIndexedBytesResources;
+pub use soil_indexed_bytes::SoilIndexedBytesStats;
+mod soil_compact_record;
+use soil_compact_record::SoilCompactRecordResources;
+pub use soil_compact_record::SoilCompactRecordStats;
+mod soil_scoped_values;
+use soil_scoped_values::SoilScopedValuesResources;
+pub use soil_scoped_values::SoilScopedValuesStats;
+mod soil_remaining_rectangles;
+use soil_remaining_rectangles::SoilRemainingRectanglesResources;
+pub use soil_remaining_rectangles::SoilRemainingRectanglesStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -482,6 +500,12 @@ pub struct RuntimeResources {
     copied_halfword_lookups: Option<Box<CopiedHalfwordLookupsResources>>,
     indexed_halfwords_39a5: Option<Box<IndexedHalfwords39a5Resources>>,
     script_byte_lookup_3ad: Option<Box<ScriptByteLookup3adResources>>,
+    soil_scene_records: Option<Box<SoilSceneRecordsResources>>,
+    soil_indirect_records: Option<Box<SoilIndirectRecordsResources>>,
+    soil_indexed_bytes: Option<Box<SoilIndexedBytesResources>>,
+    soil_compact_record: Option<Box<SoilCompactRecordResources>>,
+    soil_scoped_values: Option<Box<SoilScopedValuesResources>>,
+    soil_remaining_rectangles: Option<Box<SoilRemainingRectanglesResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -825,6 +849,24 @@ impl RuntimeResources {
         if let Some((data, _)) = files.script_byte_lookup_3ad {
             resources.script_byte_lookup_3ad = Some(Box::new(ScriptByteLookup3adResources::new(data.clone(), &source.script_byte_lookup_3ad.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.soil_scene_records {
+            resources.soil_scene_records = Some(Box::new(SoilSceneRecordsResources::new(data.clone(), &source.soil_scene_records.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.soil_indirect_records {
+            resources.soil_indirect_records = Some(Box::new(SoilIndirectRecordsResources::new(data.clone(), &source.soil_indirect_records.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.soil_indexed_bytes {
+            resources.soil_indexed_bytes = Some(Box::new(SoilIndexedBytesResources::new(data.clone(), &source.soil_indexed_bytes.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.soil_compact_record {
+            resources.soil_compact_record = Some(Box::new(SoilCompactRecordResources::new(data.clone(), &source.soil_compact_record.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.soil_scoped_values {
+            resources.soil_scoped_values = Some(Box::new(SoilScopedValuesResources::new(data.clone(), &source.soil_scoped_values.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.soil_remaining_rectangles {
+            resources.soil_remaining_rectangles = Some(Box::new(SoilRemainingRectanglesResources::new(data.clone(), &source.soil_remaining_rectangles.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1108,6 +1150,12 @@ impl RuntimeResources {
             copied_halfword_lookups: None,
             indexed_halfwords_39a5: None,
             script_byte_lookup_3ad: None,
+            soil_scene_records: None,
+            soil_indirect_records: None,
+            soil_indexed_bytes: None,
+            soil_compact_record: None,
+            soil_scoped_values: None,
+            soil_remaining_rectangles: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1264,6 +1312,12 @@ impl RuntimeResources {
             + self.copied_halfword_lookups.as_ref().map_or(0, |i| i.resident_bytes())
             + self.indexed_halfwords_39a5.as_ref().map_or(0, |i| i.resident_bytes())
             + self.script_byte_lookup_3ad.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_scene_records.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_indirect_records.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_indexed_bytes.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_compact_record.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_scoped_values.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.soil_remaining_rectangles.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1445,6 +1499,12 @@ impl RuntimeResources {
     pub fn copied_halfword_lookups_stats(&self) -> Option<CopiedHalfwordLookupsStats> { self.copied_halfword_lookups.as_ref().map(|m| m.stats()) }
     pub fn indexed_halfwords_39a5_stats(&self) -> Option<IndexedHalfwords39a5Stats> { self.indexed_halfwords_39a5.as_ref().map(|m| m.stats()) }
     pub fn script_byte_lookup_3ad_stats(&self) -> Option<ScriptByteLookup3adStats> { self.script_byte_lookup_3ad.as_ref().map(|m| m.stats()) }
+    pub fn soil_scene_records_stats(&self) -> Option<SoilSceneRecordsStats> { self.soil_scene_records.as_ref().map(|m| m.stats()) }
+    pub fn soil_indirect_records_stats(&self) -> Option<SoilIndirectRecordsStats> { self.soil_indirect_records.as_ref().map(|m| m.stats()) }
+    pub fn soil_indexed_bytes_stats(&self) -> Option<SoilIndexedBytesStats> { self.soil_indexed_bytes.as_ref().map(|m| m.stats()) }
+    pub fn soil_compact_record_stats(&self) -> Option<SoilCompactRecordStats> { self.soil_compact_record.as_ref().map(|m| m.stats()) }
+    pub fn soil_scoped_values_stats(&self) -> Option<SoilScopedValuesStats> { self.soil_scoped_values.as_ref().map(|m| m.stats()) }
+    pub fn soil_remaining_rectangles_stats(&self) -> Option<SoilRemainingRectanglesStats> { self.soil_remaining_rectangles.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1848,6 +1908,30 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.script_byte_lookup_3ad {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_scene_records {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_indirect_records {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_indexed_bytes {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_compact_record {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_scoped_values {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.soil_remaining_rectangles {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -2256,6 +2340,12 @@ impl crate::MemMap {
             || CopiedHalfwordLookupsResources::source_page(index)
             || IndexedHalfwords39a5Resources::source_page(index)
             || ScriptByteLookup3adResources::source_page(index)
+            || SoilSceneRecordsResources::source_page(index)
+            || SoilIndirectRecordsResources::source_page(index)
+            || SoilIndexedBytesResources::source_page(index)
+            || SoilCompactRecordResources::source_page(index)
+            || SoilScopedValuesResources::source_page(index)
+            || SoilRemainingRectanglesResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

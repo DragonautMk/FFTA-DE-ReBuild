@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "classify-european-soil-evidence-residual",
+  "title": "Classify European Soil Evidence residual reads",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Classify the remaining E260 sampled addresses against E232 source owners by reader, width and contiguous ranges, and record bounded static source candidates."
+  ],
+  "validation": [
+    "Protected static unit e263-soil-residual-classification-ehljhoa2 joins the authenticated E260 Wine inventory and E232 manifest: 1,731 residual bytes in 149 ranges, 151 of 193 complete lower words have possible Thumb literal bit patterns, and the bounded upper scan finds no complete fully sampled aligned LZ stream candidate."
+  ],
+  "limitations": [
+    "Address-only observations and static bit patterns do not prove executing PCs, resource ownership, asset identity or full extents; no new runtime replay or owner is claimed.",
+    "Linux, USA and native Windows remain pending; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

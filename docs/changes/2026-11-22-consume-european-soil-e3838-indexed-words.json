@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-soil-e3838-indexed-words",
+  "title": "Consume European Soil indexed words",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the indexed-word resource with 30 separate, source-authenticated Soil Evidence words and preserve original signed index arithmetic and fallback for unselected addresses.",
+    "Preserve the previous indexed records, their counters, all 129 other resource files and the existing resource ID and filename."
+  ],
+  "validation": [
+    "Windows build gh1jui6g and Wine reader e269-soil-e3838-readers-wine-dpssxyfq verify previous and new sources, coherent edit rejection, mixed boundaries/mirrors, 74 original interpreted/generated cases including negative and unselected indices, transfers and snapshot ownership.",
+    "Wine scene e269-soil-e3838-scene-wine-t22ztsv4 compares 600 recorded frames with the 30 managed words altered; all are consumed and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.",
+    "Wine CLI e269-soil-e3838-cli-wine-oon2tik4 creates, reuses and verifies 131 matching files; static join e269-soil-e3838-sample-residual-5aymku00 leaves 1,071 E260 sampled bytes outside E234 source owners."
+  ],
+  "limitations": [
+    "Observed indices are not a guest bound; index writers, full domain, other consumers and scenes, real BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows remain pending; affected older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_words_3959.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_words_3959.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/soil_e3838_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_copy_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_lz_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_observed_literals_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

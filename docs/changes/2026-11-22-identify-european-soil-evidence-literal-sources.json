@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-evidence-literal-sources",
+  "title": "Identify European Soil Evidence literal sources",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Authenticate a source plan for 135 Soil Evidence PC-relative Thumb literal words observed under Wine."
+  ],
+  "validation": [
+    "Protected static unit e265-soil-literal-source-plan-3f25m75o verifies 139 original opcode/address/hash witnesses, 135 distinct words and 540 source bytes, excluding overlaps with E232 sources and previous or candidate reader instructions."
+  ],
+  "limitations": [
+    "Instruction scopes may include nested reads; the plan publishes no owner and does not establish every caller, full source extents or all scenes.",
+    "The other sampled words, upper residual, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

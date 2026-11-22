@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-type3-source-links",
+  "title": "Identify European Soil type-3 source links",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate four observed type-3 transfer records and their linked descriptors, wrappers and pre-existing LZ streams."
+  ],
+  "validation": [
+    "Protected plan e287-soil-type3-linked-source-plan-hukink1w joins prior Wine reader evidence to 92 distinct unowned bytes, including 74 sampled bytes, while confirming one shared wrapper and four owned streams."
+  ],
+  "limitations": [
+    "The plan does not install runtime ownership or bound guest indices, other readers or scenes; interpreter scopes may include nested reads.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

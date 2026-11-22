@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-scoped-indexed-values",
+  "title": "Identify European Soil scoped indexed values",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate six individually observed indexed source values and their original readers and separately owned literal roots."
+  ],
+  "validation": [
+    "Wine disassembly e298-soil-remaining-readers-disassembly-wine-0c4y0luh and protected source plan e298-soil-scoped-values-source-plan-bk3xxzcf verify 16 previously unowned sampled bytes."
+  ],
+  "limitations": [
+    "The values do not establish table extents, arbitrary guest index domains, callback invocation or sampled caller ancestry; runtime ownership and other scenes remain open.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

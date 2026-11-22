@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-compact-metadata",
+  "title": "Identify European Soil compact metadata",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate a compact metadata projection linked to the 20 already owned Soil Evidence sprite lists."
+  ],
+  "validation": [
+    "Wine source-site capture e274-soil-compact-sites-wine-d95mdss3 observes all 88 metadata bytes over 600 E235 frames; static plan e274-soil-compact-metadata-plan-tmxn23ol verifies 20 list references, selector 0 and 20 frame references without overlapping existing owners."
+  ],
+  "limitations": [
+    "The projection does not establish producer, complete selector/index domain, all readers or scenes; instruction scopes may include nested accesses. The plan publishes no owner and existing list bytes must not be declared twice.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

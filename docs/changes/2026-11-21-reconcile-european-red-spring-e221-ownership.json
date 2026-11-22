@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "reconcile-european-red-spring-e221-ownership",
+  "title": "Reconcile European Red Spring E221 source ownership",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine sample"
+  ],
+  "changes": [
+    "Reconcile the retained 600-frame Red Spring source-address inventory against the current E221 manifest, updating the open recovery checklist without implying complete ROM coverage."
+  ],
+  "validation": [
+    "Static unit e231-redspring-e221-reconcile-wt2lyljd passes with the ROM, original report, manifests and affected source hashes checked and inputs protected. It confirms 3276 E201 residual bytes, 2324 newly declared by E221 and 952 still unowned in 166 ranges; all 420 prior-site bytes are now declared."
+  ],
+  "limitations": [
+    "The address-only sample and manifest spans do not establish executing PCs, runtime ownership dispatch, other consumers or complete ROM coverage. No game replay or performance measurement was performed; Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

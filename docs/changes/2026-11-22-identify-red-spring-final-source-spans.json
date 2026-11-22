@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-red-spring-final-source-spans",
+  "title": "Identify remaining European Red Spring source spans",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Record a source plan for the remaining 16 sampled Red Spring bytes: two original guarded switch tables and one eight-byte stack-copy source, with explicit pending implementation and platform checklists."
+  ],
+  "validation": [
+    "Wine disassembly jqg8wh29 and 56f3ef_x identifies original guards and the eight-byte copy; both Wine servers drained.",
+    "Static source plan b39y_6rn authenticates original code, roots, helper and source ranges against the exact EUR ROM and E224 manifest; these spans account for all 16 remaining sample bytes."
+  ],
+  "limitations": [
+    "The capture is address-only and does not establish executing PCs, all callers or complete ROM coverage; the plan does not publish or consume resources.",
+    "Linux, USA and native Windows remain pending; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

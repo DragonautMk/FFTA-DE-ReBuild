@@ -57,7 +57,7 @@ fn european_interleaved_lz_chain_publication_and_readers() {
         assert_eq!(&after.sources[..before.sources.len()], &before.sources);
         assert_eq!(after.sources.len(), before.sources.len() + extra);
     }
-    let streams = &lz.additional_blocks[6..]; let descs = descriptors.interleaved_lz_descriptors.as_ref().unwrap();
+    let streams = &lz.additional_blocks[6..13]; let descs = descriptors.interleaved_lz_descriptors.as_ref().unwrap();
     let selected_rows = rows.interleaved_lz_rows.as_ref().unwrap();
     assert_eq!(streams.len(), 7); assert_eq!(streams.iter().map(|s| s.encoded_source.len()).sum::<usize>(), 4123);
     assert_eq!(streams.iter().map(|s| s.decoded.len()).sum::<usize>(), 5728);

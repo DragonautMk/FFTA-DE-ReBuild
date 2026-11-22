@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-soil-a83c2-switch",
+  "title": "Consume European Soil a83c2 switch",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing Thumb switch resource with 15 authenticated Soil Evidence destinations, preserving the separately owned literal root and guest guard.",
+    "Preserve 45 prior switch tables and 129 other resource files."
+  ],
+  "validation": [
+    "Windows build knz37j12 and Wine reader e277-soil-a83c2-switch-readers-wine-syjfuorl verify source binding, edited-source rejection, mirrors and mixed boundaries, guarded and outside-guard interpreted/generated readers, transfers and snapshot ownership.",
+    "Wine scene e277-soil-a83c2-switch-scene-wine-76pzfrqd compares 600 recorded frames with the switch destinations altered and state, guest clock, video, OAM, dispatch and five nonempty audio streams match each frame.",
+    "Wine CLI e277-soil-a83c2-switch-cli-wine-bx2ywffb creates, reuses and verifies 131 matching files; static join e277-soil-a83c2-switch-sample-residual-ab5klphb leaves 385 E260 sampled bytes outside E237 source owners."
+  ],
+  "limitations": [
+    "The final indirect MOV uses interpreter fallback; the continuation does not establish all selector writers, callers, other scenes, real BIOS or UI save/Load.",
+    "Linux, USA and native Windows remain pending; older revision-sensitive tests were updated but not rerun. Wine drained with the local Bluetooth overlay; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bank_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/bank_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/blue_screw_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_copy_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "crates/recomp/src/rom_data/soil_a83c2_switch_tests.rs",
+    "crates/recomp/src/rom_data/soil_compact_metadata_tests.rs",
+    "crates/recomp/src/rom_data/soil_e3838_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_lz_tests.rs",
+    "crates/recomp/src/rom_data/soil_evidence_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/soil_sprite_lists_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-e3838-indexed-sources",
+  "title": "Identify European Soil indexed source words",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate the original e3838 reader sequence, root and 30 observed indexed source words without imposing a new guest index bound."
+  ],
+  "validation": [
+    "Wine disassembly e268-soil-e3838-disassembly-wine-l8md6ii5 and protected static plan e268-soil-e3838-source-plan-dvwif_zm verify the signed RAM index, base 14d580, existing root literal and 30 sampled words/120 bytes at observed indices 1 through 32."
+  ],
+  "limitations": [
+    "No complete index domain or guard is established; preserve raw fallback for unselected and negative indices. Scopes may contain nested accesses and the plan publishes no owner.",
+    "Index writers, other consumers, scenes, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

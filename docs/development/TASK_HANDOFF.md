@@ -31,20 +31,19 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: active
 - Outcome: partial
-- E203–E220 Wine PASS; E215 sampled residual 0 (`3blfucoi`), E207 home 172 (`ypnkepk0`).
-- E230 active ROMDATA-01-E207-HOME-UNOWNED: EUR/Wine; `zp_otq7h` typo FAIL fixed; reader `gwh_mblj`, home `18841zsj`, residue `dnr49xgd` PASS. CLI `q0do0j4t`/33839 running. Linux/USA open.
-- TARGET-REATTACH: host bind verified; check mount. Private bwrap available.
-- E173/E181–E201 PASS (archive); E202 `9qneu93s`, E205 `pf3lqjl7`/`qfr83rk5`/`c3n9eh_b`, E206 `za2m7ukk`, E207 `kkbk45be` Wine PASS; E172 raw overlap `usda5fn4`.
-- E171/E172: `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; 536 lower bytes and ordinary ID362 open.
-- E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three processes unreadable; preserve lease (`2myj8gap/cleanup-observation.json`).
+- E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
+- TARGET-REATTACH: host bind verified; check mount; bwrap available.
+- E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
+- E171/E172 `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; E170 1,068 lower bytes owned (`aqz4qh3s`); 3,600 copied-code bytes and ID362 open.
+- E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three PIDs unreadable; preserve (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
-- Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, ROMDATA-06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
-- Failed `kitubxih` and `wamu6k3z` remain retained; do not repeat failed locator `l4i2lrcu`.
+- Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, 06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
+- Failures `kitubxih`/`wamu6k3z` retained; do not repeat locator `l4i2lrcu`.
 - ROMDATA-04-METADATA14-ID1-ALIAS: batch `g2cugem4` PASS; `6d1p8x1c` excludes operand161 in 191 writers; `o9iv4u54` conditional zero slot1. Event22/key161 ordinary path, later writes/IWRAM/other producers open.
-- Title bank: six-phase default `ntggzh1c`, patch-off five native headers `8j504dl0` PASS. Other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
+- Title bank: six-phase `ntggzh1c`, patch-off five native headers `8j504dl0` PASS; other scenes/producers and FIRSTBANK-ZERO open (f4_b2apw).
 - BATTLE-40D300-OTHER: index56 Wine PASS (qbzrv3ua); other lists open.
 - CONTEXT-3AE42C: five values/both tables native `arfmrs12`, title cursor `4yp7q7yd`; E168 owns 261/261 pairs. Other readers/writers/domain open.
-- E134: controlled b6uugr9g, selections jusromci, patch-off draw an9unydr PASS; neutral exits after 26 ticks n455br6k. Ordinary hold/default draw open; GUI cache p7tuq7iz.
+- E134: controlled b6uugr9g, selections jusromci, patch-off draw an9unydr, neutral exit 26 ticks n455br6k PASS; ordinary hold/default draw open; GUI cache p7tuq7iz.
 - CONTEXT-3710D4: E170 world-map pair and four direct native reads (`ax_5va8t`), controlled byte-domain/33-record fields (`9l5p79sq`) PASS; other callers/contexts/ABI open. e160 SUBSTITUTION-371158 and e161 RANGE-37140C pass; consumers open.
 - ADJACENT-371464: e162 PASS (5zpi8vam/j4r9sopl); E170 home lby31j3d: state-width/height, 56 bytes, 1,800-frame altered-source state/audio pair PASS. Other readers/domains open.
 - SUBSTITUTION-371158: callbacks 0/3 and handler Wine PASS (rdulyaqw/h9c0peco); ordinary/other paths open.
@@ -185,9 +184,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: E230 active; ROM-DATA-FULL-EUR partial.
-- Last verified result: E229 reader `yc40amn_`, home `29mql8p4`, CLI `__imn0tp`; residual `ypnkepk0` PASS.
-- Remaining work: E207 home 172 sampled bytes, other readers/scenes/families, Linux/USA/06/07; DEPS APK unverified.
-- Errors or blockers: other literal/control readers open; DEPS NDK r30 timeouts.
-- Next action: await CLI 33839; document and close E230.
-- References: `docs/rom_data_runtime.md` E229; archive E229 and DEPS-2026-11-21.
+- Task: ROM-DATA-FULL-EUR partial.
+- Last verified result: E301 Wine reader/scene/CLI and join PASS; no E260 sampled bytes remain outside E248.
+- Remaining work: copied-code dependency, other readers/scenes/families, Linux/USA/06/07; DEPS APK unverified. Samples are not full-ROM coverage.
+- Errors or blockers: other code readers open; DEPS NDK r30 timeouts.
+- Next action: select the next unmet EUR ROM-data dependency; E260 sample is not full-ROM coverage.
+- References: `docs/rom_data_graphics.md` E301; checklist ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS.

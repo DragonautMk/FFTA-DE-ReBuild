@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-post-indexed-anchored-literals",
+  "title": "Identify European post-indexed anchored literals",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine"
+  ],
+  "changes": [
+    "Record static original-reader anchors for all 18 unowned words in the selected post-indexed address sample, with an explicit pending extraction and consumption checklist."
+  ],
+  "validation": [
+    "Static unit 0uvhmsty authenticates the exact EUR ROM and retained E170 translated block roots, checking original PC-relative LDRs and straight-line paths for 18 words (72 bytes) outside the E227 manifest."
+  ],
+  "limitations": [
+    "The E242 reads were outside instruction scopes; static anchors do not prove executing PCs, complete literal pools, all callers or full ROM coverage. The scan publishes no source.",
+    "Linux, USA and native Windows remain pending; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

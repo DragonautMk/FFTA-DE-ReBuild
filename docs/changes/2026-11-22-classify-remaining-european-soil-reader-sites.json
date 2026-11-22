@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "classify-remaining-european-soil-reader-sites",
+  "title": "Classify remaining European Soil reader sites",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Group remaining Soil Evidence lower-word observations by captured reader scope and preserve a source-backed next investigation."
+  ],
+  "validation": [
+    "Protected static unit e267-soil-remaining-sites-classification-olse67o1 verifies 58 remaining words in 64 retained rows: 43 instruction-scoped and 21 outside scope. The largest scope at e3838 contains 30 distinct words."
+  ],
+  "limitations": [
+    "Interpreter scope can contain nested accesses; grouping does not prove effective addresses, table extent, consumers or ownership, and outside-scope reads have no captured PC. No replay or owner is claimed.",
+    "Other bytes and scenes, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

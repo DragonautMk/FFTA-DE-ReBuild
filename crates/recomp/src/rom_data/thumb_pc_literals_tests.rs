@@ -49,7 +49,7 @@ fn european_thumb_pc_literals_publication_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (221, 220, 130)
+        (248, 247, 136)
     );
     for prior in &old.resources {
         let current = source
@@ -63,6 +63,27 @@ fn european_thumb_pc_literals_publication_and_original_readers() {
                 &previous, &prepared.directory, prior, current);
         } else if prior.id == THUMB_SWITCH_TABLES_ID {
             super::thumb_switch_tables_additional_tests::assert_previous_switch_tables_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COPIED_HALFWORD_LOOKUPS_ID {
+            super::copied_halfword_lookups_tests::assert_previous_copied_halfwords_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == INDEXED_WORDS_3959_ID {
+            super::soil_e3838_tests::assert_previous_indexed_words_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == COMPACT_OBJ_CATALOG_ID {
+            super::soil_compact_metadata_tests::assert_previous_compact_catalog_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == THUMB_PC_LITERALS_ID {
+            super::thumb_pc_literals_home_tests::assert_previous_thumb_literals_preserved(
+                &previous, &prepared.directory, prior, current);
+        } else if prior.id == OBSERVED_TILEMAP_ROW_ID || prior.id == OBSERVED_TILEMAP_DESCRIPTOR_ID || prior.id == OBSERVED_TILEMAP_ID {
+            super::soil_transfer_records_tests::assert_previous_soil_transfer_resource_preserved(
                 &previous, &prepared.directory, prior, current);
         } else {
             assert_eq!(current, prior);
@@ -336,7 +357,7 @@ fn european_thumb_pc_literals_publication_and_original_readers() {
     fs::write(
         root.join("result.json"),
         serde_json::to_vec_pretty(&serde_json::json!({
-            "status":"PASS", "revision":[221,220], "literals":326, "source_bytes":1304,
+            "status":"PASS", "revision":[248,247], "literals":326, "source_bytes":1304,
             "prior_resources_preserved":124, "prior_obj_dimensions_preserved":true, "prior_switch_tables_preserved":true, "poisoned_mixed_boundaries_and_mirrors":true,
             "original_interpreter_generated_reader_cases":32,
             "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

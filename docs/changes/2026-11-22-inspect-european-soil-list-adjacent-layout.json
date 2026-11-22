@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "inspect-european-soil-list-adjacent-layout",
+  "title": "Inspect European Soil list-adjacent layout",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Inspect the two sampled Bus intervals adjacent to the Soil Evidence sprite lists for source relationships."
+  ],
+  "validation": [
+    "Protected static unit e273-soil-list-adjacent-layout-rsm1ehul authenticates both 44-byte ranges and finds 20 halfword-relative matches from base 6c1740 to all E271 list roots."
+  ],
+  "limitations": [
+    "Arithmetic matches do not establish executing readers, complete format, selector domain, producer or ownership; the second interval remains unclassified. No replay or owner was published.",
+    "Other ranges and scenes, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -9,6 +9,7 @@ pub struct CopiedHalfwordLookupsStats {
     pub root_bytes: u64,
     pub table_mask: u8,
     pub root_mask: u8,
+    pub soil_source_mask: u8,
 }
 
 pub(super) struct CopiedHalfwordLookupsResources {
@@ -18,12 +19,13 @@ pub(super) struct CopiedHalfwordLookupsResources {
     root_bytes: AtomicU64,
     tables: AtomicU64,
     roots: AtomicU64,
+    soil_source: AtomicU64,
 }
 impl CopiedHalfwordLookupsResources {
     pub(super) fn source_page(index: usize) -> bool {
         let first = index >> 12;
         let last = index.saturating_add(3) >> 12;
-        (first..=last).any(|page| matches!(page, 0x3 | 0x14c))
+        (first..=last).any(|page| matches!(page, 0x3 | 0x14c | 0x14d))
     }
 
     pub(super) fn new(
@@ -51,6 +53,7 @@ impl CopiedHalfwordLookupsResources {
             root_bytes: AtomicU64::new(0),
             tables: AtomicU64::new(0),
             roots: AtomicU64::new(0),
+            soil_source: AtomicU64::new(0),
         })
     }
 
@@ -64,7 +67,7 @@ impl CopiedHalfwordLookupsResources {
         if cells.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut table_bytes, mut root_bytes, mut tables, mut roots) = (0u64, 0u64, 0u64, 0u64);
+        let (mut table_bytes, mut root_bytes, mut tables, mut roots, mut soil_source) = (0u64, 0u64, 0u64, 0u64, 0u64);
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, entry, root)) => {
                 if root {
@@ -73,6 +76,7 @@ impl CopiedHalfwordLookupsResources {
                 } else {
                     table_bytes += 1;
                     tables |= 1 << entry;
+                    if entry == 3 { soil_source |= 1 << (index + i - model::SOIL_EVIDENCE_OFFSET as usize); }
                 }
                 byte
             }
@@ -85,6 +89,7 @@ impl CopiedHalfwordLookupsResources {
         self.root_bytes.fetch_add(root_bytes, Ordering::Relaxed);
         self.tables.fetch_or(tables, Ordering::Relaxed);
         self.roots.fetch_or(roots, Ordering::Relaxed);
+        self.soil_source.fetch_or(soil_source, Ordering::Relaxed);
         Some(result)
     }
 
@@ -95,6 +100,7 @@ impl CopiedHalfwordLookupsResources {
             root_bytes: self.root_bytes.load(Ordering::Relaxed),
             table_mask: self.tables.load(Ordering::Relaxed) as u8,
             root_mask: self.roots.load(Ordering::Relaxed) as u8,
+            soil_source_mask: self.soil_source.load(Ordering::Relaxed) as u8,
         }
     }
 

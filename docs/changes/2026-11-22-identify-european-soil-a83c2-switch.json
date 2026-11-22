@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-a83c2-switch",
+  "title": "Identify European Soil a83c2 switch",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate a guarded 15-entry Thumb switch linked to an already owned literal root."
+  ],
+  "validation": [
+    "Wine disassembly e276-soil-a83c2-disassembly-wine-ps_64nk8 and static plan e276-soil-a83c2-switch-plan-6jwzeppl verify its code, 60 destination bytes, root ownership and three indices observed in the retained scene."
+  ],
+  "limitations": [
+    "No runtime owner is published; selector writers, complete callers and other scenes remain unproven. Instruction scopes may contain nested reads.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "consume-european-red-spring-observed-literals",
+  "title": "Consume European Red Spring observed Thumb literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the authenticated Thumb literal resource with 196 original source words observed in the retained Red Spring continuation, and route their exact physical bytes through the existing runtime owner.",
+    "Retain the 951 prior literals and previous resources, preserve original guest behavior, and expose separate counters for the new sources."
+  ],
+  "validation": [
+    "Wine source capture av1hj_7p observes all 238 residual words and matches 196 original Thumb LDR opcodes and effective addresses.",
+    "Windows test build lbz9wa2n and Wine reader 4sf2ed90 validate 784 source bytes, prior masks and 129 unchanged resources, coherent edit rejection, mixed and mirrored boundaries, 392 interpreted/generated original-reader cases, transfers and snapshot ownership.",
+    "Wine scene 8ze5sj_t compares 600 recorded Red Spring frames with all new backing altered; all 196 words are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.",
+    "Production build 5kb4mqhv and Wine CLI wdd7lpip pass create, reuse and verify with 131 matching files; static reconciliation pz3zxelt leaves 168 unowned E172 sampled bytes."
+  ],
+  "limitations": [
+    "Instruction scopes can include nested HLE/DMA accesses; this sample does not prove every caller, complete source extents or full ROM coverage. The other 42 sampled words, other scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows require separate verification. Wine servers drained with the local Bluetooth overlay. No performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

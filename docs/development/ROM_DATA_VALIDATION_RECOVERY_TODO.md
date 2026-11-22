@@ -470,6 +470,12 @@ current evidence before running another check.
   Both archives have positive typed reads; state, clock, video, OAM, dispatch
   and audio match, with nonempty mixed audio. Other scenes, consumers and
   platforms remain open. [Evidence](../rom_data_indexed_graphics.md).
+- [x] **ROMDATA-01-TITLE-INVENTORY-RECONCILE scoped static:** `d83mbwp2`
+  joins the retained title-language/main/opening Wine samples to E228. All
+  62/8/8 previously unowned sampled bytes have declared sources; earlier Wine
+  already exercised the five title-selector choices. This does not prove other
+  routes or current per-read dispatch.
+  [Evidence](../rom_data_runtime.md#e248-title-and-opening-inventory-reconciliation).
 - [ ] **ROMDATA-04-TITLE-MAIN-BANK-OTHER / FIRSTBANK-ZERO:** investigate other
   scenes, producers and native-dispatch attribution. All five nonempty lists
   in the E158 title main-bank sequence have one ordinary Wine interpreter
@@ -808,13 +814,414 @@ current evidence before running another check.
 
 ## 5. Resolve prerequisites before selecting further proofs
 
-- [ ] **ROMDATA-01-POST-INDEXED-LOWER-READERS:** attribute the remaining 536
-  lower-ROM bytes not matched by prior source witnesses in the E170 post-indexed
-  Wine inventory (`108ejhdv`, reconciliation `c8paxoub`). Thirty-two bytes at
-  `14d2dc..14d2fc` have a bounded table contract (`9ei8p1cy`, `s94ilj14`) and
-  E171 managed ownership (`8bb1ykny`). Remaining unmatched addresses may be
-  executable support; the inventory alone does not prove an asset.
-  [Evidence](../rom_data_runtime.md#e170-post-indexed-rom-read-inventory).
+- [x] **ROMDATA-01-SOIL-EVIDENCE-RAW scoped EUR/Wine:** `tfe8gnqy` captures
+  E231 selected-reader addresses during 600 matching Soil Evidence frames;
+  3,066 sampled bytes are outside declared sources. This does not attribute PCs.
+  [Evidence](../rom_data_runtime.md#e260-soil-evidence-rom-read-inventory).
+- [x] **ROMDATA-01-SOIL-EVIDENCE-LZ-PLAN scoped static:** `frkft5lf`
+  authenticates three complete sampled LZ77 streams: 1,335 encoded bytes and
+  1,640 decoded bytes. The plan publishes no owner.
+  [Evidence](../rom_data_graphics.md#e261-soil-evidence-lz77-source-plan).
+- [x] **ROMDATA-04-SOIL-EVIDENCE-LZ scoped EUR/Wine:** E232 serves the three
+  E261 streams. Wine reader `e262-soil-lz-readers-wine-v7ya7ht6`, scene `e262-soil-lz-scene-wine-knhlea70`, CLI `e262-soil-lz-cli-wine-6ld8ewbe` and
+  sample join `e262-soil-lz-sample-residual-twyv42n7` pass. [Evidence](../rom_data_graphics.md#e262-soil-evidence-lz77-runtime-sources).
+- [ ] **ROMDATA-01-SOIL-EVIDENCE-RESIDUAL:** attribute and integrate the
+  E260 sampled bytes (zero outside E248 owners after E301); attribution, other scenes and full coverage remain open. E272 classifies
+  112 lower and 373 upper bytes, all sampled on the Bus. E263 classifies address/width
+  groups and finds 151 possible lower Thumb literal words. E264 observes
+  matching instruction-scoped PC-relative loads for 135 distinct words, now
+  served by E266. E267 groups 58 remaining lower words; E269 serves 30, leaving 28 at that
+  stage. E284 leaves no sampled bytes below `300000`; other upper sources remain open. [Evidence](../rom_data_runtime.md#e267-soil-evidence-remaining-lower-reader-groups).
+- [x] **ROMDATA-01-SOIL-UPPER-READER-SITES scoped EUR/Wine:** E285 captures
+  all 285 E240 residual bytes; 245 are covered by interpreter-scoped groups
+  and 40 are outside those scopes. [Evidence](../rom_data_runtime.md#e285-soil-evidence-upper-residual-reader-sites).
+- [x] **ROMDATA-01-SOIL-12BYTE-RECORDS scoped EUR/Wine/static:** E286
+  authenticates six selected 12-byte-shaped rows and original stride/branches.
+  [Evidence](../rom_data_runtime.md#e286-soil-evidence-twelve-byte-record-plan).
+- [x] **ROMDATA-01-SOIL-TYPE3-LINKS scoped EUR/Wine/static:** E287 joins four
+  rows, four descriptors and four LZ wrappers to already owned streams; one
+  wrapper is shared. [Evidence](../rom_data_runtime.md#e287-soil-evidence-type-3-source-links).
+- [x] **ROMDATA-04-SOIL-12BYTE-RECORDS scoped EUR/Wine:** E241 serves the four
+  E287 type-3 rows and links without duplicate wrapper/stream ownership. Reader
+  `e288-soil-transfer-readers-wine-3f10sxyc`, scene `e288-soil-transfer-scene-wine-ixp_q9mt`, CLI `e288-soil-transfer-cli-wine-ztjvp9z5`, sample join `e288-soil-transfer-sample-residual-tn85nxvm` and prior
+  copied-halfword regression `e288-soil-copied-regression-wine-5_4m68dh` pass. [Evidence](../rom_data_runtime.md#e288-soil-evidence-type-3-transfer-runtime).
+- [ ] **ROMDATA-01-SOIL-OTHER-TRANSFER-TYPES:** establish remaining type-2 and
+  type-4 consumers, complete guest domains and the unclassified `af2716..af2718`
+  gap; no relationship to the adjacent tilemap is inferred.
+- [x] **ROMDATA-01-SOIL-TYPES24-SCOPED-PLAN EUR/Wine/static:** E289 authenticates
+  104 selected source bytes across both original reader paths, including 78
+  sampled bytes. [Evidence](../rom_data_runtime.md#e289-soil-evidence-type-2-and-type-4-source-plan).
+- [x] **ROMDATA-04-SOIL-TYPES24-OBSERVED scoped EUR/Wine:** E242 serves the
+  E289 selected paths without owning the gap or duplicating the adjacent
+  tilemap. Reader `e290-soil-types24-readers-wine-oan65r_2`, scene `e290-soil-types24-scene-wine-lrcwewjg`, CLI `e290-soil-types24-cli-wine-okzybzbi` and sample join
+  `e290-soil-types24-sample-residual-tmqi3aq8` pass. [Evidence](../rom_data_runtime.md#e290-soil-evidence-type-2-and-type-4-runtime-sources).
+- [ ] **ROMDATA-04-SOIL-TYPES24-LINUX:** validate selected readers, scene and
+  CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-TYPES24-USA:** identify and validate corresponding USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E242-WINE:** rerun other updated revision-sensitive
+  Wine fixtures when selected; their earlier evidence remains valid.
+- [ ] **ROMDATA-04-SOIL-TRANSFER-OTHER:** validate other callers/scenes, real
+  BIOS and UI save/Load; guest index domains remain unbounded.
+- [ ] **ROMDATA-04-SOIL-TRANSFER-LINUX:** validate E241 readers, selected
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-TRANSFER-USA:** identify and validate corresponding
+  USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E241-WINE:** rerun other updated revision-sensitive
+  Wine fixtures when selected; only the prior copied-halfword fixture was rerun.
+- [x] **ROMDATA-01-SOIL-39E1-READERS scoped EUR/Wine/static:** E291 identifies
+  five four-byte range records and eleven four-byte sequence records, including
+  30 sampled bytes. [Evidence](../rom_data_runtime.md#e291-soil-evidence-indexed-four-byte-record-plan).
+- [x] **ROMDATA-04-SOIL-39E1-RECORDS scoped EUR/Wine:** E243 serves all 64
+  E291 source bytes with existing literal and adjacent owners preserved. Wine
+  reader `e292-soil-scene-records-readers-wine-3ob0bs_v`, scene `e292-soil-scene-records-scene-wine-vg1kiwv5`, CLI `e292-soil-scene-records-cli-wine-xhag7oue` and
+  static join `e292-soil-scene-records-sample-residual-xzombbo8` pass. [Evidence](../rom_data_runtime.md#e292-soil-evidence-indexed-scene-record-runtime).
+- [ ] **ROMDATA-04-SOIL-39E1-OTHER:** establish other callers, initial state,
+  guest domains and scenes; validate real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-SOIL-39E1-LINUX:** validate selected readers, scene and CLI
+  on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-39E1-USA:** identify and validate corresponding USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E243-WINE:** rerun the 35 updated older revision-
+  sensitive fixtures when selected; their earlier evidence remains valid.
+- [x] **ROMDATA-01-SOIL-UPPER-INDIRECT scoped EUR/Wine/static:** E293
+  authenticates five eight-byte records, including 35 sampled bytes, and
+  compatible original reader/initializer links. [Evidence](../rom_data_runtime.md#e293-soil-evidence-indirect-eight-byte-record-plan).
+- [x] **ROMDATA-04-SOIL-UPPER-INDIRECT scoped EUR/Wine:** E244 serves all 40
+  E293 source bytes with existing literal and adjacent owners preserved. Wine
+  reader `e294-soil-indirect-records-readers-wine-cp1uz_wj`, scene `e294-soil-indirect-records-scene-wine-y9ussbh4`, CLI `e294-soil-indirect-records-cli-wine-ahnerpan` and
+  static join `e294-soil-indirect-records-sample-residual-vrbl28sb` pass. [Evidence](../rom_data_runtime.md#e294-soil-evidence-indirect-record-runtime).
+- [ ] **ROMDATA-04-SOIL-INDIRECT-OTHER:** establish sampled caller ancestry,
+  other callers, guest domains and scenes; validate real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-SOIL-INDIRECT-LINUX:** validate selected readers, scene and
+  CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-INDIRECT-USA:** identify and validate corresponding USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E244-WINE:** rerun the 36 updated older revision-
+  sensitive fixtures when selected; their earlier evidence remains valid.
+- [x] **ROMDATA-04-SOIL-INDEXED-BYTES scoped EUR/Wine:** E245 serves the six
+  witnessed bytes after the E244 indirect record. Wine reader `e295-soil-indexed-bytes-readers-wine-eb4g2qel`,
+  scene `e295-soil-indexed-bytes-scene-wine-_fgc_4sp`, CLI `e295-soil-indexed-bytes-cli-wine-ttlz5pdo` and static join `e295-soil-indexed-bytes-sample-residual-hgpyj2zs`
+  pass. [Evidence](../rom_data_runtime.md#e295-soil-evidence-indexed-byte-runtime).
+- [ ] **ROMDATA-04-SOIL-INDEXED-BYTES-OTHER:** establish full table and index
+  domain, other callers/scenes and real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-INDEXED-BYTES-LINUX:** validate selected reader, scene
+  and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-INDEXED-BYTES-USA:** identify and validate corresponding
+  USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E245-WINE:** rerun the 37 updated older revision-
+  sensitive fixtures, including the relocated fallback probe, when selected.
+- [x] **ROMDATA-01-SOIL-COMPACT-RECORD scoped EUR/Wine/static:** E296
+  authenticates a 24-byte Soil compact record and one indexed pointer word,
+  including 24 sampled bytes. [Evidence](../rom_data_compact_catalog.md#e296-soil-evidence-compact-record-plan).
+- [x] **ROMDATA-04-SOIL-COMPACT-RECORD scoped EUR/Wine:** E246 serves the
+  E296 record and observed pointer with prior bank/literal owners. Wine reader
+  `e297-soil-compact-record-readers-wine-5w49a8bi`, scene `e297-soil-compact-record-scene-wine-1ti7yhlx`, CLI `e297-soil-compact-record-cli-wine-fr1p_15v` and static join
+  `e297-soil-compact-record-sample-residual-_hg2aqh0` pass. [Evidence](../rom_data_compact_catalog.md#e297-soil-evidence-compact-record-runtime).
+- [ ] **ROMDATA-04-SOIL-COMPACT-RECORD-OTHER:** establish sampled caller
+  ancestry, complete pointer table, other callers/scenes and real BIOS and
+  UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-COMPACT-RECORD-LINUX:** validate readers, scene and
+  CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-COMPACT-RECORD-USA:** identify and validate the USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E246-WINE:** rerun the 38 updated older revision-
+  sensitive fixtures when selected; earlier evidence remains valid.
+- [x] **ROMDATA-01-SOIL-REMAINING-SCOPED scoped EUR/Wine/static:** E298
+  authenticates six individually observed indexed values, 16 sampled bytes,
+  and their existing literal roots. [Evidence](../rom_data_runtime.md#e298-soil-evidence-scoped-indexed-values-plan).
+- [x] **ROMDATA-04-SOIL-SCOPED-VALUES scoped EUR/Wine:** E247 serves all 16
+  E298 bytes with prior literal owners and fallback. Wine reader `e299-soil-scoped-values-readers-wine-4zlbm5q6`,
+  scene `e299-soil-scoped-values-scene-wine-qeu3cp12`, CLI `e299-soil-scoped-values-cli-wine-r4c7x_zi` and static join `e299-soil-scoped-values-sample-residual-248p0qae`
+  pass. [Evidence](../rom_data_runtime.md#e299-soil-evidence-scoped-indexed-values-runtime).
+- [ ] **ROMDATA-04-SOIL-SCOPED-VALUES-OTHER:** establish complete tables, guest
+  domains, actual callback invocation and ancestry, other callers/scenes,
+  real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-SCOPED-VALUES-LINUX:** validate selected readers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-SCOPED-VALUES-USA:** identify and validate corresponding
+  USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E247-WINE:** rerun the 39 updated older revision-
+  sensitive fixtures when selected; earlier evidence remains valid.
+- [ ] **ROMDATA-01-SOIL-UPPER-STRUCTURES:** establish original reader/source
+  formats for the scoped `39a` and `39e` page clusters and integrate only
+  authenticated, nonoverlapping extents.
+- [x] **ROMDATA-01-SOIL-REMAINING-RECTANGLES scoped EUR/Wine/static:** E300
+  authenticates two rectangles and one alternative literal, including all 22
+  E247 residual sample bytes. [Evidence](../rom_data_graphics.md#e300-soil-evidence-remaining-rectangle-plan).
+- [x] **ROMDATA-04-SOIL-REMAINING-RECTANGLES scoped EUR/Wine:** E248 serves
+  two rectangles and their alternate literal. Wine reader `e301-soil-remaining-rectangles-readers-wine-ibf9tm98`,
+  scene `e301-soil-remaining-rectangles-scene-wine-1o7mbmv_`, CLI `e301-soil-remaining-rectangles-cli-wine-vcu4hnwd` and static join `e301-soil-remaining-rectangles-sample-residual-a7umgmlt`
+  pass. [Evidence](../rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runtime).
+- [ ] **ROMDATA-04-SOIL-REMAINING-RECTANGLES-OTHER:** establish sampled pointer
+  ancestry, other callers/scenes and real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-REMAINING-RECTANGLES-LINUX:** validate readers, scene
+  and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-REMAINING-RECTANGLES-USA:** identify and validate
+  corresponding USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E248-WINE:** rerun the 40 updated older revision-
+  sensitive fixtures when selected; earlier evidence remains valid.
+- [ ] **ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS:** determine reader and caller
+  ancestry for the 40 E285 outside-scope bytes near `ae71be..ae787c`; E248
+  source ownership does not establish attribution or other scenes.
+- [x] **ROMDATA-01-SOIL-14D6D8-SITES scoped EUR/Wine:** E282 attributes the
+  eight sampled bytes to native read API calls with one outer dispatch context.
+  [Evidence](../rom_data_runtime.md#e282-soil-evidence-14d6d8-native-read-contexts).
+- [x] **ROMDATA-01-SOIL-14D6D8-READER scoped EUR/Wine/static:** E283
+  authenticates an eight-byte copy and subsequent halfword indexing.
+  [Evidence](../rom_data_runtime.md#e283-soil-evidence-copied-halfword-source-plan).
+- [x] **ROMDATA-04-SOIL-14D6D8-HALFWORDS scoped EUR/Wine:** E240 serves the
+  four copied halfwords; reader `e284-soil-copied-halfwords-readers-wine-r9a1m88c`, scene `e284-soil-copied-halfwords-scene-wine-6xd5_pj5`, CLI `e284-soil-copied-halfwords-cli-wine-af_b0kli` and
+  sample join `e284-soil-copied-halfwords-sample-residual-z7jjst5p` pass. [Evidence](../rom_data_runtime.md#e284-soil-evidence-copied-halfword-runtime).
+- [ ] **ROMDATA-01-SOIL-14D6D8-OTHER:** establish other callers/scenes, real
+  BIOS and UI save/Load behavior; no complete guest index domain is inferred.
+- [ ] **ROMDATA-04-SOIL-14D6D8-LINUX:** validate readers, transfers, scene and
+  CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-14D6D8-USA:** identify corresponding USA sources;
+  native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E240-WINE:** rerun affected older revision-sensitive
+  tests when selected; earlier acceptance is preserved but E240 expectations
+  were not rerun.
+- [x] **ROMDATA-01-SOIL-146-LITERAL-SITES scoped EUR/Wine:** E280 attributes all
+  13 earlier unscoped words to matching Thumb PC-relative loads under a bounded
+  interpreter window. [Evidence](../rom_data_runtime.md#e280-soil-evidence-146xxx-original-literal-sites).
+- [x] **ROMDATA-04-SOIL-146-LITERALS scoped EUR/Wine:** E239 serves 13
+  observed words; reader `e281-soil-146-literals-readers-wine-h8dj_z7q`, scene `e281-soil-146-literals-scene-wine-fivwh4bx`, CLI `e281-soil-146-literals-cli-wine-f80mzg0p` and sample
+  join `e281-soil-146-literals-sample-residual-anz9pb_y` pass. [Evidence](../rom_data_runtime.md#e281-soil-evidence-146xxx-literal-runtime).
+- [ ] **ROMDATA-01-SOIL-146-LITERALS-OTHER:** establish other callers/scenes,
+  real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-146-LITERALS-LINUX:** validate readers, transfers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-146-LITERALS-USA:** identify corresponding USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E239-WINE:** rerun affected older revision-sensitive
+  tests when selected; earlier acceptance is preserved but E239 expectations
+  were not rerun.
+- [x] **ROMDATA-01-SOIL-REMAINING-SWITCH-PLAN scoped EUR/Wine/static:** E278
+  authenticates nine guarded tables, 120 destinations and ten sampled words.
+  [Evidence](../rom_data_runtime.md#e278-soil-evidence-remaining-switch-source-plan).
+- [x] **ROMDATA-04-SOIL-REMAINING-SWITCHES scoped EUR/Wine:** E238 serves nine
+  destination arrays without duplicating roots; reader `e279-soil-remaining-switches-readers-wine-tvvu9o31`, scene
+  `e279-soil-remaining-switches-scene-wine-tgdwq7za`, CLI `e279-soil-remaining-switches-cli-wine-7oaysfzd` and sample join `e279-soil-remaining-switches-sample-residual-vdq2xyeo` pass.
+  [Evidence](../rom_data_runtime.md#e279-soil-evidence-remaining-switch-runtime).
+- [ ] **ROMDATA-01-SOIL-REMAINING-SWITCHES-OTHER:** establish selector writers,
+  other callers/scenes, real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-REMAINING-SWITCHES-LINUX:** validate readers, transfers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-REMAINING-SWITCHES-USA:** identify corresponding USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E238-WINE:** rerun affected older revision-sensitive
+  tests when selected; earlier acceptance is preserved but E238 expectations
+  were not rerun.
+- [x] **ROMDATA-01-SOIL-A83C2-WORDS scoped EUR/Wine/static:** E276 authenticates
+  a 15-entry switch with existing literal root and three sampled indices.
+  [Evidence](../rom_data_runtime.md#e276-soil-evidence-a83c2-switch-source-plan).
+- [x] **ROMDATA-04-SOIL-A83C2-SWITCH scoped EUR/Wine:** E237 serves 15
+  destinations without duplicating the existing root; reader `e277-soil-a83c2-switch-readers-wine-syjfuorl`,
+  scene `e277-soil-a83c2-switch-scene-wine-76pzfrqd`, CLI `e277-soil-a83c2-switch-cli-wine-bx2ywffb` and sample join `e277-soil-a83c2-switch-sample-residual-ab5klphb` pass.
+  [Evidence](../rom_data_runtime.md#e277-soil-evidence-a83c2-switch-runtime).
+- [ ] **ROMDATA-01-SOIL-A83C2-OTHER:** establish selector writers, other
+  callers/scenes, real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-A83C2-LINUX:** validate readers, transfers, scene and
+  CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-A83C2-USA:** identify corresponding USA sources;
+  native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E237-WINE:** rerun affected older revision-sensitive
+  tests when selected; earlier acceptance is preserved but E237 expectations
+  were not rerun.
+- [x] **ROMDATA-01-SOIL-E3838-PLAN scoped EUR/Wine/static:** E268 authenticates
+  the reader sequence, root and 30 sampled words/120 bytes; no complete index
+  bound is inferred. [Evidence](../rom_data_runtime.md#e268-soil-evidence-e3838-indexed-source-plan).
+- [x] **ROMDATA-04-SOIL-E3838-OBSERVED-WORDS scoped EUR/Wine:** E234 serves
+  the 30 E268 words, preserving signed arithmetic and fallback. Wine reader
+  `e269-soil-e3838-readers-wine-dpssxyfq`, scene `e269-soil-e3838-scene-wine-t22ztsv4`, CLI `e269-soil-e3838-cli-wine-oon2tik4` and join `e269-soil-e3838-sample-residual-5aymku00` pass.
+  [Evidence](../rom_data_runtime.md#e269-soil-evidence-sparse-indexed-words).
+- [ ] **ROMDATA-04-SOIL-E3838-OTHER:** establish other consumers and scenes,
+  real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-SOIL-E3838-LINUX:** validate readers, fallback, transfers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-E3838-USA:** identify corresponding USA sources;
+  native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E234-WINE:** rerun affected older revision-sensitive
+  tests when selected; prior acceptance remains valid but E234 expectations
+  were not rerun.
+- [ ] **ROMDATA-01-SOIL-E235-UPPER-READS:** identify source formats and readers
+  for the remaining 285 upper sampled bytes. E273 finds 20 list-offset matches;
+  E274/E275 identify and integrate the two 44-byte metadata intervals.
+  Other formats, readers and ownership remain open. [Evidence](../rom_data_runtime.md#e273-soil-evidence-list-adjacent-layout).
+- [x] **ROMDATA-01-SOIL-6C173C-BANK scoped EUR/Wine/static:** E274 verifies
+  88 metadata bytes, 20 existing list references and one 20-frame selector 0;
+  all selected bytes are observed in the Wine source-site capture.
+  [Evidence](../rom_data_compact_catalog.md#e274-soil-evidence-compact-metadata-plan).
+- [x] **ROMDATA-04-SOIL-6C173C-METADATA scoped EUR/Wine:** E236 serves the
+  two metadata spans without duplicating E271 list sources; reader `e275-soil-compact-readers-wine-myffsalx`,
+  scene `e275-soil-compact-scene-wine-gmfuh78b`, CLI `e275-soil-compact-cli-wine-jak27la2` and sample join `e275-soil-compact-sample-residual-j6x30g5v` pass.
+  [Evidence](../rom_data_compact_catalog.md#e275-soil-evidence-compact-metadata-runtime).
+- [ ] **ROMDATA-01-SOIL-6C173C-OTHER:** establish other selectors, producers,
+  readers and scenes; real BIOS and UI save/Load remain open.
+- [ ] **ROMDATA-04-SOIL-6C173C-LINUX:** validate metadata readers, transfers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-6C173C-USA:** identify corresponding USA metadata and
+  validate its use; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E236-WINE:** rerun affected older revision-sensitive
+  tests when selected; earlier acceptance is preserved but E236 expectations
+  were not rerun.
+- [x] **ROMDATA-01-SOIL-SPRITE-LISTS scoped EUR/static:** E270 identifies 20
+  paired SpritePeek count/payload candidates, 586 sampled unowned bytes, with
+  no candidate overlaps. [Evidence](../rom_data_runtime.md#e270-soil-evidence-spritepeek-list-candidates).
+- [x] **ROMDATA-04-SOIL-SPRITE-LISTS scoped EUR/Wine:** E235 serves the 20
+  E270 lists. Wine reader `e271-soil-sprite-lists-readers-wine-gywh4sti`, scene `e271-soil-sprite-lists-scene-wine-b3g8olpn`, CLI `e271-soil-sprite-lists-cli-wine-duz93oci` and
+  sample join `e271-soil-sprite-list-sample-residual-ki3vs5jv` pass.
+  [Evidence](../rom_data_runtime.md#e271-soil-evidence-typed-sprite-lists).
+- [ ] **ROMDATA-01-SOIL-SPRITE-LISTS-PRODUCER:** establish pointer producers,
+  complete asset domain and other guest/host consumers; other scenes, real BIOS
+  and UI save/Load remain open.
+- [ ] **ROMDATA-04-SOIL-SPRITE-LISTS-LINUX:** validate guest and host readers,
+  transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-SPRITE-LISTS-USA:** identify corresponding USA sources;
+  native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E235-WINE:** rerun affected older revision-sensitive
+  tests when selected; prior acceptance remains valid but E235 expectations
+  were not rerun.
+- [ ] **ROMDATA-01-SOIL-E3838-DOMAIN:** establish index writers, complete domain,
+  other readers and source extent without treating observed indices as a guard.
+- [x] **ROMDATA-01-SOIL-LITERAL-PLAN scoped EUR/static:** E265 authenticates
+  135 words/540 bytes from the E264 witnesses against E232, excluding reader
+  and source overlaps. [Evidence](../rom_data_runtime.md#e265-soil-evidence-literal-source-plan).
+- [x] **ROMDATA-04-SOIL-EVIDENCE-OBSERVED-LITERALS scoped EUR/Wine:** E233
+  serves the 135 E265 words. Wine reader `e266-soil-literals-readers-wine-itca7x6l`, scene `e266-soil-literals-scene-wine-8wxjny7m`, CLI
+  `e266-soil-literals-cli-wine-ptvqd89o` and join `e266-soil-literal-sample-residual-u2vrc_4i` pass.
+  [Evidence](../rom_data_runtime.md#e266-soil-evidence-observed-literal-sources).
+- [ ] **ROMDATA-04-SOIL-EVIDENCE-LITERALS-OTHER:** establish other callers,
+  source domains and scenes, real-BIOS behavior and UI save/Load.
+- [ ] **ROMDATA-04-SOIL-EVIDENCE-LITERALS-LINUX:** validate affected readers,
+  boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-EVIDENCE-LITERALS-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E233-WINE:** rerun affected older revision-sensitive
+  tests when selected; their previous acceptance remains valid but updated
+  E233 expectations are unverified.
+- [ ] **ROMDATA-04-SOIL-EVIDENCE-LZ-OTHER:** establish asset identity, other
+  scenes and consumers, real-BIOS behavior and UI save/Load.
+- [ ] **ROMDATA-01-SOIL-EVIDENCE-LINUX:** validate affected readers, transfers,
+  scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-SOIL-EVIDENCE-LZ-USA:** identify and authenticate USA
+  sources; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E232-WINE:** rerun affected older revision-sensitive
+  reader tests when selected, including the interleaved LZ test; their earlier
+  accepted evidence remains valid; E232 and later expectations were not rerun.
+- [x] **ROMDATA-01-BLUE-SCREW-RAW scoped EUR/Wine:** `jyhm2s_n` captures
+  E230 selected-reader addresses during 600 matching Blue Screw frames; 24
+  sampled bytes are outside declared sources. This does not attribute PCs.
+  [Evidence](../rom_data_runtime.md#e255-blue-screw-rom-read-inventory).
+- [x] **ROMDATA-01-BLUE-SCREW-LITERAL-ANCHORS scoped static:** `0iwncua_`
+  finds no bounded, straight-line translated-block-anchored Thumb LDR for the
+  six sampled words; other reader forms and paths remain possible.
+  [Evidence](../rom_data_runtime.md#e256-blue-screw-literal-anchor-scan).
+- [x] **ROMDATA-01-BLUE-SCREW-SITES scoped EUR/Wine:** `m3aveg4f` captures all
+  six words: three have matching PC-relative LDR witnesses and three share an
+  indirect LDR scope. Nested reads and other callers remain possible.
+  [Evidence](../rom_data_runtime.md#e257-blue-screw-residual-read-sites).
+- [x] **ROMDATA-01-BLUE-SCREW-SOURCE-PLAN scoped EUR/Wine:** `jkaucm5o`
+  authenticates three literals and a 15-entry indirect switch array covering
+  all E255 sampled words; the plan itself publishes no owner.
+  [Evidence](../rom_data_runtime.md#e258-blue-screw-source-plan).
+- [x] **ROMDATA-01-BLUE-SCREW-RESIDUAL scoped EUR/Wine:** E231 serves the
+  E258 literals and switch array. Wine readers `t4cf550o`, 600-frame scene
+  `dk9h50xm`, CLI `9fermhwm` and sample join `uo47n9gw` pass.
+  [Evidence](../rom_data_runtime.md#e259-blue-screw-literal-and-switch-sources).
+- [ ] **ROMDATA-04-BLUE-SCREW-SOURCES-OTHER:** establish other readers, source
+  domains and scenes, real-BIOS and UI save/Load; scopes may nest.
+- [ ] **ROMDATA-04-BLUE-SCREW-SOURCES-LINUX:** validate affected readers,
+  boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-BLUE-SCREW-SOURCES-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-01-BLUE-SCREW-LINUX:** validate affected readers and scene on
+  Linux when selected; USA and native Windows remain unverified.
+- [x] **ROMDATA-04-BANK-OBSERVED-LITERALS scoped EUR/Wine:** E229-d228 serves
+  77 witnessed words. Reader `biu5a8ky`, 12 altered-source Bank frames
+  `fwu8_cee`, CLI `g8lsy8kq` and reconciliation `duj05bki` pass.
+  [Evidence](../rom_data_runtime.md#e250-bank-observed-thumb-literals).
+- [x] **ROMDATA-01-BANK-OTHER-SAMPLED-ANCHORS scoped static:** `hfew8swv`
+  finds no straight-line translated-block-anchored Thumb LDR for these words
+  within the scanned bounds; other reader forms and paths are not excluded.
+  [Evidence](../rom_data_runtime.md#e251-bank-unscoped-literal-anchor-scan).
+- [x] **ROMDATA-01-BANK-OTHER-SAMPLED-SITES scoped static:** `rm1pwc1a`
+  authenticates the retained site capture: one 32-bit Bus read per word has
+  a Thumb `LDR r0, [r0]` instruction scope. Nested reads remain possible.
+  [Evidence](../rom_data_runtime.md#e252-bank-residual-read-sites).
+- [x] **ROMDATA-01-BANK-OTHER-SAMPLED-SWITCH-PLAN scoped EUR/Wine:** `in0jqgky`
+  authenticates three indexed switch sources with 5, 8 and 256 destination
+  words and accounts for the three sampled words. The plan publishes no owner.
+  [Evidence](../rom_data_runtime.md#e253-bank-switch-source-plan).
+- [x] **ROMDATA-01-BANK-OTHER-SAMPLED-WORDS scoped EUR/Wine:** E230 serves all
+  three E253 arrays; Wine reader `akk2y3mv`, 12 Bank frames `hcng484s`, CLI
+  `oxj8x5e8` and sample join `re_5dymo` pass.
+  [Evidence](../rom_data_runtime.md#e254-bank-switch-destinations).
+- [ ] **ROMDATA-04-BANK-SWITCH-DESTINATIONS-OTHER:** establish other readers,
+  selector domains and scenes, real-BIOS and UI save/Load; scopes may nest.
+- [ ] **ROMDATA-04-BANK-SWITCH-DESTINATIONS-LINUX:** validate affected readers,
+  boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-BANK-SWITCH-DESTINATIONS-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [ ] **ROMDATA-04-BANK-OBSERVED-LITERALS-OTHER:** establish other readers,
+  source extents, scenes, real-BIOS and UI save/Load; scopes may nest.
+- [ ] **ROMDATA-04-BANK-OBSERVED-LITERALS-LINUX:** validate affected readers,
+  boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-BANK-OBSERVED-LITERALS-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-01-F09-HISTORICAL-RECONCILE scoped static:** `__2ozlaa`
+  checks the retained 12-frame F09 inventory against E228. All 1,146 bytes
+  previously outside E71 source ranges now have declared owners; no replay or
+  current-reader claim is made.
+  [Evidence](../rom_data_runtime.md#e249-historical-f09-inventory-reconciliation).
+- [ ] **ROMDATA-01-F09-HISTORICAL-OTHER:** establish other readers, source
+  domains and scenes; validate affected paths on Linux and USA when selected.
+- [ ] **ROMDATA-01-POST-INDEXED-LOWER-READERS:** establish other readers,
+  executing PCs, source domains and scenes. All 1,068 lower bytes in the E170
+  sample now have declared sources (`aqz4qh3s`); 3,600 high bytes lie in the
+  copied IWRAM code-support block retained in ROM by the existing contract.
+  Linux, USA and native Windows remain open.
+  [Evidence](../rom_data_runtime.md#e246-full-post-indexed-inventory-reconciliation).
+- [x] **ROMDATA-01-POST-INDEXED-FULL-RECONCILE scoped static:** `aqz4qh3s`
+  authenticates intersecting E228 source spans for the complete E170 unowned
+  sample: 1,080 bytes are declared and 3,600 remain in the copied-code block.
+  Individual byte semantics and full-ROM coverage are not established.
+- [x] **ROMDATA-01-POST-INDEXED-UNSCOPED-ANCHORS scoped static:** `0uvhmsty`
+  identifies original LDRs and straight-line exported-block anchors for all 18
+  remaining sampled words. The E242 reads were unscoped; actual executing PCs
+  and ownership are not established by the scan.
+  [Evidence](../rom_data_runtime.md#e244-post-indexed-unscoped-literal-anchors).
+- [x] **ROMDATA-04-POST-INDEXED-ANCHORED-LITERALS scoped EUR/Wine:** E228
+  serves 18 anchored words. Reader `nssz0c5s`, 12 altered-source post-indexed
+  frames `fc5v9tzl`, CLI `i52g_6ot` and reconciliation `rhmbe_o9` pass.
+  [Evidence](../rom_data_runtime.md#e245-post-indexed-anchored-thumb-literals).
+- [ ] **ROMDATA-04-POST-INDEXED-ANCHORED-LITERALS-OTHER:** establish executing
+  PCs, other callers, source extents, scenes, real-BIOS and UI save/Load.
+- [ ] **ROMDATA-04-POST-INDEXED-ANCHORED-LITERALS-LINUX:** validate affected
+  readers, boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-POST-INDEXED-ANCHORED-LITERALS-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-01-POST-INDEXED-LOWER-SITES scoped EUR/Wine:** `qpmxbv2e`
+  captures all 27 words in the 12-frame E170 continuation. Nine words have
+  matching original Thumb LDR site/address witnesses; 19 read records are
+  outside instruction scopes. No source is published by the capture.
+  [Evidence](../rom_data_runtime.md#e242-post-indexed-lower-reader-sites).
+- [x] **ROMDATA-04-POST-INDEXED-OBSERVED-LITERALS scoped EUR/Wine:** E227 serves
+  nine witnessed words. Reader `6gxwak7q`, 12 altered-source post-indexed frames
+  `fbe_qfgm`, CLI `uydq8tce` and reconciliation `n2okilgf` pass.
+  [Evidence](../rom_data_runtime.md#e243-post-indexed-observed-thumb-literals).
+- [ ] **ROMDATA-04-POST-INDEXED-OBSERVED-LITERALS-OTHER:** establish other
+  callers, source extents, scenes, real-BIOS and UI save/Load; scopes may nest.
+- [ ] **ROMDATA-04-POST-INDEXED-OBSERVED-LITERALS-LINUX:** validate affected
+  readers, boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-POST-INDEXED-OBSERVED-LITERALS-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-01-POST-INDEXED-LOWER-RECONCILE scoped static:** of the 568
+  E170 bytes unmatched by earlier witnesses, E226 declares 460: 408 literals,
+  20 switch bytes and 32 display-control bytes. The remaining 108 bytes form
+  14 ranges; `wxrezwcp` validates intersecting source hashes without replay.
+  Prior witness and high copied-IWRAM subsets are outside this reconciliation.
 - [x] **ROMDATA-01-E207-HOME-INVENTORY scoped EUR/Wine:** `kkbk45be` inventories
   600 recorded home frames with the E202 dataset and equal state, clock, video,
   OAM, dispatch and audio. Of 8,544 unowned sampled bytes, 6,436 are at or above
@@ -1221,18 +1628,100 @@ current evidence before running another check.
   USA sources and consumers; native Windows remains pending.
 - [ ] **ROMDATA-01-E196-OBJ-BYTES-OTHER:** establish ordinary use of the other
   byte groups and investigate other callers without imposing guest bounds.
-- [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** classify the 8,789 previously
-  observed unowned bytes outside the E173 bank increment. E174 migrates 2,578
+- [ ] **ROMDATA-01-E172-REDSPRING-OTHER-RAW:** establish other callers, source
+  extents and scenes beyond the reconciled E172 sample. The original 8,789
+  bytes outside the E173 bank increment were addressed in later increments:
+  E174 migrates 2,578
   and E175 another 2,291. E176 owns another 64, E177 another 100, E178
   another 7, E179 another 12, E180 another 48, E181 another 28, E182
   another 58, E183 another 86, E184 another 17, E185 another 6 and E186
   another 60, E187 another 57, E188 another 20, E189 another 24, E190 another
   12, E191 another eight, E192 another 16, E193 another six, E194 another five
-  E195 another eight and E196 another two. E203 joins 420 of the remaining
-  3,276 bytes to code-support sites from another scene; all 3,276 remain
-  unowned, and their E172 executing PCs and alternate uses are unproved.
-  Continue classification before claiming the action has no remaining raw
-  source. Other scenes, consumers, Linux, USA and native Windows remain pending.
+  E195 another eight and E196 another two. E203 joined 420 of the 3,276
+  remaining at E201 to code-support sites from another scene; E212 owns all
+  420. Static E221 reconciliation `wt2lyljd` attributes 2,324 of the E201
+  residual to declared source ranges, leaving 952 sampled bytes at E221.
+  E222 adds 784, leaving 168 sampled bytes (`pz3zxelt`); E223 adds 64,
+  leaving 104 (`c_2f3g_b`); E224 adds 88, leaving 16 (`55zvsm8r`); E225
+  adds eight (`n1l57jp6`); E226 adds the last eight, leaving zero unowned bytes
+  in the retained E172 sample (`_z04mity`). Executing PCs and alternate uses
+  remain open; so do other scenes, consumers, Linux, USA and native Windows.
+  [Evidence](../rom_data_runtime.md#e240-final-red-spring-copy-source).
+- [x] **ROMDATA-01-E172-REDSPRING-E221-RECONCILE scoped static:** protected
+  E172 sample, E201/E221 manifests and source hashes reconcile (`wt2lyljd`);
+  952 sampled bus bytes remain outside E221 declared source ranges. No replay
+  or complete-ROM coverage is claimed.
+- [x] **ROMDATA-01-E172-REDSPRING-RESIDUAL-SITES scoped EUR/Wine:** `av1hj_7p`
+  observes all 238 residual words; 196 have matching original Thumb LDR
+  opcode/address witnesses. Scopes may include nested accesses and do not
+  establish every caller. [Evidence](../rom_data_compact_catalog.md#e232-red-spring-residual-reader-scopes).
+- [x] **ROMDATA-01-E172-REDSPRING-INDIRECT-SOURCES scoped EUR/Wine/static:**
+  ten original guarded switch arrays, 148 destinations and 592 source bytes
+  are authenticated (`3ubkkgml`/`rtqw8txm`); 64 overlap unowned E172 sample
+  bytes. No destination ownership or complete caller/domain claim is made.
+  [Evidence](../rom_data_runtime.md#e234-red-spring-indirect-switch-source-plan).
+- [x] **ROMDATA-01-E172-UNSCOPED-LITERAL-ANCHORS scoped static:** `rlq73_nk`
+  identifies 22 unowned sampled words with original LDRs and straight-line
+  exported-block anchors. The addresses were observed outside an instruction
+  scope; executing PCs and ownership are not established.
+  [Evidence](../rom_data_runtime.md#e236-red-spring-unscoped-literal-anchors).
+- [x] **ROMDATA-01-E172-FINAL-READERS scoped source plan:** Wine `jqg8wh29`/
+  `56f3ef_x` and static `b39y_6rn` authenticate two guarded destination arrays
+  and one eight-byte original copy source spanning the 16 E224-unowned sampled
+  bytes. The address-only sample does not prove the executing PCs or publish
+  any source. [Evidence](../rom_data_runtime.md#e238-red-spring-remaining-source-plan).
+- [x] **ROMDATA-04-E172-FINAL-SWITCH-ARRAYS scoped EUR/Wine:** E225 serves the
+  two arrays; reader `2zdfj3c8`, 600 altered-source Red Spring frames `6vjw7n51`,
+  CLI `q_skv5h9` and sample reconciliation `n1l57jp6` pass.
+  [Evidence](../rom_data_runtime.md#e239-final-red-spring-switch-arrays).
+- [ ] **ROMDATA-04-E172-FINAL-SWITCH-ARRAYS-OTHER:** establish other callers,
+  selectors, scenes, real-BIOS and UI save/Load; the sampled executing PCs and
+  complete source families remain open.
+- [x] **ROMDATA-04-E172-FINAL-COPIED-SOURCE scoped EUR/Wine:** E226 serves the
+  eight-byte copy source; reader `e2rslaz3`, 600 altered-source Red Spring frames
+  `xwjchks1`, CLI `_jk7dwh3` and sample reconciliation `_z04mity` pass.
+  [Evidence](../rom_data_runtime.md#e240-final-red-spring-copy-source).
+- [ ] **ROMDATA-04-E172-FINAL-COPIED-SOURCE-OTHER:** establish other callers,
+  scenes, real-BIOS and UI save/Load; the sampled executing PCs and complete
+  source families remain open.
+- [ ] **ROMDATA-04-E172-FINAL-SOURCES-LINUX:** validate affected sources,
+  original readers, boundaries, transfers, scene and CLI on Linux.
+- [ ] **ROMDATA-04-E172-FINAL-SOURCES-USA:** identify and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-REDSPRING-ANCHORED-LITERALS scoped EUR/Wine:** E224
+  serves 22 words. Reader `d0vf7iwd`, 600 altered-source Red Spring frames
+  `ao5jx0xh`, CLI `dl95px1f` and reconciliation `55zvsm8r` pass.
+  [Evidence](../rom_data_runtime.md#e237-red-spring-anchored-thumb-literals).
+- [ ] **ROMDATA-04-EUR-REDSPRING-ANCHORED-LITERALS-OTHER:** establish other
+  callers, literal pools, scenes, real-BIOS and UI save/Load; static anchors do
+  not prove E172 executing PCs. E239/E240 serve the four other sampled words;
+  broader families remain open.
+- [ ] **ROMDATA-04-EUR-REDSPRING-ANCHORED-LITERALS-LINUX:** validate affected
+  readers, boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-REDSPRING-ANCHORED-LITERALS-USA:** locate and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-REDSPRING-SWITCH-DESTINATIONS scoped EUR/Wine:** E223
+  serves ten arrays/148 destinations. Reader `wd1z4xka`, 600 altered-source
+  Red Spring frames `hg3vf9nv`, CLI `fzyln36o` and reconciliation `c_2f3g_b`
+  pass. [Evidence](../rom_data_runtime.md#e235-red-spring-switch-destinations).
+- [ ] **ROMDATA-04-EUR-REDSPRING-SWITCH-DESTINATIONS-OTHER:** establish other
+  callers, selectors, scenes, real-BIOS and UI save/Load; original guards do not
+  establish global selector bounds. Other families and source extents remain open.
+- [ ] **ROMDATA-04-EUR-REDSPRING-SWITCH-DESTINATIONS-LINUX:** validate affected
+  readers, boundaries, transfers, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-REDSPRING-SWITCH-DESTINATIONS-USA:** locate and authenticate
+  corresponding USA sources; native Windows remains unverified.
+- [x] **ROMDATA-04-EUR-REDSPRING-OBSERVED-LITERALS scoped EUR/Wine:** E222-d221
+  publishes and serves 196 words. Reader `4sf2ed90`, 600 altered-source Red
+  Spring frames `8ze5sj_t`, CLI `wdd7lpip` and reconciliation `pz3zxelt` pass.
+  [Evidence](../rom_data_runtime.md#e233-red-spring-observed-thumb-literals).
+- [ ] **ROMDATA-04-EUR-REDSPRING-OBSERVED-LITERALS-OTHER:** establish other
+  callers, source extents, scenes, real-BIOS and UI save/Load; scopes may nest.
+  E223–E226 serve the other 42 sampled words; broader families remain open.
+- [ ] **ROMDATA-04-EUR-REDSPRING-OBSERVED-LITERALS-LINUX:** validate affected
+  extraction, readers, boundaries, scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-EUR-REDSPRING-OBSERVED-LITERALS-USA:** locate and authenticate
+  corresponding USA sources; native Windows remains unverified.
 - [x] **ROMDATA-01-E203-REDSPRING-CODE-SUPPORT scoped static join:** `usda5fn4`
   verifies source hashes and earlier executed sites for 93 literal words and
   12 control-table words overlapping the E172 sample. It does not establish

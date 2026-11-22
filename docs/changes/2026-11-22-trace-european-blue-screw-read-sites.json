@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "trace-european-blue-screw-read-sites",
+  "title": "Trace European Blue Screw read sites",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Record source-site observations for six Blue Screw words; literal integration and indirect-source attribution remain open."
+  ],
+  "validation": [
+    "Protected Wine unit m3aveg4f captures all six words across the retained 600-frame scene; three have matching original Thumb PC-relative LDR opcode/address witnesses and three share an indirect LDR scope. Wine drained."
+  ],
+  "limitations": [
+    "Instruction scopes can include nested HLE/DMA reads; source extents, all callers, other scenes, Linux, USA and native Windows remain unverified. No performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

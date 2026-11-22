@@ -1326,6 +1326,114 @@ and normal enablement retain their existing acceptance gates.
 - EUR [E230 home observed code support](../rom_data_runtime.md#e230-home-scene-observed-literals-and-switch-destinations)
   adds 40 literal words and two switch arrays. Wine validates readers, transfers
   and 600 altered-source home frames; other paths and deferred platforms remain open.
+- EUR [E233 Red Spring observed literals](../rom_data_runtime.md#e233-red-spring-observed-thumb-literals)
+  adds 196 words. Wine validates readers, transfers and 600 altered-source Red
+  Spring frames; other readers and deferred platforms remain open.
+- EUR [E235 Red Spring switch destinations](../rom_data_runtime.md#e235-red-spring-switch-destinations)
+  adds ten guarded-path arrays. Wine validates readers, transfers and 600
+  altered-source Red Spring frames; other paths and deferred platforms remain open.
+- EUR [E237 Red Spring anchored literals](../rom_data_runtime.md#e237-red-spring-anchored-thumb-literals)
+  adds 22 words. Wine validates readers, transfers and 600 altered-source Red
+  Spring frames; other readers and deferred platforms remain open.
+- EUR [E239 final Red Spring switch arrays](../rom_data_runtime.md#e239-final-red-spring-switch-arrays)
+  adds two guarded-path arrays. Wine validates readers, transfers and 600
+  altered-source Red Spring frames; deferred paths/platforms remain open.
+- EUR [E240 final Red Spring copy source](../rom_data_runtime.md#e240-final-red-spring-copy-source)
+  adds eight copied bytes. Wine validates the original copy, transfers and 600
+  altered-source Red Spring frames; the E172 sample has no unowned bytes,
+  while other scenes/readers and deferred platforms remain open.
+- EUR [E243 post-indexed observed literals](../rom_data_runtime.md#e243-post-indexed-observed-thumb-literals)
+  adds nine words. Wine validates readers, transfers and 12 altered-source
+  post-indexed frames; deferred paths/platforms remain open.
+- EUR [E245 post-indexed anchored literals](../rom_data_runtime.md#e245-post-indexed-anchored-thumb-literals)
+  adds 18 words. Wine validates readers, transfers and 12 altered-source frames;
+  the prior-witness subset, other scenes and deferred platforms remain open.
+
+- EUR [E250 Bank observed literals](../rom_data_runtime.md#e250-bank-observed-thumb-literals)
+  adds 77 words. Wine validates readers, transfers and 12 altered-source Bank
+  frames; E254 subsequently serves the remaining three sampled words.
+- EUR [E254 Bank switch destinations](../rom_data_runtime.md#e254-bank-switch-destinations)
+  adds three arrays and 269 words. Wine validates readers, transfers and 12
+  altered-source Bank frames; other paths and deferred platforms remain open.
+
+- EUR [E259 Blue Screw sources](../rom_data_runtime.md#e259-blue-screw-literal-and-switch-sources)
+  adds three literals and a 15-entry switch array. Wine validates readers and
+  600 altered-source Blue Screw frames; other paths and platforms remain open.
+
+- EUR [E262 Soil Evidence LZ streams](../rom_data_graphics.md#e262-soil-evidence-lz77-runtime-sources)
+  serves three authenticated streams through bus views and HLE. Wine validates
+  focused readers and 600 altered-source frames; other paths and platforms remain open.
+
+- EUR [E266 Soil Evidence literals](../rom_data_runtime.md#e266-soil-evidence-observed-literal-sources)
+  serves 135 witnessed words; Wine validates readers and 600 altered-source
+  frames. Other paths and platforms remain open.
+
+- EUR [E269 sparse Soil Evidence words](../rom_data_runtime.md#e269-soil-evidence-sparse-indexed-words)
+  serves 30 signed-index observations with fallback. Wine validates readers
+  and 600 altered-source frames; the full domain and other platforms remain open.
+
+- EUR [E301 Soil Evidence remaining rectangles](../rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runtime)
+  serves two rectangles and an alternative literal. Wine validates readers,
+  transfers and 600 altered-source frames; attribution, other scenes and
+  platforms remain open. The selected E260 sample has no unowned bytes.
+
+- EUR [E299 Soil Evidence scoped values](../rom_data_runtime.md#e299-soil-evidence-scoped-indexed-values-runtime)
+  serves six witnessed values with literal ownership and unrestricted fallback.
+  Wine validates readers and 600 altered-source frames; callback invocation,
+  other indices, scenes and platforms remain open.
+
+- EUR [E297 Soil Evidence compact record](../rom_data_compact_catalog.md#e297-soil-evidence-compact-record-runtime)
+  serves one record and observed pointer with prior bank/literal owners. Wine
+  validates readers and 600 altered-source frames; ancestry, other callers,
+  scenes and platforms remain open.
+
+- EUR [E295 Soil Evidence indexed bytes](../rom_data_runtime.md#e295-soil-evidence-indexed-byte-runtime)
+  serves six witnessed bytes with unrestricted fallback. Wine validates the
+  reader and 600 altered-source frames; full domains, scenes and platforms remain open.
+
+- EUR [E294 Soil Evidence indirect records](../rom_data_runtime.md#e294-soil-evidence-indirect-record-runtime)
+  serves five source-backed eight-byte records with prior-owner/ROM fallback.
+  Wine validates selected readers and 600 altered-source frames; ancestry,
+  other callers, scenes and platforms remain open.
+
+- EUR [E292 Soil Evidence indexed records](../rom_data_runtime.md#e292-soil-evidence-indexed-scene-record-runtime)
+  serves five range and eleven sequence records while preserving prior owners
+  and unrestricted guest indexing. Wine validates selected readers and 600
+  altered-source frames; other callers, scenes and platforms remain open.
+
+- EUR [E290 Soil Evidence list and mode-7 sources](../rom_data_runtime.md#e290-soil-evidence-type-2-and-type-4-runtime-sources)
+  serves selected type-2/type-4 data while leaving the unclassified gap raw.
+  Wine validates the readers and 600 altered-source frames; other callers,
+  scenes and platforms remain open.
+
+- EUR [E288 Soil Evidence transfer rows](../rom_data_runtime.md#e288-soil-evidence-type-3-transfer-runtime)
+  serves four type-3 rows and linked descriptors without duplicate wrappers.
+  Wine validates readers and 600 altered-source frames; other types, callers,
+  scenes and platforms remain open.
+
+- EUR [E284 Soil Evidence copied halfwords](../rom_data_runtime.md#e284-soil-evidence-copied-halfword-runtime)
+  serves four typed values. Wine validates copy/index behavior and 600
+  altered-source frames; other callers and platforms remain open.
+
+- EUR [E281 Soil Evidence 146xxx literals](../rom_data_runtime.md#e281-soil-evidence-146xxx-literal-runtime)
+  serves 13 typed words. Wine validates the selected original readers and 600
+  altered-source frames; other callers and platforms remain open.
+
+- EUR [E279 Soil Evidence remaining switches](../rom_data_runtime.md#e279-soil-evidence-remaining-switch-runtime)
+  serves nine typed destination arrays. Wine validates the selected original
+  readers and 600 altered-source frames; other callers and platforms remain open.
+
+- EUR [E277 Soil Evidence switch destinations](../rom_data_runtime.md#e277-soil-evidence-a83c2-switch-runtime)
+  serves 15 typed destinations. Wine validates the selected original reader
+  and 600 altered-source frames; other callers and platforms remain open.
+
+- EUR [E275 Soil Evidence compact metadata](../rom_data_compact_catalog.md#e275-soil-evidence-compact-metadata-runtime)
+  serves 88 source bytes referencing the existing 20 typed lists. Wine validates
+  original readers and 600 altered-source frames; other domains remain open.
+
+- EUR [E271 Soil Evidence sprite lists](../rom_data_runtime.md#e271-soil-evidence-typed-sprite-lists)
+  serves 20 typed lists. Wine validates guest/host use and 600 altered-source
+  frames; producers and other platforms remain open.
 
 - The [optional bus/host ROM audit](../rom_data_runtime.md#optional-bus-and-host-rom-read-audit)
   Cargo feature is absent by default. Scoped TLS collects successful bus and

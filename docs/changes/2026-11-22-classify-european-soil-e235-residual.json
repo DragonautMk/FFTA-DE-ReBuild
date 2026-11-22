@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "classify-european-soil-e235-residual",
+  "title": "Classify European Soil E235 residual",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Classify the remaining E260 sampled reads after E235 by reader, width and address range."
+  ],
+  "validation": [
+    "Protected static unit e272-soil-e235-residual-classification-jae45q7h finds 485 unowned sampled bytes in 69 ranges, 112 lower and 373 upper; all remaining selected requests are Bus reads."
+  ],
+  "limitations": [
+    "Addresses and static bit patterns do not establish executing PCs, source formats, extents, consumers or ownership; no replay or new owner is claimed.",
+    "Other scenes, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

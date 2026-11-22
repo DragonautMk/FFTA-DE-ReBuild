@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-12byte-records",
+  "title": "Identify European Soil twelve-byte records",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate six observed 12-byte transfer-command candidates and their original stride and branch window."
+  ],
+  "validation": [
+    "Wine disassembly e286-soil-record-readers-disassembly-wine-cve18bko and static plan e286-soil-12byte-record-plan-3otuwzz3 verify six nonoverlapping E240 rows (72 bytes), 66 sampled bytes and type distribution 4/1/1."
+  ],
+  "limitations": [
+    "Linked pointer targets are candidates; no complete guest index domain, all callers, other scenes or runtime ownership established. Interpreter scopes may include nested reads.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

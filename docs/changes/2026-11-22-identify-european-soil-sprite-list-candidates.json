@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-sprite-list-candidates",
+  "title": "Identify European Soil sprite list candidates",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; existing Windows Wine evidence"
+  ],
+  "changes": [
+    "Identify count-shaped SpritePeek reads with matching six-byte-per-object payload requests in the retained Soil Evidence inventory."
+  ],
+  "validation": [
+    "Protected static unit e270-soil-sprite-list-candidates-16di9jl9 finds 20 complete, non-overlapping candidate ranges and 586 sampled bytes outside E234 source owners."
+  ],
+  "limitations": [
+    "Address-only evidence does not establish temporal pairing, call site, producer, ownership or complete asset domain. The plan publishes no resource and no new replay.",
+    "Other bytes and scenes, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

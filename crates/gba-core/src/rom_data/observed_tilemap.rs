@@ -11,6 +11,15 @@ pub const RECTANGLE_CHAIN_OFFSET: u32 = 0x3a4b08;
 pub const RECTANGLE_CHAIN_LENGTH: usize = 16;
 pub const RECTANGLE_TABLE_OFFSET: u32 = 0x3a4d3c;
 pub const RECTANGLE_TABLE_LENGTH: usize = 4;
+/// The observed Soil Evidence rectangle list and mode-7 prefix are separate
+/// from the adjacent, independently authenticated tilemap.
+pub const SOIL_RECTANGLE_ENTRIES_OFFSET: u32 = 0x39e078;
+pub const SOIL_RECTANGLE_LIST_OFFSET: u32 = 0x39e088;
+pub const SOIL_MODE7_OFFSET: u32 = 0xaf270c;
+pub const SOIL_RECTANGLE_SPECS: [(u32, u8, u8, &str); 2] = [
+    (0xae71bc, 2, 7, "dec0ebac9845e0c20c3f0682658f83038c566b6549241783cb3298f8c743b9d6"),
+    (0xae777c, 1, 3, "eae139744ee6cb08823e20c9feab24047538f30d39bf3ed575fcadb2969b4ca6"),
+];
 /// Seven adjacent pointer cells following the previously represented root.
 pub const ADDITIONAL_RECTANGLE_POINTER_OFFSET: u32 = 0x3a4d40;
 pub const ADDITIONAL_RECTANGLE_POINTER_COUNT: usize = 7;
@@ -174,6 +183,69 @@ impl Rectangle {
     }
 }
 
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SoilRectangleEntry {
+    pub rectangle_pointer: u32,
+    pub parameters: [u8; 4],
+}
+
+/// Only the witnessed prefix of this mode-7 source is represented.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SoilMode7Prefix {
+    pub width: u8,
+    pub height: u8,
+    pub opaque_header: u16,
+    pub mode: u8,
+    pub flags: u8,
+    pub first_run: Run,
+}
+
+impl SoilMode7Prefix {
+    pub fn header_bytes(&self) -> [u8; 6] {
+        let [lo, hi] = self.opaque_header.to_le_bytes();
+        [self.width, self.height, lo, hi, self.mode, self.flags]
+    }
+
+    pub fn run_bytes(&self) -> [u8; 4] {
+        let mut bytes = [0; 4];
+        bytes[..2].copy_from_slice(&self.first_run.control.to_le_bytes());
+        bytes[2..].copy_from_slice(&self.first_run.value.to_le_bytes());
+        bytes
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct SoilTransferSources {
+    pub entry_count: u8,
+    pub list_padding: [u8; 3],
+    pub entries_pointer: u32,
+    pub entries: [SoilRectangleEntry; 2],
+    pub rectangles: [Rectangle; 2],
+    pub mode7: SoilMode7Prefix,
+}
+
+impl SoilTransferSources {
+    pub fn list_bytes(&self) -> [u8; 8] {
+        let mut bytes = [0; 8];
+        bytes[0] = self.entry_count;
+        bytes[1..4].copy_from_slice(&self.list_padding);
+        bytes[4..8].copy_from_slice(&self.entries_pointer.to_le_bytes());
+        bytes
+    }
+
+    pub fn entry_bytes(&self) -> [u8; 16] {
+        let mut bytes = [0; 16];
+        for (i, entry) in self.entries.iter().enumerate() {
+            bytes[i * 8..i * 8 + 4].copy_from_slice(&entry.rectangle_pointer.to_le_bytes());
+            bytes[i * 8 + 4..i * 8 + 8].copy_from_slice(&entry.parameters);
+        }
+        bytes
+    }
+}
+
 /// One observed descriptor, its one-entry list and a separate table pointer.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -230,6 +302,8 @@ pub struct ObservedTilemap {
     pub additional_rectangle_pointers: Option<[u32; ADDITIONAL_RECTANGLE_POINTER_COUNT]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub additional_rectangles: Option<[Rectangle; 5]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_transfer_sources: Option<SoilTransferSources>,
 }
 
 impl ObservedTilemap {
@@ -299,6 +373,21 @@ impl ObservedTilemap {
             (None, None) => {}
             _ => return Err("Incomplete additional rectangle projection".into()),
         }
+        if let Some(soil) = &self.soil_transfer_sources {
+            if soil.entry_count != 2 || soil.entries_pointer != 0x0800_0000 + SOIL_RECTANGLE_ENTRIES_OFFSET
+                || (soil.mode7.width, soil.mode7.height, soil.mode7.mode) != (2, 2, 7)
+                || soil.mode7.flags & 2 == 0 || soil.mode7.first_run.control != 0x8004 {
+                return Err("Invalid Soil transfer list or mode-7 prefix".into());
+            }
+            for ((entry, rectangle), &(offset, height, width, _)) in soil.entries.iter()
+                .zip(&soil.rectangles).zip(&SOIL_RECTANGLE_SPECS) {
+                if entry.rectangle_pointer != 0x0800_0000 + offset
+                    || (rectangle.source_offset, rectangle.height, rectangle.width) != (offset, height, width)
+                    || rectangle.cells.len() != usize::from(height) * usize::from(width) {
+                    return Err("Invalid Soil transfer rectangle binding".into());
+                }
+            }
+        }
         if self.rectangle_roots.first_rectangle_pointer != 0x0800_0000 + self.rectangles[0].source_offset
             || self.rectangle_roots.entry_count != 1
             || self.rectangle_roots.descriptor_pointer != 0x0800_0000 + RECTANGLE_CHAIN_OFFSET
@@ -347,6 +436,15 @@ impl ObservedTilemap {
         if let Some(rectangles) = &self.additional_rectangles {
             for rectangle in rectangles { spans.push((rectangle.source_offset, rectangle.source_bytes(), "tilemap-additional-rectangle")); }
         }
+        if let Some(soil) = &self.soil_transfer_sources {
+            spans.push((SOIL_RECTANGLE_ENTRIES_OFFSET, soil.entry_bytes().to_vec(), "soil-rectangle-entries"));
+            spans.push((SOIL_RECTANGLE_LIST_OFFSET, soil.list_bytes().to_vec(), "soil-rectangle-list"));
+            for rectangle in &soil.rectangles {
+                spans.push((rectangle.source_offset, rectangle.source_bytes(), "soil-transfer-rectangle"));
+            }
+            spans.push((SOIL_MODE7_OFFSET, soil.mode7.header_bytes().to_vec(), "soil-mode7-header"));
+            spans.push((SOIL_MODE7_OFFSET + 6, soil.mode7.run_bytes().to_vec(), "soil-mode7-first-run"));
+        }
         spans
     }
 
@@ -381,6 +479,8 @@ impl Catalog {
             (0xd80e0, 0xd8164, "f802daafd73dab107c4269b328430eec39b7c506f02aaa95abd0f8b0ec6fc883"),
             (0xd816c, 0xd81d4, "f9933c845686c44a098c164f52ba6576b027761e8d42cc17417e7130866b5ae1"),
             (0xdb374, 0xdb3be, "0f369afa9549965623a1a8c9a6c58039453416269eedfefc7f325f8a13431992"),
+            (0xdb2a8, 0xdb2e8, "b8f6991d2409b275e18b35dcf89019055699e09d1073dede08884cd5094f86c4"),
+            (0xda758, 0xda80c, "ab0fe2595be764c37ec0493b0cb0c2168a1098ac1f00f6b0cf7d1c5a378fcc33"),
             (0x1094f2, 0x1094fc, "f44f4d84917dc2fb3a0cb21acdf06109ab433aea74f3551f44265d7d5275e712"),
             (0x10950a, 0x109540, "aecc2689b8cf19427a67608665f7ff14c929c3b707611e342ec483461650122f"),
             (0x1091be, 0x1091f8, "33c5bfaa8bb7c60757b55277a78055871d7b3fbeb46a4d70a22c5595a4d1040e"),
@@ -484,6 +584,38 @@ impl Catalog {
             descriptor_pointer: u32::from_le_bytes(chain[12..16].try_into().unwrap()),
             second_rectangle_pointer: u32::from_le_bytes(table.try_into().unwrap()),
         };
+        for (offset, length, hash) in [
+            (SOIL_RECTANGLE_ENTRIES_OFFSET, 16, "64906130b44ec8078c4daf361a0f01b4161d5d470faccbac8008752d59d7a026"),
+            (SOIL_RECTANGLE_LIST_OFFSET, 8, "71a0f7fbc9d392f4c94449d24386cd40774c6f21f8be3a9ebf46318f40dce0c7"),
+            (SOIL_MODE7_OFFSET, 6, "046892ebad4c9325df77f3bf649079b12cfa96ae57006db3472efa0f5d759f8f"),
+            (SOIL_MODE7_OFFSET + 6, 4, "84234e93ba34a4ec87a06301f65fc53e10a8fd57d6fb0f97dc36caa90f689514"),
+        ] {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + length]) != hash { return Err("Soil transfer source mismatch".into()); }
+        }
+        let mut soil_rectangles = Vec::new();
+        for &(offset, height, width, hash) in &SOIL_RECTANGLE_SPECS {
+            let start = offset as usize;
+            let length = 2 + usize::from(height) * usize::from(width) * 2;
+            let source = &rom[start..start + length];
+            if source[..2] != [height, width] || ffta_rom::digest(source) != hash {
+                return Err("Soil rectangle source mismatch".into());
+            }
+            let cells = source[2..].chunks_exact(2).map(|bytes| u16::from_le_bytes([bytes[0], bytes[1]])).collect();
+            soil_rectangles.push(Rectangle { source_offset: offset, height, width, cells });
+        }
+        let list = &rom[SOIL_RECTANGLE_LIST_OFFSET as usize..SOIL_RECTANGLE_LIST_OFFSET as usize + 8];
+        let mode7 = &rom[SOIL_MODE7_OFFSET as usize..SOIL_MODE7_OFFSET as usize + 10];
+        let soil_transfer_sources = SoilTransferSources {
+            entry_count: list[0], list_padding: list[1..4].try_into().unwrap(), entries_pointer: word(SOIL_RECTANGLE_LIST_OFFSET as usize + 4),
+            entries: std::array::from_fn(|i| {
+                let at = SOIL_RECTANGLE_ENTRIES_OFFSET as usize + i * 8;
+                SoilRectangleEntry { rectangle_pointer: word(at), parameters: rom[at + 4..at + 8].try_into().unwrap() }
+            }),
+            rectangles: soil_rectangles.try_into().map_err(|_| "Incomplete Soil transfer rectangles")?,
+            mode7: SoilMode7Prefix { width: mode7[0], height: mode7[1], opaque_header: u16::from_le_bytes(mode7[2..4].try_into().unwrap()),
+                mode: mode7[4], flags: mode7[5], first_run: Run { control: u16::from_le_bytes(mode7[6..8].try_into().unwrap()), value: u16::from_le_bytes(mode7[8..10].try_into().unwrap()) } },
+        };
         let decoded = ObservedTilemap {
             source_offset: SOURCE_OFFSET,
             width: bytes[0], height: bytes[1], opaque_header: half(2), mode: bytes[4], flags: bytes[5],
@@ -494,6 +626,7 @@ impl Catalog {
             additional_streams: Some(additional_streams),
             additional_rectangle_pointers: Some(additional_rectangle_pointers),
             additional_rectangles: Some(additional_rectangles),
+            soil_transfer_sources: Some(soil_transfer_sources),
         };
         let cells = decoded.decoded_cells()?;
         if decoded.source_bytes() != bytes || ffta_rom::digest(&cells.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<_>>()) != DECODED_SHA256 {

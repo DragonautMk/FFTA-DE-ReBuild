@@ -661,8 +661,10 @@ at each frame. Catalog source-byte counters total 12,953 across the scene and
 are aggregate rather than per-bank counts. Inputs were guarded and successful
 runtime scratch removed. Evidence:
 `target/validation/units/e128-pandora-blue-blue-screw-target-lvshesyo/` and
-`e128-blue-screw-selector-pair-2v9x4fr7/`. Selectors 5 and 6 are observed in
-separate scenes; selectors 3/4, all callers and complete animations remain open.
+`e128-blue-screw-selector-pair-2v9x4fr7/`. E255 later inventories the same
+recorded continuation against E230; 24 sampled bytes lay outside declared
+sources. E259 subsequently serves them. See the [bounded inventory](rom_data_runtime.md#e255-blue-screw-rom-read-inventory).
+Selectors 5 and 6 are observed in separate scenes; selectors 3/4, all callers and complete animations remain open.
 
 The retained branch is `target/validation/units/`
 `e128-6c1e78-redspring-slot13-rwsxgiz7/`; the prefix/selection evidence is in
@@ -703,7 +705,9 @@ overall Cargo command failed while compiling the CLI because the filesystem
 ran out of space; the prior CLI remained unchanged. Other callers, complete
 animation, Linux, USA and native Windows remain open; no performance
 measurements were made. Evidence: `target/rom-data-e127-loop-ordinary-20261104/`
-and `target/rom-data-e127-loop-timer-watch-20261104/`.
+and `target/rom-data-e127-loop-timer-watch-20261104/`. E260 later inventories
+the same continuation against E231; see the
+[bounded inventory](rom_data_runtime.md#e260-soil-evidence-rom-read-inventory).
 
 The previously failed audit CLI build was retried against the retained, verified
 845-file snapshot in an isolated Windows cross-build. The CLI compiled without
@@ -931,6 +935,47 @@ executing PCs, and does not exclude other uses of those words. At E201 the other
 2,856 sampled bytes had no match in this particular prior-site set; neither
 figure establishes full-ROM coverage.
 
+### E231 Red Spring E221 source reconciliation
+
+Static unit `e231-redspring-e221-reconcile-wt2lyljd` independently joins the
+retained 9,423-byte E172 sample to the E201 and E221 declared source ranges.
+It confirms the E201 residual of 3,276 bytes and verifies that all 420 E203
+prior-site bytes have E221 declarations. Of the E201 residual, E221 declares
+2,324 bytes: 1,948 literal, 348 switch-table, 20 copied-halfword and eight OBJ
+dimension bytes. The other 952 bytes form 166 ranges between `003698` and
+`14d854`, all sampled by the bus reader; none was sampled by the selected
+sprite-peek reader. It verifies the ROM and original report hashes and each of
+57 E201 and 563 E221 source spans intersecting the original sample. No game
+was replayed, and the inputs were protected by the validation unit.
+
+The result is an address and manifest comparison, not a proof of executing
+PCs, runtime ownership dispatch, complete source extents, other callers or
+full-ROM coverage. The 952 bytes still need source attribution and consumer
+validation; other scenes, Linux, USA and native Windows remain open. No
+performance measurement was made.
+
+### E232 Red Spring residual reader scopes
+
+Wine unit `e232-redspring-residual-sites-av1hj_7p` follows the retained E172
+input and state for 600 frames with the E221 dataset, targeting the 238 aligned
+words (952 bytes) outside its declared source ranges. All targeted bytes were
+observed. Its distinct captured site records comprise 216 instruction-scoped
+reads and 32 outside a scope. For 196 words (784 bytes), an original Thumb
+PC-relative LDR opcode and its effective address match the observed four-byte
+read, with conflicts against existing literal-reader instructions excluded.
+The remaining 42 words do not have that eligible match in this capture. The
+site plan and capture are retained with the unit; Wine drained cleanly with
+the local Bluetooth overlay.
+
+An instruction scope can contain nested HLE/DMA accesses: the match is a
+source-selection witness, not proof of every direct caller. This observation
+alone does not extract or consume these words, prove complete source extents,
+show full scene equivalence, or classify the other 42 words. Other scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+E233 subsequently publishes the 196 source-selected words and verifies their
+readers, transfers, altered-source scene and CLI under Wine, leaving 42 sampled
+words outside declared source ranges. [Evidence](rom_data_runtime.md#e233-red-spring-observed-thumb-literals).
+
 ## E173 Red Spring compact bank and host sprite lists
 
 The authenticated EUR bank at `6c1e78` has seven represented selectors and
@@ -997,3 +1042,92 @@ raw sprite peeks are observed in the selected spans. Wine production CLI
 matching the tested generation. Other records, banks, selectors, scenes and
 consumers, Linux, USA and native Windows remain open. No performance
 measurement was performed.
+
+
+## E274 Soil Evidence compact metadata plan
+
+Wine source-site capture `e274-soil-compact-sites-wine-d95mdss3` observes all
+88 sampled metadata bytes over 600 E235 Soil Evidence frames, with 71 selected
+read rows inside interpreter scopes. Protected static plan
+`e274-soil-compact-metadata-plan-tmxn23ol` verifies a compact projection rooted
+at `6c173c`: flags 12, sequence-relative offset `278`, 20 list offsets mapping
+to the E271 typed list roots, and selector 0 with 20 frames referencing those
+lists in order. Both selected metadata spans are 44 bytes; the list payloads
+remain owned by the OBJ resource and must not be declared twice.
+
+This is one sampled projection, not a complete selector/index domain, producer,
+all readers or all scenes. Interpreter scopes may include nested accesses. The
+plan publishes no owner. Linux, USA and native Windows remain open; no
+performance comparison was made.
+
+
+## E275 Soil Evidence compact metadata runtime
+
+EUR E236-d235 adds the E274 projection to the authenticated conditional
+compact OBJ catalog. The two 44-byte source spans contain the flags, 20
+relative list offsets and the selected 20-frame sequence. The catalog declares
+a dependency on `graphics.obj-static-lists`, which retains sole ownership of
+the 20 list payloads; the metadata spans do not duplicate those sources.
+Previously decoded catalog fields and 129 other resource files are preserved.
+
+Wine reader `e275-soil-compact-readers-wine-myffsalx` checks the exact source ranges, links, altered-source
+mirrors and mixed boundaries, original interpreted and generated reader
+instructions, transfers, coherent edit rejection and snapshot ownership. Wine
+scene `e275-soil-compact-scene-wine-gmfuh78b` compares 600 recorded Soil Evidence frames with both metadata
+spans altered; all 88 metadata bytes are consumed and state, guest clock,
+video, OAM, dispatch and five nonempty audio streams match each frame. Wine
+CLI `e275-soil-compact-cli-wine-jak27la2` creates, reuses and verifies 131 matching files. Static join
+`e275-soil-compact-sample-residual-j6x30g5v` leaves 397 E260 sampled bytes outside E236 source owners. Wine
+drained with the local Bluetooth overlay.
+
+This covers one observed selector and continuation, not the full selector
+domain, producers, all readers or other scenes. Real BIOS, UI save/Load,
+Linux, USA and native Windows remain open. Older revision-sensitive tests were
+updated but not rerun; no performance comparison was made.
+
+
+## E296 Soil Evidence compact record plan
+
+Protected plan `e296-soil-compact-record-source-plan-vrirvg0i` joins the
+E285 selected Wine reads with the established E186 24-byte record field
+pattern and E274 Soil Evidence metadata. It authenticates the 24-byte
+record at `39a91c..39a934` and the observed pointer word at `39aa34`;
+20 record bytes and all four pointer bytes occur in the E245 residual sample.
+The record points to the already-owned compact metadata root `6c173c` and
+selects its represented sequence zero.
+
+The original reader at `080e4afc` loads the pointer at index four from a
+table rooted at `39aa24`; its PC literal `e4b80` is already owned. Prior
+Wine disassembly `e293-soil-indirect-roots-disassembly-wine-8lucbl5h` and
+the E186 reader traces support this field geometry. These static links and
+scoped reads do not establish the sampled caller ancestry or the complete
+pointer table. In particular, adjacent `39aa38` remains unowned. The plan
+publishes no runtime owner. Other records, callers, indices and scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E297 Soil Evidence compact record runtime
+
+EUR E246-d245 serves the E296 24-byte compact record and its observed
+four-byte indexed pointer through `graphics.soil-compact-record`. The record
+links to the existing Soil compact metadata and selector zero; the pointer
+reader uses the existing Thumb literal. Those prior resources remain separate
+owners. Unselected pointer entries and neighboring bytes continue through
+prior-owner or ROM fallback; in particular `39aa38` is not claimed.
+
+Wine reader `e297-soil-compact-record-readers-wine-5w49a8bi` verifies preparation and reuse, all 133 prior
+resource definitions and files, poisoned mirrors and mixed boundaries,
+rejection of a coherently edited file, retained snapshot ownership and 28
+original interpreter/generated record and pointer reader cases. Wine scene
+`e297-soil-compact-record-scene-wine-1ti7yhlx` compares 600 retained Soil Evidence frames with all 28 source
+bytes altered and verifies reads of both spans. State, guest clock, video,
+OAM, dispatch and five nonempty audio streams match each frame. Wine CLI
+`e297-soil-compact-record-cli-wine-fr1p_15v` creates, reuses and verifies 135 matching files. Static join
+`e297-soil-compact-record-sample-residual-_hg2aqh0` leaves 38 E260 sampled bytes outside E246 sources, none below
+`300000`. Wine drained using the local Bluetooth overlay.
+
+The static links do not establish actual ancestry of sampled reads or the
+complete pointer table. Other callers, pointers, scenes, real BIOS and UI
+save/Load remain open. Older revision-sensitive fixtures were updated but
+not rerun; Linux, USA and native Windows remain pending. No performance
+comparison was made.

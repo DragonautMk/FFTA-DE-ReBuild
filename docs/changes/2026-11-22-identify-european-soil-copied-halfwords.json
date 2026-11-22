@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-soil-copied-halfwords",
+  "title": "Identify European Soil copied halfwords",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the opt-in test-only interpreter capture to record selected byte-copy reader and caller contexts.",
+    "Authenticate a four-halfword copied source with a separately owned pointer."
+  ],
+  "validation": [
+    "Wine capture e283-soil-14d6d8-reader-wine-kg1o5ej2 identifies all eight source bytes at the original byte-load instruction and its return context; caller disassembly 84wwsn66 and static plan _nouuxnz verify the eight-byte copy and subsequent halfword indexing."
+  ],
+  "limitations": [
+    "No guest index bound, state equivalence, complete callers, other scenes or runtime ownership is inferred.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/lower_rom_read_sites_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -37,6 +37,31 @@ pub const BATTLE_DIRECTORY_ROOT: u32 = 0x40d300;
 pub const BATTLE_DIRECTORY_COUNT: usize = 103;
 pub const BATTLE_DIRECTORY_SHA256: &str = "2c35f140bd943bb98726767c2a4032be05dee531b2c965b727a3dce867cd27da";
 
+/// Count/payload pairs observed on the EUR Soil Evidence continuation.
+/// These selected lists do not imply a complete producer or archive domain.
+pub const SOIL_EVIDENCE_LISTS: [(u32, usize, &str); 20] = [
+    (0x6c1768, 1, "c7643215665196f1a27786dda0524ae54d33b322e2590e46fd4f13ab58c6f33a"),
+    (0x6c1770, 3, "16d09b6ddd897559eb634d5966cbe1f31b58ab2f403702e826ab218f149e07eb"),
+    (0x6c1784, 4, "cb1e24aff52dc673b1ae52c9863b7815eca234e0733706853ff69495446036c4"),
+    (0x6c179e, 5, "e726e3e689800762be87512020775007e5ede8fa814108dba29a6f55897616d5"),
+    (0x6c17be, 5, "46884ac7f5593ffc4077ce2142cb22a4b70bacce1a2a604645cf555beca60205"),
+    (0x6c17de, 6, "5cefcc083846e790ca3d6055bc97715ba417067d1a16aa65efbb14fdca044662"),
+    (0x6c1804, 7, "4d3ba0da1862d16b1cdee32776998b7445d2ecb4001ce708699f16e0454600a8"),
+    (0x6c1830, 6, "796d1c7732d74b5b91c195b54415021e08d80314082f0f315994e28c56a851a9"),
+    (0x6c1856, 7, "adb5ecd8849c8cc51c078b14870b0289b43c7147eb41e443adada55ff55885dd"),
+    (0x6c1882, 7, "e7951bde3cf10a16fb68179a4044a5badd25a10381de5dd31b57b3a77d7364e5"),
+    (0x6c18ae, 6, "7f378c787e12656e0683cac8ce9c5262b0df4116a2fa2d3d0cf3d2294af17669"),
+    (0x6c18d4, 5, "7a245f8dccfa03b0569e19a813999e55204c3158f6c566e0dccb55fae69083a5"),
+    (0x6c18f4, 5, "96a881f06516f4bbb8959ec1b737051d404d1b9b8c2704e5b2a48b5494c81d6c"),
+    (0x6c1914, 4, "17b872bc51a52a573e96bad980954e1586c881a12a67b0ed2d002679a7b8d815"),
+    (0x6c192e, 4, "460ff8b74627dfd2d40b1fe8faaf191133125129957a01c45f1f06268fb7f5bd"),
+    (0x6c1948, 4, "79b99f010034430ba11b897188649f4a22ffe7153c7dd77572dfabcdbf4dd608"),
+    (0x6c1962, 3, "6ae8b229ed41117f149c116d655869c13b4953b3c90f43707571a99873ed3c93"),
+    (0x6c1976, 3, "366e3f7d5852cb7332db5acb3ad83ae9059afcc690c1ecabcf00f78025257646"),
+    (0x6c198a, 3, "f60d2e0b48eb79df8137e69466688b2d0cd60597b38c11f5eab43881f993a7d2"),
+    (0x6c199e, 3, "5b8a6168f07cb59dde25338a8ec42f35f054487408810a0ea2d4d2f01ffd348f"),
+];
+
 /// Three separately rooted byte groups; the guest retains their interpretation.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -698,6 +723,23 @@ impl Catalog {
             second_pair: bytes[2..4].try_into().unwrap(), transform_offsets: bytes[4..].try_into().unwrap() });
         sources.push(SourceRange { offset: LAYOUT_OFFSETS_ROOT, length: LAYOUT_OFFSETS_LENGTH as u32,
             sha256: ffta_rom::digest(bytes), role: "obj-layout-offsets".into() });
+        // These exact lists have count/payload observations in Soil Evidence;
+        // their pointer producer and the surrounding archive remain unbounded.
+        for (offset, count, expected) in SOIL_EVIDENCE_LISTS {
+            let length = 2 + count * 6;
+            let bytes = rom.get(offset as usize..offset as usize + length)
+                .ok_or("Truncated Soil Evidence OBJ list")?;
+            if ffta_rom::digest(bytes) != expected {
+                return Err("Soil Evidence OBJ list source mismatch".into());
+            }
+            let list = List::decode(offset, bytes)?;
+            if list.objects.len() != count || list.objects.iter().any(|object| object.shape >= 3) {
+                return Err("Soil Evidence OBJ list count or shape mismatch".into());
+            }
+            lists.push(list);
+            sources.push(SourceRange { offset, length: length as u32,
+                sha256: expected.into(), role: "static-obj-list".into() });
+        }
         lists.sort_by_key(|list| list.source_offset);
         sources.sort_by_key(|source| source.offset);
         let decoded = Lists { lists, battle_directory, actor_lookup, actor_lookup_extension,

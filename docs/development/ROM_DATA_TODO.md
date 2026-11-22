@@ -262,7 +262,7 @@ audio under Wine. Its E172 address inventory records 9,423 bytes outside the
 declared source set, including sprite-peek reads near `6c1e78`; these are
 historical observations (`05iu77v6`). E173 authenticates and migrates 634 of
 those bytes into the compact catalog, including host sprite-list reads; 8,789
-observed bytes lie outside that increment and need separate classification.
+observed bytes lay outside that increment and were classified by later work.
 E174 also migrates a 2,578-byte LZ77 stream observed in that action, preserving
 its source view and serving the 4,096-byte decoded output to the BIOS HLE.
 E175 extends that owner with six more observed streams totaling 2,291 source
@@ -288,9 +288,26 @@ bytes. E195 owns two tilemap alternatives and their selector, including another
 eight observed bytes. E196 owns three OBJ byte groups, including another two
 observed bytes. The altered-source 600-frame actions and CLI checks through
 E196 pass on Wine; 3,276 original observed unowned bytes lie outside these 24
-increments. E203 matches 420 of those bytes to code-support words attributed in
-a separate earlier scene; they remain unowned, and the E172 address-only sample
-does not establish their executing PCs. The E192–E194 and E196 reader and scene logs and the E195 scene log
+increments. E203 matched 420 of those bytes to code-support words attributed in
+a separate earlier scene. At E221, static reconciliation `wt2lyljd` finds 2,324
+of the E201 residual in declared source ranges, leaving 952 unowned sampled
+bytes. Wine site capture `av1hj_7p` matches 196 of those words to original
+Thumb LDR opcode/address witnesses. E222 publishes and serves those 784 bytes;
+Wine verifies the readers, a 600-frame altered-source scene and the CLI. Static
+reconciliation `pz3zxelt` leaves 168 sampled bytes (42 words) unowned. E234
+source plan `rtqw8txm` authenticates ten original guarded switch arrays that
+include 64 of those bytes. E223 serves those arrays and validates their readers,
+the altered-source scene and CLI on Wine; `c_2f3g_b` leaves 104 sampled bytes.
+E236 source scan `rlq73_nk` identifies static original LDR anchors for 88 of
+those bytes. E224 serves them and validates readers, altered-source scene and
+CLI on Wine; `55zvsm8r` leaves 16 sampled bytes. E238 source plan `b39y_6rn`
+identifies two guarded arrays and an eight-byte copy source spanning all 16.
+E225 serves the two arrays; Wine reader, altered-source scene and CLI pass, and
+`n1l57jp6` leaves eight sampled bytes for the copy source. E226 serves those
+bytes; its Wine reader, altered-source scene and CLI pass, and `_z04mity` finds
+no unowned bytes in the retained E172 sample. The address-only sample does not
+establish all executing PCs, other scenes or full-ROM coverage.
+The E192–E194 and E196 reader and scene logs and the E195 scene log
 contain D-Bus assertions before the successful tests.
 Other readers, Linux, USA and native Windows remain open.
 [Evidence](../rom_data_compact_catalog.md#e172-red-spring-rom-read-inventory).
@@ -480,6 +497,20 @@ ordinary raw/managed pair with the backing source altered (`8bb1ykny`).
 Production Wine CLI create/reuse/verify passes (`ikwqgxwg`). Other readers,
 the remaining inventory, Linux, USA and native Windows remain open.
 [Contract and evidence](../rom_data_runtime.md#european-display-control-source-tables-at-14d2dc).
+
+**ROMDATA-04-POST-INDEXED-OBSERVED-LITERALS scoped EUR progress:** E227-d226
+serves nine original Thumb literal words identified in the retained 12-frame
+post-indexed continuation. Wine validates readers, altered-source scene and
+CLI; `n2okilgf` leaves 72 bytes of the previously unmatched E170 subset outside
+declared ranges. Other scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e243-post-indexed-observed-thumb-literals).
+
+**ROMDATA-04-POST-INDEXED-ANCHORED-LITERALS scoped EUR progress:** E228-d227
+serves the remaining 18 statically anchored words. Wine validates readers,
+altered-source scene and CLI; `rhmbe_o9` leaves no unowned bytes in the E170
+568-byte subset without previous witnesses. The other prior-witness/high-block
+subsets, other scenes, Linux, USA and native Windows remain open.
+[Evidence](../rom_data_runtime.md#e245-post-indexed-anchored-thumb-literals).
 
 **ROMDATA-02-OBJ-CONTEXT-GRAPHICS scoped EUR progress:** E135 adds a
 32 KiB fixed OBJ transfer. A clean Wine profile passes CLI first create/reuse/
@@ -4552,6 +4583,10 @@ limit of old NativeAPI. 95 guards/code/default preimage exact, helper 0 paths. e
 USA 8-7 unchanged, user Atlas preserved; Linux/USA/native Windows/new 32:9 pending,
 no measurements/fixture.
 [Inventory and new sources](../rom_data_runtime.md#bank-bus-and-selected-host-rom-inventory).
+
+E250 served 77 of the 80 sampled words; E254 subsequently serves the three
+remaining words in switch arrays. See the [bounded Bank result](../rom_data_runtime.md#e254-bank-switch-destinations)
+and its recovery checklist for readers, scene and platform gaps.
 
 
 **ROMDATA-01-U16-TASK-OBJ-BANK / ROMDATA-02-U16-TASK-OBJ-MODEL completed within

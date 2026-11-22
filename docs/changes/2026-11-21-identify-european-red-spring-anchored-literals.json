@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "identify-european-red-spring-anchored-literals",
+  "title": "Identify European Red Spring anchored literals",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine sample"
+  ],
+  "changes": [
+    "Identify original Thumb literal reader anchors for 22 unowned Red Spring sample words, preparing a concrete runtime-consumption increment."
+  ],
+  "validation": [
+    "Static unit e236-redspring-literal-anchors-rlq73_nk verifies exact EUR ROM and translated-cache hashes, E223 ownership, original opcodes, 22 source words and straight-line paths from exported native block roots."
+  ],
+  "limitations": [
+    "The sampled reads were outside an instruction scope; static anchors do not prove executing PCs, all callers or complete pools. No source owner or gameplay equivalence is claimed. Four sampled words, other scenes, Linux, USA and native Windows remain open; no performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

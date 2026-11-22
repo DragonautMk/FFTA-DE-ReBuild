@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-blue-screw-source-plan",
+  "title": "Identify European Blue Screw source plan",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine and static analysis"
+  ],
+  "changes": [
+    "Record source contracts for three observed literals and a 15-entry switch array covering the Blue Screw sample residual; runtime ownership remains open."
+  ],
+  "validation": [
+    "Wine disassembly __998l61 and protected source plan jkaucm5o authenticate original opcodes, root and selector path, 72 disjoint source bytes, target shapes and all 24 sampled bytes. Wine drained."
+  ],
+  "limitations": [
+    "Captured scopes can include nested reads; other callers and scenes remain open. Linux, USA and native Windows remain unverified. No performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

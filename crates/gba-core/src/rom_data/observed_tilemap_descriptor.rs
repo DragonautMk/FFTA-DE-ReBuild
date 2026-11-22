@@ -40,6 +40,16 @@ pub const INTERLEAVED_LZ_SPECS: [(u32, &str, u32, &str); 7] = [
     (0x3a4b68, "eac3397f8eae08655b6b39d7f0ca7ced172653a6e9827a6dbbd452bf9132631b", 0xb0fdec, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
 ];
 
+/// Four Soil Evidence descriptors; the second wrapper is already owned above.
+pub const SOIL_TRANSFER_SPECS: [(u32, &str, u32, &str); 4] = [
+    (0x39a648, "fe9932728fe31fb534461d81a9b4b4af74666430e166f66ceac0e1054b25a2f6", 0xb0dd0c, "80a795bdf7ac20fadc9b5c2daf82246b9ab696e7736e80f53b55dd43884cf4a2"),
+    (0x39a688, "6e4e1c13d6a976ba67b150ba1424322c386681fa69f51430b62ade63302a66d4", 0xb0df28, "6554507a2423f81b672d1cc607ed142449ed621e72ec74dec669d31b7730951e"),
+    (0x39e090, "a2e390ae32cc255cb609001c3a034fc07cec0a870aa564208b0e8d7a0c19937b", 0xaff6dc, "80a795bdf7ac20fadc9b5c2daf82246b9ab696e7736e80f53b55dd43884cf4a2"),
+    (0x39e098, "6eee093c0b8e5b9b640429c80dff3003962c2a0b4768a68c4929fa03665bbb9f", 0xb0b4e0, "6554507a2423f81b672d1cc607ed142449ed621e72ec74dec669d31b7730951e"),
+];
+pub const SOIL_MODE7_DESCRIPTOR_OFFSET: u32 = 0x39a6e8;
+pub const SOIL_MODE7_DESCRIPTOR_SHA256: &str = "5ca26bf8018ba2427b843e68c358658461051edd681d581d7fd32331d468d38b";
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct LzWrapper {
@@ -113,6 +123,10 @@ pub struct ObservedTilemapDescriptor {
     pub additional_tilemap_descriptors: Option<[DirectTilemapDescriptor; 7]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub interleaved_lz_descriptors: Option<[AdditionalDescriptor; 7]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_transfer_descriptors: Option<[AdditionalDescriptor; 4]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_mode7_descriptor: Option<DirectTilemapDescriptor>,
 }
 
 impl ObservedTilemapDescriptor {
@@ -143,6 +157,23 @@ impl ObservedTilemapDescriptor {
                 }
             }
         }
+        if let Some(entries) = &self.soil_transfer_descriptors {
+            for (entry, &(offset, _, wrapper_offset, _)) in entries.iter().zip(&SOIL_TRANSFER_SPECS) {
+                if entry.source_offset != offset || entry.asset_pointer != 0x0800_0000 + wrapper_offset
+                    || entry.wrapper.source_offset != wrapper_offset || entry.wrapper.flags & 2 == 0 {
+                    return Err("Invalid Soil transfer descriptor or wrapper".into());
+                }
+            }
+            if entries[1].wrapper != self.additional_descriptors[2].wrapper {
+                return Err("Shared Soil transfer wrapper differs from its existing owner".into());
+            }
+        }
+        if let Some(entry) = &self.soil_mode7_descriptor {
+            if entry.source_offset != SOIL_MODE7_DESCRIPTOR_OFFSET
+                || entry.tilemap_pointer != 0x0800_0000 + observed_tilemap::SOIL_MODE7_OFFSET {
+                return Err("Invalid Soil mode-7 descriptor".into());
+            }
+        }
         Ok(())
     }
 
@@ -158,6 +189,12 @@ impl ObservedTilemapDescriptor {
                 return Err("Additional tilemap descriptor dependency mismatch".into());
             }
         }
+        if let Some(entry) = &self.soil_mode7_descriptor {
+            if tilemap.soil_transfer_sources.is_none()
+                || entry.tilemap_pointer != 0x0800_0000 + observed_tilemap::SOIL_MODE7_OFFSET {
+                return Err("Missing Soil mode-7 source dependency".into());
+            }
+        }
         Ok(())
     }
 
@@ -165,7 +202,8 @@ impl ObservedTilemapDescriptor {
         self.validate()?;
         lz.validate()?;
         for entry in self.additional_descriptors.iter().chain(&self.transfer_descriptors)
-            .chain(self.interleaved_lz_descriptors.iter().flatten()) {
+            .chain(self.interleaved_lz_descriptors.iter().flatten())
+            .chain(self.soil_transfer_descriptors.iter().flatten()) {
             if !lz.streams().any(|(offset, _, _)| offset == entry.wrapper.source_offset + WRAPPER_LENGTH as u32) {
                 return Err("Missing linked observed LZ stream".into());
             }
@@ -200,6 +238,17 @@ impl ObservedTilemapDescriptor {
                 spans.push((entry.wrapper.source_offset, entry.wrapper.source_bytes().to_vec(), "interleaved-lz-wrapper"));
             }
         }
+        if let Some(entries) = &self.soil_transfer_descriptors {
+            for (index, entry) in entries.iter().enumerate() {
+                spans.push((entry.source_offset, entry.source_bytes().to_vec(), "soil-transfer-descriptor"));
+                if index != 1 {
+                    spans.push((entry.wrapper.source_offset, entry.wrapper.source_bytes().to_vec(), "soil-transfer-lz-wrapper"));
+                }
+            }
+        }
+        if let Some(entry) = &self.soil_mode7_descriptor {
+            spans.push((entry.source_offset, entry.source_bytes().to_vec(), "soil-mode7-descriptor"));
+        }
         spans
     }
 }
@@ -226,8 +275,16 @@ impl Catalog {
                 return Err("Missing additional tilemap descriptor source dependency".into());
             }
         }
+        if !map.sources.iter().any(|source| source.offset == observed_tilemap::SOIL_MODE7_OFFSET && source.length == 6) {
+            return Err("Missing Soil mode-7 header dependency".into());
+        }
+        let mode7_at = SOIL_MODE7_DESCRIPTOR_OFFSET as usize;
+        let mode7_entry = &rom[mode7_at..mode7_at + SOURCE_LENGTH];
+        if ffta_rom::digest(mode7_entry) != SOIL_MODE7_DESCRIPTOR_SHA256 {
+            return Err("Soil mode-7 descriptor source mismatch".into());
+        }
         let lz = previous.iter().find(|resource| resource.id == OBSERVED_LZ_ID).ok_or("Missing observed LZ dependency")?;
-        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS) {
+        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS).chain(&SOIL_TRANSFER_SPECS) {
             let at = offset as usize;
             let wrapper = wrapper_offset as usize;
             if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash
@@ -269,6 +326,13 @@ impl Catalog {
             parameter8: bytes[6], opaque_byte: bytes[7], additional_descriptors, transfer_descriptors,
             additional_tilemap_descriptors: Some(additional_tilemap_descriptors),
             interleaved_lz_descriptors: Some(interleaved_lz_descriptors),
+            soil_transfer_descriptors: Some(std::array::from_fn(|i| read_descriptor(SOIL_TRANSFER_SPECS[i].0, SOIL_TRANSFER_SPECS[i].2))),
+            soil_mode7_descriptor: Some(DirectTilemapDescriptor {
+                source_offset: SOIL_MODE7_DESCRIPTOR_OFFSET,
+                tilemap_pointer: u32::from_le_bytes(mode7_entry[..4].try_into().unwrap()),
+                parameter16: u16::from_le_bytes(mode7_entry[4..6].try_into().unwrap()),
+                parameter8: mode7_entry[6], opaque_byte: mode7_entry[7],
+            }),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

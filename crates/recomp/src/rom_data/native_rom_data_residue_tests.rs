@@ -24,6 +24,7 @@ struct Observation {
     outer_dispatch: u32,
     rom_len: u32,
     owned: Vec<(u32, u32)>,
+    target_range: Option<(u32, u32)>,
     reads: BTreeSet<Read>,
 }
 
@@ -46,6 +47,11 @@ fn record(pointer: *mut c_void, address: u32, width: u8) {
         let mut observation = cell.borrow_mut();
         if offset >= observation.rom_len {
             return; // Physical-image inventory excludes cartridge open bus/EEPROM.
+        }
+        if observation.target_range.is_some_and(|(start, end)| {
+            offset >= end || offset.saturating_add(u32::from(width)) <= start
+        }) {
+            return;
         }
         let mut image_mask = 0;
         let mut unowned_mask = 0;
@@ -304,5 +310,81 @@ fn native_api_rom_residue_preserves_bounded_scene() {
         });
         fs::write(&report, serde_json::to_vec_pretty(&report_value).unwrap()).unwrap();
         eprintln!("ROM_DATA_NATIVE_RESIDUE frames={frames} contexts={} image_bytes={} unowned_bytes={} transparency=PASS", observation.reads.len(), bytes.len(), unowned_bytes.len());
+    });
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "exact private EUR ROM and recorded scene; Wine only, Linux/USA pending"]
+fn european_soil_14d6d8_native_api_context() {
+    use gba_core::rom_data::read_audit::SiteCapture;
+
+    crate::configure_headless_widescreen();
+    let path = |key| PathBuf::from(std::env::var_os(key).expect(key));
+    let report = path("FFTA_SOIL_14D6D8_REPORT");
+    assert!(!report.exists(), "preserve earlier source-site reports");
+    let rom = fs::read(path("FFTA_STATE_TEST_ROM")).unwrap();
+    assert_eq!(gba_core::ffta_rom::digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let dataset = path("FFTA_STATE_TEST_DATASET");
+    let manifest: Manifest = toml::from_str(&fs::read_to_string(dataset.join("manifest.toml")).unwrap()).unwrap();
+    assert_eq!((manifest.extractor_revision, manifest.decoder_revision), (239, 238));
+    let owned = owned_ranges(&manifest);
+    let target = (0x14d6d8u32, 0x14d6e0u32);
+    assert!(owned.iter().all(|&(start, end)| end <= target.0 || start >= target.1));
+
+    let (_library, table) = crate::load_native(&path("FFTA_STATE_TEST_NATIVE")).unwrap();
+    let original = Box::new(table);
+    let observed_table = wrapped(&original);
+    let input = crate::InputScript::load(path("FFTA_STATE_TEST_INPUT").to_str().unwrap()).unwrap();
+    let mut machine = crate::make_machine(rom, None);
+    super::attach_from_directory(&mut machine, &dataset).unwrap();
+    crate::save_state::load(&mut machine, &path("FFTA_STATE_TEST_STATE")).unwrap();
+    crate::arm_audio_hle(&mut machine, None);
+    machine.bus.tap_channels = true;
+    clear_audio(&mut machine);
+    OBSERVATION.with(|cell| {
+        assert!(cell.borrow().original.is_none());
+        *cell.borrow_mut() = Observation {
+            original: Some(std::ptr::NonNull::from(original.as_ref())),
+            rom_len: manifest.source_rom_size,
+            owned,
+            target_range: Some(target),
+            ..Observation::default()
+        };
+    });
+    let _scope = Scope;
+    let first = machine.bus.frames;
+    let sites = SiteCapture::start([target.0, target.0 + 4]);
+    for relative in 0..600 {
+        machine.bus.keys = input.keys_at(relative);
+        input.apply_mouse(&mut machine.bus, relative).unwrap();
+        let pointer = &mut machine as *mut Machine as *mut c_void;
+        crate::run_frame_native(&mut machine, &observed_table, pointer, crate::FRAME_STEP_GUARD);
+        assert_eq!(machine.bus.frames, first + relative + 1);
+        clear_audio(&mut machine);
+    }
+    let sites = sites.finish();
+    let mut sampled = BTreeSet::new();
+    for site in &sites {
+        for byte in 0..site.read.length {
+            let at = site.read.physical_offset + u32::try_from(byte).unwrap();
+            if (target.0..target.1).contains(&at) { sampled.insert(at); }
+        }
+    }
+    assert_eq!(sampled, (target.0..target.1).collect(), "both selected words must remain observed");
+    OBSERVATION.with(|cell| {
+        let observation = cell.borrow();
+        let value = serde_json::json!({
+            "status": "PASS", "frames": 600, "first_guest_frame": first,
+            "last_guest_frame": machine.bus.frames, "revision": [239, 238],
+            "target_start": target.0, "target_end": target.1,
+            "sampled_bytes": sampled.len(), "native_context_reads": observation.reads,
+            "site_reads": sites, "performance_measurements": false,
+            "scope": "one EUR continuation; filtered native read API and bus-site evidence",
+            "limits": "Native exported PC may be stale and outer dispatch may include chained blocks; neither is an exact instruction site. Interpreter/host/HLE reads are not native API calls. No state equivalence or owner is established.",
+            "Linux": "pending", "USA": "pending", "native_windows": "pending"
+        });
+        fs::write(&report, serde_json::to_vec_pretty(&value).unwrap()).unwrap();
+        eprintln!("ROM_DATA_SOIL_14D6D8_CONTEXT sampled_bytes={} native_context_reads={} PASS", sampled.len(), observation.reads.len());
     });
 }

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-21",
+  "slug": "identify-european-red-spring-switch-arrays",
+  "title": "Identify European Red Spring switch arrays",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Identify and authenticate ten guarded switch destination arrays corresponding to 16 remaining sampled Red Spring words, preparing a concrete runtime-consumption increment."
+  ],
+  "validation": [
+    "Wine disassembly 3ubkkgml and static source plan rtqw8txm verify ten roots, original guards, 148 same-state destinations and 592 source bytes; their roots are already owned, their destination spans do not overlap E222 sources, and 64 bytes overlap the remaining E172 sample."
+  ],
+  "limitations": [
+    "Instruction scopes can include nested accesses; no destination ownership, guest-domain bound or complete caller coverage is claimed. Consumption, the other 104 sampled bytes, Linux, USA and native Windows remain open. Wine drained with the local overlay; no performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

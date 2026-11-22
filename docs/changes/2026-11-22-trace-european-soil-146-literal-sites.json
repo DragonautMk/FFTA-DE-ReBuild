@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "trace-european-soil-146-literal-sites",
+  "title": "Trace European Soil 146xxx literal sites",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Add an opt-in test-only interpreter window to attribute reads previously emitted outside an interpreter scope."
+  ],
+  "validation": [
+    "Windows build ls1s3sdz and Wine capture e280-soil-146-sites-wine-q_rr8tp1 observe all 13 candidate words under matching original Thumb PC-relative instructions across the retained 600-frame EUR continuation."
+  ],
+  "limitations": [
+    "The modified-dispatch capture does not establish state equivalence, complete callers, other scenes or runtime ownership; instruction scopes can include nested accesses.",
+    "Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/lower_rom_read_sites_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

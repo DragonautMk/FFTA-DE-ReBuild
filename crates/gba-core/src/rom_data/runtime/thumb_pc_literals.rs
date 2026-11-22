@@ -15,6 +15,22 @@ pub struct ThumbPcLiteralsStats {
     pub home_anchored_mask: u64,
     pub home_observed_bytes: u64,
     pub home_observed_mask: u64,
+    pub red_spring_observed_bytes: u64,
+    pub red_spring_observed_mask: [u64; 4],
+    pub red_spring_anchored_bytes: u64,
+    pub red_spring_anchored_mask: u64,
+    pub post_indexed_observed_bytes: u64,
+    pub post_indexed_observed_mask: u64,
+    pub post_indexed_anchored_bytes: u64,
+    pub post_indexed_anchored_mask: u64,
+    pub bank_observed_bytes: u64,
+    pub bank_observed_mask: [u64; 2],
+    pub blue_screw_observed_bytes: u64,
+    pub blue_screw_observed_mask: u64,
+    pub soil_evidence_observed_bytes: u64,
+    pub soil_evidence_observed_mask: [u64; 3],
+    pub soil_146_observed_bytes: u64,
+    pub soil_146_observed_mask: u64,
 }
 
 pub(super) struct ThumbPcLiteralsResources {
@@ -30,6 +46,22 @@ pub(super) struct ThumbPcLiteralsResources {
     home_anchored: AtomicU64,
     home_observed_bytes: AtomicU64,
     home_observed: AtomicU64,
+    red_spring_observed_bytes: AtomicU64,
+    red_spring_observed: [AtomicU64; 4],
+    red_spring_anchored_bytes: AtomicU64,
+    red_spring_anchored: AtomicU64,
+    post_indexed_observed_bytes: AtomicU64,
+    post_indexed_observed: AtomicU64,
+    post_indexed_anchored_bytes: AtomicU64,
+    post_indexed_anchored: AtomicU64,
+    bank_observed_bytes: AtomicU64,
+    bank_observed: [AtomicU64; 2],
+    blue_screw_observed_bytes: AtomicU64,
+    blue_screw_observed: AtomicU64,
+    soil_evidence_observed_bytes: AtomicU64,
+    soil_evidence_observed: [AtomicU64; 3],
+    soil_146_observed_bytes: AtomicU64,
+    soil_146_observed: AtomicU64,
 }
 
 impl ThumbPcLiteralsResources {
@@ -51,6 +83,14 @@ impl ThumbPcLiteralsResources {
                 + model::OBSERVED_COUNT
                 + model::HOME_ANCHORED_COUNT
                 + model::HOME_OBSERVED_COUNT
+                + model::RED_SPRING_OBSERVED_COUNT
+                + model::RED_SPRING_ANCHORED_COUNT
+                + model::POST_INDEXED_OBSERVED_COUNT
+                + model::POST_INDEXED_ANCHORED_COUNT
+                + model::BANK_OBSERVED_COUNT
+                + model::BLUE_SCREW_OBSERVED_COUNT
+                + model::SOIL_EVIDENCE_OBSERVED_COUNT
+                + model::SOIL_146_OBSERVED_COUNT
         {
             return Err("Thumb literal source count mismatch".into());
         }
@@ -61,6 +101,14 @@ impl ThumbPcLiteralsResources {
             .chain(&data.observed)
             .chain(&data.home_anchored)
             .chain(&data.home_observed)
+            .chain(&data.red_spring_observed)
+            .chain(&data.red_spring_anchored)
+            .chain(&data.post_indexed_observed)
+            .chain(&data.post_indexed_anchored)
+            .chain(&data.bank_observed)
+            .chain(&data.blue_screw_observed)
+            .chain(&data.soil_evidence_observed)
+            .chain(&data.soil_146_observed)
             .zip(sources)
         {
             if source.offset != literal.source_offset
@@ -84,6 +132,22 @@ impl ThumbPcLiteralsResources {
             home_anchored: AtomicU64::new(0),
             home_observed_bytes: AtomicU64::new(0),
             home_observed: AtomicU64::new(0),
+            red_spring_observed_bytes: AtomicU64::new(0),
+            red_spring_observed: std::array::from_fn(|_| AtomicU64::new(0)),
+            red_spring_anchored_bytes: AtomicU64::new(0),
+            red_spring_anchored: AtomicU64::new(0),
+            post_indexed_observed_bytes: AtomicU64::new(0),
+            post_indexed_observed: AtomicU64::new(0),
+            post_indexed_anchored_bytes: AtomicU64::new(0),
+            post_indexed_anchored: AtomicU64::new(0),
+            bank_observed_bytes: AtomicU64::new(0),
+            bank_observed: std::array::from_fn(|_| AtomicU64::new(0)),
+            blue_screw_observed_bytes: AtomicU64::new(0),
+            blue_screw_observed: AtomicU64::new(0),
+            soil_evidence_observed_bytes: AtomicU64::new(0),
+            soil_evidence_observed: std::array::from_fn(|_| AtomicU64::new(0)),
+            soil_146_observed_bytes: AtomicU64::new(0),
+            soil_146_observed: AtomicU64::new(0),
         })
     }
 
@@ -107,6 +171,22 @@ impl ThumbPcLiteralsResources {
         let mut home = 0u64;
         let mut home_observed_count = 0;
         let mut home_observed = 0u64;
+        let mut red_spring_observed_count = 0;
+        let mut red_spring_observed = [0u64; 4];
+        let mut red_spring_anchored_count = 0;
+        let mut red_spring_anchored = 0u64;
+        let mut post_indexed_observed_count = 0;
+        let mut post_indexed_observed = 0u64;
+        let mut post_indexed_anchored_count = 0;
+        let mut post_indexed_anchored = 0u64;
+        let mut bank_observed_count = 0;
+        let mut bank_observed = [0u64; 2];
+        let mut blue_screw_observed_count = 0;
+        let mut blue_screw_observed = 0u64;
+        let mut soil_evidence_observed_count = 0;
+        let mut soil_evidence_observed = [0u64; 3];
+        let mut soil_146_observed_count = 0;
+        let mut soil_146_observed = 0u64;
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, word)) => {
                 count += 1;
@@ -134,7 +214,13 @@ impl ThumbPcLiteralsResources {
                         - model::OBSERVED_COUNT;
                     home_count += 1;
                     home |= 1u64 << word;
-                } else {
+                } else if word
+                    < model::LITERAL_COUNT
+                        + model::ADDITIONAL_COUNT
+                        + model::OBSERVED_COUNT
+                        + model::HOME_ANCHORED_COUNT
+                        + model::HOME_OBSERVED_COUNT
+                {
                     let word = word
                         - model::LITERAL_COUNT
                         - model::ADDITIONAL_COUNT
@@ -142,6 +228,50 @@ impl ThumbPcLiteralsResources {
                         - model::HOME_ANCHORED_COUNT;
                     home_observed_count += 1;
                     home_observed |= 1u64 << word;
+                } else if word
+                    < model::LITERAL_COUNT
+                        + model::ADDITIONAL_COUNT
+                        + model::OBSERVED_COUNT
+                        + model::HOME_ANCHORED_COUNT
+                        + model::HOME_OBSERVED_COUNT
+                        + model::RED_SPRING_OBSERVED_COUNT
+                {
+                    let word = word
+                        - model::LITERAL_COUNT
+                        - model::ADDITIONAL_COUNT
+                        - model::OBSERVED_COUNT
+                        - model::HOME_ANCHORED_COUNT
+                        - model::HOME_OBSERVED_COUNT;
+                    red_spring_observed_count += 1;
+                    red_spring_observed[word / 64] |= 1u64 << (word % 64);
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT;
+                    red_spring_anchored_count += 1;
+                    red_spring_anchored |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT;
+                    post_indexed_observed_count += 1;
+                    post_indexed_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT;
+                    post_indexed_anchored_count += 1;
+                    post_indexed_anchored |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT;
+                    bank_observed_count += 1;
+                    bank_observed[word / 64] |= 1u64 << (word % 64);
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT;
+                    blue_screw_observed_count += 1;
+                    blue_screw_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT;
+                    soil_evidence_observed_count += 1;
+                    soil_evidence_observed[word / 64] |= 1u64 << (word % 64);
+                } else {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT;
+                    soil_146_observed_count += 1;
+                    soil_146_observed |= 1u64 << word;
                 }
                 byte
             }
@@ -171,6 +301,31 @@ impl ThumbPcLiteralsResources {
             .fetch_add(home_observed_count, Ordering::Relaxed);
         self.home_observed
             .fetch_or(home_observed, Ordering::Relaxed);
+        self.red_spring_observed_bytes
+            .fetch_add(red_spring_observed_count, Ordering::Relaxed);
+        for (counter, mask) in self.red_spring_observed.iter().zip(red_spring_observed) {
+            counter.fetch_or(mask, Ordering::Relaxed);
+        }
+        self.red_spring_anchored_bytes
+            .fetch_add(red_spring_anchored_count, Ordering::Relaxed);
+        self.red_spring_anchored
+            .fetch_or(red_spring_anchored, Ordering::Relaxed);
+        self.post_indexed_observed_bytes.fetch_add(post_indexed_observed_count, Ordering::Relaxed);
+        self.post_indexed_observed.fetch_or(post_indexed_observed, Ordering::Relaxed);
+        self.post_indexed_anchored_bytes.fetch_add(post_indexed_anchored_count, Ordering::Relaxed);
+        self.post_indexed_anchored.fetch_or(post_indexed_anchored, Ordering::Relaxed);
+        self.bank_observed_bytes.fetch_add(bank_observed_count, Ordering::Relaxed);
+        for (counter, mask) in self.bank_observed.iter().zip(bank_observed) {
+            counter.fetch_or(mask, Ordering::Relaxed);
+        }
+        self.blue_screw_observed_bytes.fetch_add(blue_screw_observed_count, Ordering::Relaxed);
+        self.blue_screw_observed.fetch_or(blue_screw_observed, Ordering::Relaxed);
+        self.soil_evidence_observed_bytes.fetch_add(soil_evidence_observed_count, Ordering::Relaxed);
+        for (counter, mask) in self.soil_evidence_observed.iter().zip(soil_evidence_observed) {
+            counter.fetch_or(mask, Ordering::Relaxed);
+        }
+        self.soil_146_observed_bytes.fetch_add(soil_146_observed_count, Ordering::Relaxed);
+        self.soil_146_observed.fetch_or(soil_146_observed, Ordering::Relaxed);
         Some(result)
     }
 
@@ -190,6 +345,25 @@ impl ThumbPcLiteralsResources {
             home_anchored_mask: self.home_anchored.load(Ordering::Relaxed),
             home_observed_bytes: self.home_observed_bytes.load(Ordering::Relaxed),
             home_observed_mask: self.home_observed.load(Ordering::Relaxed),
+            red_spring_observed_bytes: self.red_spring_observed_bytes.load(Ordering::Relaxed),
+            red_spring_observed_mask: self
+                .red_spring_observed
+                .each_ref()
+                .map(|v| v.load(Ordering::Relaxed)),
+            red_spring_anchored_bytes: self.red_spring_anchored_bytes.load(Ordering::Relaxed),
+            red_spring_anchored_mask: self.red_spring_anchored.load(Ordering::Relaxed),
+            post_indexed_observed_bytes: self.post_indexed_observed_bytes.load(Ordering::Relaxed),
+            post_indexed_observed_mask: self.post_indexed_observed.load(Ordering::Relaxed),
+            post_indexed_anchored_bytes: self.post_indexed_anchored_bytes.load(Ordering::Relaxed),
+            post_indexed_anchored_mask: self.post_indexed_anchored.load(Ordering::Relaxed),
+            bank_observed_bytes: self.bank_observed_bytes.load(Ordering::Relaxed),
+            bank_observed_mask: self.bank_observed.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            blue_screw_observed_bytes: self.blue_screw_observed_bytes.load(Ordering::Relaxed),
+            blue_screw_observed_mask: self.blue_screw_observed.load(Ordering::Relaxed),
+            soil_evidence_observed_bytes: self.soil_evidence_observed_bytes.load(Ordering::Relaxed),
+            soil_evidence_observed_mask: self.soil_evidence_observed.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            soil_146_observed_bytes: self.soil_146_observed_bytes.load(Ordering::Relaxed),
+            soil_146_observed_mask: self.soil_146_observed.load(Ordering::Relaxed),
         }
     }
 
@@ -200,5 +374,13 @@ impl ThumbPcLiteralsResources {
             + self.data.observed.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.home_anchored.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.home_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.red_spring_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.red_spring_anchored.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.post_indexed_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.post_indexed_anchored.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.bank_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.blue_screw_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.soil_evidence_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.soil_146_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
     }
 }

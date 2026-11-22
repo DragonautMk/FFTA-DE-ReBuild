@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "reconcile-european-post-indexed-full-inventory",
+  "title": "Reconcile European post-indexed full inventory",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; prior Windows via Wine"
+  ],
+  "changes": [
+    "Reconcile the entire previously unowned E170 address sample against E228 and distinguish current data owners from the retained copied-IWRAM code-support block."
+  ],
+  "validation": [
+    "Static unit aqz4qh3s verifies the exact EUR ROM, retained Wine inventory and 259 intersecting E228 source hashes: 1080 sampled bytes now have declared owners and 3600 remain in the documented copied IWRAM source block. No game was replayed."
+  ],
+  "limitations": [
+    "The block contains executable support, but address overlap does not classify each byte as an instruction or asset or establish executing PCs, all readers, other scenes or full ROM coverage.",
+    "Linux, USA and native Windows remain pending; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_INVENTORY.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "trace-european-soil-upper-reader-sites",
+  "title": "Trace European Soil upper reader sites",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Record filtered reader-site evidence for the remaining sampled EUR Soil Evidence upper ROM reads."
+  ],
+  "validation": [
+    "Wine capture e285-soil-upper-sites-wine-wgddtcdt observes all 285 E240 residual bytes over 600 retained frames; 245 bytes occur in interpreter scopes and 40 remain outside those scopes."
+  ],
+  "limitations": [
+    "The inventory does not prove exact readers, source formats, extents, state equivalence or ownership; interpreter scopes can include nested reads.",
+    "Other continuations, Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

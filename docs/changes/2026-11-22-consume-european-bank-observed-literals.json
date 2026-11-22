@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-bank-observed-literals",
+  "title": "Consume European Bank observed literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the authenticated Thumb literal resource with 77 Bank sample words with original LDR witnesses, and route their exact bytes through the existing runtime owner.",
+    "Preserve the prior 1196 literals and all 129 other resource files, original guest behavior and separate usage counters."
+  ],
+  "validation": [
+    "Static source plan hpsqpff9 authenticates the exact EUR ROM, earlier source hashes, original opcodes and effective addresses; static reconciliation duj05bki finds 12 bytes still unowned among the 320 sampled bytes.",
+    "Windows test build ucbajerz and Wine reader biu5a8ky validate 308 source bytes, previous resources and masks, coherent edit rejection, boundaries, 154 interpreted/generated original-reader cases, transfers and snapshot ownership.",
+    "Wine scene fwu8_cee compares 12 recorded Bank frames with all new backing words altered; all 77 are consumed, with state, guest clock, video, OAM, dispatch and five nonempty audio streams equal each frame.",
+    "Production build d3g9inrv and Wine CLI g8lsy8kq create, reuse and verify 131 matching files."
+  ],
+  "limitations": [
+    "Instruction scopes can include nested HLE/DMA reads; the address sample does not prove all callers, source extents or full-ROM coverage. Three sampled words, other scenes, real-BIOS and UI save/Load remain open.",
+    "Linux, USA and native Windows remain pending. Wine servers drained with the local Bluetooth overlay; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/bank_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/indexed_records16_tests.rs",
+    "crates/recomp/src/rom_data/indexed_words_3959_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/thumb_switch_tables_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_additional_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_observed_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/home_residual_code_support_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_switch_tables_tests.rs",
+    "crates/recomp/src/rom_data/red_spring_final_copy_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/post_indexed_anchored_literals_tests.rs",
+    "crates/recomp/src/rom_data/obj_derived_dimensions_tests.rs",
+    "crates/recomp/src/rom_data/copied_halfword_lookups_tests.rs",
+    "crates/recomp/src/rom_data/indexed_halfwords_39a5_tests.rs",
+    "crates/recomp/src/rom_data/script_byte_lookup_3ad_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

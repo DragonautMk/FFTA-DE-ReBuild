@@ -42,6 +42,19 @@ pub const INTERLEAVED_LZ_ROW_SPECS: [(u32, u32, &str); 7] = [
     (0x3a4c88, 0x083a4b68, "34ff1f112fa5581ad8ede030542c120a20e326171b51ac1d8624c5240919da2f"),
 ];
 
+/// Observed Soil Evidence transfer rows; guest index ranges remain unrestricted.
+pub const SOIL_TRANSFER_ROW_SPECS: [(u32, u32, &str); 4] = [
+    (0x39a6f8, 0x0839a648, "2a443d3f04f45fdc926fe14b26051138dc100ec234f87ec7e09617de1c424713"),
+    (0x39a770, 0x0839a688, "fa25f25a66719394644ed1f9740cb2815e931ab04d0608614e1a9ea06f47d0bb"),
+    (0x39e0ac, 0x0839e090, "1676cc178feec75d4c999899e2515a92ad04212c92fb79dad96f1bfd0194b44b"),
+    (0x39e0b8, 0x0839e098, "2a03f79339c88d6fa5484e22d1a3b22050a3dd6eddd4b6c3e295089c84d67a3e"),
+];
+/// One list row and one mode-7 row; their targets have separate owners.
+pub const SOIL_OTHER_ROW_SPECS: [(u32, u32, u8, &str); 2] = [
+    (0x39e0a0, 0x0839e088, 2, "b3fd44665dc46e637300c936c4e03b7599b46764f2350a3375c23569e4f02cac"),
+    (0x39a704, 0x0839a6e8, 4, "05b1e8c34e9f9c0bc1afa180b012f1a33310abff0645fdead826b4077175836a"),
+];
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct AdditionalRow {
@@ -86,6 +99,10 @@ pub struct ObservedTilemapRow {
     pub direct_tilemap_rows: Option<[AdditionalRow; 7]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub interleaved_lz_rows: Option<[AdditionalRow; 7]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_transfer_rows: Option<[AdditionalRow; 4]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub soil_other_rows: Option<[AdditionalRow; 2]>,
 }
 
 impl ObservedTilemapRow {
@@ -117,6 +134,20 @@ impl ObservedTilemapRow {
                 }
             }
         }
+        if let Some(rows) = &self.soil_transfer_rows {
+            for (row, &(offset, pointer, _)) in rows.iter().zip(&SOIL_TRANSFER_ROW_SPECS) {
+                if row.source_offset != offset || row.descriptor_pointer != pointer || row.field0 != 3 {
+                    return Err("Invalid Soil transfer row".into());
+                }
+            }
+        }
+        if let Some(rows) = &self.soil_other_rows {
+            for (row, &(offset, pointer, kind, _)) in rows.iter().zip(&SOIL_OTHER_ROW_SPECS) {
+                if row.source_offset != offset || row.descriptor_pointer != pointer || row.field0 != kind {
+                    return Err("Invalid Soil list or mode-7 row".into());
+                }
+            }
+        }
         Ok(())
     }
 
@@ -144,6 +175,18 @@ impl ObservedTilemapRow {
                 return Err("Interleaved LZ row descriptor dependency mismatch".into());
             }
         }
+        if let Some(rows) = &self.soil_transfer_rows {
+            let entries = descriptor.soil_transfer_descriptors.as_ref().ok_or("Missing Soil transfer descriptor dependencies")?;
+            if rows.iter().zip(entries).any(|(row, entry)| row.descriptor_pointer != 0x0800_0000 + entry.source_offset) {
+                return Err("Soil transfer row descriptor dependency mismatch".into());
+            }
+        }
+        if let Some(rows) = &self.soil_other_rows {
+            let entry = descriptor.soil_mode7_descriptor.as_ref().ok_or("Missing Soil mode-7 descriptor dependency")?;
+            if rows[1].descriptor_pointer != 0x0800_0000 + entry.source_offset {
+                return Err("Soil mode-7 row descriptor dependency mismatch".into());
+            }
+        }
         Ok(())
     }
 
@@ -152,6 +195,12 @@ impl ObservedTilemapRow {
         tilemap.validate()?;
         if self.list_row.descriptor_pointer != 0x0800_0000 + observed_tilemap::RECTANGLE_CHAIN_OFFSET + 8 {
             return Err("Observed rectangle list row dependency mismatch".into());
+        }
+        if let Some(rows) = &self.soil_other_rows {
+            if tilemap.soil_transfer_sources.is_none()
+                || rows[0].descriptor_pointer != 0x0800_0000 + observed_tilemap::SOIL_RECTANGLE_LIST_OFFSET {
+                return Err("Missing Soil rectangle list dependency".into());
+            }
         }
         Ok(())
     }
@@ -174,6 +223,12 @@ impl ObservedTilemapRow {
         }
         if let Some(rows) = &self.interleaved_lz_rows {
             for row in rows { spans.push((row.source_offset, row.source_bytes(), "interleaved-lz-row")); }
+        }
+        if let Some(rows) = &self.soil_transfer_rows {
+            for row in rows { spans.push((row.source_offset, row.source_bytes(), "soil-transfer-row")); }
+        }
+        if let Some(rows) = &self.soil_other_rows {
+            for row in rows { spans.push((row.source_offset, row.source_bytes(), "soil-other-row")); }
         }
         spans
     }
@@ -199,23 +254,36 @@ impl Catalog {
             && source.length as usize == observed_tilemap::RECTANGLE_CHAIN_LENGTH) {
             return Err("Observed rectangle list source dependency mismatch".into());
         }
+        if !tilemap.sources.iter().any(|source| source.offset == observed_tilemap::SOIL_RECTANGLE_LIST_OFFSET && source.length == 8) {
+            return Err("Missing Soil rectangle list source dependency".into());
+        }
         let descriptor = previous.iter().find(|resource| resource.id == OBSERVED_TILEMAP_DESCRIPTOR_ID).ok_or("Missing observed tilemap descriptor dependency")?;
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOURCE_OFFSET && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
             return Err("Observed tilemap row source dependency mismatch".into());
         }
-        for &(_, pointer, _) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS) {
+        for &(_, pointer, _) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS).chain(&SOIL_TRANSFER_ROW_SPECS) {
             if !descriptor.sources.iter().any(|source| source.offset == pointer - 0x0800_0000
                 && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
                 return Err("Additional tilemap row source dependency mismatch".into());
             }
         }
+        if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOIL_MODE7_DESCRIPTOR_OFFSET
+            && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
+            return Err("Missing Soil mode-7 descriptor source dependency".into());
+        }
         let start = SOURCE_OFFSET as usize;
         let bytes = &rom[start..start + SOURCE_LENGTH];
         if ffta_rom::digest(bytes) != SOURCE_SHA256 { return Err("Observed tilemap row source hash mismatch".into()); }
-        for &(offset, _, hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS) {
+        for &(offset, _, hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&DIRECT_ROW_SPECS).chain(&INTERLEAVED_LZ_ROW_SPECS).chain(&SOIL_TRANSFER_ROW_SPECS) {
             let at = offset as usize;
             if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash {
                 return Err("Additional observed tilemap row source hash mismatch".into());
+            }
+        }
+        for &(offset, _, _, hash) in &SOIL_OTHER_ROW_SPECS {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash {
+                return Err("Soil list or mode-7 row source mismatch".into());
             }
         }
         let list_at = LIST_ROW_OFFSET as usize;
@@ -243,6 +311,8 @@ impl Catalog {
             additional_rows, transfer_rows, list_row: read_row(LIST_ROW_OFFSET),
             direct_tilemap_rows: Some(std::array::from_fn(|i| read_row(DIRECT_ROW_SPECS[i].0))),
             interleaved_lz_rows: Some(std::array::from_fn(|i| read_row(INTERLEAVED_LZ_ROW_SPECS[i].0))),
+            soil_transfer_rows: Some(std::array::from_fn(|i| read_row(SOIL_TRANSFER_ROW_SPECS[i].0))),
+            soil_other_rows: Some(std::array::from_fn(|i| read_row(SOIL_OTHER_ROW_SPECS[i].0))),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

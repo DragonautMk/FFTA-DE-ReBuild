@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "trace-european-soil-14d6d8-native-contexts",
+  "title": "Trace European Soil 14d6d8 native contexts",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Add an opt-in test-only filtered native API context capture for two unowned Soil Evidence words."
+  ],
+  "validation": [
+    "Windows build 3___wn__ and Wine capture e282-soil-14d6d8-sites-wine-7mza_q21 observe all eight bytes as native byte reads in one dispatch context over 600 EUR frames."
+  ],
+  "limitations": [
+    "The exported PC and outer dispatch are not exact instruction sites; source format, state equivalence, other callers/scenes and runtime ownership remain unproven.",
+    "Build m6dd0jue failed on a test-only conversion and was fixed; Wine dxkh8rfg omitted TinyCC, drained and the corrected retry passed. Linux, USA and native Windows remain open; no performance comparison was performed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}
