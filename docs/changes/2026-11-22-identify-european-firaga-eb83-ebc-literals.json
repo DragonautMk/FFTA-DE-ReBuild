@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-eb83-ebc-literals",
+  "title": "Identify European Firaga eb83 and ebc literals",
+  "kind": "docs",
+  "platforms": [
+    "European ROM"
+  ],
+  "changes": [
+    "Authenticate ten original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample."
+  ],
+  "validation": [
+    "Protected source plan e330-firaga-eb83-ebc-literals-source-plan-iomybbqw authenticates 40 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and retained disassemblies."
+  ],
+  "limitations": [
+    "This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

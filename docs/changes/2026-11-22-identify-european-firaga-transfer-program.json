@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-transfer-program",
+  "title": "Identify European Firaga transfer program sources",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows disassembly via Wine"
+  ],
+  "changes": [
+    "Authenticate one selected four-record transfer program, its descriptor roots and existing LZ ownership; record palette payload extents as separate open work."
+  ],
+  "validation": [
+    "Protected source plan e320-firaga-39cb9c-source-plan-ilwy805q authenticates 121 unowned source bytes, including 98 E302 sampled bytes, and rechecks all three previously verified compressed and decoded stream hashes.",
+    "Five Wine disassemblies pass and drain the coordinated server; earlier E304 reader and 606-frame Wine scene evidence covers the three existing LZ streams."
+  ],
+  "limitations": [
+    "Source identification does not publish data, prove individual address-sample PCs or establish palette payload extents, other selectors, producers, consumers, scenes, Linux, USA or native Windows. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

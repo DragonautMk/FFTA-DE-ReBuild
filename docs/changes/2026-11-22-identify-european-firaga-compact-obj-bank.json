@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-compact-obj-bank",
+  "title": "Identify European Firaga compact OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Document the selected compact OBJ directory, ten-frame sequence, three empty lists and indirect roots while reusing seven previously owned lists.",
+    "Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist."
+  ],
+  "validation": [
+    "Static source plan e313-firaga-compact-obj-source-plan-retry-nj96f9zl authenticates 66 sampled bytes, original reader fingerprints and the seven prior list owners.",
+    "Reused earlier Wine original caller and compact-reader disassemblies; no new gameplay or performance measurement."
+  ],
+  "limitations": [
+    "The initial static unit 4x33r8y_ failed because the pointer was indirect; the passing retry authenticates the descriptor link.",
+    "The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.",
+    "Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

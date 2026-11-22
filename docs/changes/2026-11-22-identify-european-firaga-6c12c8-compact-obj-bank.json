@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-6c12c8-compact-obj-bank",
+  "title": "Identify European Firaga 6c12c8 compact OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Document the selected compact OBJ descriptor, 13-frame sequence and one empty list while reusing nine previously owned lists.",
+    "Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist."
+  ],
+  "validation": [
+    "Static source plan e317-firaga-6c12c8-source-plan-bz8m5fb_ authenticates 85 bytes, including 81 sampled bytes, original reader fingerprints and nine prior list owners.",
+    "Reused prior Wine disassemblies 8lucbl5h and 3y7u8cdl for the original descriptor caller and task callback; both servers drained. No new gameplay or performance measurement."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.",
+    "Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

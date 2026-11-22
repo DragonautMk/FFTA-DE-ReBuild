@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-firaga-lz-sources",
+  "title": "Identify Firaga battle LZ sources",
+  "kind": "docs",
+  "platforms": [
+    "Wine"
+  ],
+  "changes": [
+    "Authenticate three European Firaga scene LZ77 source extents before runtime publication."
+  ],
+  "validation": [
+    "Static unit e303-firaga-lz-plan-o44ggusq decodes 3,290 sampled encoded bytes to 5,968 bytes, verifies exact hashes and checks disjointness from E248 source owners."
+  ],
+  "limitations": [
+    "The source plan does not establish game-level asset identities, HLE call sites, all consumers or runtime publication; Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

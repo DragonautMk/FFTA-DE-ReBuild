@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-firaga-transfer-program",
+  "title": "Consume European Firaga transfer program",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish one typed four-record Firaga transfer program and its roots, wrappers and format headers while reusing the three existing LZ stream owners and preserving guest fallback."
+  ],
+  "validation": [
+    "Wine reader e321-firaga-transfer-program-readers-wine-tfkrk5a_ checks unchanged prior resources, tampered-file rejection, poisoned mixed LZ boundaries and mirrors, 36 original reader comparisons, three transfers and snapshot ownership.",
+    "Wine scene e321-firaga-transfer-program-scene-wine-sh2x442o compares 606 altered-source frames, positively consumes all 12 new source groups, and matches state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e321-firaga-transfer-program-cli-wine-hj1_inpx creates, reuses and verifies 144 matching files; static join e321-firaga-transfer-program-sample-residual-h_gw4p3y leaves 1,143 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "Palette payload extents, source-save history, other selectors, producers, consumers, scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.",
+    "Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/firaga_transfer_program.rs",
+    "crates/gba-core/src/rom_data/runtime/firaga_transfer_program.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_transfer_program_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -62,6 +62,79 @@ pub const SOIL_EVIDENCE_LISTS: [(u32, usize, &str); 20] = [
     (0x6c199e, 3, "5b8a6168f07cb59dde25338a8ec42f35f054487408810a0ea2d4d2f01ffd348f"),
 ];
 
+/// Count/payload pairs observed on the EUR Firaga battle continuation.
+/// These selected lists do not establish a complete producer or archive domain.
+pub const FIRAGA_SPRITE_LISTS: [(u32, usize, &str); 44] = [
+    (0x418ef8, 1, "06b9a3e4e4b69f0740355269c6c08e3aed2078e016c469fbbb953c809b9fa15d"),
+    (0x418f00, 2, "ac888ed9d701d06ddcbd365a06432c5e57e1b6f8cc97d74595961c7c1ff0b3e7"),
+    (0x418f10, 2, "1f3f9ab2aa16b272f1d5330f42bffcfad5b4a5f88c8b040f0c493d8861820761"),
+    (0x418f20, 2, "87273bd53830625ec7b23b799bff0a1de845921c7aadc9382e32716bd6fe252c"),
+    (0x418f30, 3, "852e0d71eace6239910d6c89151106286d93c4590da9a49bcbd47f673517d844"),
+    (0x418f44, 3, "63bee83223ebbaad92463d6265d8a35fc151f51c890ee1c2e584e947484e824d"),
+    (0x418f58, 4, "820373e91024f608b552579e8ae175d792c8e37135215a14bbd7e843a5ef9399"),
+    (0x418f74, 4, "0dcdde33b53230ca3de7a4492600b2cba8235834cd66cc655d6c5afc6c96240c"),
+    (0x418f90, 4, "d64bf1a2b3e3e373b8e75536081943e0b5d4f11f89c031185690e023d7cb5d29"),
+    (0x418fac, 4, "ad8a1a4c87ccbd3c989d7fa8db8cea44925a66bdb43e357404aeb3327b9aef08"),
+    (0x418fc8, 4, "e559efb6ce3ddfb3c54f20324f08df41750e7d030a042cd8c0d3205d2871cef2"),
+    (0x418fe4, 4, "7fe20f762f5cf064561a744c348cd99006d4d79c95ad58b0d77905a4ee408493"),
+    (0x419000, 5, "2826da249f056ddd04aefdfa7351b46bb812c4bac484a69281b3465a319d1634"),
+    (0x419020, 5, "d554aa6ccf82cd8cc8ce6dc8cff2d5848b864bb5a1365498f1d7baf0af01b1d2"),
+    (0x419040, 5, "a087ef95fc7214ac468c9dbebb92e25eefee20a9ff623c2ff027c35b8d1b7441"),
+    (0x419060, 5, "4df1c0aa0a8680ed584a6d045f19d6f791f4c1466692a85003dcead69a11da2a"),
+    (0x419080, 5, "d2303fd932238523ceb8446d5cf1fa9f50e450a017812d401be74a97b833c801"),
+    (0x4190a0, 5, "a99cd8ffd331c98d124e9ab848bed368d24a4473186a4ec858fe19e27e0bc8b0"),
+    (0x6b3590, 1, "0ed4ee712bd4b54e39d3a6ee3be378a3080495bffcd253f29c6f940f5483334f"),
+    (0x6b3598, 2, "82e0e01a4a8fef822802faaae9e2366493d044848e0b0ec4d46c08bc085f4429"),
+    (0x6b35a6, 4, "d7dd7e4e89fc5f31ec5e5a03aa3ecaec3c5f2ebf397460d0de5a3511614d5827"),
+    (0x6b35c0, 6, "a06a2e72b0dad08d693168fe4ce4223878aebb936a279c98b5f0c8bb96260fbc"),
+    (0x6b35e6, 9, "9874756399c7f636e61bedc6577af17d8aa4a1d91d89c716c3cbd2f075f0747a"),
+    (0x6b361e, 9, "671bb5e4ad78b47832e6d65fbbfc253f4fcb1f27ce742fdf077c37d898662f60"),
+    (0x6b3656, 9, "91ee372a3ecb7ce4890323691869385a7641c4728112b170243a31ceae1e00d3"),
+    (0x6b36f4, 18, "6a83d8dff0848c7cb7346440855b322d596c90a02f9da3e0ae8bc971fad3d284"),
+    (0x6b3762, 18, "6fa68326acd3977caa3276c6349f112e4e3bde42eba23bed128d06db28f49384"),
+    (0x6b37d0, 19, "02fb77871b04faa451ca2ee08e0465d9706ca43649d6f5b57fc94704e9d870ca"),
+    (0x6b3844, 19, "9982f83671315ae5566b679218ccaf1be058137bd19079f217e21a258b89132a"),
+    (0x6b38b8, 19, "33e098f92448e77f711a5036229d7c4b2daafceb76dcc0ff31a4b75504fec04c"),
+    (0x6b392c, 20, "97d54ac6d17327aca61283522118afe564f020d95d2a316835907ceb49ad15ce"),
+    (0x6b39a6, 22, "b5aba616f1f34344c441c5dbc013c0c45ad5a2419e76fa6009afd3608f2a5d54"),
+    (0x6b3a2c, 22, "8267a7ceccc0723f7d206a450da744bde803d12fb3abff30f84e075759781f22"),
+    (0x6b3ab2, 22, "60a1b681068458fc48d096f5e95087bf281ba274918c4db03afad42e5fb0afaf"),
+    (0x6b3b3a, 22, "fcd33f197fd2edd28ae503a910dc0a79a56f46dbe73c72add90f19d5ae0e0f98"),
+    (0x6c12e0, 3, "4b12f280814093d7b68a1e11f5d18088c848911b91eccc1a2fc62384ff8db009"),
+    (0x6c12f4, 3, "f42cbae33391a049f4459046ac319955d95dfdd5b6a5b44329b028b30209b1aa"),
+    (0x6c1308, 6, "6b6b6ea048674eebe633d3ad4b3bd4de29b7def30d685ddc2a6aaf312634d4ca"),
+    (0x6c132e, 6, "07b7a773125a100e51f4f40a33e50c8396ea70e64763206d95a76b9d3ca22a8b"),
+    (0x6c1354, 6, "8f87d292ef8a680a87bf01ca9dd070ef6535a3ffea3cc6204ea6c7e6ee813dd2"),
+    (0x6c137a, 6, "db29e376a09f7f2b5f6946c536da41f7c45a13b32ee086885f19a8db5ad42064"),
+    (0x6c13a0, 3, "58b96bdbf456c1f26375f4e96424e1db9ab5d1910a5514cfcb7815b2076023c8"),
+    (0x6c13b4, 3, "7cec261c12884540afaf81fee89beb6f01980d91e15a0f89ff616a9f02ef184b"),
+    (0x6c13c8, 3, "397269b25f0937733edeccfae9b2a677fca1d3acee04db6dd5960771f5c9c5fd"),
+];
+
+/// The zero-object list referenced by the selected Firaga animation sequence.
+pub const FIRAGA_EMPTY_LIST: (u32, usize, &str) = (
+    0x418eec,
+    0,
+    "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+);
+
+/// Empty lists referenced by the selected compact Firaga sequence.
+pub const FIRAGA_COMPACT_EMPTY_LISTS: [(u32, usize, &str); 3] = [
+    (0x6b368e, 0, "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"),
+    (0x6b3690, 0, "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"),
+    (0x6b3692, 0, "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"),
+];
+
+/// Empty list referenced by the adjacent compact Firaga sequence.
+pub const FIRAGA_ADJACENT_EMPTY_LIST: (u32, usize, &str) = (
+    0x6b3b38, 0, "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+);
+
+/// Empty list referenced by the selected compact Firaga bank at 6c12c8.
+pub const FIRAGA_6C12C8_EMPTY_LIST: (u32, usize, &str) = (
+    0x6c13dc, 0, "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7",
+);
+
 /// Three separately rooted byte groups; the guest retains their interpretation.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -735,6 +808,24 @@ impl Catalog {
             let list = List::decode(offset, bytes)?;
             if list.objects.len() != count || list.objects.iter().any(|object| object.shape >= 3) {
                 return Err("Soil Evidence OBJ list count or shape mismatch".into());
+            }
+            lists.push(list);
+            sources.push(SourceRange { offset, length: length as u32,
+                sha256: expected.into(), role: "static-obj-list".into() });
+        }
+        // These exact lists have count/payload observations in the Firaga
+        // continuation; their pointer producer and archive remain unbounded.
+        for (offset, count, expected) in FIRAGA_SPRITE_LISTS.into_iter()
+            .chain([FIRAGA_EMPTY_LIST]).chain(FIRAGA_COMPACT_EMPTY_LISTS).chain([FIRAGA_ADJACENT_EMPTY_LIST, FIRAGA_6C12C8_EMPTY_LIST]) {
+            let length = 2 + count * 6;
+            let bytes = rom.get(offset as usize..offset as usize + length)
+                .ok_or("Truncated Firaga OBJ list")?;
+            if ffta_rom::digest(bytes) != expected {
+                return Err("Firaga OBJ list source mismatch".into());
+            }
+            let list = List::decode(offset, bytes)?;
+            if list.objects.len() != count || list.objects.iter().any(|object| object.shape >= 3) {
+                return Err("Firaga OBJ list count or shape mismatch".into());
             }
             lists.push(list);
             sources.push(SourceRange { offset, length: length as u32,

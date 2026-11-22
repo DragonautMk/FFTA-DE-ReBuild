@@ -31,7 +31,7 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: active
 - Outcome: partial
-- E301 Wine reader/scene/CLI and join PASS. No sampled E260 bytes remain outside E248. Copied code, other readers/scenes/families and full-ROM coverage remain open. Next EUR dependency: see `docs/rom_data_graphics.md` E301 and checklist ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS.
+- E260 owned E248; E302 residual 313 in E265 (`77a2186_`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -187,9 +187,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ENGINE-REBUILD-PLAN completed.
-- Last verified result: Nine milestones, 26 open checks and all local roadmap links verified.
-- Remaining work: Engine implementation, native performance and Godot adoption are deferred.
-- Errors or blockers: None for planning.
-- Next action: After the agreed EUR scope and explicit selection, pin the school dialogue replay for RB-01.
-- References: [Engine rebuild TODO](ENGINE_REBUILD_TODO.md) and [frontend assessment](GODOT_FRONTEND_TODO.md).
+- Task: E337 ROMDATA-04-FIRAGA-RESIDUAL-LITERALS paused by user; EUR/Wine; Linux/USA deferred.
+- Last verified result: E336 source plan 52 words/208 bytes; E335 sample residual 313.
+- Remaining work: E266 draft unvalidated; Wine readers/transfers, scene, CLI and join; other family criteria open.
+- Errors or blockers: build `mve1jq1_` session 90946 exited 130; receipt says running, local lease retained, child status unknown.
+- Next action: only on user resume, inspect build outputs and ownership before restart or lease action; then validate.
+- References: `docs/rom_data_runtime.md` E336; recovery checklist.

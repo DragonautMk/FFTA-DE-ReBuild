@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-queued-transfer",
+  "title": "Identify European Firaga queued transfer source",
+  "kind": "added",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Add bounded feature-gated DMA read provenance and identify one original queued halfword-transfer projection and its two producer literals."
+  ],
+  "validation": [
+    "Wine captures e326-firaga-40e844-dma-wine-d2e7v3m2 and e326-firaga-40e844-queue-wine-y_wimttr identify one DMA3 transfer and join a queued source-pointer write to its descriptor; a synthetic immediate-DMA pair preserves full state and guest clock.",
+    "Protected source plan e326-firaga-40e844-source-plan-yuq_1w_3 authenticates 264 unowned sampled bytes and original producer arithmetic, with Wine disassembly e326-firaga-enqueue-caller-wine-h4sr9ejw. Wine servers drained."
+  ],
+  "limitations": [
+    "Only one selected transfer and continuation are covered; native exported PCs are context rather than exact store sites, and other indices, allocation/format, consumers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.",
+    "The source-save history remains unknown. The nested DMA scope uses RAII but the focused synthetic check exercises immediate DMA only; typed publication is pending."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data/read_audit.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-firaga-stack-initialization",
+  "title": "Consume European Firaga stack initialization",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish typed original pointer literals and stack initialization fields while preserving original live selectors and fallback."
+  ],
+  "validation": [
+    "Wine reader e325-firaga-stack-initialization-readers-wine-g2cv2hbo checks unchanged prior resources, tampered-file rejection, poisoned boundaries and mirrors, 26 original reader comparisons, two original copy-loop cases, three transfers and snapshot ownership.",
+    "Wine scene e325-firaga-stack-initialization-scene-wine-w0ru_ree compares 606 altered-source frames, positively consumes all six groups, and matches state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e325-firaga-stack-initialization-cli-wine-_t8_0ngi creates, reuses and verifies 146 matching files; static join e325-firaga-stack-initialization-sample-residual-smedangh leaves 1,065 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "Live selector domain, other callers and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.",
+    "Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/firaga_stack_initialization.rs",
+    "crates/gba-core/src/rom_data/runtime/firaga_stack_initialization.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_stack_initialization_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -961,6 +961,293 @@ current evidence before running another check.
   corresponding USA sources; native Windows remains unverified.
 - [ ] **ROMDATA-REGRESSION-E248-WINE:** rerun the 40 updated older revision-
   sensitive fixtures when selected; earlier evidence remains valid.
+- [x] **ROMDATA-01-FIRAGA-SCENE-INVENTORY scoped EUR/Wine:** E302 compares
+  606 recorded battle frames and inventories selected readers against E248;
+  8,283 distinct observed bytes are outside its source spans.
+  [Evidence](../rom_data_gameplay.md#e302-european-firaga-scene-rom-read-inventory).
+- [x] **ROMDATA-01-FIRAGA-LZ-PLAN scoped static:** E303 authenticates three
+  complete streams covering 3,290 E302 sampled bytes and 5,968 decoded bytes.
+  [Evidence](../rom_data_graphics.md#e303-firaga-battle-lz77-source-plan).
+- [x] **ROMDATA-04-FIRAGA-LZ scoped EUR/Wine:** E249 publishes the three E303
+  streams. Wine readers `6taiimnv`, scene `ugltru8s`, CLI `a19gxpua` and
+  static join `higcopsd` pass. [Evidence](../rom_data_graphics.md#e304-firaga-battle-lz77-runtime-sources).
+- [ ] **ROMDATA-04-FIRAGA-LZ-OTHER:** establish game-level asset identities,
+  other callers/scenes and real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-FIRAGA-LZ-LINUX:** validate publication, readers, transfers,
+  affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-FIRAGA-LZ-USA:** identify and validate corresponding USA
+  sources when selected; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E249-WINE:** rerun the 41 revision-sensitive older
+  fixtures updated for E249 and check their reports when selected. The older
+  E174/E175 observed-LZ fixtures also need current-revision adaptation before
+  a rerun; earlier accepted results remain valid.
+- [x] **ROMDATA-01-FIRAGA-SPRITE-PLAN scoped static:** E305 finds 44 fully
+  sampled, disjoint count/payload candidates covering 2,170 bytes.
+  [Evidence](../rom_data_runtime.md#e305-firaga-spritepeek-list-candidates).
+- [x] **ROMDATA-04-FIRAGA-SPRITE-LISTS scoped EUR/Wine:** E250 serves all
+  44 E305 lists. Wine reader `zlctezch`, scene `pa5aamwj`, CLI `h5s9hkgs`
+  and static join `qgpr0gm3` pass. [Evidence](../rom_data_runtime.md#e306-firaga-typed-sprite-lists).
+- [ ] **ROMDATA-04-FIRAGA-SPRITE-LISTS-OTHER:** establish pointer producers,
+  other callers/scenes and real-BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-FIRAGA-SPRITE-LISTS-LINUX:** validate publication, guest and
+  host reads, transfers, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-FIRAGA-SPRITE-LISTS-USA:** identify and validate corresponding
+  USA sources when selected; native Windows remains unverified.
+- [ ] **ROMDATA-REGRESSION-E250-WINE:** rerun the 42 revision-sensitive older
+  fixtures updated for E250 and check their reports when selected; older
+  revision-pinned fixtures still need adaptation before rerunning.
+- [x] **ROMDATA-01-FIRAGA-3B9E80-SOURCE scoped EUR/static:** E307 authenticates
+  two adjacent copied matrices and four literal words, covering 472 sampled
+  bytes outside E250 sources. [Evidence](../rom_data_graphics.md#e307-firaga-copied-matrix-source-plan).
+- [x] **ROMDATA-04-FIRAGA-COPIED-MATRICES scoped EUR/Wine:** E251 publishes
+  both matrices and four literal words; reader `43bpfeqh`, scene `_e603cr2`,
+  CLI `e308-firaga-matrices-cli-wine-73v6pnom` and join `q5otx2ur` pass.
+  [Evidence](../rom_data_graphics.md#e308-firaga-copied-matrix-runtime).
+- [ ] **ROMDATA-04-FIRAGA-COPIED-MATRICES-OTHER:** establish the dynamic producer,
+  semantics, other readers/scenes, real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-FIRAGA-COPIED-MATRICES-LINUX:** validate publication,
+  original readers, transfers, the affected scene and CLI on Linux.
+- [ ] **ROMDATA-04-FIRAGA-COPIED-MATRICES-USA:** identify and validate
+  corresponding USA sources; native Windows also remains unverified.
+- [ ] **ROMDATA-REGRESSION-E251-WINE:** rerun the 43 updated older
+  revision-sensitive fixtures when selected; older pinned fixtures need
+  adaptation before rerunning. Earlier accepted evidence remains valid.
+- [x] **ROMDATA-01-FIRAGA-RESIDUAL-SOURCE scoped EUR/static:** E309 authenticates
+  626 + 22 sampled bytes of compact cell data and the associated original
+  reader paths. [Evidence](../rom_data_graphics.md#e309-firaga-compact-cell-source-plan).
+- [x] **ROMDATA-04-FIRAGA-COMPACT-CELLS scoped EUR/Wine:** E252 serves the E309
+  frames, sequence, pointer cell and caller literal. Wine reader `5kbmgbk2`,
+  scene `e310-firaga-compact-scene-wine-q89549qz`, CLI `e310-firaga-compact-cli-wine-0ha_kvmp` and join `5soh9_aa` pass.
+  [Evidence](../rom_data_graphics.md#e310-firaga-compact-cell-runtime).
+- [ ] **ROMDATA-REGRESSION-E252-WINE:** rerun the 44 updated older revision-
+  sensitive fixtures when selected; older pinned fixtures need adaptation.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-CELLS-OTHER:** establish other selectors,
+  field meanings, scenes, real BIOS and UI save/Load behavior.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-CELLS-LINUX:** validate publication, readers,
+  affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-CELLS-USA:** identify and validate corresponding
+  USA sources when selected; native Windows also remains unverified.
+- [x] **ROMDATA-01-FIRAGA-412050-SOURCE scoped EUR/static:** E311 authenticates
+  176 candidate bytes, 172 sampled, and the original indexed OBJ readers.
+  [Evidence](../rom_data_obj.md#e311-firaga-indexed-obj-source-plan).
+- [x] **ROMDATA-04-FIRAGA-OBJ-BANK scoped EUR/Wine:** E253 serves the E311
+  descriptor, sequence and directory, reusing 18 lists and adding the empty
+  list to guest/host ownership. Reader `za6f9c7v`, scene `e312-firaga-obj-scene-wine-3d6gbyaw`, CLI `e312-firaga-obj-cli-wine-qe3bcmsl`
+  and join `0hdjkda7` pass.
+  [Evidence](../rom_data_obj.md#e312-firaga-indexed-obj-runtime).
+- [ ] **ROMDATA-REGRESSION-E253-WINE:** rerun the 45 updated older revision-
+  sensitive fixtures when selected; older pinned fixtures need adaptation.
+- [ ] **ROMDATA-04-FIRAGA-OBJ-BANK-OTHER:** establish producer ancestry, other
+  selectors/scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-OBJ-BANK-LINUX:** validate publication, guest/host
+  readers, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-FIRAGA-OBJ-BANK-USA:** identify and validate corresponding
+  USA sources when selected; native Windows also remains unverified.
+- [x] **ROMDATA-01-FIRAGA-6B368E-SOURCE scoped EUR/static:** E313 authenticates
+  a compact OBJ bank, three empty lists and selected indirect roots covering
+  66 sampled bytes. [Evidence](../rom_data_obj.md#e313-firaga-compact-obj-source-plan).
+- [x] **ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK scoped EUR/Wine:** E254 serves the
+  E313 compact bank and roots, reusing seven lists and adding three empty
+  lists to guest/host ownership. Reader `e314-firaga-compact-obj-readers-wine-uag8crl9`, scene `e314-firaga-compact-obj-scene-wine-00m4jnor`, CLI
+  `e314-firaga-compact-obj-cli-wine-dlvxuop3` and join `e314-firaga-compact-obj-sample-residual-h1qk2fn_` pass.
+  [Evidence](../rom_data_obj.md#e314-firaga-compact-obj-runtime).
+- [ ] **ROMDATA-REGRESSION-E254-WINE:** rerun the 46 updated older revision-
+  sensitive fixtures when selected; older pinned fixtures need adaptation.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK-OTHER:** establish descriptor and
+  producer ancestry, other selectors/scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK-LINUX:** validate publication,
+  guest/host readers, affected scene and CLI on Linux when selected.
+- [ ] **ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK-USA:** identify and validate
+  corresponding USA sources; native Windows also remains unverified.
+- [x] **ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-SOURCES scoped EUR/static:**
+  E315 authenticates 115 source bytes, 107 sampled, two descriptors, a
+  17-frame sequence, ten prior lists and one empty list.
+  [Evidence](../rom_data_obj.md#e315-firaga-adjacent-compact-obj-source-plan).
+- [x] **ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-BANK scoped EUR/Wine:** E255
+  serves the selected descriptors, count, compact sequence and empty list,
+  retaining earlier owners. Reader `e316-firaga-adjacent-obj-readers-wine-5zq084xm`, scene `e316-firaga-adjacent-obj-scene-wine-vgv_p24h`, CLI `e316-firaga-adjacent-obj-cli-wine-823mmm5g`
+  and join `e316-firaga-adjacent-obj-sample-residual-rk9t89t2` pass.
+  [Evidence](../rom_data_obj.md#e316-firaga-adjacent-compact-obj-runtime).
+- [ ] **ROMDATA-REGRESSION-E255-WINE:** rerun the 47 updated older revision-
+  sensitive fixtures when selected; older pinned fixtures need adaptation.
+- [ ] **ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-OTHER:** establish remaining
+  selectors/sequences, producer ancestry, other scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-LINUX:** validate publication,
+  readers, selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-USA:** identify and validate
+  corresponding sources; native Windows remains unverified.
+- [x] **ROMDATA-04-FIRAGA-6C12C8-SOURCES scoped EUR/static:** E317
+  authenticates 85 source bytes, 81 sampled, a 13-frame sequence, nine
+  prior lists and one empty list.
+  [Evidence](../rom_data_obj.md#e317-firaga-6c12c8-compact-obj-source-plan).
+- [x] **ROMDATA-04-FIRAGA-6C12C8-BANK scoped EUR/Wine:** E256 serves the
+  selected count, pointer, descriptor, compact sequence and empty list,
+  retaining earlier owners. Reader `e318-firaga-6c12c8-obj-readers-wine-hjwi7j_n`, scene `e318-firaga-6c12c8-obj-scene-wine-vav9bzv2`, CLI `e318-firaga-6c12c8-obj-cli-wine-maq3te3q`
+  and join `e318-firaga-6c12c8-obj-sample-residual-loxk_hkh` pass.
+  [Evidence](../rom_data_obj.md#e318-firaga-6c12c8-compact-obj-runtime).
+- [ ] **ROMDATA-REGRESSION-E256-WINE:** rerun the 48 updated older revision-
+  sensitive fixtures when selected; older pinned fixtures need adaptation.
+- [ ] **ROMDATA-04-FIRAGA-6C12C8-OTHER:** establish other selectors, pointers,
+  producers and scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-6C12C8-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-6C12C8-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-04-FIRAGA-EB9C0-LITERALS scoped EUR/Wine:** E257 adds seven
+  source-backed original Thumb LDR operands to the existing literal owner.
+  Reader `e319-firaga-eb9c0-literals-readers-wine-ej_mhq65`, scene `e319-firaga-eb9c0-literals-scene-wine-g9opsvws`, CLI `e319-firaga-eb9c0-literals-cli-wine-kq1iltos` and join `e319-firaga-eb9c0-literals-sample-residual-r8fvlc_h` pass.
+  [Evidence](../rom_data_runtime.md#e319-firaga-observed-thumb-literals).
+- [ ] **ROMDATA-REGRESSION-E257-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures, including unchanged-literal assumptions, when
+  selected; 49 updated fixtures have not been rerun.
+- [ ] **ROMDATA-04-FIRAGA-EB9C0-OTHER:** establish other readers, tables,
+  scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-EB9C0-LINUX:** validate readers, selected scene and
+  CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-EB9C0-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-39CB9C-SOURCES scoped EUR/static:** E320 authenticates
+  four transfer records, their roots and wrappers, and three previously owned
+  LZ streams. [Evidence](../rom_data_runtime.md#e320-firaga-transfer-program-source-plan).
+- [x] **ROMDATA-04-FIRAGA-39CB9C-PROGRAM scoped EUR/Wine:** E258 publishes
+  typed controls and reuses the existing LZ streams. Reader `e321-firaga-transfer-program-readers-wine-tfkrk5a_`, scene
+  `e321-firaga-transfer-program-scene-wine-sh2x442o`, CLI `e321-firaga-transfer-program-cli-wine-hj1_inpx` and join `e321-firaga-transfer-program-sample-residual-h_gw4p3y` pass.
+  [Evidence](../rom_data_runtime.md#e321-firaga-transfer-program-runtime).
+- [ ] **ROMDATA-REGRESSION-E258-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures for E258, including E257 literal assumptions,
+  when selected.
+- [x] **ROMDATA-01-FIRAGA-39CB9C-PALETTE-ROW-SOURCES scoped EUR/static:** E322
+  proves two adjacent eight-byte row prefixes, 14 bytes sampled. [Evidence](../rom_data_graphics.md#e322-firaga-palette-row-source-plan).
+- [x] **ROMDATA-04-FIRAGA-39CB9C-PALETTE-ROWS scoped EUR/Wine:** E259 serves
+  the selected prefixes. Reader `e323-firaga-palette-rows-readers-wine-rqv2iq3y`, scene `e323-firaga-palette-rows-scene-wine-05hjmqhm`, CLI `e323-firaga-palette-rows-cli-wine-7y0zezfv`
+  and join `e323-firaga-palette-rows-sample-residual-uui0fp3b` pass.
+  [Evidence](../rom_data_graphics.md#e323-firaga-palette-row-runtime).
+- [ ] **ROMDATA-REGRESSION-E259-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-01-FIRAGA-39CB9C-PALETTES:** establish other consumers and
+  selected or full use of the additional rows declared at `ae6db8`; the E322
+  source plan covers only the first row of each selected palette.
+- [ ] **ROMDATA-04-FIRAGA-39CB9C-OTHER:** establish other selectors, producers,
+  consumers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-39CB9C-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-39CB9C-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-14D480-SOURCES scoped EUR/static:** E324 authenticates
+  five original literals and 44 bytes copied to the stack; all 64 source bytes
+  appear in E302. [Evidence](../rom_data_runtime.md#e324-firaga-stack-initialization-source-plan).
+- [x] **ROMDATA-04-FIRAGA-14D480-STACK scoped EUR/Wine:** E260 publishes
+  typed stack data and literals. Reader `e325-firaga-stack-initialization-readers-wine-g2cv2hbo`, scene `e325-firaga-stack-initialization-scene-wine-w0ru_ree`,
+  CLI `e325-firaga-stack-initialization-cli-wine-_t8_0ngi` and join `e325-firaga-stack-initialization-sample-residual-smedangh` pass.
+  [Evidence](../rom_data_runtime.md#e325-firaga-stack-initialization-runtime).
+- [ ] **ROMDATA-REGRESSION-E260-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-14D480-OTHER:** establish live selector meaning and
+  domain, other callers and scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-14D480-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-14D480-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-40E844-SOURCES scoped EUR/Wine:** E326 identifies
+  one queued halfword-transfer projection and its original producer; 264 source
+  bytes are sampled. [Evidence](../rom_data_runtime.md#e326-firaga-queued-halfword-transfer-source-plan).
+- [x] **ROMDATA-04-FIRAGA-40E844-TRANSFER scoped EUR/Wine:** E261 publishes
+  the selected transfer view. Reader `e327-firaga-queued-transfer-readers-wine-eas1b41j`, scene `e327-firaga-queued-transfer-scene-wine-9nspb3cr`,
+  CLI `e327-firaga-queued-transfer-cli-wine-4jv_uinh` and join `e327-firaga-queued-transfer-sample-residual-nrrlw5qt` pass.
+  [Evidence](../rom_data_runtime.md#e327-firaga-queued-halfword-transfer-runtime).
+- [ ] **ROMDATA-REGRESSION-E261-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-40E844-OTHER:** establish other indices, source
+  allocation/format, consumers and scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-40E844-LINUX:** validate publication, original
+  transfer, selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-40E844-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-2D-2E-LITERALS scoped EUR/static:** E328 authenticates
+  41 original Thumb LDR instruction/source pairs, 164 sampled bytes.
+  [Evidence](../rom_data_runtime.md#e328-firaga-2d2e-thumb-literal-source-plan).
+- [x] **ROMDATA-04-FIRAGA-2D-2E-LITERALS scoped EUR/Wine:** E262 publishes
+  the 41 words. Reader `e329-firaga-2d-2e-literals-readers-wine-537ey132`, scene `e329-firaga-2d-2e-literals-scene-wine-ag5y0o6_`, CLI `e329-firaga-2d-2e-literals-cli-wine-stvyq0wt` and
+  join `e329-firaga-2d-2e-literals-sample-residual-yfp0eet3` pass.
+  [Evidence](../rom_data_runtime.md#e329-firaga-2d2e-thumb-literal-runtime).
+- [ ] **ROMDATA-REGRESSION-E262-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-2D-2E-OTHER:** establish other readers, values,
+  scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-2D-2E-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-2D-2E-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-EB83-EBC-LITERALS scoped EUR/static:** E330
+  authenticates ten original LDR instruction/source pairs, 40 sampled bytes.
+  [Evidence](../rom_data_runtime.md#e330-firaga-eb83ebc-thumb-literal-source-plan).
+- [x] **ROMDATA-04-FIRAGA-EB83-EBC-LITERALS scoped EUR/Wine:** E263 publishes
+  the ten words. Reader `e331-firaga-eb83-ebc-literals-readers-wine-u78tirug`, scene `e331-firaga-eb83-ebc-literals-scene-wine-uzod2dru`, CLI `e331-firaga-eb83-ebc-literals-cli-wine-t7kh3_rm` and
+  join `e331-firaga-eb83-ebc-literals-sample-residual-s6x3bxvv` pass.
+  [Evidence](../rom_data_runtime.md#e331-firaga-eb83ebc-thumb-literal-runtime).
+- [ ] **ROMDATA-REGRESSION-E263-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-EB83-EBC-OTHER:** establish other readers, values,
+  scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-EB83-EBC-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-EB83-EBC-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-CODE-LITERALS scoped EUR/static:** E332
+  authenticates 14 original LDR instruction/source pairs, 56 sampled bytes.
+  [Evidence](../rom_data_runtime.md#e332-firaga-0130190cf-thumb-literal-source-plan).
+- [x] **ROMDATA-04-FIRAGA-CODE-LITERALS scoped EUR/Wine:** E264 publishes
+  the 14 words. Reader `e333-firaga-code-literals-readers-wine-0j4qqizf`, scene `e333-firaga-code-literals-scene-wine-lcs3hcvx`, CLI `e333-firaga-code-literals-cli-wine-kijs396o` and
+  join `e333-firaga-code-literals-sample-residual-we6mxexq` pass.
+  [Evidence](../rom_data_runtime.md#e333-firaga-0130190cf-thumb-literal-runtime).
+- [ ] **ROMDATA-REGRESSION-E264-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-CODE-LITERALS-OTHER:** establish other readers,
+  values, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-CODE-LITERALS-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-CODE-LITERALS-USA:** identify and validate
+  corresponding sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-MIXED-LITERALS scoped EUR/static:** E334
+  authenticates 57 original LDR instruction/source pairs, 228 sampled bytes.
+  [Evidence](../rom_data_runtime.md#e334-firaga-mixed-thumb-literal-source-plan).
+- [x] **ROMDATA-04-FIRAGA-MIXED-LITERALS scoped EUR/Wine:** E265 publishes
+  the 57 words. Reader `e335-firaga-mixed-literals-readers-wine-8ipblmws`, scene `e335-firaga-mixed-literals-scene-wine-ixvjw955`, CLI `e335-firaga-mixed-literals-cli-wine-7jyq36ot` and
+  join `e335-firaga-mixed-literals-sample-residual-77a2186_` pass.
+  [Evidence](../rom_data_runtime.md#e335-firaga-mixed-thumb-literal-runtime).
+- [ ] **ROMDATA-REGRESSION-E265-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-MIXED-LITERALS-OTHER:** establish other readers,
+  values, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-MIXED-LITERALS-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-MIXED-LITERALS-USA:** identify and validate
+  corresponding sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-RESIDUAL-LITERALS scoped EUR/static:** E336
+  authenticates 52 original LDR instruction/source pairs, 208 sampled bytes.
+  [Evidence](../rom_data_runtime.md#e336-firaga-residual-thumb-literal-source-plan).
+- [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS:** the E266 draft publishes the
+  selected words but remains unvalidated. Its Windows build
+  `e337-firaga-residual-literals-build-mve1jq1_` was interrupted on user pause
+  (session exit 130); its receipt still says running and a unit-local lease is
+  retained. Inspect ownership, child processes and outputs before any restart or
+  lease action. Wine readers/transfers, altered-source scene, CLI and residual
+  join remain to be validated after the user resumes the work.
+- [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-OTHER:** establish other readers,
+  values, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-LINUX:** validate publication, readers,
+  selected scene and CLI when that platform is selected.
+- [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-USA:** identify and validate
+  corresponding sources; native Windows remains unverified.
+- [ ] **ROMDATA-01-FIRAGA-SCENE-RESIDUAL:** attribute the E302 sampled
+  addresses to original readers and source contracts; 313 remain outside E265
+  source ownership. Integrate authenticated unmigrated data and preserve code
+  or other justified exclusions separately.
+  Other scenes, consumers and full-ROM coverage remain open.
+- [ ] **ROMDATA-01-FIRAGA-SCENE-LINUX:** reproduce the selected inventory and
+  equivalent scene on Linux when that platform is selected.
+- [ ] **ROMDATA-01-FIRAGA-SCENE-USA:** identify a corresponding USA scene and
+  validate it when that region is selected; native Windows also remains open.
 - [ ] **ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS:** determine reader and caller
   ancestry for the 40 E285 outside-scope bytes near `ae71be..ae787c`; E248
   source ownership does not establish attribution or other scenes.

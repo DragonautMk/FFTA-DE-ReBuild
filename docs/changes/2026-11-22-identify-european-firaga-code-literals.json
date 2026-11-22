@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-code-literals",
+  "title": "Identify European Firaga code literals",
+  "kind": "docs",
+  "platforms": [
+    "European ROM"
+  ],
+  "changes": [
+    "Authenticate 14 original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample."
+  ],
+  "validation": [
+    "Protected source plan e332-firaga-code-literals-source-plan-loawcszx authenticates 56 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and Wine disassemblies.",
+    "Wine disassembly e332-firaga-code-literals-disassembly-wine-nbsow8qc passed and drained the coordinated server."
+  ],
+  "limitations": [
+    "The code-candidate map is speculative. This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

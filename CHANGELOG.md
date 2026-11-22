@@ -314,6 +314,26 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDA
 
 [Change record](docs/changes/2026-11-22-inventory-european-soil-evidence-rom-reads.json)
 
+## 2026-11-22 — Inventory European Firaga scene ROM reads
+
+Type: docs. Platforms: Wine.
+
+**Changes**
+
+- Record a 606-frame European Firaga battle comparison and selected-reader inventory against the E248 dataset.
+
+**Validation**
+
+- Wine unit e302-firaga-scene-audit-wine-fxu8xxli passed per-frame state, clock, video, OAM, dispatch and audio comparison; 8,283 observed bytes are outside declared sources and the Wine server drained.
+
+**Limitations**
+
+- Observed addresses are not asset extents or executing PCs; attribution, additional scenes, Linux, USA, real BIOS and native Windows remain open. No performance comparison was made.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-22-inventory-european-firaga-rom-reads.json)
+
 ## 2026-11-22 — Inventory European Blue Screw ROM reads
 
 Type: docs. Platforms: European ROM; Windows via Wine.
@@ -396,6 +416,66 @@ Type: docs. Platforms: European ROM; Windows via Wine.
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-22-identify-red-spring-final-source-spans.json)
+
+## 2026-11-22 — Identify Firaga sprite list candidates
+
+Type: docs. Platforms: European ROM; static source inventory.
+
+**Changes**
+
+- Identify fully sampled count and payload pairs in the European Firaga scene for subsequent typed OBJ integration.
+
+**Validation**
+
+- Static unit e305-firaga-sprite-list-candidates-u3pn58da finds 44 disjoint candidates containing 347 objects and 2,170 sampled bytes outside E249 owners.
+
+**Limitations**
+
+- Address matching does not prove temporal pairing, call sites, producers or full asset coverage; typed runtime use, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-22-identify-firaga-sprite-list-candidates.json)
+
+## 2026-11-22 — Identify Firaga battle LZ sources
+
+Type: docs. Platforms: Wine.
+
+**Changes**
+
+- Authenticate three European Firaga scene LZ77 source extents before runtime publication.
+
+**Validation**
+
+- Static unit e303-firaga-lz-plan-o44ggusq decodes 3,290 sampled encoded bytes to 5,968 bytes, verifies exact hashes and checks disjointness from E248 source owners.
+
+**Limitations**
+
+- The source plan does not establish game-level asset identities, HLE call sites, all consumers or runtime publication; Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-22-identify-firaga-lz-sources.json)
+
+## 2026-11-22 — Identify Firaga copied matrix sources
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate two adjacent copied halfword matrices and four original literal words observed in the European Firaga scene.
+
+**Validation**
+
+- Static source plan e307-firaga-copy-matrix-source-plan-b7zo8r9m verifies 472 sampled bytes, original copy and queue instruction fingerprints and existing E250 ownership; supporting disassembly ran on Wine.
+
+**Limitations**
+
+- The source plan alone does not attribute every sampled access to those callers, establish full semantics or publish runtime resources. Other scenes, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-22-identify-firaga-copied-matrices.json)
 
 ## 2026-11-22 — Identify European Soil type-3 source links
 
@@ -754,6 +834,311 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDA
 
 [Change record](docs/changes/2026-11-22-identify-european-post-indexed-anchored-literals.json)
 
+## 2026-11-22 — Identify European Firaga transfer program sources
+
+Type: docs. Platforms: European ROM; Windows disassembly via Wine.
+
+**Changes**
+
+- Authenticate one selected four-record transfer program, its descriptor roots and existing LZ ownership; record palette payload extents as separate open work.
+
+**Validation**
+
+- Protected source plan e320-firaga-39cb9c-source-plan-ilwy805q authenticates 121 unowned source bytes, including 98 E302 sampled bytes, and rechecks all three previously verified compressed and decoded stream hashes.
+- Five Wine disassemblies pass and drain the coordinated server; earlier E304 reader and 606-frame Wine scene evidence covers the three existing LZ streams.
+
+**Limitations**
+
+- Source identification does not publish data, prove individual address-sample PCs or establish palette payload extents, other selectors, producers, consumers, scenes, Linux, USA or native Windows. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-transfer-program.json)
+
+## 2026-11-22 — Identify European Firaga stack initialization sources
+
+Type: docs. Platforms: European ROM; Windows disassembly via Wine.
+
+**Changes**
+
+- Authenticate five original literal pointers and five copied stack initialization blocks as a scoped source plan.
+
+**Validation**
+
+- Protected source plan e324-firaga-14d480-source-plan-52tdqmk9 authenticates 64 unowned source bytes, all sampled by E302, the original LDR operands and stack-copy instruction sequence.
+- Wine disassembly e324-firaga-14d480-consumer-wine-i51e67_6 and prior E283 copy-helper evidence pass and drain the coordinated server.
+
+**Limitations**
+
+- This plan does not publish data or attribute address-only sampled accesses to PCs; live selector domain, other callers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-stack-initialization.json)
+
+## 2026-11-22 — Identify European Firaga residual literals
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate 52 original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample.
+
+**Validation**
+
+- Protected source plan e336-firaga-residual-literals-source-plan-6fg1_6yj authenticates 208 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and Wine disassemblies.
+- Wine disassembly e336-firaga-residual-literals-disassembly-wine-d9ijk6ak passed and drained the coordinated server.
+
+**Limitations**
+
+- Linear disassembly does not establish executed PCs. This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-residual-literals.json)
+
+## 2026-11-22 — Identify European Firaga queued transfer source
+
+Type: added. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Add bounded feature-gated DMA read provenance and identify one original queued halfword-transfer projection and its two producer literals.
+
+**Validation**
+
+- Wine captures e326-firaga-40e844-dma-wine-d2e7v3m2 and e326-firaga-40e844-queue-wine-y_wimttr identify one DMA3 transfer and join a queued source-pointer write to its descriptor; a synthetic immediate-DMA pair preserves full state and guest clock.
+- Protected source plan e326-firaga-40e844-source-plan-yuq_1w_3 authenticates 264 unowned sampled bytes and original producer arithmetic, with Wine disassembly e326-firaga-enqueue-caller-wine-h4sr9ejw. Wine servers drained.
+
+**Limitations**
+
+- Only one selected transfer and continuation are covered; native exported PCs are context rather than exact store sites, and other indices, allocation/format, consumers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+- The source-save history remains unknown. The nested DMA scope uses RAII but the focused synthetic check exercises immediate DMA only; typed publication is pending.
+
+Documentation: [read_audit.rs](crates/gba-core/src/rom_data/read_audit.rs), [mem.rs](crates/gba-core/src/mem.rs), [native_rom_data_residue_tests.rs](crates/recomp/src/rom_data/native_rom_data_residue_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-queued-transfer.json)
+
+## 2026-11-22 — Identify European Firaga palette row sources
+
+Type: docs. Platforms: European ROM; Windows disassembly via Wine.
+
+**Changes**
+
+- Authenticate two adjacent selected palette row prefixes and their original copy consumer; leave additional rows and other consumers open.
+
+**Validation**
+
+- Protected source plan e322-firaga-palette-prefix-source-plan-vk6ruysg authenticates 16 unowned source bytes, including 14 E302 sampled bytes, and the original selected call arguments and copy-helper chain.
+- Wine disassembly e322-firaga-palette-consumer-wine-miin8nps and the earlier E307 helper evidence pass and drain the coordinated server.
+
+**Limitations**
+
+- This plan does not publish data or attribute address-only sampled accesses to PCs; additional rows, other consumers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-palette-rows.json)
+
+## 2026-11-22 — Identify European Firaga mixed literals
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate 57 original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample.
+
+**Validation**
+
+- Protected source plan e334-firaga-mixed-literals-source-plan-t56gh8bq authenticates 228 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and Wine disassemblies.
+- Wine disassembly e334-firaga-mixed-literals-disassembly-wine-5rc48zzd passed and drained the coordinated server.
+
+**Limitations**
+
+- Linear disassembly does not establish executed PCs. This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-mixed-literals.json)
+
+## 2026-11-22 — Identify European Firaga indexed OBJ bank
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Document the selected descriptor, nineteen-frame sequence, twenty-entry object directory and empty list while reusing eighteen previously owned lists.
+- Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist.
+
+**Validation**
+
+- Static source contract e311-firaga-obj-source-contract-zn6lp3op authenticates 176 candidate bytes, including 172 observed outside E252 source owners, and all sequence links.
+- Wine disassembly e311-firaga-obj-readers-wine-0_vwkio3 confirms the original constructor and scheduler reads; the Wine server drained.
+
+**Limitations**
+
+- The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.
+- Linux, USA and native Windows remain pending; no performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-indexed-obj-bank.json)
+
+## 2026-11-22 — Identify European Firaga eb83 and ebc literals
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate ten original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample.
+
+**Validation**
+
+- Protected source plan e330-firaga-eb83-ebc-literals-source-plan-iomybbqw authenticates 40 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and retained disassemblies.
+
+**Limitations**
+
+- This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-eb83-ebc-literals.json)
+
+## 2026-11-22 — Identify European Firaga compact OBJ bank
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Document the selected compact OBJ directory, ten-frame sequence, three empty lists and indirect roots while reusing seven previously owned lists.
+- Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist.
+
+**Validation**
+
+- Static source plan e313-firaga-compact-obj-source-plan-retry-nj96f9zl authenticates 66 sampled bytes, original reader fingerprints and the seven prior list owners.
+- Reused earlier Wine original caller and compact-reader disassemblies; no new gameplay or performance measurement.
+
+**Limitations**
+
+- The initial static unit 4x33r8y_ failed because the pointer was indirect; the passing retry authenticates the descriptor link.
+- The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.
+- Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-compact-obj-bank.json)
+
+## 2026-11-22 — Identify European Firaga compact cell source
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Document a source-rooted compact cell directory, ten frame streams and a ten-entry sequence, preserving unknown fields and excluding the intervening bytes.
+- Track publication, wider consumer coverage and deferred platform checks in the ROM data recovery checklist.
+
+**Validation**
+
+- Static source plan e309-firaga-compact-source-plan-163iufku authenticates 626 plus 22 sampled source bytes, reader fingerprints, ten compact frame extents and E251 non-overlap.
+- Wine disassembly e309-firaga-compact-readers-wine-wv43bxaa and constructor/count evidence m654jv6l, 5bhu4sna and artnj9cx support the reader interpretation; Wine servers drained.
+
+**Limitations**
+
+- The scene sample lacks executing PCs; source fields, wider selectors and scenes remain partially unclassified. No resource is published by this source-only plan.
+- Linux, USA and native Windows remain pending; no performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-compact-cells.json)
+
+## 2026-11-22 — Identify European Firaga code literals
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate 14 original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample.
+
+**Validation**
+
+- Protected source plan e332-firaga-code-literals-source-plan-loawcszx authenticates 56 unowned source bytes, all sampled by E302, and original LDR opcodes, effective addresses and Wine disassemblies.
+- Wine disassembly e332-firaga-code-literals-disassembly-wine-nbsow8qc passed and drained the coordinated server.
+
+**Limitations**
+
+- The code-candidate map is speculative. This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-code-literals.json)
+
+## 2026-11-22 — Identify European Firaga adjacent compact OBJ bank
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Document two compact OBJ task descriptors, the adjacent 17-frame sequence and one empty list while reusing ten previously owned lists.
+- Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist.
+
+**Validation**
+
+- Static source plan e315-firaga-adjacent-compact-obj-source-plan-3g8h3wg6 authenticates 115 bytes, including 107 sampled bytes, original reader fingerprints and ten prior list owners.
+- Wine disassemblies 2djsznfs and 3y7u8cdl trace the original descriptor constructor and task callback; both servers drained. No new gameplay or performance measurement.
+
+**Limitations**
+
+- The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.
+- Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-adjacent-compact-obj-bank.json)
+
+## 2026-11-22 — Identify European Firaga 6c12c8 compact OBJ bank
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Document the selected compact OBJ descriptor, 13-frame sequence and one empty list while reusing nine previously owned lists.
+- Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist.
+
+**Validation**
+
+- Static source plan e317-firaga-6c12c8-source-plan-bz8m5fb_ authenticates 85 bytes, including 81 sampled bytes, original reader fingerprints and nine prior list owners.
+- Reused prior Wine disassemblies 8lucbl5h and 3y7u8cdl for the original descriptor caller and task callback; both servers drained. No new gameplay or performance measurement.
+
+**Limitations**
+
+- The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.
+- Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-6c12c8-compact-obj-bank.json)
+
+## 2026-11-22 — Identify European Firaga 2d and 2e literals
+
+Type: docs. Platforms: European ROM; Windows disassembly via Wine.
+
+**Changes**
+
+- Authenticate 41 original Thumb PC-relative literal instruction/source pairs in the selected Firaga address sample.
+
+**Validation**
+
+- Protected source plan e328-firaga-2d-2e-literals-source-plan-csk4bbyl authenticates 164 unowned source bytes, all sampled by E302, and original LDR opcodes and effective addresses.
+- Wine disassembly e328-firaga-2d-2e-literals-disassembly-wine-edr1c64y passes and drains the coordinated server.
+
+**Limitations**
+
+- This plan does not publish data or attribute address-only sampled accesses to PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-22-identify-european-firaga-2d-2e-literals.json)
+
 ## 2026-11-22 — Identify European Blue Screw source plan
 
 Type: docs. Platforms: European ROM; Windows via Wine and static analysis.
@@ -793,6 +1178,28 @@ Type: docs. Platforms: European ROM; Windows via Wine and static analysis.
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-22-identify-european-bank-switch-arrays.json)
+
+## 2026-11-22 — Draft European Firaga residual literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Draft an extension of the existing Thumb literal resource with 52 authenticated source words; runtime publication remains unaccepted.
+
+**Validation**
+
+- Prior E336 source plan e336-firaga-residual-literals-source-plan-6fg1_6yj authenticates 52 pairs and 208 sampled bytes; Wine disassembly passed.
+- E337 Windows build e337-firaga-residual-literals-build-mve1jq1_ was interrupted on user pause; session exited 130 while the unit receipt remained running with a local lease.
+
+**Limitations**
+
+- The E266 draft is unvalidated. Inspect process ownership and outputs before restart or lease action on user resume; Wine readers/transfers, altered-source scene, CLI and residual join remain to run.
+- Other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-draft-european-firaga-residual-literals.json)
 
 ## 2026-11-22 — Consume final European Red Spring switch arrays
 
@@ -1302,6 +1709,407 @@ Type: added. Platforms: European ROM; Windows via Wine.
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-22-consume-european-post-indexed-anchored-literals.json)
+
+## 2026-11-22 — Consume European Firaga transfer program
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish one typed four-record Firaga transfer program and its roots, wrappers and format headers while reusing the three existing LZ stream owners and preserving guest fallback.
+
+**Validation**
+
+- Wine reader e321-firaga-transfer-program-readers-wine-tfkrk5a_ checks unchanged prior resources, tampered-file rejection, poisoned mixed LZ boundaries and mirrors, 36 original reader comparisons, three transfers and snapshot ownership.
+- Wine scene e321-firaga-transfer-program-scene-wine-sh2x442o compares 606 altered-source frames, positively consumes all 12 new source groups, and matches state, clock, video, OAM, dispatch and audio.
+- Wine CLI e321-firaga-transfer-program-cli-wine-hj1_inpx creates, reuses and verifies 144 matching files; static join e321-firaga-transfer-program-sample-residual-h_gw4p3y leaves 1,143 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Palette payload extents, source-save history, other selectors, producers, consumers, scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-transfer-program.json)
+
+## 2026-11-22 — Consume European Firaga Thumb literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Append seven authenticated original Firaga LDR operands to the existing Thumb literal owner, preserving previous entries and guest fallback.
+
+**Validation**
+
+- Wine reader e319-firaga-eb9c0-literals-readers-wine-ej_mhq65 checks prior resources, coherent edit rejection, mirrors/boundaries, 14 original reader comparisons and three DMA/CpuSet/CpuFastSet cases.
+- Wine scene e319-firaga-eb9c0-literals-scene-wine-g9opsvws compares 606 altered-source frames and positively consumes all seven words; state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e319-firaga-eb9c0-literals-cli-wine-kq1iltos creates, reuses and verifies 143 matching files; static join e319-firaga-eb9c0-literals-sample-residual-r8fvlc_h leaves 1,241 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, other original callers, tables and scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 49 revised older fixtures were not rerun; some require adaptation for the expanded literal resource. Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-thumb-literals.json)
+
+## 2026-11-22 — Consume European Firaga stack initialization
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish typed original pointer literals and stack initialization fields while preserving original live selectors and fallback.
+
+**Validation**
+
+- Wine reader e325-firaga-stack-initialization-readers-wine-g2cv2hbo checks unchanged prior resources, tampered-file rejection, poisoned boundaries and mirrors, 26 original reader comparisons, two original copy-loop cases, three transfers and snapshot ownership.
+- Wine scene e325-firaga-stack-initialization-scene-wine-w0ru_ree compares 606 altered-source frames, positively consumes all six groups, and matches state, clock, video, OAM, dispatch and audio.
+- Wine CLI e325-firaga-stack-initialization-cli-wine-_t8_0ngi creates, reuses and verifies 146 matching files; static join e325-firaga-stack-initialization-sample-residual-smedangh leaves 1,065 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Live selector domain, other callers and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-stack-initialization.json)
+
+## 2026-11-22 — Consume European Firaga sprite lists
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated static OBJ catalog and guest page routing with 44 Firaga-scene lists while preserving earlier resources and fallback.
+- Update revision-sensitive fixtures for the new dataset and prior OBJ preservation.
+
+**Validation**
+
+- Wine reader e306-firaga-sprite-lists-readers-wine-zlctezch verifies 224 earlier lists, 135 other resources, poisoned boundaries, three interpreter/host comparisons and transfers.
+- Wine scene e306-firaga-sprite-lists-scene-wine-pa5aamwj compares 606 altered-source frames, with all 44 lists consumed by both guest and host; state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e306-firaga-sprite-lists-cli-wine-h5s9hkgs creates, reuses and verifies 137 matching files; static join e306-firaga-sprite-list-sample-residual-qgpr0gm3 leaves 2,823 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, original list producers, other scenes/readers, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 42 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-sprite-lists.json)
+
+## 2026-11-22 — Consume European Firaga queued transfer
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish one selected typed queued halfword-transfer view and its original producer literals while preserving guest queue, DMA and fallback.
+
+**Validation**
+
+- Wine reader e327-firaga-queued-transfer-readers-wine-eas1b41j checks unchanged prior resources, tampered-file rejection, poisoned boundaries and mirrors, original literal readers, producer/queue/DMA destination, transfers and snapshot ownership.
+- Wine scene e327-firaga-queued-transfer-scene-wine-9nspb3cr compares 606 altered-source frames, positively consumes all three source groups, and matches state, clock, video, OAM, dispatch and audio.
+- Wine CLI e327-firaga-queued-transfer-cli-wine-4jv_uinh creates, reuses and verifies 147 matching files; static join e327-firaga-queued-transfer-sample-residual-nrrlw5qt leaves 801 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other indices, source allocation/format, producers, consumers and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-queued-transfer.json)
+
+## 2026-11-22 — Consume European Firaga palette rows
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish two typed selected palette row prefixes with original transfer-program dependency and normal fallback for additional rows.
+
+**Validation**
+
+- Wine reader e323-firaga-palette-rows-readers-wine-rqv2iq3y checks unchanged prior resources, tampered-file rejection, poisoned boundaries and mirrors, two complete original consumer copies, generated copy-helper cases, three transfers and snapshot ownership.
+- Wine scene e323-firaga-palette-rows-scene-wine-05hjmqhm compares 606 altered-source frames, positively consumes both row groups, and matches state, clock, video, OAM, dispatch and audio.
+- Wine CLI e323-firaga-palette-rows-cli-wine-7y0zezfv creates, reuses and verifies 145 matching files; static join e323-firaga-palette-rows-sample-residual-uui0fp3b leaves 1,129 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Additional rows, other selectors, producers, consumers and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-palette-rows.json)
+
+## 2026-11-22 — Consume European Firaga mixed literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb literal resource with 57 authenticated source words while preserving prior owners and guest fallback.
+
+**Validation**
+
+- Wine reader e335-firaga-mixed-literals-readers-wine-8ipblmws checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 114 original reader cases, transfers and snapshot ownership.
+- Wine scene e335-firaga-mixed-literals-scene-wine-ixvjw955 compares 606 altered-source frames and consumes all 57 words, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e335-firaga-mixed-literals-cli-wine-7jyq36ot creates, reuses and verifies 147 matching files; static join e335-firaga-mixed-literals-sample-residual-77a2186_ leaves 313 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-mixed-literals.json)
+
+## 2026-11-22 — Consume European Firaga LZ streams
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated LZ resource and HLE counters to serve three Firaga battle streams while preserving prior resources and raw fallback.
+- Update the affected revision-sensitive fixtures for the new dataset and preservation contract.
+
+**Validation**
+
+- Wine reader e304-firaga-lz-readers-wine-6taiimnv verifies 17 prior streams, 135 other resources, poisoned and mirrored boundaries, coherent edit rejection, three SWI cases and nine transfer cases.
+- Wine scene e304-firaga-lz-scene-wine-ugltru8s compares 606 altered-source frames with one HLE call per new stream; state, guest clock, video, OAM, dispatch and audio match.
+- Wine CLI e304-firaga-lz-cli-wine-a19gxpua creates, reuses and verifies 137 matching files; static join e304-firaga-lz-sample-residual-higcopsd leaves 4,993 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Game-level asset identities, other scenes and readers, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 41 revised older fixtures and older E174/E175 LZ fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-lz-streams.json)
+
+## 2026-11-22 — Consume European Firaga indexed OBJ bank
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the typed Firaga descriptor, indexed sequence and object directory, retaining original task indexing and existing list owners.
+- Add the selected empty list to guest/host OBJ ownership and update revision-sensitive fixtures.
+
+**Validation**
+
+- Wine reader e312-firaga-obj-readers-wine-za6f9c7v verifies preservation of prior resources and lists, poisoned mirrors/boundaries, original reader comparisons, transfers and the empty-list host path.
+- Wine scene e312-firaga-obj-scene-wine-3d6gbyaw compares 606 altered-source frames; indexed sources and the empty list are used and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e312-firaga-obj-cli-wine-qe3bcmsl creates, reuses and verifies 140 matching files; static join e312-firaga-obj-sample-residual-0hdjkda7 leaves 1,523 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, producer ancestry, other selectors and scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 45 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-indexed-obj-bank.json)
+
+## 2026-11-22 — Consume European Firaga eb83/ebc literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb literal resource with 10 authenticated source words while preserving prior owners and guest fallback.
+
+**Validation**
+
+- Wine reader e331-firaga-eb83-ebc-literals-readers-wine-u78tirug checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 20 original reader cases, transfers and snapshot ownership.
+- Wine scene e331-firaga-eb83-ebc-literals-scene-wine-uzod2dru compares 606 altered-source frames and consumes all 10 words, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e331-firaga-eb83-ebc-literals-cli-wine-t7kh3_rm creates, reuses and verifies 147 matching files; static join e331-firaga-eb83-ebc-literals-sample-residual-s6x3bxvv leaves 597 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-eb83-ebc-literals.json)
+
+## 2026-11-22 — Consume European Firaga copied matrices
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish authenticated typed Firaga copied matrices and their original pointer literals; serve guest reads without changing original copy behavior or fallback.
+- Update revision-sensitive fixtures for E251 and add a focused original-reader, transfer and snapshot check.
+
+**Validation**
+
+- Wine reader e308-firaga-matrices-readers-wine-retry-43bpfeqh verifies prior resources, poisoned mirrors and boundaries, eight original literal cases, two original copy cases and four DMA/CpuSet cases.
+- Wine scene e308-firaga-matrices-scene-wine-_e603cr2 compares 606 altered-source frames; both matrices and all four literal words are read and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e308-firaga-matrices-cli-wine-73v6pnom creates, reuses and verifies 138 matching files; static join e308-firaga-matrices-sample-residual-q5otx2ur leaves 2,351 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The first Wine reader attempt 15hjtvca failed because its endpoint excluded a second combined load; retry 43bpfeqh passes at a shared endpoint. Both Wine servers drained.
+- The source-save history, dynamic producer, matrix semantics, other scenes/readers, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 43 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-copied-matrices.json)
+
+## 2026-11-22 — Consume European Firaga compact OBJ bank
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the typed Firaga compact OBJ bank and indirect roots, preserving original guest indexing and seven existing list owners.
+- Add three selected empty lists to guest/host OBJ ownership and update revision-sensitive fixtures.
+
+**Validation**
+
+- Wine reader e314-firaga-compact-obj-readers-wine-uag8crl9 verifies preservation of prior resources and lists, poisoned mirrors/boundaries, 30 original reader comparisons, eight transfers and the three empty-list host paths.
+- Wine scene e314-firaga-compact-obj-scene-wine-00m4jnor compares 606 altered-source frames; five compact source groups and all three empty-list guest paths are used and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e314-firaga-compact-obj-cli-wine-dlvxuop3 creates, reuses and verifies 141 matching files; static join e314-firaga-compact-obj-sample-residual-h1qk2fn_ leaves 1,457 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, producer ancestry, other selectors and scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 46 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-compact-obj-bank.json)
+
+## 2026-11-22 — Consume European Firaga compact cells
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish authenticated compact cell frames, sequence and original root words as typed resources; preserve original encoding, decoder, indexing and fallback.
+- Update revision-sensitive fixtures for E252 and add a focused original-reader, transfer and snapshot check.
+
+**Validation**
+
+- Wine reader e310-firaga-compact-readers-wine-5kbmgbk2 verifies prior resources, poisoned mirrors and boundaries, 80 original reader comparisons and four DMA/CpuSet cases.
+- Wine scene e310-firaga-compact-scene-wine-q89549qz compares 606 altered-source frames; all four source groups are read and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e310-firaga-compact-cli-wine-0ha_kvmp creates, reuses and verifies 139 matching files; static join e310-firaga-compact-sample-residual-5soh9_aa leaves 1,695 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The first Windows test build qsp0_nyj failed because the new fixture lacked the Bus import; build 8c07svlc passes with that import.
+- The source-save history, other selectors, fields, scenes/readers, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 44 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-compact-cells.json)
+
+## 2026-11-22 — Consume European Firaga 013/019/0cf literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb literal resource with 14 authenticated source words while preserving prior owners and guest fallback.
+
+**Validation**
+
+- Wine reader e333-firaga-code-literals-readers-wine-0j4qqizf checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 28 original reader cases, transfers and snapshot ownership.
+- Wine scene e333-firaga-code-literals-scene-wine-lcs3hcvx compares 606 altered-source frames and consumes all 14 words, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e333-firaga-code-literals-cli-wine-kijs396o creates, reuses and verifies 147 matching files; static join e333-firaga-code-literals-sample-residual-we6mxexq leaves 541 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-code-literals.json)
+
+## 2026-11-22 — Consume European Firaga adjacent compact OBJ bank
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish typed Firaga task descriptor projections, count source, adjacent compact directory and 17-frame sequence, preserving prior owners and guest fallback.
+- Add the selected empty list to guest/host OBJ ownership and update revision-sensitive fixtures.
+
+**Validation**
+
+- Wine reader e316-firaga-adjacent-obj-readers-wine-5zq084xm verifies preservation of prior resources and lists, poisoned mirrors/boundaries, 36 original reader comparisons, eight transfers and the empty-list host path.
+- Wine scene e316-firaga-adjacent-obj-scene-wine-vgv_p24h compares 606 altered-source frames; seven compact source groups and the empty-list guest path are used and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e316-firaga-adjacent-obj-cli-wine-823mmm5g creates, reuses and verifies 142 matching files; static join e316-firaga-adjacent-obj-sample-residual-rk9t89t2 leaves 1,350 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, producer ancestry, other selectors and scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 47 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-adjacent-compact-obj-bank.json)
+
+## 2026-11-22 — Consume European Firaga 6c12c8 OBJ bank
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish the selected Firaga descriptor, count, compact directory and 13-frame sequence, preserving prior owners and guest fallback.
+- Add the selected empty list to guest/host OBJ ownership and update revision-sensitive fixtures.
+
+**Validation**
+
+- Wine reader e318-firaga-6c12c8-obj-readers-wine-hjwi7j_n verifies preservation of prior resources and lists, poisoned mirrors/boundaries, 36 original reader comparisons, eight transfers and the empty-list host path.
+- Wine scene e318-firaga-6c12c8-obj-scene-wine-vav9bzv2 compares 606 altered-source frames; five compact source groups and the empty-list guest path are used and state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e318-firaga-6c12c8-obj-cli-wine-maq3te3q creates, reuses and verifies 143 matching files; static join e318-firaga-6c12c8-obj-sample-residual-loxk_hkh leaves 1,269 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The source-save history, producer ancestry, other selectors and scenes, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- The 48 revised older fixtures were not rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-6c12c8-obj-bank.json)
+
+## 2026-11-22 — Consume European Firaga 2d/2e literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb literal resource with 41 authenticated source words while preserving prior owners and guest fallback.
+
+**Validation**
+
+- Wine reader e329-firaga-2d-2e-literals-readers-wine-537ey132 checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 82 original reader cases, transfers and snapshot ownership.
+- Wine scene e329-firaga-2d-2e-literals-scene-wine-ag5y0o6_ compares 606 altered-source frames and consumes all 41 words, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e329-firaga-2d-2e-literals-cli-wine-stvyq0wt creates, reuses and verifies 147 matching files; static join e329-firaga-2d-2e-literals-sample-residual-yfp0eet3 leaves 637 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-22-consume-european-firaga-2d-2e-literals.json)
 
 ## 2026-11-22 — Consume European Blue Screw sources
 

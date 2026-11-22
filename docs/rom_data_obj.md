@@ -4062,3 +4062,219 @@ reader and scene logs contain D-Bus pending-call assertions before successful
 completion; the cause remains unestablished. Ordinary use of the other groups,
 other callers, Linux, USA and native Windows remain open. No performance
 measurements were made.
+
+## E311 Firaga indexed OBJ source plan
+
+Protected static unit `e311-firaga-obj-source-contract-zn6lp3op` identifies a
+EUR descriptor at `398f90`, one sequence directory at `412050`, a sequence
+with 19 frames, and a 20-entry object directory at `418e9c`. The descriptor
+contains the two original roots and two additional halfwords. The sequence
+references the empty list at `418eec` and 18 lists already owned by
+`graphics.obj-static-lists`; directory entry 1 is not referenced by this
+sequence and its list is excluded from the selected source plan.
+
+The new source portions total 176 bytes: 12 descriptor bytes, 4 sequence-index
+bytes, 78 sequence bytes, 80 object-index bytes and the 2-byte empty-list
+header. Of those, 172 were observed in the E302 address sample outside E252
+source owners. All 19 frame list IDs resolve within the selected object
+directory; durations remain original u16 values and the live task retains its
+index and counter. Existing list resources are not duplicated.
+
+Wine disassembly `e311-firaga-obj-readers-wine-0_vwkio3` authenticates the
+original constructor's relative sequence index and header reads and the
+scheduler's frame, object-directory and duration reads. This is a source plan,
+not runtime publication. The address-only sample does not attribute each read
+to these PCs or prove its producer, and the source projection adds no guest
+bounds. Other scenes, selectors, real BIOS, UI save/Load, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+## E312 Firaga indexed OBJ runtime
+
+EUR E253-d252 publishes `graphics.firaga-indexed-obj-bank` for the E311
+descriptor, sequence index and 19-frame sequence, and 20-entry object index.
+The selected zero-object list is added to `graphics.obj-static-lists` so guest
+and host readers share its typed owner. The other 18 referenced lists retain
+their previous owners; the unreferenced list remains on its prior fallback.
+Original task indexing, timing and fallback are unchanged.
+
+Wine reader `e312-firaga-obj-readers-wine-za6f9c7v` verifies creation and reuse,
+137 unchanged other resources and preservation of the earlier OBJ lists,
+coherent-edit rejection, poisoned mirrors and mixed boundaries, snapshot
+ownership, original interpreter/generated reader comparisons, DMA/CpuSet,
+and a host comparison for the empty list. Wine scene `e312-firaga-obj-scene-wine-3d6gbyaw` compares 606
+retained Firaga frames with the 176 selected source bytes altered in managed
+backing ROM. The four indexed source groups record byte reads of [12, 4, 184, 76],
+including repeated accesses; the empty list has guest use and host use
+`True` in this continuation. State, guest clock, video,
+OAM, dispatch and five nonempty audio streams match every frame. The source
+save's earlier history remains unknown. Wine CLI `e312-firaga-obj-cli-wine-qe3bcmsl` creates, reuses and
+verifies 140 matching files. Wine drained using the local Bluetooth overlay.
+
+Static join `e312-firaga-obj-sample-residual-0hdjkda7` finds 1,523 E302 sampled
+bytes still outside E253 declared sources. The sample is address-only, not
+full-ROM coverage or attribution of every read to a caller. The dynamic
+producer, other selectors/scenes, opaque descriptor fields, real BIOS and UI
+save/Load remain open. Forty-five updated older revision-sensitive fixtures,
+Linux, USA and native Windows remain to be checked. No performance comparison
+was made.
+
+## E313 Firaga compact OBJ source plan
+
+Protected static unit `e313-firaga-compact-obj-source-plan-retry-nj96f9zl`
+authenticates a selected EUR compact OBJ bank rooted at `6b3578`. The original
+caller indexes the pointer table at `39cc6c`; the selected cell points to a
+descriptor whose first word points to the bank. The four-byte header selects
+the compact original reader and places the sequence index 284 bytes after the
+root. Ten relative halfword offsets select seven nonempty lists already owned
+by `graphics.obj-static-lists` and three previously unowned empty lists.
+
+One sequence index and its ten compact frame entries reference those ten lists.
+All 66 selected source bytes—caller literal, descriptor pointer and root,
+header and directory, three empty-list headers, and sequence—were observed in
+the E302 address sample outside E253 source owners. Prior Wine disassemblies
+`target/rom-data-palette-programs/indexed-handlers/000eb830.txt` and
+`target/rom-data-root-6b9b80/{shared-reader/0d9990.txt,parser/0d97d0.txt}`
+support the original caller and compact-reader interpretation. Initial unit
+`4x33r8y_` failed because it assumed a direct pointer; the passing plan checks
+the descriptor indirection.
+
+The address sample lacks executing PCs and does not attribute every read to
+the identified caller. Other selectors, scenes and descriptor fields remain
+open. This source plan adds no guest bound and publishes no resource; Linux,
+USA and native Windows remain pending. No performance comparison was made.
+
+## E314 Firaga compact OBJ runtime
+
+EUR E254-d253 publishes `graphics.firaga-compact-obj-bank` for the E313
+indirect roots, compact header, list directory and ten-frame sequence. The
+three selected zero-object lists are added to `graphics.obj-static-lists` for
+guest and host readers. Seven nonempty lists retain their previous owners;
+original guest indexing, timing and fallback are unchanged.
+
+Wine reader `e314-firaga-compact-obj-readers-wine-uag8crl9` verifies creation and reuse, 138 unchanged other
+resources and preservation of the earlier OBJ lists, coherent-edit rejection,
+poisoned mirrors and mixed boundaries, snapshot ownership, original
+interpreter/generated reader comparisons, DMA/CpuSet and host comparisons for
+the three empty lists. Wine scene `e314-firaga-compact-obj-scene-wine-00m4jnor` compares 606 retained Firaga frames
+with the 66 selected source bytes altered in managed backing ROM. The five
+compact source groups record byte reads of [4, 4, 4, 182, 890], including repeated
+accesses; the empty-list guest/host use pairs are [['true', 'true'], ['true', 'true'], ['true', 'true']]. State, guest clock,
+video, OAM, dispatch and five nonempty audio streams match every frame. The
+source save's earlier history remains unknown. Wine CLI `e314-firaga-compact-obj-cli-wine-dlvxuop3` creates,
+reuses and verifies 141 matching files. Wine drained using the local Bluetooth
+overlay.
+
+Static join `e314-firaga-compact-obj-sample-residual-h1qk2fn_` finds 1,457 E302 sampled bytes still outside E254 declared
+sources. The sample is address-only, not full-ROM coverage or attribution of
+every read to a caller. The dynamic producer, other selectors/scenes, descriptor
+fields, real BIOS and UI save/Load remain open. Forty-six updated older
+revision-sensitive fixtures, Linux, USA and native Windows remain to be checked.
+No performance comparison was made.
+
+## E315 Firaga adjacent compact OBJ source plan
+
+Protected static plan `e315-firaga-adjacent-compact-obj-source-plan-3g8h3wg6`
+authenticates 115 EUR source bytes outside E254 ownership, including 107 bytes
+in the E302 address sample. The caller's table selects two 24-byte
+descriptors at `39cc3c`; E254 already owns the first descriptor's bank
+pointer. The plan covers the remaining first-descriptor fields, the second
+descriptor, the selected count-table byte and its caller literal. Both
+descriptors select sequence zero; the second has a delay parameter of 30.
+
+The second descriptor points to compact bank `6b36ac`. Its first sequence
+contains 17 frames referring to 11 list indices. Ten corresponding nonempty
+lists already belong to `graphics.obj-static-lists`; index 9 is an unowned
+empty list at `6b3b38`. The selected header and first 11 directory entries,
+first sequence offset, frames and empty header are authenticated. The bank has
+additional entries and sequences outside this selection.
+
+Wine disassemblies `e315-firaga-descriptor-consumer-wine-2djsznfs` and
+`e315-firaga-descriptor-callback-wine-3y7u8cdl`, together with authenticated
+instruction fingerprints, trace the caller through `080d9ba8` to callback
+`080d88fc`, its 24-byte descriptor stride and compact bank reads. The initial
+consumer unit also captured an unrelated callback window; it is not used as
+evidence of this descriptor path. Both Wine servers drained. The static plan
+adds no runtime resource or guest bounds.
+
+E302 has no executing PCs: sample intersections do not prove individual read
+attribution. Other descriptors, selectors, sequences, scenes, real BIOS and UI
+save/Load remain open. Linux, USA and native Windows checks remain pending; no performance comparison or new gameplay run was made.
+
+## E316 Firaga adjacent compact OBJ runtime
+
+EUR E255-d254 publishes `graphics.firaga-adjacent-compact-obj-bank` for the
+E315 caller count, two descriptor projections, adjacent compact directory and
+17-frame sequence. The selected empty list is added to `graphics.obj-static-lists`
+for guest and host readers. Ten nonempty lists and the first descriptor's bank
+pointer retain their earlier owners. Other sequence entries retain the original
+guest indexing and normal fallback.
+
+Wine reader `e316-firaga-adjacent-obj-readers-wine-5zq084xm` verifies creation and reuse, prior resources and lists,
+coherent-edit rejection, poisoned mirrors and mixed boundaries, snapshot
+ownership, 36 original interpreter/generated reader cases,
+8 DMA/CpuSet cases and the empty-list host path. Wine scene
+`e316-firaga-adjacent-obj-scene-wine-vgv_p24h` compares 606 retained Firaga frames with all 115 selected source
+bytes altered in managed backing ROM. The seven source groups recorded byte
+reads [4, 1, 16, 126, 76, 216, 144], including repeated accesses; empty-list guest/host use was
+['true', 'true']. State, guest clock, video, OAM, dispatch and five nonempty audio
+streams match every frame. The source save's earlier history remains unknown.
+Wine CLI `e316-firaga-adjacent-obj-cli-wine-823mmm5g` creates, reuses and verifies 142 matching files. The Wine
+server drained using the local Bluetooth overlay.
+
+Static join `e316-firaga-adjacent-obj-sample-residual-rk9t89t2` finds 1,350 E302 sampled bytes still outside E255 declared
+sources. The sample is address-only, not full-ROM coverage or attribution of
+every read to a caller. Other selectors/sequences/scenes, producer ancestry,
+real BIOS and UI save/Load remain open. Forty-seven updated older revision-
+sensitive fixtures, Linux, USA and native Windows remain to be checked.
+No performance comparison was made.
+
+## E317 Firaga 6c12c8 compact OBJ source plan
+
+Protected static plan `e317-firaga-6c12c8-source-plan-bz8m5fb_` authenticates
+85 EUR bytes outside E255 ownership, including 81 bytes in the E302 address
+sample. The original caller uses separately owned PC literals to select the
+count byte at `39aa82` and pointer at `39aa2c`; the pointer selects one
+24-byte descriptor at `39a8bc`. That descriptor selects sequence zero and
+has a delay parameter of 16. It points to compact bank `6c12c8`.
+
+The selected compact sequence has 13 frames referring to ten list indices.
+Nine corresponding nonempty lists already belong to `graphics.obj-static-lists`;
+index 9 is an unowned empty list at `6c13dc`. The plan authenticates the count,
+pointer, descriptor, bank header and directory, empty header, and compact
+sequence. Prior Wine disassembly `e293-soil-indirect-roots-disassembly-wine-8lucbl5h`
+and callback disassembly `e315-firaga-descriptor-callback-wine-3y7u8cdl`
+support the original caller and reader interpretation. The selected index is
+a source-backed projection, not a restriction on guest indices.
+
+E302 has no executing PCs: sample intersections do not prove individual read
+attribution. Other selectors, pointers, descriptors, producers and scenes,
+real BIOS and UI save/Load remain open. This plan publishes no runtime
+resource; Linux, USA and native Windows remain pending. No performance
+comparison or new gameplay run was made.
+
+## E318 Firaga 6c12c8 compact OBJ runtime
+
+EUR E256-d255 publishes `graphics.firaga-6c12c8-obj-bank` for the E317
+selected count, descriptor pointer and fields, compact directory and 13-frame
+sequence. The selected empty list is added to `graphics.obj-static-lists` for
+guest and host readers. Nine nonempty lists and the caller's PC literals retain
+their earlier owners. Other indices retain the original guest fallback.
+
+Wine reader `e318-firaga-6c12c8-obj-readers-wine-hjwi7j_n` verifies creation and reuse, prior resources and lists,
+coherent-edit rejection, poisoned mirrors and mixed boundaries, snapshot
+ownership, 36 original interpreter/generated reader cases,
+8 DMA/CpuSet cases and the empty-list host path. Wine scene
+`e318-firaga-6c12c8-obj-scene-wine-vav9bzv2` compares 606 retained Firaga frames with all 85 selected source
+bytes altered in managed backing ROM. The five source groups recorded byte
+reads [1, 4, 52, 88, 420], including repeated accesses; empty-list guest/host use was
+['true', 'true']. State, guest clock, video, OAM, dispatch and five nonempty audio
+streams match every frame. The source save's earlier history remains unknown.
+Wine CLI `e318-firaga-6c12c8-obj-cli-wine-maq3te3q` creates, reuses and verifies 143 matching files. The Wine
+server drained using the local Bluetooth overlay.
+
+Static join `e318-firaga-6c12c8-obj-sample-residual-loxk_hkh` finds 1,269 E302 sampled bytes still outside E256 declared
+sources. The sample is address-only, not full-ROM coverage or attribution of
+every read to a caller. Other selectors/consumers/scenes, producer ancestry,
+real BIOS and UI save/Load remain open. Forty-eight updated older revision-
+sensitive fixtures, Linux, USA and native Windows remain to be checked.
+No performance comparison was made.

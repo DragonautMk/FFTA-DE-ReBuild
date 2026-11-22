@@ -1529,6 +1529,92 @@ Direct consumption is now connected in 04; normal enablement awaits gate 05.
 
 **Dependencies:** ROMDATA-01/02/03. **Core of the main objective.**
 
+**ROMDATA-04-FIRAGA-MIXED-LITERALS scoped EUR/Wine:** E265 serves 57 selected
+Thumb literal words; original readers, transfers, altered-source scene and CLI
+pass. Other readers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e335-firaga-mixed-thumb-literal-runtime).
+
+**ROMDATA-04-FIRAGA-CODE-LITERALS scoped EUR/Wine:** E264 serves 14 selected
+Thumb literal words; original readers, transfers, altered-source scene and CLI
+pass. Other readers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e333-firaga-0130190cf-thumb-literal-runtime).
+
+**ROMDATA-04-FIRAGA-EB83-EBC-LITERALS scoped EUR/Wine:** E263 serves ten
+selected Thumb literal words; original readers, transfers, altered-source scene
+and CLI pass. Other readers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e331-firaga-eb83ebc-thumb-literal-runtime).
+
+**ROMDATA-04-FIRAGA-2D-2E-LITERALS scoped EUR/Wine:** E262 serves 41 selected
+Thumb literal words; original readers, transfers, altered-source scene and CLI
+pass. Other readers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e329-firaga-2d2e-thumb-literal-runtime).
+
+**ROMDATA-04-FIRAGA-40E844-TRANSFER scoped EUR/Wine:** E261 serves one
+selected queued halfword-transfer view and its original literals; producer,
+queue, DMA, altered-source scene and CLI checks pass. Other indices, source
+format and allocation remain open.
+[Evidence](../rom_data_runtime.md#e327-firaga-queued-halfword-transfer-runtime).
+
+**ROMDATA-04-FIRAGA-14D480-STACK scoped EUR/Wine:** E260 serves the selected
+stack fields and original literals; readers, copy, altered-source scene and CLI
+checks pass. Other callers and selector domains remain open.
+[Evidence](../rom_data_runtime.md#e325-firaga-stack-initialization-runtime).
+
+**ROMDATA-04-FIRAGA-39CB9C-PALETTE-ROWS scoped EUR/Wine:** E259 serves the
+two selected palette row prefixes; original copy, altered-source scene and CLI
+checks pass. Additional rows and consumers remain open.
+[Evidence](../rom_data_graphics.md#e323-firaga-palette-row-runtime).
+
+**ROMDATA-04-FIRAGA-39CB9C-PROGRAM scoped EUR/Wine:** E258 serves the
+selected program controls and reuses prior LZ streams; readers, transfers,
+altered-source scene and CLI pass. Palette payload extents and broader coverage
+remain open. [Evidence](../rom_data_runtime.md#e321-firaga-transfer-program-runtime).
+
+**ROMDATA-04-FIRAGA-EB9C0-LITERALS scoped EUR/Wine:** E257 adds seven
+source-backed Thumb LDR operands to the existing runtime literal owner. Reader,
+transfer, altered-source scene and CLI checks pass; broader coverage remains
+open. [Evidence](../rom_data_runtime.md#e319-firaga-observed-thumb-literals).
+
+**ROMDATA-04-FIRAGA-6C12C8-BANK scoped EUR/Wine:** E256 serves the selected
+count, descriptor, compact sequence and empty list while reusing earlier
+owners. Reader, host, transfer, altered-source scene and CLI checks pass; broader
+coverage remains open. [Evidence](../rom_data_obj.md#e318-firaga-6c12c8-compact-obj-runtime).
+
+**ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-BANK scoped EUR/Wine:** E255 serves
+two descriptor projections, count, compact sequence and empty list while
+reusing earlier owners. Reader, host, transfer, altered-source scene and CLI
+checks pass; broader coverage remains open. [Evidence](../rom_data_obj.md#e316-firaga-adjacent-compact-obj-runtime).
+
+**ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK scoped EUR/Wine:** E254 serves a compact
+sequence, directory, indirect roots and three empty lists while reusing seven
+earlier lists. Reader, host, transfer, altered-source scene and CLI checks pass;
+broader coverage remains open. [Evidence](../rom_data_obj.md#e314-firaga-compact-obj-runtime).
+
+**ROMDATA-04-FIRAGA-OBJ-BANK scoped EUR/Wine:** E253 serves a 19-frame indexed
+sequence, descriptor, directory and empty list while reusing 18 earlier lists.
+Reader, host, transfer, altered-source scene and CLI checks pass; broader
+coverage remains open. [Evidence](../rom_data_obj.md#e312-firaga-indexed-obj-runtime).
+
+**ROMDATA-04-FIRAGA-COMPACT-CELLS scoped EUR/Wine:** E252 serves ten compact
+cell frames, a sequence and their selected roots. Reader, transfer, altered-
+source scene and production CLI checks pass; broader coverage remains open.
+[Evidence](../rom_data_graphics.md#e310-firaga-compact-cell-runtime).
+
+**ROMDATA-04-FIRAGA-COPIED-MATRICES scoped EUR/Wine:** E251 serves two copied
+matrices and four original literal words. Original readers/copy, transfers,
+altered-source scene and production CLI checks pass; producers and broader
+coverage remain open. [Evidence](../rom_data_graphics.md#e308-firaga-copied-matrix-runtime).
+
+**ROMDATA-04-FIRAGA-SPRITE-LISTS scoped EUR/Wine:** E250 serves 44 observed
+typed OBJ lists on guest and host paths. Reader, transfer, altered-source scene
+and production CLI checks pass; producer and broader coverage remain open.
+[Evidence](../rom_data_runtime.md#e306-firaga-typed-sprite-lists).
+
+**ROMDATA-04-FIRAGA-LZ scoped EUR/Wine:** E249 serves three authenticated
+Firaga-scene LZ streams. Reader, transfer, altered-source scene and production
+CLI checks pass; attribution and broader family/platform coverage remain open.
+[Evidence](../rom_data_graphics.md#e304-firaga-battle-lz77-runtime-sources).
+
 - [x] Introduce resource access through IDs and typed structures, with loading/
   preloading from decoded files. Define memory budget, data lifetime and
   invalidation; avoid I/O in audio callbacks and per-pixel or per-instruction paths.

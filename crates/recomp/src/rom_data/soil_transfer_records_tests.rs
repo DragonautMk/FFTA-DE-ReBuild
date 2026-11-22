@@ -42,9 +42,19 @@ fn european_soil_transfer_rows_and_original_readers() {
     let prepared = preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap();
     assert_eq!(prepared.action, "created");
     assert_eq!(preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap().action, "reused");
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (248, 247, 136));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (257, 256, 142));
     for prior in &old.resources {
         let current = source.manifest.resources.iter().find(|entry| entry.id == prior.id).unwrap();
+        if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
+        if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
         if prior.id == OBSERVED_TILEMAP_ROW_ID || prior.id == OBSERVED_TILEMAP_DESCRIPTOR_ID {
             let old_data: serde_json::Value = serde_json::from_slice(&fs::read(previous.join(&prior.path)).unwrap()).unwrap();
             let new_data: serde_json::Value = serde_json::from_slice(&fs::read(prepared.directory.join(&current.path)).unwrap()).unwrap();
@@ -154,7 +164,7 @@ fn european_soil_transfer_rows_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner)); managed.load_state(&state).unwrap();
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner)); fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "soil_rows":4, "soil_descriptors":4, "new_wrappers":3,
+        "status":"PASS", "revision":[257,256], "soil_rows":4, "soil_descriptors":4, "new_wrappers":3,
         "new_source_bytes":92, "shared_wrapper_owned_once":true, "existing_streams_owned_once":true,
         "previous_fields_and_other_resources_preserved":true, "poisoned_mirrors_and_mixed_boundaries":true,
         "original_interpreter_generated_cases":cases, "full_state_clock_equal":true, "coherent_edit_rejected":true,

@@ -49,7 +49,7 @@ fn european_red_spring_final_copy_and_original_reader() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -347,7 +347,7 @@ fn european_red_spring_final_copy_and_original_reader() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "new_tables":1, "new_source_bytes":8,
+        "status":"PASS", "revision":[257,256], "new_tables":1, "new_source_bytes":8,
         "previous_tables_preserved":2, "prior_other_resources_unchanged":120, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_switch_tables_preserved":true, "prior_thumb_literals_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_and_generated_copy_cases":2,
         "original_helper_and_guest_stack_preserved":true, "dma_cpuset_cpufastset_state_and_clock_equal":true,

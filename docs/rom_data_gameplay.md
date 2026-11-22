@@ -8033,3 +8033,30 @@ addresses, not executing PCs, and does not describe other scenes. Other readers,
 index domains, meanings, real-BIOS, UI save/Load, Linux, USA and native Windows
 remain open. The Wine server drained and the local Bluetooth overlay avoided
 the known assertion; no performance comparisons were performed.
+
+## E302 European Firaga scene ROM-read inventory
+
+The retained European Stin-target checkpoint and its recorded six-frame A
+confirmation followed by 600 neutral frames provide a battle continuation
+distinct from the previously inventoried Llednar action. The checkpoint and
+input plan match the earlier `e130-battle-stin-cast-z26ex8v8` evidence; the
+source save's earlier history is unknown. No new cheat or forced state change
+was applied in this continuation.
+
+Wine `e302-firaga-scene-audit-wine-fxu8xxli` compares the original and E248-d247
+managed machines for all 606 frames. Complete state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match at every frame. The audit records
+234,386 distinct physical ROM bytes observed by the selected bus and host
+readers; 8,283 of them lie outside declared E248 source spans, including 868
+below `300000` and 7,415 at or above it. All 8,283 occur in bus observations;
+2,182 also occur in SpritePeek observations. These counts describe unique
+addresses, not bytes independently attributable to each reader.
+
+The inventory is address-only: unowned observations may include code support,
+and neither executing instruction sites nor asset boundaries are established.
+Interpreter fetches, folded constants, unselected host readers and other scenes
+are outside its coverage. The protected checkpoint, ROM, native library, build
+inputs and dataset were retained unchanged; Wine drained and the local overlay
+avoided the known D-Bus assertion. Attribution and integration of genuine
+remaining data, broader gameplay, Linux, USA, real-BIOS and native Windows
+checks remain open. No performance comparison was made.

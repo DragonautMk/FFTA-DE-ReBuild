@@ -100,6 +100,16 @@ use gba_core::rom_data::{
     soil_compact_record::SoilCompactRecord, SOIL_COMPACT_RECORD_ID, SOIL_COMPACT_RECORD_FILE, MAX_SOIL_COMPACT_RECORD_FILE_BYTES,
     soil_scoped_values::SoilScopedValues, SOIL_SCOPED_VALUES_ID, SOIL_SCOPED_VALUES_FILE, MAX_SOIL_SCOPED_VALUES_FILE_BYTES,
     soil_remaining_rectangles::SoilRemainingRectangles, SOIL_REMAINING_RECTANGLES_ID, SOIL_REMAINING_RECTANGLES_FILE, MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES,
+    firaga_copied_matrices::FiragaCopiedMatrices, FIRAGA_COPIED_MATRICES_ID, FIRAGA_COPIED_MATRICES_FILE, MAX_FIRAGA_COPIED_MATRICES_FILE_BYTES,
+    firaga_compact_cells::FiragaCompactCells, FIRAGA_COMPACT_CELLS_ID, FIRAGA_COMPACT_CELLS_FILE, MAX_FIRAGA_COMPACT_CELLS_FILE_BYTES,
+    firaga_indexed_obj_bank::FiragaIndexedObjBank, FIRAGA_INDEXED_OBJ_BANK_ID, FIRAGA_INDEXED_OBJ_BANK_FILE, MAX_FIRAGA_INDEXED_OBJ_BANK_FILE_BYTES,
+    firaga_compact_obj_bank::FiragaCompactObjBank, FIRAGA_COMPACT_OBJ_BANK_ID, FIRAGA_COMPACT_OBJ_BANK_FILE, MAX_FIRAGA_COMPACT_OBJ_BANK_FILE_BYTES,
+    firaga_adjacent_compact_obj_bank::FiragaAdjacentCompactObjBank, FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID, FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE, MAX_FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE_BYTES,
+    firaga_6c12c8_obj_bank::Firaga6c12c8ObjBank, FIRAGA_6C12C8_OBJ_BANK_ID, FIRAGA_6C12C8_OBJ_BANK_FILE, MAX_FIRAGA_6C12C8_OBJ_BANK_FILE_BYTES,
+    firaga_transfer_program::FiragaTransferProgram, FIRAGA_TRANSFER_PROGRAM_ID, FIRAGA_TRANSFER_PROGRAM_FILE, MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES,
+    firaga_palette_rows::FiragaPaletteRows, FIRAGA_PALETTE_ROWS_ID, FIRAGA_PALETTE_ROWS_FILE, MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES,
+    firaga_stack_initialization::FiragaStackInitialization, FIRAGA_STACK_INITIALIZATION_ID, FIRAGA_STACK_INITIALIZATION_FILE, MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES,
+    firaga_queued_transfer::FiragaQueuedTransfer, FIRAGA_QUEUED_TRANSFER_ID, FIRAGA_QUEUED_TRANSFER_FILE, MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -269,6 +279,28 @@ mod soil_e3838_tests;
 #[cfg(test)]
 mod soil_sprite_lists_tests;
 #[cfg(test)]
+mod firaga_sprite_lists_tests;
+#[cfg(test)]
+mod firaga_copied_matrices_tests;
+#[cfg(test)]
+mod firaga_compact_cells_tests;
+#[cfg(test)]
+mod firaga_indexed_obj_bank_tests;
+#[cfg(test)]
+mod firaga_compact_obj_bank_tests;
+#[cfg(test)]
+mod firaga_adjacent_compact_obj_bank_tests;
+#[cfg(test)]
+mod firaga_6c12c8_obj_bank_tests;
+#[cfg(test)]
+mod firaga_transfer_program_tests;
+#[cfg(test)]
+mod firaga_palette_rows_tests;
+#[cfg(test)]
+mod firaga_stack_initialization_tests;
+#[cfg(test)]
+mod firaga_queued_transfer_tests;
+#[cfg(test)]
 mod soil_compact_metadata_tests;
 #[cfg(test)]
 mod soil_a83c2_switch_tests;
@@ -338,6 +370,18 @@ mod blue_screw_observed_literals_tests;
 mod soil_evidence_observed_literals_tests;
 #[cfg(test)]
 mod soil_146_observed_literals_tests;
+#[cfg(test)]
+mod firaga_observed_literals_tests;
+#[cfg(test)]
+mod firaga_2d2e_observed_literals_tests;
+#[cfg(test)]
+mod firaga_eb83_ebc_observed_literals_tests;
+#[cfg(test)]
+mod firaga_code_observed_literals_tests;
+#[cfg(test)]
+mod firaga_mixed_observed_literals_tests;
+#[cfg(test)]
+mod firaga_residual_observed_literals_tests;
 #[cfg(test)]
 mod blue_screw_switch_tables_tests;
 #[cfg(test)]
@@ -558,6 +602,8 @@ mod redspring_lz_source_tests;
 mod observed_lz_tests;
 #[cfg(test)]
 mod soil_evidence_lz_tests;
+#[cfg(test)]
+mod firaga_lz_tests;
 #[cfg(test)]
 mod interleaved_lz_chain_tests;
 #[cfg(test)]
@@ -1278,6 +1324,16 @@ fn parse_soil_indexed_bytes(bytes: &[u8]) -> Result<SoilIndexedBytes, String> { 
 fn parse_soil_compact_record(bytes: &[u8]) -> Result<SoilCompactRecord, String> { let value: SoilCompactRecord = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_compact_record: {e}"))?; value.validate()?; Ok(value) }
 fn parse_soil_scoped_values(bytes: &[u8]) -> Result<SoilScopedValues, String> { let value: SoilScopedValues = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_scoped_values: {e}"))?; value.validate()?; Ok(value) }
 fn parse_soil_remaining_rectangles(bytes: &[u8]) -> Result<SoilRemainingRectangles, String> { let value: SoilRemainingRectangles = serde_json::from_slice(bytes).map_err(|e| format!("Invalid soil_remaining_rectangles: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_copied_matrices(bytes: &[u8]) -> Result<FiragaCopiedMatrices, String> { let value: FiragaCopiedMatrices = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_copied_matrices: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_compact_cells(bytes: &[u8]) -> Result<FiragaCompactCells, String> { let value: FiragaCompactCells = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_compact_cells: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_indexed_obj_bank(bytes: &[u8]) -> Result<FiragaIndexedObjBank, String> { let value: FiragaIndexedObjBank = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_indexed_obj_bank: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_compact_obj_bank(bytes: &[u8]) -> Result<FiragaCompactObjBank, String> { let value: FiragaCompactObjBank = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_compact_obj_bank: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_adjacent_compact_obj_bank(bytes: &[u8]) -> Result<FiragaAdjacentCompactObjBank, String> { let value: FiragaAdjacentCompactObjBank = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_adjacent_compact_obj_bank: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_6c12c8_obj_bank(bytes: &[u8]) -> Result<Firaga6c12c8ObjBank, String> { let value: Firaga6c12c8ObjBank = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_6c12c8_obj_bank: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_transfer_program(bytes: &[u8]) -> Result<FiragaTransferProgram, String> { let value: FiragaTransferProgram = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_transfer_program: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_palette_rows(bytes: &[u8]) -> Result<FiragaPaletteRows, String> { let value: FiragaPaletteRows = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_palette_rows: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_stack_initialization(bytes: &[u8]) -> Result<FiragaStackInitialization, String> { let value: FiragaStackInitialization = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_stack_initialization: {e}"))?; value.validate()?; Ok(value) }
+fn parse_firaga_queued_transfer(bytes: &[u8]) -> Result<FiragaQueuedTransfer, String> { let value: FiragaQueuedTransfer = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_queued_transfer: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1325,6 +1381,16 @@ fn encode_soil_indexed_bytes(value: &SoilIndexedBytes) -> Result<Vec<u8>, String
 fn encode_soil_compact_record(value: &SoilCompactRecord) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_compact_record: {e}")) }
 fn encode_soil_scoped_values(value: &SoilScopedValues) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_scoped_values: {e}")) }
 fn encode_soil_remaining_rectangles(value: &SoilRemainingRectangles) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode soil_remaining_rectangles: {e}")) }
+fn encode_firaga_copied_matrices(value: &FiragaCopiedMatrices) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_copied_matrices: {e}")) }
+fn encode_firaga_compact_cells(value: &FiragaCompactCells) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_compact_cells: {e}")) }
+fn encode_firaga_indexed_obj_bank(value: &FiragaIndexedObjBank) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_indexed_obj_bank: {e}")) }
+fn encode_firaga_compact_obj_bank(value: &FiragaCompactObjBank) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_compact_obj_bank: {e}")) }
+fn encode_firaga_adjacent_compact_obj_bank(value: &FiragaAdjacentCompactObjBank) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_adjacent_compact_obj_bank: {e}")) }
+fn encode_firaga_6c12c8_obj_bank(value: &Firaga6c12c8ObjBank) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_6c12c8_obj_bank: {e}")) }
+fn encode_firaga_transfer_program(value: &FiragaTransferProgram) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_transfer_program: {e}")) }
+fn encode_firaga_palette_rows(value: &FiragaPaletteRows) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_palette_rows: {e}")) }
+fn encode_firaga_stack_initialization(value: &FiragaStackInitialization) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_stack_initialization: {e}")) }
+fn encode_firaga_queued_transfer(value: &FiragaQueuedTransfer) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_queued_transfer: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1632,6 +1698,16 @@ struct Dataset {
     soil_compact_record: Option<SoilCompactRecord>,
     soil_scoped_values: Option<SoilScopedValues>,
     soil_remaining_rectangles: Option<SoilRemainingRectangles>,
+    firaga_copied_matrices: Option<FiragaCopiedMatrices>,
+    firaga_compact_cells: Option<FiragaCompactCells>,
+    firaga_indexed_obj_bank: Option<FiragaIndexedObjBank>,
+    firaga_compact_obj_bank: Option<FiragaCompactObjBank>,
+    firaga_adjacent_compact_obj_bank: Option<FiragaAdjacentCompactObjBank>,
+    firaga_6c12c8_obj_bank: Option<Firaga6c12c8ObjBank>,
+    firaga_transfer_program: Option<FiragaTransferProgram>,
+    firaga_palette_rows: Option<FiragaPaletteRows>,
+    firaga_stack_initialization: Option<FiragaStackInitialization>,
+    firaga_queued_transfer: Option<FiragaQueuedTransfer>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1750,6 +1826,16 @@ struct Dataset {
     soil_compact_record_bytes: Option<Vec<u8>>,
     soil_scoped_values_bytes: Option<Vec<u8>>,
     soil_remaining_rectangles_bytes: Option<Vec<u8>>,
+    firaga_copied_matrices_bytes: Option<Vec<u8>>,
+    firaga_compact_cells_bytes: Option<Vec<u8>>,
+    firaga_indexed_obj_bank_bytes: Option<Vec<u8>>,
+    firaga_compact_obj_bank_bytes: Option<Vec<u8>>,
+    firaga_adjacent_compact_obj_bank_bytes: Option<Vec<u8>>,
+    firaga_6c12c8_obj_bank_bytes: Option<Vec<u8>>,
+    firaga_transfer_program_bytes: Option<Vec<u8>>,
+    firaga_palette_rows_bytes: Option<Vec<u8>>,
+    firaga_stack_initialization_bytes: Option<Vec<u8>>,
+    firaga_queued_transfer_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1894,6 +1980,16 @@ impl Dataset {
             soil_compact_record: self.soil_compact_record.as_ref().zip(self.soil_compact_record_bytes.as_deref()),
             soil_scoped_values: self.soil_scoped_values.as_ref().zip(self.soil_scoped_values_bytes.as_deref()),
             soil_remaining_rectangles: self.soil_remaining_rectangles.as_ref().zip(self.soil_remaining_rectangles_bytes.as_deref()),
+            firaga_copied_matrices: self.firaga_copied_matrices.as_ref().zip(self.firaga_copied_matrices_bytes.as_deref()),
+            firaga_compact_cells: self.firaga_compact_cells.as_ref().zip(self.firaga_compact_cells_bytes.as_deref()),
+            firaga_indexed_obj_bank: self.firaga_indexed_obj_bank.as_ref().zip(self.firaga_indexed_obj_bank_bytes.as_deref()),
+            firaga_compact_obj_bank: self.firaga_compact_obj_bank.as_ref().zip(self.firaga_compact_obj_bank_bytes.as_deref()),
+            firaga_adjacent_compact_obj_bank: self.firaga_adjacent_compact_obj_bank.as_ref().zip(self.firaga_adjacent_compact_obj_bank_bytes.as_deref()),
+            firaga_6c12c8_obj_bank: self.firaga_6c12c8_obj_bank.as_ref().zip(self.firaga_6c12c8_obj_bank_bytes.as_deref()),
+            firaga_transfer_program: self.firaga_transfer_program.as_ref().zip(self.firaga_transfer_program_bytes.as_deref()),
+            firaga_palette_rows: self.firaga_palette_rows.as_ref().zip(self.firaga_palette_rows_bytes.as_deref()),
+            firaga_stack_initialization: self.firaga_stack_initialization.as_ref().zip(self.firaga_stack_initialization_bytes.as_deref()),
+            firaga_queued_transfer: self.firaga_queued_transfer.as_ref().zip(self.firaga_queued_transfer_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2106,6 +2202,16 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let soil_compact_record_bytes=manifest.coverage.iter().any(|id|id==SOIL_COMPACT_RECORD_ID).then(||read_bounded(&path.join(SOIL_COMPACT_RECORD_FILE),MAX_SOIL_COMPACT_RECORD_FILE_BYTES)).transpose()?;
     let soil_scoped_values_bytes=manifest.coverage.iter().any(|id|id==SOIL_SCOPED_VALUES_ID).then(||read_bounded(&path.join(SOIL_SCOPED_VALUES_FILE),MAX_SOIL_SCOPED_VALUES_FILE_BYTES)).transpose()?;
     let soil_remaining_rectangles_bytes=manifest.coverage.iter().any(|id|id==SOIL_REMAINING_RECTANGLES_ID).then(||read_bounded(&path.join(SOIL_REMAINING_RECTANGLES_FILE),MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES)).transpose()?;
+    let firaga_copied_matrices_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_COPIED_MATRICES_ID).then(||read_bounded(&path.join(FIRAGA_COPIED_MATRICES_FILE),MAX_FIRAGA_COPIED_MATRICES_FILE_BYTES)).transpose()?;
+    let firaga_compact_cells_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_COMPACT_CELLS_ID).then(||read_bounded(&path.join(FIRAGA_COMPACT_CELLS_FILE),MAX_FIRAGA_COMPACT_CELLS_FILE_BYTES)).transpose()?;
+    let firaga_indexed_obj_bank_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_INDEXED_OBJ_BANK_ID).then(||read_bounded(&path.join(FIRAGA_INDEXED_OBJ_BANK_FILE),MAX_FIRAGA_INDEXED_OBJ_BANK_FILE_BYTES)).transpose()?;
+    let firaga_compact_obj_bank_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_COMPACT_OBJ_BANK_ID).then(||read_bounded(&path.join(FIRAGA_COMPACT_OBJ_BANK_FILE),MAX_FIRAGA_COMPACT_OBJ_BANK_FILE_BYTES)).transpose()?;
+    let firaga_adjacent_compact_obj_bank_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID).then(||read_bounded(&path.join(FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE),MAX_FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE_BYTES)).transpose()?;
+    let firaga_6c12c8_obj_bank_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_6C12C8_OBJ_BANK_ID).then(||read_bounded(&path.join(FIRAGA_6C12C8_OBJ_BANK_FILE),MAX_FIRAGA_6C12C8_OBJ_BANK_FILE_BYTES)).transpose()?;
+    let firaga_transfer_program_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_TRANSFER_PROGRAM_ID).then(||read_bounded(&path.join(FIRAGA_TRANSFER_PROGRAM_FILE),MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES)).transpose()?;
+    let firaga_palette_rows_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_PALETTE_ROWS_ID).then(||read_bounded(&path.join(FIRAGA_PALETTE_ROWS_FILE),MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES)).transpose()?;
+    let firaga_stack_initialization_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_STACK_INITIALIZATION_ID).then(||read_bounded(&path.join(FIRAGA_STACK_INITIALIZATION_FILE),MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES)).transpose()?;
+    let firaga_queued_transfer_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_QUEUED_TRANSFER_ID).then(||read_bounded(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2270,6 +2376,16 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         soil_compact_record_bytes.as_ref().map_or(0, Vec::len),
         soil_scoped_values_bytes.as_ref().map_or(0, Vec::len),
         soil_remaining_rectangles_bytes.as_ref().map_or(0, Vec::len),
+        firaga_copied_matrices_bytes.as_ref().map_or(0, Vec::len),
+        firaga_compact_cells_bytes.as_ref().map_or(0, Vec::len),
+        firaga_indexed_obj_bank_bytes.as_ref().map_or(0, Vec::len),
+        firaga_compact_obj_bank_bytes.as_ref().map_or(0, Vec::len),
+        firaga_adjacent_compact_obj_bank_bytes.as_ref().map_or(0, Vec::len),
+        firaga_6c12c8_obj_bank_bytes.as_ref().map_or(0, Vec::len),
+        firaga_transfer_program_bytes.as_ref().map_or(0, Vec::len),
+        firaga_palette_rows_bytes.as_ref().map_or(0, Vec::len),
+        firaga_stack_initialization_bytes.as_ref().map_or(0, Vec::len),
+        firaga_queued_transfer_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2389,6 +2505,16 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let soil_compact_record=soil_compact_record_bytes.as_deref().map(parse_soil_compact_record).transpose()?;
     let soil_scoped_values=soil_scoped_values_bytes.as_deref().map(parse_soil_scoped_values).transpose()?;
     let soil_remaining_rectangles=soil_remaining_rectangles_bytes.as_deref().map(parse_soil_remaining_rectangles).transpose()?;
+    let firaga_copied_matrices=firaga_copied_matrices_bytes.as_deref().map(parse_firaga_copied_matrices).transpose()?;
+    let firaga_compact_cells=firaga_compact_cells_bytes.as_deref().map(parse_firaga_compact_cells).transpose()?;
+    let firaga_indexed_obj_bank=firaga_indexed_obj_bank_bytes.as_deref().map(parse_firaga_indexed_obj_bank).transpose()?;
+    let firaga_compact_obj_bank=firaga_compact_obj_bank_bytes.as_deref().map(parse_firaga_compact_obj_bank).transpose()?;
+    let firaga_adjacent_compact_obj_bank=firaga_adjacent_compact_obj_bank_bytes.as_deref().map(parse_firaga_adjacent_compact_obj_bank).transpose()?;
+    let firaga_6c12c8_obj_bank=firaga_6c12c8_obj_bank_bytes.as_deref().map(parse_firaga_6c12c8_obj_bank).transpose()?;
+    let firaga_transfer_program=firaga_transfer_program_bytes.as_deref().map(parse_firaga_transfer_program).transpose()?;
+    let firaga_palette_rows=firaga_palette_rows_bytes.as_deref().map(parse_firaga_palette_rows).transpose()?;
+    let firaga_stack_initialization=firaga_stack_initialization_bytes.as_deref().map(parse_firaga_stack_initialization).transpose()?;
+    let firaga_queued_transfer=firaga_queued_transfer_bytes.as_deref().map(parse_firaga_queued_transfer).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2558,6 +2684,16 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         soil_compact_record,
         soil_scoped_values,
         soil_remaining_rectangles,
+        firaga_copied_matrices,
+        firaga_compact_cells,
+        firaga_indexed_obj_bank,
+        firaga_compact_obj_bank,
+        firaga_adjacent_compact_obj_bank,
+        firaga_6c12c8_obj_bank,
+        firaga_transfer_program,
+        firaga_palette_rows,
+        firaga_stack_initialization,
+        firaga_queued_transfer,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2676,6 +2812,16 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         soil_compact_record_bytes,
         soil_scoped_values_bytes,
         soil_remaining_rectangles_bytes,
+        firaga_copied_matrices_bytes,
+        firaga_compact_cells_bytes,
+        firaga_indexed_obj_bank_bytes,
+        firaga_compact_obj_bank_bytes,
+        firaga_adjacent_compact_obj_bank_bytes,
+        firaga_6c12c8_obj_bank_bytes,
+        firaga_transfer_program_bytes,
+        firaga_palette_rows_bytes,
+        firaga_stack_initialization_bytes,
+        firaga_queued_transfer_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2822,6 +2968,16 @@ fn check_dataset_budget(
     soil_compact_record: usize,
     soil_scoped_values: usize,
     soil_remaining_rectangles: usize,
+    firaga_copied_matrices: usize,
+    firaga_compact_cells: usize,
+    firaga_indexed_obj_bank: usize,
+    firaga_compact_obj_bank: usize,
+    firaga_adjacent_compact_obj_bank: usize,
+    firaga_6c12c8_obj_bank: usize,
+    firaga_transfer_program: usize,
+    firaga_palette_rows: usize,
+    firaga_stack_initialization: usize,
+    firaga_queued_transfer: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -2956,6 +3112,16 @@ fn check_dataset_budget(
         || soil_compact_record as u64 > MAX_SOIL_COMPACT_RECORD_FILE_BYTES
         || soil_scoped_values as u64 > MAX_SOIL_SCOPED_VALUES_FILE_BYTES
         || soil_remaining_rectangles as u64 > MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES
+        || firaga_copied_matrices as u64 > MAX_FIRAGA_COPIED_MATRICES_FILE_BYTES
+        || firaga_compact_cells as u64 > MAX_FIRAGA_COMPACT_CELLS_FILE_BYTES
+        || firaga_indexed_obj_bank as u64 > MAX_FIRAGA_INDEXED_OBJ_BANK_FILE_BYTES
+        || firaga_compact_obj_bank as u64 > MAX_FIRAGA_COMPACT_OBJ_BANK_FILE_BYTES
+        || firaga_adjacent_compact_obj_bank as u64 > MAX_FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE_BYTES
+        || firaga_6c12c8_obj_bank as u64 > MAX_FIRAGA_6C12C8_OBJ_BANK_FILE_BYTES
+        || firaga_transfer_program as u64 > MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES
+        || firaga_palette_rows as u64 > MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES
+        || firaga_stack_initialization as u64 > MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES
+        || firaga_queued_transfer as u64 > MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3096,6 +3262,16 @@ fn check_dataset_budget(
         .saturating_add(soil_compact_record)
         .saturating_add(soil_scoped_values)
         .saturating_add(soil_remaining_rectangles)
+        .saturating_add(firaga_copied_matrices)
+        .saturating_add(firaga_compact_cells)
+        .saturating_add(firaga_indexed_obj_bank)
+        .saturating_add(firaga_compact_obj_bank)
+        .saturating_add(firaga_adjacent_compact_obj_bank)
+        .saturating_add(firaga_6c12c8_obj_bank)
+        .saturating_add(firaga_transfer_program)
+        .saturating_add(firaga_palette_rows)
+        .saturating_add(firaga_stack_initialization)
+        .saturating_add(firaga_queued_transfer)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3328,6 +3504,16 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.soil_compact_record {eprintln!("ROM_DATA runtime=decoded resource={SOIL_COMPACT_RECORD_ID} file={} record_offset={}",dataset.manifest.resources[133].sha256,data.record_offset);}
     if let Some(_data)=&dataset.soil_scoped_values {eprintln!("ROM_DATA runtime=decoded resource={SOIL_SCOPED_VALUES_ID} file={} values={}",dataset.manifest.resources[134].sha256,gba_core::rom_data::soil_scoped_values::SPANS.len());}
     if let Some(data)=&dataset.soil_remaining_rectangles {eprintln!("ROM_DATA runtime=decoded resource={SOIL_REMAINING_RECTANGLES_ID} file={} rectangles={}",dataset.manifest.resources[135].sha256,data.rectangles.len());}
+    if let Some(data)=&dataset.firaga_copied_matrices {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_COPIED_MATRICES_ID} file={} matrices={}",dataset.manifest.resources[136].sha256,data.matrices.len());}
+    if let Some(data)=&dataset.firaga_compact_cells {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_COMPACT_CELLS_ID} file={} frames={}",dataset.manifest.resources[137].sha256,data.frames.len());}
+    if let Some(data)=&dataset.firaga_indexed_obj_bank {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_INDEXED_OBJ_BANK_ID} file={} frames={}",dataset.manifest.resources[138].sha256,data.sequence.frames.len());}
+    if let Some(data)=&dataset.firaga_compact_obj_bank {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_COMPACT_OBJ_BANK_ID} file={} frames={}",dataset.manifest.resources[139].sha256,data.frames.len());}
+    if let Some(data)=&dataset.firaga_adjacent_compact_obj_bank {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID} file={} frames={}",dataset.manifest.resources[140].sha256,data.frames.len());}
+    if let Some(data)=&dataset.firaga_6c12c8_obj_bank {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_6C12C8_OBJ_BANK_ID} file={} frames={}",dataset.manifest.resources[141].sha256,data.frames.len());}
+    if let Some(data)=&dataset.firaga_transfer_program {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_TRANSFER_PROGRAM_ID} file={} records={}",dataset.manifest.resources[142].sha256,data.records.len());}
+    if let Some(data)=&dataset.firaga_palette_rows {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_PALETTE_ROWS_ID} file={} rows={}",dataset.manifest.resources[143].sha256,data.rows.len());}
+    if let Some(data)=&dataset.firaga_stack_initialization {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_STACK_INITIALIZATION_ID} file={} groups={}",dataset.manifest.resources[144].sha256,data.word_pairs.len()+2);}
+    if let Some(data)=&dataset.firaga_queued_transfer {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_QUEUED_TRANSFER_ID} file={} halfwords={}",dataset.manifest.resources[145].sha256,data.halfwords.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3496,7 +3682,7 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.conditional_substitution_words_stats() {eprintln!("ROM_DATA_USE resource={CONDITIONAL_SUBSTITUTION_WORDS_ID} dataset={} bus_reads={} source_bytes={} literal_bytes={} word_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.literal_bytes,i.word_bytes);}
         if let Some(i)=resources.display_control_tables_stats() {eprintln!("ROM_DATA_USE resource={DISPLAY_CONTROL_TABLES_ID} dataset={} bus_reads={} source_bytes={} halfword_bytes={} pointer_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.halfword_bytes,i.pointer_bytes);}
         if let Some(i)=resources.compact_primary_alias_stats() {eprintln!("ROM_DATA_USE resource={COMPACT_PRIMARY_ALIAS_ID} dataset={} bus_reads={} source_bytes={} selector_bytes={} position_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.selector_bytes,i.position_bytes);}
-        if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={} soil_source_bytes={:?} soil_hle_calls={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls,i.soil_source_bytes_by_block,i.soil_hle_calls_by_block);}
+        if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={} soil_source_bytes={:?} soil_hle_calls={:?} firaga_source_bytes={:?} firaga_hle_calls={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls,i.soil_source_bytes_by_block,i.soil_hle_calls_by_block,i.firaga_source_bytes_by_block,i.firaga_hle_calls_by_block);}
         if let Some(i)=resources.constructor_template64_stats() {eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_TEMPLATE64_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.observed_tilemap_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ID} dataset={} bus_reads={} source_bytes={} rectangle_bytes={:?} root_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.rectangle_bytes,i.root_bytes);}
         if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} wrapper_bytes={} transfer_descriptor_bytes={} transfer_wrapper_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.descriptor_bytes,i.wrapper_bytes,i.transfer_descriptor_bytes,i.transfer_wrapper_bytes);}
@@ -3517,6 +3703,16 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.soil_compact_record_stats() {eprintln!("ROM_DATA_USE resource={SOIL_COMPACT_RECORD_ID} dataset={} bus_reads={} record_bytes={} pointer_bytes={}",resources.dataset_sha256(),i.bus_reads,i.record_bytes,i.pointer_bytes);}
         if let Some(i)=resources.soil_scoped_values_stats() {eprintln!("ROM_DATA_USE resource={SOIL_SCOPED_VALUES_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
         if let Some(i)=resources.soil_remaining_rectangles_stats() {eprintln!("ROM_DATA_USE resource={SOIL_REMAINING_RECTANGLES_ID} dataset={} bus_reads={} literal_bytes={} rectangle_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.literal_bytes,i.rectangle_bytes);}
+        if let Some(i)=resources.firaga_copied_matrices_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_COPIED_MATRICES_ID} dataset={} bus_reads={} literal_bytes={:?} matrix_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.literal_bytes,i.matrix_bytes);}
+        if let Some(i)=resources.firaga_compact_cells_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_COMPACT_CELLS_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_indexed_obj_bank_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_INDEXED_OBJ_BANK_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_compact_obj_bank_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_COMPACT_OBJ_BANK_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_adjacent_compact_obj_bank_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_6c12c8_obj_bank_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_6C12C8_OBJ_BANK_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_transfer_program_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_TRANSFER_PROGRAM_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_palette_rows_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_PALETTE_ROWS_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_stack_initialization_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_STACK_INITIALIZATION_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.firaga_queued_transfer_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_QUEUED_TRANSFER_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -3941,6 +4137,16 @@ fn write_dataset_inner(
     let soil_compact_record_data=source.soil_compact_record.as_ref().map(|c|encode_soil_compact_record(&c.decoded)).transpose()?;
     let soil_scoped_values_data=source.soil_scoped_values.as_ref().map(|c|encode_soil_scoped_values(&c.decoded)).transpose()?;
     let soil_remaining_rectangles_data=source.soil_remaining_rectangles.as_ref().map(|c|encode_soil_remaining_rectangles(&c.decoded)).transpose()?;
+    let firaga_copied_matrices_data=source.firaga_copied_matrices.as_ref().map(|c|encode_firaga_copied_matrices(&c.decoded)).transpose()?;
+    let firaga_compact_cells_data=source.firaga_compact_cells.as_ref().map(|c|encode_firaga_compact_cells(&c.decoded)).transpose()?;
+    let firaga_indexed_obj_bank_data=source.firaga_indexed_obj_bank.as_ref().map(|c|encode_firaga_indexed_obj_bank(&c.decoded)).transpose()?;
+    let firaga_compact_obj_bank_data=source.firaga_compact_obj_bank.as_ref().map(|c|encode_firaga_compact_obj_bank(&c.decoded)).transpose()?;
+    let firaga_adjacent_compact_obj_bank_data=source.firaga_adjacent_compact_obj_bank.as_ref().map(|c|encode_firaga_adjacent_compact_obj_bank(&c.decoded)).transpose()?;
+    let firaga_6c12c8_obj_bank_data=source.firaga_6c12c8_obj_bank.as_ref().map(|c|encode_firaga_6c12c8_obj_bank(&c.decoded)).transpose()?;
+    let firaga_transfer_program_data=source.firaga_transfer_program.as_ref().map(|c|encode_firaga_transfer_program(&c.decoded)).transpose()?;
+    let firaga_palette_rows_data=source.firaga_palette_rows.as_ref().map(|c|encode_firaga_palette_rows(&c.decoded)).transpose()?;
+    let firaga_stack_initialization_data=source.firaga_stack_initialization.as_ref().map(|c|encode_firaga_stack_initialization(&c.decoded)).transpose()?;
+    let firaga_queued_transfer_data=source.firaga_queued_transfer.as_ref().map(|c|encode_firaga_queued_transfer(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4091,6 +4297,16 @@ fn write_dataset_inner(
     if let Some(bytes)=&soil_compact_record_data {files.push(bytes);}
     if let Some(bytes)=&soil_scoped_values_data {files.push(bytes);}
     if let Some(bytes)=&soil_remaining_rectangles_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_copied_matrices_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_compact_cells_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_indexed_obj_bank_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_compact_obj_bank_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_adjacent_compact_obj_bank_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_6c12c8_obj_bank_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_transfer_program_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_palette_rows_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_stack_initialization_data {files.push(bytes);}
+    if let Some(bytes)=&firaga_queued_transfer_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4232,6 +4448,16 @@ fn write_dataset_inner(
         soil_compact_record_data.as_ref().map_or(0, Vec::len),
         soil_scoped_values_data.as_ref().map_or(0, Vec::len),
         soil_remaining_rectangles_data.as_ref().map_or(0, Vec::len),
+        firaga_copied_matrices_data.as_ref().map_or(0, Vec::len),
+        firaga_compact_cells_data.as_ref().map_or(0, Vec::len),
+        firaga_indexed_obj_bank_data.as_ref().map_or(0, Vec::len),
+        firaga_compact_obj_bank_data.as_ref().map_or(0, Vec::len),
+        firaga_adjacent_compact_obj_bank_data.as_ref().map_or(0, Vec::len),
+        firaga_6c12c8_obj_bank_data.as_ref().map_or(0, Vec::len),
+        firaga_transfer_program_data.as_ref().map_or(0, Vec::len),
+        firaga_palette_rows_data.as_ref().map_or(0, Vec::len),
+        firaga_stack_initialization_data.as_ref().map_or(0, Vec::len),
+        firaga_queued_transfer_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4366,6 +4592,16 @@ fn write_dataset_inner(
     if let Some(bytes)=&soil_compact_record_data {write(&path.join(SOIL_COMPACT_RECORD_FILE),bytes)?;}
     if let Some(bytes)=&soil_scoped_values_data {write(&path.join(SOIL_SCOPED_VALUES_FILE),bytes)?;}
     if let Some(bytes)=&soil_remaining_rectangles_data {write(&path.join(SOIL_REMAINING_RECTANGLES_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_copied_matrices_data {write(&path.join(FIRAGA_COPIED_MATRICES_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_compact_cells_data {write(&path.join(FIRAGA_COMPACT_CELLS_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_indexed_obj_bank_data {write(&path.join(FIRAGA_INDEXED_OBJ_BANK_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_compact_obj_bank_data {write(&path.join(FIRAGA_COMPACT_OBJ_BANK_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_adjacent_compact_obj_bank_data {write(&path.join(FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_6c12c8_obj_bank_data {write(&path.join(FIRAGA_6C12C8_OBJ_BANK_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_transfer_program_data {write(&path.join(FIRAGA_TRANSFER_PROGRAM_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_palette_rows_data {write(&path.join(FIRAGA_PALETTE_ROWS_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_stack_initialization_data {write(&path.join(FIRAGA_STACK_INITIALIZATION_FILE),bytes)?;}
+    if let Some(bytes)=&firaga_queued_transfer_data {write(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4726,6 +4962,16 @@ mod tests {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5053,8 +5299,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

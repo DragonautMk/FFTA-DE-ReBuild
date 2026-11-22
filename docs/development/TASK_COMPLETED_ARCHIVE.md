@@ -25836,3 +25836,253 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: The future engine rebuild has nine milestones and 26 open tasks covering accuracy, portability, performance and modding. Each resource family has an authoring format and an observable edit. The audio plan covers editable sequences, playable files and in-game replacement. The school dialogue and Giza encounter have named reference evidence.
 - Evidence: [Engine rebuild TODO](ENGINE_REBUILD_TODO.md) and [change record](../changes/2026-11-22-plan-editable-game-engine-rebuild.json). All 25 local links, including 12 section references, and three backlinks resolve. Project-memory, handoff and whitespace checks passed.
 - Limits: Godot adoption, converters, game rules, mod support and benchmarks remain future decisions or implementation. The agreed EUR ROM work retains priority.
+
+### ROMDATA-01-FIRAGA-SCENE-INVENTORY
+
+- Outcome: completed
+- Verified criteria: E302 EUR E248 606-frame raw/managed per-frame state, clock, video, OAM, dispatch and five nonempty audio comparisons; selected-reader address inventory reports 8,283 distinct bytes outside declared sources. Wine drained; protected inputs unchanged.
+- Evidence: `e302-firaga-scene-audit-wine-fxu8xxli`, `docs/rom_data_gameplay.md#e302-european-firaga-scene-rom-read-inventory`, `docs/changes/2026-11-22-inventory-european-firaga-rom-reads.json`.
+- Limits: Addresses alone do not prove readers or assets; other scenes, full-ROM coverage, real BIOS, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-LZ-PLAN
+
+- Outcome: completed
+- Verified criteria: E303 authenticates three disjoint EUR LZ77 streams, all 3,290 source bytes sampled outside E248 owners and 5,968 bytes decoded, with exact hashes and preserved inputs.
+- Evidence: `e303-firaga-lz-plan-o44ggusq`, `docs/rom_data_graphics.md#e303-firaga-battle-lz77-source-plan`, `docs/changes/2026-11-22-identify-firaga-lz-sources.json`.
+- Limits: Source plan only; caller, semantic asset identity, other scenes, Linux, USA and native Windows remain open; no performance measurement.
+
+### ROMDATA-04-FIRAGA-LZ
+
+- Outcome: completed
+- Verified criteria: E249-d248 publishes three LZ streams covering 3,290 encoded bytes and 5,968 decoded bytes. Wine verifies prior resources, poisoned boundaries, three original SWIs, nine transfers, 606-frame state/clock/video/OAM/dispatch/audio equivalence with one HLE call per stream, and CLI create/reuse/verify of 137 files. The E302 sampled residual is 4,993 bytes.
+- Evidence: Wine reader `e304-firaga-lz-readers-wine-6taiimnv`, scene `e304-firaga-lz-scene-wine-ugltru8s`, CLI `e304-firaga-lz-cli-wine-a19gxpua`, join `e304-firaga-lz-sample-residual-higcopsd`, `docs/rom_data_graphics.md#e304-firaga-battle-lz77-runtime-sources`, `docs/changes/2026-11-22-consume-european-firaga-lz-streams.json`.
+- Limits: One retained scene and address-only sample; asset identity, other readers/scenes, real BIOS, UI save/Load, 41 revised legacy fixtures, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-SPRITE-PLAN
+
+- Outcome: completed
+- Verified criteria: E305 compares the E302 audit with E249 owners and identifies 44 disjoint fully sampled count/payload candidates, containing 347 objects and 2,170 source bytes.
+- Evidence: `e305-firaga-sprite-list-candidates-u3pn58da`, `docs/rom_data_runtime.md#e305-firaga-spritepeek-list-candidates`, `docs/changes/2026-11-22-identify-firaga-sprite-list-candidates.json`.
+- Limits: Address pairing does not establish producer, temporal relationship or full source domain; runtime consumption, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-FIRAGA-SPRITE-LISTS
+
+- Outcome: completed
+- Verified criteria: E250-d249 publishes 44 OBJ lists covering 347 objects and 2,170 source bytes. Wine verifies prior resources, poisoned boundaries, three original interpreter/host comparisons, transfers, 606-frame state/clock/video/OAM/dispatch/audio equality with all 44 lists used by guest and host, and CLI create/reuse/verify of 137 files. The E302 sampled residual is 2,823 bytes.
+- Evidence: Wine reader `e306-firaga-sprite-lists-readers-wine-zlctezch`, scene `e306-firaga-sprite-lists-scene-wine-pa5aamwj`, CLI `e306-firaga-sprite-lists-cli-wine-h5s9hkgs`, join `e306-firaga-sprite-list-sample-residual-qgpr0gm3`, `docs/rom_data_runtime.md#e306-firaga-typed-sprite-lists`, `docs/changes/2026-11-22-consume-european-firaga-sprite-lists.json`.
+- Limits: One retained scene and address-only sample; source-save history, producers, other readers/scenes, real BIOS, UI save/Load, 42 revised fixtures, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-3B9E80-SOURCE
+
+- Outcome: completed
+- Verified criteria: E307 authenticates two adjacent original copy sources of 252 and 204 bytes and four literal words, all 472 bytes observed outside E250 sources; Wine disassemblies support callers, copy callback and queued dimensions.
+- Evidence: `e307-firaga-copy-matrix-source-plan-b7zo8r9m`, `e307-firaga-3b9e80-reader-disassembly-_3papedk`, `e307-firaga-copy-helper-disassembly-24_47o69`, `e307-firaga-copy-consumer-disassembly-inldrchf`, `e307-firaga-copy-draw-disassembly-vkgjpuzu`, `docs/rom_data_graphics.md#e307-firaga-copied-matrix-source-plan`, `docs/changes/2026-11-22-identify-firaga-copied-matrices.json`.
+- Limits: Static source plan does not attribute every sampled access or prove complete semantics; runtime, other scenes, Linux, USA and native Windows remain open. No performance measurement.
+
+### ROMDATA-04-FIRAGA-COPIED-MATRICES
+
+- Outcome: completed
+- Verified criteria: E251-d250 publishes two authenticated European matrices and four original literals while preserving copy semantics, prior resources and fallback; selected poisoned-source readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e308-firaga-matrices-readers-wine-retry-43bpfeqh`, scene `e308-firaga-matrices-scene-wine-_e603cr2`, CLI `e308-firaga-matrices-cli-wine-73v6pnom`, join `e308-firaga-matrices-sample-residual-q5otx2ur`; all Wine servers drained. E302 residual is 2,351 bytes.
+- Limits: one retained continuation; source-save history, dynamic producer, semantics, other scenes/readers, real BIOS and UI save/Load unproved. The 43 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison. Reader `15hjtvca` first failed due to a test endpoint and was fixed in the passing retry.
+
+### ROMDATA-01-FIRAGA-RESIDUAL-SOURCE
+
+- Outcome: completed
+- Verified criteria: authenticated one European source plan: compact cell header, directory, ten encoded frames and ten sequence entries, 626 plus 22 bytes observed outside E251 source owners; original code and encoded run extents independently checked. The intervening two bytes are excluded.
+- Evidence: `e309-firaga-compact-source-plan-163iufku`, Wine readers `e309-firaga-compact-readers-wine-wv43bxaa`, `e309-firaga-candidate-consumer-wine-m654jv6l`, `e309-firaga-candidate-branch-wine-5bhu4sna`, `e309-firaga-candidate-count-wine-artnj9cx`; grouping `e309-firaga-residual-groups-la9tbmid`. Wine drained.
+- Limits: sampled accesses lack PC attribution; complete field semantics, other selectors/scenes and runtime publication remain open. Linux, USA and native Windows deferred; no performance comparison. Next-reader uncertainty triggered Sol `/root/sol_e309_source_diagnosis`, requested gpt-6.1-sol xhigh; effective settings unconfirmed. It identified the reader paths and proposed 626+22 bytes, which the independent static plan and Wine disassembly verified.
+
+### ROMDATA-04-FIRAGA-COMPACT-CELLS
+
+- Outcome: completed
+- Verified criteria: E252-d251 publishes typed compact frames, sequence and selected roots while preserving original decode, indexing, prior resources and fallback. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e310-firaga-compact-readers-wine-5kbmgbk2`, scene `e310-firaga-compact-scene-wine-q89549qz`, CLI `e310-firaga-compact-cli-wine-0ha_kvmp`, join `e310-firaga-compact-sample-residual-5soh9_aa`; all Wine servers drained. E302 residual is 1,695 bytes.
+- Limits: one retained continuation; source-save history, complete producer and field semantics, other scenes/readers, real BIOS and UI save/Load unproved. The 44 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison. First build `qsp0_nyj` failed for a missing test import and retry `8c07svlc` passed; the reader preflight's predecessor path was corrected before Wine started.
+
+### ROMDATA-01-FIRAGA-412050-SOURCE
+
+- Outcome: completed
+- Verified criteria: authenticated the European descriptor, one 19-frame sequence and 20-entry object directory, plus its referenced empty list. The plan adds 176 source bytes, of which 172 were sampled outside E252; 18 referenced lists already have owners.
+- Evidence: `e311-firaga-obj-source-contract-zn6lp3op`, `e311-firaga-412050-bank-plan-swlmqvn7` and Wine original readers `e311-firaga-obj-readers-wine-0_vwkio3`; Wine drained.
+- Limits: the address sample lacks executing PCs; producer ancestry, other scenes/selectors and runtime publication remain open. The unreferenced second list is excluded. Linux, USA and native Windows are deferred; no performance comparison.
+
+### ROMDATA-04-FIRAGA-OBJ-BANK
+
+- Outcome: completed
+- Verified criteria: E253-d252 publishes the European indexed OBJ descriptor, sequence and directory, adds the selected empty list to guest/host ownership and preserves the 18 referenced lists. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e312-firaga-obj-readers-wine-za6f9c7v`, scene `e312-firaga-obj-scene-wine-3d6gbyaw`, CLI `e312-firaga-obj-cli-wine-qe3bcmsl`, join `e312-firaga-obj-sample-residual-0hdjkda7`; all Wine servers drained. E302 residual is 1,523 bytes.
+- Limits: one retained continuation; source-save history, producer ancestry, other selectors/scenes, real BIOS and UI save/Load unproved. The 45 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-6B368E-SOURCE
+
+- Outcome: completed
+- Verified criteria: authenticated a compact EUR OBJ bank, ten-frame sequence, three empty lists and selected indirect roots. All 66 planned bytes were sampled outside E253; seven nonempty lists already have owners.
+- Evidence: `e313-firaga-compact-obj-source-plan-retry-nj96f9zl`, `e313-firaga-6b368e-probe-jrywuwn0`; reused prior Wine original caller and compact-reader disassembly.
+- Limits: `4x33r8y_` initially assumed a direct pointer; the passing plan checks the descriptor indirection. Sampled PCs, broader producer/selector/scene coverage and runtime publication remain unproved. Linux, USA and native Windows deferred; no performance comparison.
+
+### ROMDATA-04-FIRAGA-COMPACT-OBJ-BANK
+
+- Outcome: completed
+- Verified criteria: E254-d253 publishes the European compact OBJ bank and indirect roots, adds three empty lists to guest/host ownership and preserves seven earlier nonempty lists. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e314-firaga-compact-obj-readers-wine-uag8crl9`, scene `e314-firaga-compact-obj-scene-wine-00m4jnor`, CLI `e314-firaga-compact-obj-cli-wine-dlvxuop3`, join `e314-firaga-compact-obj-sample-residual-h1qk2fn_`; all Wine servers drained. E302 residual is 1,457 bytes.
+- Limits: one retained continuation; source-save history, producer ancestry, other selectors/scenes, real BIOS and UI save/Load unproved. The 46 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-SOURCES
+
+- Outcome: completed
+- Verified criteria: authenticated 115 EUR bytes, of which 107 are in the E302 sample; original constructor/callback select two 24-byte descriptors and a 17-frame compact sequence using ten prior lists and one empty list. Source plan adds no guest bounds.
+- Evidence: static `e315-firaga-adjacent-compact-obj-source-plan-3g8h3wg6`, probe `agzgmxtz`, Wine disassemblies `2djsznfs` and `3y7u8cdl`, both servers drained.
+- Limits: address-only sample has no PCs; no runtime publication or replay. Other selectors, sequences, scenes, real BIOS, UI saves, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-ADJACENT-COMPACT-OBJ-BANK
+
+- Outcome: completed
+- Verified criteria: E255-d254 publishes the selected European descriptor projections, count, adjacent compact sequence and one empty list, preserving ten earlier nonempty lists and the first descriptor bank pointer. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e316-firaga-adjacent-obj-readers-wine-5zq084xm`, scene `e316-firaga-adjacent-obj-scene-wine-vgv_p24h`, CLI `e316-firaga-adjacent-obj-cli-wine-823mmm5g`, join `e316-firaga-adjacent-obj-sample-residual-rk9t89t2`; all Wine servers drained. E302 residual is 1,350 bytes.
+- Limits: one retained continuation; source-save history, producer ancestry, other selectors/scenes, real BIOS and UI save/Load unproved. The 47 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-6C12C8-SOURCES
+
+- Outcome: completed
+- Verified criteria: authenticated 85 EUR bytes, of which 81 are in the E302 sample; original caller/callback link one compact descriptor and its 13-frame sequence to nine prior lists and one empty list. Source plan adds no guest bounds.
+- Evidence: static `e317-firaga-6c12c8-source-plan-bz8m5fb_`; reused Wine disassemblies `8lucbl5h` and `3y7u8cdl`, both servers drained.
+- Limits: address-only sample has no PCs; no runtime publication or replay. Other selectors, pointers, producers, scenes, real BIOS, UI saves, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-6C12C8-BANK
+
+- Outcome: completed
+- Verified criteria: E256-d255 publishes the selected European count, pointer, compact descriptor, 13-frame sequence and one empty list, preserving nine earlier nonempty lists and both caller literals. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: reader `e318-firaga-6c12c8-obj-readers-wine-hjwi7j_n`, scene `e318-firaga-6c12c8-obj-scene-wine-vav9bzv2`, CLI `e318-firaga-6c12c8-obj-cli-wine-maq3te3q`, join `e318-firaga-6c12c8-obj-sample-residual-loxk_hkh`; all Wine servers drained. E302 residual is 1,269 bytes.
+- Limits: one retained continuation; source-save history, producer ancestry, other selectors/scenes, real BIOS and UI save/Load unproved. The 48 revised older fixtures, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-EB9C0-LITERALS
+
+- Outcome: completed
+- Verified criteria: E257-d256 appends seven authenticated European Thumb LDR operands to the existing literal owner without changing prior entries. Selected poisoned-source original readers, transfers, 606-frame scene and production CLI pass on Wine.
+- Evidence: source plan `e319-firaga-eb9c0-literals-source-plan-i2d5wcm0`, reader `e319-firaga-eb9c0-literals-readers-wine-ej_mhq65`, scene `e319-firaga-eb9c0-literals-scene-wine-g9opsvws`, CLI `e319-firaga-eb9c0-literals-cli-wine-kq1iltos`, join `e319-firaga-eb9c0-literals-sample-residual-r8fvlc_h`; all Wine servers drained. E302 residual is 1,241 bytes.
+- Limits: one retained continuation; source-save history, other callers/tables/scenes, real BIOS and UI save/Load unproved. The 49 revised older fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-39CB9C-SOURCES
+
+- Outcome: completed
+- Verified criteria: E320 authenticates the selected European four-record program, its roots, wrappers and format headers; 121 source bytes contain 98 E302 sampled bytes. The three LZ streams already belong to `graphics.observed-lz-block` and retain E304 Wine reader/scene evidence.
+- Evidence: protected plan `e320-firaga-39cb9c-source-plan-ilwy805q`, Wine disassemblies `4gdp8uwp`, `9_vg1v5x`, `hzx7t6al`, `y91zg36h`, `j0o4fvrw`; Wine servers drained.
+- Limits: palette payload extents/overlap, typed publication and guest use, individual sampled PCs, other selectors/producers/consumers/scenes, Linux, USA and native Windows remain open. No performance measurements.
+
+### ROMDATA-04-FIRAGA-39CB9C-PROGRAM
+
+- Outcome: completed
+- Verified criteria: E258-d257 publishes the selected European transfer program and composes prior LZ owners and guest fallback. Original readers, transfers, poisoned-source 606-frame scene and production CLI pass on Wine.
+- Evidence: source plan `e320-firaga-39cb9c-source-plan-ilwy805q`, reader `e321-firaga-transfer-program-readers-wine-tfkrk5a_`, scene `e321-firaga-transfer-program-scene-wine-sh2x442o`, CLI `e321-firaga-transfer-program-cli-wine-hj1_inpx`, join `e321-firaga-transfer-program-sample-residual-h_gw4p3y`; all Wine servers drained. E302 residual is 1,143 bytes.
+- Limits: one retained continuation; palette payload extents, source-save history, other callers/tables/scenes, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-39CB9C-WHITESPACE
+
+- Outcome: completed
+- Verified criteria: removed the introduced trailing whitespace reported by `git diff --check`; project-memory, handoff and diff checks pass. This formatting-only follow-up does not change the E321 Wine evidence.
+
+### ROMDATA-01-FIRAGA-39CB9C-PALETTE-ROW-SOURCES
+
+- Outcome: completed
+- Verified criteria: E322 authenticates two adjacent eight-byte selected palette row prefixes and original `db374`/`d80e0` copy semantics; 14 bytes are in the E302 sample.
+- Evidence: source plan `e322-firaga-palette-prefix-source-plan-vk6ruysg`, Wine consumer `e322-firaga-palette-consumer-wine-miin8nps` and E307 helper; Wine drained.
+- Limits: no publication or sample-PC attribution; extra rows, other consumers/scenes, Linux, USA and native Windows remain open. No performance measurements. Parent `ROMDATA-01-FIRAGA-39CB9C-PALETTES` remains partial.
+
+### ROMDATA-04-FIRAGA-39CB9C-PALETTE-ROWS
+
+- Outcome: completed
+- Verified criteria: E259-d258 publishes the two selected European palette row prefixes and preserves guest fallback for additional rows. Original consumers, helper, transfers, poisoned-source 606-frame scene and production CLI pass on Wine.
+- Evidence: source plan `e322-firaga-palette-prefix-source-plan-vk6ruysg`, reader `e323-firaga-palette-rows-readers-wine-rqv2iq3y`, scene `e323-firaga-palette-rows-scene-wine-05hjmqhm`, CLI `e323-firaga-palette-rows-cli-wine-7y0zezfv`, join `e323-firaga-palette-rows-sample-residual-uui0fp3b`; all Wine servers drained. E302 residual is 1,129 bytes.
+- Limits: one retained continuation; additional palette rows, source-save history, other callers/tables/scenes, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-14D480-SOURCES
+
+- Outcome: completed
+- Verified criteria: E324 authenticates five original Thumb literals and five adjacent stack initialization sources, 64 bytes all present in the E302 sample; original readers and copy helper are identified.
+- Evidence: source plan `e324-firaga-14d480-source-plan-52tdqmk9`, Wine disassembly `e324-firaga-14d480-consumer-wine-i51e67_6`, E283 helper; Wine drained.
+- Limits: no publication or sample-PC attribution; selector domains, other consumers/scenes, Linux, USA and native Windows remain open. No performance measurements. Parent `ROMDATA-01-FIRAGA-SCENE-RESIDUAL` remains partial.
+
+### ROMDATA-04-FIRAGA-14D480-STACK
+
+- Outcome: completed
+- Verified criteria: E260-d259 publishes the five selected European literal pointers and stack initialization fields with original guest control flow and fallback. Original readers, copy, transfers, poisoned-source 606-frame scene and production CLI pass on Wine.
+- Evidence: source plan `e324-firaga-14d480-source-plan-52tdqmk9`, reader `e325-firaga-stack-initialization-readers-wine-g2cv2hbo`, scene `e325-firaga-stack-initialization-scene-wine-w0ru_ree`, CLI `e325-firaga-stack-initialization-cli-wine-_t8_0ngi`, join `e325-firaga-stack-initialization-sample-residual-smedangh`; all Wine servers drained. E302 residual is 1,065 bytes.
+- Limits: one retained continuation; live selector domain, source-save history, other callers/scenes, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-40E844-SOURCES
+
+- Outcome: completed
+- Verified criteria: E326 authenticates one 256-byte queued halfword transfer and two original producer literals, all 264 bytes sampled. Wine DMA provenance joins the selected original producer, queue node and DMA destination.
+- Evidence: source plan `e326-firaga-40e844-source-plan-yuq_1w_3`, Wine `e326-firaga-40e844-dma-wine-d2e7v3m2`, `e326-firaga-40e844-queue-wine-y_wimttr`, `e326-firaga-enqueue-caller-wine-h4sr9ejw`; Wine drained. Sol `/root/sol_firaga_dma_source` was requested as gpt-6.1-sol/xhigh; effective settings were not independently confirmed.
+- Limits: no publication or implied graphics format/global extent; source-save history, other indices, callers/scenes, Linux, USA and native Windows remain open. Synthetic immediate DMA state/clock comparison passed; nested scope was not independently exercised. No performance measurement.
+
+### ROMDATA-04-FIRAGA-40E844-TRANSFER
+
+- Outcome: completed
+- Verified criteria: E261-d260 publishes one selected European queued halfword-transfer view and two original literals, preserving original queue, DMA and guest fallback. Original producer/queue/DMA, poisoned-source 606-frame scene and production CLI pass on Wine.
+- Evidence: source plan `e326-firaga-40e844-source-plan-yuq_1w_3`, reader `e327-firaga-queued-transfer-readers-wine-eas1b41j`, scene `e327-firaga-queued-transfer-scene-wine-9nspb3cr`, CLI `e327-firaga-queued-transfer-cli-wine-4jv_uinh`, join `e327-firaga-queued-transfer-sample-residual-nrrlw5qt`; all Wine servers drained. E302 residual is 801 bytes.
+- Limits: one retained continuation; other indices, source allocation/format, source-save history, other callers/scenes, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-2D-2E-LITERALS
+
+- Outcome: completed
+- Verified criteria: E328 authenticates 41 original Thumb PC-relative LDR instruction/source pairs, 164 bytes all present in the E302 sample and outside E261 ownership.
+- Evidence: source plan `e328-firaga-2d-2e-literals-source-plan-csk4bbyl`, Wine disassembly `e328-firaga-2d-2e-literals-disassembly-wine-edr1c64y`; Wine drained.
+- Limits: no publication or individual sample-PC attribution; other readers/scenes, Linux, USA and native Windows remain open. No performance measurements.
+
+### ROMDATA-04-FIRAGA-2D-2E-LITERALS
+
+- Outcome: completed
+- Verified criteria: E262-d261 extends the existing literal resource with 41 authenticated European words; prior entries, other resources and guest fallback are preserved. Original readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e328-firaga-2d-2e-literals-source-plan-csk4bbyl`, reader `e329-firaga-2d-2e-literals-readers-wine-537ey132`, scene `e329-firaga-2d-2e-literals-scene-wine-ag5y0o6_`, CLI `e329-firaga-2d-2e-literals-cli-wine-stvyq0wt`, join `e329-firaga-2d-2e-literals-sample-residual-yfp0eet3`; all Wine servers drained. E302 residual is 637 sampled bytes.
+- Limits: one retained continuation; other readers, values and scenes, source-save history, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-SCENE-RESIDUAL-CLASSIFY
+
+- Outcome: completed for one source-plan selection
+- Verified criteria: E330 partitions the 637 E302 addresses outside E262 and authenticates ten original LDR/source pairs, 40 sampled bytes, in retained EUR eb830/eba5c disassemblies. Runtime publication remains open.
+- Evidence: `e330-firaga-eb83-ebc-literals-source-plan-iomybbqw`; previous E329 join `yfp0eet3`.
+- Limits: address-only sample lacks individual PCs; remaining sources, readers and scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-FIRAGA-EB83-EBC-LITERALS
+
+- Outcome: completed
+- Verified criteria: E263-d262 extends the existing literal resource with 10 authenticated European words; prior entries, other resources and guest fallback are preserved. Original readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e330-firaga-eb83-ebc-literals-source-plan-iomybbqw`, reader `e331-firaga-eb83-ebc-literals-readers-wine-u78tirug`, scene `e331-firaga-eb83-ebc-literals-scene-wine-uzod2dru`, CLI `e331-firaga-eb83-ebc-literals-cli-wine-t7kh3_rm`, join `e331-firaga-eb83-ebc-literals-sample-residual-s6x3bxvv`; all Wine servers drained. E302 residual is 597 sampled bytes.
+- Limits: one retained continuation; other readers, values and scenes, source-save history, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-CODE-LITERALS
+
+- Outcome: completed for the selected source plan
+- Verified criteria: E332 authenticates 14 original LDR/source pairs, 56 sampled bytes, in European 013/019/0cf windows. Runtime publication remains open.
+- Evidence: source plan `e332-firaga-code-literals-source-plan-loawcszx`, Wine disassembly `e332-firaga-code-literals-disassembly-wine-nbsow8qc` drained; E331 join `s6x3bxvv`.
+- Limits: code-candidate map is speculative, address-only sample lacks individual PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-FIRAGA-CODE-LITERALS
+
+- Outcome: completed
+- Verified criteria: E264-d263 extends the existing literal resource with 14 authenticated European words; prior entries, other resources and guest fallback are preserved. Original readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e332-firaga-code-literals-source-plan-loawcszx`, reader `e333-firaga-code-literals-readers-wine-0j4qqizf`, scene `e333-firaga-code-literals-scene-wine-lcs3hcvx`, CLI `e333-firaga-code-literals-cli-wine-kijs396o`, join `e333-firaga-code-literals-sample-residual-we6mxexq`; all Wine servers drained. E302 residual is 541 sampled bytes.
+- Limits: one retained continuation; other readers, values and scenes, source-save history, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-MIXED-LITERALS
+
+- Outcome: completed for the selected source plan
+- Verified criteria: E334 authenticates 57 original LDR/source pairs, 228 sampled bytes, in six European code windows. Runtime publication remains open.
+- Evidence: source plan `e334-firaga-mixed-literals-source-plan-t56gh8bq`, Wine disassembly `e334-firaga-mixed-literals-disassembly-wine-5rc48zzd` drained; E333 join `we6mxexq`.
+- Limits: linear disassembly and address-only sample do not establish individual executed PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-FIRAGA-MIXED-LITERALS
+
+- Outcome: completed
+- Verified criteria: E265-d264 extends the existing literal resource with 57 authenticated European words; prior entries, other resources and guest fallback are preserved. Original readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e334-firaga-mixed-literals-source-plan-t56gh8bq`, reader `e335-firaga-mixed-literals-readers-wine-8ipblmws`, scene `e335-firaga-mixed-literals-scene-wine-ixvjw955`, CLI `e335-firaga-mixed-literals-cli-wine-7jyq36ot`, join `e335-firaga-mixed-literals-sample-residual-77a2186_`; all Wine servers drained. E302 residual is 313 sampled bytes.
+- Limits: one retained continuation; other readers, values and scenes, source-save history, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-RESIDUAL-LITERALS
+
+- Outcome: completed for the selected source plan
+- Verified criteria: E336 authenticates 52 original LDR/source pairs, 208 sampled bytes, in 19 European code windows. Runtime publication remains open.
+- Evidence: source plan `e336-firaga-residual-literals-source-plan-6fg1_6yj`, Wine disassembly `e336-firaga-residual-literals-disassembly-wine-d9ijk6ak` drained; E335 join `77a2186_`.
+- Limits: linear disassembly and address-only sample do not establish individual executed PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison.

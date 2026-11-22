@@ -31,6 +31,18 @@ pub struct ThumbPcLiteralsStats {
     pub soil_evidence_observed_mask: [u64; 3],
     pub soil_146_observed_bytes: u64,
     pub soil_146_observed_mask: u64,
+    pub firaga_observed_bytes: u64,
+    pub firaga_observed_mask: u64,
+    pub firaga_2d2e_observed_bytes: u64,
+    pub firaga_2d2e_observed_mask: u64,
+    pub firaga_eb83_ebc_observed_bytes: u64,
+    pub firaga_eb83_ebc_observed_mask: u64,
+    pub firaga_code_observed_bytes: u64,
+    pub firaga_code_observed_mask: u64,
+    pub firaga_mixed_observed_bytes: u64,
+    pub firaga_mixed_observed_mask: u64,
+    pub firaga_residual_observed_bytes: u64,
+    pub firaga_residual_observed_mask: u64,
 }
 
 pub(super) struct ThumbPcLiteralsResources {
@@ -62,6 +74,18 @@ pub(super) struct ThumbPcLiteralsResources {
     soil_evidence_observed: [AtomicU64; 3],
     soil_146_observed_bytes: AtomicU64,
     soil_146_observed: AtomicU64,
+    firaga_observed_bytes: AtomicU64,
+    firaga_observed: AtomicU64,
+    firaga_2d2e_observed_bytes: AtomicU64,
+    firaga_2d2e_observed: AtomicU64,
+    firaga_eb83_ebc_observed_bytes: AtomicU64,
+    firaga_eb83_ebc_observed: AtomicU64,
+    firaga_code_observed_bytes: AtomicU64,
+    firaga_code_observed: AtomicU64,
+    firaga_mixed_observed_bytes: AtomicU64,
+    firaga_mixed_observed: AtomicU64,
+    firaga_residual_observed_bytes: AtomicU64,
+    firaga_residual_observed: AtomicU64,
 }
 
 impl ThumbPcLiteralsResources {
@@ -91,6 +115,12 @@ impl ThumbPcLiteralsResources {
                 + model::BLUE_SCREW_OBSERVED_COUNT
                 + model::SOIL_EVIDENCE_OBSERVED_COUNT
                 + model::SOIL_146_OBSERVED_COUNT
+                + model::FIRAGA_OBSERVED_COUNT
+                + model::FIRAGA_2D2E_OBSERVED_COUNT
+                + model::FIRAGA_EB83_EBC_OBSERVED_COUNT
+                + model::FIRAGA_CODE_OBSERVED_COUNT
+                + model::FIRAGA_MIXED_OBSERVED_COUNT
+                + model::FIRAGA_RESIDUAL_OBSERVED_COUNT
         {
             return Err("Thumb literal source count mismatch".into());
         }
@@ -109,6 +139,12 @@ impl ThumbPcLiteralsResources {
             .chain(&data.blue_screw_observed)
             .chain(&data.soil_evidence_observed)
             .chain(&data.soil_146_observed)
+            .chain(&data.firaga_observed)
+            .chain(&data.firaga_2d2e_observed)
+            .chain(&data.firaga_eb83_ebc_observed)
+            .chain(&data.firaga_code_observed)
+            .chain(&data.firaga_mixed_observed)
+            .chain(&data.firaga_residual_observed)
             .zip(sources)
         {
             if source.offset != literal.source_offset
@@ -148,6 +184,18 @@ impl ThumbPcLiteralsResources {
             soil_evidence_observed: std::array::from_fn(|_| AtomicU64::new(0)),
             soil_146_observed_bytes: AtomicU64::new(0),
             soil_146_observed: AtomicU64::new(0),
+            firaga_observed_bytes: AtomicU64::new(0),
+            firaga_observed: AtomicU64::new(0),
+            firaga_2d2e_observed_bytes: AtomicU64::new(0),
+            firaga_2d2e_observed: AtomicU64::new(0),
+            firaga_eb83_ebc_observed_bytes: AtomicU64::new(0),
+            firaga_eb83_ebc_observed: AtomicU64::new(0),
+            firaga_code_observed_bytes: AtomicU64::new(0),
+            firaga_code_observed: AtomicU64::new(0),
+            firaga_mixed_observed_bytes: AtomicU64::new(0),
+            firaga_mixed_observed: AtomicU64::new(0),
+            firaga_residual_observed_bytes: AtomicU64::new(0),
+            firaga_residual_observed: AtomicU64::new(0),
         })
     }
 
@@ -187,6 +235,18 @@ impl ThumbPcLiteralsResources {
         let mut soil_evidence_observed = [0u64; 3];
         let mut soil_146_observed_count = 0;
         let mut soil_146_observed = 0u64;
+        let mut firaga_observed_count = 0;
+        let mut firaga_observed = 0u64;
+        let mut firaga_2d2e_observed_count = 0;
+        let mut firaga_2d2e_observed = 0u64;
+        let mut firaga_eb83_ebc_observed_count = 0;
+        let mut firaga_eb83_ebc_observed = 0u64;
+        let mut firaga_code_observed_count = 0;
+        let mut firaga_code_observed = 0u64;
+        let mut firaga_mixed_observed_count = 0;
+        let mut firaga_mixed_observed = 0u64;
+        let mut firaga_residual_observed_count = 0;
+        let mut firaga_residual_observed = 0u64;
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, word)) => {
                 count += 1;
@@ -268,10 +328,34 @@ impl ThumbPcLiteralsResources {
                     let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT;
                     soil_evidence_observed_count += 1;
                     soil_evidence_observed[word / 64] |= 1u64 << (word % 64);
-                } else {
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT {
                     let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT;
                     soil_146_observed_count += 1;
                     soil_146_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT + model::FIRAGA_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT;
+                    firaga_observed_count += 1;
+                    firaga_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT + model::FIRAGA_OBSERVED_COUNT + model::FIRAGA_2D2E_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT - model::FIRAGA_OBSERVED_COUNT;
+                    firaga_2d2e_observed_count += 1;
+                    firaga_2d2e_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT + model::FIRAGA_OBSERVED_COUNT + model::FIRAGA_2D2E_OBSERVED_COUNT + model::FIRAGA_EB83_EBC_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT - model::FIRAGA_OBSERVED_COUNT - model::FIRAGA_2D2E_OBSERVED_COUNT;
+                    firaga_eb83_ebc_observed_count += 1;
+                    firaga_eb83_ebc_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT + model::FIRAGA_OBSERVED_COUNT + model::FIRAGA_2D2E_OBSERVED_COUNT + model::FIRAGA_EB83_EBC_OBSERVED_COUNT + model::FIRAGA_CODE_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT - model::FIRAGA_OBSERVED_COUNT - model::FIRAGA_2D2E_OBSERVED_COUNT - model::FIRAGA_EB83_EBC_OBSERVED_COUNT;
+                    firaga_code_observed_count += 1;
+                    firaga_code_observed |= 1u64 << word;
+                } else if word < model::LITERAL_COUNT + model::ADDITIONAL_COUNT + model::OBSERVED_COUNT + model::HOME_ANCHORED_COUNT + model::HOME_OBSERVED_COUNT + model::RED_SPRING_OBSERVED_COUNT + model::RED_SPRING_ANCHORED_COUNT + model::POST_INDEXED_OBSERVED_COUNT + model::POST_INDEXED_ANCHORED_COUNT + model::BANK_OBSERVED_COUNT + model::BLUE_SCREW_OBSERVED_COUNT + model::SOIL_EVIDENCE_OBSERVED_COUNT + model::SOIL_146_OBSERVED_COUNT + model::FIRAGA_OBSERVED_COUNT + model::FIRAGA_2D2E_OBSERVED_COUNT + model::FIRAGA_EB83_EBC_OBSERVED_COUNT + model::FIRAGA_CODE_OBSERVED_COUNT + model::FIRAGA_MIXED_OBSERVED_COUNT {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT - model::FIRAGA_OBSERVED_COUNT - model::FIRAGA_2D2E_OBSERVED_COUNT - model::FIRAGA_EB83_EBC_OBSERVED_COUNT - model::FIRAGA_CODE_OBSERVED_COUNT;
+                    firaga_mixed_observed_count += 1;
+                    firaga_mixed_observed |= 1u64 << word;
+                } else {
+                    let word = word - model::LITERAL_COUNT - model::ADDITIONAL_COUNT - model::OBSERVED_COUNT - model::HOME_ANCHORED_COUNT - model::HOME_OBSERVED_COUNT - model::RED_SPRING_OBSERVED_COUNT - model::RED_SPRING_ANCHORED_COUNT - model::POST_INDEXED_OBSERVED_COUNT - model::POST_INDEXED_ANCHORED_COUNT - model::BANK_OBSERVED_COUNT - model::BLUE_SCREW_OBSERVED_COUNT - model::SOIL_EVIDENCE_OBSERVED_COUNT - model::SOIL_146_OBSERVED_COUNT - model::FIRAGA_OBSERVED_COUNT - model::FIRAGA_2D2E_OBSERVED_COUNT - model::FIRAGA_EB83_EBC_OBSERVED_COUNT - model::FIRAGA_CODE_OBSERVED_COUNT - model::FIRAGA_MIXED_OBSERVED_COUNT;
+                    firaga_residual_observed_count += 1;
+                    firaga_residual_observed |= 1u64 << word;
                 }
                 byte
             }
@@ -326,6 +410,18 @@ impl ThumbPcLiteralsResources {
         }
         self.soil_146_observed_bytes.fetch_add(soil_146_observed_count, Ordering::Relaxed);
         self.soil_146_observed.fetch_or(soil_146_observed, Ordering::Relaxed);
+        self.firaga_observed_bytes.fetch_add(firaga_observed_count, Ordering::Relaxed);
+        self.firaga_observed.fetch_or(firaga_observed, Ordering::Relaxed);
+        self.firaga_2d2e_observed_bytes.fetch_add(firaga_2d2e_observed_count, Ordering::Relaxed);
+        self.firaga_2d2e_observed.fetch_or(firaga_2d2e_observed, Ordering::Relaxed);
+        self.firaga_eb83_ebc_observed_bytes.fetch_add(firaga_eb83_ebc_observed_count, Ordering::Relaxed);
+        self.firaga_eb83_ebc_observed.fetch_or(firaga_eb83_ebc_observed, Ordering::Relaxed);
+        self.firaga_code_observed_bytes.fetch_add(firaga_code_observed_count, Ordering::Relaxed);
+        self.firaga_code_observed.fetch_or(firaga_code_observed, Ordering::Relaxed);
+        self.firaga_mixed_observed_bytes.fetch_add(firaga_mixed_observed_count, Ordering::Relaxed);
+        self.firaga_mixed_observed.fetch_or(firaga_mixed_observed, Ordering::Relaxed);
+        self.firaga_residual_observed_bytes.fetch_add(firaga_residual_observed_count, Ordering::Relaxed);
+        self.firaga_residual_observed.fetch_or(firaga_residual_observed, Ordering::Relaxed);
         Some(result)
     }
 
@@ -364,6 +460,18 @@ impl ThumbPcLiteralsResources {
             soil_evidence_observed_mask: self.soil_evidence_observed.each_ref().map(|v| v.load(Ordering::Relaxed)),
             soil_146_observed_bytes: self.soil_146_observed_bytes.load(Ordering::Relaxed),
             soil_146_observed_mask: self.soil_146_observed.load(Ordering::Relaxed),
+            firaga_observed_bytes: self.firaga_observed_bytes.load(Ordering::Relaxed),
+            firaga_observed_mask: self.firaga_observed.load(Ordering::Relaxed),
+            firaga_2d2e_observed_bytes: self.firaga_2d2e_observed_bytes.load(Ordering::Relaxed),
+            firaga_2d2e_observed_mask: self.firaga_2d2e_observed.load(Ordering::Relaxed),
+            firaga_eb83_ebc_observed_bytes: self.firaga_eb83_ebc_observed_bytes.load(Ordering::Relaxed),
+            firaga_eb83_ebc_observed_mask: self.firaga_eb83_ebc_observed.load(Ordering::Relaxed),
+            firaga_code_observed_bytes: self.firaga_code_observed_bytes.load(Ordering::Relaxed),
+            firaga_code_observed_mask: self.firaga_code_observed.load(Ordering::Relaxed),
+            firaga_mixed_observed_bytes: self.firaga_mixed_observed_bytes.load(Ordering::Relaxed),
+            firaga_mixed_observed_mask: self.firaga_mixed_observed.load(Ordering::Relaxed),
+            firaga_residual_observed_bytes: self.firaga_residual_observed_bytes.load(Ordering::Relaxed),
+            firaga_residual_observed_mask: self.firaga_residual_observed.load(Ordering::Relaxed),
         }
     }
 
@@ -382,5 +490,11 @@ impl ThumbPcLiteralsResources {
             + self.data.blue_screw_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.soil_evidence_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.soil_146_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_2d2e_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_eb83_ebc_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_code_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_mixed_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.firaga_residual_observed.capacity() * std::mem::size_of::<model::LiteralWord>()
     }
 }

@@ -84,6 +84,16 @@ pub mod soil_indexed_bytes;
 pub mod soil_compact_record;
 pub mod soil_scoped_values;
 pub mod soil_remaining_rectangles;
+pub mod firaga_copied_matrices;
+pub mod firaga_compact_cells;
+pub mod firaga_indexed_obj_bank;
+pub mod firaga_compact_obj_bank;
+pub mod firaga_adjacent_compact_obj_bank;
+pub mod firaga_6c12c8_obj_bank;
+pub mod firaga_transfer_program;
+pub mod firaga_palette_rows;
+pub mod firaga_stack_initialization;
+pub mod firaga_queued_transfer;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -149,8 +159,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 248;
-pub const DECODER_REV: u32 = 247;
+pub const EXTRACTOR_REV: u32 = 266;
+pub const DECODER_REV: u32 = 265;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -516,6 +526,16 @@ pub const SOIL_INDEXED_BYTES_ID: &str = "engine.soil-indexed-bytes";
 pub const SOIL_COMPACT_RECORD_ID: &str = "graphics.soil-compact-record";
 pub const SOIL_SCOPED_VALUES_ID: &str = "engine.soil-scoped-values";
 pub const SOIL_REMAINING_RECTANGLES_ID: &str = "graphics.soil-remaining-rectangles";
+pub const FIRAGA_COPIED_MATRICES_ID: &str = "graphics.firaga-copied-matrices";
+pub const FIRAGA_COMPACT_CELLS_ID: &str = "graphics.firaga-compact-cells";
+pub const FIRAGA_INDEXED_OBJ_BANK_ID: &str = "graphics.firaga-indexed-obj-bank";
+pub const FIRAGA_COMPACT_OBJ_BANK_ID: &str = "graphics.firaga-compact-obj-bank";
+pub const FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID: &str = "graphics.firaga-adjacent-compact-obj-bank";
+pub const FIRAGA_6C12C8_OBJ_BANK_ID: &str = "graphics.firaga-6c12c8-obj-bank";
+pub const FIRAGA_TRANSFER_PROGRAM_ID: &str = "graphics.firaga-transfer-program";
+pub const FIRAGA_PALETTE_ROWS_ID: &str = "graphics.firaga-palette-rows";
+pub const FIRAGA_STACK_INITIALIZATION_ID: &str = "engine.firaga-stack-initialization";
+pub const FIRAGA_QUEUED_TRANSFER_ID: &str = "engine.firaga-queued-transfer";
 pub const INDEXED_RECORDS16_FILE: &str = "indexed-records16.json";
 pub const INDEXED_WORDS_3959_FILE: &str = "indexed-words-3959a4.json";
 pub const THUMB_SWITCH_TABLES_FILE: &str = "thumb-switch-tables.json";
@@ -529,6 +549,16 @@ pub const SOIL_INDEXED_BYTES_FILE: &str = "soil-indexed-bytes.json";
 pub const SOIL_COMPACT_RECORD_FILE: &str = "soil-compact-record.json";
 pub const SOIL_SCOPED_VALUES_FILE: &str = "soil-scoped-values.json";
 pub const SOIL_REMAINING_RECTANGLES_FILE: &str = "soil-remaining-rectangles.json";
+pub const FIRAGA_COPIED_MATRICES_FILE: &str = "firaga-copied-matrices.json";
+pub const FIRAGA_COMPACT_CELLS_FILE: &str = "firaga-compact-cells.json";
+pub const FIRAGA_INDEXED_OBJ_BANK_FILE: &str = "firaga-indexed-obj-bank.json";
+pub const FIRAGA_COMPACT_OBJ_BANK_FILE: &str = "firaga-compact-obj-bank.json";
+pub const FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE: &str = "firaga-adjacent-compact-obj-bank.json";
+pub const FIRAGA_6C12C8_OBJ_BANK_FILE: &str = "firaga-6c12c8-obj-bank.json";
+pub const FIRAGA_TRANSFER_PROGRAM_FILE: &str = "firaga-transfer-program.json";
+pub const FIRAGA_PALETTE_ROWS_FILE: &str = "firaga-palette-rows.json";
+pub const FIRAGA_STACK_INITIALIZATION_FILE: &str = "firaga-stack-initialization.json";
+pub const FIRAGA_QUEUED_TRANSFER_FILE: &str = "firaga-queued-transfer.json";
 pub const INDEXED_RECORDS16_FORMAT: &str = "indexed-records16-v1-json";
 pub const INDEXED_WORDS_3959_FORMAT: &str = "indexed-words-3959a4-v1-json";
 pub const THUMB_SWITCH_TABLES_FORMAT: &str = "thumb-switch-tables-v1-json";
@@ -542,6 +572,16 @@ pub const SOIL_INDEXED_BYTES_FORMAT: &str = "soil-indexed-bytes-v1-json";
 pub const SOIL_COMPACT_RECORD_FORMAT: &str = "soil-compact-record-v1-json";
 pub const SOIL_SCOPED_VALUES_FORMAT: &str = "soil-scoped-values-v1-json";
 pub const SOIL_REMAINING_RECTANGLES_FORMAT: &str = "soil-remaining-rectangles-v1-json";
+pub const FIRAGA_COPIED_MATRICES_FORMAT: &str = "firaga-copied-matrices-v1-json";
+pub const FIRAGA_COMPACT_CELLS_FORMAT: &str = "firaga-compact-cells-v1-json";
+pub const FIRAGA_INDEXED_OBJ_BANK_FORMAT: &str = "firaga-indexed-obj-bank-v1-json";
+pub const FIRAGA_COMPACT_OBJ_BANK_FORMAT: &str = "firaga-compact-obj-bank-v1-json";
+pub const FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FORMAT: &str = "firaga-adjacent-compact-obj-bank-v1-json";
+pub const FIRAGA_6C12C8_OBJ_BANK_FORMAT: &str = "firaga-6c12c8-obj-bank-v1-json";
+pub const FIRAGA_TRANSFER_PROGRAM_FORMAT: &str = "firaga-transfer-program-v1-json";
+pub const FIRAGA_PALETTE_ROWS_FORMAT: &str = "firaga-palette-rows-v1-json";
+pub const FIRAGA_STACK_INITIALIZATION_FORMAT: &str = "firaga-stack-initialization-v1-json";
+pub const FIRAGA_QUEUED_TRANSFER_FORMAT: &str = "firaga-queued-transfer-v1-json";
 pub const MAX_INDEXED_RECORDS16_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_INDEXED_WORDS_3959_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_THUMB_SWITCH_TABLES_FILE_BYTES: u64 = 1024 * 1024;
@@ -555,6 +595,16 @@ pub const MAX_SOIL_INDEXED_BYTES_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_SOIL_COMPACT_RECORD_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_SOIL_SCOPED_VALUES_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_SOIL_REMAINING_RECTANGLES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_COPIED_MATRICES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_COMPACT_CELLS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_INDEXED_OBJ_BANK_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_COMPACT_OBJ_BANK_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_6C12C8_OBJ_BANK_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -929,6 +979,16 @@ pub struct Extraction {
     pub soil_compact_record: Option<soil_compact_record::Catalog>,
     pub soil_scoped_values: Option<soil_scoped_values::Catalog>,
     pub soil_remaining_rectangles: Option<soil_remaining_rectangles::Catalog>,
+    pub firaga_copied_matrices: Option<firaga_copied_matrices::Catalog>,
+    pub firaga_compact_cells: Option<firaga_compact_cells::Catalog>,
+    pub firaga_indexed_obj_bank: Option<firaga_indexed_obj_bank::Catalog>,
+    pub firaga_compact_obj_bank: Option<firaga_compact_obj_bank::Catalog>,
+    pub firaga_adjacent_compact_obj_bank: Option<firaga_adjacent_compact_obj_bank::Catalog>,
+    pub firaga_6c12c8_obj_bank: Option<firaga_6c12c8_obj_bank::Catalog>,
+    pub firaga_transfer_program: Option<firaga_transfer_program::Catalog>,
+    pub firaga_palette_rows: Option<firaga_palette_rows::Catalog>,
+    pub firaga_stack_initialization: Option<firaga_stack_initialization::Catalog>,
+    pub firaga_queued_transfer: Option<firaga_queued_transfer::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1071,6 +1131,16 @@ pub struct BaseFiles<'a> {
     pub soil_compact_record: Option<(&'a soil_compact_record::SoilCompactRecord, &'a [u8])>,
     pub soil_scoped_values: Option<(&'a soil_scoped_values::SoilScopedValues, &'a [u8])>,
     pub soil_remaining_rectangles: Option<(&'a soil_remaining_rectangles::SoilRemainingRectangles, &'a [u8])>,
+    pub firaga_copied_matrices: Option<(&'a firaga_copied_matrices::FiragaCopiedMatrices, &'a [u8])>,
+    pub firaga_compact_cells: Option<(&'a firaga_compact_cells::FiragaCompactCells, &'a [u8])>,
+    pub firaga_indexed_obj_bank: Option<(&'a firaga_indexed_obj_bank::FiragaIndexedObjBank, &'a [u8])>,
+    pub firaga_compact_obj_bank: Option<(&'a firaga_compact_obj_bank::FiragaCompactObjBank, &'a [u8])>,
+    pub firaga_adjacent_compact_obj_bank: Option<(&'a firaga_adjacent_compact_obj_bank::FiragaAdjacentCompactObjBank, &'a [u8])>,
+    pub firaga_6c12c8_obj_bank: Option<(&'a firaga_6c12c8_obj_bank::Firaga6c12c8ObjBank, &'a [u8])>,
+    pub firaga_transfer_program: Option<(&'a firaga_transfer_program::FiragaTransferProgram, &'a [u8])>,
+    pub firaga_palette_rows: Option<(&'a firaga_palette_rows::FiragaPaletteRows, &'a [u8])>,
+    pub firaga_stack_initialization: Option<(&'a firaga_stack_initialization::FiragaStackInitialization, &'a [u8])>,
+    pub firaga_queued_transfer: Option<(&'a firaga_queued_transfer::FiragaQueuedTransfer, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -2026,6 +2096,86 @@ impl Extraction {
                 dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
             });
             result.soil_remaining_rectangles = Some(metadata);
+            let metadata = firaga_copied_matrices::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_COPIED_MATRICES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_COPIED_MATRICES_ID.into(), path: FIRAGA_COPIED_MATRICES_FILE.into(),
+                format: FIRAGA_COPIED_MATRICES_FORMAT.into(), sha256: String::new(),
+                dependencies: Vec::new(), sources: metadata.sources.clone(),
+            });
+            result.firaga_copied_matrices = Some(metadata);
+            let metadata = firaga_compact_cells::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_COMPACT_CELLS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_COMPACT_CELLS_ID.into(), path: FIRAGA_COMPACT_CELLS_FILE.into(),
+                format: FIRAGA_COMPACT_CELLS_FORMAT.into(), sha256: String::new(),
+                dependencies: Vec::new(), sources: metadata.sources.clone(),
+            });
+            result.firaga_compact_cells = Some(metadata);
+            let metadata = firaga_indexed_obj_bank::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_INDEXED_OBJ_BANK_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_INDEXED_OBJ_BANK_ID.into(), path: FIRAGA_INDEXED_OBJ_BANK_FILE.into(),
+                format: FIRAGA_INDEXED_OBJ_BANK_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBJ_STATIC_LISTS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_indexed_obj_bank = Some(metadata);
+            let metadata = firaga_compact_obj_bank::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_COMPACT_OBJ_BANK_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_COMPACT_OBJ_BANK_ID.into(), path: FIRAGA_COMPACT_OBJ_BANK_FILE.into(),
+                format: FIRAGA_COMPACT_OBJ_BANK_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBJ_STATIC_LISTS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_compact_obj_bank = Some(metadata);
+            let metadata = firaga_adjacent_compact_obj_bank::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID.into(), path: FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE.into(),
+                format: FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBJ_STATIC_LISTS_ID.into(), FIRAGA_COMPACT_OBJ_BANK_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_adjacent_compact_obj_bank = Some(metadata);
+            let metadata = firaga_6c12c8_obj_bank::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_6C12C8_OBJ_BANK_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_6C12C8_OBJ_BANK_ID.into(), path: FIRAGA_6C12C8_OBJ_BANK_FILE.into(),
+                format: FIRAGA_6C12C8_OBJ_BANK_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBJ_STATIC_LISTS_ID.into(), THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_6c12c8_obj_bank = Some(metadata);
+            let metadata = firaga_transfer_program::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_TRANSFER_PROGRAM_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_TRANSFER_PROGRAM_ID.into(), path: FIRAGA_TRANSFER_PROGRAM_FILE.into(),
+                format: FIRAGA_TRANSFER_PROGRAM_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![OBSERVED_LZ_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_transfer_program = Some(metadata);
+            let metadata = firaga_palette_rows::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_PALETTE_ROWS_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_PALETTE_ROWS_ID.into(), path: FIRAGA_PALETTE_ROWS_FILE.into(),
+                format: FIRAGA_PALETTE_ROWS_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![FIRAGA_TRANSFER_PROGRAM_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.firaga_palette_rows = Some(metadata);
+            let metadata = firaga_stack_initialization::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_STACK_INITIALIZATION_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_STACK_INITIALIZATION_ID.into(), path: FIRAGA_STACK_INITIALIZATION_FILE.into(),
+                format: FIRAGA_STACK_INITIALIZATION_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.firaga_stack_initialization = Some(metadata);
+            let metadata = firaga_queued_transfer::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(FIRAGA_QUEUED_TRANSFER_ID.into());
+            result.manifest.resources.push(Resource {
+                id: FIRAGA_QUEUED_TRANSFER_ID.into(), path: FIRAGA_QUEUED_TRANSFER_FILE.into(),
+                format: FIRAGA_QUEUED_TRANSFER_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![], sources: metadata.sources.clone(),
+            });
+            result.firaga_queued_transfer = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -2196,6 +2346,16 @@ impl Extraction {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2367,6 +2527,16 @@ impl Extraction {
             || self.soil_indexed_bytes.is_some() != self.soil_compact_record.is_some()
             || self.soil_compact_record.is_some() != self.soil_scoped_values.is_some()
             || self.soil_scoped_values.is_some() != self.soil_remaining_rectangles.is_some()
+            || self.soil_remaining_rectangles.is_some() != self.firaga_copied_matrices.is_some()
+            || self.firaga_copied_matrices.is_some() != self.firaga_compact_cells.is_some()
+            || self.firaga_compact_cells.is_some() != self.firaga_indexed_obj_bank.is_some()
+            || self.firaga_indexed_obj_bank.is_some() != self.firaga_compact_obj_bank.is_some()
+            || self.firaga_compact_obj_bank.is_some() != self.firaga_adjacent_compact_obj_bank.is_some()
+            || self.firaga_adjacent_compact_obj_bank.is_some() != self.firaga_6c12c8_obj_bank.is_some()
+            || self.firaga_6c12c8_obj_bank.is_some() != self.firaga_transfer_program.is_some()
+            || self.firaga_transfer_program.is_some() != self.firaga_palette_rows.is_some()
+            || self.firaga_palette_rows.is_some() != self.firaga_stack_initialization.is_some()
+            || self.firaga_stack_initialization.is_some() != self.firaga_queued_transfer.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3448,6 +3618,96 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected soil_remaining_rectangles".into()),
         }
+        match (&self.firaga_copied_matrices, files.firaga_copied_matrices) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_COPIED_MATRICES_FILE_BYTES { return Err("Firaga copied matrices file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[136].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_copied_matrices".into()),
+        }
+        match (&self.firaga_compact_cells, files.firaga_compact_cells) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_COMPACT_CELLS_FILE_BYTES { return Err("Firaga compact cells file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[137].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_compact_cells".into()),
+        }
+        match (&self.firaga_indexed_obj_bank, files.firaga_indexed_obj_bank) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_INDEXED_OBJ_BANK_FILE_BYTES { return Err("Firaga indexed OBJ bank file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[138].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_indexed_obj_bank".into()),
+        }
+        match (&self.firaga_compact_obj_bank, files.firaga_compact_obj_bank) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_COMPACT_OBJ_BANK_FILE_BYTES { return Err("Firaga compact OBJ bank file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[139].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_compact_obj_bank".into()),
+        }
+        match (&self.firaga_adjacent_compact_obj_bank, files.firaga_adjacent_compact_obj_bank) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_ADJACENT_COMPACT_OBJ_BANK_FILE_BYTES { return Err("Adjacent Firaga compact OBJ bank file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[140].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_adjacent_compact_obj_bank".into()),
+        }
+        match (&self.firaga_6c12c8_obj_bank, files.firaga_6c12c8_obj_bank) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_6C12C8_OBJ_BANK_FILE_BYTES { return Err("Firaga 6c12c8 OBJ bank file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[141].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_6c12c8_obj_bank".into()),
+        }
+        match (&self.firaga_transfer_program, files.firaga_transfer_program) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES { return Err("Firaga transfer program file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[142].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_transfer_program".into()),
+        }
+        match (&self.firaga_palette_rows, files.firaga_palette_rows) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES { return Err("Firaga palette rows file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[143].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_palette_rows".into()),
+        }
+        match (&self.firaga_stack_initialization, files.firaga_stack_initialization) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES { return Err("Firaga stack initialization file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[144].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_stack_initialization".into()),
+        }
+        match (&self.firaga_queued_transfer, files.firaga_queued_transfer) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES { return Err("Firaga queued transfer file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[145].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected firaga_queued_transfer".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -4098,6 +4358,46 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded soil_remaining_rectangles differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_copied_matrices, files.firaga_copied_matrices) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_copied_matrices differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_compact_cells, files.firaga_compact_cells) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_compact_cells differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_indexed_obj_bank, files.firaga_indexed_obj_bank) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_indexed_obj_bank differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_compact_obj_bank, files.firaga_compact_obj_bank) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_compact_obj_bank differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_adjacent_compact_obj_bank, files.firaga_adjacent_compact_obj_bank) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_adjacent_compact_obj_bank differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_6c12c8_obj_bank, files.firaga_6c12c8_obj_bank) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_6c12c8_obj_bank differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_transfer_program, files.firaga_transfer_program) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_transfer_program differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_palette_rows, files.firaga_palette_rows) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_palette_rows differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_stack_initialization, files.firaga_stack_initialization) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_stack_initialization differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.firaga_queued_transfer, files.firaga_queued_transfer) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded firaga_queued_transfer differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -4245,6 +4545,16 @@ impl Extraction {
             + usize::from(self.soil_compact_record.is_some())
             + usize::from(self.soil_scoped_values.is_some())
             + usize::from(self.soil_remaining_rectangles.is_some())
+            + usize::from(self.firaga_copied_matrices.is_some())
+            + usize::from(self.firaga_compact_cells.is_some())
+            + usize::from(self.firaga_indexed_obj_bank.is_some())
+            + usize::from(self.firaga_compact_obj_bank.is_some())
+            + usize::from(self.firaga_adjacent_compact_obj_bank.is_some())
+            + usize::from(self.firaga_6c12c8_obj_bank.is_some())
+            + usize::from(self.firaga_transfer_program.is_some())
+            + usize::from(self.firaga_palette_rows.is_some())
+            + usize::from(self.firaga_stack_initialization.is_some())
+            + usize::from(self.firaga_queued_transfer.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4435,6 +4745,16 @@ mod tests {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4578,6 +4898,16 @@ mod tests {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4731,6 +5061,16 @@ mod tests {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4873,6 +5213,16 @@ mod tests {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

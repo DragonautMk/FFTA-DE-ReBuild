@@ -58,12 +58,17 @@ fn european_soil_sprite_lists_guest_and_host_consumption() {
     let prepared = preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap();
     assert_eq!(prepared.action, "created");
     assert_eq!(preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap().action, "reused");
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (248, 247, 136));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (257, 256, 142));
     for prior in &old.resources {
         let current = source.manifest.resources.iter().find(|entry| entry.id == prior.id).unwrap();
+        if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
         if prior.id == OBJ_STATIC_LISTS_ID {
             assert_previous_obj_lists_preserved(&previous, &prepared.directory, prior, current);
-            assert_eq!(current.sources.len() - prior.sources.len(), 20);
+            assert_eq!(current.sources.len() - prior.sources.len(), 64);
         } else if prior.id == COMPACT_OBJ_CATALOG_ID {
             super::soil_compact_metadata_tests::assert_previous_compact_catalog_preserved(
                 &previous, &prepared.directory, prior, current);
@@ -85,7 +90,7 @@ fn european_soil_sprite_lists_guest_and_host_consumption() {
         }
     }
     let data = &source.obj_lists.as_ref().unwrap().decoded;
-    assert_eq!(data.lists.len(), 224);
+    assert_eq!(data.lists.len(), 268);
     let mut total = 0;
     for (offset, count, _) in model::SOIL_EVIDENCE_LISTS {
         let list = data.lists.iter().find(|list| list.source_offset == offset).unwrap();
@@ -211,8 +216,8 @@ fn european_soil_sprite_lists_guest_and_host_consumption() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "resources":136, "previous_obj_lists_preserved":204,
-        "previous_other_resources_unchanged":122, "previous_copied_halfwords_preserved":true, "previous_literals_preserved":true, "previous_switch_tables_preserved":true, "previous_compact_catalog_preserved":true, "soil_lists":20, "soil_objects":91, "soil_source_bytes":586,
+        "status":"PASS", "revision":[257,256], "resources":142, "previous_obj_lists_preserved":204,
+        "previous_other_resources_unchanged":121, "previous_copied_halfwords_preserved":true, "previous_literals_preserved":true, "previous_switch_tables_preserved":true, "previous_compact_catalog_preserved":true, "soil_lists":20, "soil_objects":91, "soil_source_bytes":586,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_host_comparisons":3,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,
         "missing_dataset_and_snapshot_owner_retained":true, "Linux":"pending", "USA":"pending",

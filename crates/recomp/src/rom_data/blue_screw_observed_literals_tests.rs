@@ -49,7 +49,7 @@ fn european_blue_screw_observed_literals_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -426,7 +426,7 @@ fn european_blue_screw_observed_literals_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "blue_screw_observed_literals":3, "blue_screw_observed_source_bytes":12,
+        "status":"PASS", "revision":[257,256], "blue_screw_observed_literals":3, "blue_screw_observed_source_bytes":12,
         "prior_literals_preserved":1273, "prior_other_resources_unchanged":120, "previous_copied_halfwords_preserved":true, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_switch_tables_preserved":true, "legacy_masks_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_generated_reader_cases":6,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

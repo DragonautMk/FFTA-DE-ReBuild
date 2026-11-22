@@ -36,12 +36,12 @@ fn european_soil_evidence_lz_publication_and_swi() {
     let prepared = preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap();
     assert_eq!(prepared.action, "created");
     assert_eq!(preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap().action, "reused");
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (248, 247, 136));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (257, 256, 142));
     for prior in &old.resources {
         let current = source.manifest.resources.iter().find(|entry| entry.id == prior.id).unwrap();
         if prior.id == OBSERVED_LZ_ID {
             assert_previous_observed_lz_preserved(&previous, &prepared.directory, prior, current);
-            assert_eq!(current.sources.len() - prior.sources.len(), 3);
+            assert_eq!(current.sources.len() - prior.sources.len(), 6);
         } else if prior.id == THUMB_PC_LITERALS_ID {
             super::thumb_pc_literals_home_tests::assert_previous_thumb_literals_preserved(
                 &previous, &prepared.directory, prior, current);
@@ -70,7 +70,7 @@ fn european_soil_evidence_lz_publication_and_swi() {
     }
     let data = &source.observed_lz.as_ref().unwrap().decoded;
     let specs = &ADDITIONAL_SPECS[13..16];
-    assert_eq!(data.additional_blocks.len(), 16);
+    assert_eq!(data.additional_blocks.len(), 19);
     assert_eq!(specs.iter().map(|s| s.encoded_length).sum::<usize>(), 1335);
     assert_eq!(specs.iter().map(|s| s.decoded_length).sum::<usize>(), 1640);
     for (stream, spec) in data.additional_blocks[13..16].iter().zip(specs) {
@@ -178,7 +178,7 @@ fn european_soil_evidence_lz_publication_and_swi() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "resources":136, "previous_other_resources_unchanged":120, "previous_copied_halfwords_preserved":true, "previous_switch_tables_preserved":true, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "previous_literals_preserved":true,
+        "status":"PASS", "revision":[257,256], "resources":142, "previous_other_resources_unchanged":120, "previous_copied_halfwords_preserved":true, "previous_switch_tables_preserved":true, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "previous_literals_preserved":true,
         "previous_streams_preserved":14, "new_streams":3, "new_encoded_bytes":1335, "new_decoded_bytes":1640,
         "poisoned_mirrored_and_boundary_reads":true, "original_swi_state_clock_cases":3,
         "dma_cpuset_cpufastset_state_clock_cases":9, "coherent_edit_rejected":true,

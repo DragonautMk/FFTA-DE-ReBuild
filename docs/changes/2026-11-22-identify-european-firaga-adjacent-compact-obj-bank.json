@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-adjacent-compact-obj-bank",
+  "title": "Identify European Firaga adjacent compact OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Document two compact OBJ task descriptors, the adjacent 17-frame sequence and one empty list while reusing ten previously owned lists.",
+    "Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist."
+  ],
+  "validation": [
+    "Static source plan e315-firaga-adjacent-compact-obj-source-plan-3g8h3wg6 authenticates 115 bytes, including 107 sampled bytes, original reader fingerprints and ten prior list owners.",
+    "Wine disassemblies 2djsznfs and 3y7u8cdl trace the original descriptor constructor and task callback; both servers drained. No new gameplay or performance measurement."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.",
+    "Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

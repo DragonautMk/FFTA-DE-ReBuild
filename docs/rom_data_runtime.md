@@ -4057,7 +4057,6 @@ serves and validates these arrays in the sampled Bank scene. Other readers and
 scenes, Linux, USA and native Windows remain open.
 No performance comparison was made.
 
-
 ## E254 Bank switch destinations
 
 EUR E230-d229 extends `engine.thumb-switch-tables` with the three E253
@@ -4903,3 +4902,429 @@ one shared endpoint; its retry passed. Other indices, actual callback
 invocation and ancestry, scenes, real BIOS and UI save/Load remain open. Older revision-sensitive fixtures were updated
 but not rerun; Linux, USA and native Windows remain pending. No performance
 comparison was made.
+
+## E305 Firaga SpritePeek list candidates
+
+Protected static unit `e305-firaga-sprite-list-candidates-u3pn58da` compares
+E302 selected reads with E249 sources. It finds 44 count-shaped SpritePeek
+reads with matching six-byte-per-object payload requests. All complete
+candidate ranges were sampled outside E249 owners; together they contain 347
+objects and cover 2,170 bytes, with no candidate range overlap. Exact offsets,
+counts and source hashes are retained in the plan. It publishes no resource.
+
+The address-only inventory does not prove temporal pairing, original call
+sites, the pointer producer or the complete asset domain. Typed consumption and
+the affected scene must be verified before claiming ownership. Other sampled
+bytes, scenes, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+## E306 Firaga typed sprite lists
+
+EUR E250-d249 adds the 44 E305 selected lists to the authenticated static OBJ
+resource: 347 typed objects and 2,170 original source bytes. The previous 224
+lists and 135 other resource files are preserved. Guest bus reads and host OBJ
+decoding consume the typed data; unselected sources retain prior behavior.
+
+Wine reader `e306-firaga-sprite-lists-readers-wine-zlctezch` verifies prior
+sources, coherent-edit rejection, mirrors and mixed boundaries, three original
+interpreter/host comparisons, transfers and snapshot owner retention. Wine
+scene `e306-firaga-sprite-lists-scene-wine-pa5aamwj` compares 606 retained
+Firaga frames with all 44 backing lists altered. All 44 are consumed by both
+the guest and host; state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match every frame. The source save's earlier history is unknown.
+
+Wine CLI `e306-firaga-sprite-lists-cli-wine-h5s9hkgs` creates, reuses and
+verifies 137 matching files. Static join
+`e306-firaga-sprite-list-sample-residual-qgpr0gm3` leaves 2,823 E302 sampled
+bytes outside E250 declared sources. Wine drained with the local Bluetooth
+overlay. The scene does not establish the complete pointer producer, all
+consumers or full-ROM coverage. Other scenes, real BIOS, UI save/Load, older
+revision-sensitive fixtures, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+## E319 Firaga observed Thumb literals
+
+EUR E257-d256 adds seven PC-relative LDR operands at `eb9c0..eb9dc` to
+`engine.thumb-pc-literals`. Protected source plan
+`e319-firaga-eb9c0-literals-source-plan-i2d5wcm0` authenticates all seven
+original instruction/source pairs and all 28 bytes against the E302 address
+sample. Existing literal entries and their owners retain their prior ordering
+and values. Guest reads outside these selected words retain normal fallback.
+
+Wine reader `e319-firaga-eb9c0-literals-readers-wine-ej_mhq65` verifies creation and reuse, prior literal and other
+resource preservation, coherent-edit rejection, poisoned mirrors and mixed
+boundaries, snapshot ownership, 14 original
+interpreter/generated reader cases and three DMA/CpuSet/CpuFastSet cases.
+Wine scene `e319-firaga-eb9c0-literals-scene-wine-g9opsvws` compares 606 retained Firaga frames with all seven words
+altered in managed backing ROM; the selected resource records
+28 byte reads and mask 127, confirming use of
+all seven words. State, guest clock, video, OAM, dispatch and five nonempty
+audio streams match every frame. The source save's earlier history remains
+unknown. Wine CLI `e319-firaga-eb9c0-literals-cli-wine-kq1iltos` creates, reuses and verifies 143 matching files.
+The Wine server drained using the local Bluetooth overlay.
+
+Static join `e319-firaga-eb9c0-literals-sample-residual-r8fvlc_h` finds 1,241 E302 sampled bytes outside E257 declared
+sources. The sample is address-only, not full-ROM coverage or attribution of
+every read to a caller. Other original callers, tables, scenes, real BIOS and
+UI save/Load remain open. Forty-nine older revision-sensitive fixtures were
+updated but not rerun; fixtures expecting an unchanged literal resource need
+adaptation. Linux, USA and native Windows remain to be checked. No performance
+comparison was made.
+
+## E320 Firaga transfer program source plan
+
+Protected plan `e320-firaga-39cb9c-source-plan-ilwy805q` identifies a
+European transfer program selected through the original count and pointer
+tables at `39cbda` and `39cbd4`. The selected program at `39cb9c` contains
+four 12-byte records: one references a two-entry palette list and three
+reference compressed graphics streams. Original Thumb disassembly traces the
+caller and task callbacks to the record handlers, including the 12-byte stride
+and the format-header lookup. The plan authenticates 121 currently unowned
+source bytes; 98 occur in the address-only E302 sample. It does not publish
+these sources or prove which original instruction caused each sampled read.
+
+The three format headers lead to the streams at `af5660`, `af4998` and
+`af5454`. Their original encoded and decoded hashes match the existing
+`graphics.observed-lz-block` sources verified by E304 reader
+`e304-firaga-lz-readers-wine-6taiimnv` and 606-frame Wine scene
+`e304-firaga-lz-scene-wine-ugltru8s`. Future publication must reuse those
+owners instead of duplicating the compressed streams. The two palette-list
+entries point to `ae6db8` and `ae6db0`; their payload extents, overlap and
+complete original consumer contract were not established by E320. E322 later
+identifies the selected adjacent row prefixes; other rows and consumers remain
+open.
+
+Wine disassembly units `e320-firaga-39cb9c-consumer-wine-4gdp8uwp`,
+`e320-firaga-39cb9c-callback-wine-9_vg1v5x`,
+`e320-firaga-39cb9c-reader-wine-hzx7t6al`,
+`e320-firaga-39cb9c-program-wine-y91zg36h` and
+`e320-firaga-39cb9c-handlers-wine-j0o4fvrw` passed and drained the Wine
+server. Typed publication and guest use, other selectors, producers and
+scenes, Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+## E321 Firaga transfer program runtime
+
+EUR E258-d257 publishes typed controls for the selected E320 program: caller
+literals, the selected pointer and count, four transfer records, the two-entry
+palette-list wrapper, three LZ wrappers and their format headers. The original
+three compressed streams remain owned by `graphics.observed-lz-block`; this
+resource does not claim their bytes or the unresolved palette payloads. The
+runtime composes earlier owners with the selected bytes and normal fallback.
+
+Wine reader `e321-firaga-transfer-program-readers-wine-tfkrk5a_` confirms previous resources are unchanged, rejects a
+coherent altered file and manifest, checks poisoned mirrors and mixed boundaries
+including prior LZ owners, compares 36 original interpreter/generated reader
+cases and exercises DMA, CpuSet and CpuFastSet with matching states and clocks.
+It also preserves the active owner across missing-dataset and snapshot cases.
+
+Wine scene `e321-firaga-transfer-program-scene-wine-sh2x442o` compares 606 retained Firaga frames with all 121 selected
+backing bytes altered; every source group is consumed: [8, 4, 1, 184, 11, 16, 9, 54, 26, 5, 25, 11].
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+every frame. The source save's earlier history remains unknown. Wine CLI
+`e321-firaga-transfer-program-cli-wine-hj1_inpx` creates, reuses and verifies 144 matching files. All Wine servers
+drained with the local Bluetooth overlay.
+
+Static join `e321-firaga-transfer-program-sample-residual-h_gw4p3y` leaves 1,143 E302 sampled addresses outside E258 sources.
+The sample is address-only and neither attributes every access to an instruction
+nor establishes full-ROM coverage. Palette payload extents, other selectors,
+producers, consumers and scenes, real BIOS and UI save/Load remain open. Older
+revision-sensitive fixtures need adaptation and rerun; Linux, USA and native
+Windows remain to be checked. No performance comparison was made.
+
+## E324 Firaga stack initialization source plan
+
+Protected source plan `e324-firaga-14d480-source-plan-52tdqmk9` authenticates
+five original Thumb LDR literals at `d8660..d8674` and their five adjacent
+source blocks at `14d480..14d4ac`. Original routine `d8538` loads three pairs
+of words, requests a four-byte copy through the previously validated
+`147dc0` helper, and copies four more words to its stack. Wine disassembly
+`e324-firaga-14d480-consumer-wine-i51e67_6` and the E283 copy-helper evidence
+pass with Wine drained.
+
+The source plan covers 64 previously unowned bytes, all present in the E302
+address-only sample. It authenticates original source addresses and instruction
+pairs but does not attribute each sampled access to a specific PC. Typed
+publication, the meaning and domain of live selectors, other callers and scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E325 Firaga stack initialization runtime
+
+EUR E260-d259 publishes the E324 original LDR literals and stack initialization
+fields as typed words: five roots, three word pairs, one copied word and four
+final words. All 64 authenticated source bytes are supplied through the guest
+bus with normal prior-owner and ROM fallback. The game's original stack and
+live selectors retain their existing behavior.
+
+Wine reader `e325-firaga-stack-initialization-readers-wine-g2cv2hbo` confirms 144 prior resources are unchanged, rejects a
+coherent altered file and manifest, checks poisoned mirrors and mixed
+boundaries, compares 26 original interpreter/generated reader cases and two
+original copy-loop cases, and exercises DMA, CpuSet, CpuFastSet and snapshot
+ownership with matching states and clocks.
+
+Wine scene `e325-firaga-stack-initialization-scene-wine-w0ru_ree` compares 606 retained Firaga frames with all 64 selected
+backing bytes altered; all six source groups are used: [20, 8, 8, 8, 4, 16].
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+every frame. The source save's earlier history remains unknown. Wine CLI
+`e325-firaga-stack-initialization-cli-wine-_t8_0ngi` creates, reuses and verifies 146 matching files. All Wine servers
+drained using the local Bluetooth overlay.
+
+Static join `e325-firaga-stack-initialization-sample-residual-smedangh` leaves 1,065 E302 sampled addresses outside E260 sources.
+The sample is address-only and does not establish full-ROM coverage or attribute
+every access to an instruction. Live selector domain, other callers and scenes,
+real BIOS and UI save/Load remain open. Older revision-sensitive fixtures need
+adaptation and rerun; Linux, USA and native Windows remain to be checked. No
+performance comparison was made.
+
+## E326 Firaga queued halfword-transfer source plan
+
+Protected source plan `e326-firaga-40e844-source-plan-yuq_1w_3` identifies one
+EUR transfer of 128 halfwords from `40e844..40e944`, plus the original source
+base and destination literals at `ac9a0` and `ac9a8`: 264 unowned source bytes,
+all present in the E302 address-only sample. The selected original producer at
+`ac94e..ac95a` forms the source from base `0840e344` and an index shifted by
+8, requests 128 halfwords and calls the existing queue helper. The observed
+index is 5. No image format, full allocation extent or other index domain is
+inferred from this selected transfer.
+
+Wine capture `e326-firaga-40e844-dma-wine-d2e7v3m2` attributes all 128 target
+requests to one immediate DMA3 transfer to `06013700`. A bounded follow-up
+`e326-firaga-40e844-queue-wine-y_wimttr` joins a source-pointer store to the
+same queue node and its later DMA use. Wine disassembly
+`e326-firaga-enqueue-caller-wine-h4sr9ejw` authenticates the producer and
+call. The native exported PC is a context, not an asserted exact store site;
+the queue executor's own return address is not treated as producer ancestry.
+All Wine servers drained.
+
+The feature-gated diagnostic now scopes DMA provenance to actual source reads,
+restores nested scopes and records unclassified target reads separately. A
+synthetic immediate-DMA comparison in the Wine capture checks equal complete
+state and guest clock with observation enabled. This source plan publishes no
+resource. The source save's earlier history, other indices, consumers, scenes,
+real BIOS, UI save/Load, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+## E327 Firaga queued halfword-transfer runtime
+
+EUR E261-d260 publishes the E326 selected view as 128 typed halfwords and
+two original producer literals: 264 authenticated source bytes. The original
+producer, queue, DMA channel and live selector remain active. Other source
+indices and neighboring bytes retain their prior owners or ROM fallback; the
+selected transfer does not establish a graphics format or a full allocation.
+
+Wine reader `e327-firaga-queued-transfer-readers-wine-eas1b41j` confirms 145 prior resources are unchanged, rejects a
+coherent altered file and manifest, checks poisoned mirrors and mixed
+boundaries, compares original interpreted/generated literal readers, and runs
+the original producer prefix, queue helper and DMA executor. The selected
+256-byte VRAM destination and complete guest state/clock agree. DMA, CpuSet,
+CpuFastSet and snapshot ownership also pass.
+
+Wine scene `e327-firaga-queued-transfer-scene-wine-9nspb3cr` compares 606 retained Firaga frames with all 264 selected
+backing bytes altered; all three source groups are used: [4, 4, 256].
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+every frame. The source save's earlier history remains unknown. Wine CLI
+`e327-firaga-queued-transfer-cli-wine-4jv_uinh` creates, reuses and verifies 147 matching files. All Wine servers
+drained using the local Bluetooth overlay.
+
+Static join `e327-firaga-queued-transfer-sample-residual-nrrlw5qt` leaves 801 E302 sampled addresses outside E261 sources.
+The sample is address-only and does not establish full-ROM coverage. Other
+indices, source allocation/format, producers, consumers and scenes, real BIOS
+and UI save/Load remain open. Older revision-sensitive fixtures need adaptation
+and rerun; Linux, USA and native Windows remain to be checked. No performance
+comparison was made.
+
+## E328 Firaga 2d/2e Thumb literal source plan
+
+Protected plan `e328-firaga-2d-2e-literals-source-plan-csk4bbyl` authenticates
+41 original PC-relative Thumb LDR instruction/source pairs in the `2d` and
+`2e` regions. Their 164 distinct source bytes are all present in the E302
+address-only sample and have no E261 owner. Wine disassembly
+`e328-firaga-2d-2e-literals-disassembly-wine-edr1c64y` passed and drained the
+Wine server. The plan publishes no resource and does not attribute individual
+sampled accesses to a specific PC.
+
+Typed publication and an altered-source scene were subsequently verified in
+E329 below. Other readers, values, scenes, real BIOS, UI save/Load, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E329 Firaga 2d/2e Thumb literal runtime
+
+EUR E262-d261 extends the existing `engine.thumb-pc-literals` resource with
+the E328 41 authenticated source words (164 bytes). It preserves the previous
+literal entries, other resources and fallback for addresses without an owner.
+Original guest instructions remain active and no other reader or source bound
+is inferred.
+
+Wine reader `e329-firaga-2d-2e-literals-readers-wine-537ey132` confirms all prior entries and 145 other resources are
+unchanged; it checks poisoned source bytes, mirrors and mixed boundaries,
+rejects coherent data/hash edits and compares 82 original interpreted/generated
+reader cases. DMA, CpuSet, CpuFastSet and snapshot owner retention pass.
+
+Wine scene `e329-firaga-2d-2e-literals-scene-wine-ag5y0o6_` compares 606 retained Firaga frames while the selected
+backing bytes are altered. All 41 words are consumed (mask
+`0x1ffffffffff`); state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match at every frame. The source save's earlier history
+is unknown. Wine CLI `e329-firaga-2d-2e-literals-cli-wine-stvyq0wt` creates, reuses and verifies 147 matching files.
+All Wine servers drained using the local Bluetooth overlay.
+
+Static join `e329-firaga-2d-2e-literals-sample-residual-yfp0eet3` leaves 637 E302 sampled addresses outside E262 sources.
+This address-only sample does not identify every original reader or establish
+full-ROM coverage. Other readers, values and scenes, real BIOS and UI save/Load
+remain open. Older revision-sensitive fixtures need adaptation and rerun;
+Linux, USA and native Windows remain to be checked. No performance comparison
+was made.
+
+## E330 Firaga eb83/ebc Thumb literal source plan
+
+Protected plan `e330-firaga-eb83-ebc-literals-source-plan-iomybbqw`
+authenticates ten original PC-relative Thumb LDR instruction/source pairs
+against the European ROM and two retained disassemblies of the `eb830` and
+`eba5c` functions. The 40 distinct source bytes all occur in the E302
+address-only sample and have no E262 owner. Reconciliation confirms 637
+sampled bytes remain outside E262; if these 40 bytes are subsequently owned,
+597 would remain. The plan publishes no resource and does not attribute
+individual sampled accesses to a specific PC.
+
+Runtime publication and an altered-source scene were subsequently verified in
+E331 below. Other readers, values, scenes, real BIOS, UI save/Load, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E331 Firaga eb83/ebc Thumb literal runtime
+
+EUR E263-d262 extends the existing `engine.thumb-pc-literals` resource with
+the E330 ten authenticated source words (40 bytes). It preserves the previous
+literal entries, other resources and fallback for addresses without an owner.
+Original guest instructions remain active and no other reader or source bound
+is inferred.
+
+Wine reader `e331-firaga-eb83-ebc-literals-readers-wine-u78tirug` confirms all prior entries and 145 other resources are
+unchanged; it checks poisoned source bytes, mirrors and mixed boundaries,
+rejects coherent data/hash edits and compares 20 original interpreted/generated
+reader cases. DMA, CpuSet, CpuFastSet and snapshot owner retention pass.
+
+Wine scene `e331-firaga-eb83-ebc-literals-scene-wine-uzod2dru` compares 606 retained Firaga frames while the selected
+backing bytes are altered. All ten words are consumed (mask
+`0x3ff`); state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match at every frame. The source save's earlier history
+is unknown. Wine CLI `e331-firaga-eb83-ebc-literals-cli-wine-t7kh3_rm` creates, reuses and verifies 147 matching files.
+All Wine servers drained using the local Bluetooth overlay.
+
+Static join `e331-firaga-eb83-ebc-literals-sample-residual-s6x3bxvv` leaves 597 E302 sampled addresses outside E263 sources.
+This address-only sample does not identify every original reader or establish
+full-ROM coverage. Other readers, values and scenes, real BIOS and UI save/Load
+remain open. Older revision-sensitive fixtures need adaptation and rerun;
+Linux, USA and native Windows remain to be checked. No performance comparison
+was made.
+
+## E332 Firaga 013/019/0cf Thumb literal source plan
+
+Protected plan `e332-firaga-code-literals-source-plan-loawcszx` authenticates
+14 original PC-relative Thumb LDR instruction/source pairs against the
+European ROM. Wine disassembly
+`e332-firaga-code-literals-disassembly-wine-nbsow8qc` covers the selected
+`013`, `019` and `0cf` windows and drained the Wine server. The code-candidate
+map used for selection is speculative. The 56 distinct source bytes all
+occur in the E302 address-only sample and have no E263 owner. Reconciliation
+confirms 597 sampled bytes remain outside E263; if these 56 bytes are
+subsequently owned, 541 would remain. The plan publishes no resource and does
+not attribute individual sampled accesses to a specific PC.
+
+Runtime publication and an altered-source scene were subsequently verified in
+E333 below. Other readers, values, scenes, real BIOS, UI save/Load, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E333 Firaga 013/019/0cf Thumb literal runtime
+
+EUR E264-d263 extends the existing `engine.thumb-pc-literals` resource with
+the E332 14 authenticated source words (56 bytes). It preserves the previous
+literal entries, other resources and fallback for addresses without an owner.
+Original guest instructions remain active and no other reader or source bound
+is inferred.
+
+Wine reader `e333-firaga-code-literals-readers-wine-0j4qqizf` confirms all prior entries and 145 other resources are
+unchanged; it checks poisoned source bytes, mirrors and mixed boundaries,
+rejects coherent data/hash edits and compares 28 original interpreted/generated
+reader cases. DMA, CpuSet, CpuFastSet and snapshot owner retention pass.
+
+Wine scene `e333-firaga-code-literals-scene-wine-lcs3hcvx` compares 606 retained Firaga frames while the selected
+backing bytes are altered. All 14 words are consumed (mask
+`0x3fff`); state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match at every frame. The source save's earlier history
+is unknown. Wine CLI `e333-firaga-code-literals-cli-wine-kijs396o` creates, reuses and verifies 147 matching files.
+All Wine servers drained using the local Bluetooth overlay.
+
+Static join `e333-firaga-code-literals-sample-residual-we6mxexq` leaves 541 E302 sampled addresses outside E264 sources.
+This address-only sample does not identify every original reader or establish
+full-ROM coverage. Other readers, values and scenes, real BIOS and UI save/Load
+remain open. Older revision-sensitive fixtures need adaptation and rerun;
+Linux, USA and native Windows remain to be checked. No performance comparison
+was made.
+
+## E334 Firaga mixed Thumb literal source plan
+
+Protected plan `e334-firaga-mixed-literals-source-plan-t56gh8bq` authenticates
+57 original PC-relative Thumb LDR instruction/source pairs against the
+European ROM. Wine disassembly
+`e334-firaga-mixed-literals-disassembly-wine-5rc48zzd` covers six selected
+code windows and drained the Wine server. The 228 distinct source bytes all
+occur in the E302 address-only sample and have no E264 owner. Reconciliation
+confirms 541 sampled bytes remain outside E264; if these 228 bytes are
+subsequently owned, 313 would remain. The plan publishes no resource. Linear
+disassembly and the address-only sample do not prove that any individual PC
+executed for a sampled access.
+
+Runtime publication and an altered-source scene were subsequently verified in
+E335 below. Other readers, values, scenes, real BIOS, UI save/Load, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E335 Firaga mixed Thumb literal runtime
+
+EUR E265-d264 extends the existing `engine.thumb-pc-literals` resource with
+the E334 57 authenticated source words (228 bytes). It preserves the previous
+literal entries, other resources and fallback for addresses without an owner.
+Original guest instructions remain active and no other reader or source bound
+is inferred.
+
+Wine reader `e335-firaga-mixed-literals-readers-wine-8ipblmws` confirms all prior entries and 145 other resources are
+unchanged; it checks poisoned source bytes, mirrors and mixed boundaries,
+rejects coherent data/hash edits and compares 114 original interpreted/generated
+reader cases. DMA, CpuSet, CpuFastSet and snapshot owner retention pass.
+
+Wine scene `e335-firaga-mixed-literals-scene-wine-ixvjw955` compares 606 retained Firaga frames while the selected
+backing bytes are altered. All 57 words are consumed (mask
+`0x1ffffffffffffff`); state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match at every frame. The source save's earlier history
+is unknown. Wine CLI `e335-firaga-mixed-literals-cli-wine-7jyq36ot` creates, reuses and verifies 147 matching files.
+All Wine servers drained using the local Bluetooth overlay.
+
+Static join `e335-firaga-mixed-literals-sample-residual-77a2186_` leaves 313 E302 sampled addresses outside E265 sources.
+This address-only sample does not identify every original reader or establish
+full-ROM coverage. Other readers, values and scenes, real BIOS and UI save/Load
+remain open. Older revision-sensitive fixtures need adaptation and rerun;
+Linux, USA and native Windows remain to be checked. No performance comparison
+was made.
+
+## E336 Firaga residual Thumb literal source plan
+
+Protected plan `e336-firaga-residual-literals-source-plan-6fg1_6yj` authenticates
+52 original PC-relative Thumb LDR instruction/source pairs against the
+European ROM. Wine disassembly
+`e336-firaga-residual-literals-disassembly-wine-d9ijk6ak` covers 19 selected
+code windows and drained the Wine server. The 208 distinct source bytes all
+occur in the E302 address-only sample and have no E265 owner. Reconciliation
+confirms 313 sampled bytes remain outside E265; if these 208 bytes are
+subsequently owned, 105 would remain. The plan publishes no resource. Linear
+disassembly and the address-only sample do not prove that any individual PC
+executed for a sampled access.
+
+Runtime publication and the altered-source scene remain to be verified. Other
+readers, values, scenes, real BIOS, UI save/Load, Linux, USA and native Windows
+remain open. No performance comparison was made.
+
+The E337 E266-d265 publication is a draft, not an accepted runtime result. The
+user paused the work during Windows build
+`e337-firaga-residual-literals-build-mve1jq1_`; its session exited 130 while
+its unit receipt remained running and its local lease remained present. Before
+any restart or lease action on resume, inspect ownership, child processes and
+outputs. The affected Wine reader, transfer, altered-scene, CLI and residual
+join checks have not run.

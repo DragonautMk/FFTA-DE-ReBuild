@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-firaga-mixed-literals",
+  "title": "Consume European Firaga mixed literals",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing Thumb literal resource with 57 authenticated source words while preserving prior owners and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e335-firaga-mixed-literals-readers-wine-8ipblmws checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 114 original reader cases, transfers and snapshot ownership.",
+    "Wine scene e335-firaga-mixed-literals-scene-wine-ixvjw955 compares 606 altered-source frames and consumes all 57 words, matching state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e335-firaga-mixed-literals-cli-wine-7jyq36ot creates, reuses and verifies 147 matching files; static join e335-firaga-mixed-literals-sample-residual-77a2186_ leaves 313 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.",
+    "Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_mixed_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

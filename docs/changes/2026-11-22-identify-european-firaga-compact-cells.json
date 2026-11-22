@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-compact-cells",
+  "title": "Identify European Firaga compact cell source",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Document a source-rooted compact cell directory, ten frame streams and a ten-entry sequence, preserving unknown fields and excluding the intervening bytes.",
+    "Track publication, wider consumer coverage and deferred platform checks in the ROM data recovery checklist."
+  ],
+  "validation": [
+    "Static source plan e309-firaga-compact-source-plan-163iufku authenticates 626 plus 22 sampled source bytes, reader fingerprints, ten compact frame extents and E251 non-overlap.",
+    "Wine disassembly e309-firaga-compact-readers-wine-wv43bxaa and constructor/count evidence m654jv6l, 5bhu4sna and artnj9cx support the reader interpretation; Wine servers drained."
+  ],
+  "limitations": [
+    "The scene sample lacks executing PCs; source fields, wider selectors and scenes remain partially unclassified. No resource is published by this source-only plan.",
+    "Linux, USA and native Windows remain pending; no performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-indexed-obj-bank",
+  "title": "Identify European Firaga indexed OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Document the selected descriptor, nineteen-frame sequence, twenty-entry object directory and empty list while reusing eighteen previously owned lists.",
+    "Track runtime publication, guest/host use and deferred platform checks in the ROM data recovery checklist."
+  ],
+  "validation": [
+    "Static source contract e311-firaga-obj-source-contract-zn6lp3op authenticates 176 candidate bytes, including 172 observed outside E252 source owners, and all sequence links.",
+    "Wine disassembly e311-firaga-obj-readers-wine-0_vwkio3 confirms the original constructor and scheduler reads; the Wine server drained."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs; producer ancestry and broader selectors/scenes remain open. No runtime resource is published by this source plan.",
+    "Linux, USA and native Windows remain pending; no performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

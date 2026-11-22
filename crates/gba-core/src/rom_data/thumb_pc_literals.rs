@@ -2208,16 +2208,227 @@ pub const SOIL_146_OBSERVED: [(u32, u32, u16); SOIL_146_OBSERVED_COUNT] = [
     (0x1467d0, 0x1467b8, 0x4b05),
 ];
 
-pub const SOURCE_PAGES: [usize; 123] = [
+// Original LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_OBSERVED_COUNT: usize = 7;
+pub const FIRAGA_OBSERVED: [(u32, u32, u16); FIRAGA_OBSERVED_COUNT] = [
+    (0x0eb9c0, 0x0eb90c, 0x492c),
+    (0x0eb9c4, 0x0eb91e, 0x4929),
+    (0x0eb9c8, 0x0eb930, 0x4925),
+    (0x0eb9cc, 0x0eb93a, 0x4924),
+    (0x0eb9d0, 0x0eb95a, 0x491d),
+    (0x0eb9d4, 0x0eb95c, 0x4c1d),
+    (0x0eb9d8, 0x0eb988, 0x4913),
+];
+
+// Original 2d/2e LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_2D2E_OBSERVED_COUNT: usize = 41;
+pub const FIRAGA_2D2E_OBSERVED: [(u32, u32, u16); FIRAGA_2D2E_OBSERVED_COUNT] = [
+    (0x02d830, 0x02d814, 0x4806),
+    (0x02d888, 0x02d848, 0x490f),
+    (0x02d8e4, 0x02d8c8, 0x4906),
+    (0x02d964, 0x02d900, 0x4818),
+    (0x02d968, 0x02d904, 0x4818),
+    (0x02d96c, 0x02d910, 0x4916),
+    (0x02d970, 0x02d914, 0x4a16),
+    (0x02d974, 0x02d924, 0x4b13),
+    (0x02d9ec, 0x02d9d0, 0x4b06),
+    (0x02dca4, 0x02dc54, 0x4a13),
+    (0x02dca8, 0x02dc66, 0x4810),
+    (0x02dcac, 0x02dc92, 0x4a06),
+    (0x02ddd0, 0x02dd90, 0x490f),
+    (0x02ddd4, 0x02dd94, 0x4a0f),
+    (0x02ddd8, 0x02dd98, 0x4a0f),
+    (0x02de8c, 0x02de5a, 0x4a0c),
+    (0x02e0d4, 0x02df98, 0x494e),
+    (0x02e0d8, 0x02df9c, 0x4a4e),
+    (0x02e0dc, 0x02dfa0, 0x4a4e),
+    (0x02e0e4, 0x02dfaa, 0x4c4e),
+    (0x02e0ec, 0x02e086, 0x4a19),
+    (0x02e158, 0x02e0fc, 0x4c16),
+    (0x02e15c, 0x02e100, 0x4d16),
+    (0x02e160, 0x02e106, 0x4816),
+    (0x02e164, 0x02e11e, 0x4a11),
+    (0x02e414, 0x02e3d8, 0x480e),
+    (0x02e440, 0x02e420, 0x4c07),
+    (0x02e4fc, 0x02e4f6, 0x4801),
+    (0x02e5f0, 0x02e596, 0x4a16),
+    (0x02e5f4, 0x02e598, 0x4816),
+    (0x02e5f8, 0x02e59a, 0x4917),
+    (0x02e5fc, 0x02e59e, 0x4b17),
+    (0x02e600, 0x02e5d2, 0x480b),
+    (0x02e604, 0x02e5e2, 0x4808),
+    (0x02e780, 0x02e716, 0x491a),
+    (0x02e784, 0x02e728, 0x4d16),
+    (0x02e788, 0x02e72c, 0x4816),
+    (0x02e78c, 0x02e740, 0x4812),
+    (0x02e790, 0x02e750, 0x4a0f),
+    (0x02e794, 0x02e75e, 0x480d),
+    (0x02e798, 0x02e76e, 0x480a),
+];
+
+// Original eb83/ebc LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_EB83_EBC_OBSERVED_COUNT: usize = 10;
+pub const FIRAGA_EB83_EBC_OBSERVED: [(u32, u32, u16); FIRAGA_EB83_EBC_OBSERVED_COUNT] = [
+    (0x0eb868, 0x0eb854, 0x4804),
+    (0x0eb898, 0x0eb884, 0x4804),
+    (0x0eb9b0, 0x0eb8ba, 0x483d),
+    (0x0eb9b4, 0x0eb8d2, 0x4a38),
+    (0x0eba38, 0x0eb9fa, 0x4a0f),
+    (0x0eba88, 0x0eba6c, 0x4806),
+    (0x0ebab4, 0x0eba96, 0x4807),
+    (0x0ebb70, 0x0ebb6c, 0x4800),
+    (0x0ebc2c, 0x0ebbf8, 0x480c),
+    (0x0ebc30, 0x0ebc0a, 0x4909),
+];
+
+// Original 013/019/0cf LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_CODE_OBSERVED_COUNT: usize = 14;
+pub const FIRAGA_CODE_OBSERVED: [(u32, u32, u16); FIRAGA_CODE_OBSERVED_COUNT] = [
+    (0x01390c, 0x0138f0, 0x4a06),
+    (0x013910, 0x0138f2, 0x4907),
+    (0x013914, 0x0138f4, 0x4b07),
+    (0x013948, 0x013936, 0x4904),
+    (0x01394c, 0x013940, 0x4902),
+    (0x019678, 0x019672, 0x4901),
+    (0x0196e8, 0x019698, 0x4913),
+    (0x0196ec, 0x01969a, 0x4814),
+    (0x0196f0, 0x01969c, 0x4a14),
+    (0x019728, 0x01970e, 0x4a06),
+    (0x0cf258, 0x0cf23c, 0x4d06),
+    (0x0cf25c, 0x0cf250, 0x4802),
+    (0x0cf2bc, 0x0cf29e, 0x4e07),
+    (0x0cf2c0, 0x0cf2b4, 0x4802),
+];
+
+// Original mixed-region LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_MIXED_OBSERVED_COUNT: usize = 57;
+pub const FIRAGA_MIXED_OBSERVED: [(u32, u32, u16); FIRAGA_MIXED_OBSERVED_COUNT] = [
+    (0x00b044, 0x00b03a, 0x4802),
+    (0x00b0ec, 0x00b0ce, 0x4907),
+    (0x00b194, 0x00b16a, 0x480a),
+    (0x00b208, 0x00b1a6, 0x4818),
+    (0x00b4c4, 0x00b49e, 0x4809),
+    (0x00b4c8, 0x00b4ae, 0x4906),
+    (0x00b4cc, 0x00b4be, 0x4803),
+    (0x00b530, 0x00b50a, 0x4c09),
+    (0x00b7ec, 0x00b6ce, 0x4a47),
+    (0x00ba18, 0x00b8f4, 0x4b48),
+    (0x00ba1c, 0x00b990, 0x4b22),
+    (0x00bb2c, 0x00bae4, 0x4b11),
+    (0x00bbb4, 0x00bb86, 0x490b),
+    (0x00bbb8, 0x00bba0, 0x4905),
+    (0x00bd10, 0x00bcfa, 0x4c05),
+    (0x00bda4, 0x00bd8c, 0x4805),
+    (0x00bdec, 0x00bdd8, 0x4804),
+    (0x00be30, 0x00be1c, 0x4804),
+    (0x0265f0, 0x0265ce, 0x4e08),
+    (0x026634, 0x026602, 0x4c0c),
+    (0x026638, 0x026604, 0x4d0c),
+    (0x02663c, 0x02661e, 0x4907),
+    (0x026658, 0x026646, 0x4904),
+    (0x026e80, 0x026e66, 0x4806),
+    (0x02cac4, 0x02ca80, 0x4d10),
+    (0x02caec, 0x02cad4, 0x4c05),
+    (0x02caf0, 0x02cae2, 0x4903),
+    (0x02cb1c, 0x02cb08, 0x4804),
+    (0x02ccf8, 0x02ccc6, 0x4b0c),
+    (0x02ce28, 0x02cde8, 0x480f),
+    (0x0ac52c, 0x0ac4d0, 0x4c16),
+    (0x0ac530, 0x0ac4dc, 0x4d14),
+    (0x0ac534, 0x0ac4de, 0x4b15),
+    (0x0ac630, 0x0ac596, 0x4926),
+    (0x0ac634, 0x0ac598, 0x4a26),
+    (0x0ac638, 0x0ac5aa, 0x4c23),
+    (0x0ac63c, 0x0ac5d6, 0x4e19),
+    (0x0ac6f8, 0x0ac6e6, 0x4a04),
+    (0x0ac884, 0x0ac87c, 0x4801),
+    (0x0ac924, 0x0ac918, 0x4a02),
+    (0x0acdbc, 0x0acdb2, 0x4802),
+    (0x0d7518, 0x0d7502, 0x4805),
+    (0x0d7558, 0x0d7542, 0x4805),
+    (0x0d755c, 0x0d754c, 0x4903),
+    (0x0d7970, 0x0d7912, 0x4817),
+    (0x0d7b7c, 0x0d7b72, 0x4902),
+    (0x0d7d70, 0x0d7d68, 0x4901),
+    (0x0d7fd8, 0x0d7fca, 0x4803),
+    (0x0e45c8, 0x0e45b8, 0x4803),
+    (0x0e4624, 0x0e4604, 0x4a07),
+    (0x0e4628, 0x0e460c, 0x4c06),
+    (0x0e462c, 0x0e4612, 0x4a06),
+    (0x0e4700, 0x0e4652, 0x482b),
+    (0x0e4704, 0x0e4660, 0x4828),
+    (0x0e4708, 0x0e4668, 0x4827),
+    (0x0e470c, 0x0e4696, 0x4c1d),
+    (0x0e4794, 0x0e476c, 0x4c09),
+];
+
+// Original residual-region LDR literal operands sampled during the EUR Firaga continuation.
+pub const FIRAGA_RESIDUAL_OBSERVED_COUNT: usize = 52;
+pub const FIRAGA_RESIDUAL_OBSERVED: [(u32, u32, u16); FIRAGA_RESIDUAL_OBSERVED_COUNT] = [
+    (0x000c24, 0x000c16, 0x4903),
+    (0x007ac0, 0x007ab2, 0x4903),
+    (0x007ad4, 0x007ac6, 0x4903),
+    (0x00a7bc, 0x00a784, 0x490d),
+    (0x00a9dc, 0x00a9ac, 0x490b),
+    (0x00aa0c, 0x00a9f8, 0x4804),
+    (0x00aac0, 0x00aab2, 0x4c03),
+    (0x00aac4, 0x00aaaa, 0x4a06),
+    (0x00c138, 0x00c128, 0x4a03),
+    (0x00c150, 0x00c140, 0x4a03),
+    (0x00c168, 0x00c158, 0x4a03),
+    (0x00c308, 0x00c2dc, 0x4a0a),
+    (0x00c30c, 0x00c2f6, 0x4805),
+    (0x00c34c, 0x00c324, 0x4a09),
+    (0x00c350, 0x00c33a, 0x4805),
+    (0x0176a0, 0x01763e, 0x4818),
+    (0x01e9fc, 0x01e9f0, 0x4802),
+    (0x01ed84, 0x01ed76, 0x4803),
+    (0x01edb8, 0x01ed9c, 0x4a06),
+    (0x01edbc, 0x01edb2, 0x4902),
+    (0x023d90, 0x023d58, 0x490d),
+    (0x023d94, 0x023d6e, 0x4809),
+    (0x023d98, 0x023d70, 0x4909),
+    (0x0290e8, 0x0290d0, 0x4805),
+    (0x029170, 0x029156, 0x4806),
+    (0x029db8, 0x029d60, 0x4815),
+    (0x02a0bc, 0x02a0b8, 0x4800),
+    (0x02a728, 0x02a720, 0x4901),
+    (0x095b24, 0x095b18, 0x4902),
+    (0x097494, 0x097402, 0x4924),
+    (0x097498, 0x097428, 0x491b),
+    (0x09749c, 0x097430, 0x481a),
+    (0x09a050, 0x09a028, 0x4809),
+    (0x09a064, 0x09a054, 0x4803),
+    (0x0a3ab0, 0x0a3a64, 0x4912),
+    (0x0a6f60, 0x0a6f1c, 0x4910),
+    (0x0a6f64, 0x0a6f24, 0x4e0f),
+    (0x0a9448, 0x0a93fc, 0x4812),
+    (0x0aa244, 0x0aa220, 0x4808),
+    (0x0aa248, 0x0aa230, 0x4805),
+    (0x0aa24c, 0x0aa23a, 0x4904),
+    (0x0d8230, 0x0d8222, 0x4803),
+    (0x0d8260, 0x0d8246, 0x4806),
+    (0x0e0b98, 0x0e0b8c, 0x4802),
+    (0x137854, 0x13784c, 0x4801),
+    (0x14b038, 0x14afb4, 0x4920),
+    (0x14b03c, 0x14afce, 0x4b1b),
+    (0x14b040, 0x14b006, 0x4f0e),
+    (0x14b0c4, 0x14b09a, 0x4f0a),
+    (0x14b10c, 0x14b0da, 0x490c),
+    (0x14b6e8, 0x14b6aa, 0x490f),
+    (0x14b6ec, 0x14b6b8, 0x4d0c),
+];
+
+pub const SOURCE_PAGES: [usize; 127] = [
     0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0x10,
     0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c,
     0x1d, 0x1e, 0x1f, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29,
-    0x2a, 0x2b, 0x2c, 0x2e, 0x37, 0x3a, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x91,
-    0x92, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0, 0xa1,
+    0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x37, 0x3a, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x91,
+    0x92, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0, 0xa1,
     0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7, 0xb8,
     0xb9, 0xbb, 0xbe, 0xbf, 0xc0, 0xcb, 0xcc, 0xce, 0xcf, 0xd0, 0xd2, 0xd6,
     0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6,
-    0xf0, 0x109, 0x125, 0x126, 0x127, 0x128, 0x129, 0x12a, 0x12b, 0x130, 0x132, 0x133,
+    0xeb, 0xf0, 0x109, 0x125, 0x126, 0x127, 0x128, 0x129, 0x12a, 0x12b, 0x130, 0x132, 0x133,
     0x134, 0x135, 0x137, 0x138, 0x139, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149,
     0x14a, 0x14b, 0x14c,
 ];
@@ -2248,6 +2459,12 @@ pub struct ThumbPcLiterals {
     pub blue_screw_observed: Vec<LiteralWord>,
     pub soil_evidence_observed: Vec<LiteralWord>,
     pub soil_146_observed: Vec<LiteralWord>,
+    pub firaga_observed: Vec<LiteralWord>,
+    pub firaga_2d2e_observed: Vec<LiteralWord>,
+    pub firaga_eb83_ebc_observed: Vec<LiteralWord>,
+    pub firaga_code_observed: Vec<LiteralWord>,
+    pub firaga_mixed_observed: Vec<LiteralWord>,
+    pub firaga_residual_observed: Vec<LiteralWord>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -2354,6 +2571,48 @@ impl ThumbPcLiterals {
         {
             return Err("Invalid Soil 146 observed EUR Thumb literal source, reader or order".into());
         }
+        if self.firaga_observed.len() != FIRAGA_OBSERVED_COUNT
+            || self.firaga_observed.iter().zip(FIRAGA_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.firaga_2d2e_observed.len() != FIRAGA_2D2E_OBSERVED_COUNT
+            || self.firaga_2d2e_observed.iter().zip(FIRAGA_2D2E_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga 2d/2e observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.firaga_eb83_ebc_observed.len() != FIRAGA_EB83_EBC_OBSERVED_COUNT
+            || self.firaga_eb83_ebc_observed.iter().zip(FIRAGA_EB83_EBC_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga eb83/ebc observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.firaga_code_observed.len() != FIRAGA_CODE_OBSERVED_COUNT
+            || self.firaga_code_observed.iter().zip(FIRAGA_CODE_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga code observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.firaga_mixed_observed.len() != FIRAGA_MIXED_OBSERVED_COUNT
+            || self.firaga_mixed_observed.iter().zip(FIRAGA_MIXED_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga mixed observed EUR Thumb literal source, reader or order".into());
+        }
+        if self.firaga_residual_observed.len() != FIRAGA_RESIDUAL_OBSERVED_COUNT
+            || self.firaga_residual_observed.iter().zip(FIRAGA_RESIDUAL_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            })
+        {
+            return Err("Invalid Firaga residual observed EUR Thumb literal source, reader or order".into());
+        }
         Ok(())
     }
 
@@ -2408,8 +2667,26 @@ impl ThumbPcLiterals {
         if let Ok(index) = self.soil_evidence_observed.binary_search_by_key(&base, |v| v.source_offset) {
             return Some((self.soil_evidence_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + index));
         }
-        let index = self.soil_146_observed.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        Some((self.soil_146_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + index))
+        if let Ok(index) = self.soil_146_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.soil_146_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.firaga_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.firaga_2d2e_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_2d2e_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.firaga_eb83_ebc_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_eb83_ebc_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.firaga_code_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_code_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + index));
+        }
+        if let Ok(index) = self.firaga_mixed_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_mixed_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + index));
+        }
+        let index = self.firaga_residual_observed.binary_search_by_key(&base, |v| v.source_offset).ok()?;
+        Some((self.firaga_residual_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + FIRAGA_MIXED_OBSERVED_COUNT + index))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -2432,7 +2709,7 @@ impl Catalog {
         }
         let prior = PriorSources::new(previous)?;
         let mut literals = Vec::with_capacity(LITERAL_COUNT);
-        let mut sources = Vec::with_capacity(LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT);
+        let mut sources = Vec::with_capacity(LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + FIRAGA_MIXED_OBSERVED_COUNT + FIRAGA_RESIDUAL_OBSERVED_COUNT);
         for (offset, reader, expected_opcode) in LITERALS {
             let at = reader as usize;
             let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
@@ -2789,6 +3066,201 @@ impl Catalog {
                 value: u32::from_le_bytes(bytes.try_into().unwrap()) });
             sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
         }
+        let mut firaga_observed = Vec::with_capacity(FIRAGA_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga observed Thumb literal already has an owner".into());
+            }
+            firaga_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut firaga_2d2e_observed = Vec::with_capacity(FIRAGA_2D2E_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_2D2E_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga 2d/2e observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga 2d/2e observed Thumb literal already has an owner".into());
+            }
+            firaga_2d2e_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut firaga_eb83_ebc_observed = Vec::with_capacity(FIRAGA_EB83_EBC_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_EB83_EBC_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_2D2E_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga eb83/ebc observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga eb83/ebc observed Thumb literal already has an owner".into());
+            }
+            firaga_eb83_ebc_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut firaga_code_observed = Vec::with_capacity(FIRAGA_CODE_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_CODE_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_EB83_EBC_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_2D2E_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga code observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga code observed Thumb literal already has an owner".into());
+            }
+            firaga_code_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut firaga_mixed_observed = Vec::with_capacity(FIRAGA_MIXED_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_MIXED_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_CODE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_EB83_EBC_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_2D2E_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga mixed observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga mixed observed Thumb literal already has an owner".into());
+            }
+            firaga_mixed_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut firaga_residual_observed = Vec::with_capacity(FIRAGA_RESIDUAL_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in FIRAGA_RESIDUAL_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || LITERALS.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || ADDITIONAL.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || HOME_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || RED_SPRING_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || POST_INDEXED_ANCHORED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BANK_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || BLUE_SCREW_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_EVIDENCE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_MIXED_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_CODE_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_EB83_EBC_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_2D2E_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || FIRAGA_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+                || SOIL_146_OBSERVED.binary_search_by_key(&offset, |v| v.0).is_ok()
+            {
+                return Err("Firaga residual observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            if prior.contains(offset, bytes.len())? {
+                return Err("Firaga residual observed Thumb literal already has an owner".into());
+            }
+            firaga_residual_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
         let decoded = ThumbPcLiterals {
             literals,
             additional,
@@ -2803,6 +3275,12 @@ impl Catalog {
             blue_screw_observed,
             soil_evidence_observed,
             soil_146_observed,
+            firaga_observed,
+            firaga_2d2e_observed,
+            firaga_eb83_ebc_observed,
+            firaga_code_observed,
+            firaga_mixed_observed,
+            firaga_residual_observed,
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

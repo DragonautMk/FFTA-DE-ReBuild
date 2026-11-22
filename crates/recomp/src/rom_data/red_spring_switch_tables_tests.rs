@@ -71,7 +71,7 @@ fn european_red_spring_switch_tables_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -489,7 +489,7 @@ fn european_red_spring_switch_tables_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "red_spring_tables":10, "red_spring_destinations":148, "red_spring_source_bytes":592,
+        "status":"PASS", "revision":[257,256], "red_spring_tables":10, "red_spring_destinations":148, "red_spring_source_bytes":592,
         "prior_switch_tables_preserved":29, "prior_other_resources_unchanged":120, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_copied_halfwords_preserved":true, "prior_thumb_literals_preserved":true, "legacy_masks_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_guarded_interpreter_generated_cases":guarded_cases,
         "outside_guard_cases":outside_cases, "outside_load_cases":outside_load_cases, "indirect_mov_interpreter_fallback":true,

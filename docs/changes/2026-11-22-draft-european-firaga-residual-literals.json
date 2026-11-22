@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "draft-european-firaga-residual-literals",
+  "title": "Draft European Firaga residual literals",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Draft an extension of the existing Thumb literal resource with 52 authenticated source words; runtime publication remains unaccepted."
+  ],
+  "validation": [
+    "Prior E336 source plan e336-firaga-residual-literals-source-plan-6fg1_6yj authenticates 52 pairs and 208 sampled bytes; Wine disassembly passed.",
+    "E337 Windows build e337-firaga-residual-literals-build-mve1jq1_ was interrupted on user pause; session exited 130 while the unit receipt remained running with a local lease."
+  ],
+  "limitations": [
+    "The E266 draft is unvalidated. Inspect process ownership and outputs before restart or lease action on user resume; Wine readers/transfers, altered-source scene, CLI and residual join remain to run.",
+    "Other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_residual_observed_literals_tests.rs",
+    "crates/recomp/src/rom_data/thumb_pc_literals_home_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

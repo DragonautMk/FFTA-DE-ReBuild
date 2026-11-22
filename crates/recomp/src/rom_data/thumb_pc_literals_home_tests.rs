@@ -38,12 +38,18 @@ pub(super) fn assert_previous_thumb_literals_preserved(
             + model::BLUE_SCREW_OBSERVED_COUNT
             + model::SOIL_EVIDENCE_OBSERVED_COUNT
             + model::SOIL_146_OBSERVED_COUNT
+            + model::FIRAGA_OBSERVED_COUNT
+            + model::FIRAGA_2D2E_OBSERVED_COUNT
+            + model::FIRAGA_EB83_EBC_OBSERVED_COUNT
+            + model::FIRAGA_CODE_OBSERVED_COUNT
+            + model::FIRAGA_MIXED_OBSERVED_COUNT
+            + model::FIRAGA_RESIDUAL_OBSERVED_COUNT
     );
     let old: serde_json::Value =
         serde_json::from_slice(&fs::read(previous.join(&prior.path)).unwrap()).unwrap();
     let new: serde_json::Value =
         serde_json::from_slice(&fs::read(current_directory.join(&current.path)).unwrap()).unwrap();
-    for name in ["literals", "additional", "observed", "home_anchored", "home_observed", "red_spring_observed", "red_spring_anchored", "post_indexed_observed", "post_indexed_anchored", "bank_observed", "blue_screw_observed", "soil_evidence_observed", "soil_146_observed"] {
+    for name in ["literals", "additional", "observed", "home_anchored", "home_observed", "red_spring_observed", "red_spring_anchored", "post_indexed_observed", "post_indexed_anchored", "bank_observed", "blue_screw_observed", "soil_evidence_observed", "soil_146_observed", "firaga_observed", "firaga_2d2e_observed", "firaga_eb83_ebc_observed", "firaga_code_observed", "firaga_mixed_observed", "firaga_residual_observed"] {
         if let Some(value) = old.get(name) {
             assert_eq!(value, &new[name]);
         }
@@ -98,7 +104,7 @@ fn european_home_anchored_thumb_literals_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -489,7 +495,7 @@ fn european_home_anchored_thumb_literals_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "home_anchored_literals":25, "home_anchored_source_bytes":100,
+        "status":"PASS", "revision":[257,256], "home_anchored_literals":25, "home_anchored_source_bytes":100,
         "prior_literals_preserved":886, "prior_other_resources_unchanged":121, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_switch_tables_preserved":true, "legacy_masks_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_generated_reader_cases":48,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

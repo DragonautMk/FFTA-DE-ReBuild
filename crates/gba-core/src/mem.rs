@@ -1096,13 +1096,31 @@ impl MemMap {
             );
         }
 
+        #[cfg(feature = "rom-data-read-audit")]
+        let _dma_transfer = crate::rom_data::read_audit::DmaExecution::prepare(
+            crate::rom_data::read_audit::DmaTransfer {
+                sequence: 0, frame: self.frames, channel: i,
+                programmed_src: ch.src, programmed_dst: ch.dst, raw_count: ch.count,
+                control: ch.control, initial_src: src, initial_dst: dst, count, unit,
+                src_adjust: src_adj, dst_adjust: dst_adj, timing: ch.timing(),
+                source_writer: None, enable_writer: None,
+            },
+        );
         let mut done = 0u32;
         for _ in 0..count {
             if word {
-                let v = self.read32(src);
+                let v = {
+                    #[cfg(feature = "rom-data-read-audit")]
+                    let _dma_scope = crate::rom_data::read_audit::DmaExecution::enter(_dma_transfer);
+                    self.read32(src)
+                };
                 self.write32(dst, v);
             } else {
-                let v = self.read16(src);
+                let v = {
+                    #[cfg(feature = "rom-data-read-audit")]
+                    let _dma_scope = crate::rom_data::read_audit::DmaExecution::enter(_dma_transfer);
+                    self.read16(src)
+                };
                 self.write16(dst, v);
             }
             src = match src_adj {
@@ -1200,6 +1218,8 @@ impl MemMap {
         let was_enabled = self.dma[i].enabled();
         self.dma[i].control = (self.dma[i].control & 0x00FF) | ((value as u16) << 8);
         if !was_enabled && self.dma[i].enabled() {
+            #[cfg(feature = "rom-data-read-audit")]
+            crate::rom_data::read_audit::dma_enabled(i);
             if let Some(log) = self.ffta_diagnostics.as_mut() {
                 log.dma_context[i] = log.context;
             }
@@ -1265,6 +1285,8 @@ impl MemMap {
                 let field = rel % 12;
                 match field {
                     0..=3 => {
+                        #[cfg(feature = "rom-data-read-audit")]
+                        crate::rom_data::read_audit::dma_source_written(i);
                         let shift = field * 8;
                         self.dma[i].src =
                             (self.dma[i].src & !(0xFF << shift)) | ((value as u32) << shift);

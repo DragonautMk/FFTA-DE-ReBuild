@@ -49,7 +49,7 @@ fn european_thumb_pc_literals_publication_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -357,7 +357,7 @@ fn european_thumb_pc_literals_publication_and_original_readers() {
     fs::write(
         root.join("result.json"),
         serde_json::to_vec_pretty(&serde_json::json!({
-            "status":"PASS", "revision":[248,247], "literals":326, "source_bytes":1304,
+            "status":"PASS", "revision":[257,256], "literals":326, "source_bytes":1304,
             "prior_resources_preserved":124, "prior_obj_dimensions_preserved":true, "prior_switch_tables_preserved":true, "poisoned_mixed_boundaries_and_mirrors":true,
             "original_interpreter_generated_reader_cases":32,
             "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

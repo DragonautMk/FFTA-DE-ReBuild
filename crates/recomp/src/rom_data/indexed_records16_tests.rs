@@ -38,7 +38,7 @@ fn european_indexed_records16_publication_and_original_readers() {
     let prepared = preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap();
     assert_eq!(prepared.action, "created");
     assert_eq!(preparation::prepare(&root.join("resources"), &mut source, &mut |_| Ok(())).unwrap().action, "reused");
-    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (248, 247, 136));
+    assert_eq!((source.manifest.extractor_revision, source.manifest.decoder_revision, source.manifest.resources.len()), (257, 256, 142));
     for prior in &old.resources {
         let current = source.manifest.resources.iter().find(|entry| entry.id == prior.id).unwrap();
         if prior.id == gba_core::rom_data::OBJ_DIMENSIONS_ID {
@@ -191,7 +191,7 @@ fn european_indexed_records16_publication_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "records":86, "source_bytes":1376,
+        "status":"PASS", "revision":[257,256], "records":86, "source_bytes":1376,
         "prior_resources_preserved":122, "prior_obj_dimensions_preserved":true, "row82_alias":true, "poisoned_mixed_boundaries_and_mirrors":true,
         "original_interpreter_generated_reader_cases":36, "outside_indices_unchanged":true,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

@@ -1374,6 +1374,109 @@ and normal enablement retain their existing acceptance gates.
   serves 30 signed-index observations with fallback. Wine validates readers
   and 600 altered-source frames; the full domain and other platforms remain open.
 
+- EUR [E319 Firaga Thumb literals](../rom_data_runtime.md#e319-firaga-observed-thumb-literals)
+  adds seven original LDR operands; Wine validates readers, transfers, CLI and
+  606 altered-source frames. 1,241 E302 bytes remain outside E257 sources.
+
+- EUR [E321 Firaga transfer program runtime](../rom_data_runtime.md#e321-firaga-transfer-program-runtime)
+  serves the selected typed controls; Wine readers, transfers, CLI and 606
+  altered-source frames pass. 1,143 E302 bytes remain outside E258 sources.
+
+- EUR [E323 Firaga palette row runtime](../rom_data_graphics.md#e323-firaga-palette-row-runtime)
+  serves two selected row prefixes; Wine readers, copies, CLI and 606 altered-
+  source frames pass. 1,129 E302 bytes remain outside E259 sources.
+
+- EUR [E325 Firaga stack initialization runtime](../rom_data_runtime.md#e325-firaga-stack-initialization-runtime)
+  serves the selected literal and stack fields; Wine readers, copies, CLI and
+  606 altered-source frames pass. 1,065 E302 bytes remain outside E260 sources.
+
+- EUR [E327 queued halfword-transfer runtime](../rom_data_runtime.md#e327-firaga-queued-halfword-transfer-runtime)
+  serves one selected transfer and literals; Wine producer/queue/DMA, CLI and
+  606 altered-source frames pass. 801 E302 bytes remain outside E261 sources.
+
+- EUR [E336 Firaga residual literals](../rom_data_runtime.md#e336-firaga-residual-thumb-literal-source-plan)
+  has a 52-word source plan; an unvalidated E337 publication draft is paused.
+  Its interrupted build retains a local lease; inspect ownership on resume.
+
+- EUR [E335 Firaga mixed literals](../rom_data_runtime.md#e335-firaga-mixed-thumb-literal-runtime)
+  serves 57 selected words; Wine readers, transfers, 606 altered-source frames
+  and CLI pass. 313 E302 sampled bytes remain outside E265 sources; other
+  readers and scenes remain open.
+
+- EUR [E333 Firaga code literals](../rom_data_runtime.md#e333-firaga-0130190cf-thumb-literal-runtime)
+  serves 14 selected words; Wine readers, transfers, 606 altered-source frames
+  and CLI pass. 541 E302 sampled bytes remain outside E264 sources; other
+  readers and scenes remain open.
+
+- EUR [E331 Firaga eb83/ebc literals](../rom_data_runtime.md#e331-firaga-eb83ebc-thumb-literal-runtime)
+  serves ten selected words; Wine readers, transfers, 606 altered-source frames
+  and CLI pass. 597 E302 sampled bytes remain outside E263 sources; other
+  readers and scenes remain open.
+
+- EUR [E329 Firaga 2d/2e literals](../rom_data_runtime.md#e329-firaga-2d2e-thumb-literal-runtime)
+  serves 41 selected words; Wine readers, transfers, 606 altered-source frames
+  and CLI pass. 637 E302 sampled bytes remain outside E262 sources; other
+  readers and scenes remain open.
+
+- EUR [E326 queued halfword-transfer source](../rom_data_runtime.md#e326-firaga-queued-halfword-transfer-source-plan)
+  identifies one 256-byte DMA projection and producer; typed publication and
+  other indices remain open.
+
+- EUR [E324 Firaga stack initialization](../rom_data_runtime.md#e324-firaga-stack-initialization-source-plan)
+  has an authenticated 64-byte source plan; typed publication and other
+  callers remain open.
+
+- EUR [E322 Firaga palette rows](../rom_data_graphics.md#e322-firaga-palette-row-source-plan)
+  has an authenticated two-prefix source plan; typed publication and other
+  rows remain open.
+
+- EUR [E320 Firaga transfer program](../rom_data_runtime.md#e320-firaga-transfer-program-source-plan)
+  has an authenticated source plan; typed publication and palette payload
+  extents remain open.
+
+- EUR [E318 Firaga 6c12c8 compact OBJ bank](../rom_data_obj.md#e318-firaga-6c12c8-compact-obj-runtime)
+  serves the selected count, descriptor, compact sequence and empty list.
+  Wine validates readers, host use, transfers, CLI and 606 altered-source
+  frames; 1,269 E302 bytes remain outside E256 sources.
+
+- EUR [E316 adjacent Firaga compact OBJ bank](../rom_data_obj.md#e316-firaga-adjacent-compact-obj-runtime)
+  serves two descriptor projections, count, a 17-frame sequence and one empty
+  list. Wine validates readers, host use, transfers, CLI and 606 altered-source
+  frames; 1,350 E302 bytes remain outside E255 sources.
+
+- EUR [E314 Firaga compact OBJ bank](../rom_data_obj.md#e314-firaga-compact-obj-runtime)
+  serves indirect roots, compact directory, sequence and three empty lists,
+  reusing seven earlier lists. Wine validates readers, host use, transfers, CLI
+  and 606 altered-source frames; 1,457 E302 bytes remain outside E254 sources.
+
+- EUR [E312 Firaga indexed OBJ bank](../rom_data_obj.md#e312-firaga-indexed-obj-runtime)
+  serves the descriptor, sequence, directory and empty list, reusing 18 earlier
+  lists. Wine validates readers, host use, transfers, CLI and 606 altered-source
+  frames; the E302 sample has 1,523 bytes outside E253 sources.
+
+- EUR [E310 Firaga compact cells](../rom_data_graphics.md#e310-firaga-compact-cell-runtime)
+  serves typed frames, sequence and roots; Wine validates original readers,
+  transfers, CLI and 606 altered-source frames. The E302 sample has 1,695 bytes
+  outside E252 sources; broader scene/platform coverage remains open.
+
+- EUR [E308 Firaga copied matrices](../rom_data_graphics.md#e308-firaga-copied-matrix-runtime)
+  serves two matrices and four literals; Wine validates original copy/readers,
+  transfers, CLI and 606 altered-source frames. The E302 sample has 2,351
+  bytes outside E251 sources; producer and broader scene/platform coverage remain open.
+
+- EUR [E306 Firaga sprite lists](../rom_data_runtime.md#e306-firaga-typed-sprite-lists)
+  serves 44 sampled lists; Wine validates guest/host reads and 606 altered-source
+  frames. Their producer and broader scene/platform coverage remain open.
+
+- EUR [E304 Firaga LZ sources](../rom_data_graphics.md#e304-firaga-battle-lz77-runtime-sources)
+  serves three streams covering 3,290 sampled bytes. Wine validates readers,
+  transfers and 606 altered-source frames; broader scene/platform coverage
+  remains open, with 4,993 E302 sampled bytes outside E249 owners.
+
+- EUR [E302 Firaga battle inventory](../rom_data_gameplay.md#e302-european-firaga-scene-rom-read-inventory)
+  compares 606 frames on Wine and identifies 8,283 sampled bytes outside E248
+  sources. Attribution and further scene/platform coverage remain open.
+
 - EUR [E301 Soil Evidence remaining rectangles](../rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runtime)
   serves two rectangles and an alternative literal. Wine validates readers,
   transfers and 600 altered-source frames; attribution, other scenes and

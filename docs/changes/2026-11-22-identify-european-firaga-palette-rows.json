@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-palette-rows",
+  "title": "Identify European Firaga palette row sources",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows disassembly via Wine"
+  ],
+  "changes": [
+    "Authenticate two adjacent selected palette row prefixes and their original copy consumer; leave additional rows and other consumers open."
+  ],
+  "validation": [
+    "Protected source plan e322-firaga-palette-prefix-source-plan-vk6ruysg authenticates 16 unowned source bytes, including 14 E302 sampled bytes, and the original selected call arguments and copy-helper chain.",
+    "Wine disassembly e322-firaga-palette-consumer-wine-miin8nps and the earlier E307 helper evidence pass and drain the coordinated server."
+  ],
+  "limitations": [
+    "This plan does not publish data or attribute address-only sampled accesses to PCs; additional rows, other consumers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

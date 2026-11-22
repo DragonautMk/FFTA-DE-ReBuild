@@ -141,8 +141,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let mut first_alternate_read = None;
     let poison_observed_lz = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_LZ").is_some();
     let poison_soil_lz = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_LZ").is_some();
+    let poison_firaga_lz = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LZ").is_some();
     let poison_soil_literals = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_LITERALS").is_some();
     let poison_soil_146_literals = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_146_LITERALS").is_some();
+    let poison_firaga_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LITERALS").is_some();
+    let poison_firaga_2d2e_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_2D2E_LITERALS").is_some();
+    let poison_firaga_eb83_ebc_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_EB83_EBC_LITERALS").is_some();
+    let poison_firaga_code_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_CODE_LITERALS").is_some();
+    let poison_firaga_mixed_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_MIXED_LITERALS").is_some();
+    let poison_firaga_residual_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_RESIDUAL_LITERALS").is_some();
     let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
     let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
     let poison_tilemap_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_RECTANGLES").is_some();
@@ -176,6 +183,7 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_indexed_words_3959 = std::env::var_os("FFTA_STATE_TEST_POISON_INDEXED_WORDS_3959").is_some();
     let poison_soil_e3838 = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_E3838").is_some();
     let poison_soil_sprite_lists = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_SPRITE_LISTS").is_some();
+    let poison_firaga_sprite_lists = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_SPRITE_LISTS").is_some();
     let poison_soil_compact = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_COMPACT").is_some();
     let poison_soil_a83c2_switch = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_A83C2_SWITCH").is_some();
     let poison_soil_remaining_switches = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_REMAINING_SWITCHES").is_some();
@@ -191,6 +199,16 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_soil_compact_record = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_COMPACT_RECORD").is_some();
     let poison_soil_scoped_values = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_SCOPED_VALUES").is_some();
     let poison_soil_remaining_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_REMAINING_RECTANGLES").is_some();
+    let poison_firaga_copied_matrices = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COPIED_MATRICES").is_some();
+    let poison_firaga_compact_cells = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COMPACT_CELLS").is_some();
+    let poison_firaga_indexed_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_INDEXED_OBJ").is_some();
+    let poison_firaga_compact_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COMPACT_OBJ").is_some();
+    let poison_firaga_adjacent_compact_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_ADJACENT_COMPACT_OBJ").is_some();
+    let poison_firaga_6c12c8_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_6C12C8_OBJ").is_some();
+    let poison_firaga_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_TRANSFER").is_some();
+    let poison_firaga_palette_rows = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_PALETTE_ROWS").is_some();
+    let poison_firaga_stack = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_STACK").is_some();
+    let poison_firaga_queued = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_QUEUED").is_some();
     let poison_final_copy = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_FINAL_COPY").is_some();
     let poison_indexed_halfwords_39a5 = std::env::var_os("FFTA_STATE_TEST_POISON_INDEXED_HALFWORDS_39A5").is_some();
     let poison_script_byte_lookup_3ad = std::env::var_os("FFTA_STATE_TEST_POISON_SCRIPT_BYTE_LOOKUP_3AD").is_some();
@@ -307,6 +325,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     for at in start as usize..end as usize { machine.bus.rom[at] = !rom[at]; }
                 }
             }
+            if index == 1 && poison_firaga_sprite_lists {
+                for (offset, count, _) in gba_core::rom_data::obj_lists::FIRAGA_SPRITE_LISTS {
+                    for at in offset as usize..offset as usize + 2 + count * 6 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_soil_sprite_lists {
                 for (offset, count, _) in gba_core::rom_data::obj_lists::SOIL_EVIDENCE_LISTS {
                     for at in offset as usize..offset as usize + 2 + count * 6 { machine.bus.rom[at] = !rom[at]; }
@@ -365,6 +388,65 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_soil_scoped_values {
                 for (start, len) in gba_core::rom_data::soil_scoped_values::SPANS { for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; } }
+            }
+            if index == 1 && poison_firaga_copied_matrices {
+                use gba_core::rom_data::firaga_copied_matrices::{LITERALS,MATRICES};
+                for (offset,_) in LITERALS { for at in offset as usize..offset as usize+4 { machine.bus.rom[at]=!rom[at]; } }
+                for (offset,width,height) in MATRICES { for at in offset as usize..offset as usize+2*usize::from(width)*usize::from(height) { machine.bus.rom[at]=!rom[at]; } }
+            }
+            if index == 1 && poison_firaga_compact_cells {
+                use gba_core::rom_data::firaga_compact_cells::{CALLER_LITERAL,TABLE_CELL,SOURCE_OFFSET,FIRST_END,SEQUENCE_OFFSET,SEQUENCE_END};
+                for (start,end) in [(CALLER_LITERAL,CALLER_LITERAL+4),(TABLE_CELL,TABLE_CELL+4),(SOURCE_OFFSET,FIRST_END),(SEQUENCE_OFFSET,SEQUENCE_END)] {
+                    for at in start as usize..end as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_indexed_obj {
+                use gba_core::rom_data::{firaga_indexed_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::DESCRIPTOR_OFFSET,12),(bank::SEQUENCE_ROOT,82),(bank::OBJECT_ROOT,80),(obj_lists::FIRAGA_EMPTY_LIST.0,2)] {
+                    for at in start as usize..start as usize+len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_compact_obj {
+                use gba_core::rom_data::{firaga_compact_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::CALLER_LITERAL,4),(bank::DESCRIPTOR_ROOT,4),(bank::SELECTED_POINTER,4),(bank::BANK_ROOT,24),(bank::SEQUENCE_ROOT,24)] {
+                    for at in start as usize..start as usize+len { machine.bus.rom[at] = !rom[at]; }
+                }
+                for (start,_,_) in obj_lists::FIRAGA_COMPACT_EMPTY_LISTS { for at in start as usize..start as usize+2 { machine.bus.rom[at]=!rom[at]; } }
+            }
+            if index == 1 && poison_firaga_adjacent_compact_obj {
+                use gba_core::rom_data::{firaga_adjacent_compact_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::COUNT_LITERAL,4),(bank::COUNT_BYTE,1),(bank::FIRST_FIELDS,20),(bank::SECOND_DESCRIPTOR,24),(bank::BANK_ROOT,26),(bank::SEQUENCE_DIRECTORY,2),(bank::FIRST_SEQUENCE,36),(obj_lists::FIRAGA_ADJACENT_EMPTY_LIST.0,2)] {
+                    for at in start as usize..start as usize+len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_6c12c8_obj {
+                use gba_core::rom_data::{firaga_6c12c8_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::COUNT_BYTE,1),(bank::DESCRIPTOR_POINTER,4),(bank::DESCRIPTOR,24),(bank::BANK_ROOT,24),(bank::SEQUENCE_ROOT,30),(obj_lists::FIRAGA_6C12C8_EMPTY_LIST.0,2)] {
+                    for at in start as usize..start as usize+len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_transfer {
+                use gba_core::rom_data::firaga_transfer_program as program;
+                for (start,len) in program::SOURCE_OFFSETS.into_iter().zip(program::SOURCE_LENGTHS) {
+                    for at in start as usize..start as usize+len {machine.bus.rom[at]=!rom[at];}
+                }
+            }
+            if index == 1 && poison_firaga_palette_rows {
+                for start in gba_core::rom_data::firaga_palette_rows::ROW_OFFSETS {
+                    for at in start as usize..start as usize+8 {machine.bus.rom[at]=!rom[at];}
+                }
+            }
+            if index == 1 && poison_firaga_stack {
+                use gba_core::rom_data::firaga_stack_initialization as source;
+                for (start,len) in source::SOURCE_OFFSETS.into_iter().zip(source::SOURCE_LENGTHS) {
+                    for at in start as usize..start as usize+len {machine.bus.rom[at]=!rom[at];}
+                }
+            }
+            if index == 1 && poison_firaga_queued {
+                use gba_core::rom_data::firaga_queued_transfer as source;
+                for (start,len) in source::SOURCE_OFFSETS.into_iter().zip(source::SOURCE_LENGTHS) {
+                    for at in start as usize..start as usize+len {machine.bus.rom[at]=!rom[at];}
+                }
             }
             if index == 1 && poison_soil_remaining_rectangles {
                 use gba_core::rom_data::soil_remaining_rectangles::{ALT_LITERAL,RECTS};
@@ -496,9 +578,44 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
                 }
             }
+            if index == 1 && poison_firaga_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_2d2e_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_2D2E_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_eb83_ebc_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_EB83_EBC_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_code_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_CODE_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_mixed_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_MIXED_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_residual_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_RESIDUAL_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_soil_literals {
                 for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::SOIL_EVIDENCE_OBSERVED {
                     for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_lz {
+                for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[16..19] {
+                    for at in spec.offset as usize..spec.offset as usize + spec.encoded_length { machine.bus.rom[at] = !rom[at]; }
                 }
             }
             if index == 1 && poison_soil_lz {
@@ -678,10 +795,52 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
                 }
             }
+            if index == 1 && poison_firaga_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_2d2e_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_2D2E_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_eb83_ebc_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_EB83_EBC_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_code_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_CODE_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_mixed_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_MIXED_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_residual_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::FIRAGA_RESIDUAL_OBSERVED {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
             if index == 1 && poison_soil_literals {
                 for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::SOIL_EVIDENCE_OBSERVED {
                     let start = offset as usize;
                     machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_lz {
+                for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[16..19] {
+                    let start = spec.offset as usize;
+                    machine.bus.rom[start..start + spec.encoded_length].copy_from_slice(&rom[start..start + spec.encoded_length]);
                 }
             }
             if index == 1 && poison_soil_lz {
@@ -755,6 +914,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
                 }
             }
+            if index == 1 && poison_firaga_sprite_lists {
+                for (offset, count, _) in gba_core::rom_data::obj_lists::FIRAGA_SPRITE_LISTS {
+                    let start = offset as usize;
+                    machine.bus.rom[start..start + 2 + count * 6].copy_from_slice(&rom[start..start + 2 + count * 6]);
+                }
+            }
             if index == 1 && poison_soil_sprite_lists {
                 for (offset, count, _) in gba_core::rom_data::obj_lists::SOIL_EVIDENCE_LISTS {
                     let start = offset as usize;
@@ -817,6 +982,65 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_soil_scoped_values {
                 for (start, len) in gba_core::rom_data::soil_scoped_values::SPANS { let at=start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]); }
+            }
+            if index == 1 && poison_firaga_copied_matrices {
+                use gba_core::rom_data::firaga_copied_matrices::{LITERALS,MATRICES};
+                for (offset,_) in LITERALS { let at=offset as usize; machine.bus.rom[at..at+4].copy_from_slice(&rom[at..at+4]); }
+                for (offset,width,height) in MATRICES { let at=offset as usize; let len=2*usize::from(width)*usize::from(height); machine.bus.rom[at..at+len].copy_from_slice(&rom[at..at+len]); }
+            }
+            if index == 1 && poison_firaga_compact_cells {
+                use gba_core::rom_data::firaga_compact_cells::{CALLER_LITERAL,TABLE_CELL,SOURCE_OFFSET,FIRST_END,SEQUENCE_OFFSET,SEQUENCE_END};
+                for (start,end) in [(CALLER_LITERAL,CALLER_LITERAL+4),(TABLE_CELL,TABLE_CELL+4),(SOURCE_OFFSET,FIRST_END),(SEQUENCE_OFFSET,SEQUENCE_END)] {
+                    let start=start as usize; let end=end as usize; machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+                }
+            }
+            if index == 1 && poison_firaga_indexed_obj {
+                use gba_core::rom_data::{firaga_indexed_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::DESCRIPTOR_OFFSET,12),(bank::SEQUENCE_ROOT,82),(bank::OBJECT_ROOT,80),(obj_lists::FIRAGA_EMPTY_LIST.0,2)] {
+                    let start=start as usize; machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_firaga_compact_obj {
+                use gba_core::rom_data::{firaga_compact_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::CALLER_LITERAL,4),(bank::DESCRIPTOR_ROOT,4),(bank::SELECTED_POINTER,4),(bank::BANK_ROOT,24),(bank::SEQUENCE_ROOT,24)] {
+                    let start=start as usize; machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+                for (start,_,_) in obj_lists::FIRAGA_COMPACT_EMPTY_LISTS {let start=start as usize;machine.bus.rom[start..start+2].copy_from_slice(&rom[start..start+2]);}
+            }
+            if index == 1 && poison_firaga_adjacent_compact_obj {
+                use gba_core::rom_data::{firaga_adjacent_compact_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::COUNT_LITERAL,4),(bank::COUNT_BYTE,1),(bank::FIRST_FIELDS,20),(bank::SECOND_DESCRIPTOR,24),(bank::BANK_ROOT,26),(bank::SEQUENCE_DIRECTORY,2),(bank::FIRST_SEQUENCE,36),(obj_lists::FIRAGA_ADJACENT_EMPTY_LIST.0,2)] {
+                    let start=start as usize; machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_firaga_6c12c8_obj {
+                use gba_core::rom_data::{firaga_6c12c8_obj_bank as bank,obj_lists};
+                for (start,len) in [(bank::COUNT_BYTE,1),(bank::DESCRIPTOR_POINTER,4),(bank::DESCRIPTOR,24),(bank::BANK_ROOT,24),(bank::SEQUENCE_ROOT,30),(obj_lists::FIRAGA_6C12C8_EMPTY_LIST.0,2)] {
+                    let start=start as usize; machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_firaga_transfer {
+                use gba_core::rom_data::firaga_transfer_program as program;
+                for (start,len) in program::SOURCE_OFFSETS.into_iter().zip(program::SOURCE_LENGTHS) {
+                    let start=start as usize;machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_firaga_palette_rows {
+                for start in gba_core::rom_data::firaga_palette_rows::ROW_OFFSETS {
+                    let start=start as usize;machine.bus.rom[start..start+8].copy_from_slice(&rom[start..start+8]);
+                }
+            }
+            if index == 1 && poison_firaga_stack {
+                use gba_core::rom_data::firaga_stack_initialization as source;
+                for (start,len) in source::SOURCE_OFFSETS.into_iter().zip(source::SOURCE_LENGTHS) {
+                    let start=start as usize;machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
+            }
+            if index == 1 && poison_firaga_queued {
+                use gba_core::rom_data::firaga_queued_transfer as source;
+                for (start,len) in source::SOURCE_OFFSETS.into_iter().zip(source::SOURCE_LENGTHS) {
+                    let start=start as usize;machine.bus.rom[start..start+len].copy_from_slice(&rom[start..start+len]);
+                }
             }
             if index == 1 && poison_soil_remaining_rectangles {
                 use gba_core::rom_data::soil_remaining_rectangles::{ALT_LITERAL,RECTS};
@@ -1375,6 +1599,19 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.soil_metadata_bytes.iter().all(|&count| count > 0));
         eprintln!("ROM_DATA_SOIL_COMPACT_POISON source_bytes={:?} masks={:?}", stats.soil_metadata_bytes, stats.soil_metadata_mask);
     }
+    if poison_firaga_sprite_lists {
+        let owner = decoded.bus.rom_resources().unwrap();
+        let mut guest = 0;
+        let mut host = 0;
+        for (offset, _, _) in gba_core::rom_data::obj_lists::FIRAGA_SPRITE_LISTS {
+            let (used_guest, used_host) = owner.obj_list_source_used(offset).expect("Firaga OBJ list owner");
+            guest += usize::from(used_guest);
+            host += usize::from(used_host);
+        }
+        assert_eq!(host, gba_core::rom_data::obj_lists::FIRAGA_SPRITE_LISTS.len(),
+            "Firaga scene must consume each selected list on the host");
+        eprintln!("ROM_DATA_FIRAGA_SPRITE_LISTS_POISON guest_lists={} host_lists={}", guest, host);
+    }
     if poison_soil_sprite_lists {
         let owner = decoded.bus.rom_resources().unwrap();
         let mut guest = 0;
@@ -1421,6 +1658,64 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "Red Spring scene must consume the final copy source: {stats:?}");
         eprintln!("ROM_DATA_RED_SPRING_FINAL_COPY_POISON table_bytes={} tables={}",
             stats.table_bytes, stats.table_mask);
+    }
+    if poison_firaga_copied_matrices {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_copied_matrices_stats().expect("Firaga copied matrix owner");
+        assert!(stats.matrix_bytes.iter().all(|&n|n>0),"scene must consume both matrices: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_COPIED_MATRICES_POISON matrices={:?} literals={:?}",stats.matrix_bytes,stats.literal_bytes);
+    }
+    if poison_firaga_compact_cells {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_compact_cells_stats().expect("Firaga compact cell owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume all compact sources: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_COMPACT_CELLS_POISON source_bytes={:?}",stats.source_bytes);
+    }
+    if poison_firaga_indexed_obj {
+        let owner=decoded.bus.rom_resources().unwrap();
+        let stats=owner.firaga_indexed_obj_bank_stats().expect("Firaga indexed OBJ owner");
+        let empty=owner.obj_list_source_used(gba_core::rom_data::obj_lists::FIRAGA_EMPTY_LIST.0).expect("Firaga empty list owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0) && empty.0,"scene must consume indexed sources and empty list: {stats:?} {empty:?}");
+        eprintln!("ROM_DATA_FIRAGA_INDEXED_OBJ_POISON source_bytes={:?} empty_guest={} empty_host={}",stats.source_bytes,empty.0,empty.1);
+    }
+    if poison_firaga_compact_obj {
+        let owner=decoded.bus.rom_resources().unwrap();
+        let stats=owner.firaga_compact_obj_bank_stats().expect("Firaga compact OBJ owner");
+        let empty=gba_core::rom_data::obj_lists::FIRAGA_COMPACT_EMPTY_LISTS.map(|(at,_,_)|owner.obj_list_source_used(at).expect("Firaga empty list owner"));
+        assert!(stats.source_bytes.iter().all(|&n|n>0) && empty.iter().all(|entry|entry.0),"scene must consume compact sources and empty lists: {stats:?} {empty:?}");
+        eprintln!("ROM_DATA_FIRAGA_COMPACT_OBJ_POISON source_bytes={:?} empty={:?}",stats.source_bytes,empty);
+    }
+    if poison_firaga_adjacent_compact_obj {
+        let owner=decoded.bus.rom_resources().unwrap();
+        let stats=owner.firaga_adjacent_compact_obj_bank_stats().expect("Adjacent Firaga compact OBJ owner");
+        let empty=owner.obj_list_source_used(gba_core::rom_data::obj_lists::FIRAGA_ADJACENT_EMPTY_LIST.0).expect("Adjacent Firaga empty list owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0) && empty.0,"scene must consume adjacent compact sources and empty list: {stats:?} {empty:?}");
+        eprintln!("ROM_DATA_FIRAGA_ADJACENT_COMPACT_OBJ_POISON source_bytes={:?} empty_guest={} empty_host={}",stats.source_bytes,empty.0,empty.1);
+    }
+    if poison_firaga_6c12c8_obj {
+        let owner=decoded.bus.rom_resources().unwrap();
+        let stats=owner.firaga_6c12c8_obj_bank_stats().expect("Firaga 6c12c8 OBJ owner");
+        let empty=owner.obj_list_source_used(gba_core::rom_data::obj_lists::FIRAGA_6C12C8_EMPTY_LIST.0).expect("Firaga 6c12c8 empty list owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0) && empty.0,"scene must consume Firaga 6c12c8 sources and empty list: {stats:?} {empty:?}");
+        eprintln!("ROM_DATA_FIRAGA_6C12C8_OBJ_POISON source_bytes={:?} empty_guest={} empty_host={}",stats.source_bytes,empty.0,empty.1);
+    }
+    if poison_firaga_transfer {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_transfer_program_stats().expect("Firaga transfer owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume each selected transfer source: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_TRANSFER_POISON source_bytes={:?}",stats.source_bytes);
+    }
+    if poison_firaga_palette_rows {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_palette_rows_stats().expect("Firaga palette rows owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume both selected palette row prefixes: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_PALETTE_ROWS_POISON source_bytes={:?}",stats.source_bytes);
+    }
+    if poison_firaga_stack {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_stack_initialization_stats().expect("Firaga stack owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume each selected stack source: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_STACK_POISON source_bytes={:?}",stats.source_bytes);
+    }
+    if poison_firaga_queued {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_queued_transfer_stats().expect("Firaga queued transfer owner");
+        assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume each selected queued source: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_QUEUED_POISON source_bytes={:?}",stats.source_bytes);
     }
     if poison_soil_remaining_rectangles {
         let stats=decoded.bus.rom_resources().unwrap().soil_remaining_rectangles_stats().expect("Soil remaining rectangle owner");
@@ -1622,12 +1917,61 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         eprintln!("ROM_DATA_SOIL_146_LITERALS_POISON source_bytes={} literals={}",
             stats.soil_146_observed_bytes, stats.soil_146_observed_mask);
     }
+    if poison_firaga_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_observed_bytes > 0 && stats.firaga_observed_mask == (1u64 << 7) - 1,
+            "Firaga scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_observed_bytes, stats.firaga_observed_mask);
+    }
+    if poison_firaga_2d2e_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_2d2e_observed_bytes > 0 && stats.firaga_2d2e_observed_mask == (1u64 << 41) - 1,
+            "Firaga 2d/2e scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_2D2E_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_2d2e_observed_bytes, stats.firaga_2d2e_observed_mask);
+    }
+    if poison_firaga_eb83_ebc_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_eb83_ebc_observed_bytes > 0 && stats.firaga_eb83_ebc_observed_mask == (1u64 << 10) - 1,
+            "Firaga eb83/ebc scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_EB83_EBC_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_eb83_ebc_observed_bytes, stats.firaga_eb83_ebc_observed_mask);
+    }
+    if poison_firaga_code_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_code_observed_bytes > 0 && stats.firaga_code_observed_mask == (1u64 << 14) - 1,
+            "Firaga code scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_CODE_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_code_observed_bytes, stats.firaga_code_observed_mask);
+    }
+    if poison_firaga_mixed_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_mixed_observed_bytes > 0 && stats.firaga_mixed_observed_mask == (1u64 << 57) - 1,
+            "Firaga mixed scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_MIXED_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_mixed_observed_bytes, stats.firaga_mixed_observed_mask);
+    }
+    if poison_firaga_residual_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
+        assert!(stats.firaga_residual_observed_bytes > 0 && stats.firaga_residual_observed_mask == (1u64 << 52) - 1,
+            "Firaga residual scene must consume all selected literals: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_RESIDUAL_LITERALS_POISON source_bytes={} literals={}",
+            stats.firaga_residual_observed_bytes, stats.firaga_residual_observed_mask);
+    }
     if poison_soil_literals {
         let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
         assert!(stats.soil_evidence_observed_bytes > 0 && stats.soil_evidence_observed_mask == [u64::MAX, u64::MAX, 0x7f],
             "Soil Evidence scene must consume all sampled literal words: {stats:?}");
         eprintln!("ROM_DATA_SOIL_LITERALS_POISON source_bytes={} literals={:?}",
             stats.soil_evidence_observed_bytes, stats.soil_evidence_observed_mask);
+    }
+    if poison_firaga_lz {
+        let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
+        assert!((0..3).all(|i| stats.firaga_source_bytes_by_block[i] > 0 || stats.firaga_hle_calls_by_block[i] > 0),
+            "Firaga scene must consume all three LZ sources: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_LZ_POISON source_bytes={:?} hle_calls={:?}",
+            stats.firaga_source_bytes_by_block, stats.firaga_hle_calls_by_block);
     }
     if poison_soil_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");

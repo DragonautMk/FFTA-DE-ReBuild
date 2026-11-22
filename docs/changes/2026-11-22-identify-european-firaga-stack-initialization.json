@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "identify-european-firaga-stack-initialization",
+  "title": "Identify European Firaga stack initialization sources",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows disassembly via Wine"
+  ],
+  "changes": [
+    "Authenticate five original literal pointers and five copied stack initialization blocks as a scoped source plan."
+  ],
+  "validation": [
+    "Protected source plan e324-firaga-14d480-source-plan-52tdqmk9 authenticates 64 unowned source bytes, all sampled by E302, the original LDR operands and stack-copy instruction sequence.",
+    "Wine disassembly e324-firaga-14d480-consumer-wine-i51e67_6 and prior E283 copy-helper evidence pass and drain the coordinated server."
+  ],
+  "limitations": [
+    "This plan does not publish data or attribute address-only sampled accesses to PCs; live selector domain, other callers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

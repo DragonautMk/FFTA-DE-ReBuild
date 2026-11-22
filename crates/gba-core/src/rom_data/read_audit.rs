@@ -51,6 +51,186 @@ thread_local! {
     static TRACE: RefCell<Option<TraceState>> = const { RefCell::new(None) };
     static TRIGGER: RefCell<Option<TriggerState>> = const { RefCell::new(None) };
     static EXECUTION_SITE: Cell<Option<ExecutionSite>> = const { Cell::new(None) };
+    static DMA_CAPTURE: RefCell<Option<DmaCaptureState>> = const { RefCell::new(None) };
+    static DMA_CURRENT: Cell<Option<DmaTransfer>> = const { Cell::new(None) };
+    static DMA_NATIVE_WRITE: Cell<Option<NativeDmaWriteContext>> = const { Cell::new(None) };
+}
+
+/// A native API call context. `exported_pc` and `outer_dispatch` may be stale
+/// or cover chained blocks; neither is an asserted guest store instruction.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct NativeDmaWriteContext {
+    pub address: u32,
+    pub width: u8,
+    pub value: u32,
+    pub exported_pc: u32,
+    pub outer_dispatch: u32,
+    pub lr: u32,
+    pub cpsr: u32,
+    pub args: [u32; 4],
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct DmaWriterContext {
+    pub native: Option<NativeDmaWriteContext>,
+    pub instruction: Option<ExecutionSite>,
+}
+
+/// Transfer metadata only; no guest source bytes or elapsed host time.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct DmaTransfer {
+    pub sequence: u64,
+    pub frame: u64,
+    pub channel: usize,
+    pub programmed_src: u32,
+    pub programmed_dst: u32,
+    pub raw_count: u16,
+    pub control: u16,
+    pub initial_src: u32,
+    pub initial_dst: u32,
+    pub count: u32,
+    pub unit: u32,
+    pub src_adjust: u16,
+    pub dst_adjust: u16,
+    pub timing: u16,
+    pub source_writer: Option<DmaWriterContext>,
+    pub enable_writer: Option<DmaWriterContext>,
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct DmaObservation {
+    pub transfer: DmaTransfer,
+    pub requests: u64,
+    pub target_bytes: BTreeSet<u32>,
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct DmaCaptureReport {
+    pub target_requests: u64,
+    pub dma_requests: u64,
+    pub non_dma_requests: u64,
+    pub overflow: bool,
+    pub transfers: Vec<DmaObservation>,
+    pub non_dma_reads: BTreeSet<Read>,
+}
+
+struct DmaCaptureState {
+    start: u32,
+    end: u32,
+    max_entries: usize,
+    sequence: u64,
+    source_writers: [Option<DmaWriterContext>; 4],
+    enable_writers: [Option<DmaWriterContext>; 4],
+    target_requests: u64,
+    dma_requests: u64,
+    non_dma_requests: u64,
+    overflow: bool,
+    transfers: BTreeMap<u64, DmaObservation>,
+    non_dma_reads: BTreeSet<Read>,
+}
+
+/// Thread-bound bounded capture. A DMA enabled before start has unknown writer
+/// provenance until a later source write or enable edge is observed.
+pub struct DmaCapture(PhantomData<Rc<()>>);
+impl DmaCapture {
+    pub fn start(start: u32, end: u32, max_entries: usize) -> Self {
+        assert!(start < end && end <= 0x1000000 && max_entries > 0);
+        DMA_CAPTURE.with(|cell| {
+            let mut capture = cell.borrow_mut();
+            assert!(capture.is_none(), "DMA capture is already active");
+            *capture = Some(DmaCaptureState {
+                start,
+                end,
+                max_entries,
+                sequence: 0,
+                source_writers: [None; 4],
+                enable_writers: [None; 4],
+                target_requests: 0,
+                dma_requests: 0,
+                non_dma_requests: 0,
+                overflow: false,
+                transfers: BTreeMap::new(),
+                non_dma_reads: BTreeSet::new(),
+            });
+        });
+        Self(PhantomData)
+    }
+    pub fn finish(self) -> DmaCaptureReport {
+        DMA_CAPTURE.with(|cell| {
+            let state = cell.borrow_mut().take().expect("active DMA capture");
+            DmaCaptureReport {
+                target_requests: state.target_requests,
+                dma_requests: state.dma_requests,
+                non_dma_requests: state.non_dma_requests,
+                overflow: state.overflow,
+                transfers: state.transfers.into_values().collect(),
+                non_dma_reads: state.non_dma_reads,
+            }
+        })
+    }
+}
+impl Drop for DmaCapture {
+    fn drop(&mut self) {
+        DMA_CAPTURE.with(|cell| *cell.borrow_mut() = None);
+    }
+}
+
+/// Surround one delegated native API write. Nested scopes restore their caller.
+pub struct NativeDmaWrite(Option<NativeDmaWriteContext>);
+impl NativeDmaWrite {
+    pub fn enter(context: NativeDmaWriteContext) -> Self {
+        Self(DMA_NATIVE_WRITE.with(|cell| cell.replace(Some(context))))
+    }
+}
+impl Drop for NativeDmaWrite {
+    fn drop(&mut self) {
+        DMA_NATIVE_WRITE.with(|cell| cell.set(self.0));
+    }
+}
+
+fn dma_writer_context() -> DmaWriterContext {
+    DmaWriterContext {
+        native: DMA_NATIVE_WRITE.with(Cell::get),
+        instruction: EXECUTION_SITE.with(Cell::get),
+    }
+}
+pub(crate) fn dma_source_written(channel: usize) {
+    DMA_CAPTURE.with(|cell| {
+        if let Some(state) = cell.borrow_mut().as_mut() {
+            state.source_writers[channel] = Some(dma_writer_context());
+        }
+    });
+}
+pub(crate) fn dma_enabled(channel: usize) {
+    DMA_CAPTURE.with(|cell| {
+        if let Some(state) = cell.borrow_mut().as_mut() {
+            state.enable_writers[channel] = Some(dma_writer_context());
+        }
+    });
+}
+
+/// Nested transfers, including sound DMA preemption, restore the outer scope.
+pub(crate) struct DmaExecution(Option<DmaTransfer>);
+impl DmaExecution {
+    pub(crate) fn prepare(mut transfer: DmaTransfer) -> Option<DmaTransfer> {
+        DMA_CAPTURE.with(|cell| {
+            cell.borrow_mut().as_mut().map(|state| {
+                state.sequence += 1;
+                transfer.sequence = state.sequence;
+                transfer.source_writer = state.source_writers[transfer.channel];
+                transfer.enable_writer = state.enable_writers[transfer.channel];
+                transfer
+            })
+        })
+    }
+    pub(crate) fn enter(transfer: Option<DmaTransfer>) -> Self {
+        Self(DMA_CURRENT.with(|cell| cell.replace(transfer)))
+    }
+}
+impl Drop for DmaExecution {
+    fn drop(&mut self) {
+        DMA_CURRENT.with(|cell| cell.set(self.0));
+    }
 }
 
 /// Separate, thread-bound word-filtered diagnostic. Existing address-only
@@ -136,7 +316,9 @@ impl Drop for Capture {
 
 /// Only surrounds the interpreter's instruction-byte fetch, never execution,
 /// HLE handling or ticking. This guard has no effect in normal builds.
-pub(crate) fn fetching() -> bool { FETCH_DEPTH.with(|depth| depth.get() != 0) }
+pub(crate) fn fetching() -> bool {
+    FETCH_DEPTH.with(|depth| depth.get() != 0)
+}
 
 pub(crate) struct InstructionFetch;
 impl InstructionFetch {
@@ -185,6 +367,43 @@ fn record_with_service(reader: Reader, address: u32, length: usize, service: Ser
         physical_offset: address & 0x01ff_ffff,
         length,
     };
+    DMA_CAPTURE.with(|cell| {
+        if let Some(state) = cell.borrow_mut().as_mut() {
+            let begin = read.physical_offset.max(state.start);
+            let end =
+                (u64::from(read.physical_offset) + length as u64).min(u64::from(state.end)) as u32;
+            if begin < end {
+                state.target_requests += 1;
+                if let Some(transfer) = DMA_CURRENT.with(Cell::get) {
+                    state.dma_requests += 1;
+                    if !state.transfers.contains_key(&transfer.sequence)
+                        && state.transfers.len() >= state.max_entries
+                    {
+                        state.overflow = true;
+                    } else {
+                        let event = state.transfers.entry(transfer.sequence).or_insert_with(|| {
+                            DmaObservation {
+                                transfer,
+                                requests: 0,
+                                target_bytes: BTreeSet::new(),
+                            }
+                        });
+                        event.requests += 1;
+                        event.target_bytes.extend(begin..end);
+                    }
+                } else {
+                    state.non_dma_requests += 1;
+                    if !state.non_dma_reads.contains(&read)
+                        && state.non_dma_reads.len() >= state.max_entries
+                    {
+                        state.overflow = true;
+                    } else {
+                        state.non_dma_reads.insert(read);
+                    }
+                }
+            }
+        }
+    });
     TRACE.with(|trace| {
         if let Some(state) = trace.borrow_mut().as_mut() {
             state.record(read, service);

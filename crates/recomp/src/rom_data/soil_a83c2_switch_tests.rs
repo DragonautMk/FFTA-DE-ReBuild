@@ -71,7 +71,7 @@ fn european_soil_a83c2_switch_tables_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -80,6 +80,16 @@ fn european_soil_a83c2_switch_tables_and_original_readers() {
             .iter()
             .find(|entry| entry.id == prior.id)
             .unwrap();
+        if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
+        if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
         if prior.id == THUMB_SWITCH_TABLES_ID {
             super::thumb_switch_tables_additional_tests::assert_previous_switch_tables_preserved(
                 &previous,
@@ -479,8 +489,8 @@ fn european_soil_a83c2_switch_tables_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "soil_a83c2_tables":1, "soil_a83c2_destinations":15, "soil_a83c2_source_bytes":60,
-        "prior_switch_tables_preserved":45, "prior_other_resources_unchanged":124, "previous_copied_halfwords_preserved":true, "previous_literals_preserved":true, "legacy_masks_preserved":true,
+        "status":"PASS", "revision":[257,256], "soil_a83c2_tables":1, "soil_a83c2_destinations":15, "soil_a83c2_source_bytes":60,
+        "prior_switch_tables_preserved":45, "prior_other_resources_unchanged":123, "previous_copied_halfwords_preserved":true, "previous_literals_preserved":true, "legacy_masks_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_guarded_interpreter_generated_cases":guarded_cases,
         "outside_guard_cases":outside_cases, "outside_load_cases":outside_load_cases, "indirect_mov_interpreter_fallback":true,
         "dma_cpuset_cpufastset_state_and_clock_equal":true, "coherent_edit_rejected":true,

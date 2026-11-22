@@ -95,7 +95,7 @@ fn european_obj_dimension_views_publication_and_original_reader() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -359,7 +359,7 @@ fn european_obj_dimension_views_publication_and_original_reader() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "derived_tables":2, "entries_per_table":12, "source_bytes":96,
+        "status":"PASS", "revision":[257,256], "derived_tables":2, "entries_per_table":12, "source_bytes":96,
         "dimensions_file_unchanged":true, "prior_other_resources_unchanged":117, "previous_compact_catalog_preserved":true, "previous_obj_lists_preserved":true, "previous_indexed_words_preserved":true, "prior_observed_lz_preserved":true, "prior_switch_tables_preserved":true, "prior_thumb_literals_preserved":true,
         "poisoned_mixed_boundaries_and_mirrors":true, "original_interpreter_generated_prefix_cases":32,
         "reserved_shape_original_physical_reads_preserved":true,

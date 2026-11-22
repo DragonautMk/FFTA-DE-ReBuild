@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "inventory-european-firaga-rom-reads",
+  "title": "Inventory European Firaga scene ROM reads",
+  "kind": "docs",
+  "platforms": [
+    "Wine"
+  ],
+  "changes": [
+    "Record a 606-frame European Firaga battle comparison and selected-reader inventory against the E248 dataset."
+  ],
+  "validation": [
+    "Wine unit e302-firaga-scene-audit-wine-fxu8xxli passed per-frame state, clock, video, OAM, dispatch and audio comparison; 8,283 observed bytes are outside declared sources and the Wine server drained."
+  ],
+  "limitations": [
+    "Observed addresses are not asset extents or executing PCs; attribution, additional scenes, Linux, USA, real BIOS and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

@@ -224,6 +224,36 @@ pub use soil_scoped_values::SoilScopedValuesStats;
 mod soil_remaining_rectangles;
 use soil_remaining_rectangles::SoilRemainingRectanglesResources;
 pub use soil_remaining_rectangles::SoilRemainingRectanglesStats;
+mod firaga_copied_matrices;
+use firaga_copied_matrices::FiragaCopiedMatricesResources;
+pub use firaga_copied_matrices::FiragaCopiedMatricesStats;
+mod firaga_compact_cells;
+use firaga_compact_cells::FiragaCompactCellsResources;
+pub use firaga_compact_cells::FiragaCompactCellsStats;
+mod firaga_indexed_obj_bank;
+use firaga_indexed_obj_bank::FiragaIndexedObjBankResources;
+pub use firaga_indexed_obj_bank::FiragaIndexedObjBankStats;
+mod firaga_compact_obj_bank;
+use firaga_compact_obj_bank::FiragaCompactObjBankResources;
+pub use firaga_compact_obj_bank::FiragaCompactObjBankStats;
+mod firaga_adjacent_compact_obj_bank;
+use firaga_adjacent_compact_obj_bank::FiragaAdjacentCompactObjBankResources;
+pub use firaga_adjacent_compact_obj_bank::FiragaAdjacentCompactObjBankStats;
+mod firaga_6c12c8_obj_bank;
+use firaga_6c12c8_obj_bank::Firaga6c12c8ObjBankResources;
+pub use firaga_6c12c8_obj_bank::Firaga6c12c8ObjBankStats;
+mod firaga_transfer_program;
+use firaga_transfer_program::FiragaTransferProgramResources;
+pub use firaga_transfer_program::FiragaTransferProgramStats;
+mod firaga_palette_rows;
+use firaga_palette_rows::FiragaPaletteRowsResources;
+pub use firaga_palette_rows::FiragaPaletteRowsStats;
+mod firaga_stack_initialization;
+use firaga_stack_initialization::FiragaStackInitializationResources;
+pub use firaga_stack_initialization::FiragaStackInitializationStats;
+mod firaga_queued_transfer;
+use firaga_queued_transfer::FiragaQueuedTransferResources;
+pub use firaga_queued_transfer::FiragaQueuedTransferStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -506,6 +536,16 @@ pub struct RuntimeResources {
     soil_compact_record: Option<Box<SoilCompactRecordResources>>,
     soil_scoped_values: Option<Box<SoilScopedValuesResources>>,
     soil_remaining_rectangles: Option<Box<SoilRemainingRectanglesResources>>,
+    firaga_copied_matrices: Option<Box<FiragaCopiedMatricesResources>>,
+    firaga_compact_cells: Option<Box<FiragaCompactCellsResources>>,
+    firaga_indexed_obj_bank: Option<Box<FiragaIndexedObjBankResources>>,
+    firaga_compact_obj_bank: Option<Box<FiragaCompactObjBankResources>>,
+    firaga_adjacent_compact_obj_bank: Option<Box<FiragaAdjacentCompactObjBankResources>>,
+    firaga_6c12c8_obj_bank: Option<Box<Firaga6c12c8ObjBankResources>>,
+    firaga_transfer_program: Option<Box<FiragaTransferProgramResources>>,
+    firaga_palette_rows: Option<Box<FiragaPaletteRowsResources>>,
+    firaga_stack_initialization: Option<Box<FiragaStackInitializationResources>>,
+    firaga_queued_transfer: Option<Box<FiragaQueuedTransferResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -867,6 +907,36 @@ impl RuntimeResources {
         if let Some((data, _)) = files.soil_remaining_rectangles {
             resources.soil_remaining_rectangles = Some(Box::new(SoilRemainingRectanglesResources::new(data.clone(), &source.soil_remaining_rectangles.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.firaga_copied_matrices {
+            resources.firaga_copied_matrices = Some(Box::new(FiragaCopiedMatricesResources::new(data.clone(), &source.firaga_copied_matrices.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_compact_cells {
+            resources.firaga_compact_cells = Some(Box::new(FiragaCompactCellsResources::new(data.clone(), &source.firaga_compact_cells.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_indexed_obj_bank {
+            resources.firaga_indexed_obj_bank = Some(Box::new(FiragaIndexedObjBankResources::new(data.clone(), &source.firaga_indexed_obj_bank.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_compact_obj_bank {
+            resources.firaga_compact_obj_bank = Some(Box::new(FiragaCompactObjBankResources::new(data.clone(), &source.firaga_compact_obj_bank.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_adjacent_compact_obj_bank {
+            resources.firaga_adjacent_compact_obj_bank = Some(Box::new(FiragaAdjacentCompactObjBankResources::new(data.clone(), &source.firaga_adjacent_compact_obj_bank.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_6c12c8_obj_bank {
+            resources.firaga_6c12c8_obj_bank = Some(Box::new(Firaga6c12c8ObjBankResources::new(data.clone(), &source.firaga_6c12c8_obj_bank.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_transfer_program {
+            resources.firaga_transfer_program = Some(Box::new(FiragaTransferProgramResources::new(data.clone(), &source.firaga_transfer_program.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_palette_rows {
+            resources.firaga_palette_rows = Some(Box::new(FiragaPaletteRowsResources::new(data.clone(), &source.firaga_palette_rows.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_stack_initialization {
+            resources.firaga_stack_initialization = Some(Box::new(FiragaStackInitializationResources::new(data.clone(), &source.firaga_stack_initialization.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.firaga_queued_transfer {
+            resources.firaga_queued_transfer = Some(Box::new(FiragaQueuedTransferResources::new(data.clone(), &source.firaga_queued_transfer.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1156,6 +1226,16 @@ impl RuntimeResources {
             soil_compact_record: None,
             soil_scoped_values: None,
             soil_remaining_rectangles: None,
+            firaga_copied_matrices: None,
+            firaga_compact_cells: None,
+            firaga_indexed_obj_bank: None,
+            firaga_compact_obj_bank: None,
+            firaga_adjacent_compact_obj_bank: None,
+            firaga_6c12c8_obj_bank: None,
+            firaga_transfer_program: None,
+            firaga_palette_rows: None,
+            firaga_stack_initialization: None,
+            firaga_queued_transfer: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1318,6 +1398,16 @@ impl RuntimeResources {
             + self.soil_compact_record.as_ref().map_or(0, |i| i.resident_bytes())
             + self.soil_scoped_values.as_ref().map_or(0, |i| i.resident_bytes())
             + self.soil_remaining_rectangles.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_copied_matrices.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_compact_cells.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_indexed_obj_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_compact_obj_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_adjacent_compact_obj_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_6c12c8_obj_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_transfer_program.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_palette_rows.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_stack_initialization.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.firaga_queued_transfer.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1505,6 +1595,16 @@ impl RuntimeResources {
     pub fn soil_compact_record_stats(&self) -> Option<SoilCompactRecordStats> { self.soil_compact_record.as_ref().map(|m| m.stats()) }
     pub fn soil_scoped_values_stats(&self) -> Option<SoilScopedValuesStats> { self.soil_scoped_values.as_ref().map(|m| m.stats()) }
     pub fn soil_remaining_rectangles_stats(&self) -> Option<SoilRemainingRectanglesStats> { self.soil_remaining_rectangles.as_ref().map(|m| m.stats()) }
+    pub fn firaga_copied_matrices_stats(&self) -> Option<FiragaCopiedMatricesStats> { self.firaga_copied_matrices.as_ref().map(|m| m.stats()) }
+    pub fn firaga_compact_cells_stats(&self) -> Option<FiragaCompactCellsStats> { self.firaga_compact_cells.as_ref().map(|m| m.stats()) }
+    pub fn firaga_indexed_obj_bank_stats(&self) -> Option<FiragaIndexedObjBankStats> { self.firaga_indexed_obj_bank.as_ref().map(|m| m.stats()) }
+    pub fn firaga_compact_obj_bank_stats(&self) -> Option<FiragaCompactObjBankStats> { self.firaga_compact_obj_bank.as_ref().map(|m| m.stats()) }
+    pub fn firaga_adjacent_compact_obj_bank_stats(&self) -> Option<FiragaAdjacentCompactObjBankStats> { self.firaga_adjacent_compact_obj_bank.as_ref().map(|m| m.stats()) }
+    pub fn firaga_6c12c8_obj_bank_stats(&self) -> Option<Firaga6c12c8ObjBankStats> { self.firaga_6c12c8_obj_bank.as_ref().map(|m| m.stats()) }
+    pub fn firaga_transfer_program_stats(&self) -> Option<FiragaTransferProgramStats> { self.firaga_transfer_program.as_ref().map(|m| m.stats()) }
+    pub fn firaga_palette_rows_stats(&self) -> Option<FiragaPaletteRowsStats> { self.firaga_palette_rows.as_ref().map(|m| m.stats()) }
+    pub fn firaga_stack_initialization_stats(&self) -> Option<FiragaStackInitializationStats> { self.firaga_stack_initialization.as_ref().map(|m| m.stats()) }
+    pub fn firaga_queued_transfer_stats(&self) -> Option<FiragaQueuedTransferStats> { self.firaga_queued_transfer.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1935,6 +2035,46 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.firaga_copied_matrices {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_compact_cells {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_indexed_obj_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_compact_obj_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_adjacent_compact_obj_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_6c12c8_obj_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_transfer_program {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_palette_rows {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_stack_initialization {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.firaga_queued_transfer {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2346,6 +2486,16 @@ impl crate::MemMap {
             || SoilCompactRecordResources::source_page(index)
             || SoilScopedValuesResources::source_page(index)
             || SoilRemainingRectanglesResources::source_page(index)
+            || FiragaCopiedMatricesResources::source_page(index)
+            || FiragaCompactCellsResources::source_page(index)
+            || FiragaIndexedObjBankResources::source_page(index)
+            || FiragaCompactObjBankResources::source_page(index)
+            || FiragaAdjacentCompactObjBankResources::source_page(index)
+            || Firaga6c12c8ObjBankResources::source_page(index)
+            || FiragaTransferProgramResources::source_page(index)
+            || FiragaPaletteRowsResources::source_page(index)
+            || FiragaStackInitializationResources::source_page(index)
+            || FiragaQueuedTransferResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "slug": "consume-european-firaga-palette-rows",
+  "title": "Consume European Firaga palette rows",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish two typed selected palette row prefixes with original transfer-program dependency and normal fallback for additional rows."
+  ],
+  "validation": [
+    "Wine reader e323-firaga-palette-rows-readers-wine-rqv2iq3y checks unchanged prior resources, tampered-file rejection, poisoned boundaries and mirrors, two complete original consumer copies, generated copy-helper cases, three transfers and snapshot ownership.",
+    "Wine scene e323-firaga-palette-rows-scene-wine-05hjmqhm compares 606 altered-source frames, positively consumes both row groups, and matches state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e323-firaga-palette-rows-cli-wine-7y0zezfv creates, reuses and verifies 145 matching files; static join e323-firaga-palette-rows-sample-residual-uui0fp3b leaves 1,129 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "Additional rows, other selectors, producers, consumers and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.",
+    "Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/firaga_palette_rows.rs",
+    "crates/gba-core/src/rom_data/runtime/firaga_palette_rows.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_palette_rows_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

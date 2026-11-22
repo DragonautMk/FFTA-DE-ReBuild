@@ -48,7 +48,7 @@ fn european_soil_indirect_records_and_original_readers() {
             source.manifest.decoder_revision,
             source.manifest.resources.len()
         ),
-        (248, 247, 136)
+        (257, 256, 142)
     );
     for prior in &old.resources {
         let current = source
@@ -57,6 +57,16 @@ fn european_soil_indirect_records_and_original_readers() {
             .iter()
             .find(|entry| entry.id == prior.id)
             .unwrap();
+        if prior.id == OBJ_STATIC_LISTS_ID {
+            super::soil_sprite_lists_tests::assert_previous_obj_lists_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
+        if prior.id == OBSERVED_LZ_ID {
+            super::soil_evidence_lz_tests::assert_previous_observed_lz_preserved(
+                &previous, &prepared.directory, prior, current);
+            continue;
+        }
         assert_eq!(current, prior);
         assert_eq!(
             fs::read(prepared.directory.join(&current.path)).unwrap(),
@@ -393,7 +403,7 @@ fn european_soil_indirect_records_and_original_readers() {
     assert!(Arc::ptr_eq(managed.bus.rom_resources().unwrap(), &owner));
     fs::rename(&unavailable, &prepared.directory).unwrap();
     fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({
-        "status":"PASS", "revision":[248,247], "resources":136, "new_source_bytes":40, "records":5,
+        "status":"PASS", "revision":[257,256], "resources":142, "new_source_bytes":40, "records":5,
         "previous_resources_unchanged":131, "roots_remain_in_existing_owner":true, "unselected_indices_fall_back":true,
         "poisoned_mirrors_and_mixed_boundaries":true, "original_interpreter_generated_cases":completed,
         "full_state_clock_equal":true, "coherent_edit_rejected":true, "missing_dataset_and_snapshot_owner_retained":true,
