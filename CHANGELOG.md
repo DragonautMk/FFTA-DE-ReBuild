@@ -273,6 +273,27 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDA
 
 [Change record](docs/changes/2026-11-22-reconcile-european-f09-historical-inventory.json)
 
+## 2026-11-22 — Plan a game engine rebuild with editable assets and playable music
+
+Type: docs. Platforms: Project planning.
+
+**Changes**
+
+- Add nine milestones for authoring formats, music rendering, deterministic tactical rules, saves, mods, portability and performance. The first edit uses the EUR school dialogue. The first proposed battle uses the recorded White Flowers deployment and movement at Giza Plains.
+- Propose a headless Rust rules core and a Godot presentation trial. Use reference replays, native desktop measurements and an edit that works outside the Godot editor to decide adoption. Link the rebuild from the frontend assessment, ROM-data TODO and project state.
+
+**Validation**
+
+- Verified all nine milestone IDs, 26 open checkboxes, 25 local link occurrences including 12 section anchors, and three incoming documentation links. Cross-checked existing text, audio and battle evidence, the desktop pacing interval and official Godot references.
+
+**Limitations**
+
+- This planning unit delivers the checklist. Runtime implementation, audio export, mod loading, native platform measurements and a Godot adoption decision remain future work after the agreed EUR scope and explicit selection.
+
+Documentation: [ENGINE_REBUILD_TODO.md](docs/development/ENGINE_REBUILD_TODO.md), [GODOT_FRONTEND_TODO.md](docs/development/GODOT_FRONTEND_TODO.md).
+
+[Change record](docs/changes/2026-11-22-plan-editable-game-engine-rebuild.json)
+
 ## 2026-11-22 — Inventory European Soil Evidence ROM reads
 
 Type: docs. Platforms: European ROM; Windows via Wine.

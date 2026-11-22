@@ -25829,3 +25829,10 @@ Verified criteria: E248-d247 owns a 7x7 rectangle, 1x3 rectangle and alternative
 Limits: the alternative literal was exercised by the reader but not read in this scene. Sampled pointer ancestry, arbitrary guest bounds, other callers and scenes, real BIOS, UI save/Load, 40 updated older regression fixtures, Linux, USA and native Windows remain open. No performance comparison.
 
 Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runtime`; `docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md`; `docs/changes/2026-11-22-consume-european-soil-remaining-rectangles.json`.
+
+### ENGINE-REBUILD-PLAN
+
+- Outcome: completed
+- Verified criteria: The future engine rebuild has nine milestones and 26 open tasks covering accuracy, portability, performance and modding. Each resource family has an authoring format and an observable edit. The audio plan covers editable sequences, playable files and in-game replacement. The school dialogue and Giza encounter have named reference evidence.
+- Evidence: [Engine rebuild TODO](ENGINE_REBUILD_TODO.md) and [change record](../changes/2026-11-22-plan-editable-game-engine-rebuild.json). All 25 local links, including 12 section references, and three backlinks resolve. Project-memory, handoff and whitespace checks passed.
+- Limits: Godot adoption, converters, game rules, mod support and benchmarks remain future decisions or implementation. The agreed EUR ROM work retains priority.

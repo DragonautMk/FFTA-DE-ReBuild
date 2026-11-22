@@ -31,6 +31,7 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: active
 - Outcome: partial
+- E301 Wine reader/scene/CLI and join PASS. No sampled E260 bytes remain outside E248. Copied code, other readers/scenes/families and full-ROM coverage remain open. Next EUR dependency: see `docs/rom_data_graphics.md` E301 and checklist ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -173,6 +174,8 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Blockers, dependencies and shared resources
 
+- DEPS APK unverified after NDK r30 timeouts.
+
 - DBG2 IME tests touched personal `~/.local/share/ibus-table/tables/cangjie3-user.db`; user informed, do not alter it. Unit de2hg3tl lost an Xvfb handle: host status unknown; do not signal by guess.
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
@@ -184,9 +187,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: ROM-DATA-FULL-EUR partial.
-- Last verified result: E301 Wine reader/scene/CLI and join PASS; no E260 sampled bytes remain outside E248.
-- Remaining work: copied-code dependency, other readers/scenes/families, Linux/USA/06/07; DEPS APK unverified. Samples are not full-ROM coverage.
-- Errors or blockers: other code readers open; DEPS NDK r30 timeouts.
-- Next action: select the next unmet EUR ROM-data dependency; E260 sample is not full-ROM coverage.
-- References: `docs/rom_data_graphics.md` E301; checklist ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS.
+- Task: ENGINE-REBUILD-PLAN completed.
+- Last verified result: Nine milestones, 26 open checks and all local roadmap links verified.
+- Remaining work: Engine implementation, native performance and Godot adoption are deferred.
+- Errors or blockers: None for planning.
+- Next action: After the agreed EUR scope and explicit selection, pin the school dialogue replay for RB-01.
+- References: [Engine rebuild TODO](ENGINE_REBUILD_TODO.md) and [frontend assessment](GODOT_FRONTEND_TODO.md).

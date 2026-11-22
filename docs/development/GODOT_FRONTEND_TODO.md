@@ -7,6 +7,9 @@ remains completing ROM extraction and consumption of the resulting data in the
 runtime. This document does not authorize builds, installations, refactoring or
 prototypes. The initial code draft was removed at the user's request.
 
+For the longer-term work on editable assets, game rules and the first playable
+battle in a rebuilt engine, see the [engine rebuild TODO](ENGINE_REBUILD_TODO.md).
+
 <a id="valutazione"></a>
 
 ## Assessment

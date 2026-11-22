@@ -645,6 +645,8 @@ and normal enablement retain their existing acceptance gates.
   full native dispatch and application lifecycle are still private binary
   modules; a shared runtime boundary is a prerequisite for native frontend
   parity. Do not infer implementation approval from this deferred TODO.
+  Editable asset formats, sequenced music, headless game rules and the first
+  playable battle have a separate [engine rebuild TODO](ENGINE_REBUILD_TODO.md).
 
 - [EUR audio source contracts](../rom_data_audio.md) identify the original
   M4A driver,3player configurations,640song-directory entries and455unique

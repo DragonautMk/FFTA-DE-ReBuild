@@ -16,6 +16,9 @@ The [Godot frontend](GODOT_FRONTEND_TODO.md) is only an assessment with its TODO
 deferred until agreed extraction is complete. It is not a new execution step
 of this TODO and must not be developed during data migration.
 
+The future game rebuild uses the verified dataset as the source for editable
+files, listenable music and a playable tactical encounter. [Engine rebuild TODO](ENGINE_REBUILD_TODO.md)
+
 The [debug tools TODO](DEBUG_TOOLS_TODO.md) collects improvements for user and
 assistant: case replay, read audits, divergence comparison and ROM coverage
 links. It is a checklist selected as needed, not a new parallel campaign
