@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-star-cross-lz-streams",
+  "title": "Consume European Star Cross LZ streams",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing observed LZ owner to serve two Star Cross source streams and decoded HLE output, preserving old stream indices and counters."
+  ],
+  "validation": [
+    "Wine d2ksd6ci preserves 20 earlier streams and 147 other resources, rejects coherent edits, checks mirrors/boundaries, two original SWI and six DMA/CpuSet/CpuFastSet cases, and snapshot owner retention.",
+    "Wine lqmy00iv matches 480 frames with both source streams altered and one managed HLE call per stream. Wine m_69fwj8 creates, reuses and verifies the 149-file E293 dataset; all three servers drained."
+  ],
+  "limitations": [
+    "One retained continuation does not establish asset identities, all callers and scenes, save ancestry or real BIOS behavior. Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_lz_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_lz_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

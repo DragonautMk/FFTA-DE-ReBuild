@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "reconcile-european-star-cross-literal-sample",
+  "title": "Reconcile European Star Cross literal sample",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static reconciliation"
+  ],
+  "changes": [
+    "Join the retained E403 Star Cross address inventory to the E294 manifest after literal integration."
+  ],
+  "validation": [
+    "Protected join 6zwywcjb verifies 76 more sampled bytes now have declared sources and 207 remain unowned in 22 intervals; other resource metadata is unchanged."
+  ],
+  "limitations": [
+    "This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "observe-european-white-flowers-isolated-operands",
+  "title": "Observe European White Flowers isolated read operands",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows under Wine"
+  ],
+  "changes": [
+    "Add a bounded test-only observer for the pre-step operands of two original White Flowers source reads."
+  ],
+  "validation": [
+    "Windows build vdeeh6qg and Wine unit s86speyz observe both exact byte and halfword operands in normal interpreter steps over 600 retained frames; Wine server drained."
+  ],
+  "limitations": [
+    "Caller ancestry, selector domains, complete asset extents, runtime publication, other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_operand_sites_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_operand_sites_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -221,6 +221,14 @@ retired successful scratch. Evidence:
 trigger and paired proof, not all 40 banks, eight groups, selectors, consumers,
 Linux, USA or native Windows.
 
+A later E275 Wine inventory of the same retained continuation is documented
+separately in the [E362 selected-reader audit](rom_data_runtime.md#e362-white-flowers-rom-read-inventory).
+It records broader ROM addresses without attributing them to the table groups.
+[E366](rom_data_runtime.md#e366-white-flowers-localized-indexed-archive-runtime)
+serves five separate indexed archives, their pointer group and caller literals;
+one archive is consumed in that retained continuation. Other ordinary language
+scenes, readers and platforms remain open.
+
 EUR schema1/extractor21/decoder20 introduced fixed `ui-graphics.json`, resource
 `graphics.ui-custom-banks`, format `ui-custom-banks-v1-json`. The declared
 catalog has nine raw BE-size custom LZ/RLE banks, ten independently rooted

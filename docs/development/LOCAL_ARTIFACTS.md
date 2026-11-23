@@ -54,6 +54,12 @@ The command must finish all its children and write an explicit `status: PASS`
 JSON for every selected `--result`. A harness may run several related phases
 and assert their results before writing that final JSON.
 
+If the caller closes stdout during a successful unit, a broken pipe on the
+final status message does not change the already written PASS receipt or
+turn successful input retirement into a failure. Real input-retirement and
+receipt errors still fail. This applies to the final message after successful
+cleanup, not to failures earlier in the unit.
+
 Keep only these durable outputs from a successful unit:
 
 - The command log, PASS results, source/input identities and cleanup receipt.

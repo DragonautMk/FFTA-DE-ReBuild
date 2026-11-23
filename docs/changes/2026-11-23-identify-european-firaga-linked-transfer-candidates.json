@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "identify-european-firaga-linked-transfer-candidates",
+  "title": "Identify European Firaga linked transfer candidates",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Identify a conditional original index-2 path to a type-3 row and descriptor that reference an existing wrapper and compressed stream."
+  ],
+  "validation": [
+    "Wine disassembly e355-firaga-residual-readers-disassembly-wine-fvczyws1 passes with server drained; existing E342 data and E286/E287 reader evidence identify the candidate source links.",
+    "Exact EUR inspection finds both candidate spans unowned in E272 and 17 of their 20 bytes in the address-only E302 residual."
+  ],
+  "limitations": [
+    "The sample does not establish executing PCs or prove the conditional ancestry occurred. Source authentication, runtime publication, other callers and scenes remain open.",
+    "Linux, USA and native Windows remain pending. No performance comparison was made. Focused Sol xhigh requested, effective settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -4,6 +4,16 @@ use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 pub const SOURCE_OFFSET: u32 = 0xaf2718;
+/// Conditional source projections for the original White Flowers queued transfer.
+pub const WHITE_FLOWERS_QUEUED_LITERALS: u32 = 0x12bf7c;
+pub const WHITE_FLOWERS_QUEUED_OFFSETS: [u32; 2] = [0x3ba0d8, 0x3ba218];
+pub const WHITE_FLOWERS_QUEUED_HALFWORDS: usize = 20 * 8;
+pub const WHITE_FLOWERS_QUEUED_LENGTH: usize = WHITE_FLOWERS_QUEUED_HALFWORDS * 2;
+pub const WHITE_FLOWERS_QUEUED_HASHES: [&str; 3] = [
+    "2134b463b17b64c7ca2c1aa0953564063035e44c2ef100c453b62ed1f51d817c",
+    "3e9d4721fef47bde1cf15b0befc688b2d30a5764519acfaef9726e4a2d3c9fe3",
+    "21fd6404a202738aaacb8f7c422c849bfdf90f4b0aaca015fd76804ec1c60d13",
+];
 pub const SOURCE_LENGTH: usize = 102;
 pub const SOURCE_SHA256: &str = "f84b800ef7584f5f274fbbb8eb32bf4bb45a323c56ff026d7218b14c17f0709e";
 pub const DECODED_SHA256: &str = "307e945d04b0bffeac6f011e54fdbd455db30da84b08d7d9482d25701311f186";
@@ -304,6 +314,15 @@ pub struct ObservedTilemap {
     pub additional_rectangles: Option<[Rectangle; 5]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub soil_transfer_sources: Option<SoilTransferSources>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_queued: Option<WhiteFlowersQueuedRows>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct WhiteFlowersQueuedRows {
+    pub caller_literals: [u32; 3],
+    pub halfwords: [Vec<u16>; 2],
 }
 
 impl ObservedTilemap {
@@ -388,6 +407,13 @@ impl ObservedTilemap {
                 }
             }
         }
+        if let Some(rows) = &self.white_flowers_queued {
+            if rows.caller_literals != [0x083ba0d8, 0x083ba218, 0x03000990]
+                || rows.halfwords.iter().any(|cells| cells.len() != WHITE_FLOWERS_QUEUED_HALFWORDS)
+            {
+                return Err("Invalid White Flowers queued row projection".into());
+            }
+        }
         if self.rectangle_roots.first_rectangle_pointer != 0x0800_0000 + self.rectangles[0].source_offset
             || self.rectangle_roots.entry_count != 1
             || self.rectangle_roots.descriptor_pointer != 0x0800_0000 + RECTANGLE_CHAIN_OFFSET
@@ -445,6 +471,12 @@ impl ObservedTilemap {
             spans.push((SOIL_MODE7_OFFSET, soil.mode7.header_bytes().to_vec(), "soil-mode7-header"));
             spans.push((SOIL_MODE7_OFFSET + 6, soil.mode7.run_bytes().to_vec(), "soil-mode7-first-run"));
         }
+        if let Some(rows) = &self.white_flowers_queued {
+            spans.push((WHITE_FLOWERS_QUEUED_LITERALS, rows.caller_literals.iter().flat_map(|v| v.to_le_bytes()).collect(), "white-flowers-queued-literals"));
+            for (i, cells) in rows.halfwords.iter().enumerate() {
+                spans.push((WHITE_FLOWERS_QUEUED_OFFSETS[i], cells.iter().flat_map(|v| v.to_le_bytes()).collect(), "white-flowers-queued-halfwords"));
+            }
+        }
         spans
     }
 
@@ -471,6 +503,9 @@ impl Catalog {
             return Err("Observed tilemap requires the exact EUR ROM".into());
         }
         for (start, end, expected) in [
+            (0x12bf10, 0x12bf38, "d97795791e2923be54cd586fc9ba66fadf35a7c788bb825613dd151af4abe773"),
+            (0x0be4, 0x0c40, "557ca921d579344d0e02662661aab9d780dc75e98f88ebdb9d9532660f39c2ac"),
+            (0x0800, 0x0918, "ac9a693288b02a8ae2d7024fdd53894d80016d550721178091e91bdfc5de6864"),
             (0xda544, 0xda590, "1de61b0dea68ac7332b0ed9755fc4b7fd1df2d08c69cef8dbb47167dfe925b20"),
             (0xda64c, 0xda6a0, "7314784022a2b2a49bf98d6e8f5887b5b1102f30900ef327c354e70b7ada73d6"),
             (0xda14c, 0xda1fe, "24325845d23d8f6262749a416a14a752e68b1e85e21b035266c58229c73e4230"),
@@ -616,6 +651,22 @@ impl Catalog {
             mode7: SoilMode7Prefix { width: mode7[0], height: mode7[1], opaque_header: u16::from_le_bytes(mode7[2..4].try_into().unwrap()),
                 mode: mode7[4], flags: mode7[5], first_run: Run { control: u16::from_le_bytes(mode7[6..8].try_into().unwrap()), value: u16::from_le_bytes(mode7[8..10].try_into().unwrap()) } },
         };
+        for (i, (offset, length)) in [(WHITE_FLOWERS_QUEUED_LITERALS, 12usize),
+            (WHITE_FLOWERS_QUEUED_OFFSETS[0], WHITE_FLOWERS_QUEUED_LENGTH),
+            (WHITE_FLOWERS_QUEUED_OFFSETS[1], WHITE_FLOWERS_QUEUED_LENGTH)].into_iter().enumerate() {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + length]) != WHITE_FLOWERS_QUEUED_HASHES[i] {
+                return Err("White Flowers queued row source mismatch".into());
+            }
+        }
+        let white_flowers_queued = WhiteFlowersQueuedRows {
+            caller_literals: std::array::from_fn(|i| word(WHITE_FLOWERS_QUEUED_LITERALS as usize + i * 4)),
+            halfwords: std::array::from_fn(|i| {
+                let at = WHITE_FLOWERS_QUEUED_OFFSETS[i] as usize;
+                rom[at..at + WHITE_FLOWERS_QUEUED_LENGTH].chunks_exact(2)
+                    .map(|v| u16::from_le_bytes([v[0], v[1]])).collect()
+            }),
+        };
         let decoded = ObservedTilemap {
             source_offset: SOURCE_OFFSET,
             width: bytes[0], height: bytes[1], opaque_header: half(2), mode: bytes[4], flags: bytes[5],
@@ -627,6 +678,7 @@ impl Catalog {
             additional_rectangle_pointers: Some(additional_rectangle_pointers),
             additional_rectangles: Some(additional_rectangles),
             soil_transfer_sources: Some(soil_transfer_sources),
+            white_flowers_queued: Some(white_flowers_queued),
         };
         let cells = decoded.decoded_cells()?;
         if decoded.source_bytes() != bytes || ffta_rom::digest(&cells.iter().flat_map(|v| v.to_le_bytes()).collect::<Vec<_>>()) != DECODED_SHA256 {

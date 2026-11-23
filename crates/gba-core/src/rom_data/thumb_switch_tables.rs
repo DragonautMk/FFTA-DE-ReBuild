@@ -52,8 +52,13 @@ pub const TABLES: [TableSpec; TABLE_COUNT] = [
 
 /// Additional battle, home and Red Spring tables use roots owned by Thumb PC literals.
 /// Only destinations are new sources; guest out-of-range behavior remains live.
-pub const ADDITIONAL_TABLE_COUNT: usize = 32;
-pub const ADDITIONAL_DESTINATION_COUNT: usize = 942;
+pub const PREVIOUS_ADDITIONAL_TABLE_COUNT: usize = 32;
+pub const FIRAGA_ADDITIONAL_TABLE_COUNT: usize = 34;
+pub const WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT: usize = 35;
+pub const WHITE_FLOWERS_RESIDUAL_TABLE_COUNT: usize = 42;
+pub const WHITE_FLOWERS_MIXED_TABLE_COUNT: usize = 47;
+pub const ADDITIONAL_TABLE_COUNT: usize = 50;
+pub const ADDITIONAL_DESTINATION_COUNT: usize = 1716;
 pub const ADDITIONAL_SOURCE_ROLE: &str = "thumb-switch-destinations";
 
 #[derive(Clone, Copy, Debug)]
@@ -108,6 +113,25 @@ pub const ADDITIONAL_TABLES: [AdditionalTableSpec; ADDITIONAL_TABLE_COUNT] = [
     AdditionalTableSpec { root: 0x133f40, count: 7, code_start: 0x133f32, guard: 0x133f32, reader: 0x133f3c, mov: 0x133f3e, code_sha256: "574b4c9e83dbdc6b4d2203317ea4ac9270f90bc77bf89d70da10287f795578c6", source_sha256: "6a106efecfa7dbc59e3591e35f83ed7682add0d779130b0283adcad77ee1fde2" },
     AdditionalTableSpec { root: 0x1343e0, count: 8, code_start: 0x1343d0, guard: 0x1343d0, reader: 0x1343da, mov: 0x1343dc, code_sha256: "3f6a31969240cbcbae7c88c80b6591f93b767b77613157bd001621e974f2fcac", source_sha256: "d157b1c4d4b07b4066751d93b37334fdaf1e0afd38ba62bf82aa44965bf7c267" },
     AdditionalTableSpec { root: 0x1357e8, count: 5, code_start: 0x1357d4, guard: 0x1357d4, reader: 0x1357de, mov: 0x1357e0, code_sha256: "c8c71afb1983252994279d553fddfcdc4b4a2219af501e2345d3ef418df2c2ab", source_sha256: "21893163878a4dba86feffd6dad5dd40fce8f3076fcde836cbed0f0950a69e56" },
+    AdditionalTableSpec { root: 0xd7b7c, count: 12, code_start: 0xd7b6a, guard: 0xd7b6a, reader: 0xd7b70, mov: 0xd7b78, code_sha256: "8294cc0c7ad64711c5235ec6a5e958a23b4ad79dd12de1dad99a25765f5eab61", source_sha256: "34293fa2718c3d54a99d8cef82df1b1a1b73f030ca1209dcb32551769c86dac4" },
+    AdditionalTableSpec { root: 0xd7d70, count: 14, code_start: 0xd7d60, guard: 0xd7d60, reader: 0xd7d66, mov: 0xd7d6e, code_sha256: "6cd014fae29c8952f29db73428a9ae2617ccac95095f310491eba8059c1147be", source_sha256: "3f9be23496a97567ffb922a520f3b11e64ad0e985496b0724da06fd1c5d2c7d1" },
+    AdditionalTableSpec { root: 0x32e10, count: 256, code_start: 0x32dfa, guard: 0x32dfc, reader: 0x32e04, mov: 0x32e0c, code_sha256: "5659c6e1ff0e726db17bf97dd4e42bbae178a9e66937f0b3ea55e7adf1ae834f", source_sha256: "8b1cd081e8694bc98b608a3fce6b2f34449b907612e64b997d124e6103804e7f" },
+    AdditionalTableSpec { root: 0x31618, count: 255, code_start: 0x31604, guard: 0x31606, reader: 0x3160e, mov: 0x31616, code_sha256: "9cdb6f0df3c24d510f0b8f1a4e3a3c13098b1efd8e6bd2ed6eeeeae2d016966c", source_sha256: "228a554873a731a0f8ef7a8cdc3d0ad168da03a93cefb3181900c8414ab580b3" },
+    AdditionalTableSpec { root: 0x36320, count: 11, code_start: 0x3630c, guard: 0x3630c, reader: 0x36310, mov: 0x36318, code_sha256: "775cc9ace4cbb0c9a52e975c1cdbeece9088cbcc554bcc3b096baedd8fcd0ba9", source_sha256: "56faffee40850bd92c74f8df2abfc64972b443c3f76e8a22f16f3e768062b311" },
+    AdditionalTableSpec { root: 0x3ce28, count: 10, code_start: 0x3ce0e, guard: 0x3ce0e, reader: 0x3ce14, mov: 0x3ce1c, code_sha256: "fd80655b82d49e9d2613cedeb88d81c7b5e64a993143eb3282307253847e5760", source_sha256: "417e14d37ab09cb3d6743239af11b87c04a81bf21a6915815f3ab655d87ecd9f" },
+    AdditionalTableSpec { root: 0x43f90, count: 14, code_start: 0x43f76, guard: 0x43f76, reader: 0x43f7c, mov: 0x43f84, code_sha256: "daf46e2ac05cc929e0ce90ad7f17a1193dd6feb757276d626aa5fc711cb8f311", source_sha256: "be3fa4e6cb53b774842121473e5cc0946d1ad440cb73316a47afbf19b898cfbb" },
+    AdditionalTableSpec { root: 0x465a8, count: 5, code_start: 0x46596, guard: 0x46598, reader: 0x4659e, mov: 0x465a6, code_sha256: "6d00f08ecee81f710d92cdd8da379b651fde673de920611aa66cce9d373c5977", source_sha256: "ff558fb16acfd53446181bbbf228f1e26f4dd9a09db6cd86c0f35b1125bd0441" },
+    AdditionalTableSpec { root: 0x8d344, count: 13, code_start: 0x8d334, guard: 0x8d334, reader: 0x8d33a, mov: 0x8d342, code_sha256: "b2a1eaef97dd19cc4611c5d26878f11630b3a1996952db624b29b9de4fda4990", source_sha256: "ebaa1ee8d012be03ad48255d7543e254bc01bd4f59b5cdfdaf78ae1435b12c45" },
+    AdditionalTableSpec { root: 0xd1f58, count: 65, code_start: 0xd1f42, guard: 0xd1f42, reader: 0xd1f48, mov: 0xd1f50, code_sha256: "0d562d7b02eca47a98cba65601e5abfed36b11beaed0af6ee8ff9f76f8a7e2b6", source_sha256: "88d3b524ccdc52a5ff30653f7f85b1373d5b65b38f1507e47bc6cd29b9dcda51" },
+    // The out-of-domain helper at 0bbfd4 may return; retain original fallback reads.
+    AdditionalTableSpec { root: 0x4e038, count: 7, code_start: 0x4e026, guard: 0x4e026, reader: 0x4e02c, mov: 0x4e034, code_sha256: "58d59b2dd8d19bb30e7ee20caaa28821c8b8be2d6e423e71b1cdb3c87ed0d23f", source_sha256: "14492e0365736815cee36e17289205bbcccd3f1a700d54cb27a1e0259b929edc" },
+    AdditionalTableSpec { root: 0x8dfd0, count: 14, code_start: 0x8dfbc, guard: 0x8dfbc, reader: 0x8dfc2, mov: 0x8dfca, code_sha256: "19d563ac0da9c8e6c283a2121ee8bffe67da3f5ce6425d2357290901b69b6d73", source_sha256: "8d9ae0552b0d0f60119d9c5e047fe09a6be681c08d48151608b1c071ebb6ccb1" },
+    AdditionalTableSpec { root: 0xbbffc, count: 37, code_start: 0xbbfd0, guard: 0xbbfd0, reader: 0xbbfd8, mov: 0xbbfe0, code_sha256: "764ea1207578b3b52e470ef19836eba1e3e53091728113c4f0fbe0b0a1000440", source_sha256: "b0fe306c4eeb85923cc49bde70523ec62e93f1d15726f623eb129cd64f8df7ea" },
+    AdditionalTableSpec { root: 0xcd950, count: 23, code_start: 0xcd940, guard: 0xcd940, reader: 0xcd944, mov: 0xcd94c, code_sha256: "455d92b9f63640eda9c7e92f32be9e143d86d6f9d1809bbfdf378acd6cde5a36", source_sha256: "a11a6ce18489b156059bf83fe5768d1ee5f598c28908d5da6c8ce49538189309" },
+    AdditionalTableSpec { root: 0x125c88, count: 8, code_start: 0x125c78, guard: 0x125c78, reader: 0x125c7e, mov: 0x125c86, code_sha256: "2ee5f9187db66e5d62db01a18a981c7ebc1dabb83dacbaec9d7a0f81e88572ad", source_sha256: "25fee10c047dcfd1cb533c836c1a0f83702040b77254b64784d3bb6045ae9742" },
+    AdditionalTableSpec { root: 0x2a7b0, count: 11, code_start: 0x2a79a, guard: 0x2a79c, reader: 0x2a7a0, mov: 0x2a7a8, code_sha256: "969664e21ea18268c37749c2fdbb2344a871a197dfc9af9988243a059885e396", source_sha256: "053cee09d503cbbdbd14008f795e340443f838d51b1cfb05aa0104eabc1cfb70" },
+    AdditionalTableSpec { root: 0x125fe4, count: 12, code_start: 0x125fd0, guard: 0x125fd4, reader: 0x125fd8, mov: 0x125fe0, code_sha256: "aab18da1d78a8af88cdd98f662d4182fa36a0a7bef9c9b1fbfa5d86a9007fdb0", source_sha256: "926f076935f206b158f82b216ec66ca605afdf6e5cb87a44d69829804302909c" },
+    AdditionalTableSpec { root: 0x1279b8, count: 7, code_start: 0x12798a, guard: 0x12798a, reader: 0x127990, mov: 0x127998, code_sha256: "d4ed6bdee7c2abeeb8a5ae5424bd9fadd009a5d0608cc42e079557a387e18adf", source_sha256: "fc3a42742eebc2534bc0732a900a841e4ca09cfc9bf03e62cf58a97993d94f16" },
 ];
 
 /// Even target address used by the original Thumb `MOV pc` instruction.
@@ -154,7 +178,7 @@ impl ThumbSwitchTables {
                 return Err("Invalid EUR Thumb switch-table source, target or order".into());
             }
         }
-        if self.additional_tables.len() != ADDITIONAL_TABLE_COUNT {
+        if ![PREVIOUS_ADDITIONAL_TABLE_COUNT, FIRAGA_ADDITIONAL_TABLE_COUNT, WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT, WHITE_FLOWERS_RESIDUAL_TABLE_COUNT, WHITE_FLOWERS_MIXED_TABLE_COUNT, ADDITIONAL_TABLE_COUNT].contains(&self.additional_tables.len()) {
             return Err("Invalid additional EUR Thumb switch-table count".into());
         }
         for (table, spec) in self.additional_tables.iter().zip(ADDITIONAL_TABLES) {

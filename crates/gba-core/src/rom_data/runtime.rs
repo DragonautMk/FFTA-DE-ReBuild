@@ -254,6 +254,12 @@ pub use firaga_stack_initialization::FiragaStackInitializationStats;
 mod firaga_queued_transfer;
 use firaga_queued_transfer::FiragaQueuedTransferResources;
 pub use firaga_queued_transfer::FiragaQueuedTransferStats;
+mod white_flowers_signed_bytes;
+use white_flowers_signed_bytes::WhiteFlowersSignedBytesResources;
+pub use white_flowers_signed_bytes::WhiteFlowersSignedBytesStats;
+mod white_flowers_isolated_values;
+use white_flowers_isolated_values::WhiteFlowersIsolatedValuesResources;
+pub use white_flowers_isolated_values::WhiteFlowersIsolatedValuesStats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -546,6 +552,8 @@ pub struct RuntimeResources {
     firaga_palette_rows: Option<Box<FiragaPaletteRowsResources>>,
     firaga_stack_initialization: Option<Box<FiragaStackInitializationResources>>,
     firaga_queued_transfer: Option<Box<FiragaQueuedTransferResources>>,
+    white_flowers_signed_bytes: Option<Box<WhiteFlowersSignedBytesResources>>,
+    white_flowers_isolated_values: Option<Box<WhiteFlowersIsolatedValuesResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -937,6 +945,12 @@ impl RuntimeResources {
         if let Some((data, _)) = files.firaga_queued_transfer {
             resources.firaga_queued_transfer = Some(Box::new(FiragaQueuedTransferResources::new(data.clone(), &source.firaga_queued_transfer.as_ref().unwrap().sources)?));
         }
+        if let Some((data, _)) = files.white_flowers_signed_bytes {
+            resources.white_flowers_signed_bytes = Some(Box::new(WhiteFlowersSignedBytesResources::new(data.clone(), &source.white_flowers_signed_bytes.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.white_flowers_isolated_values {
+            resources.white_flowers_isolated_values = Some(Box::new(WhiteFlowersIsolatedValuesResources::new(data.clone(), &source.white_flowers_isolated_values.as_ref().unwrap().sources)?));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1236,6 +1250,8 @@ impl RuntimeResources {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1408,6 +1424,8 @@ impl RuntimeResources {
             + self.firaga_palette_rows.as_ref().map_or(0, |i| i.resident_bytes())
             + self.firaga_stack_initialization.as_ref().map_or(0, |i| i.resident_bytes())
             + self.firaga_queued_transfer.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.white_flowers_signed_bytes.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.white_flowers_isolated_values.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1605,6 +1623,8 @@ impl RuntimeResources {
     pub fn firaga_palette_rows_stats(&self) -> Option<FiragaPaletteRowsStats> { self.firaga_palette_rows.as_ref().map(|m| m.stats()) }
     pub fn firaga_stack_initialization_stats(&self) -> Option<FiragaStackInitializationStats> { self.firaga_stack_initialization.as_ref().map(|m| m.stats()) }
     pub fn firaga_queued_transfer_stats(&self) -> Option<FiragaQueuedTransferStats> { self.firaga_queued_transfer.as_ref().map(|m| m.stats()) }
+    pub fn white_flowers_signed_bytes_stats(&self) -> Option<WhiteFlowersSignedBytesStats> { self.white_flowers_signed_bytes.as_ref().map(|m| m.stats()) }
+    pub fn white_flowers_isolated_values_stats(&self) -> Option<WhiteFlowersIsolatedValuesStats> { self.white_flowers_isolated_values.as_ref().map(|m| m.stats()) }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -2075,6 +2095,14 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.white_flowers_signed_bytes {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.white_flowers_isolated_values {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2496,6 +2524,8 @@ impl crate::MemMap {
             || FiragaPaletteRowsResources::source_page(index)
             || FiragaStackInitializationResources::source_page(index)
             || FiragaQueuedTransferResources::source_page(index)
+            || WhiteFlowersSignedBytesResources::source_page(index)
+            || WhiteFlowersIsolatedValuesResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

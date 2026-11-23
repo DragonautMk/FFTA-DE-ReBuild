@@ -8060,3 +8060,49 @@ inputs and dataset were retained unchanged; Wine drained and the local overlay
 avoided the known D-Bus assertion. Attribution and integration of genuine
 remaining data, broader gameplay, Linux, USA, real-BIOS and native Windows
 checks remain open. No performance comparison was made.
+
+## E338 Firaga vertical lookup source projection
+
+Protected plan `e338-firaga-vertical-extension-source-plan-hmwlk2jk` compares
+the E302 address-only Firaga sample with the E266 manifest and the previously
+authenticated `080264f6` signed halfword lookup at base `394e0c`. The sample
+contains all 22 bytes at `394e20..36`, corresponding to physical indices 10
+through 20; E266 owns none of them. Its existing six entries at `394e14..20`
+remain authenticated. The original task byte is shifted before lookup without
+a local range guard. The sample does not attribute an individual read to this
+PC, and these indices do not establish a guest bound, semantic table extent
+or all consumers. The source plan publishes no runtime resource.
+
+Runtime publication, isolated accounting and one altered-source Wine scene
+were subsequently verified in E339 below. Other indices, callers and scenes,
+real BIOS, UI save/Load, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+## E339 Firaga vertical lookup runtime projection
+
+EUR E267-d266 extends `gameplay.observed-task-parameters` from six to 17
+represented signed halfwords, preserving the older four- and six-entry formats.
+The 22 additional source bytes represent physical indices 10..20 of the
+original uncapped lookup; other indices continue to use prior owners or ROM
+fallback. The original guest reader and index calculation remain active.
+Correction usage now has an independent bitset so the extended indices cannot
+collide with battle-phase or signed-lookup accounting.
+
+Wine reader `e339-firaga-vertical-extension-readers-wine-tzkb51gc` verifies all 145 other resources, older representations,
+source authentication, poisoned mirrors and mixed boundaries, isolated
+accounting, 56 interpreted/generated original-reader cases, DMA/CpuSet/
+CpuFastSet and snapshot owner retention. The tested indices include adjacent
+and outside values; their results and complete guest state/clock match.
+
+Wine scene `e339-firaga-vertical-extension-scene-wine-kf23c29b` compares 606 retained Firaga frames while the 22 selected
+ROM bytes are altered. All 11 new projection entries are consumed (correction
+mask `0x1ffff`); state, guest clock, video, OAM, dispatch
+and five nonempty audio streams match every frame. The source save's earlier
+history is unknown. Wine CLI `e339-firaga-vertical-extension-cli-wine-huxmebx6` creates, reuses and verifies 147 matching
+files. All Wine servers drained using the local Bluetooth overlay.
+
+Static join `e339-firaga-vertical-extension-sample-residual-o6wga3mh` leaves 83 E302 sampled addresses outside E267 sources.
+This address-only sample does not attribute every read to an instruction or
+establish a full semantic table or global coverage. Other indices, callers and
+scenes, real BIOS, UI save/Load, older revision-sensitive fixtures, Linux, USA
+and native Windows remain open. No performance comparison was made.

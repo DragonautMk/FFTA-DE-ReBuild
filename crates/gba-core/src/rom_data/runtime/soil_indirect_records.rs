@@ -16,7 +16,7 @@ pub(super) struct SoilIndirectRecordsResources {
 }
 impl SoilIndirectRecordsResources {
     pub(super) fn source_page(index: usize) -> bool {
-        ((index >> 12)..=(index.saturating_add(3) >> 12)).any(|page| page == 0x39a || page == 0x39e)
+        ((index >> 12)..=(index.saturating_add(3) >> 12)).any(|page| matches!(page, 0x39a | 0x39c | 0x39e))
     }
     pub(super) fn new(
         data: model::SoilIndirectRecords,

@@ -1,6 +1,7 @@
 //! Source-authenticated EUR compact cell frames and sequence used by Firaga.
 use super::{
     observed_tilemap::StreamToken, script39_registry_poses::PriorSources, Resource, SourceRange,
+    THUMB_PC_LITERALS_ID,
 };
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
@@ -12,6 +13,13 @@ pub const FIRST_END: u32 = 0xae9ea2;
 pub const SEQUENCE_OFFSET: u32 = 0xae9ea4;
 pub const SEQUENCE_END: u32 = 0xae9eba;
 pub const DIRECTORY_OFFSETS: [u16; 10] = [20, 28, 44, 96, 148, 192, 280, 362, 434, 522];
+pub const INDEXED_FIELD_SPANS: [(u32, usize); 5] = [
+    (0x39cc96, 1), (0x39cca8, 2), (0x39ccba, 1), (0x39ccd2, 1), (0x39ccfc, 4),
+];
+const INDEXED_FIELD_ROLES: [&str; 5] = [
+    "firaga-index2-byte-cc96", "firaga-index2-halfword-cca8", "firaga-index2-byte-ccba",
+    "firaga-index2-byte-ccd2", "firaga-index2-word-ccfc",
+];
 const FRAME_SHAPES: [(u8, u8, usize); 10] = [
     (3, 2, 8),
     (3, 4, 16),
@@ -24,11 +32,16 @@ const FRAME_SHAPES: [(u8, u8, usize); 10] = [
     (7, 8, 88),
     (6, 8, 100),
 ];
-const HASHES: [&str; 4] = [
+const HASHES: [&str; 9] = [
     "e951f81c9c58f38793c7a3e32159c7b7524496ad2af600f3f02434d35851165e",
     "f4325e4197bd08b3d5bf170ecd9c206b73494ed75e621901a3744a9d3b4b921b",
     "a1bce0c67692c799cbb8ef3a01e7edc5a01b17ea132ca63ad5800af233954e49",
     "b1d3420dcc8fb59742bd5c56de364d29716a3b2d84b06bca06e7ab2ab9fe87be",
+    "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9",
+    "475bb473cad1270c6a48a68c0dd0aea1a0f61401816687b14d6d8b90f27b0a7e",
+    "6da43b944e494e885e69af021f93c6d9331c78aa228084711429160a5bbd15b5",
+    "dabd3aff769f07eb2965401eb029974ebba3407afd02b26ddb564ea5f8efae72",
+    "35e9ba7c5a8172e42df6c255e78e05037a14c733119ffe17cd0775e5fd9d0e0e",
 ];
 
 /// The original decoder preserves both unexplained header bytes and run controls.
@@ -112,6 +125,23 @@ pub struct SequenceEntry {
     pub high_flags: u8,
     pub second_byte: u8,
 }
+/// Selected physical values; original guest indices are not restricted.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FiragaIndexedFields {
+    pub byte_cc96: u8,
+    pub halfword_cca8: u16,
+    pub byte_ccba: u8,
+    pub byte_ccd2: u8,
+    pub word_ccfc: u32,
+}
+impl FiragaIndexedFields {
+    fn bytes(&self) -> [[u8; 4]; 5] {
+        [u32::from(self.byte_cc96).to_le_bytes(), u32::from(self.halfword_cca8).to_le_bytes(),
+         u32::from(self.byte_ccba).to_le_bytes(), u32::from(self.byte_ccd2).to_le_bytes(),
+         self.word_ccfc.to_le_bytes()]
+    }
+}
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FiragaCompactCells {
@@ -122,6 +152,8 @@ pub struct FiragaCompactCells {
     pub directory_offsets: [u16; 10],
     pub frames: Vec<Frame>,
     pub sequence: Vec<SequenceEntry>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub indexed_fields: Option<FiragaIndexedFields>,
 }
 impl FiragaCompactCells {
     pub fn validate(&self) -> Result<(), String> {
@@ -180,7 +212,7 @@ impl FiragaCompactCells {
         if sequence.len() != (SEQUENCE_END - SEQUENCE_OFFSET) as usize {
             return Err("Firaga compact sequence extent mismatch".into());
         }
-        Ok(vec![
+        let mut spans = vec![
             (
                 CALLER_LITERAL,
                 self.caller_literal.to_le_bytes().to_vec(),
@@ -193,7 +225,12 @@ impl FiragaCompactCells {
             ),
             (SOURCE_OFFSET, first, "firaga-compact-cell-frames"),
             (SEQUENCE_OFFSET, sequence, "firaga-compact-sequence"),
-        ])
+        ];
+        if let Some(fields) = &self.indexed_fields {
+            spans.extend(INDEXED_FIELD_SPANS.into_iter().zip(fields.bytes()).zip(INDEXED_FIELD_ROLES)
+                .map(|(((offset, len), bytes), role)| (offset, bytes[..len].to_vec(), role)));
+        }
+        Ok(spans)
     }
     pub fn byte_at(&self, offset: u32) -> Option<(u8, usize)> {
         for (at, value, owner) in [
@@ -245,6 +282,13 @@ impl FiragaCompactCells {
                     },
                     3,
                 ));
+            }
+        }
+        if let Some(fields) = &self.indexed_fields {
+            for (index, ((start, len), bytes)) in INDEXED_FIELD_SPANS.into_iter().zip(fields.bytes()).enumerate() {
+                if let Some(at) = offset.checked_sub(start) {
+                    if (at as usize) < len { return Some((bytes[at as usize], 4 + index)); }
+                }
             }
         }
         None
@@ -302,6 +346,28 @@ impl Catalog {
             || word(TABLE_CELL as usize) != 0x08ae9c30
         {
             return Err("Firaga compact original reader fingerprint mismatch".into());
+        }
+        for (start, end, hash) in [
+            (0xeb930, 0xeb940, "62f413c286f8a59d4967523973bc8e08d64b023f1a8e78fbd14b2f2878a6cc9c"),
+            (0xeb8b0, 0xeb8c2, "a2e4de7c815160c4e7024634463234cbf7fe59a794b9f59d5d8e04f6dae15b8f"),
+            (0xebc0a, 0xebc12, "c96841d1391ad3638829d91c24ac4ab93177803d4263aebacb5708c890f20045"),
+            (0xeb95c, 0xeb964, "f32e669688608ae444fd87ba722107a7d4fa60b0dad299a65a63867a66a2da10"),
+            (0xeb988, 0xeb992, "66a0f87373dfb46c173b13f20166a7e2e1f3d7918620f699ab89dc1805bcbeb3"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != hash { return Err("Firaga indexed field reader mismatch".into()); }
+        }
+        let roots = [(0xeb93a, 0xeb9cc, 0x39cc94), (0xeb8ba, 0xeb9b0, 0x39cca4),
+                     (0xebc0a, 0xebc30, 0x39ccb8), (0xeb95c, 0xeb9d4, 0x39ccd0),
+                     (0xeb988, 0xeb9d8, 0x39ccf4)];
+        let owner = previous.iter().find(|resource| resource.id == THUMB_PC_LITERALS_ID);
+        if !previous.is_empty() && owner.is_none() { return Err("Missing Firaga indexed field literal owner".into()); }
+        for (pc, literal, base) in roots {
+            let op = half(pc as usize);
+            if op & 0xf800 != 0x4800 || ((pc + 4) & !3) + u32::from(op & 255) * 4 != literal
+                || word(literal as usize) != 0x0800_0000 + base
+                || owner.is_some_and(|resource| !resource.sources.iter().any(|s| s.offset == literal && s.length == 4)) {
+                return Err("Firaga indexed field root mismatch".into());
+            }
         }
         let mut frames = Vec::new();
         for (i, &(width, height, _)) in FRAME_SHAPES.iter().enumerate() {
@@ -363,6 +429,13 @@ impl Catalog {
             directory_offsets: std::array::from_fn(|i| half(SOURCE_OFFSET as usize + 4 + 2 * i)),
             frames,
             sequence,
+            indexed_fields: Some(FiragaIndexedFields {
+                byte_cc96: rom[0x39cc96],
+                halfword_cca8: half(0x39cca8),
+                byte_ccba: rom[0x39ccba],
+                byte_ccd2: rom[0x39ccd2],
+                word_ccfc: word(0x39ccfc),
+            }),
         };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();

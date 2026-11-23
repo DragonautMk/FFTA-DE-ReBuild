@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-white-flowers-byte-indexed-switch",
+  "title": "Authenticate European White Flowers byte-indexed switch",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Identify a 256-destination original Thumb switch and the actual bounded reader candidate for sampled word 03320c."
+  ],
+  "validation": [
+    "Protected source plan e386-white-flowers-032e-switch-source-plan-0x7b7450 verifies the byte-indexed dispatch, existing root owner, 1,024 disjoint destination bytes and three sampled entries."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

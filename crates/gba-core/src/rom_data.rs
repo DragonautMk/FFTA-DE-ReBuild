@@ -94,6 +94,8 @@ pub mod firaga_transfer_program;
 pub mod firaga_palette_rows;
 pub mod firaga_stack_initialization;
 pub mod firaga_queued_transfer;
+pub mod white_flowers_signed_bytes;
+pub mod white_flowers_isolated_values;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -159,8 +161,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 266;
-pub const DECODER_REV: u32 = 265;
+pub const EXTRACTOR_REV: u32 = 295;
+pub const DECODER_REV: u32 = 294;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -415,7 +417,7 @@ pub const UI_CONTEXT_TEMPLATES_FORMAT: &str = "ui-context-templates-v1-json";
 pub const MAX_UI_CONTEXT_TEMPLATES_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const COMPACT_OBJ_CATALOG_ID: &str = "graphics.conditional-compact-obj-catalog";
 pub const COMPACT_OBJ_CATALOG_FILE: &str = "compact-obj-catalog.json";
-pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v13-json";
+pub const COMPACT_OBJ_CATALOG_FORMAT: &str = "compact-obj-catalog-v14-json";
 pub const MAX_COMPACT_OBJ_CATALOG_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const CONDITIONAL_ITEM_PARAMETERS_ID: &str = "gameplay.conditional-item-parameters";
 pub const CONDITIONAL_ITEM_PARAMETERS_FILE: &str = "conditional-item-parameters.json";
@@ -536,6 +538,8 @@ pub const FIRAGA_TRANSFER_PROGRAM_ID: &str = "graphics.firaga-transfer-program";
 pub const FIRAGA_PALETTE_ROWS_ID: &str = "graphics.firaga-palette-rows";
 pub const FIRAGA_STACK_INITIALIZATION_ID: &str = "engine.firaga-stack-initialization";
 pub const FIRAGA_QUEUED_TRANSFER_ID: &str = "engine.firaga-queued-transfer";
+pub const WHITE_FLOWERS_SIGNED_BYTES_ID: &str = "engine.white-flowers-signed-bytes";
+pub const WHITE_FLOWERS_ISOLATED_VALUES_ID: &str = "engine.white-flowers-isolated-values";
 pub const INDEXED_RECORDS16_FILE: &str = "indexed-records16.json";
 pub const INDEXED_WORDS_3959_FILE: &str = "indexed-words-3959a4.json";
 pub const THUMB_SWITCH_TABLES_FILE: &str = "thumb-switch-tables.json";
@@ -559,6 +563,8 @@ pub const FIRAGA_TRANSFER_PROGRAM_FILE: &str = "firaga-transfer-program.json";
 pub const FIRAGA_PALETTE_ROWS_FILE: &str = "firaga-palette-rows.json";
 pub const FIRAGA_STACK_INITIALIZATION_FILE: &str = "firaga-stack-initialization.json";
 pub const FIRAGA_QUEUED_TRANSFER_FILE: &str = "firaga-queued-transfer.json";
+pub const WHITE_FLOWERS_SIGNED_BYTES_FILE: &str = "white-flowers-signed-bytes.json";
+pub const WHITE_FLOWERS_ISOLATED_VALUES_FILE: &str = "white-flowers-isolated-values.json";
 pub const INDEXED_RECORDS16_FORMAT: &str = "indexed-records16-v1-json";
 pub const INDEXED_WORDS_3959_FORMAT: &str = "indexed-words-3959a4-v1-json";
 pub const THUMB_SWITCH_TABLES_FORMAT: &str = "thumb-switch-tables-v1-json";
@@ -582,6 +588,8 @@ pub const FIRAGA_TRANSFER_PROGRAM_FORMAT: &str = "firaga-transfer-program-v1-jso
 pub const FIRAGA_PALETTE_ROWS_FORMAT: &str = "firaga-palette-rows-v1-json";
 pub const FIRAGA_STACK_INITIALIZATION_FORMAT: &str = "firaga-stack-initialization-v1-json";
 pub const FIRAGA_QUEUED_TRANSFER_FORMAT: &str = "firaga-queued-transfer-v1-json";
+pub const WHITE_FLOWERS_SIGNED_BYTES_FORMAT: &str = "white-flowers-signed-bytes-v1-json";
+pub const WHITE_FLOWERS_ISOLATED_VALUES_FORMAT: &str = "white-flowers-isolated-values-v1-json";
 pub const MAX_INDEXED_RECORDS16_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_INDEXED_WORDS_3959_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_THUMB_SWITCH_TABLES_FILE_BYTES: u64 = 1024 * 1024;
@@ -605,6 +613,8 @@ pub const MAX_FIRAGA_TRANSFER_PROGRAM_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES: u64 = 1024 * 1024;
+pub const MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES: u64 = 1024 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -989,6 +999,8 @@ pub struct Extraction {
     pub firaga_palette_rows: Option<firaga_palette_rows::Catalog>,
     pub firaga_stack_initialization: Option<firaga_stack_initialization::Catalog>,
     pub firaga_queued_transfer: Option<firaga_queued_transfer::Catalog>,
+    pub white_flowers_signed_bytes: Option<white_flowers_signed_bytes::Catalog>,
+    pub white_flowers_isolated_values: Option<white_flowers_isolated_values::Catalog>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1141,6 +1153,8 @@ pub struct BaseFiles<'a> {
     pub firaga_palette_rows: Option<(&'a firaga_palette_rows::FiragaPaletteRows, &'a [u8])>,
     pub firaga_stack_initialization: Option<(&'a firaga_stack_initialization::FiragaStackInitialization, &'a [u8])>,
     pub firaga_queued_transfer: Option<(&'a firaga_queued_transfer::FiragaQueuedTransfer, &'a [u8])>,
+    pub white_flowers_signed_bytes: Option<(&'a white_flowers_signed_bytes::WhiteFlowersSignedBytes, &'a [u8])>,
+    pub white_flowers_isolated_values: Option<(&'a white_flowers_isolated_values::WhiteFlowersIsolatedValues, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -2176,6 +2190,22 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.firaga_queued_transfer = Some(metadata);
+            let metadata = white_flowers_signed_bytes::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(WHITE_FLOWERS_SIGNED_BYTES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: WHITE_FLOWERS_SIGNED_BYTES_ID.into(), path: WHITE_FLOWERS_SIGNED_BYTES_FILE.into(),
+                format: WHITE_FLOWERS_SIGNED_BYTES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.white_flowers_signed_bytes = Some(metadata);
+            let metadata = white_flowers_isolated_values::Catalog::from_rom(rom, &result.manifest.resources)?;
+            result.manifest.coverage.push(WHITE_FLOWERS_ISOLATED_VALUES_ID.into());
+            result.manifest.resources.push(Resource {
+                id: WHITE_FLOWERS_ISOLATED_VALUES_ID.into(), path: WHITE_FLOWERS_ISOLATED_VALUES_FILE.into(),
+                format: WHITE_FLOWERS_ISOLATED_VALUES_FORMAT.into(), sha256: String::new(),
+                dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
+            });
+            result.white_flowers_isolated_values = Some(metadata);
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -2356,6 +2386,8 @@ impl Extraction {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2537,6 +2569,8 @@ impl Extraction {
             || self.firaga_transfer_program.is_some() != self.firaga_palette_rows.is_some()
             || self.firaga_palette_rows.is_some() != self.firaga_stack_initialization.is_some()
             || self.firaga_stack_initialization.is_some() != self.firaga_queued_transfer.is_some()
+            || self.firaga_queued_transfer.is_some() != self.white_flowers_signed_bytes.is_some()
+            || self.white_flowers_signed_bytes.is_some() != self.white_flowers_isolated_values.is_some()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3708,6 +3742,24 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected firaga_queued_transfer".into()),
         }
+        match (&self.white_flowers_signed_bytes, files.white_flowers_signed_bytes) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES { return Err("White Flowers signed-byte file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[146].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected white_flowers_signed_bytes".into()),
+        }
+        match (&self.white_flowers_isolated_values, files.white_flowers_isolated_values) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES { return Err("White Flowers isolated-value file exceeds input guard".into()); }
+                total = total.saturating_add(bytes.len());
+                expected.resources[147].sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {},
+            _ => return Err("Missing or unexpected white_flowers_isolated_values".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -4398,6 +4450,14 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded firaga_queued_transfer differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.white_flowers_signed_bytes, files.white_flowers_signed_bytes) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded white_flowers_signed_bytes differs from authenticated source".into()); }
+        }
+        if let (Some(expected), Some((decoded, _))) = (&self.white_flowers_isolated_values, files.white_flowers_isolated_values) {
+            decoded.validate()?;
+            if decoded != &expected.decoded { return Err("Decoded white_flowers_isolated_values differs from authenticated source".into()); }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -4555,6 +4615,8 @@ impl Extraction {
             + usize::from(self.firaga_palette_rows.is_some())
             + usize::from(self.firaga_stack_initialization.is_some())
             + usize::from(self.firaga_queued_transfer.is_some())
+            + usize::from(self.white_flowers_signed_bytes.is_some())
+            + usize::from(self.white_flowers_isolated_values.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4755,6 +4817,8 @@ mod tests {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4908,6 +4972,8 @@ mod tests {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5071,6 +5137,8 @@ mod tests {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5223,6 +5291,8 @@ mod tests {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

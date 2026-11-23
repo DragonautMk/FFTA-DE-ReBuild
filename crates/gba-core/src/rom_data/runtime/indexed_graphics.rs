@@ -22,6 +22,10 @@ pub struct IndexedGraphicsStats {
     /// Physical color archive and program masks, in source order.
     pub color_archives_mask: u64,
     pub color_programs_mask: [u64; 8],
+    pub white_flowers_caller_literal_bytes: u64,
+    pub white_flowers_archive_bytes: [u64; 5],
+    pub white_flowers_direct_literal_bytes: u64,
+    pub white_flowers_direct_archive_bytes: u64,
 }
 #[derive(Clone, Copy)]
 struct Byte {
@@ -39,12 +43,14 @@ pub(super) struct IndexedGraphicsResources {
     spans: Vec<Span>,
     reads: AtomicU64,
     bytes: AtomicU64,
-    fields: [AtomicU64; 8],
+    fields: [AtomicU64; 10],
     banks: AtomicU64,
     groups: AtomicU64,
-    programs: [AtomicU64; 18],
+    programs: [AtomicU64; 22],
     color_bytes: AtomicU64,
     color_programs: [AtomicU64; 8],
+    white_flowers_bytes: [AtomicU64; 5],
+    white_flowers_direct_bytes: AtomicU64,
 }
 impl IndexedGraphicsResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -83,6 +89,12 @@ impl IndexedGraphicsResources {
                 for cell in &mut cells {
                     cell.field = 7;
                 }
+            } else if *offset == model::WHITE_FLOWERS_LITERALS {
+                for cell in &mut cells { cell.field = 8; }
+            } else if *offset == model::WHITE_FLOWERS_DIRECT_LITERAL {
+                for cell in &mut cells { cell.field = 9; }
+            } else if *offset == model::WHITE_FLOWERS_GROUP {
+                for cell in &mut cells { cell.field = 0; cell.group = model::GROUPS.len() as u8; }
             } else if let Some(group) = data.groups.iter().position(|g| g.source_offset == *offset) {
                 for cell in &mut cells {
                     cell.field = 0;
@@ -91,6 +103,14 @@ impl IndexedGraphicsResources {
             } else {
                 let (bank, archive, first_program) = if let Some(bank) = data.archives.iter().position(|a| a.source_offset == *offset) {
                     (bank, &data.archives[bank], data.archives[..bank].iter().map(|a| a.programs.len()).sum::<usize>())
+                } else if *offset == model::WHITE_FLOWERS_DIRECT_ROOT {
+                    let direct = data.white_flowers_direct.as_ref().ok_or("Missing White Flowers direct indexed graphics")?;
+                    (model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len() + model::WHITE_FLOWERS_ROOTS.len(), &direct.archive,
+                        model::BASE_PROGRAM_COUNT + model::COLOR_ARCHIVE_ROOTS.len() * 165 + model::WHITE_FLOWERS_ROOTS.len() * 33)
+                } else if let Some(slot) = model::WHITE_FLOWERS_ROOTS.iter().position(|&at| at == *offset) {
+                    let white = data.white_flowers.as_ref().ok_or("Missing White Flowers indexed graphics")?;
+                    (model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len() + slot, &white.archives[slot],
+                        model::BASE_PROGRAM_COUNT + model::COLOR_ARCHIVE_ROOTS.len() * 165 + slot * 33)
                 } else {
                     let archives = data.color_archives.as_ref().ok_or("Missing color indexed graphics")?;
                     let color = model::COLOR_ARCHIVE_ROOTS.iter().enumerate().find_map(|(i, &root)| {
@@ -166,6 +186,8 @@ impl IndexedGraphicsResources {
             programs: std::array::from_fn(|_| AtomicU64::new(0)),
             color_bytes: AtomicU64::new(0),
             color_programs: std::array::from_fn(|_| AtomicU64::new(0)),
+            white_flowers_bytes: std::array::from_fn(|_| AtomicU64::new(0)),
+            white_flowers_direct_bytes: AtomicU64::new(0),
         })
     }
     fn byte(&self, index: usize) -> Option<Byte> {
@@ -186,19 +208,25 @@ impl IndexedGraphicsResources {
         if values.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 8], 0u64, 0u64, [0u64; 18]);
+        let (mut fields, mut banks, mut groups, mut programs) = ([0u64; 10], 0u64, 0u64, [0u64; 22]);
         let (mut color_bytes, mut color_programs) = (0u64, [0u64; 8]);
+        let mut white_flowers_bytes = [0u64; 5];
+        let mut white_flowers_direct_bytes = 0u64;
         let result = std::array::from_fn(|i| match values[i] {
             Some(cell) => {
                 fields[cell.field as usize] += 1;
                 if cell.bank != 255 {
                     banks |= 1 << cell.bank;
-                    if usize::from(cell.bank) >= model::ARCHIVES.len() {
+                    if (model::ARCHIVES.len()..model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len()).contains(&usize::from(cell.bank)) {
                         color_bytes += 1;
                         if cell.program != u16::MAX {
                             let color_program = usize::from(cell.program) - model::BASE_PROGRAM_COUNT;
                             color_programs[color_program / 64] |= 1 << (color_program % 64);
                         }
+                    } else if (model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len()..model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len() + model::WHITE_FLOWERS_ROOTS.len()).contains(&usize::from(cell.bank)) {
+                        white_flowers_bytes[usize::from(cell.bank) - model::ARCHIVES.len() - model::COLOR_ARCHIVE_ROOTS.len()] += 1;
+                    } else if usize::from(cell.bank) == model::ARCHIVES.len() + model::COLOR_ARCHIVE_ROOTS.len() + model::WHITE_FLOWERS_ROOTS.len() {
+                        white_flowers_direct_bytes += 1;
                     }
                 }
                 if cell.group != 255 {
@@ -225,6 +253,10 @@ impl IndexedGraphicsResources {
         for (counter, mask) in self.color_programs.iter().zip(color_programs) {
             counter.fetch_or(mask, Ordering::Relaxed);
         }
+        for (counter, count) in self.white_flowers_bytes.iter().zip(white_flowers_bytes) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
+        self.white_flowers_direct_bytes.fetch_add(white_flowers_direct_bytes, Ordering::Relaxed);
         Some(result)
     }
     pub(super) fn stats(&self) -> IndexedGraphicsStats {
@@ -249,6 +281,10 @@ impl IndexedGraphicsResources {
             color_source_bytes: self.color_bytes.load(Ordering::Relaxed),
             color_archives_mask: (self.banks.load(Ordering::Relaxed) >> model::ARCHIVES.len()) & 7,
             color_programs_mask: self.color_programs.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            white_flowers_caller_literal_bytes: v[8],
+            white_flowers_archive_bytes: self.white_flowers_bytes.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            white_flowers_direct_literal_bytes: v[9],
+            white_flowers_direct_archive_bytes: self.white_flowers_direct_bytes.load(Ordering::Relaxed),
             programs_used: self
                 .programs
                 .iter()
@@ -267,6 +303,15 @@ impl IndexedGraphicsResources {
 // Source pages only; the exact byte membership is determined by the immutable spans.
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
     (model::CONTEXT_SOURCE as usize, model::CONTEXT_RECORDS * 4),
+    (model::WHITE_FLOWERS_LITERALS as usize, 16),
+    (model::WHITE_FLOWERS_DIRECT_LITERAL as usize, 4),
+    (model::WHITE_FLOWERS_DIRECT_ROOT as usize, model::WHITE_FLOWERS_DIRECT_LENGTH),
+    (model::WHITE_FLOWERS_GROUP as usize, 20),
+    (model::WHITE_FLOWERS_ROOTS[0] as usize, model::WHITE_FLOWERS_LENGTHS[0]),
+    (model::WHITE_FLOWERS_ROOTS[1] as usize, model::WHITE_FLOWERS_LENGTHS[1]),
+    (model::WHITE_FLOWERS_ROOTS[2] as usize, model::WHITE_FLOWERS_LENGTHS[2]),
+    (model::WHITE_FLOWERS_ROOTS[3] as usize, model::WHITE_FLOWERS_LENGTHS[3]),
+    (model::WHITE_FLOWERS_ROOTS[4] as usize, model::WHITE_FLOWERS_LENGTHS[4]),
     (model::COLOR_ARCHIVE_ROOTS[0] as usize, model::COLOR_ARCHIVE_LENGTHS[0]),
     (model::COLOR_ARCHIVE_ROOTS[1] as usize, model::COLOR_ARCHIVE_LENGTHS[1]),
     (model::COLOR_ARCHIVE_ROOTS[2] as usize, model::COLOR_ARCHIVE_LENGTHS[2]),

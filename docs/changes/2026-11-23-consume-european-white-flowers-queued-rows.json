@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-queued-rows",
+  "title": "Consume European White Flowers queued rows",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend observed tilemaps with two authenticated conditional 20 by 8 queued halfword projections and original selector literals while preserving prior owners and the guest queue."
+  ],
+  "validation": [
+    "Wine reader e368-white-flowers-queued-readers-wine-xeokmdlp verifies six original interpreter/generated selector cases and three original queue/DMA cases, both projections, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.",
+    "Wine scene e368-white-flowers-queued-scene-wine-8n1stan0 consumes the first projection over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e368-white-flowers-queued-cli-wine-oxrskpdo creates, reuses and verifies 147 matching files; static join e368-white-flowers-queued-sample-residual-ce_e0lx3 leaves 6,437 unowned E362 sampled bytes including 3,600 documented copied-code support bytes."
+  ],
+  "limitations": [
+    "The address-only sample does not establish executing PCs or conditional ancestry. The nonzero ordinary scene, other callers, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_queued_rows_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

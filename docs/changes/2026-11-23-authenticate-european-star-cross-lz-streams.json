@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-star-cross-lz-streams",
+  "title": "Authenticate European Star Cross LZ streams",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static source plan"
+  ],
+  "changes": [
+    "Authenticate two previously unowned type-10 compressed sources observed in the Star Cross continuation."
+  ],
+  "validation": [
+    "Protected unit vx5hei60 decodes 4,960 source bytes to 9,296 bytes with exact consumption, verifies every source byte was sampled by the bus and excludes overlap with E292 owners."
+  ],
+  "limitations": [
+    "Game-level asset identities, instruction PCs, all callers, runtime integration, real BIOS and DMA, other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

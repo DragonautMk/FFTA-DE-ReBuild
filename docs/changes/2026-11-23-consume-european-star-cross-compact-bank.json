@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-star-cross-compact-bank",
+  "title": "Consume European Star Cross compact bank",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing compact catalog to selectors 0/1 and their 23 source-backed Star Cross lists, so guest and typed host paths can use 2,116 additional bytes without original-ROM data fallback."
+  ],
+  "validation": [
+    "Wine mooa591q preserves the prior bank projections and 147 other resources, verifies altered-source mirrors and boundaries, three original reader prefixes, 22 nonempty typed sprite lists and coherent edited-file rejection.",
+    "Wine gf1aql83 matches all 480 ordinary frames with added source bytes altered and observes positive bus and typed-sprite consumption without raw sprite peeks. Wine v988px6y creates, reuses and verifies the 149-file E292 dataset; all three servers drained."
+  ],
+  "limitations": [
+    "One retained continuation does not establish every selector timing, guest bound, consumer, scene, save ancestry or real BIOS. Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/compact_starcross_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/compact_starcross_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

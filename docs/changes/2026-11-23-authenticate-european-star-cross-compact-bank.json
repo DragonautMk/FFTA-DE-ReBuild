@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-star-cross-compact-bank",
+  "title": "Authenticate European Star Cross compact bank",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static source plan"
+  ],
+  "changes": [
+    "Authenticate the remaining source-backed selectors and list geometry in the existing Star Cross compact bank."
+  ],
+  "validation": [
+    "Protected unit liuwuxg7 checks 2,116 unowned source bytes in selectors 0/1 and 23 lists, all observed on the bus; 2,014 list bytes were also observed by sprite peeks. Existing E291 bank projection is preserved."
+  ],
+  "limitations": [
+    "The source plan does not implement runtime consumption or establish individual selector timing, all callers, other scenes, Linux, USA or native Windows. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

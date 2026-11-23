@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-star-cross-literals",
+  "title": "Authenticate European Star Cross literals",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Authenticate 19 candidate original PC-relative Thumb loads and their sampled source words."
+  ],
+  "validation": [
+    "Wine unit 2u_db_rz disassembles four bounded code windows and verifies all 19 opcode/word relationships, their 76 sampled bytes and absence of E293 owners; server drained."
+  ],
+  "limitations": [
+    "Static instruction relationships do not prove execution in the sampled scene, source-save ancestry, all readers, runtime consumption, other scenes, Linux, USA or native Windows. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

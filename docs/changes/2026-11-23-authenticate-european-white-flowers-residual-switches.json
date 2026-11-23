@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-white-flowers-residual-switches",
+  "title": "Authenticate European White Flowers residual switches",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Identify seven original Thumb switches and their 373 destinations."
+  ],
+  "validation": [
+    "Protected source plan e388-white-flowers-residual-switch-source-plan-c4c67ilr verifies seven original dispatches, existing root owners, 1,492 disjoint destination bytes and 40 sampled bytes."
+  ],
+  "limitations": [
+    "The 031618 out-of-range helper may return; preserve the original fallback beyond 255 projected entries.",
+    "The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

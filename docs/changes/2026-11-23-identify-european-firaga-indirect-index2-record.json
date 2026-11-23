@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "identify-european-firaga-indirect-index2-record",
+  "title": "Authenticate European Firaga indirect index 2 record",
+  "kind": "docs",
+  "platforms": [
+    "European ROM"
+  ],
+  "changes": [
+    "Authenticate an eight-byte index-2 physical record for a previously established indirect reader."
+  ],
+  "validation": [
+    "Protected source plan e353-firaga-indirect-index2-source-plan-lojq8qbl checks exact EUR code, existing root, record ownership and seven sampled bytes."
+  ],
+  "limitations": [
+    "The sample does not attribute executing PCs or pointer ancestry and does not establish guest bounds. Runtime publication, other indices/callers/scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

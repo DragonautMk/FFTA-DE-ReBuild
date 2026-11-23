@@ -142,6 +142,7 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_observed_lz = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_LZ").is_some();
     let poison_soil_lz = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_LZ").is_some();
     let poison_firaga_lz = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LZ").is_some();
+    let poison_star_cross_lz = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_LZ").is_some();
     let poison_soil_literals = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_LITERALS").is_some();
     let poison_soil_146_literals = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_146_LITERALS").is_some();
     let poison_firaga_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LITERALS").is_some();
@@ -150,6 +151,7 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_firaga_code_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_CODE_LITERALS").is_some();
     let poison_firaga_mixed_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_MIXED_LITERALS").is_some();
     let poison_firaga_residual_literals = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_RESIDUAL_LITERALS").is_some();
+    let poison_firaga_vertical = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_VERTICAL").is_some();
     let poison_constructor64 = std::env::var_os("FFTA_STATE_TEST_POISON_CONSTRUCTOR64").is_some();
     let poison_observed_tilemap = std::env::var_os("FFTA_STATE_TEST_POISON_OBSERVED_TILEMAP").is_some();
     let poison_tilemap_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_RECTANGLES").is_some();
@@ -187,20 +189,46 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_soil_compact = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_COMPACT").is_some();
     let poison_soil_a83c2_switch = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_A83C2_SWITCH").is_some();
     let poison_soil_remaining_switches = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_REMAINING_SWITCHES").is_some();
+    let poison_firaga_palette_switches = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_PALETTE_SWITCHES").is_some();
+    let poison_white_flowers_switch = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_SWITCH").is_some();
+    let poison_white_flowers_residual_switches = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_RESIDUAL_SWITCHES").is_some();
+    let poison_white_flowers_mixed_switches = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_MIXED_SWITCHES").is_some();
+    let poison_white_flowers_final_switches = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_FINAL_SWITCHES").is_some();
+    let poison_white_flowers_signed_bytes = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_SIGNED_BYTES").is_some();
+    let poison_white_flowers_isolated_values = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_ISOLATED_VALUES").is_some();
+    let poison_firaga_palette_projection = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_PALETTE_PROJECTION").is_some();
     let poison_thumb_switch_tables = std::env::var_os("FFTA_STATE_TEST_POISON_THUMB_SWITCH_TABLES").is_some();
     let poison_obj_derived_dimensions = std::env::var_os("FFTA_STATE_TEST_POISON_OBJ_DERIVED_DIMENSIONS").is_some();
     let poison_copied_halfword_lookups = std::env::var_os("FFTA_STATE_TEST_POISON_COPIED_HALFWORD_LOOKUPS").is_some();
+    let poison_firaga_signed_halfwords = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_SIGNED_HALFWORDS").is_some();
     let poison_soil_copied_halfwords = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_COPIED_HALFWORDS").is_some();
+    let poison_star_cross_copied = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_COPIED_TABLES").is_some();
     let poison_soil_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_TRANSFER").is_some();
+    let poison_firaga_linked_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LINKED_TRANSFER").is_some();
     let poison_soil_other_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_OTHER_TRANSFER").is_some();
     let poison_soil_scene_records = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_SCENE_RECORDS").is_some();
     let poison_soil_indirect_records = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_INDIRECT_RECORDS").is_some();
+    let poison_firaga_indirect_index2 = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_INDIRECT_INDEX2").is_some();
+    let poison_firaga_ccec_indirect = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_CCEC_INDIRECT").is_some();
+    let poison_white_flowers_indexed = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_INDEXED").is_some();
+    let poison_white_flowers_queued = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_QUEUED").is_some();
+    let poison_white_flowers_direct = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_DIRECT").is_some();
+    let poison_white_flowers_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_LITERALS").is_some();
+    let poison_white_flowers_additional_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_ADDITIONAL_LITERALS").is_some();
+    let poison_white_flowers_later_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_LATER_LITERALS").is_some();
+    let poison_white_flowers_thirteen_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_THIRTEEN_LITERALS").is_some();
+    let poison_white_flowers_many_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_MANY_LITERALS").is_some();
+    let poison_white_flowers_bulk_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_BULK_LITERALS").is_some();
+    let poison_white_flowers_remaining_literals = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_REMAINING_LITERALS").is_some();
+    let poison_star_cross_literals = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_LITERALS").is_some();
     let poison_soil_indexed_bytes = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_INDEXED_BYTES").is_some();
     let poison_soil_compact_record = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_COMPACT_RECORD").is_some();
     let poison_soil_scoped_values = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_SCOPED_VALUES").is_some();
+    let poison_firaga_scoped_index2 = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_SCOPED_INDEX2").is_some();
     let poison_soil_remaining_rectangles = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_REMAINING_RECTANGLES").is_some();
     let poison_firaga_copied_matrices = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COPIED_MATRICES").is_some();
     let poison_firaga_compact_cells = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COMPACT_CELLS").is_some();
+    let poison_firaga_index2_fields = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_INDEX2_FIELDS").is_some();
     let poison_firaga_indexed_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_INDEXED_OBJ").is_some();
     let poison_firaga_compact_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_COMPACT_OBJ").is_some();
     let poison_firaga_adjacent_compact_obj = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_ADJACENT_COMPACT_OBJ").is_some();
@@ -262,13 +290,17 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     #[cfg(feature = "rom-data-read-audit")]
     let mut red_spring_reads = std::collections::BTreeSet::new();
     #[cfg(feature = "rom-data-read-audit")]
+    let poison_star_cross = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_BANK").is_some();
+    #[cfg(feature = "rom-data-read-audit")]
+    let mut star_cross_reads = std::collections::BTreeSet::new();
+    #[cfg(feature = "rom-data-read-audit")]
     if let Some(path) = &scene_audit_path {
         assert!(!path.exists(), "preserve earlier scene audit reports");
     }
     #[cfg(feature = "rom-data-read-audit")]
     let mut scene_reads = std::collections::BTreeSet::new();
     #[cfg(not(feature = "rom-data-read-audit"))]
-    assert!(std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").is_none() && std::env::var_os("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").is_none() && std::env::var_os("FFTA_STATE_TEST_ROM_AUDIT_REPORT").is_none() && std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_BANK").is_none(), "scene source audit requires rom-data-read-audit");
+    assert!(std::env::var_os("FFTA_STATE_TEST_REQUIRE_COMPACT_6BAC28").is_none() && std::env::var_os("FFTA_STATE_TEST_COMPACT_WATCH_ROOT").is_none() && std::env::var_os("FFTA_STATE_TEST_ROM_AUDIT_REPORT").is_none() && std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_BANK").is_none() && std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_BANK").is_none(), "scene source audit requires rom-data-read-audit");
     for relative in 0..frames {
         let mut counts = [(0, 0); 2];
         for (index, machine) in [&mut legacy, &mut decoded].into_iter().enumerate() {
@@ -312,9 +344,45 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 for at in start..end { machine.bus.rom[at] = !rom[at]; }
             }
             if index == 1 && poison_soil_remaining_switches {
-                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[23..].iter().copied() {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[23..32].iter().copied() {
                     for at in spec.start() as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
                 }
+            }
+            if index == 1 && poison_firaga_palette_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[32..34].iter().copied() {
+                    for at in spec.start() as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_switch {
+                let spec = gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[34];
+                for at in spec.root as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_white_flowers_residual_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[35..42].iter().copied() {
+                    for at in spec.root as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_mixed_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[42..47].iter().copied() {
+                    for at in spec.root as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+                for at in 0x08dfcc..0x08dfd0 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_white_flowers_final_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[47..50].iter().copied() {
+                    for at in spec.root as usize..spec.end() as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+                for at in 0x02a7ac..0x02a7b0 { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_white_flowers_signed_bytes {
+                let start = gba_core::rom_data::white_flowers_signed_bytes::SOURCE_OFFSET as usize;
+                let end = start + gba_core::rom_data::white_flowers_signed_bytes::SOURCE_LENGTH;
+                for at in start..end { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_white_flowers_isolated_values {
+                use gba_core::rom_data::white_flowers_isolated_values::{BYTE_OFFSET, ROW_LENGTH, ROW_OFFSET};
+                for at in ROW_OFFSET as usize..ROW_OFFSET as usize + ROW_LENGTH * 2 { machine.bus.rom[at] = !rom[at]; }
+                machine.bus.rom[BYTE_OFFSET as usize] = !rom[BYTE_OFFSET as usize];
             }
             if index == 1 && poison_soil_a83c2_switch {
                 let spec = gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[22];
@@ -370,6 +438,10 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 let start = gba_core::rom_data::copied_halfword_lookups::SOIL_EVIDENCE_OFFSET as usize;
                 for at in start..start + 8 { machine.bus.rom[at] = !rom[at]; }
             }
+            if index == 1 && poison_star_cross_copied {
+                let start = gba_core::rom_data::copied_halfword_lookups::STAR_CROSS_OFFSET as usize;
+                for at in start..start + gba_core::rom_data::copied_halfword_lookups::STAR_CROSS_BYTES { machine.bus.rom[at] = !rom[at]; }
+            }
             if index == 1 && poison_soil_scene_records {
                 use gba_core::rom_data::soil_scene_records::{RANGE_OFFSET, SEQUENCE_OFFSET, SEQUENCE_COUNT, RECORD_BYTES};
                 for at in RANGE_OFFSET as usize..SEQUENCE_OFFSET as usize + SEQUENCE_COUNT * RECORD_BYTES { machine.bus.rom[at] = !rom[at]; }
@@ -377,6 +449,84 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_soil_indirect_records {
                 use gba_core::rom_data::soil_indirect_records::{OFFSETS, RECORD_BYTES};
                 for start in OFFSETS { for at in start as usize..start as usize + RECORD_BYTES { machine.bus.rom[at] = !rom[at]; } }
+            }
+            if index == 1 && poison_firaga_indirect_index2 {
+                use gba_core::rom_data::soil_indirect_records::{FIRAGA_INDEX2_OFFSET, RECORD_BYTES};
+                for at in FIRAGA_INDEX2_OFFSET as usize..FIRAGA_INDEX2_OFFSET as usize + RECORD_BYTES { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_firaga_ccec_indirect {
+                use gba_core::rom_data::soil_indirect_records::{FIRAGA_CCEC_OFFSET, RECORD_BYTES};
+                for at in FIRAGA_CCEC_OFFSET as usize..FIRAGA_CCEC_OFFSET as usize + RECORD_BYTES { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_white_flowers_indexed {
+                use gba_core::rom_data::indexed_graphics as model;
+                for (start, len) in [(model::WHITE_FLOWERS_LITERALS, 16), (model::WHITE_FLOWERS_GROUP, 20)]
+                    .into_iter().chain(model::WHITE_FLOWERS_ROOTS.into_iter().zip(model::WHITE_FLOWERS_LENGTHS)) {
+                    for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_queued {
+                use gba_core::rom_data::observed_tilemap as model;
+                for (start, len) in [(model::WHITE_FLOWERS_QUEUED_LITERALS, 12)]
+                    .into_iter().chain(model::WHITE_FLOWERS_QUEUED_OFFSETS.into_iter().map(|at| (at, model::WHITE_FLOWERS_QUEUED_LENGTH))) {
+                    for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_direct {
+                use gba_core::rom_data::indexed_graphics as model;
+                for (start, len) in [(model::WHITE_FLOWERS_DIRECT_LITERAL, 4), (model::WHITE_FLOWERS_DIRECT_ROOT, model::WHITE_FLOWERS_DIRECT_LENGTH)] {
+                    for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_additional_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_ADDITIONAL {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_later_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_LATER {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_thirteen_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_THIRTEEN {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_many_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_MANY {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_bulk_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_BULK {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_white_flowers_remaining_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_REMAINING {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_star_cross_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::STAR_CROSS_OBSERVED {
+                    for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_palette_projection {
+                use gba_core::rom_data::ui_palettes::{FIRAGA_PALETTE_PROJECTION_BYTES, FIRAGA_PALETTE_PROJECTION_OFFSET};
+                for at in FIRAGA_PALETTE_PROJECTION_OFFSET as usize..FIRAGA_PALETTE_PROJECTION_OFFSET as usize + FIRAGA_PALETTE_PROJECTION_BYTES { machine.bus.rom[at] = !rom[at]; }
+            }
+            if index == 1 && poison_firaga_linked_transfer {
+                use gba_core::rom_data::{observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+                for (start, len) in [(row::FIRAGA_TRANSFER_ROW_OFFSET, row::SOURCE_LENGTH), (descriptor::FIRAGA_TRANSFER_DESCRIPTOR_OFFSET, descriptor::SOURCE_LENGTH)] {
+                    for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; }
+                }
             }
             if index == 1 && poison_soil_indexed_bytes {
                 use gba_core::rom_data::soil_indexed_bytes::{OFFSET, COUNT};
@@ -389,6 +539,9 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_soil_scoped_values {
                 for (start, len) in gba_core::rom_data::soil_scoped_values::SPANS { for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; } }
             }
+            if index == 1 && poison_firaga_scoped_index2 {
+                for &(start, len) in &gba_core::rom_data::soil_scoped_values::SPANS[6..] { for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; } }
+            }
             if index == 1 && poison_firaga_copied_matrices {
                 use gba_core::rom_data::firaga_copied_matrices::{LITERALS,MATRICES};
                 for (offset,_) in LITERALS { for at in offset as usize..offset as usize+4 { machine.bus.rom[at]=!rom[at]; } }
@@ -398,6 +551,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::firaga_compact_cells::{CALLER_LITERAL,TABLE_CELL,SOURCE_OFFSET,FIRST_END,SEQUENCE_OFFSET,SEQUENCE_END};
                 for (start,end) in [(CALLER_LITERAL,CALLER_LITERAL+4),(TABLE_CELL,TABLE_CELL+4),(SOURCE_OFFSET,FIRST_END),(SEQUENCE_OFFSET,SEQUENCE_END)] {
                     for at in start as usize..end as usize { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_firaga_index2_fields {
+                for (start, len) in gba_core::rom_data::firaga_compact_cells::INDEXED_FIELD_SPANS {
+                    for at in start as usize..start as usize + len { machine.bus.rom[at] = !rom[at]; }
                 }
             }
             if index == 1 && poison_firaga_indexed_obj {
@@ -481,6 +639,10 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::copied_halfword_lookups::{ADDITIONAL_ROOTS, TABLE_OFFSETS};
                 for start in TABLE_OFFSETS[..2].iter().copied() { for at in start as usize..start as usize + 8 { machine.bus.rom[at] = !rom[at]; } }
                 for start in ADDITIONAL_ROOTS { for at in start as usize..start as usize + 4 { machine.bus.rom[at] = !rom[at]; } }
+            }
+            if index == 1 && poison_firaga_signed_halfwords {
+                use gba_core::rom_data::copied_halfword_lookups::{SIGNED_PROJECTION_OFFSET, SIGNED_PROJECTION_BYTES};
+                for at in SIGNED_PROJECTION_OFFSET as usize..SIGNED_PROJECTION_OFFSET as usize + SIGNED_PROJECTION_BYTES { machine.bus.rom[at] = !rom[at]; }
             }
             if index == 1 && poison_indexed_halfwords_39a5 {
                 use gba_core::rom_data::indexed_halfwords_39a5::{SOURCE_BYTES, SOURCE_OFFSET};
@@ -608,6 +770,9 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
                 }
             }
+            if index == 1 && poison_firaga_vertical {
+                for at in 0x394e20..0x394e36 { machine.bus.rom[at] = !rom[at]; }
+            }
             if index == 1 && poison_soil_literals {
                 for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::SOIL_EVIDENCE_OBSERVED {
                     for at in offset as usize..offset as usize + 4 { machine.bus.rom[at] = !rom[at]; }
@@ -615,6 +780,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_firaga_lz {
                 for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[16..19] {
+                    for at in spec.offset as usize..spec.offset as usize + spec.encoded_length { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_star_cross_lz {
+                for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[19..21] {
                     for at in spec.offset as usize..spec.offset as usize + spec.encoded_length { machine.bus.rom[at] = !rom[at]; }
                 }
             }
@@ -753,6 +923,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     for at in start..end { machine.bus.rom[at] = !rom[at]; }
                 }
             }
+            #[cfg(feature = "rom-data-read-audit")]
+            if index == 1 && poison_star_cross {
+                for &(start, end) in super::compact_starcross_tests::NEW_SPANS {
+                    for at in start..end { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             let pointer = machine as *mut gba_core::Machine as *mut std::ffi::c_void;
             #[cfg(feature = "rom-data-read-audit")]
             let compact_watch = if index == 1 && compact_watch_hit.is_none() && compact_watch_span.is_some() {
@@ -762,7 +938,7 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 }).unwrap())
             } else { None };
             #[cfg(feature = "rom-data-read-audit")]
-            let scene_audit = (index == 1 && (scene_audit_path.is_some() || poison_red_spring))
+            let scene_audit = (index == 1 && (scene_audit_path.is_some() || poison_red_spring || poison_star_cross))
                 .then(gba_core::rom_data::read_audit::Capture::start);
             counts[index] = run_frame_native(machine, &table, pointer, FRAME_STEP_GUARD);
             #[cfg(feature = "rom-data-read-audit")]
@@ -773,6 +949,13 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                         let start = read.physical_offset as usize;
                         let end = start.saturating_add(read.length);
                         super::compact_redspring_tests::NEW_SPANS.iter().any(|&(a, z)| start < z && end > a)
+                    }));
+                }
+                if poison_star_cross {
+                    star_cross_reads.extend(reads.iter().copied().filter(|read| {
+                        let start = read.physical_offset as usize;
+                        let end = start.saturating_add(read.length);
+                        super::compact_starcross_tests::NEW_SPANS.iter().any(|&(a, z)| start < z && end > a)
                     }));
                 }
                 if scene_audit_path.is_some() { scene_reads.extend(reads); }
@@ -786,6 +969,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 // Snapshot identity hashes the ROM; restore only after the frame's
                 // guest and host readers have used the altered backing bytes.
                 for &(start, end) in super::compact_redspring_tests::NEW_SPANS {
+                    machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+                }
+            }
+            #[cfg(feature = "rom-data-read-audit")]
+            if index == 1 && poison_star_cross {
+                for &(start, end) in super::compact_starcross_tests::NEW_SPANS {
                     machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
                 }
             }
@@ -831,6 +1020,9 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]);
                 }
             }
+            if index == 1 && poison_firaga_vertical {
+                machine.bus.rom[0x394e20..0x394e36].copy_from_slice(&rom[0x394e20..0x394e36]);
+            }
             if index == 1 && poison_soil_literals {
                 for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::SOIL_EVIDENCE_OBSERVED {
                     let start = offset as usize;
@@ -839,6 +1031,12 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             }
             if index == 1 && poison_firaga_lz {
                 for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[16..19] {
+                    let start = spec.offset as usize;
+                    machine.bus.rom[start..start + spec.encoded_length].copy_from_slice(&rom[start..start + spec.encoded_length]);
+                }
+            }
+            if index == 1 && poison_star_cross_lz {
+                for spec in &gba_core::rom_data::observed_lz::ADDITIONAL_SPECS[19..21] {
                     let start = spec.offset as usize;
                     machine.bus.rom[start..start + spec.encoded_length].copy_from_slice(&rom[start..start + spec.encoded_length]);
                 }
@@ -898,10 +1096,52 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
             }
             if index == 1 && poison_soil_remaining_switches {
-                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[23..].iter().copied() {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[23..32].iter().copied() {
                     machine.bus.rom[spec.start() as usize..spec.end() as usize]
                         .copy_from_slice(&rom[spec.start() as usize..spec.end() as usize]);
                 }
+            }
+            if index == 1 && poison_firaga_palette_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[32..34].iter().copied() {
+                    machine.bus.rom[spec.start() as usize..spec.end() as usize]
+                        .copy_from_slice(&rom[spec.start() as usize..spec.end() as usize]);
+                }
+            }
+            if index == 1 && poison_white_flowers_switch {
+                let spec = gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[34];
+                machine.bus.rom[spec.root as usize..spec.end() as usize]
+                    .copy_from_slice(&rom[spec.root as usize..spec.end() as usize]);
+            }
+            if index == 1 && poison_white_flowers_residual_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[35..42].iter().copied() {
+                    machine.bus.rom[spec.root as usize..spec.end() as usize]
+                        .copy_from_slice(&rom[spec.root as usize..spec.end() as usize]);
+                }
+            }
+            if index == 1 && poison_white_flowers_mixed_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[42..47].iter().copied() {
+                    machine.bus.rom[spec.root as usize..spec.end() as usize]
+                        .copy_from_slice(&rom[spec.root as usize..spec.end() as usize]);
+                }
+                machine.bus.rom[0x08dfcc..0x08dfd0].copy_from_slice(&rom[0x08dfcc..0x08dfd0]);
+            }
+            if index == 1 && poison_white_flowers_final_switches {
+                for spec in gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[47..50].iter().copied() {
+                    machine.bus.rom[spec.root as usize..spec.end() as usize]
+                        .copy_from_slice(&rom[spec.root as usize..spec.end() as usize]);
+                }
+                machine.bus.rom[0x02a7ac..0x02a7b0].copy_from_slice(&rom[0x02a7ac..0x02a7b0]);
+            }
+            if index == 1 && poison_white_flowers_signed_bytes {
+                let start = gba_core::rom_data::white_flowers_signed_bytes::SOURCE_OFFSET as usize;
+                let end = start + gba_core::rom_data::white_flowers_signed_bytes::SOURCE_LENGTH;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
+            if index == 1 && poison_white_flowers_isolated_values {
+                use gba_core::rom_data::white_flowers_isolated_values::{BYTE_OFFSET, ROW_LENGTH, ROW_OFFSET};
+                let start = ROW_OFFSET as usize;
+                machine.bus.rom[start..start + ROW_LENGTH * 2].copy_from_slice(&rom[start..start + ROW_LENGTH * 2]);
+                machine.bus.rom[BYTE_OFFSET as usize] = rom[BYTE_OFFSET as usize];
             }
             if index == 1 && poison_soil_a83c2_switch {
                 let spec = gba_core::rom_data::thumb_switch_tables::ADDITIONAL_TABLES[22];
@@ -963,6 +1203,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 let start = gba_core::rom_data::copied_halfword_lookups::SOIL_EVIDENCE_OFFSET as usize;
                 machine.bus.rom[start..start + 8].copy_from_slice(&rom[start..start + 8]);
             }
+            if index == 1 && poison_star_cross_copied {
+                let start = gba_core::rom_data::copied_halfword_lookups::STAR_CROSS_OFFSET as usize;
+                let end = start + gba_core::rom_data::copied_halfword_lookups::STAR_CROSS_BYTES;
+                machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+            }
             if index == 1 && poison_soil_scene_records {
                 use gba_core::rom_data::soil_scene_records::{RANGE_OFFSET, SEQUENCE_OFFSET, SEQUENCE_COUNT, RECORD_BYTES};
                 let start = RANGE_OFFSET as usize; let end = SEQUENCE_OFFSET as usize + SEQUENCE_COUNT * RECORD_BYTES;
@@ -971,6 +1216,84 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_soil_indirect_records {
                 use gba_core::rom_data::soil_indirect_records::{OFFSETS, RECORD_BYTES};
                 for start in OFFSETS { let at = start as usize; machine.bus.rom[at..at + RECORD_BYTES].copy_from_slice(&rom[at..at + RECORD_BYTES]); }
+            }
+            if index == 1 && poison_firaga_indirect_index2 {
+                use gba_core::rom_data::soil_indirect_records::{FIRAGA_INDEX2_OFFSET, RECORD_BYTES};
+                let at = FIRAGA_INDEX2_OFFSET as usize; machine.bus.rom[at..at + RECORD_BYTES].copy_from_slice(&rom[at..at + RECORD_BYTES]);
+            }
+            if index == 1 && poison_firaga_ccec_indirect {
+                use gba_core::rom_data::soil_indirect_records::{FIRAGA_CCEC_OFFSET, RECORD_BYTES};
+                let at = FIRAGA_CCEC_OFFSET as usize; machine.bus.rom[at..at + RECORD_BYTES].copy_from_slice(&rom[at..at + RECORD_BYTES]);
+            }
+            if index == 1 && poison_white_flowers_indexed {
+                use gba_core::rom_data::indexed_graphics as model;
+                for (start, len) in [(model::WHITE_FLOWERS_LITERALS, 16), (model::WHITE_FLOWERS_GROUP, 20)]
+                    .into_iter().chain(model::WHITE_FLOWERS_ROOTS.into_iter().zip(model::WHITE_FLOWERS_LENGTHS)) {
+                    let at = start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]);
+                }
+            }
+            if index == 1 && poison_white_flowers_queued {
+                use gba_core::rom_data::observed_tilemap as model;
+                for (start, len) in [(model::WHITE_FLOWERS_QUEUED_LITERALS, 12)]
+                    .into_iter().chain(model::WHITE_FLOWERS_QUEUED_OFFSETS.into_iter().map(|at| (at, model::WHITE_FLOWERS_QUEUED_LENGTH))) {
+                    let at = start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]);
+                }
+            }
+            if index == 1 && poison_white_flowers_direct {
+                use gba_core::rom_data::indexed_graphics as model;
+                for (start, len) in [(model::WHITE_FLOWERS_DIRECT_LITERAL, 4), (model::WHITE_FLOWERS_DIRECT_ROOT, model::WHITE_FLOWERS_DIRECT_LENGTH)] {
+                    let at = start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]);
+                }
+            }
+            if index == 1 && poison_white_flowers_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_OBSERVED {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_additional_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_ADDITIONAL {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_later_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_LATER {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_thirteen_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_THIRTEEN {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_many_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_MANY {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_bulk_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_BULK {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_white_flowers_remaining_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_REMAINING {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_star_cross_literals {
+                for (offset, _, _) in gba_core::rom_data::thumb_pc_literals::STAR_CROSS_OBSERVED {
+                    let at = offset as usize; machine.bus.rom[at..at + 4].copy_from_slice(&rom[at..at + 4]);
+                }
+            }
+            if index == 1 && poison_firaga_palette_projection {
+                use gba_core::rom_data::ui_palettes::{FIRAGA_PALETTE_PROJECTION_BYTES, FIRAGA_PALETTE_PROJECTION_OFFSET};
+                let at = FIRAGA_PALETTE_PROJECTION_OFFSET as usize; machine.bus.rom[at..at + FIRAGA_PALETTE_PROJECTION_BYTES].copy_from_slice(&rom[at..at + FIRAGA_PALETTE_PROJECTION_BYTES]);
+            }
+            if index == 1 && poison_firaga_linked_transfer {
+                use gba_core::rom_data::{observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+                for (start, len) in [(row::FIRAGA_TRANSFER_ROW_OFFSET, row::SOURCE_LENGTH), (descriptor::FIRAGA_TRANSFER_DESCRIPTOR_OFFSET, descriptor::SOURCE_LENGTH)] {
+                    let at = start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]);
+                }
             }
             if index == 1 && poison_soil_indexed_bytes {
                 use gba_core::rom_data::soil_indexed_bytes::{OFFSET, COUNT};
@@ -983,6 +1306,9 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             if index == 1 && poison_soil_scoped_values {
                 for (start, len) in gba_core::rom_data::soil_scoped_values::SPANS { let at=start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]); }
             }
+            if index == 1 && poison_firaga_scoped_index2 {
+                for &(start, len) in &gba_core::rom_data::soil_scoped_values::SPANS[6..] { let at=start as usize; machine.bus.rom[at..at + len].copy_from_slice(&rom[at..at + len]); }
+            }
             if index == 1 && poison_firaga_copied_matrices {
                 use gba_core::rom_data::firaga_copied_matrices::{LITERALS,MATRICES};
                 for (offset,_) in LITERALS { let at=offset as usize; machine.bus.rom[at..at+4].copy_from_slice(&rom[at..at+4]); }
@@ -992,6 +1318,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::firaga_compact_cells::{CALLER_LITERAL,TABLE_CELL,SOURCE_OFFSET,FIRST_END,SEQUENCE_OFFSET,SEQUENCE_END};
                 for (start,end) in [(CALLER_LITERAL,CALLER_LITERAL+4),(TABLE_CELL,TABLE_CELL+4),(SOURCE_OFFSET,FIRST_END),(SEQUENCE_OFFSET,SEQUENCE_END)] {
                     let start=start as usize; let end=end as usize; machine.bus.rom[start..end].copy_from_slice(&rom[start..end]);
+                }
+            }
+            if index == 1 && poison_firaga_index2_fields {
+                for (start, len) in gba_core::rom_data::firaga_compact_cells::INDEXED_FIELD_SPANS {
+                    let start = start as usize; machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]);
                 }
             }
             if index == 1 && poison_firaga_indexed_obj {
@@ -1076,6 +1407,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::copied_halfword_lookups::{ADDITIONAL_ROOTS, TABLE_OFFSETS};
                 for start in TABLE_OFFSETS[..2].iter().copied() { let start = start as usize; machine.bus.rom[start..start + 8].copy_from_slice(&rom[start..start + 8]); }
                 for start in ADDITIONAL_ROOTS { let start = start as usize; machine.bus.rom[start..start + 4].copy_from_slice(&rom[start..start + 4]); }
+            }
+            if index == 1 && poison_firaga_signed_halfwords {
+                use gba_core::rom_data::copied_halfword_lookups::{SIGNED_PROJECTION_OFFSET, SIGNED_PROJECTION_BYTES};
+                let start = SIGNED_PROJECTION_OFFSET as usize;
+                machine.bus.rom[start..start + SIGNED_PROJECTION_BYTES].copy_from_slice(&rom[start..start + SIGNED_PROJECTION_BYTES]);
             }
             if index == 1 && poison_indexed_halfwords_39a5 {
                 use gba_core::rom_data::indexed_halfwords_39a5::{SOURCE_BYTES, SOURCE_OFFSET};
@@ -1585,6 +1921,65 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         eprintln!("ROM_DATA_SOIL_REMAINING_SWITCHES_POISON source_bytes={} switch_mask={}",
             stats.additional_source_bytes, stats.additional_destinations_mask);
     }
+    if poison_firaga_palette_switches {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
+        let mask = 3u64 << 32;
+        assert!(stats.additional_source_bytes > 0 && stats.additional_destinations_mask & mask == mask,
+            "Firaga scene must consume both palette switch tables: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_PALETTE_SWITCHES_POISON source_bytes={} mask={}", stats.additional_source_bytes, stats.additional_destinations_mask);
+    }
+    if poison_white_flowers_switch {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
+        let mask = 1u64 << 34;
+        assert!(stats.additional_source_bytes > 0 && stats.additional_destinations_mask & mask == mask,
+            "White Flowers scene must consume the selected switch table: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_SWITCH_POISON source_bytes={} mask={}", stats.additional_source_bytes, stats.additional_destinations_mask);
+    }
+    if poison_white_flowers_residual_switches {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
+        let mask = 0x7fu64 << 35;
+        assert!(stats.additional_source_bytes > 0 && stats.additional_destinations_mask & mask == mask,
+            "White Flowers scene must consume all selected switch tables: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_RESIDUAL_SWITCHES_POISON source_bytes={} mask={}", stats.additional_source_bytes, stats.additional_destinations_mask);
+    }
+    if poison_white_flowers_mixed_switches {
+        let resources = decoded.bus.rom_resources().unwrap();
+        let switch = resources.thumb_switch_tables_stats().expect("Thumb switch owner");
+        let literal = resources.thumb_pc_literals_stats().expect("Thumb literal owner");
+        let mask = 0x1fu64 << 42;
+        assert!(switch.additional_source_bytes > 0 && switch.additional_destinations_mask & mask == mask,
+            "White Flowers scene must consume all mixed switches: {switch:?}");
+        assert!(literal.white_flowers_mixed_bytes > 0 && literal.white_flowers_mixed_mask == 0x1f,
+            "White Flowers scene must consume all mixed literals: {literal:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_MIXED_SWITCHES_POISON switch_bytes={} switch_mask={} literal_bytes={} literal_mask={}",
+            switch.additional_source_bytes, switch.additional_destinations_mask, literal.white_flowers_mixed_bytes, literal.white_flowers_mixed_mask);
+    }
+    if poison_white_flowers_final_switches {
+        let resources = decoded.bus.rom_resources().unwrap();
+        let switch = resources.thumb_switch_tables_stats().expect("Thumb switch owner");
+        let literal = resources.thumb_pc_literals_stats().expect("Thumb literal owner");
+        let mask = 0x7u64 << 47;
+        assert!(switch.additional_source_bytes > 0 && switch.additional_destinations_mask & mask == mask,
+            "White Flowers scene must consume all final switches: {switch:?}");
+        assert!(literal.white_flowers_final_bytes > 0 && literal.white_flowers_final_mask == 0x7,
+            "White Flowers scene must consume all final literals: {literal:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_FINAL_SWITCHES_POISON switch_bytes={} switch_mask={} literal_bytes={} literal_mask={}",
+            switch.additional_source_bytes, switch.additional_destinations_mask, literal.white_flowers_final_bytes, literal.white_flowers_final_mask);
+    }
+    if poison_white_flowers_signed_bytes {
+        let stats = decoded.bus.rom_resources().unwrap().white_flowers_signed_bytes_stats().expect("White Flowers signed-byte owner");
+        let mask = 0x7u64 << 20;
+        assert!(stats.source_bytes > 0 && stats.values_mask & mask == mask,
+            "White Flowers scene must consume all three sampled values: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_SIGNED_BYTES_POISON source_bytes={} mask={}", stats.source_bytes, stats.values_mask);
+    }
+    if poison_white_flowers_isolated_values {
+        let stats = decoded.bus.rom_resources().unwrap().white_flowers_isolated_values_stats().expect("White Flowers isolated value owner");
+        assert!(stats.row_source_bytes > 0 && stats.byte_source_bytes > 0 && stats.row_values_mask & (1 << 11) != 0,
+            "White Flowers scene must consume the sampled values: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_ISOLATED_VALUES_POISON row_bytes={} byte_bytes={} row_mask={}",
+            stats.row_source_bytes, stats.byte_source_bytes, stats.row_values_mask);
+    }
     if poison_soil_a83c2_switch {
         let stats = decoded.bus.rom_resources().unwrap().thumb_switch_tables_stats().expect("Thumb switch owner");
         assert!(stats.additional_source_bytes > 0 && stats.additional_destinations_mask & (1 << 22) != 0,
@@ -1669,6 +2064,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.source_bytes.iter().all(|&n|n>0),"scene must consume all compact sources: {stats:?}");
         eprintln!("ROM_DATA_FIRAGA_COMPACT_CELLS_POISON source_bytes={:?}",stats.source_bytes);
     }
+    if poison_firaga_index2_fields {
+        let stats=decoded.bus.rom_resources().unwrap().firaga_compact_cells_stats().expect("Firaga compact cell owner");
+        assert!(stats.indexed_source_bytes.iter().all(|&n| n > 0), "scene must consume all indexed fields: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_INDEX2_FIELDS_POISON source_bytes={:?}", stats.indexed_source_bytes);
+    }
     if poison_firaga_indexed_obj {
         let owner=decoded.bus.rom_resources().unwrap();
         let stats=owner.firaga_indexed_obj_bank_stats().expect("Firaga indexed OBJ owner");
@@ -1727,6 +2127,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.source_bytes > 0 && stats.values_mask & 0x3f == 0x3f, "scene must consume all six witnessed values: {stats:?}");
         eprintln!("ROM_DATA_SOIL_SCOPED_VALUES_POISON source_bytes={} values={}", stats.source_bytes, stats.values_mask);
     }
+    if poison_firaga_scoped_index2 {
+        let stats = decoded.bus.rom_resources().unwrap().soil_scoped_values_stats().expect("Soil scoped values owner");
+        assert!(stats.source_bytes > 0 && stats.values_mask & 0xc0 == 0xc0, "scene must consume both index-2 values: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_SCOPED_INDEX2_POISON source_bytes={} values={}", stats.source_bytes, stats.values_mask);
+    }
     if poison_soil_compact_record {
         let stats = decoded.bus.rom_resources().unwrap().soil_compact_record_stats().expect("Soil compact record owner");
         assert!(stats.record_bytes > 0 && stats.pointer_bytes > 0, "scene must consume the record and pointer: {stats:?}");
@@ -1741,6 +2146,103 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         let stats = decoded.bus.rom_resources().unwrap().soil_indirect_records_stats().expect("Soil indirect record owner");
         assert!(stats.source_bytes > 0 && stats.record_mask & 0x1f == 0x1f, "scene must consume all five witnessed records: {stats:?}");
         eprintln!("ROM_DATA_SOIL_INDIRECT_RECORDS_POISON source_bytes={} records={}", stats.source_bytes, stats.record_mask);
+    }
+    if poison_firaga_indirect_index2 {
+        let stats = decoded.bus.rom_resources().unwrap().soil_indirect_records_stats().expect("Soil indirect record owner");
+        assert!(stats.source_bytes > 0 && stats.record_mask & 0x20 != 0, "scene must consume the index-2 record: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_INDIRECT_INDEX2_POISON source_bytes={} mask={}", stats.source_bytes, stats.record_mask);
+    }
+    if poison_firaga_ccec_indirect {
+        let stats = decoded.bus.rom_resources().unwrap().soil_indirect_records_stats().expect("Firaga CCEC indirect record owner");
+        assert!(stats.source_bytes > 0 && stats.record_mask & 0x40 != 0, "scene must consume the CCEC record: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_CCEC_INDIRECT_POISON source_bytes={} mask={}", stats.source_bytes, stats.record_mask);
+    }
+    if poison_white_flowers_indexed {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_graphics_stats().expect("White Flowers indexed archive owner");
+        assert!(stats.white_flowers_archive_bytes[0] > 0, "scene must consume the observed first archive: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_INDEXED_POISON archive_bytes={:?}", stats.white_flowers_archive_bytes);
+    }
+    if poison_white_flowers_queued {
+        let stats = decoded.bus.rom_resources().unwrap().observed_tilemap_stats().expect("White Flowers queued rows owner");
+        assert!(stats.white_flowers_queued_bytes[0] > 0 && stats.white_flowers_queued_bytes[1] > 0,
+            "scene must consume the observed literals and first queued projection: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_QUEUED_POISON source_bytes={:?}", stats.white_flowers_queued_bytes);
+    }
+    if poison_white_flowers_direct {
+        let stats = decoded.bus.rom_resources().unwrap().indexed_graphics_stats().expect("White Flowers direct indexed archive owner");
+        assert!(stats.white_flowers_direct_literal_bytes > 0 && stats.white_flowers_direct_archive_bytes > 0,
+            "scene must consume the observed direct indexed sources: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_DIRECT_POISON literal_bytes={} archive_bytes={}", stats.white_flowers_direct_literal_bytes, stats.white_flowers_direct_archive_bytes);
+    }
+    if poison_white_flowers_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("White Flowers literal owner");
+        let expected = (1u64 << gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_OBSERVED_COUNT) - 1;
+        assert!(stats.white_flowers_observed_bytes > 0 && stats.white_flowers_observed_mask == expected,
+            "scene must consume all selected literal words: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_LITERALS_POISON source_bytes={} mask={}", stats.white_flowers_observed_bytes, stats.white_flowers_observed_mask);
+    }
+    if poison_white_flowers_additional_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Additional White Flowers literal owner");
+        let expected = (1u64 << gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_ADDITIONAL_COUNT) - 1;
+        assert!(stats.white_flowers_additional_bytes > 0 && stats.white_flowers_additional_mask == expected,
+            "scene must consume all selected additional literal words: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_ADDITIONAL_LITERALS_POISON source_bytes={} mask={}", stats.white_flowers_additional_bytes, stats.white_flowers_additional_mask);
+    }
+    if poison_white_flowers_later_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Later White Flowers literal owner");
+        let expected = (1u64 << gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_LATER_COUNT) - 1;
+        assert!(stats.white_flowers_later_bytes > 0 && stats.white_flowers_later_mask == expected,
+            "scene must consume all selected later literal words: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_LATER_LITERALS_POISON source_bytes={} mask={}", stats.white_flowers_later_bytes, stats.white_flowers_later_mask);
+    }
+    if poison_white_flowers_thirteen_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thirteen White Flowers literal pools owner");
+        let expected = (1u64 << gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_THIRTEEN_COUNT) - 1;
+        assert!(stats.white_flowers_thirteen_bytes > 0 && stats.white_flowers_thirteen_mask == expected,
+            "scene must consume all selected words from thirteen literal pools: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_THIRTEEN_LITERALS_POISON source_bytes={} mask={}", stats.white_flowers_thirteen_bytes, stats.white_flowers_thirteen_mask);
+    }
+    if poison_white_flowers_many_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Additional White Flowers literal pools owner");
+        let expected = [u64::MAX, (1u64 << (gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_MANY_COUNT - 64)) - 1];
+        assert!(stats.white_flowers_many_bytes > 0 && stats.white_flowers_many_mask == expected,
+            "scene must consume all selected words from twenty-eight literal pools: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_MANY_LITERALS_POISON source_bytes={} mask={:?}", stats.white_flowers_many_bytes, stats.white_flowers_many_mask);
+    }
+    if poison_white_flowers_bulk_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Sixty-two White Flowers literal pools owner");
+        assert!(stats.white_flowers_bulk_bytes > 0 && stats.white_flowers_bulk_mask == [u64::MAX; 2],
+            "scene must consume all selected words from sixty-two literal pools: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_BULK_LITERALS_POISON source_bytes={} mask={:?}", stats.white_flowers_bulk_bytes, stats.white_flowers_bulk_mask);
+    }
+    if poison_white_flowers_remaining_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Remaining sampled White Flowers literal pools owner");
+        let expected = [u64::MAX, u64::MAX, (1u64 << (gba_core::rom_data::thumb_pc_literals::WHITE_FLOWERS_REMAINING_COUNT - 128)) - 1];
+        assert!(stats.white_flowers_remaining_bytes > 0 && stats.white_flowers_remaining_mask == expected,
+            "scene must consume all selected remaining literal words: {stats:?}");
+        eprintln!("ROM_DATA_WHITE_FLOWERS_REMAINING_LITERALS_POISON source_bytes={} mask={:?}", stats.white_flowers_remaining_bytes, stats.white_flowers_remaining_mask);
+    }
+    if poison_star_cross_literals {
+        let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Star Cross literal owner");
+        let expected = (1u64 << gba_core::rom_data::thumb_pc_literals::STAR_CROSS_OBSERVED_COUNT) - 1;
+        assert!(stats.star_cross_observed_bytes > 0 && stats.star_cross_observed_mask == expected,
+            "scene must consume all selected Star Cross literal words: {stats:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_LITERALS_POISON source_bytes={} mask={}",
+            stats.star_cross_observed_bytes, stats.star_cross_observed_mask);
+    }
+    if poison_firaga_palette_projection {
+        let bytes = decoded.bus.rom_resources().unwrap().ui_palette_source_bytes(gba_core::rom_data::ui_palettes::FIRAGA_PALETTE_PROJECTION_OFFSET).expect("Firaga palette projection owner");
+        assert!(bytes > 0, "scene must consume the selected palette projection");
+        eprintln!("ROM_DATA_FIRAGA_PALETTE_PROJECTION_POISON source_bytes={bytes}");
+    }
+    if poison_firaga_linked_transfer {
+        let owner = decoded.bus.rom_resources().unwrap();
+        let rows = owner.observed_tilemap_row_stats().expect("Firaga transfer row owner");
+        let descriptors = owner.observed_tilemap_descriptor_stats().expect("Firaga transfer descriptor owner");
+        assert!(rows.firaga_transfer_row_bytes > 0 && descriptors.firaga_transfer_descriptor_bytes > 0,
+            "scene must consume both Firaga transfer sources: {rows:?} {descriptors:?}");
+        eprintln!("ROM_DATA_FIRAGA_LINKED_TRANSFER_POISON row_bytes={} descriptor_bytes={}",
+            rows.firaga_transfer_row_bytes, descriptors.firaga_transfer_descriptor_bytes);
     }
     if poison_soil_scene_records {
         let stats = decoded.bus.rom_resources().unwrap().soil_scene_records_stats().expect("Soil scene record owner");
@@ -1777,12 +2279,25 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "Soil Evidence scene must consume all eight selected source bytes: {stats:?}");
         eprintln!("ROM_DATA_SOIL_COPIED_HALFWORDS_POISON table_bytes={} source_mask={}", stats.table_bytes, stats.soil_source_mask);
     }
+    if poison_star_cross_copied {
+        let stats = decoded.bus.rom_resources().unwrap().copied_halfword_lookups_stats().expect("Star Cross copied table owner");
+        assert!(stats.star_cross_bytes > 0 && stats.star_cross_regions_mask == 0xf,
+            "scene must consume all four Star Cross source groups: {stats:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_COPIED_POISON source_bytes={} regions_mask={}",
+            stats.star_cross_bytes, stats.star_cross_regions_mask);
+    }
     if poison_copied_halfword_lookups {
         let stats = decoded.bus.rom_resources().unwrap().copied_halfword_lookups_stats().expect("copied halfword owner");
         assert!(stats.table_bytes > 0 && stats.table_mask & 1 != 0,
             "battle must consume the first copied halfword table: {stats:?}");
         eprintln!("ROM_DATA_COPIED_HALFWORD_LOOKUPS_POISON table_bytes={} root_bytes={} tables={} roots={}",
             stats.table_bytes, stats.root_bytes, stats.table_mask, stats.root_mask);
+    }
+    if poison_firaga_signed_halfwords {
+        let stats = decoded.bus.rom_resources().unwrap().copied_halfword_lookups_stats().expect("halfword lookup owner");
+        assert!(stats.signed_projection_bytes > 0 && stats.signed_projection_regions_mask == 3,
+            "Firaga scene must consume both physical projection regions: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_SIGNED_HALFWORDS_POISON source_bytes={} regions={}", stats.signed_projection_bytes, stats.signed_projection_regions_mask);
     }
     if poison_indexed_halfwords_39a5 {
         let stats = decoded.bus.rom_resources().unwrap().indexed_halfwords_39a5_stats().expect("indexed halfword owner");
@@ -1959,6 +2474,14 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         eprintln!("ROM_DATA_FIRAGA_RESIDUAL_LITERALS_POISON source_bytes={} literals={}",
             stats.firaga_residual_observed_bytes, stats.firaga_residual_observed_mask);
     }
+    if poison_firaga_vertical {
+        let stats = decoded.bus.rom_resources().unwrap().observed_task_parameters_stats().expect("task parameter owner");
+        let selected = ((1u64 << 17) - 1) & !((1u64 << 6) - 1);
+        assert_eq!(stats.corrections_used_mask & selected, selected,
+            "Firaga scene must consume every selected vertical projection entry: {stats:?}");
+        eprintln!("ROM_DATA_FIRAGA_VERTICAL_POISON source_bytes={} correction_mask={}",
+            stats.vertical_correction_bytes, stats.corrections_used_mask);
+    }
     if poison_soil_literals {
         let stats = decoded.bus.rom_resources().unwrap().thumb_pc_literals_stats().expect("Thumb literal owner");
         assert!(stats.soil_evidence_observed_bytes > 0 && stats.soil_evidence_observed_mask == [u64::MAX, u64::MAX, 0x7f],
@@ -1972,6 +2495,13 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "Firaga scene must consume all three LZ sources: {stats:?}");
         eprintln!("ROM_DATA_FIRAGA_LZ_POISON source_bytes={:?} hle_calls={:?}",
             stats.firaga_source_bytes_by_block, stats.firaga_hle_calls_by_block);
+    }
+    if poison_star_cross_lz {
+        let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
+        assert!((0..2).all(|i| stats.star_cross_source_bytes_by_block[i] > 0 || stats.star_cross_hle_calls_by_block[i] > 0),
+            "Star Cross scene must consume both LZ sources: {stats:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_LZ_POISON source_bytes={:?} hle_calls={:?}",
+            stats.star_cross_source_bytes_by_block, stats.star_cross_hle_calls_by_block);
     }
     if poison_soil_lz {
         let stats = decoded.bus.rom_resources().unwrap().observed_lz_stats().expect("observed LZ owner");
@@ -1995,6 +2525,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         let raw_host = red_spring_reads.iter().filter(|read| read.reader == Reader::SpritePeek).count();
         assert!(bus > 0 && typed_host > 0 && raw_host == 0, "new bank bytes must be consumed through managed bus and sprite lists");
         eprintln!("ROM_DATA_RED_SPRING_POISON new_bytes=634 bus_requests={bus} typed_sprite_requests={typed_host} raw_sprite_requests={raw_host}");
+    }
+    #[cfg(feature = "rom-data-read-audit")]
+    if poison_star_cross {
+        use gba_core::rom_data::read_audit::Reader;
+        let bus = star_cross_reads.iter().filter(|read| read.reader == Reader::Bus).count();
+        let typed_host = star_cross_reads.iter().filter(|read| read.reader == Reader::SpriteList).count();
+        let raw_host = star_cross_reads.iter().filter(|read| read.reader == Reader::SpritePeek).count();
+        assert!(bus > 0 && typed_host > 0 && raw_host == 0, "new bank bytes must be consumed through managed bus and sprite lists");
+        eprintln!("ROM_DATA_STAR_CROSS_POISON new_bytes=2116 bus_requests={bus} typed_sprite_requests={typed_host} raw_sprite_requests={raw_host}");
     }
     #[cfg(feature = "rom-data-read-audit")]
     if let Some(root) = compact_watch_root {

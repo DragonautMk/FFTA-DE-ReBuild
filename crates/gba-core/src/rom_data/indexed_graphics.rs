@@ -30,6 +30,24 @@ pub const COLOR_ARCHIVE_SHA256: [&str; 3] = [
 /// Already owned by the FFFF directory-word resource; keep its physical owner.
 pub const COLOR_ARCHIVE_SHARED_START: u32 = 0x3d4830;
 pub const COLOR_ARCHIVE_SHARED_END: u32 = 0x3d4834;
+/// Five physical slots selected by the original White Flowers language path.
+pub const WHITE_FLOWERS_GROUP: u32 = 0x395560;
+pub const WHITE_FLOWERS_LITERALS: u32 = 0x089fbc;
+pub const WHITE_FLOWERS_ROOTS: [u32; 5] = [0x43b36c, 0x44c99c, 0x45e4c8, 0x46f4f4, 0x480ffc];
+pub const WHITE_FLOWERS_LENGTHS: [usize; 5] = [1272, 1281, 1286, 1271, 1285];
+pub const WHITE_FLOWERS_SHA256: [&str; 5] = [
+    "65ffa8821f3be91cbe15af8a6e6bf1be05cb578817de294aa985f7af6692f227",
+    "9431c3f097eb7c74ba29ad81acd6b1bdb903696dbdf4361af5a146d5e57937f8",
+    "f5b521468148c644a014368b92a771c2f326f889a30b322164b590b4920821f7",
+    "a12bbaca1dfd0b0bb09aa2be948d3d0903a380f4e2d912dca38414830290a052",
+    "2eb2c22a076e26608d91a87e35551e8c390d3a0e324d6a25915f82ccf8021140",
+];
+pub const WHITE_FLOWERS_LITERAL_VALUES: [u32; 4] = [0x08395560, 0x02000000, 0x1f6e, 0x06008a40];
+/// Directly rooted archive used by an original one-program wrapper.
+pub const WHITE_FLOWERS_DIRECT_LITERAL: u32 = 0x0cf3f8;
+pub const WHITE_FLOWERS_DIRECT_ROOT: u32 = 0x3c94bc;
+pub const WHITE_FLOWERS_DIRECT_LENGTH: usize = 6357;
+pub const WHITE_FLOWERS_DIRECT_SHA256: &str = "abd11554b4428471f842afec8aab321b31f462eda4bab5f7041ca7b7837fa328";
 pub type SourceSpan = (u32, Vec<u8>, String);
 fn invalid() -> String {
     "Invalid declared indexed graphics archive".into()
@@ -318,12 +336,31 @@ pub struct ContextRecord {
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
+pub struct WhiteFlowersIndexed {
+    pub caller_literals: [u32; 4],
+    pub group: PointerGroup,
+    pub archives: Vec<Archive>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct WhiteFlowersDirectIndexed {
+    pub caller_literal: u32,
+    pub archive: Archive,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct IndexedGraphics {
     pub contexts: Vec<ContextRecord>,
     pub groups: Vec<PointerGroup>,
     pub archives: Vec<Archive>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub color_archives: Option<Vec<Archive>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers: Option<WhiteFlowersIndexed>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_direct: Option<WhiteFlowersDirectIndexed>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -388,6 +425,43 @@ impl IndexedGraphics {
                     spans.push((archive.source_offset, bytes, format!("color-indexed-archive/{i}")));
                 }
             }
+        }
+        if let Some(white) = &self.white_flowers {
+            if white.caller_literals != WHITE_FLOWERS_LITERAL_VALUES
+                || white.group.source_offset != WHITE_FLOWERS_GROUP
+                || white.group.pointers != WHITE_FLOWERS_ROOTS
+                || white.archives.len() != WHITE_FLOWERS_ROOTS.len()
+            {
+                return Err(invalid());
+            }
+            spans.push((WHITE_FLOWERS_LITERALS, white.caller_literals.iter().flat_map(|v| v.to_le_bytes()).collect(), "white-flowers-caller-literals".into()));
+            spans.push((WHITE_FLOWERS_GROUP, white.group.source_bytes(), "white-flowers-indexed-selector".into()));
+            for (i, archive) in white.archives.iter().enumerate() {
+                if archive.source_offset != WHITE_FLOWERS_ROOTS[i]
+                    || archive.programs.len() != 33
+                    || archive.fixed_decoded_bytes != 64
+                {
+                    return Err(invalid());
+                }
+                let bytes = archive.source_bytes()?;
+                if bytes.len() != WHITE_FLOWERS_LENGTHS[i] {
+                    return Err(invalid());
+                }
+                spans.push((archive.source_offset, bytes, format!("white-flowers-indexed-archive/{i}")));
+            }
+        }
+        if let Some(direct) = &self.white_flowers_direct {
+            if direct.caller_literal != 0x08000000 + WHITE_FLOWERS_DIRECT_ROOT
+                || direct.archive.source_offset != WHITE_FLOWERS_DIRECT_ROOT
+                || direct.archive.programs.len() != 62
+                || direct.archive.fixed_decoded_bytes != 128
+            {
+                return Err(invalid());
+            }
+            let bytes = direct.archive.source_bytes()?;
+            if bytes.len() != WHITE_FLOWERS_DIRECT_LENGTH { return Err(invalid()); }
+            spans.push((WHITE_FLOWERS_DIRECT_LITERAL, direct.caller_literal.to_le_bytes().to_vec(), "white-flowers-direct-indexed-literal".into()));
+            spans.push((WHITE_FLOWERS_DIRECT_ROOT, bytes, "white-flowers-direct-indexed-archive".into()));
         }
         spans.sort_by_key(|v| v.0);
         for pair in spans.windows(2) {
@@ -454,7 +528,7 @@ impl Catalog {
             index: i as u8, value: row[0], secondary_program: row[1],
             primary_program: row[2], opaque: row[3],
         }).collect();
-        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None };
+        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None, white_flowers: None, white_flowers_direct: None };
         let source: Vec<u8> = decoded.source_spans()?
             .iter()
             .flat_map(|(_, b, _)| b.iter().copied())
@@ -474,6 +548,47 @@ impl Catalog {
             Ok(archive)
         }).collect::<Result<Vec<_>, String>>()?;
         decoded.color_archives = Some(color_archives);
+        if ffta_rom::digest(&rom[0x89eb4..0x89ed8]) != "f2f3d141a7403dd1ebb7db29414a60966acfa05bb541aa6e96cf3968bc5a76b9" {
+            return Err("White Flowers indexed caller fingerprint mismatch".into());
+        }
+        let caller_literals = std::array::from_fn(|i| {
+            let at = WHITE_FLOWERS_LITERALS as usize + 4 * i;
+            u32::from_le_bytes(rom[at..at + 4].try_into().unwrap())
+        });
+        let mut pointers = [0; 5];
+        for (i, pointer) in pointers.iter_mut().enumerate() {
+            let at = WHITE_FLOWERS_GROUP as usize + i * 4;
+            *pointer = u32::from_le_bytes(rom[at..at + 4].try_into().unwrap())
+                .checked_sub(0x08000000).ok_or_else(invalid)?;
+        }
+        let white_archives = WHITE_FLOWERS_ROOTS.iter().enumerate().map(|(i, &at)| {
+            let start = at as usize;
+            let bytes = &rom[start..start + WHITE_FLOWERS_LENGTHS[i]];
+            if ffta_rom::digest(bytes) != WHITE_FLOWERS_SHA256[i] {
+                return Err("White Flowers indexed archive fingerprint mismatch".into());
+            }
+            let archive = Archive::from_source(bytes, at)?;
+            if archive.source_bytes()? != bytes { return Err(invalid()); }
+            Ok(archive)
+        }).collect::<Result<Vec<_>, String>>()?;
+        decoded.white_flowers = Some(WhiteFlowersIndexed {
+            caller_literals,
+            group: PointerGroup { source_offset: WHITE_FLOWERS_GROUP, pointers },
+            archives: white_archives,
+        });
+        if ffta_rom::digest(&rom[0xcf3e0..0xcf3f6]) != "bdbca62c4bc286ac4a278a1a88df82517b7534cf7543f3e74beef12903189b40" {
+            return Err("White Flowers direct indexed caller fingerprint mismatch".into());
+        }
+        let literal = WHITE_FLOWERS_DIRECT_LITERAL as usize;
+        let caller_literal = u32::from_le_bytes(rom[literal..literal + 4].try_into().unwrap());
+        let at = WHITE_FLOWERS_DIRECT_ROOT as usize;
+        let bytes = &rom[at..at + WHITE_FLOWERS_DIRECT_LENGTH];
+        if ffta_rom::digest(bytes) != WHITE_FLOWERS_DIRECT_SHA256 {
+            return Err("White Flowers direct indexed archive fingerprint mismatch".into());
+        }
+        let archive = Archive::from_source(bytes, WHITE_FLOWERS_DIRECT_ROOT)?;
+        if archive.source_bytes()? != bytes { return Err(invalid()); }
+        decoded.white_flowers_direct = Some(WhiteFlowersDirectIndexed { caller_literal, archive });
         let spans = decoded.source_spans()?;
         let sources = spans
             .into_iter()

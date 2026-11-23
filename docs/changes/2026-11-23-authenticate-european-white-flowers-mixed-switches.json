@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-white-flowers-mixed-switches",
+  "title": "Authenticate European White Flowers mixed switches",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Identify five original Thumb switches, 89 destinations and five unowned literals."
+  ],
+  "validation": [
+    "Protected source plan e390-white-flowers-mixed-switch-source-plan-_u4vahgs verifies five original dispatches, five literal readers, 376 disjoint source bytes and 80 sampled bytes."
+  ],
+  "limitations": [
+    "The 0bbffc out-of-range helper may return; preserve the original fallback beyond 37 projected entries.",
+    "The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

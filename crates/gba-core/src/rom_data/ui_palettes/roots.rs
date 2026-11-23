@@ -12,6 +12,7 @@ pub struct Reference {
 pub const BANK_ROOTS: &[(u32, u32)] = &[
     (0x40fcb0, 160),
     (0x40fd50, 32),
+    (super::FIRAGA_PALETTE_PROJECTION_OFFSET, super::FIRAGA_PALETTE_PROJECTION_BYTES as u32),
     (0x40fd90, 128),
     (0x410830, 160),
     (0x4108d0, 32),

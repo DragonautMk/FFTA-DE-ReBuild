@@ -15,11 +15,14 @@ pub struct ObservedTaskParametersStats {
     pub signed_lookup_indices_mask: u64,
     pub phases_used: u64,
     pub corrections_used: u64,
+    /// Bit zero corresponds to original correction index 4.
+    pub corrections_used_mask: u64,
 }
 pub(super) struct ObservedTaskParametersResources {
     data: model::ObservedTaskParameters,
     counts: [AtomicU64; 7],
     used: AtomicU64,
+    corrections: AtomicU64,
 }
 impl ObservedTaskParametersResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -46,6 +49,7 @@ impl ObservedTaskParametersResources {
             data,
             counts: std::array::from_fn(|_| AtomicU64::new(0)),
             used: AtomicU64::new(0),
+            corrections: AtomicU64::new(0),
         })
     }
     fn byte(&self, at: usize) -> Option<(u8, usize)> {
@@ -67,8 +71,8 @@ impl ObservedTaskParametersResources {
             Some((*value as u8, 6))
         } else {
             let value = self.data.vertical_corrections.byte_at(at)?;
-            self.used.fetch_or(
-                1 << (model::PHASE_COUNT as u32 + (at - model::VERTICAL_SOURCE) / 2),
+            self.corrections.fetch_or(
+                1u64 << ((at - model::VERTICAL_SOURCE) / 2),
                 Ordering::Relaxed,
             );
             Some((value, 3))
@@ -106,6 +110,7 @@ impl ObservedTaskParametersResources {
         let [bus_reads, source_bytes, phase_threshold_bytes, vertical_correction_bytes, battle_phase_threshold_bytes, battle_draw_sequence_bytes, signed_lookup_bytes] =
             self.counts.each_ref().map(|i| i.load(Ordering::Relaxed));
         let used = self.used.load(Ordering::Relaxed);
+        let corrections = self.corrections.load(Ordering::Relaxed);
         ObservedTaskParametersStats {
             bus_reads,
             source_bytes,
@@ -116,7 +121,8 @@ impl ObservedTaskParametersResources {
             signed_lookup_bytes,
             signed_lookup_indices_mask: (used >> 12) & 15,
             phases_used: u64::from((used & ((1 << model::PHASE_COUNT) - 1)).count_ones()),
-            corrections_used: u64::from(((used >> model::PHASE_COUNT) & 0x3f).count_ones()),
+            corrections_used: u64::from(corrections.count_ones()),
+            corrections_used_mask: corrections,
         }
     }
     pub(super) fn resident_bytes(&self) -> usize {

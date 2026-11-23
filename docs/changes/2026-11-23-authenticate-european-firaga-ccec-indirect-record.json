@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-firaga-ccec-indirect-record",
+  "title": "Authenticate European Firaga CCEC indirect record",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source plan"
+  ],
+  "changes": [
+    "Authenticate the conditional index-2 pointer, indirect-record consumer and eight-byte physical source."
+  ],
+  "validation": [
+    "Protected source plan e360-firaga-ccec-indirect-source-plan-zt7zwucy verifies original code, existing pointer/root owners, E274 disjointness and all seven sampled residual bytes."
+  ],
+  "limitations": [
+    "The address-only sample does not establish executing PCs or prove conditional ancestry. Runtime publication, other callers, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

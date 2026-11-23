@@ -2419,18 +2419,739 @@ pub const FIRAGA_RESIDUAL_OBSERVED: [(u32, u32, u16); FIRAGA_RESIDUAL_OBSERVED_C
     (0x14b6ec, 0x14b6b8, 0x4d0c),
 ];
 
-pub const SOURCE_PAGES: [usize; 127] = [
-    0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0x10,
-    0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c,
-    0x1d, 0x1e, 0x1f, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29,
-    0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x37, 0x3a, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x91,
-    0x92, 0x95, 0x96, 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0, 0xa1,
-    0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7, 0xb8,
-    0xb9, 0xbb, 0xbe, 0xbf, 0xc0, 0xcb, 0xcc, 0xce, 0xcf, 0xd0, 0xd2, 0xd6,
-    0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6,
-    0xeb, 0xf0, 0x109, 0x125, 0x126, 0x127, 0x128, 0x129, 0x12a, 0x12b, 0x130, 0x132, 0x133,
-    0x134, 0x135, 0x137, 0x138, 0x139, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149,
-    0x14a, 0x14b, 0x14c,
+/// Four sampled White Flowers literal pools and their original Thumb readers.
+pub const WHITE_FLOWERS_OBSERVED_COUNT: usize = 49;
+pub const WHITE_FLOWERS_OBSERVED: [(u32, u32, u16); WHITE_FLOWERS_OBSERVED_COUNT] = [
+    (0x023a74, 0x0239e8, 0x4922),
+    (0x023a78, 0x0239ea, 0x4e23),
+    (0x023a7c, 0x023a08, 0x481c),
+    (0x023a80, 0x023a0c, 0x481c),
+    (0x023a84, 0x023a20, 0x4918),
+    (0x023a88, 0x023a26, 0x4c18),
+    (0x023a8c, 0x023a2a, 0x4818),
+    (0x023a90, 0x023a3e, 0x4814),
+    (0x023a94, 0x023a4e, 0x4911),
+    (0x023a98, 0x023a5c, 0x490e),
+    (0x03d170, 0x03d05c, 0x4e44),
+    (0x03d174, 0x03d06a, 0x4942),
+    (0x03d178, 0x03d078, 0x4b3f),
+    (0x03d17c, 0x03d0a8, 0x4834),
+    (0x03d180, 0x03d0b8, 0x4831),
+    (0x03d184, 0x03d0ce, 0x482d),
+    (0x03d188, 0x03d100, 0x4921),
+    (0x03d18c, 0x03d106, 0x4d21),
+    (0x03d190, 0x03d10e, 0x4a20),
+    (0x03d194, 0x03d120, 0x491c),
+    (0x03d198, 0x03d140, 0x4815),
+    (0x03d19c, 0x03d142, 0x4b16),
+    (0x03d1a0, 0x03d152, 0x4913),
+    (0x03d1a4, 0x03d166, 0x4e0f),
+    (0x0bbc78, 0x0bbaa4, 0x4874),
+    (0x0bbc7c, 0x0bbade, 0x4867),
+    (0x0bbc80, 0x0bbb0e, 0x485c),
+    (0x0bbc84, 0x0bbb44, 0x484f),
+    (0x0bbc88, 0x0bbb78, 0x4843),
+    (0x0bbc8c, 0x0bbb86, 0x4841),
+    (0x0bbc90, 0x0bbbae, 0x4838),
+    (0x0bbc94, 0x0bbbe0, 0x482c),
+    (0x0bbc98, 0x0bbbee, 0x492a),
+    (0x127b0c, 0x127a48, 0x4830),
+    (0x127b10, 0x127a58, 0x4a2d),
+    (0x127b14, 0x127a5a, 0x482e),
+    (0x127b18, 0x127a66, 0x4b2c),
+    (0x127b1c, 0x127a6a, 0x482c),
+    (0x127b20, 0x127a6e, 0x482c),
+    (0x127b24, 0x127a78, 0x492a),
+    (0x127b28, 0x127a8a, 0x4d27),
+    (0x127b2c, 0x127a8c, 0x4b27),
+    (0x127b30, 0x127ac6, 0x4d1a),
+    (0x127b34, 0x127adc, 0x4c15),
+    (0x127b38, 0x127ade, 0x4a16),
+    (0x127b3c, 0x127ae8, 0x4a14),
+    (0x127b40, 0x127af2, 0x4a13),
+    (0x127b44, 0x127afc, 0x4a11),
+    (0x127b48, 0x127b06, 0x4a10),
+];
+/// Eight additional sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_ADDITIONAL_COUNT: usize = 62;
+pub const WHITE_FLOWERS_ADDITIONAL: [(u32, u32, u16); WHITE_FLOWERS_ADDITIONAL_COUNT] = [
+    (0x023ad8, 0x023a9e, 0x4c0e),
+    (0x023adc, 0x023aa0, 0x490e),
+    (0x023ae0, 0x023aa8, 0x490d),
+    (0x023ae4, 0x023aaa, 0x480e),
+    (0x023ae8, 0x023aac, 0x4a0e),
+    (0x023aec, 0x023ab8, 0x4a0c),
+    (0x023af0, 0x023ac6, 0x490a),
+    (0x023ba8, 0x023b02, 0x4c29),
+    (0x023bac, 0x023b10, 0x4926),
+    (0x023bb0, 0x023b12, 0x4827),
+    (0x023bb4, 0x023b14, 0x4a27),
+    (0x023bb8, 0x023b26, 0x4924),
+    (0x023bbc, 0x023b40, 0x4e1e),
+    (0x023bc0, 0x023b42, 0x4c1f),
+    (0x023bc4, 0x023b5a, 0x4a1a),
+    (0x0252fc, 0x025298, 0x4818),
+    (0x025300, 0x0252a4, 0x4816),
+    (0x025304, 0x0252ae, 0x4815),
+    (0x025308, 0x0252b8, 0x4813),
+    (0x02530c, 0x0252c4, 0x4911),
+    (0x025310, 0x0252c6, 0x4d12),
+    (0x025314, 0x0252d4, 0x490f),
+    (0x025318, 0x0252e0, 0x490d),
+    (0x02c920, 0x02c8d2, 0x4e13),
+    (0x02c924, 0x02c8d6, 0x4813),
+    (0x02c928, 0x02c8d8, 0x4913),
+    (0x02c92c, 0x02c8ea, 0x4b10),
+    (0x02c930, 0x02c8fa, 0x480d),
+    (0x02c934, 0x02c8fe, 0x490d),
+    (0x02c938, 0x02c900, 0x480d),
+    (0x02c93c, 0x02c902, 0x4b0e),
+    (0x02cbf8, 0x02cb8a, 0x491b),
+    (0x02cbfc, 0x02cb8c, 0x4c1b),
+    (0x02cc00, 0x02cb8e, 0x481c),
+    (0x02cc04, 0x02cb9a, 0x491a),
+    (0x02cc08, 0x02cba6, 0x4918),
+    (0x02cc0c, 0x02cbc4, 0x4911),
+    (0x02cc10, 0x02cbce, 0x4810),
+    (0x02ed24, 0x02ecd0, 0x4c14),
+    (0x02ed28, 0x02ecd2, 0x4a15),
+    (0x02ed2c, 0x02ecde, 0x4a13),
+    (0x02ed30, 0x02ece6, 0x4812),
+    (0x02ed34, 0x02ecea, 0x4812),
+    (0x02ed38, 0x02ecec, 0x4912),
+    (0x02ed3c, 0x02ecfa, 0x4a10),
+    (0x02ed40, 0x02ed02, 0x490f),
+    (0x09a3b4, 0x09a2ca, 0x4d3a),
+    (0x09a3b8, 0x09a2d8, 0x4e37),
+    (0x09a3bc, 0x09a2fa, 0x4d30),
+    (0x09a3c0, 0x09a342, 0x481f),
+    (0x09a3c4, 0x09a346, 0x4a1f),
+    (0x09a3c8, 0x09a356, 0x4b1c),
+    (0x09a3cc, 0x09a358, 0x481c),
+    (0x09a3d0, 0x09a35c, 0x4d1c),
+    (0x12799c, 0x12793c, 0x4a17),
+    (0x1279a0, 0x12793e, 0x4818),
+    (0x1279a4, 0x12794e, 0x4815),
+    (0x1279a8, 0x127958, 0x4e13),
+    (0x1279ac, 0x12796a, 0x4810),
+    (0x1279b0, 0x127972, 0x4a0f),
+    (0x1279b4, 0x127984, 0x4b0b),
+    (0x1279b8, 0x127992, 0x4909),
+];
+/// Ten further sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_LATER_COUNT: usize = 62;
+pub const WHITE_FLOWERS_LATER: [(u32, u32, u16); WHITE_FLOWERS_LATER_COUNT] = [
+    (0x0037e8, 0x0037a0, 0x4b11),
+    (0x0037ec, 0x0037b0, 0x480e),
+    (0x0037f0, 0x0037b2, 0x4a0f),
+    (0x0037f4, 0x0037bc, 0x490d),
+    (0x0037f8, 0x0037ca, 0x490b),
+    (0x0037fc, 0x0037cc, 0x4a0b),
+    (0x00c3d0, 0x00c3ae, 0x4908),
+    (0x00c3d4, 0x00c3b2, 0x4908),
+    (0x00c3d8, 0x00c3b4, 0x4808),
+    (0x00c3dc, 0x00c3be, 0x4907),
+    (0x00c3e0, 0x00c3c0, 0x4a07),
+    (0x00c3e4, 0x00c3c6, 0x4907),
+    (0x02527c, 0x0251e8, 0x4c24),
+    (0x025280, 0x025214, 0x4c1a),
+    (0x025284, 0x02521e, 0x4919),
+    (0x025288, 0x025228, 0x4917),
+    (0x02528c, 0x02522a, 0x4818),
+    (0x025290, 0x025240, 0x4c13),
+    (0x02da8c, 0x02da04, 0x4821),
+    (0x02da90, 0x02da08, 0x4921),
+    (0x02da94, 0x02da16, 0x491f),
+    (0x02da98, 0x02da1a, 0x491f),
+    (0x02da9c, 0x02da2c, 0x4d1b),
+    (0x02daa0, 0x02da72, 0x4a0b),
+    (0x02ef10, 0x02ee96, 0x4a1e),
+    (0x02ef14, 0x02ee98, 0x491e),
+    (0x02ef18, 0x02eed6, 0x4c10),
+    (0x02ef1c, 0x02eeea, 0x4a0c),
+    (0x02ef20, 0x02eef4, 0x490a),
+    (0x02ef24, 0x02eef6, 0x4a0b),
+    (0x038190, 0x03812a, 0x4919),
+    (0x038194, 0x03812c, 0x4819),
+    (0x038198, 0x03813e, 0x4916),
+    (0x03819c, 0x038150, 0x4812),
+    (0x0381a0, 0x038166, 0x4a0e),
+    (0x0381a4, 0x038172, 0x4a0c),
+    (0x038348, 0x0382c0, 0x4921),
+    (0x03834c, 0x0382e2, 0x4f1a),
+    (0x038350, 0x0382ee, 0x4b18),
+    (0x038354, 0x03831a, 0x4b0e),
+    (0x038358, 0x03832a, 0x480b),
+    (0x03835c, 0x038332, 0x4f0a),
+    (0x043200, 0x04314c, 0x482c),
+    (0x043204, 0x04315a, 0x4e2a),
+    (0x043208, 0x043164, 0x4a28),
+    (0x04320c, 0x04316e, 0x4b27),
+    (0x043210, 0x04319c, 0x4c1c),
+    (0x043214, 0x0431c0, 0x4b14),
+    (0x04e300, 0x04e246, 0x482e),
+    (0x04e304, 0x04e24a, 0x492e),
+    (0x04e308, 0x04e25a, 0x482b),
+    (0x04e30c, 0x04e25c, 0x492b),
+    (0x04e310, 0x04e25e, 0x4a2c),
+    (0x04e314, 0x04e282, 0x4824),
+    (0x04e318, 0x04e2a6, 0x4b1c),
+    (0x0be044, 0x0bdfc2, 0x4820),
+    (0x0be048, 0x0bdfce, 0x481e),
+    (0x0be04c, 0x0bdfd2, 0x491e),
+    (0x0be050, 0x0bdfe4, 0x491a),
+    (0x0be054, 0x0bdff6, 0x4917),
+    (0x0be058, 0x0be01c, 0x4c0e),
+    (0x0be05c, 0x0be01e, 0x4d0f),
+];
+/// Thirteen further sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_THIRTEEN_COUNT: usize = 60;
+pub const WHITE_FLOWERS_THIRTEEN: [(u32, u32, u16); WHITE_FLOWERS_THIRTEEN_COUNT] = [
+    (0x00291c, 0x0028a6, 0x4c1d),
+    (0x002920, 0x0028aa, 0x4a1d),
+    (0x002924, 0x0028b0, 0x481c),
+    (0x002928, 0x0028b6, 0x4b1c),
+    (0x0038dc, 0x0038a8, 0x4c0c),
+    (0x0038e0, 0x0038ac, 0x4a0c),
+    (0x0038e4, 0x0038b8, 0x490a),
+    (0x0038e8, 0x0038be, 0x490a),
+    (0x009a0c, 0x0099f2, 0x4906),
+    (0x009a10, 0x0099f4, 0x4806),
+    (0x009a14, 0x0099fe, 0x4805),
+    (0x009a18, 0x009a00, 0x4a05),
+    (0x00c590, 0x00c52a, 0x4819),
+    (0x00c594, 0x00c538, 0x4816),
+    (0x00c598, 0x00c564, 0x490c),
+    (0x00c59c, 0x00c56e, 0x490b),
+    (0x01bc84, 0x01bb3e, 0x4851),
+    (0x01bc88, 0x01bb54, 0x4d4c),
+    (0x01bc8c, 0x01bb56, 0x484d),
+    (0x01bc90, 0x01bb5c, 0x494c),
+    (0x01bc94, 0x01bbce, 0x4e31),
+    (0x01bcc4, 0x01bc98, 0x480a),
+    (0x01bcc8, 0x01bca8, 0x4807),
+    (0x01bccc, 0x01bcaa, 0x4a08),
+    (0x01bcd0, 0x01bcb2, 0x4a07),
+    (0x01bcd4, 0x01bcb6, 0x4807),
+    (0x01ecd8, 0x01ecae, 0x4c0a),
+    (0x01ecdc, 0x01ecb6, 0x4a09),
+    (0x01ece0, 0x01ecb8, 0x4909),
+    (0x01ece4, 0x01ecc4, 0x4b07),
+    (0x023d14, 0x023cbe, 0x4915),
+    (0x023d18, 0x023cd6, 0x4910),
+    (0x023d1c, 0x023cd8, 0x4810),
+    (0x023d20, 0x023cda, 0x4a11),
+    (0x023d24, 0x023cf0, 0x490c),
+    (0x032b64, 0x032b42, 0x4908),
+    (0x032b68, 0x032b48, 0x4a07),
+    (0x032b6c, 0x032b4c, 0x4807),
+    (0x032b70, 0x032b52, 0x4907),
+    (0x032b74, 0x032b56, 0x4907),
+    (0x038058, 0x038012, 0x4f11),
+    (0x03805c, 0x038018, 0x4c10),
+    (0x038060, 0x03801a, 0x4911),
+    (0x038064, 0x038026, 0x480f),
+    (0x038068, 0x03802a, 0x4a0f),
+    (0x09a644, 0x09a604, 0x480f),
+    (0x09a648, 0x09a60e, 0x4d0e),
+    (0x09a64c, 0x09a61e, 0x490b),
+    (0x09a650, 0x09a630, 0x4907),
+    (0x09a654, 0x09a638, 0x4906),
+    (0x128f54, 0x128ef2, 0x4818),
+    (0x128f58, 0x128ef4, 0x4918),
+    (0x128f5c, 0x128f00, 0x4916),
+    (0x128f60, 0x128f32, 0x4a0b),
+    (0x128f64, 0x128f3e, 0x4809),
+    (0x12be54, 0x12bdc0, 0x4a24),
+    (0x12be58, 0x12bdc2, 0x4925),
+    (0x12be5c, 0x12bdc4, 0x4b25),
+    (0x12be60, 0x12be12, 0x4a13),
+    (0x12be64, 0x12be40, 0x4808),
+];
+/// Twenty-eight further sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_MANY_COUNT: usize = 92;
+pub const WHITE_FLOWERS_MANY: [(u32, u32, u16); WHITE_FLOWERS_MANY_COUNT] = [
+    (0x000a20, 0x0009ec, 0x480c),
+    (0x000a24, 0x000a00, 0x4a08),
+    (0x000a28, 0x000a02, 0x4909),
+    (0x000fc0, 0x000f8a, 0x480d),
+    (0x000fc4, 0x000f9e, 0x4a09),
+    (0x000fc8, 0x000fa0, 0x4909),
+    (0x00386c, 0x003830, 0x4c0e),
+    (0x003870, 0x003846, 0x4e0a),
+    (0x003874, 0x00384a, 0x480a),
+    (0x00c790, 0x00c75a, 0x4d0d),
+    (0x00c794, 0x00c77c, 0x4805),
+    (0x00c798, 0x00c780, 0x4805),
+    (0x00c7ec, 0x00c7bc, 0x4f0b),
+    (0x00c7f0, 0x00c7be, 0x480c),
+    (0x00c7f4, 0x00c7c2, 0x490c),
+    (0x0116b8, 0x01168a, 0x490b),
+    (0x0116bc, 0x01168e, 0x4c0b),
+    (0x0116c0, 0x01169e, 0x4a08),
+    (0x01afe8, 0x01aed6, 0x4944),
+    (0x01afec, 0x01aed8, 0x4844),
+    (0x01aff0, 0x01afb0, 0x4a0f),
+    (0x01c8a0, 0x01c83e, 0x4d18),
+    (0x01c8a4, 0x01c84e, 0x4a15),
+    (0x01c8a8, 0x01c87c, 0x4a0a),
+    (0x020588, 0x02054c, 0x4a0e),
+    (0x02058c, 0x020558, 0x4c0c),
+    (0x020590, 0x020560, 0x480b),
+    (0x020694, 0x020674, 0x4907),
+    (0x020698, 0x020676, 0x4a08),
+    (0x02069c, 0x020680, 0x4c06),
+    (0x02553c, 0x0254f6, 0x4a11),
+    (0x025540, 0x02552a, 0x4a05),
+    (0x025544, 0x025534, 0x4903),
+    (0x02657c, 0x026546, 0x4e0d),
+    (0x026580, 0x02654a, 0x480d),
+    (0x026584, 0x026560, 0x4808),
+    (0x02a84c, 0x02a808, 0x4c10),
+    (0x02a850, 0x02a80e, 0x4910),
+    (0x02a854, 0x02a81e, 0x4b0d),
+    (0x02a858, 0x02a820, 0x480d),
+    (0x02c86c, 0x02c81e, 0x4813),
+    (0x02c870, 0x02c820, 0x4913),
+    (0x02c874, 0x02c822, 0x4a14),
+    (0x02c878, 0x02c82e, 0x4b12),
+    (0x02c8ac, 0x02c894, 0x4b05),
+    (0x02c8b0, 0x02c896, 0x4806),
+    (0x02c8b4, 0x02c89a, 0x4a06),
+    (0x0326c8, 0x032692, 0x4c0d),
+    (0x0326cc, 0x032698, 0x4a0c),
+    (0x0326d0, 0x0326b2, 0x4907),
+    (0x0329f4, 0x0329ce, 0x4c09),
+    (0x0329f8, 0x0329da, 0x4907),
+    (0x0329fc, 0x0329ee, 0x4803),
+    (0x032a00, 0x0329f0, 0x4a03),
+    (0x0337dc, 0x0337a0, 0x4e0e),
+    (0x0337e0, 0x0337c4, 0x4806),
+    (0x0337e4, 0x0337ca, 0x4a06),
+    (0x0337e8, 0x0337d2, 0x4805),
+    (0x035ec8, 0x035e98, 0x480b),
+    (0x035ecc, 0x035eb4, 0x4905),
+    (0x035ed0, 0x035eb6, 0x4a06),
+    (0x035ed4, 0x035ebc, 0x4905),
+    (0x037b3c, 0x037b10, 0x480a),
+    (0x037b40, 0x037b14, 0x490a),
+    (0x037b44, 0x037b28, 0x4a06),
+    (0x03885c, 0x03880e, 0x4813),
+    (0x038860, 0x03882e, 0x4a0c),
+    (0x038864, 0x038832, 0x4a0c),
+    (0x03ce20, 0x03cde2, 0x4a0f),
+    (0x03ce24, 0x03ce06, 0x4d07),
+    (0x03ce28, 0x03ce16, 0x4904),
+    (0x03d474, 0x03d440, 0x480c),
+    (0x03d478, 0x03d460, 0x4d05),
+    (0x03d47c, 0x03d46c, 0x4e03),
+    (0x043f88, 0x043f66, 0x4808),
+    (0x043f8c, 0x043f70, 0x4906),
+    (0x043f90, 0x043f7e, 0x4904),
+    (0x044184, 0x044102, 0x4a20),
+    (0x044188, 0x04413e, 0x4912),
+    (0x04418c, 0x044140, 0x4d12),
+    (0x0d7210, 0x0d71da, 0x4c0d),
+    (0x0d7214, 0x0d71e6, 0x4c0b),
+    (0x0d7218, 0x0d7200, 0x4905),
+    (0x0d721c, 0x0d7204, 0x4805),
+    (0x145134, 0x145112, 0x4808),
+    (0x145138, 0x14511e, 0x4806),
+    (0x14513c, 0x145126, 0x4905),
+    (0x145140, 0x145128, 0x4a05),
+    (0x14cb48, 0x14cb12, 0x4a0d),
+    (0x14cb4c, 0x14cb16, 0x4a0d),
+    (0x14cb50, 0x14cb22, 0x4e0b),
+    (0x14cb54, 0x14cb34, 0x4807),
+];
+/// Sixty-two further sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_BULK_COUNT: usize = 128;
+pub const WHITE_FLOWERS_BULK: [(u32, u32, u16); WHITE_FLOWERS_BULK_COUNT] = [
+    (0x000a78, 0x000a3e, 0x480e),
+    (0x000a7c, 0x000a52, 0x490a),
+    (0x000dc0, 0x000d8a, 0x480d),
+    (0x000dc4, 0x000d9c, 0x4909),
+    (0x000dec, 0x000dca, 0x4908),
+    (0x000df0, 0x000dd6, 0x4906),
+    (0x00395c, 0x003950, 0x4a02),
+    (0x003960, 0x003956, 0x4902),
+    (0x009c30, 0x009bf8, 0x480d),
+    (0x009c34, 0x009bfc, 0x4e0d),
+    (0x009d78, 0x009d60, 0x4905),
+    (0x009d7c, 0x009d64, 0x4a05),
+    (0x00a150, 0x00a130, 0x4807),
+    (0x00a154, 0x00a132, 0x4908),
+    (0x00c6ac, 0x00c690, 0x4a06),
+    (0x00c6b0, 0x00c698, 0x4b05),
+    (0x00d748, 0x00d712, 0x480d),
+    (0x00d74c, 0x00d718, 0x4b0c),
+    (0x013578, 0x01355e, 0x4a06),
+    (0x01357c, 0x013562, 0x4c06),
+    (0x0166c4, 0x0166ac, 0x4805),
+    (0x0166c8, 0x0166ae, 0x4a06),
+    (0x016784, 0x01676c, 0x4805),
+    (0x016788, 0x01676e, 0x4a06),
+    (0x016900, 0x0168ea, 0x4805),
+    (0x016904, 0x0168ec, 0x4905),
+    (0x01b82c, 0x01b814, 0x4805),
+    (0x01b830, 0x01b816, 0x4906),
+    (0x01b930, 0x01b910, 0x4807),
+    (0x01b934, 0x01b922, 0x4904),
+    (0x01bae0, 0x01bab4, 0x4e0a),
+    (0x01bae4, 0x01babc, 0x4d09),
+    (0x01ffb8, 0x01ffa4, 0x4804),
+    (0x01ffbc, 0x01ffb2, 0x4802),
+    (0x0202d0, 0x020298, 0x490d),
+    (0x0202d4, 0x0202c2, 0x4804),
+    (0x021f38, 0x021f1e, 0x4a06),
+    (0x021f3c, 0x021f20, 0x4806),
+    (0x023990, 0x02395a, 0x4d0d),
+    (0x023994, 0x023972, 0x4808),
+    (0x023e6c, 0x023e56, 0x4a05),
+    (0x023e70, 0x023e5e, 0x4904),
+    (0x025a08, 0x025978, 0x4823),
+    (0x025a0c, 0x025994, 0x481d),
+    (0x02a8a0, 0x02a886, 0x4806),
+    (0x02a8a4, 0x02a888, 0x4906),
+    (0x02cc68, 0x02cc1e, 0x4c12),
+    (0x02cc6c, 0x02cc22, 0x4912),
+    (0x02ebf0, 0x02eb9a, 0x4815),
+    (0x02ebf4, 0x02eb9c, 0x4915),
+    (0x02ee50, 0x02edd6, 0x481e),
+    (0x02ee54, 0x02ede0, 0x481c),
+    (0x030f2c, 0x030f18, 0x4804),
+    (0x030f30, 0x030f1a, 0x4a05),
+    (0x032108, 0x0320e0, 0x4809),
+    (0x03210c, 0x0320f4, 0x4805),
+    (0x0321f8, 0x0321e4, 0x4804),
+    (0x0321fc, 0x0321ec, 0x4803),
+    (0x032a3c, 0x032a26, 0x4805),
+    (0x032a40, 0x032a2a, 0x4905),
+    (0x0360bc, 0x0360b0, 0x4802),
+    (0x0360c0, 0x0360b4, 0x4902),
+    (0x03631c, 0x0362fe, 0x4807),
+    (0x036320, 0x036312, 0x4903),
+    (0x0363b8, 0x03639e, 0x4806),
+    (0x0363bc, 0x0363a2, 0x4906),
+    (0x03645c, 0x036442, 0x4806),
+    (0x036460, 0x036446, 0x4906),
+    (0x03820c, 0x0381e4, 0x4809),
+    (0x038210, 0x0381ec, 0x4808),
+    (0x03861c, 0x0385cc, 0x4a13),
+    (0x038620, 0x0385ec, 0x480c),
+    (0x0399f4, 0x039980, 0x481c),
+    (0x0399f8, 0x039988, 0x4b1b),
+    (0x03c998, 0x03c95e, 0x480e),
+    (0x03c99c, 0x03c96c, 0x4a0b),
+    (0x0440b0, 0x04409e, 0x4904),
+    (0x0440b4, 0x0440a8, 0x4d02),
+    (0x04dea0, 0x04ddb4, 0x483a),
+    (0x04dea4, 0x04ddc4, 0x4837),
+    (0x04e230, 0x04e1f0, 0x480f),
+    (0x04e234, 0x04e204, 0x4c0b),
+    (0x08dea0, 0x08de02, 0x4e27),
+    (0x08dea4, 0x08de4a, 0x4816),
+    (0x09a90c, 0x09a898, 0x491c),
+    (0x09a910, 0x09a8b0, 0x4817),
+    (0x09d914, 0x09d900, 0x4a04),
+    (0x09d918, 0x09d904, 0x4904),
+    (0x0a1048, 0x0a1028, 0x4d07),
+    (0x0a104c, 0x0a1032, 0x4806),
+    (0x0acaf0, 0x0acae4, 0x4802),
+    (0x0acaf4, 0x0acae6, 0x4903),
+    (0x0acd54, 0x0acd42, 0x4904),
+    (0x0acd58, 0x0acd44, 0x4804),
+    (0x0bba70, 0x0bb9a6, 0x4832),
+    (0x0bba74, 0x0bba04, 0x481b),
+    (0x0bba78, 0x0bba48, 0x480b),
+    (0x0bc2dc, 0x0bc254, 0x4f21),
+    (0x0bc2e0, 0x0bc262, 0x481f),
+    (0x0bdf50, 0x0bdf0a, 0x4c11),
+    (0x0bdf54, 0x0bdf0e, 0x4811),
+    (0x0c08d4, 0x0c08b6, 0x4c07),
+    (0x0c08d8, 0x0c08c4, 0x4904),
+    (0x0cab80, 0x0cab5e, 0x4c08),
+    (0x0cab84, 0x0cab60, 0x4808),
+    (0x0caba0, 0x0cab8a, 0x4805),
+    (0x0caba4, 0x0cab8c, 0x4905),
+    (0x0cd074, 0x0ccfb2, 0x4830),
+    (0x0cd078, 0x0ccfe4, 0x4a24),
+    (0x0cd770, 0x0cd75a, 0x4805),
+    (0x0cd774, 0x0cd75e, 0x4905),
+    (0x0cf4bc, 0x0cf4a2, 0x4806),
+    (0x0cf4c0, 0x0cf4a4, 0x4a06),
+    (0x0cf540, 0x0cf522, 0x4807),
+    (0x0cf544, 0x0cf524, 0x4a07),
+    (0x0d1f54, 0x0d1f3e, 0x4805),
+    (0x0d1f58, 0x0d1f4a, 0x4903),
+    (0x0d25c4, 0x0d2592, 0x4a0c),
+    (0x0d25c8, 0x0d2594, 0x480c),
+    (0x12b9d4, 0x12b97c, 0x4815),
+    (0x12b9d8, 0x12b9b6, 0x4a08),
+    (0x12b9dc, 0x12b9b8, 0x4b08),
+    (0x12bd60, 0x12bd08, 0x4e15),
+    (0x12bd64, 0x12bd30, 0x4c0c),
+    (0x12bd68, 0x12bd50, 0x4a05),
+    (0x1450e0, 0x1450ce, 0x4804),
+    (0x1450e4, 0x1450d4, 0x4903),
+    (0x1450e8, 0x1450d6, 0x4a04),
+];
+/// Remaining sampled White Flowers literal pools.
+pub const WHITE_FLOWERS_REMAINING_COUNT: usize = 182;
+pub const WHITE_FLOWERS_REMAINING: [(u32, u32, u16); WHITE_FLOWERS_REMAINING_COUNT] = [
+    (0x000ffc, 0x000fe4, 0x4a05),
+    (0x003428, 0x0033fe, 0x4a0a),
+    (0x0036c0, 0x0036a0, 0x4907),
+    (0x0037d8, 0x003780, 0x4c15),
+    (0x003828, 0x00380c, 0x4806),
+    (0x0076bc, 0x0076b8, 0x4800),
+    (0x007b60, 0x007b5c, 0x4800),
+    (0x009a2c, 0x009a1e, 0x4803),
+    (0x00a128, 0x00a112, 0x4a05),
+    (0x00a704, 0x00a6ea, 0x4c06),
+    (0x00c4d8, 0x00c4d4, 0x4900),
+    (0x00c5e4, 0x00c5ce, 0x4b05),
+    (0x0106ac, 0x0106a4, 0x4901),
+    (0x012160, 0x01210e, 0x4914),
+    (0x013504, 0x0134f8, 0x4902),
+    (0x016704, 0x0166f8, 0x4802),
+    (0x0167c4, 0x0167b8, 0x4802),
+    (0x01693c, 0x016934, 0x4801),
+    (0x01b664, 0x01b63c, 0x4a09),
+    (0x01b684, 0x01b66c, 0x4805),
+    (0x01b76c, 0x01b760, 0x4802),
+    (0x01bab0, 0x01ba8e, 0x4808),
+    (0x01ccb0, 0x01cc8e, 0x4a08),
+    (0x01dc8c, 0x01dc52, 0x490e),
+    (0x01ed70, 0x01ed5c, 0x4804),
+    (0x020198, 0x020128, 0x481b),
+    (0x0201e8, 0x0201aa, 0x480f),
+    (0x02024c, 0x02020e, 0x4f0f),
+    (0x020374, 0x020348, 0x480a),
+    (0x020398, 0x020388, 0x4a03),
+    (0x020444, 0x02040a, 0x4a0e),
+    (0x020540, 0x020512, 0x480b),
+    (0x020668, 0x02063a, 0x480b),
+    (0x021fa8, 0x021f74, 0x480c),
+    (0x022c30, 0x022bea, 0x4811),
+    (0x023d04, 0x023c9a, 0x4c1a),
+    (0x023d0c, 0x023ca8, 0x4918),
+    (0x023eb0, 0x023e94, 0x4906),
+    (0x02a6f4, 0x02a6ec, 0x4901),
+    (0x02c8c0, 0x02c8b8, 0x4901),
+    (0x02eb40, 0x02eaee, 0x4c14),
+    (0x02ed5c, 0x02ed48, 0x4a04),
+    (0x02ee5c, 0x02ee0c, 0x4813),
+    (0x02ee64, 0x02ee3e, 0x4a09),
+    (0x031618, 0x031610, 0x4901),
+    (0x0321e0, 0x0321b0, 0x480b),
+    (0x032e10, 0x032e06, 0x4902),
+    (0x035f9c, 0x035f88, 0x4804),
+    (0x036100, 0x0360c8, 0x480d),
+    (0x036130, 0x036106, 0x490a),
+    (0x0361e0, 0x0361b4, 0x4a0a),
+    (0x03628c, 0x036268, 0x4808),
+    (0x037aac, 0x037a46, 0x4b19),
+    (0x0385b0, 0x038596, 0x4806),
+    (0x03866c, 0x03863c, 0x4a0b),
+    (0x0386a8, 0x038678, 0x480b),
+    (0x039be0, 0x039af4, 0x4a3a),
+    (0x03a474, 0x03a452, 0x4a08),
+    (0x03a5d0, 0x03a5b4, 0x4906),
+    (0x03cdd0, 0x03cd90, 0x4a0f),
+    (0x03d424, 0x03d40c, 0x4e05),
+    (0x03d558, 0x03d524, 0x4d0c),
+    (0x04417c, 0x0440e4, 0x4d25),
+    (0x0465a8, 0x0465a0, 0x4901),
+    (0x04e018, 0x04e010, 0x4801),
+    (0x063058, 0x063050, 0x4901),
+    (0x074644, 0x074612, 0x480c),
+    (0x083c14, 0x083bf2, 0x4a08),
+    (0x08d1b4, 0x08d134, 0x4a1f),
+    (0x08d32c, 0x08d318, 0x4904),
+    (0x08d344, 0x08d33c, 0x4901),
+    (0x08d52c, 0x08d4ee, 0x4a0f),
+    (0x08d894, 0x08d7fc, 0x4c25),
+    (0x08d930, 0x08d8e6, 0x4d12),
+    (0x08da00, 0x08d93e, 0x4c30),
+    (0x08db78, 0x08dae6, 0x4824),
+    (0x08dc24, 0x08dbea, 0x490e),
+    (0x08dcb8, 0x08dc66, 0x4814),
+    (0x08df84, 0x08df44, 0x490f),
+    (0x08e080, 0x08e070, 0x4903),
+    (0x092514, 0x09250c, 0x4901),
+    (0x096624, 0x09660c, 0x4905),
+    (0x09a694, 0x09a662, 0x480c),
+    (0x09a6a4, 0x09a69a, 0x4802),
+    (0x09a800, 0x09a72e, 0x4e34),
+    (0x09ce70, 0x09ce3c, 0x490c),
+    (0x09d8f4, 0x09d828, 0x4c32),
+    (0x0a0b6c, 0x0a0b4e, 0x4807),
+    (0x0bbfe4, 0x0bbcc0, 0x48c8),
+    (0x0bc148, 0x0bc0ca, 0x481f),
+    (0x0bc2d4, 0x0bc1a2, 0x484c),
+    (0x0cd08c, 0x0cd082, 0x4a02),
+    (0x0cd378, 0x0cd200, 0x4b5d),
+    (0x0cd44c, 0x0cd438, 0x4904),
+    (0x0cd748, 0x0cd54e, 0x497e),
+    (0x0cd81c, 0x0cd7e6, 0x490d),
+    (0x0cd950, 0x0cd946, 0x4902),
+    (0x0cdd2c, 0x0cdcb6, 0x4a1d),
+    (0x0cf40c, 0x0cf3fe, 0x4903),
+    (0x0cf4d0, 0x0cf4ca, 0x4901),
+    (0x0cf568, 0x0cf562, 0x4901),
+    (0x0d2664, 0x0d2636, 0x480b),
+    (0x0d2668, 0x0d2638, 0x490b),
+    (0x0d27c4, 0x0d27b4, 0x4803),
+    (0x125724, 0x125706, 0x4c07),
+    (0x12579c, 0x125786, 0x4805),
+    (0x1257d8, 0x1257ca, 0x4803),
+    (0x12584c, 0x125844, 0x4801),
+    (0x1258a8, 0x125898, 0x4803),
+    (0x1258b4, 0x1258ac, 0x4801),
+    (0x125948, 0x125940, 0x4901),
+    (0x125954, 0x12594c, 0x4801),
+    (0x125b3c, 0x125b18, 0x4808),
+    (0x125b54, 0x125b40, 0x4804),
+    (0x125cd0, 0x125cb6, 0x4806),
+    (0x1266f0, 0x1266ea, 0x4801),
+    (0x126728, 0x126710, 0x4805),
+    (0x12672c, 0x126722, 0x4802),
+    (0x1271d0, 0x1271a4, 0x480a),
+    (0x1271d4, 0x1271a8, 0x480a),
+    (0x12725c, 0x127254, 0x4801),
+    (0x1272d8, 0x1272c2, 0x4905),
+    (0x127334, 0x12732c, 0x4801),
+    (0x128878, 0x12880e, 0x4c1a),
+    (0x129210, 0x129204, 0x4802),
+    (0x129274, 0x129214, 0x4c17),
+    (0x129fe8, 0x129fc4, 0x4808),
+    (0x12a044, 0x12a01c, 0x4c09),
+    (0x12a074, 0x12a064, 0x4803),
+    (0x12a0c4, 0x12a0b2, 0x4804),
+    (0x12a0c8, 0x12a0c0, 0x4801),
+    (0x12a114, 0x12a0cc, 0x4c11),
+    (0x12a118, 0x12a0e0, 0x4c0d),
+    (0x12a130, 0x12a122, 0x4803),
+    (0x12a694, 0x12a680, 0x4804),
+    (0x12b8d0, 0x12b8c0, 0x4803),
+    (0x12bbc8, 0x12bbb2, 0x4805),
+    (0x12bc08, 0x12bbda, 0x480b),
+    (0x12bc38, 0x12bc0e, 0x4a0a),
+    (0x12bc3c, 0x12bc1c, 0x4c07),
+    (0x12bc80, 0x12bc4c, 0x4c0c),
+    (0x12bc84, 0x12bc68, 0x4a06),
+    (0x12bcb0, 0x12bc88, 0x4c09),
+    (0x12bcb4, 0x12bc94, 0x4807),
+    (0x12bcd4, 0x12bcb8, 0x4806),
+    (0x12bd90, 0x12bd76, 0x4c06),
+    (0x12bd94, 0x12bd78, 0x4d06),
+    (0x12bdb4, 0x12bd9e, 0x4905),
+    (0x12bea4, 0x12be76, 0x4c0b),
+    (0x12bf78, 0x12bea8, 0x4e33),
+    (0x12bf88, 0x12bf40, 0x4a11),
+    (0x12bf8c, 0x12bf64, 0x4909),
+    (0x12c03c, 0x12c000, 0x4c0e),
+    (0x12c06c, 0x12c050, 0x4806),
+    (0x12c0d4, 0x12c098, 0x490e),
+    (0x12c0d8, 0x12c09c, 0x480e),
+    (0x12c1c4, 0x12c192, 0x490c),
+    (0x12c1c8, 0x12c1aa, 0x4907),
+    (0x12c218, 0x12c1e2, 0x490d),
+    (0x12c21c, 0x12c1fc, 0x4907),
+    (0x12c260, 0x12c22e, 0x4a0c),
+    (0x12c2a8, 0x12c292, 0x4805),
+    (0x1450c4, 0x1450a6, 0x4807),
+    (0x1450c8, 0x1450b8, 0x4803),
+    (0x145108, 0x1450f2, 0x4805),
+    (0x1451e4, 0x1451d2, 0x4804),
+    (0x1451f8, 0x1451e8, 0x4803),
+    (0x146ee4, 0x146e40, 0x4e28),
+    (0x146ee8, 0x146e3e, 0x4f2a),
+    (0x14727c, 0x147248, 0x490c),
+    (0x147388, 0x147362, 0x4c09),
+    (0x148ad8, 0x148ac8, 0x4803),
+    (0x148adc, 0x148ad0, 0x4902),
+    (0x148afc, 0x148ae8, 0x4804),
+    (0x148cb0, 0x148c88, 0x4a09),
+    (0x148cb4, 0x148c8a, 0x490a),
+    (0x1490fc, 0x149074, 0x4821),
+    (0x149100, 0x14907a, 0x4821),
+    (0x149390, 0x14935a, 0x480d),
+    (0x14cb0c, 0x14cb04, 0x4901),
+    (0x14cda8, 0x14cd86, 0x4808),
+    (0x14cdac, 0x14cd88, 0x4908),
+];
+/// Literal words required by the selected White Flowers mixed switches.
+pub const WHITE_FLOWERS_MIXED_COUNT: usize = 5;
+pub const WHITE_FLOWERS_MIXED: [(u32, u32, u16); WHITE_FLOWERS_MIXED_COUNT] = [
+    (0x04e038, 0x04e02e, 0x4902),
+    (0x08dfcc, 0x08df96, 0x4a0d),
+    (0x08dfd0, 0x08dfc4, 0x4902),
+    (0x0bbffc, 0x0bbfda, 0x4908),
+    (0x125c88, 0x125c80, 0x4901),
+];
+/// Literal words required by the final selected White Flowers switches.
+pub const WHITE_FLOWERS_FINAL_COUNT: usize = 3;
+pub const WHITE_FLOWERS_FINAL: [(u32, u32, u16); WHITE_FLOWERS_FINAL_COUNT] = [
+    (0x02a7ac, 0x02a78c, 0x4a07),
+    (0x02a7b0, 0x02a7a2, 0x4903),
+    (0x125fe4, 0x125fda, 0x4902),
+];
+/// Sampled Star Cross literal words and their original PC-relative readers.
+pub const STAR_CROSS_OBSERVED_COUNT: usize = 19;
+pub const STAR_CROSS_OBSERVED: [(u32, u32, u16); STAR_CROSS_OBSERVED_COUNT] = [
+    (0x0eeb58, 0x0eeb0e, 0x4912),
+    (0x0eeb5c, 0x0eeb30, 0x480a),
+    (0x0eeb60, 0x0eeb40, 0x4807),
+    (0x0eeca4, 0x0eeb66, 0x484f),
+    (0x0eeca8, 0x0eeb72, 0x494d),
+    (0x0eecac, 0x0eeb7e, 0x494b),
+    (0x0eecb0, 0x0eec52, 0x4817),
+    (0x0eecb4, 0x0eec62, 0x4814),
+    (0x0eed64, 0x0eed4e, 0x4905),
+    (0x0eede4, 0x0eedba, 0x480a),
+    (0x0eede8, 0x0eedc8, 0x4807),
+    (0x0eee24, 0x0eee04, 0x4807),
+    (0x0eee80, 0x0eee4e, 0x480c),
+    (0x0eee84, 0x0eee60, 0x4808),
+    (0x0eee88, 0x0eee6a, 0x4807),
+    (0x14a5c4, 0x14a59c, 0x4e09),
+    (0x14aa7c, 0x14aa58, 0x4d08),
+    (0x14aa80, 0x14aa64, 0x4806),
+    (0x14ba44, 0x14ba1c, 0x4809),
+];
+pub const WHITE_FLOWERS_BASE: usize = LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT
+    + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT
+    + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT
+    + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT
+    + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT
+    + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + FIRAGA_MIXED_OBSERVED_COUNT
+    + FIRAGA_RESIDUAL_OBSERVED_COUNT;
+pub const WHITE_FLOWERS_ADDITIONAL_BASE: usize = WHITE_FLOWERS_BASE + WHITE_FLOWERS_OBSERVED_COUNT;
+pub const WHITE_FLOWERS_LATER_BASE: usize = WHITE_FLOWERS_ADDITIONAL_BASE + WHITE_FLOWERS_ADDITIONAL_COUNT;
+pub const WHITE_FLOWERS_THIRTEEN_BASE: usize = WHITE_FLOWERS_LATER_BASE + WHITE_FLOWERS_LATER_COUNT;
+pub const WHITE_FLOWERS_MANY_BASE: usize = WHITE_FLOWERS_THIRTEEN_BASE + WHITE_FLOWERS_THIRTEEN_COUNT;
+pub const WHITE_FLOWERS_BULK_BASE: usize = WHITE_FLOWERS_MANY_BASE + WHITE_FLOWERS_MANY_COUNT;
+pub const WHITE_FLOWERS_REMAINING_BASE: usize = WHITE_FLOWERS_BULK_BASE + WHITE_FLOWERS_BULK_COUNT;
+pub const WHITE_FLOWERS_MIXED_BASE: usize = WHITE_FLOWERS_REMAINING_BASE + WHITE_FLOWERS_REMAINING_COUNT;
+pub const WHITE_FLOWERS_FINAL_BASE: usize = WHITE_FLOWERS_MIXED_BASE + WHITE_FLOWERS_MIXED_COUNT;
+pub const STAR_CROSS_OBSERVED_BASE: usize = WHITE_FLOWERS_FINAL_BASE + WHITE_FLOWERS_FINAL_COUNT;
+
+pub const SOURCE_PAGES: [usize; 156] = [
+    0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0xd,
+    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b,
+    0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
+    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x30, 0x31, 0x32, 0x33, 0x35,
+    0x36, 0x37, 0x38, 0x39, 0x3a, 0x3c, 0x3d, 0x43, 0x44, 0x46, 0x4d, 0x4e,
+    0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x63, 0x74, 0x83, 0x8d, 0x8e, 0x91, 0x92,
+    0x95, 0x96, 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0,
+    0xa1, 0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7,
+    0xb8, 0xb9, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xca, 0xcb, 0xcc, 0xcd,
+    0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd6, 0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0,
+    0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xeb, 0xee, 0xf0, 0x109, 0x125, 0x126, 0x127,
+    0x128, 0x129, 0x12a, 0x12b, 0x12c, 0x130, 0x132, 0x133, 0x134, 0x135, 0x137, 0x138,
+    0x139, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149, 0x14a, 0x14b, 0x14c,
 ];
 
 /// A literal operand and the original PC-relative LDR that can read it.
@@ -2465,6 +3186,26 @@ pub struct ThumbPcLiterals {
     pub firaga_code_observed: Vec<LiteralWord>,
     pub firaga_mixed_observed: Vec<LiteralWord>,
     pub firaga_residual_observed: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_observed: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_additional: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_later: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_thirteen: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_many: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_bulk: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_remaining: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_mixed: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub white_flowers_final: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_observed: Option<Vec<LiteralWord>>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -2613,6 +3354,76 @@ impl ThumbPcLiterals {
         {
             return Err("Invalid Firaga residual observed EUR Thumb literal source, reader or order".into());
         }
+        if let Some(words) = &self.white_flowers_observed {
+            if words.len() != WHITE_FLOWERS_OBSERVED_COUNT || words.iter().zip(WHITE_FLOWERS_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid White Flowers observed Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_additional {
+            if words.len() != WHITE_FLOWERS_ADDITIONAL_COUNT || words.iter().zip(WHITE_FLOWERS_ADDITIONAL).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid additional White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_later {
+            if words.len() != WHITE_FLOWERS_LATER_COUNT || words.iter().zip(WHITE_FLOWERS_LATER).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid later White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_thirteen {
+            if words.len() != WHITE_FLOWERS_THIRTEEN_COUNT || words.iter().zip(WHITE_FLOWERS_THIRTEEN).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid thirteen-pool White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_many {
+            if words.len() != WHITE_FLOWERS_MANY_COUNT || words.iter().zip(WHITE_FLOWERS_MANY).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid twenty-eight-pool White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_bulk {
+            if words.len() != WHITE_FLOWERS_BULK_COUNT || words.iter().zip(WHITE_FLOWERS_BULK).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid sixty-two-pool White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_remaining {
+            if words.len() != WHITE_FLOWERS_REMAINING_COUNT || words.iter().zip(WHITE_FLOWERS_REMAINING).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid remaining-pool White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_mixed {
+            if words.len() != WHITE_FLOWERS_MIXED_COUNT || words.iter().zip(WHITE_FLOWERS_MIXED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid mixed-switch White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.white_flowers_final {
+            if words.len() != WHITE_FLOWERS_FINAL_COUNT || words.iter().zip(WHITE_FLOWERS_FINAL).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid final-switch White Flowers Thumb literal source, reader or order".into());
+            }
+        }
+        if let Some(words) = &self.star_cross_observed {
+            if words.len() != STAR_CROSS_OBSERVED_COUNT || words.iter().zip(STAR_CROSS_OBSERVED).any(|(v, (offset, reader, _))| {
+                v.source_offset != offset || v.reader_offset != reader
+            }) {
+                return Err("Invalid Star Cross Thumb literal source, reader or order".into());
+            }
+        }
         Ok(())
     }
 
@@ -2685,8 +3496,57 @@ impl ThumbPcLiterals {
         if let Ok(index) = self.firaga_mixed_observed.binary_search_by_key(&base, |v| v.source_offset) {
             return Some((self.firaga_mixed_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + index));
         }
-        let index = self.firaga_residual_observed.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        Some((self.firaga_residual_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + FIRAGA_MIXED_OBSERVED_COUNT + index))
+        if let Ok(index) = self.firaga_residual_observed.binary_search_by_key(&base, |v| v.source_offset) {
+            return Some((self.firaga_residual_observed[index].value.to_le_bytes()[(offset & 3) as usize], LITERAL_COUNT + ADDITIONAL_COUNT + OBSERVED_COUNT + HOME_ANCHORED_COUNT + HOME_OBSERVED_COUNT + RED_SPRING_OBSERVED_COUNT + RED_SPRING_ANCHORED_COUNT + POST_INDEXED_OBSERVED_COUNT + POST_INDEXED_ANCHORED_COUNT + BANK_OBSERVED_COUNT + BLUE_SCREW_OBSERVED_COUNT + SOIL_EVIDENCE_OBSERVED_COUNT + SOIL_146_OBSERVED_COUNT + FIRAGA_OBSERVED_COUNT + FIRAGA_2D2E_OBSERVED_COUNT + FIRAGA_EB83_EBC_OBSERVED_COUNT + FIRAGA_CODE_OBSERVED_COUNT + FIRAGA_MIXED_OBSERVED_COUNT + index));
+        }
+        if let Some(words) = &self.white_flowers_observed {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_additional {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_ADDITIONAL_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_later {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_LATER_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_thirteen {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_THIRTEEN_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_many {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_MANY_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_bulk {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_BULK_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_remaining {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_REMAINING_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_mixed {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_MIXED_BASE + index));
+            }
+        }
+        if let Some(words) = &self.white_flowers_final {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_FINAL_BASE + index));
+            }
+        }
+        let words = self.star_cross_observed.as_ref()?;
+        let index = words.binary_search_by_key(&base, |v| v.source_offset).ok()?;
+        Some((words[index].value.to_le_bytes()[(offset & 3) as usize], STAR_CROSS_OBSERVED_BASE + index))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -2706,6 +3566,312 @@ impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Thumb literals require exact EUR ROM; USA pending".into());
+        }
+        for (start, end, expected) in [
+            (0xeeb00, 0xeee84, "3ef3dcaf82d60602d8c96beae9100e6c363cda41efef40b6202fd97eb6e90b85"),
+            (0x14a590, 0x14a5c0, "0e937b72b01f3f93597f4cb98244044cebba7229f97692cf1e7a62413fbfe39a"),
+            (0x14aa50, 0x14aa80, "8c407a72f79ebcb0e5c2ed696e60b96e7528f137c72363c13683fe0861c7694f"),
+            (0x14ba10, 0x14ba40, "2ddca5d1063ab79727b8907378617ac2669bc8e4b34c056c58ef39485c90eff1"),
+            (0x2a78c, 0x2a78e, "93e27574dd19d60e3afaf55a4f2cf0633baadba01b02a9aa0400768ee0a9088f"),
+            (0x2a7a2, 0x2a7a4, "4a58005dfc4d62e6d2bc2ddd2f5adf9ed674cb355716944569ed0a76fc6dbcc0"),
+            (0x125fda, 0x125fdc, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0x4e02e, 0x4e030, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0x8df96, 0x8df98, "64030d007d9f1a29c670e8752d42c756593e4af1c095d8fae78371a8653a667c"),
+            (0x8dfc4, 0x8dfc6, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0xbbfda, 0xbbfdc, "31b0a2aa6b56ac02df3dd163da0775ded406addcc9367fc25a7e7b885b3f2965"),
+            (0x125c80, 0x125c82, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0xd2636, 0xd263a, "bf23ef621db022ede697e4c74adc920a0185588d7e00108b31dde7436fbee03c"),
+            (0x126710, 0x126724, "8d625c40b4383294eee51cd6d98945d4743b61755eba4d651e78397020fb7491"),
+            (0x1271a4, 0x1271aa, "2e0683e90626f4b72854c978f1c122a38984bf1492ec50c265035b4e4db2854a"),
+            (0x12a0b2, 0x12a0c2, "66e3977285b556167759c61f32d0b7bec11d583bedeafb4519d9facf8bdd1d4b"),
+            (0x12a0cc, 0x12a0e2, "ab39be1c7689825329667d205cb858658d7dc5e926aef97248727b62eb63a38e"),
+            (0x12bc0e, 0x12bc1e, "311f320e2369101974facd552f620aaa5a4f7a5f54c5b807a11797756acd1375"),
+            (0x12bc4c, 0x12bc6a, "77213ecf8b94d2c52abd0c629fc29b3e7f311e6bd91c8af2a9ecb0d5df814120"),
+            (0x12bc88, 0x12bc96, "6996fb70274e88a97d3cd6ded6a43390d7555668a211f57fd76e71e9d43e513c"),
+            (0x12bd76, 0x12bd7a, "add8057a1f155f6712f3d4f34aa97d187d5b9d9e06cbfe920230f48bdd2e9357"),
+            (0x12bf40, 0x12bf66, "662b77c463c6bff03b1c98a4ca8609a8371e9df07e692e359b8698b84e637ef4"),
+            (0x12c098, 0x12c09e, "2472fa412a580454a82c6c737c221ea32d6c6852918533a7f072947ddd374c72"),
+            (0x12c192, 0x12c1ac, "d1d861411fc08230f4a7c2c892ae74d48381868dcf6e528562d483bcfd74e45c"),
+            (0x12c1e2, 0x12c1fe, "41cb2c184dae859fc686eab39f33f868f86eee35d9762f1643621f050f2e7a0f"),
+            (0x1450a6, 0x1450ba, "b0223b962ed2c9624e7620c12006303884cf3f047801cb02502acff1f2df0cd3"),
+            (0x146e3e, 0x146e42, "9b07306ab10aa470adfc81564cb4253dfa45549340a10e25d13bc6a86e11a000"),
+            (0x148ac8, 0x148ad2, "518421ee3fa59e572687fa44737cf8c388ba86a2d415119b71d8c78fbff162dd"),
+            (0x148c88, 0x148c8c, "79f2d726a7b72e006020e84e9ec373ef3e791b8d06960bfafe02294ccb9952a1"),
+            (0x149074, 0x14907c, "f61db250f4d40aa4cd0717dfde41bb2f564201d69fa21907e7807ca039328729"),
+            (0x14cd86, 0x14cd8a, "2a7144f9dd72d1a3063ca662e32cd36e3ada08c8f311ff568dd953a38cc055b9"),
+            (0xfe4, 0xfe6, "516b21717b4f1bb4f437d75cc00b6103b3fc893d2a97f8996e0be7158e2860f2"),
+            (0x33fe, 0x3400, "d3d9db38b4f642b12b4c3dd222b04a765ed51960acc1c03b1213a56f94cd842a"),
+            (0x36a0, 0x36a2, "ef2c54842d8931cd371b77e6a7dca176ae29237662a14fb977bb1f4c8504eb4c"),
+            (0x3780, 0x3782, "d4fc4272c7f02a2d9328b5c04e85a11e3708cf48a3219e58c96753970297046d"),
+            (0x380c, 0x380e, "5d04f1d497a09418ee1996c2d8ed36a0f6eda0869151d0d60c8ae534d7fd3707"),
+            (0x76b8, 0x76ba, "4d2ae2d6e0000b72a5739078e0e83bc029b6232edabff84d012acd1d4803db51"),
+            (0x7b5c, 0x7b5e, "4d2ae2d6e0000b72a5739078e0e83bc029b6232edabff84d012acd1d4803db51"),
+            (0x9a1e, 0x9a20, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0xa112, 0xa114, "516b21717b4f1bb4f437d75cc00b6103b3fc893d2a97f8996e0be7158e2860f2"),
+            (0xa6ea, 0xa6ec, "4012ab3d5abd2560dbcef6230809757195b0c0b394bede6a2d9c9a087e9481ff"),
+            (0xc4d4, 0xc4d6, "8b218b1d3c571d7f8f754bcac93c85e9abf4a384dadd24abce3cd2d3755ace66"),
+            (0xc5ce, 0xc5d0, "49ee35b4c1732e7d10fd4a3b3dce5dbf35ca38f60b31333506082d1cb00657f8"),
+            (0x106a4, 0x106a6, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x1210e, 0x12110, "b1131472d7f7dd4431b21113b4806a064080dd6e5b469efcc6daa26db0d6da29"),
+            (0x134f8, 0x134fa, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0x166f8, 0x166fa, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+            (0x167b8, 0x167ba, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+            (0x16934, 0x16936, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x1b63c, 0x1b63e, "036e5f96b66b8faf4d1fd1ac4991ae2ba3b68ac6f2a409fa262dd2cc1d0e2465"),
+            (0x1b66c, 0x1b66e, "1b0275bf871d17b2604643228b0b4d1f2373911157464a690d37470ba82ff61f"),
+            (0x1b760, 0x1b762, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+            (0x1ba8e, 0x1ba90, "154ee9936fddd5e2eac0f274df1af98a3da7ea95f6f1c0dc316dcdd3c8261b16"),
+            (0x1cc8e, 0x1cc90, "3740f0a7e1f0ada5f7971e8fd1302d86c596997f2bce585c4c965d0567fd2763"),
+            (0x1dc52, 0x1dc54, "75a3e9997fdb48f18b315fa40b13a247adc56d27db6ef60b49c2ae9d58f40fd1"),
+            (0x1ed5c, 0x1ed5e, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x20128, 0x2012a, "d210d4d2f4b60914a009f6c6a9ad80e404ab1bd7137f9a746b709741880c70cd"),
+            (0x201aa, 0x201ac, "a5fbbfd46efbd0475ecd15490ed79d9cb3f4e477420c7d7401281bf212b4212e"),
+            (0x2020e, 0x20210, "7e89b0f7e619309f7786d15f0754bd0a1ec59036f57fab4088d8a11760793627"),
+            (0x20348, 0x2034a, "9159c3afb2d38467f9a18b993d79ba49e3fd3ac0e9f0bca618ba899aad1c157a"),
+            (0x20388, 0x2038a, "cb2074e4cd534f18d70eb9a36c2df5b4c9b7a2353b14b2e48b5ce3fa95ad8eab"),
+            (0x2040a, 0x2040c, "aa76da1bbe4c1999d2327cb5481e17cd9a92a98562fe6c17a703f66da5f5fffa"),
+            (0x20512, 0x20514, "0d915a3817397d574d32fdf36d15d0172f9273a2e9f7b59be1fedfc2fd1c77eb"),
+            (0x2063a, 0x2063c, "0d915a3817397d574d32fdf36d15d0172f9273a2e9f7b59be1fedfc2fd1c77eb"),
+            (0x21f74, 0x21f76, "b107df03bf38e1309fe2f094ddb2032f7bba9df09870b0cebe0dd9757df159fe"),
+            (0x22bea, 0x22bec, "18bab51312e9604a9d65bcc356207ef57f4b5eed0ada43128ca2b34ef3975c84"),
+            (0x23c9a, 0x23c9c, "9369e01b09fa352f74053d7a3a37ec61e65e24cbd305deac47374d4f5e80b45a"),
+            (0x23ca8, 0x23caa, "419b83a8fcbaf82fde0b4e9ff095e428ae474e7d9862dd13336c1edc5ac2af0c"),
+            (0x23e94, 0x23e96, "0b378bd44515053a53e465d8020ee03e58b14e54d0394dc09cd57f7bb682bd6f"),
+            (0x2a6ec, 0x2a6ee, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x2c8b8, 0x2c8ba, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x2eaee, 0x2eaf0, "e841e2ec3ee98149b1f6546a212303d9838dcff104c8897c15ab6b935df95af0"),
+            (0x2ed48, 0x2ed4a, "bc95c2a08f0a78cad3b103913c9d62c7dd959fcd67789f052ab240eddb87c427"),
+            (0x2ee0c, 0x2ee0e, "2c5109c22680819748a895a201189ccb4261f5ff1c7604da4cb698439f6e6a98"),
+            (0x2ee3e, 0x2ee40, "036e5f96b66b8faf4d1fd1ac4991ae2ba3b68ac6f2a409fa262dd2cc1d0e2465"),
+            (0x31610, 0x31612, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x321b0, 0x321b2, "0d915a3817397d574d32fdf36d15d0172f9273a2e9f7b59be1fedfc2fd1c77eb"),
+            (0x32e06, 0x32e08, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0x35f88, 0x35f8a, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x360c8, 0x360ca, "6315200161be9105de641237fc89d133a1ccb6092b4da082f451e9a502d1c2e8"),
+            (0x36106, 0x36108, "33462c6ad8d3c9823e7b43633ff1a94f7671c4d155888e47618b5f60027701e5"),
+            (0x361b4, 0x361b6, "d3d9db38b4f642b12b4c3dd222b04a765ed51960acc1c03b1213a56f94cd842a"),
+            (0x36268, 0x3626a, "154ee9936fddd5e2eac0f274df1af98a3da7ea95f6f1c0dc316dcdd3c8261b16"),
+            (0x37a46, 0x37a48, "80e1c03fe9267036fad7fde2798cbfdb61aeda14365cab1b132988cac8128e33"),
+            (0x38596, 0x38598, "5d04f1d497a09418ee1996c2d8ed36a0f6eda0869151d0d60c8ae534d7fd3707"),
+            (0x3863c, 0x3863e, "0b65f00e81cee50960b0e8d78edf00a4b1918b48e36de214d940da79711da3c5"),
+            (0x38678, 0x3867a, "0d915a3817397d574d32fdf36d15d0172f9273a2e9f7b59be1fedfc2fd1c77eb"),
+            (0x39af4, 0x39af6, "9e0ac49025320d1f144c9c4dc09fcf338000a016a0c51fa97b4d0699c872a284"),
+            (0x3a452, 0x3a454, "3740f0a7e1f0ada5f7971e8fd1302d86c596997f2bce585c4c965d0567fd2763"),
+            (0x3a5b4, 0x3a5b6, "0b378bd44515053a53e465d8020ee03e58b14e54d0394dc09cd57f7bb682bd6f"),
+            (0x3cd90, 0x3cd92, "e281a9c140ee0c993758ebfe5a2af22d8f8b1e675a902236d732e43cbfcbecf8"),
+            (0x3d40c, 0x3d40e, "017096b422509c02f9015043748d009d0e1aeaf0966329b4533067474c98d102"),
+            (0x3d524, 0x3d526, "797bba0d18d0c0ff6c4330e6460651b10e2344d34d3fd9c4f753c6cbd06dea93"),
+            (0x440e4, 0x440e6, "7db1dd4d9cb34cc9ec894ead9990410bbf6355af821f37c213239db03ead95f6"),
+            (0x465a0, 0x465a2, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x4e010, 0x4e012, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x63050, 0x63052, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x74612, 0x74614, "b107df03bf38e1309fe2f094ddb2032f7bba9df09870b0cebe0dd9757df159fe"),
+            (0x83bf2, 0x83bf4, "3740f0a7e1f0ada5f7971e8fd1302d86c596997f2bce585c4c965d0567fd2763"),
+            (0x8d134, 0x8d136, "c1ce2f6687c7a7fa5ec6f5f0553dfca17e1727bd68fe20cfd1c33ba83acc038d"),
+            (0x8d318, 0x8d31a, "039f2c519d87eaa01db07c3792baf082572cbe04e34da945aee4a8aad839e869"),
+            (0x8d33c, 0x8d33e, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x8d4ee, 0x8d4f0, "e281a9c140ee0c993758ebfe5a2af22d8f8b1e675a902236d732e43cbfcbecf8"),
+            (0x8d7fc, 0x8d7fe, "6162275aeb2434b374e87483ccf1d2c3fc3b73604c8ab5d65dda851398983e55"),
+            (0x8d8e6, 0x8d8e8, "59b0fab46baa39bd6537c14069d4808bd15207ad36647d46c8f857423113f60a"),
+            (0x8d93e, 0x8d940, "a459a88018423bf737725ebeaccff33a6e6dfc29947c77f27e870cc036f3b48b"),
+            (0x8dae6, 0x8dae8, "eefd199e7e5a54f13c92f5b6ae51efdbe0da08cf6398030a93e455c38bfc4a5b"),
+            (0x8dbea, 0x8dbec, "75a3e9997fdb48f18b315fa40b13a247adc56d27db6ef60b49c2ae9d58f40fd1"),
+            (0x8dc66, 0x8dc68, "e662b25a9f11a81de91897fc0f7a023eba36e300ecbea0f37d26684d27b3b567"),
+            (0x8df44, 0x8df46, "410c6a40c4831aa45c9536397fa114f96563fadf5d6e8f87e503ef72da4fb4f0"),
+            (0x8e070, 0x8e072, "4a58005dfc4d62e6d2bc2ddd2f5adf9ed674cb355716944569ed0a76fc6dbcc0"),
+            (0x9250c, 0x9250e, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x9660c, 0x9660e, "ada02b8b82c7faf24597e90c7b6dc34d35c9ea972ae7a02a0f28fc813b590f7d"),
+            (0x9a662, 0x9a664, "b107df03bf38e1309fe2f094ddb2032f7bba9df09870b0cebe0dd9757df159fe"),
+            (0x9a69a, 0x9a69c, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+            (0x9a72e, 0x9a730, "e8c169d57d68d78c0b402c6941498bce3f7beba1e7e0b876c656cec93198ae40"),
+            (0x9ce3c, 0x9ce3e, "d25ccabfe312309c151fb362c19110c05ecc968985cf8de33a35b57e1fb6b383"),
+            (0x9d828, 0x9d82a, "710a07506a1d869d3d9515cdd54fc6aac3b33ec81f6fcf0a29733831e6d7d862"),
+            (0xa0b4e, 0xa0b50, "61698f2f3a79782027200ff3b1df361aa231fc4b15e8389fcd87cc40e4e5d4bf"),
+            (0xbbcc0, 0xbbcc2, "cd4e3bb9324ddac76db26cbba388b61177a28d0e646e9767a68365cadcce893a"),
+            (0xbc0ca, 0xbc0cc, "8150fa5e1eb0ff4dbd5c3ab337245e4d8292df7ea8c5c1de25f59f21c5d4522d"),
+            (0xbc1a2, 0xbc1a4, "3ebe95bc23aea71fa066b78f6b1e50dbeaaf58edfa921125101d672e8ca178ec"),
+            (0xcd082, 0xcd084, "9c168c461a76978d97b4b69d2d01b51bf3a0268721ba1719e16719753334eab1"),
+            (0xcd200, 0xcd202, "b14c01a4858367c4ef20b5554377030863e44557d7adeaf263f6c71b997319b1"),
+            (0xcd438, 0xcd43a, "039f2c519d87eaa01db07c3792baf082572cbe04e34da945aee4a8aad839e869"),
+            (0xcd54e, 0xcd550, "f292a7225f56b4e3a1b127d38b5908742b2390ea75aabf6a52a45ce476f6aa62"),
+            (0xcd7e6, 0xcd7e8, "fe956fbef5dc147704e711849ac4d9ddb6a3d961c60c47411eba96036ec0cf82"),
+            (0xcd946, 0xcd948, "973f548d52a4ac0fd213356a224c045718aafe934f0dc1ec269732a28f48f405"),
+            (0xcdcb6, 0xcdcb8, "a6e36316f2b79ffd2b805a0808f9770a2d022261349a72389ae7664a7dbd3398"),
+            (0xcf3fe, 0xcf400, "4a58005dfc4d62e6d2bc2ddd2f5adf9ed674cb355716944569ed0a76fc6dbcc0"),
+            (0xcf4ca, 0xcf4cc, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0xcf562, 0xcf564, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0xd27b4, 0xd27b6, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x125706, 0x125708, "fccfc0b1b7c8cbbedb50e4b454cd5197f8e6edc1042f0c6f76c3a406a4a90e15"),
+            (0x125786, 0x125788, "1b0275bf871d17b2604643228b0b4d1f2373911157464a690d37470ba82ff61f"),
+            (0x1257ca, 0x1257cc, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x125844, 0x125846, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x125898, 0x12589a, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x1258ac, 0x1258ae, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x125940, 0x125942, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0x12594c, 0x12594e, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x125b18, 0x125b1a, "154ee9936fddd5e2eac0f274df1af98a3da7ea95f6f1c0dc316dcdd3c8261b16"),
+            (0x125b40, 0x125b42, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x125cb6, 0x125cb8, "5d04f1d497a09418ee1996c2d8ed36a0f6eda0869151d0d60c8ae534d7fd3707"),
+            (0x1266ea, 0x1266ec, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x127254, 0x127256, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x1272c2, 0x1272c4, "ada02b8b82c7faf24597e90c7b6dc34d35c9ea972ae7a02a0f28fc813b590f7d"),
+            (0x12732c, 0x12732e, "31e0725f04cb990467ae9ead44eba9bea6a77dc200aaca4f52d0ea20b15d60c6"),
+            (0x12880e, 0x128810, "9369e01b09fa352f74053d7a3a37ec61e65e24cbd305deac47374d4f5e80b45a"),
+            (0x129204, 0x129206, "3d88a921f3763ca3f5b36a3eb658a80857a75a7e27a3c9379c43a57f5a388710"),
+            (0x129214, 0x129216, "0a67a806b845fb69b7e9ecd6ef7f5b2c9e9e7d09eba80260bf106807fbc6938a"),
+            (0x129fc4, 0x129fc6, "154ee9936fddd5e2eac0f274df1af98a3da7ea95f6f1c0dc316dcdd3c8261b16"),
+            (0x12a01c, 0x12a01e, "29bde21c03c4355cf08152007f8cb7df97d778c61874027d3daa47a7afc8011c"),
+            (0x12a064, 0x12a066, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x12a122, 0x12a124, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x12a680, 0x12a682, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x12b8c0, 0x12b8c2, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x12bbb2, 0x12bbb4, "1b0275bf871d17b2604643228b0b4d1f2373911157464a690d37470ba82ff61f"),
+            (0x12bbda, 0x12bbdc, "0d915a3817397d574d32fdf36d15d0172f9273a2e9f7b59be1fedfc2fd1c77eb"),
+            (0x12bcb8, 0x12bcba, "5d04f1d497a09418ee1996c2d8ed36a0f6eda0869151d0d60c8ae534d7fd3707"),
+            (0x12bd9e, 0x12bda0, "ada02b8b82c7faf24597e90c7b6dc34d35c9ea972ae7a02a0f28fc813b590f7d"),
+            (0x12be76, 0x12be78, "6288e073eeec30bcdc4d107c404b5ef6dddf6288c164f43c061be1d1731270f6"),
+            (0x12bea8, 0x12beaa, "a6367ab0268f6ddb8891832fb3431416210db1b2de8da454ac03709e71569c6f"),
+            (0x12c000, 0x12c002, "d3ba49639b8b847d08cfb2121e675da1f02c34e08982cfa44209b2845608ad43"),
+            (0x12c050, 0x12c052, "5d04f1d497a09418ee1996c2d8ed36a0f6eda0869151d0d60c8ae534d7fd3707"),
+            (0x12c22e, 0x12c230, "9df5c1aec06c6469b5f24752b1dd44107bc03b36778e9a7a50b6c7d5c2e88dd1"),
+            (0x12c292, 0x12c294, "1b0275bf871d17b2604643228b0b4d1f2373911157464a690d37470ba82ff61f"),
+            (0x1450f2, 0x1450f4, "1b0275bf871d17b2604643228b0b4d1f2373911157464a690d37470ba82ff61f"),
+            (0x1451d2, 0x1451d4, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x1451e8, 0x1451ea, "cf854e7e5e990dbd0110d7aefac74f20ae6826e97501aab1118655e97b9877e6"),
+            (0x147248, 0x14724a, "d25ccabfe312309c151fb362c19110c05ecc968985cf8de33a35b57e1fb6b383"),
+            (0x147362, 0x147364, "29bde21c03c4355cf08152007f8cb7df97d778c61874027d3daa47a7afc8011c"),
+            (0x148ae8, 0x148aea, "df93930c8dd3a18d2b8f506d5936c327d615f320f282cbf5b0d334f1243ba507"),
+            (0x14935a, 0x14935c, "6315200161be9105de641237fc89d133a1ccb6092b4da082f451e9a502d1c2e8"),
+            (0x14cb04, 0x14cb06, "d8f074ca183cc2031988d0f4a643d8e6a0ef5d873b0bf87b103e37adf01e8bc5"),
+            (0xbb9a6, 0xbba4a, "1e480348f36ba3189ec9427cf0f1a5bae878fcbfc6e11247a3417e9d94cb8735"),
+            (0x12b97c, 0x12b9ba, "cdaf7b5ed75fa44dc3c0e86c4f7873d78bc7d79b5c2852f7c9ec218435042b29"),
+            (0x12bd08, 0x12bd52, "4a465f6b0dd1cd9cebf2b0b294693624ed0e5cc3020a509100982dd3bad7c1d0"),
+            (0x1450ce, 0x1450d8, "cd11a28c2ad32ec3c6e403303ec580317e96efc87c9f50860ae9f663cfe82468"),
+            (0xa3e, 0xa54, "6d8fec7ab6af45ab964f1e4be6342ec061a004279fa5c1f7c31888b59e2a6c97"),
+            (0xd8a, 0xd9e, "6323b7da252bfca7b6480e2dce09b568b93cfc8d262c8dec7cffac6f47d00507"),
+            (0xdca, 0xdd8, "7e6037e615b8a62f75b4f74b29b9faf98d321ea0bfd88f26d78915665dd5cdde"),
+            (0x3950, 0x3958, "bd3e1062dd06fb3463e74612f0a12d14fe13b570fd6a9fa26c1620b004b10e5a"),
+            (0x9bf8, 0x9bfe, "c4ef9d1e0281a0d85ad4b7f3e605ca074b56793453ecd062942c6447903cedfe"),
+            (0x9d60, 0x9d66, "b371c1028c6e9cff4e12e2b14284bd035628a165fad1edaff65cae1b1e306cf3"),
+            (0xa130, 0xa134, "f8c86be07a4bb9d2e65e3f7efa99b187a4ee6065be0caad49b7ca2166542107b"),
+            (0xc690, 0xc69a, "a7339d56442c533bca73d6a40ed4b38f7cd3d8d8a35b3dcabf0fb00a1aab2280"),
+            (0xd712, 0xd71a, "b49af403eaf003e960d6ac377d83fcc74596ffcf53bf55a24a8ce6bb307e72b7"),
+            (0x1355e, 0x13564, "d8d27483199369c325e4efb95d61d69ddeec0d08d135ecdb8e94047e3618dd6b"),
+            (0x166ac, 0x166b0, "65ab79fb4a39e37b4d064414df592ba95d6d15ad39966f67af6db7f9672b133d"),
+            (0x1676c, 0x16770, "65ab79fb4a39e37b4d064414df592ba95d6d15ad39966f67af6db7f9672b133d"),
+            (0x168ea, 0x168ee, "81d72b752d6c42237063fa206c626ebdd4d476a0742a53c0269038adb462be77"),
+            (0x1b814, 0x1b818, "b5d5e21c4ee1dac3893fd757b70f2bd83b9b1ca0f7f8affba79c9a5139e4fba1"),
+            (0x1b910, 0x1b924, "dcdce97f129cd252a9967d8ec03f8730ce62a6a2759f9920add9f3e9ea7b06f1"),
+            (0x1bab4, 0x1babe, "f7ad4ccaa8ecc844cdf444d32862b4e39e68e93354c40fc7270ce21c766eacaa"),
+            (0x1ffa4, 0x1ffb4, "9f6ba5caa8cbaaa5dc8ca2642c26f7d18d56e959eae6f5e62d71aaa81378af10"),
+            (0x20298, 0x202c4, "f8587482744d3e11b62c83f6cd5cbcee9d50ea4093ebfadb42479df317012ebd"),
+            (0x21f1e, 0x21f22, "630997bed536fb15dc487061d3859326ec79edabfe9b7e818f6c872c2e57acb8"),
+            (0x2395a, 0x23974, "84d12dd17e4b18c4d2496df5a1969e3945baba90c06ac81bf9db1307e5a85fc1"),
+            (0x23e56, 0x23e60, "8a1a5d64beb555835f979ea066992e8fe82d87b7793101b80549a4484985419c"),
+            (0x25978, 0x25996, "b8a7aa416cd2ffdccdc04200b3cedb235011ce19e75bd8456d4eeb9cbd7b7798"),
+            (0x2a886, 0x2a88a, "4ee00fd55e8b031b59589a4c56650511cf06d53c31febc8daec6a9ac7af62b6b"),
+            (0x2cc1e, 0x2cc24, "d40f0d3770ad5c832fd606d9539d2bb3ff20c3ba089e9346d820b12085b68d89"),
+            (0x2eb9a, 0x2eb9e, "ddcf792c63ef3450abe75df383b5f6b393e6fc3e2cdc313d1df42138bc19aa7b"),
+            (0x2edd6, 0x2ede2, "a18ea42b5eb2e47eeb09f46dd154fa86c8c8f22ec97b32caeaa342e3d5c2b49c"),
+            (0x30f18, 0x30f1c, "b57ba9fc4d100590c691111a80649c322690e6b8fa4706c9255d5cf21fe0ba79"),
+            (0x320e0, 0x320f6, "06676578ea9c0e496ed6e6b833cc340bb66c4b92fd7ebea952d08d6d11025626"),
+            (0x321e4, 0x321ee, "1f9fc2a49f8c0f8f9620e5b05816b849515c995f45b91323f67a1192d692ce1b"),
+            (0x32a26, 0x32a2c, "c769f0344c4d848e723ff27cfb1b2510eca606a814112e6f176fd1de08c05380"),
+            (0x360b0, 0x360b6, "6b2ae9cfda770fa989a1f1134c0553d0e76a2979ae4a1a76f0cebaf6645f1d81"),
+            (0x362fe, 0x36314, "138f1971142711728cdf71dda9fcbb5ee60899e289cbc0a4ebea87c55a05f3ec"),
+            (0x3639e, 0x363a4, "7beda793773947bac3530f0ab290338bc37a10f6e2c6e6b8e25b4cd609af32d4"),
+            (0x36442, 0x36448, "7beda793773947bac3530f0ab290338bc37a10f6e2c6e6b8e25b4cd609af32d4"),
+            (0x381e4, 0x381ee, "6140b24f2815bb4bb877cc890f79c799278e16ce63c8c4c6420f92fca641ac06"),
+            (0x385cc, 0x385ee, "76dbb8830589505bcffbe12b7119a2752ee710e1c2d77e1f19d9a05a931cec54"),
+            (0x39980, 0x3998a, "00485b34b181dcf82d371b763032064bdcb25916e022b2836f1decf838ba6262"),
+            (0x3c95e, 0x3c96e, "947b6f45c9f40def72dc880558d615fc5c6181f84b3194c6bf4538c452aaa22b"),
+            (0x4409e, 0x440aa, "ccdff1fa0f12e50730cea718635d79d68b7ebb3ee8078352ca3625972626e9fa"),
+            (0x4ddb4, 0x4ddc6, "4d5dfd1dabe259872579cd78062253c99e692fc4d9207a75babedbeb9cc2e4c4"),
+            (0x4e1f0, 0x4e206, "33cabce43f7b33e81ed669a4ee68d439013f10f896a62cecd855c30d428ea011"),
+            (0x8de02, 0x8de4c, "dd03dec20ec732967ad9f0235a561f54a5dca3e87de2ec4876df797f2b6ed904"),
+            (0x9a898, 0x9a8b2, "55869e7a28283d82839a2bd8ff01ea8831ceb18f5432aedc7a863439ddfa284e"),
+            (0x9d900, 0x9d906, "ac5f05490f1258f844f30fa3844daa0caea65dacbf7b7a0cb5f8ce9a84f31856"),
+            (0xa1028, 0xa1034, "81ea1818235696d5e4903fed1a3c23c989fb708e6d7187c05ba2976dd469d5dc"),
+            (0xacae4, 0xacae8, "38439949f9c4527b02a6e837404dcaa3ab154f94c9dbf46d5067cc61f0a52263"),
+            (0xacd42, 0xacd46, "b9868618219ced4f27e81a0d71453e35a9159905b5debfe40d50dc7e981e2bb7"),
+            (0xbc254, 0xbc264, "3b7c5d64adae37099ff123698db18348e05a472d5dc947a9c7e4bc59055b6087"),
+            (0xbdf0a, 0xbdf10, "cb5ea3534074bffb24d617ee7000902ceb676d359f3c61f614a160059acb4bfe"),
+            (0xc08b6, 0xc08c6, "e6ebe3ecf50bd8d377d594292b5d8c3bd941f3696a70ce9e681159b700cc11d4"),
+            (0xcab5e, 0xcab62, "67fec57ad0f09d65b76e6b24abcea28f32aa21c9d1092a44b1ef043857afc071"),
+            (0xcab8a, 0xcab8e, "81d72b752d6c42237063fa206c626ebdd4d476a0742a53c0269038adb462be77"),
+            (0xccfb2, 0xccfe6, "bcea0013f723217c7e207b88991370e5486bd67445eb8164ed6db2edf32d9f1f"),
+            (0xcd75a, 0xcd760, "d70c1583a1af38f004f1c5e463e6cd146e01de422485889313b815bc30ef1a5a"),
+            (0xcf4a2, 0xcf4a6, "a42514383c9bfdb95ae4f769ea079e60f2eaff00636994a89d231d1d5d7bea83"),
+            (0xcf522, 0xcf526, "3b6663c5a71a94d4cb3bcdbac3286d537c59a44252f897d7777f30c5ced95d0e"),
+            (0xd1f3e, 0xd1f4c, "14ac59c4a8e1c0f62e0caa2fea55c899e2403867f21a56bcb888fb0223d1637c"),
+            (0xd2592, 0xd2596, "f1e8b749cb2a7568af0ec3c60432705c67d95a9b7652f2de5c3862dd0d2c068d"),
+            (0x2a808, 0x2a822, "231b66ee7a8ce9c80e63ba5279a2653fc6a981dbb345bdbb4e523d42c3376ba2"),
+            (0x2c81e, 0x2c830, "9bf0dcdb67705207b80ac048bc23dc35e916223559cdbedc8de268b4336a35f5"),
+            (0x329ce, 0x329f2, "f3e942bc2111141b5830972fce44ae089dc7718fb40e4425715b7a7b2aa58472"),
+            (0x337a0, 0x337d4, "b4ceb02532ae75b70634eafb900c5a98d95f3c0f39dcb0c81c2c5779f9e17f99"),
+            (0x35e98, 0x35ebe, "c1f7383ee83c358fad3bd8cc3194a7425463451ce61805da4ac13dba0073b2aa"),
+            (0xd71da, 0xd7206, "8515113591ac1bfd7730f7fae4ed4c1423bdeb71c842858236e9e5f3425bcf54"),
+            (0x145112, 0x14512a, "ac4550da86e8263be6858806bf3679677c88b963167e82758232ea5680fd53da"),
+            (0x14cb12, 0x14cb36, "c076c79d470942b8b5d767ed34ecc097d9f1f48a0143c57b72eef8d9071b8135"),
+            (0x9ec, 0xa04, "85b14f354968c81b060bfccb1928462ebfb1e583c16110da8beda8d2575e6f76"),
+            (0xf8a, 0xfa2, "562a581d10e2fea9caac26d4083a08f966070c2520342d943654d91b1b4080d7"),
+            (0x3830, 0x384c, "6d47ed2879126cb290fc9c68ebe2ff498e3ea108d7293a03837473fa14bcf96c"),
+            (0xc75a, 0xc782, "014eee1a92afaece5686562698b25d898463d9d04815f14bf7383236725d5ee9"),
+            (0xc7bc, 0xc7c4, "f15f2299eb5c9b0c81f4e435135c4d28e01d5ecad7b21949d991f23d174ccc77"),
+            (0x1168a, 0x116a0, "cdaafe4e3fac1559739bf95f88d37e7dbecbd9d8c6cc370df0ebca9d12517c2d"),
+            (0x1aed6, 0x1afb2, "9bf63dfb7887080dc99bd6b8a0f7613d3086c718ec618742fe10965929afe8ed"),
+            (0x1c83e, 0x1c87e, "9cc6596a5ea6441f385358ddf919423d0b9d32e3f8c23a3029814943c46d7fef"),
+            (0x2054c, 0x20562, "ecfc95904a9caaa36e30977f829d7526e2173e280a0d7aa6b4e58eb973ca3c6e"),
+            (0x20674, 0x20682, "7857a12287a41cb3d3915fc254bcf5323c336b64b013e6952f61c3e912311841"),
+            (0x254f6, 0x25536, "8e2a597b12ed04c5f655190b2b69322e8738e62c2706039b98ae8afd7fb36e3e"),
+            (0x26546, 0x26562, "cd441d11434b560d3a134276b4dcf5c4e841e9673c0c99986fc5d8dcef577b6d"),
+            (0x2c894, 0x2c89c, "d7b13e1ceae21e1f7d2fbab3cd283703c78f1177e06e0e83473e0478e20768a4"),
+            (0x32692, 0x326b4, "c91254915395953d1cf375f1b3296b1a98d3a82e9e9f9a44f364a4f993101ce6"),
+            (0x37b10, 0x37b2a, "6cfceaed67002714690da33195950df7e5f5c8bd99f600f4923caae6bed7ef30"),
+            (0x3880e, 0x38834, "67af512f77dafabf5b23fe7184095515d538bb1363f8b393750ed6c8115f4892"),
+            (0x3cde2, 0x3ce18, "4c7aae5bdf992f2b19198c83ce1a31c9024678fbb4c73014fba9356c3234cf7b"),
+            (0x3d440, 0x3d46e, "ee8f6678cdccf76ca2e8e9f49a8112420bd8002169fe5d0c5da73ff1412959c7"),
+            (0x43f66, 0x43f80, "db8f867fff705fe091e719e41e7a0096c60019fc985f4fd018ab11da596ef962"),
+            (0x44102, 0x44142, "375e8f6a50426adaad74b90987b04637b61be0fd4b7d62c3dfafef06ea1bd1de"),
+            (0x28a6, 0x28b8, "a21b48477e07e687bc7a7df4d4f427880c4e3807c74bc5192a7d1ef46c23b44d"),
+            (0x38a8, 0x38c0, "40cec971694f7d0d2ffad8405e29e8e8833db53fa4a62fabdee8d708dd3e1ce4"),
+            (0x99f2, 0x9a02, "73cc89d729ea6205d00efd9a60bd145165f429f17a31e6093710cf473421bfeb"),
+            (0xc52a, 0xc570, "774077559d8299b8799e928d0c142520baf10dfc6938352b081e75c2edabeb56"),
+            (0x1bb3e, 0x1bbd0, "f0c3f07e02a56309d3d77e94982df5f3224b450a78a190264329226ed1c25609"),
+            (0x1bc98, 0x1bcb8, "d0bf9014eea47aa5bf333222272dc27c621e179080446a2edb3939aaf73b9dad"),
+            (0x1ecae, 0x1ecc6, "859fe79704d6737ae2c239621e0121d2b895adce4f2e1a1df7be6f1953baf9b1"),
+            (0x23cbe, 0x23cf2, "ae2fac0f4b410cfed22d73ec603e0869ef73e8214a634b62d9a9f7c9aa1c23e3"),
+            (0x32b42, 0x32b58, "d1f8ddedfdad4ff81196763852feb6066f057791a250ada43f0bfb0ba0586f1c"),
+            (0x38012, 0x3802c, "6bc68ad9bf81a67245927812d4b8a112fc7949df5bd798deaf116d5d23073ecb"),
+            (0x9a604, 0x9a63a, "3926fa01376810bf70fd3e56c776b4d13155e402488e951c49c16ce02db331fe"),
+            (0x128ef2, 0x128f40, "f538af36f1609674565cca6b9a8a33c7ed0054b862c175f581e6c6f8117705df"),
+            (0x12bdc0, 0x12be42, "30be75691a9d0a3eb764473696266785cc20aa651e11f6f5241a502e4fe88bb2"),
+            (0x37a0, 0x37ce, "c3686aca6651bd1be77e44559121ed9d38510aca87d42e69fa42213573272939"),
+            (0xc3ae, 0xc3c8, "5d12f8ff6d95a29646e4c03fa99a2e6cbaa411c508e831a56bf0bfca40552767"),
+            (0x251e8, 0x25242, "137cc991e4cdac56ca32f7f4e7d701d7d25ae9ba7b9c678d19f2b8e4f750083b"),
+            (0x2da04, 0x2da74, "20d72b5a37d5f4034224dd83543af965d96383bcfc1154afca963c33940d32c3"),
+            (0x2ee96, 0x2eef8, "c014a8b02ae3386e525817704a0c83397e2b617ea40a8d3b5a5b568265c48cbb"),
+            (0x3812a, 0x38174, "07fff0ea3620eaafbb198292c44af8fe0bd4939540290a5c752b2b84eeb70e5a"),
+            (0x382c0, 0x38334, "ce08a23f068e9755477e54a1eabe48a73b3eabd1a2abebd166c4573b902b6cd2"),
+            (0x4314c, 0x431c2, "9a9d97f48c9e0501ded62320a442d30ecef1c8698d4c4b3232d241080e85d3ec"),
+            (0x4e246, 0x4e2a8, "73776f7509f581eabddc677a19b7788ec8f24482ad649b0e038375238c7ce378"),
+            (0xbdfc2, 0xbe020, "626dec2d108c05547cb6a222377b6c13e56c7e988f108bcc7706b6cad6f1963d"),
+            (0x23a9e, 0x23ac8, "e09551cd4c0157db2db78d7f85483146da09e21d6e9214e48b20f185412c66c3"),
+            (0x23b02, 0x23b5c, "855eea0d7f4e8df18ea971a53535c42b7c8e793434f0c5445a44a560138f5066"),
+            (0x25298, 0x252e2, "2375fed6df2d0b41ae3f6f5bdf0d1ace891ccad58117d2b37fd34718daaa1b68"),
+            (0x2c8d2, 0x2c904, "a98659ec287ab0ffba4658a13fde54356d4d3e54b21963f591c32830b0459a56"),
+            (0x2cb8a, 0x2cbd0, "2eca6ccaf5132d28cc1572fee8b6f7c933f5989f7cb2f0a2cac5cf53b7247752"),
+            (0x2ecd0, 0x2ed04, "e0dd5df04c1f1f2abdee45f1ee94a9512d955ad9e0ac606bcc63614b4bc3dc54"),
+            (0x9a2ca, 0x9a35e, "f441389b1fa2e5a8504cd709de745dde02a27b15dc2351e0b27970cea5924f99"),
+            (0x12793c, 0x127994, "731bcc422f1c33601865e0e236cee1c079f85ac5c42ff90eeebe52f4e506ab0c"),
+            (0x239e4, 0x23a72, "97a627aa6274bef7844d2914a6053a4a8550cfb4009730997145fb49a52add5b"),
+            (0x3d05c, 0x3d168, "ca2126fe9e6273e1439e84c85614b90bd59a2f6f7fd50206056eb0ff73b64ca4"),
+            (0xbbaa4, 0xbbbf0, "6451d9d0dddb096ab6cc8070db7a76df5442886ac005050c777f602d7145f49e"),
+            (0x127a3c, 0x127b08, "4954f1838850e53f607a0c9c8c547fdb379c80937bad03d4f309743c58bac0ff"),
+        ] {
+            if ffta_rom::digest(&rom[start..end]) != expected {
+                return Err("White Flowers literal reader context mismatch".into());
+            }
         }
         let prior = PriorSources::new(previous)?;
         let mut literals = Vec::with_capacity(LITERAL_COUNT);
@@ -3261,6 +4427,166 @@ impl Catalog {
                 value: u32::from_le_bytes(bytes.try_into().unwrap()) });
             sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
         }
+        let mut white_flowers_observed = Vec::with_capacity(WHITE_FLOWERS_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("White Flowers observed Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_additional = Vec::with_capacity(WHITE_FLOWERS_ADDITIONAL_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_ADDITIONAL {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Additional White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_additional.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_later = Vec::with_capacity(WHITE_FLOWERS_LATER_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_LATER {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Later White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_later.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_thirteen = Vec::with_capacity(WHITE_FLOWERS_THIRTEEN_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_THIRTEEN {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Thirteen-pool White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_thirteen.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_many = Vec::with_capacity(WHITE_FLOWERS_MANY_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_MANY {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Twenty-eight-pool White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_many.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_bulk = Vec::with_capacity(WHITE_FLOWERS_BULK_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_BULK {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Sixty-two-pool White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_bulk.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_remaining = Vec::with_capacity(WHITE_FLOWERS_REMAINING_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_REMAINING {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Remaining-pool White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_remaining.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_mixed = Vec::with_capacity(WHITE_FLOWERS_MIXED_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_MIXED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Mixed-switch White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_mixed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut white_flowers_final = Vec::with_capacity(WHITE_FLOWERS_FINAL_COUNT);
+        for (offset, reader, expected_opcode) in WHITE_FLOWERS_FINAL {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Final-switch White Flowers Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            white_flowers_final.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
+        let mut star_cross_observed = Vec::with_capacity(STAR_CROSS_OBSERVED_COUNT);
+        for (offset, reader, expected_opcode) in STAR_CROSS_OBSERVED {
+            let at = reader as usize;
+            let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+            if offset & 3 != 0 || opcode != expected_opcode || opcode & 0xf800 != 0x4800
+                || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                || prior.contains(offset, 4)?
+                || sources.iter().any(|source| source.offset < offset + 4 && offset < source.offset + source.length)
+            {
+                return Err("Star Cross Thumb literal reader or source mismatch".into());
+            }
+            let bytes = &rom[offset as usize..offset as usize + 4];
+            star_cross_observed.push(LiteralWord { source_offset: offset, reader_offset: reader,
+                value: u32::from_le_bytes(bytes.try_into().unwrap()) });
+            sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
+        }
         let decoded = ThumbPcLiterals {
             literals,
             additional,
@@ -3281,6 +4607,16 @@ impl Catalog {
             firaga_code_observed,
             firaga_mixed_observed,
             firaga_residual_observed,
+            white_flowers_observed: Some(white_flowers_observed),
+            white_flowers_additional: Some(white_flowers_additional),
+            white_flowers_later: Some(white_flowers_later),
+            white_flowers_thirteen: Some(white_flowers_thirteen),
+            white_flowers_many: Some(white_flowers_many),
+            white_flowers_bulk: Some(white_flowers_bulk),
+            white_flowers_remaining: Some(white_flowers_remaining),
+            white_flowers_mixed: Some(white_flowers_mixed),
+            white_flowers_final: Some(white_flowers_final),
+            star_cross_observed: Some(star_cross_observed),
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

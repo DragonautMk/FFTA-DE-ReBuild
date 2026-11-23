@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "inventory-european-white-flowers-rom-reads",
+  "title": "Inventory European White Flowers ROM reads",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Inventory selected original-ROM reads during an existing White Flowers battle-entry continuation against the current E275 resources."
+  ],
+  "validation": [
+    "Wine unit e362-white-flowers-audit-wine-tqqmw74v compares 700 raw/managed frames with matching state, clock, video, OAM, dispatch and nonempty audio; server drained.",
+    "The address-only report identifies 8,039 sampled bytes outside E275 declared sources for subsequent classification."
+  ],
+  "limitations": [
+    "Address and reader do not prove executing PCs, source extents or data formats. Other scenes/readers, source-save history, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

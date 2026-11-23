@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "plan-european-white-flowers-signed-byte-projection",
+  "title": "Plan European White Flowers signed byte projection",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Identify a signed-byte reader sequence and 48 non-overlapping source bytes covering three sampled offsets."
+  ],
+  "validation": [
+    "Wine disassemblies o1ejpxi9 and qvbss5me and protected source plan g28z8ftk fingerprint the reader, root owner, cursor helper and selected bytes."
+  ],
+  "limitations": [
+    "The read occurs before cursor normalization; preserve fallback for initial indices outside the projection. Controlled original-reader/helper proof, asset extent, ancestry, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

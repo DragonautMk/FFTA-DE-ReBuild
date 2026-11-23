@@ -110,6 +110,8 @@ use gba_core::rom_data::{
     firaga_palette_rows::FiragaPaletteRows, FIRAGA_PALETTE_ROWS_ID, FIRAGA_PALETTE_ROWS_FILE, MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES,
     firaga_stack_initialization::FiragaStackInitialization, FIRAGA_STACK_INITIALIZATION_ID, FIRAGA_STACK_INITIALIZATION_FILE, MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES,
     firaga_queued_transfer::FiragaQueuedTransfer, FIRAGA_QUEUED_TRANSFER_ID, FIRAGA_QUEUED_TRANSFER_FILE, MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES,
+    white_flowers_signed_bytes::WhiteFlowersSignedBytes, WHITE_FLOWERS_SIGNED_BYTES_ID, WHITE_FLOWERS_SIGNED_BYTES_FILE, MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES,
+    white_flowers_isolated_values::WhiteFlowersIsolatedValues, WHITE_FLOWERS_ISOLATED_VALUES_ID, WHITE_FLOWERS_ISOLATED_VALUES_FILE, MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -310,6 +312,44 @@ mod soil_remaining_switch_tests;
 mod soil_copied_halfwords_tests;
 #[cfg(test)]
 mod soil_transfer_records_tests;
+#[cfg(test)]
+mod firaga_linked_transfer_tests;
+#[cfg(test)]
+mod firaga_palette_projection_tests;
+#[cfg(test)]
+mod firaga_ccec_indirect_tests;
+#[cfg(test)]
+mod white_flowers_indexed_archive_tests;
+#[cfg(test)]
+mod white_flowers_queued_rows_tests;
+#[cfg(test)]
+mod white_flowers_direct_indexed_tests;
+#[cfg(test)]
+mod white_flowers_literal_pools_tests;
+#[cfg(test)]
+mod white_flowers_additional_literals_tests;
+#[cfg(test)]
+mod white_flowers_later_literals_tests;
+#[cfg(test)]
+mod white_flowers_thirteen_literals_tests;
+#[cfg(test)]
+mod white_flowers_many_literals_tests;
+#[cfg(test)]
+mod white_flowers_bulk_literals_tests;
+#[cfg(test)]
+mod white_flowers_remaining_literals_tests;
+#[cfg(test)]
+mod white_flowers_switch_tests;
+#[cfg(test)]
+mod white_flowers_residual_switches_tests;
+#[cfg(test)]
+mod white_flowers_mixed_switches_tests;
+#[cfg(test)]
+mod white_flowers_final_switches_tests;
+#[cfg(test)]
+mod white_flowers_isolated_values_tests;
+#[cfg(test)]
+mod white_flowers_signed_bytes_tests;
 #[cfg(test)]
 mod soil_other_transfer_tests;
 #[cfg(test)]
@@ -596,6 +636,14 @@ mod ui_context_templates_tests;
 mod compact_obj_catalog_tests;
 #[cfg(test)]
 mod compact_redspring_tests;
+#[cfg(test)]
+mod compact_starcross_tests;
+#[cfg(test)]
+mod star_cross_lz_tests;
+#[cfg(test)]
+mod star_cross_literals_tests;
+#[cfg(test)]
+mod star_cross_copied_tables_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod redspring_lz_source_tests;
 #[cfg(test)]
@@ -768,6 +816,18 @@ mod slot_job_lookup_runtime_tests;
 mod observed_task_parameters_runtime_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod vertical_correction_extension_tests;
+#[cfg(test)]
+mod firaga_vertical_extension_tests;
+#[cfg(test)]
+mod firaga_scoped_index2_tests;
+#[cfg(test)]
+mod firaga_palette_switches_tests;
+#[cfg(test)]
+mod firaga_signed_halfwords_tests;
+#[cfg(test)]
+mod firaga_index2_fields_tests;
+#[cfg(test)]
+mod firaga_indirect_index2_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod llednar_draw_list_tests;
 #[cfg(test)]
@@ -910,6 +970,8 @@ mod native_rom_data_residue_tests;
 mod host_rom_read_audit_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod lower_rom_read_sites_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod white_flowers_operand_sites_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod bank_rom_read_audit_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
@@ -1334,6 +1396,8 @@ fn parse_firaga_transfer_program(bytes: &[u8]) -> Result<FiragaTransferProgram, 
 fn parse_firaga_palette_rows(bytes: &[u8]) -> Result<FiragaPaletteRows, String> { let value: FiragaPaletteRows = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_palette_rows: {e}"))?; value.validate()?; Ok(value) }
 fn parse_firaga_stack_initialization(bytes: &[u8]) -> Result<FiragaStackInitialization, String> { let value: FiragaStackInitialization = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_stack_initialization: {e}"))?; value.validate()?; Ok(value) }
 fn parse_firaga_queued_transfer(bytes: &[u8]) -> Result<FiragaQueuedTransfer, String> { let value: FiragaQueuedTransfer = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_queued_transfer: {e}"))?; value.validate()?; Ok(value) }
+fn parse_white_flowers_signed_bytes(bytes: &[u8]) -> Result<WhiteFlowersSignedBytes, String> { let value: WhiteFlowersSignedBytes = serde_json::from_slice(bytes).map_err(|e| format!("Invalid white_flowers_signed_bytes: {e}"))?; value.validate()?; Ok(value) }
+fn parse_white_flowers_isolated_values(bytes: &[u8]) -> Result<WhiteFlowersIsolatedValues, String> { let value: WhiteFlowersIsolatedValues = serde_json::from_slice(bytes).map_err(|e| format!("Invalid white_flowers_isolated_values: {e}"))?; value.validate()?; Ok(value) }
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1391,6 +1455,8 @@ fn encode_firaga_transfer_program(value: &FiragaTransferProgram) -> Result<Vec<u
 fn encode_firaga_palette_rows(value: &FiragaPaletteRows) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_palette_rows: {e}")) }
 fn encode_firaga_stack_initialization(value: &FiragaStackInitialization) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_stack_initialization: {e}")) }
 fn encode_firaga_queued_transfer(value: &FiragaQueuedTransfer) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_queued_transfer: {e}")) }
+fn encode_white_flowers_signed_bytes(value: &WhiteFlowersSignedBytes) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode white_flowers_signed_bytes: {e}")) }
+fn encode_white_flowers_isolated_values(value: &WhiteFlowersIsolatedValues) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode white_flowers_isolated_values: {e}")) }
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1708,6 +1774,8 @@ struct Dataset {
     firaga_palette_rows: Option<FiragaPaletteRows>,
     firaga_stack_initialization: Option<FiragaStackInitialization>,
     firaga_queued_transfer: Option<FiragaQueuedTransfer>,
+    white_flowers_signed_bytes: Option<WhiteFlowersSignedBytes>,
+    white_flowers_isolated_values: Option<WhiteFlowersIsolatedValues>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1836,6 +1904,8 @@ struct Dataset {
     firaga_palette_rows_bytes: Option<Vec<u8>>,
     firaga_stack_initialization_bytes: Option<Vec<u8>>,
     firaga_queued_transfer_bytes: Option<Vec<u8>>,
+    white_flowers_signed_bytes_bytes: Option<Vec<u8>>,
+    white_flowers_isolated_values_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -1990,6 +2060,8 @@ impl Dataset {
             firaga_palette_rows: self.firaga_palette_rows.as_ref().zip(self.firaga_palette_rows_bytes.as_deref()),
             firaga_stack_initialization: self.firaga_stack_initialization.as_ref().zip(self.firaga_stack_initialization_bytes.as_deref()),
             firaga_queued_transfer: self.firaga_queued_transfer.as_ref().zip(self.firaga_queued_transfer_bytes.as_deref()),
+            white_flowers_signed_bytes: self.white_flowers_signed_bytes.as_ref().zip(self.white_flowers_signed_bytes_bytes.as_deref()),
+            white_flowers_isolated_values: self.white_flowers_isolated_values.as_ref().zip(self.white_flowers_isolated_values_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2212,6 +2284,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let firaga_palette_rows_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_PALETTE_ROWS_ID).then(||read_bounded(&path.join(FIRAGA_PALETTE_ROWS_FILE),MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES)).transpose()?;
     let firaga_stack_initialization_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_STACK_INITIALIZATION_ID).then(||read_bounded(&path.join(FIRAGA_STACK_INITIALIZATION_FILE),MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES)).transpose()?;
     let firaga_queued_transfer_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_QUEUED_TRANSFER_ID).then(||read_bounded(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES)).transpose()?;
+    let white_flowers_signed_bytes_bytes=manifest.coverage.iter().any(|id|id==WHITE_FLOWERS_SIGNED_BYTES_ID).then(||read_bounded(&path.join(WHITE_FLOWERS_SIGNED_BYTES_FILE),MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES)).transpose()?;
+    let white_flowers_isolated_values_bytes=manifest.coverage.iter().any(|id|id==WHITE_FLOWERS_ISOLATED_VALUES_ID).then(||read_bounded(&path.join(WHITE_FLOWERS_ISOLATED_VALUES_FILE),MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES)).transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2386,6 +2460,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_palette_rows_bytes.as_ref().map_or(0, Vec::len),
         firaga_stack_initialization_bytes.as_ref().map_or(0, Vec::len),
         firaga_queued_transfer_bytes.as_ref().map_or(0, Vec::len),
+        white_flowers_signed_bytes_bytes.as_ref().map_or(0, Vec::len),
+        white_flowers_isolated_values_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2515,6 +2591,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let firaga_palette_rows=firaga_palette_rows_bytes.as_deref().map(parse_firaga_palette_rows).transpose()?;
     let firaga_stack_initialization=firaga_stack_initialization_bytes.as_deref().map(parse_firaga_stack_initialization).transpose()?;
     let firaga_queued_transfer=firaga_queued_transfer_bytes.as_deref().map(parse_firaga_queued_transfer).transpose()?;
+    let white_flowers_signed_bytes=white_flowers_signed_bytes_bytes.as_deref().map(parse_white_flowers_signed_bytes).transpose()?;
+    let white_flowers_isolated_values=white_flowers_isolated_values_bytes.as_deref().map(parse_white_flowers_isolated_values).transpose()?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2694,6 +2772,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_palette_rows,
         firaga_stack_initialization,
         firaga_queued_transfer,
+        white_flowers_signed_bytes,
+        white_flowers_isolated_values,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2822,6 +2902,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_palette_rows_bytes,
         firaga_stack_initialization_bytes,
         firaga_queued_transfer_bytes,
+        white_flowers_signed_bytes_bytes,
+        white_flowers_isolated_values_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -2978,6 +3060,8 @@ fn check_dataset_budget(
     firaga_palette_rows: usize,
     firaga_stack_initialization: usize,
     firaga_queued_transfer: usize,
+    white_flowers_signed_bytes: usize,
+    white_flowers_isolated_values: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3122,6 +3206,8 @@ fn check_dataset_budget(
         || firaga_palette_rows as u64 > MAX_FIRAGA_PALETTE_ROWS_FILE_BYTES
         || firaga_stack_initialization as u64 > MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES
         || firaga_queued_transfer as u64 > MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES
+        || white_flowers_signed_bytes as u64 > MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES
+        || white_flowers_isolated_values as u64 > MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3272,6 +3358,8 @@ fn check_dataset_budget(
         .saturating_add(firaga_palette_rows)
         .saturating_add(firaga_stack_initialization)
         .saturating_add(firaga_queued_transfer)
+        .saturating_add(white_flowers_signed_bytes)
+        .saturating_add(white_flowers_isolated_values)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3514,6 +3602,8 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.firaga_palette_rows {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_PALETTE_ROWS_ID} file={} rows={}",dataset.manifest.resources[143].sha256,data.rows.len());}
     if let Some(data)=&dataset.firaga_stack_initialization {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_STACK_INITIALIZATION_ID} file={} groups={}",dataset.manifest.resources[144].sha256,data.word_pairs.len()+2);}
     if let Some(data)=&dataset.firaga_queued_transfer {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_QUEUED_TRANSFER_ID} file={} halfwords={}",dataset.manifest.resources[145].sha256,data.halfwords.len());}
+    if let Some(data)=&dataset.white_flowers_signed_bytes {eprintln!("ROM_DATA runtime=decoded resource={WHITE_FLOWERS_SIGNED_BYTES_ID} file={} values={}",dataset.manifest.resources[146].sha256,data.values.len());}
+    if let Some(data)=&dataset.white_flowers_isolated_values {eprintln!("ROM_DATA runtime=decoded resource={WHITE_FLOWERS_ISOLATED_VALUES_ID} file={} row_values={}",dataset.manifest.resources[147].sha256,data.row.len());}
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3713,6 +3803,8 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.firaga_palette_rows_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_PALETTE_ROWS_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.firaga_stack_initialization_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_STACK_INITIALIZATION_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.firaga_queued_transfer_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_QUEUED_TRANSFER_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
+        if let Some(i)=resources.white_flowers_signed_bytes_stats() {eprintln!("ROM_DATA_USE resource={WHITE_FLOWERS_SIGNED_BYTES_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
+        if let Some(i)=resources.white_flowers_isolated_values_stats() {eprintln!("ROM_DATA_USE resource={WHITE_FLOWERS_ISOLATED_VALUES_ID} dataset={} bus_reads={} row_bytes={} byte_bytes={} row_mask={}",resources.dataset_sha256(),i.bus_reads,i.row_source_bytes,i.byte_source_bytes,i.row_values_mask);}
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -4147,6 +4239,8 @@ fn write_dataset_inner(
     let firaga_palette_rows_data=source.firaga_palette_rows.as_ref().map(|c|encode_firaga_palette_rows(&c.decoded)).transpose()?;
     let firaga_stack_initialization_data=source.firaga_stack_initialization.as_ref().map(|c|encode_firaga_stack_initialization(&c.decoded)).transpose()?;
     let firaga_queued_transfer_data=source.firaga_queued_transfer.as_ref().map(|c|encode_firaga_queued_transfer(&c.decoded)).transpose()?;
+    let white_flowers_signed_bytes_data=source.white_flowers_signed_bytes.as_ref().map(|c|encode_white_flowers_signed_bytes(&c.decoded)).transpose()?;
+    let white_flowers_isolated_values_data=source.white_flowers_isolated_values.as_ref().map(|c|encode_white_flowers_isolated_values(&c.decoded)).transpose()?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4307,6 +4401,8 @@ fn write_dataset_inner(
     if let Some(bytes)=&firaga_palette_rows_data {files.push(bytes);}
     if let Some(bytes)=&firaga_stack_initialization_data {files.push(bytes);}
     if let Some(bytes)=&firaga_queued_transfer_data {files.push(bytes);}
+    if let Some(bytes)=&white_flowers_signed_bytes_data {files.push(bytes);}
+    if let Some(bytes)=&white_flowers_isolated_values_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4458,6 +4554,8 @@ fn write_dataset_inner(
         firaga_palette_rows_data.as_ref().map_or(0, Vec::len),
         firaga_stack_initialization_data.as_ref().map_or(0, Vec::len),
         firaga_queued_transfer_data.as_ref().map_or(0, Vec::len),
+        white_flowers_signed_bytes_data.as_ref().map_or(0, Vec::len),
+        white_flowers_isolated_values_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4602,6 +4700,8 @@ fn write_dataset_inner(
     if let Some(bytes)=&firaga_palette_rows_data {write(&path.join(FIRAGA_PALETTE_ROWS_FILE),bytes)?;}
     if let Some(bytes)=&firaga_stack_initialization_data {write(&path.join(FIRAGA_STACK_INITIALIZATION_FILE),bytes)?;}
     if let Some(bytes)=&firaga_queued_transfer_data {write(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),bytes)?;}
+    if let Some(bytes)=&white_flowers_signed_bytes_data {write(&path.join(WHITE_FLOWERS_SIGNED_BYTES_FILE),bytes)?;}
+    if let Some(bytes)=&white_flowers_isolated_values_data {write(&path.join(WHITE_FLOWERS_ISOLATED_VALUES_FILE),bytes)?;}
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4972,6 +5072,8 @@ mod tests {
             firaga_palette_rows: None,
             firaga_stack_initialization: None,
             firaga_queued_transfer: None,
+            white_flowers_signed_bytes: None,
+            white_flowers_isolated_values: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5299,8 +5401,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

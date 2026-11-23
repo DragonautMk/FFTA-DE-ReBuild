@@ -26086,3 +26086,493 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: E336 authenticates 52 original LDR/source pairs, 208 sampled bytes, in 19 European code windows. Runtime publication remains open.
 - Evidence: source plan `e336-firaga-residual-literals-source-plan-6fg1_6yj`, Wine disassembly `e336-firaga-residual-literals-disassembly-wine-d9ijk6ak` drained; E335 join `77a2186_`.
 - Limits: linear disassembly and address-only sample do not establish individual executed PCs; other readers and scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-FIRAGA-RESIDUAL-LITERALS
+
+- Outcome: completed
+- Verified criteria: E266-d265 extends the existing literal resource with 52 authenticated European words; prior entries, other resources and guest fallback are preserved. Original readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e336-firaga-residual-literals-source-plan-6fg1_6yj`, reconciled build `e337-residual-build-evidence-reconciled-06cq110j`, reader `e337-firaga-residual-literals-readers-wine-tmmrcebi`, scene `e337-firaga-residual-literals-scene-wine-m1fas74s`, CLI `e337-firaga-residual-literals-cli-wine-qgtz2kbo`, join `e337-firaga-residual-literals-sample-residual-29h_ckxv`; all Wine servers drained. E302 residual is 105 sampled bytes.
+- Diagnostics: Sol `/root/sol_e337_io_diagnosis`, GPT-6.1 Sol/xhigh requested (effective settings unconfirmed), identified shared target I/O wait; both executions subsequently advanced.
+- Limits: original build unit remains FAIL due broken pipe. One retained continuation; other readers, values and scenes, source-save history, real BIOS and UI save/Load unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-VERTICAL-EXTENSION
+
+- Outcome: completed for the selected source plan
+- Verified criteria: E338 authenticates 22 sampled unowned bytes as the physical projection of the original uncapped vertical lookup at indices 10..20, preserving the prior indices 4..9. Runtime publication remains open.
+- Evidence: `e338-firaga-vertical-extension-source-plan-hmwlk2jk`; E151 reader `e151-vertical-extension-wine-92o14x87`; E337 join `29h_ckxv`.
+- Limits: address-only sample does not establish an individual executing PC or full table bounds; other consumers and scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-FIRAGA-VERTICAL-EXTENSION
+
+- Outcome: completed
+- Verified criteria: E267-d266 extends the physical vertical lookup projection with indices 10..20, preserves prior formats and guest fallback, and isolates correction accounting. Original interpreted/generated readers and transfers, 606-frame poisoned-source scene and production CLI pass on Wine.
+- Evidence: source plan `e338-firaga-vertical-extension-source-plan-hmwlk2jk`, reader `e339-firaga-vertical-extension-readers-wine-tzkb51gc`, scene `e339-firaga-vertical-extension-scene-wine-kf23c29b`, CLI `e339-firaga-vertical-extension-cli-wine-huxmebx6`, join `e339-firaga-vertical-extension-sample-residual-o6wga3mh`; all Wine servers drained. E302 residual is 83 sampled bytes.
+- Limits: one retained continuation; the address-only sample lacks individual PCs, and other indices/callers/scenes, source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-SCOPED-INDEX2
+
+- Outcome: completed source-plan selection
+- Verified criteria: E302 sampled word `39a820` and byte `39a876` are unowned physical index-2 projections of bases used by authenticated original readers; the word is nonzero.
+- Evidence: `e340-firaga-scoped-index2-source-plan-b3kir03p`, prior Wine disassembly `e298-soil-remaining-readers-disassembly-wine-0c4y0luh`; E267 owns prior index-4 values.
+- Limits: the address-only sample does not establish executing PCs or a common invocation. Publication, other indices/readers/scenes, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-VALIDATION-STDOUT-BROKEN-PIPE
+
+- Outcome: completed for the selected Wine validation
+- Verified criteria: a successful unit no longer changes its receipt to FAIL or exits 120 solely because its final output pipe is closed after cleanup; genuine retirement errors remain in the existing failure handler.
+- Evidence: Wine proof `e341-closed-stdout-wine-proof-v6cjp6xu`, inner unit `e341-closed-stdout-cli-wine-zf76dich`; EUR production CLI verified, exit 0, receipt PASS, scratch removed, Wine server drained. Earlier outer proof `e341-closed-stdout-wine-proof-qsu55wxi` remains FAIL with exit 120; inner Wine unit passed and drained.
+- Limits: dedicated Linux host regression tests for true retirement and output failures remain open; native Windows unverified. No performance comparison.
+
+### ROMDATA-04-FIRAGA-SCOPED-INDEX2
+
+- Outcome: completed
+- Verified criteria: E268-d267 serves the two E340 indexed projections, preserves prior values/format and fallback, and rejects partial or forged values. Original interpreted/generated loads, 606 altered-source scene frames and production CLI pass on Wine.
+- Evidence: source plan `e340-firaga-scoped-index2-source-plan-b3kir03p`, reader `e342-firaga-scoped-index2-readers-wine-4cdn3xwg`, scene `e342-firaga-scoped-index2-scene-wine-5o3bgt5b`, CLI `e342-firaga-scoped-index2-cli-wine-54wdcjp2`, join `e342-firaga-scoped-index2-sample-residual-81qecn8v`; Wine servers drained. E302 residual is 78 sampled bytes. Initial test build `e342-firaga-scoped-index2-build-g222eg2j` remains FAIL for a missing test trait import, corrected in `e342-firaga-scoped-index2-build-uracfril`.
+- Limits: the address-only sample lacks PCs and does not prove a common invocation or complete table extent. Other indices/callers/scenes, source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-PALETTE-SWITCH-DIAGNOSIS
+
+- Outcome: completed read-only diagnosis
+- Verified criteria: retained disassemblies show unsigned 12/14-way palette dispatches with roots `0d7b7c`/`0d7d70` and destination ranges `0d7b80..bb0`/`0d7d74..dac`. The E302 sample contains words at `0d7b90`, `0d7da4` and `0d7da8`; exact PC attribution is unproved.
+- Evidence: `target/rom-data-palette-programs/script-palette-entry.txt`, `palette-direct-colors-update.txt`, E342 join `e342-firaga-scoped-index2-sample-residual-81qecn8v`. Consultant `/root/sol_e343_residual_diagnosis` requested GPT-6.1 Sol/xhigh; effective configuration unconfirmed.
+- Limits: independently authenticate exact ROM fingerprints, root ownership, all destination bounds and overlap before publication; other clusters/readers/scenes and Linux/USA/native Windows remain open. No performance measurement.
+
+### ROMDATA-01-FIRAGA-PALETTE-SWITCH-PLAN
+
+- Outcome: completed source-plan selection
+- Verified criteria: exact EUR ROM fingerprint, unsigned guards and literal roots authenticate 12/14-way destination tables, 104 disjoint source bytes, 26 even targets and 12 E302-sampled bytes; roots remain prior-owned.
+- Evidence: `e344-firaga-palette-switch-source-plan-o0cbwelm`; prior read-only Sol diagnosis `/root/sol_e343_residual_diagnosis` requested GPT-6.1 Sol/xhigh, effective configuration unconfirmed.
+- Limits: no runtime data published; sample has no executing PCs. Other indices/readers/scenes, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-PALETTE-SWITCH
+
+- Outcome: completed
+- Verified criteria: E269-d268 serves two guarded 12/14-way palette switch destination arrays, preserving prior roots, representation and guest fallback. Wine checks all 26 entries in interpreted/generated paths, out-of-range paths, transfers, snapshot retention, 606 altered-source frames and production CLI. Indirect `MOV pc` uses interpreter fallback.
+- Evidence: source plan `e344-firaga-palette-switch-source-plan-o0cbwelm`, reader `e345-firaga-palette-switch-readers-wine-n12uhnkp`, scene `e345-firaga-palette-switch-scene-wine-19we6cc1`, CLI `e345-firaga-palette-switch-cli-wine-lkro3br9`, join `e345-firaga-palette-switch-sample-residual-no7zdoby`; Wine servers drained. E302 residual is 66 sampled bytes.
+- Limits: address-only sample lacks individual PCs and does not prove all readers/scenes or full-ROM coverage. Source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-SHORT-NATIVE-CONTEXT
+
+- Outcome: completed bounded negative observation
+- Verified criteria: existing Wine observer compares state and outputs for 12 retained EUR Firaga frames; its native API capture contains none of the 66 E302 E269-residual bytes. Wine drained.
+- Evidence: `e346-firaga-residual-native-context-wine-hle43zmn`, E302 audit and E345 residual join.
+- Limits: no absence claim beyond this short capture; interpreter fallback, host/HLE/direct DMA, later frames and other scenes are excluded. Native PC/dispatch are not exact instruction sites. Longer targeted capture or an independent source contract is required for attribution; Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-14CF-READERS
+
+- Outcome: completed bounded reader discovery
+- Verified criteria: E269 leaves 24 E302-sampled halfword bytes compatible with readers `08007aba` and `08007ad0`, base `14cf30` and second-view displacement `80`, at indices 18, 23, 24, 25, 26 and 32. The retained sample does not identify executing PCs.
+- Evidence: `e347-firaga-14cf-pointer-xrefs-zh94vzfa`; Wine disassembly `e336-firaga-residual-literals-disassembly-wine-d9ijk6ak`.
+- Limits: exact source and full physical reader domains require a protected plan before publication; semantic table extent, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-14CF-PROJECTION-PLAN
+
+- Outcome: completed source-plan selection
+- Verified criteria: exact EUR code and prior literal roots authenticate two 256-index signed-halfword physical views. Their 640-byte union is unowned in E269 and contains 24 E302-sampled bytes; publishing it would leave 42 sampled residual bytes.
+- Evidence: `e348-firaga-14cf-projection-source-plan-bq_cnj9n`; prior E347 xref and E336 Wine disassembly.
+- Limits: arbitrary low-byte addressability does not prove each input reachable, a semantic table extent or individual E302 PCs. Runtime publication, other readers/scenes, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-14CF-PROJECTION
+
+- Outcome: completed
+- Verified criteria: E270-d269 serves the 640-byte union of two signed-halfword readers' low-byte physical domains, preserving prior sources, literal roots, serialized representation and guest fallback. Wine verifies 84 original interpreted/generated reader cases, transfers, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e348-firaga-14cf-projection-source-plan-bq_cnj9n`, reader `e349-firaga-signed-halfwords-readers-wine-lh4xw9gy`, scene `e349-firaga-signed-halfwords-scene-wine-0w4y_z_n`, CLI `e349-firaga-signed-halfwords-cli-wine-q2nr5p9n`, join `e349-firaga-signed-halfwords-sample-residual-io3xsjg4`; Wine servers drained. E302 residual is 42 sampled bytes. An initial scene preflight met the concurrent join's catalog lease and launched no unit; the lease released normally before the successful sequential retry.
+- Limits: address-only sample lacks individual PCs; physical addressability does not prove input reachability or a semantic table extent. Other readers/scenes, source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-INDEX2-FIELDS
+
+- Outcome: completed bounded reader discovery
+- Verified criteria: E270 leaves nine E302-sampled bytes compatible with original index-2 fields at `39cc96`, `39cca8..aa`, `39ccba`, `39ccd2` and `39ccfc..cd00`. The retained sample does not identify executing PCs.
+- Evidence: `e350-firaga-39a-39cc-pointer-xrefs-u0fvo5nk`; retained `target/rom-data-palette-programs/indexed-handlers/000eb830.txt` and `000eba5c-parent.txt`.
+- Limits: exact source fingerprints and ownership require a protected plan before publication; semantic table extents, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-FIRAGA-INDEX2-FIELDS-PLAN
+
+- Outcome: completed source-plan selection
+- Verified criteria: exact EUR code and prior literal roots authenticate five index-2 physical fields, nine disjoint bytes, all in the E302 sample; publishing them would leave 33 sampled residual bytes.
+- Evidence: `e351-firaga-index2-fields-source-plan-tmv0x8by`; prior E350 xref and retained Firaga disassemblies.
+- Limits: the sample does not attribute PCs; guest bounds and semantic extents remain open. Runtime publication, other readers/scenes, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-INDEX2-FIELDS
+
+- Outcome: completed
+- Verified criteria: E271-d270 serves five scoped index-2 fields, preserving prior compact data, literal roots, serialized representation and guest fallback. Wine verifies 40 original interpreted/generated field and root cases, transfers, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e351-firaga-index2-fields-source-plan-tmv0x8by`, reader `e352-firaga-index2-fields-readers-wine-enxi8h4h`, scene `e352-firaga-index2-fields-scene-wine-jn68cocs`, CLI `e352-firaga-index2-fields-cli-wine-zbyfd8qq`, join `e352-firaga-index2-fields-sample-residual-pxnn7sao`; Wine servers drained. E302 residual is 33 sampled bytes.
+- Limits: address-only sample lacks individual PCs; complete table extents and all readers/scenes are unproved. Source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-INDIRECT-INDEX2-PLAN
+
+- Outcome: completed source-plan selection
+- Verified criteria: exact EUR code and prior literal root authenticate the index-2 eight-byte physical record at `39aac4..39aacc`, disjoint from E271; seven bytes occur in the E302 sample. Publishing it would leave 26 sampled residual bytes.
+- Evidence: `e353-firaga-indirect-index2-source-plan-lojq8qbl`; prior E293 source/reader evidence and E352 residual join.
+- Limits: the sample does not attribute PCs or pointer ancestry; guest bounds and semantic extents remain open. Runtime publication, other readers/scenes, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-04-FIRAGA-INDIRECT-INDEX2
+
+- Outcome: completed
+- Verified criteria: E272-d271 serves the eight-byte indirect index-2 record, preserving prior records, literal roots, serialized representation and guest fallback. Wine verifies 20 original interpreted/generated cases, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e353-firaga-indirect-index2-source-plan-lojq8qbl`, reader `e354-firaga-indirect-index2-readers-wine-b7cio2t3`, scene `e354-firaga-indirect-index2-scene-wine-lx36oq5k`, CLI `e354-firaga-indirect-index2-cli-wine-_s7qf3ro`, join `e354-firaga-indirect-index2-sample-residual-61erx_sh`; Wine servers drained. E302 residual is 26 sampled bytes.
+- Limits: address-only sample lacks individual PCs and pointer ancestry; other indices, callers and scenes are unproved. Source-save history, real BIOS and UI save/Load are unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-RESIDUAL-READERS
+
+- Outcome: completed for candidate identification
+- Verified criteria: protected Wine disassembly `e355-firaga-residual-readers-disassembly-wine-fvczyws1` PASS/drained; E342 original index-2 pointer/count, E286/E287 row readers and exact EUR inspection identify a type-3 row at 39a758 linked to descriptor 39a678 and existing wrapper b0dd58. Candidate spans are unowned and intersect 17 sampled bytes.
+- Limits: the E302 address sample lacks executing PCs and does not prove the conditional path; the linked-source plan, runtime publication, other readers/scenes, Linux/USA/native Windows remain open. Sol `/root/sol_e343_residual_diagnosis` xhigh requested/effective settings unconfirmed. No performance comparison.
+
+### ROMDATA-01-FIRAGA-LINKED-TRANSFER-PLAN
+
+- Outcome: completed for selected EUR source plan
+- Verified criteria: `e356-firaga-linked-transfer-source-plan-8or7qly_` authenticates E342 conditional pointer/count and code, 12-byte row, eight-byte descriptor, prior wrapper/stream ownership and 17-byte E302 intersection.
+- Limits: plan does not publish runtime data or prove sample PCs/path, arbitrary indices, other callers/scenes, Linux/USA/native Windows. No performance comparison.
+
+### ROMDATA-04-FIRAGA-LINKED-TRANSFER
+
+- Outcome: completed for selected EUR/Wine scope
+- Verified criteria: E273-d272 serves the 12-byte row and eight-byte descriptor while preserving previous representations, shared wrapper/stream ownership and guest fallback. Wine verifies six original interpreter/generated reader cases, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e356-firaga-linked-transfer-source-plan-8or7qly_`, reader `e357-firaga-linked-transfer-readers-wine-be8l1_ah`, scene `e357-firaga-linked-transfer-scene-wine-izp2e4pq`, CLI `e357-firaga-linked-transfer-cli-wine-6dug_n2c`, join `e357-firaga-linked-transfer-sample-residual-ah1pd9hx`; Wine servers drained. E302 residual is nine sampled bytes. Build `8st6vdhe` was superseded after a test-only flag collision; corrected build `akrs7470` passed.
+- Limits: address-only sample lacks individual PCs and does not prove conditional path ancestry; other indices, callers/scenes, source-save history, real BIOS and UI save/Load remain unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-PALETTE-PROJECTION-PLAN
+
+- Outcome: completed for selected EUR source plan
+- Verified criteria: `e358-firaga-palette-projection-source-plan-dtoi3884` authenticates original bounded caller/reader, 16-halfword interval, existing literal owner, disjoint E273 source and two-byte E302 intersection.
+- Limits: bound is conditional; plan does not publish runtime data or prove sample PCs/path, other callers/scenes, Linux/USA/native Windows. No performance comparison.
+
+### ROMDATA-04-FIRAGA-PALETTE-PROJECTION
+
+- Outcome: completed for selected EUR/Wine scope
+- Verified criteria: E274-d273 serves 16 palette halfwords while preserving previous banks, literal root and guest fallback. Wine verifies 32 original interpreter/generated reader cases, an out-of-projection fallback, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e358-firaga-palette-projection-source-plan-dtoi3884`, reader `e359-firaga-palette-projection-readers-wine-4vc70dqr`, scene `e359-firaga-palette-projection-scene-wine-mrf6k1gq`, CLI `e359-firaga-palette-projection-cli-wine-x3vrl3f5`, join `e359-firaga-palette-projection-sample-residual-w9mdf6yf`; Wine servers drained. E302 residual is seven sampled bytes.
+- Limits: address-only sample lacks individual PCs and does not prove the conditional caller path; other callers/scenes, source-save history, real BIOS and UI save/Load remain unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-FIRAGA-CCEC-INDIRECT-PLAN
+
+- Outcome: completed for selected EUR source plan
+- Verified criteria: `e360-firaga-ccec-indirect-source-plan-zt7zwucy` authenticates E352 conditional pointer, original indirect consumer, eight-byte record, prior root/pointer owners and all seven E302 residual bytes.
+- Limits: plan does not publish runtime data or prove sample PCs/path, other callers/scenes, Linux/USA/native Windows. No performance comparison.
+
+### ROMDATA-04-FIRAGA-CCEC-INDIRECT
+
+- Outcome: completed for selected EUR/Wine scope
+- Verified criteria: E275-d274 serves the eight-byte indirect record while preserving prior records, indexed pointer/root owners and guest fallback. Wine verifies 20 original interpreter/generated cases, snapshot retention, 606 altered-source frames and production CLI.
+- Evidence: source plan `e360-firaga-ccec-indirect-source-plan-zt7zwucy`, reader `e361-firaga-ccec-indirect-readers-wine-zcuhebx4`, scene `e361-firaga-ccec-indirect-scene-wine-_jvgs94x`, CLI `e361-firaga-ccec-indirect-cli-wine-z4yf7_da`, join `e361-firaga-ccec-indirect-sample-residual-idrflo71`; Wine servers drained. E302 residual is zero sampled bytes.
+- Limits: the address-only sample lacks individual PCs and does not prove conditional ancestry or full-ROM coverage; other indices, callers/scenes, source-save history, real BIOS and UI save/Load remain unproved. Older revision-sensitive fixtures need adaptation/rerun; Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-RAW
+
+- Outcome: completed for selected EUR/Wine inventory
+- Verified criteria: `e362-white-flowers-audit-wine-tqqmw74v` compares 700 retained frames against E275 and records 8,039 bytes outside declared sources; Wine server drained.
+- Limits: address-only selected readers do not prove PCs, formats, source extents or full-ROM coverage. Source-save history, other scenes/readers, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-RESIDUAL-GROUPS
+
+- Outcome: completed for selected EUR static grouping
+- Verified criteria: `e363-white-flowers-residual-groups-fa24opzf` verifies and groups all 8,039 unowned E362 sample bytes; 3,600 lie in E246's previously documented copied-code block.
+- Limits: 4,439 remaining sampled bytes need classification; bit-pattern anchors do not prove execution, source extents or full-ROM coverage. Other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-SOURCE-CANDIDATES
+
+- Outcome: completed for bounded EUR candidate identification
+- Verified criteria: `e364-white-flowers-high-xrefs-2v0ucvhi` records four literal candidates; retained disassembly and focused Sol diagnosis identify conditional indexed archive candidate `43b36c` via `395560`/`08089eb4` and original decoder.
+- Limits: source plan, other language archives, ownership and runtime publication remain open. Address sample lacks PCs; other scenes, Linux, USA and native Windows remain open. Sol `/root/sol_e343_residual_diagnosis` xhigh requested/effective settings unconfirmed. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-INDEXED-ARCHIVE-PLAN
+
+- Outcome: completed for selected EUR static source plan
+- Verified criteria: `e365-white-flowers-indexed-archive-source-plan-5d3a1lp3` authenticates five archives, pointer group, original caller/decoder and disjoint prior owners; 1,274 sampled source bytes.
+- Limits: independent parser is not the production parser; runtime, conditional ancestry, other scenes, Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-INDEXED-ARCHIVES
+
+- Outcome: completed for selected EUR/Wine source group and retained scene
+- Verified criteria: E276 publishes five archives, group and four literals. Wine reader `3d7s19no` verifies all five original interpreter/generated decodes, old owners and fallback; altered-source 700-frame scene `y_1th6uh`, CLI `j6kabfzv`, and static join `djytd17l` PASS. Wine drained.
+- Limits: scene consumes only slot 0; 6,765 sampled bytes remain, including 3,600 known copied-code support. Other scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. Failed `hh_l3ixb` retained: test incorrectly assumed slot 5 unowned; corrected test verifies prior owner and unowned slot 30. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-3BA0D8-ROOTS
+
+- Outcome: completed for selected EUR static source plan
+- Verified criteria: Wine disassemblies `z47ofoc0`/`jk8i1ag1`/`lqsxdeqq` and protected plan `f2kk2tp7` identify two conditional 20 × 8 queued halfword projections and three literals; 328 E362 sampled bytes, no E276 owner.
+- Limits: runtime, sample PCs/conditional ancestry, other callers/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-QUEUED-ROWS
+
+- Outcome: completed for selected EUR/Wine queued sources and retained scene
+- Verified criteria: E277 publishes two 20 × 8 halfword projections and three literals. Wine reader `xeokmdlp` verifies original selector, queue and DMA including both alternatives; 700-frame altered-source scene `8n1stan0`, CLI `e368-white-flowers-queued-cli-wine-oxrskpdo`, and static join `ce_e0lx3` PASS. Wine drained.
+- Limits: scene consumes the first projection only; 6,437 sampled bytes remain, including 3,600 known copied-code support. Other scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-RESIDUAL-E277
+
+- Outcome: completed for selected EUR address grouping and source candidates
+- Verified criteria: `47pkvd93` groups 6,437 unowned sampled bytes, 3,600 known copied-code support. Wine disassembly `gljcbz8v` identifies an indexed archive caller at `080cf3e0` and candidate root `3c94bc`.
+- Limits: exact source plan, sample PCs/conditional ancestry, other callers/scenes and Linux/USA/native Windows remain open. Sol `/root/sol_e343_residual_diagnosis` xhigh requested/effective settings unconfirmed. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-3C94BC-PLAN
+
+- Outcome: completed for selected EUR static source plan
+- Verified criteria: protected plan `0oy7mnn2` independently reconstructs 62 programs, authenticates original wrapper and literal, proves no E277 owner and 135 sampled bytes; preserves three-byte gap to prior indexed archive.
+- Limits: production parser, runtime, sample PCs/conditional ancestry, other callers/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-3C94BC
+
+- Outcome: completed for selected EUR/Wine indexed source and retained scene
+- Verified criteria: E278 publishes the 62-program archive and original literal. Wine reader `ywvmnh46` verifies original wrapper, decoder and boundary selectors; 700-frame altered-source scene `9pwn72wh`, CLI `e371-white-flowers-direct-cli-wine-t_d5oash`, and static join `2casb5p1` PASS. Wine drained.
+- Limits: 6,302 sampled bytes remain, including 3,600 known copied-code support. Other programs/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-FOUR-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassemblies `1cfeb1yt`/`dcgqeh_6` and protected plan `bur61cim` authenticate 49 sampled words, original readers and disjoint E278 owners.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-FOUR-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E279 publishes 49 Thumb literal words. Wine reader `6ot86e3c` verifies 98 interpreter/generated cases; 700-frame altered-source scene `th4l8fim` consumes all 49, CLI `e373-white-flowers-literals-cli-wine-eixsrqj_`, and static join `wzleu30g` PASS. Wine drained.
+- Limits: 6,106 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-EIGHT-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `x8vvx3in` and protected plan `_dh5w4pb` authenticate 62 sampled words, original readers and disjoint E279 owners.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-EIGHT-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E280 publishes 62 Thumb literal words. Wine reader `g7ci2tnq` verifies 124 interpreter/generated cases; 700-frame altered-source scene `0kdrgo3_` consumes all 62, CLI `e375-white-flowers-more-literals-cli-wine-ucmhxrmh`, and static join `cjcrgtzy` PASS. Wine drained.
+- Limits: 5,858 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-TEN-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `q6818iy7` and protected plan `ei2nr32i` authenticate 62 sampled words, original readers and disjoint E280 owners.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-TEN-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E281 publishes 62 Thumb literal words. Wine reader `sfa40qnd` verifies 124 interpreter/generated cases; 700-frame altered-source scene `4aph05lq` consumes all 62, CLI `e377-white-flowers-later-literals-cli-wine-se9n4l2l`, and static join `kxz4n64i` PASS. Wine drained.
+- Limits: 5,610 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `5yhjeio9` and protected plan `ro9nq2gs` authenticate 60 sampled words, original readers and disjoint E281 owners.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E282 publishes 60 Thumb literal words. Wine reader `e379-white-flowers-thirteen-literals-readers-wine-xhl37t_m` verifies 120 interpreter/generated cases; 700-frame altered-source scene `e379-white-flowers-thirteen-literals-scene-wine-ukju6ylf` consumes all 60, CLI `e379-white-flowers-thirteen-literals-cli-wine-hjw0548p`, and static join `e379-white-flowers-thirteen-literals-sample-residual-pte_4_ze` PASS. Wine drained.
+- Limits: 5,370 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `umy1ze7f` and protected plan `ig_ne93b` authenticate 92 sampled words, original readers and disjoint E282 owners.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E283 publishes 92 Thumb literal words. Wine reader `e381-white-flowers-many-literals-readers-wine-sn2kn037` verifies 184 interpreter/generated cases; 700-frame altered-source scene `e381-white-flowers-many-literals-scene-wine-qnj53ytl` consumes all 92, CLI `e381-white-flowers-many-literals-cli-wine-n4ygbw8g`, and static join `e381-white-flowers-many-literals-sample-residual-l4g6pt_j` PASS. Wine drained.
+- Limits: 5,002 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `hrfc36ve` and protected plan `vh86eqhl` authenticate 128 sampled words, original readers and disjoint E283 owners. Initial selection `t3dztdqn` failed due a range-length filter; corrected `oty9qqm6` passed.
+- Limits: runtime, sample PCs/ancestry, other candidate pools/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E284 publishes 128 Thumb literal words. Wine reader `e383-white-flowers-bulk-literals-readers-wine-ibbq6jvp` verifies 256 interpreter/generated cases; 700-frame altered-source scene `e383-white-flowers-bulk-literals-scene-wine-8caa5f6p` consumes all 128, CLI `e383-white-flowers-bulk-literals-cli-wine-q0eg09u7`, and static join `e383-white-flowers-bulk-literals-sample-residual-fb5qs3bk` PASS. Wine drained.
+- Limits: 4,490 sampled bytes remain, including 3,600 known copied-code support. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-REMAINING-LITERAL-POOLS
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassembly `4lyi07_z` and protected plan `6teqz1tq` authenticate 182 sampled words, original readers and disjoint E284 owners. Excluded `03320c`: candidate `032eb8` lies in jump-table data, actual reader unproved.
+- Limits: runtime, sample PCs/ancestry, remaining candidates/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-REMAINING-LITERAL-POOLS
+
+- Outcome: completed for selected EUR/Wine literal sources and retained scene
+- Verified criteria: E285 publishes 182 Thumb literal words. Wine reader `e385-white-flowers-remaining-literals-readers-wine-fm569axt` verifies 364 interpreter/generated cases; 700-frame altered-source scene `e385-white-flowers-remaining-literals-scene-wine-tf_2k_48` consumes all 182, CLI `e385-white-flowers-remaining-literals-cli-wine-rm83cqb2`, and static join `e385-white-flowers-remaining-literals-sample-residual-x6f12no9` PASS. Wine drained.
+- Limits: 3,762 sampled bytes remain, including 3,600 known copied-code support and the `03320c` false-positive candidate. Other pools/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-3320C-READER
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: retained Wine disassembly and protected plan `0x7b7450` identify byte-indexed original dispatch, 256 disjoint destinations and sampled indices 5, 45 and 254. The false candidate `032eb8` is jump-table data.
+- Limits: runtime, sample PCs/ancestry, other readers/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-032E-SWITCH
+
+- Outcome: completed for selected EUR/Wine switch destinations and retained scene
+- Verified criteria: E286 publishes 256 Thumb destinations. Wine reader `e387-white-flowers-switch-readers-wine-rzmpfvqn` verifies 10 original interpreter/generated dispatch cases, original guard and fallback; 700-frame altered-source scene `e387-white-flowers-switch-scene-wine-dvb87b5n`, CLI `e387-white-flowers-switch-cli-wine-4zd4hs5l`, and static join `e387-white-flowers-switch-sample-residual-3unoh3bm` PASS. Wine drained. Initial reader `7d7zef1n` used an interior chain stop and failed; corrected test uses the original BL destination. Sol xhigh requested, effective settings unconfirmed.
+- Limits: 3,750 sampled bytes remain, including 3,600 known copied-code support. Other readers/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-RESIDUAL-SWITCHES
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: retained Wine disassembly and protected plan `c4c67ilr` identify seven original switches, 373 disjoint destinations and 40 sampled bytes.
+- Limits: 031618 helper may return, so retain out-of-domain fallback. Runtime, sample PCs/ancestry, other readers/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-RESIDUAL-SWITCHES
+
+- Outcome: completed for selected EUR/Wine switches and retained scene
+- Verified criteria: E287 publishes seven arrays and 373 Thumb destinations. Wine reader `e389-white-flowers-residual-switches-readers-wine-rf3njife` verifies 46 original interpreter/generated dispatch cases, 14 guard and 14 fallback cases; 700-frame altered-source scene `e389-white-flowers-residual-switches-scene-wine-6x87yzpb`, CLI `e389-white-flowers-residual-switches-cli-wine-4yz9hng2`, and static join `e389-white-flowers-residual-switches-sample-residual-6uy1wu37` PASS. Wine drained.
+- Limits: 3,710 sampled bytes remain, including 3,600 known copied-code support. The 031618 helper may return; other readers/scenes/callers, Linux/USA/native Windows and older revision-sensitive fixtures remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-MIXED-SWITCHES
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: retained Wine disassembly and protected plan `_u4vahgs` identify five original switches, 89 disjoint destinations, five unowned literal words and 80 sampled bytes.
+- Limits: 0bbffc helper may return, so retain out-of-domain fallback. Runtime, sample PCs/ancestry, other readers/scenes and Linux/USA/native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-MIXED-SWITCHES
+
+- Outcome: completed for selected EUR/Wine runtime; parent remains partial
+- Verified criteria: E288-d287 publishes five switches and five literals; 42 dispatch, 10 guard, 10 fallback and two literal reader cases PASS (`ge_wrdqh`); 700-frame poisoned-source scene PASS (`s_vunzae`); Wine CLI PASS (`e391-white-flowers-mixed-switches-cli-wine-ausnc_j0`); sample join PASS (`y9chyeki`). All Wine servers drained.
+- Limits: 3,630 sampled bytes remain, 3,600 copied-code support. Helper return, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-FINAL-SAMPLE
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: map `_bg_fj4z`, Wine disassembly `7edn_8m0` and plan `5w_6ycut` authenticate three switches, 30 destinations and three literals covering 24 sampled bytes. Wine drained.
+- Limits: six isolated sampled bytes lack a source contract; 3,600 copied-code support, runtime, sample PCs/ancestry, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-FINAL-SWITCHES
+
+- Outcome: completed for selected EUR/Wine runtime; parent remains partial
+- Verified criteria: E289-d288 publishes three switches and three literals; 14 dispatch, six guard, six fallback and two literal reader cases PASS (`e393-white-flowers-final-switches-readers-wine-7kkhhjbu`); 700-frame poisoned-source scene PASS (`e393-white-flowers-final-switches-scene-wine-vwkx19aq`); Wine CLI PASS (`e393-white-flowers-final-switches-cli-wine-wdmf8psu`); sample join PASS (`e393-white-flowers-final-switches-sample-residual-4a4mml6z`). All Wine servers drained.
+- Limits: 3,606 sampled bytes remain, 3,600 copied-code support. Six isolated bytes, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-ISOLATED-SITES
+
+- Outcome: completed for selected EUR/Wine filtered observation; parent remains partial
+- Verified criteria: `9vq22s5t` observes all six residual bytes in 600 frames; three fall in two interpreter scopes, whose access widths match retained Wine disassembly. Wine drained.
+- Limits: scope can include nested accesses; exact operands/extent and three unscoped readers remain unproved. Other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-397B1E-CONTEXT
+
+- Outcome: completed for selected EUR/Wine context; parent remains partial
+- Verified criteria: `95w54vo0` records three native non-DMA byte reads at 397b1e..397b21 during 600 frames; all share outer dispatch 08083bd1 and exported PC 08083bf2. Wine drained.
+- Limits: exported PC and dispatch need original-code authentication; selector domain, extent, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-397B1E-SOURCE
+
+- Outcome: completed for selected EUR static source plan; parent remains partial
+- Verified criteria: Wine disassemblies `o1ejpxi9`/`qvbss5me` and source plan `g28z8ftk` pin the original byte reader and 48-byte non-overlapping projection covering three sampled bytes. Wine drained.
+- Limits: read precedes cursor normalization; controlled reader/helper proof, source extent, initial index domain, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-397B1E-PROJECTION
+
+- Outcome: completed for selected EUR/Wine runtime; parent remains partial
+- Verified criteria: E290-d289 adds 48 signed bytes; original reader/helper and outside fallback PASS (`e397-white-flowers-signed-bytes-readers-wine-dagykkmv`); 700-frame altered-source scene PASS (`e397-white-flowers-signed-bytes-scene-wine-_s3ccy3e`); Wine CLI PASS (`e397-white-flowers-signed-bytes-cli-wine-c2h7zruq`); sample join PASS (`e397-white-flowers-signed-bytes-sample-residual-9x1r8abz`). All Wine servers drained.
+- Limits: 3,603 sampled bytes remain, 3,600 copied-code support. True source extent, producer ancestry, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-ISOLATED-OPERANDS
+
+- Outcome: completed for selected EUR/Wine operand observation; parent remains partial
+- Verified criteria: `s86speyz` proves direct original byte and halfword operands at 080cf406 and 0802edcc in 600 retained frames; Wine drained.
+- Limits: source extents, selector ancestry, publication, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-ISOLATED-SOURCE-PLAN
+
+- Outcome: completed for selected EUR static plan; parent remains partial
+- Verified criteria: `lnthon5v` authenticates original readers, two prior-owned roots and non-overlapping 20-halfword/one-byte projections covering three sampled bytes.
+- Limits: preserve fallback outside selected physical bytes; full asset extents, ancestry, publication, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-WHITE-FLOWERS-ISOLATED-VALUES
+
+- Outcome: completed for selected EUR/Wine runtime; parent remains partial
+- Verified criteria: E291-d290 adds 20 halfwords and one byte; original readers/fallback PASS (`e400-white-flowers-isolated-values-readers-wine-i8jfpb3l`); 700-frame altered-source scene PASS (`e400-white-flowers-isolated-values-scene-wine-ohe96xlp`); Wine CLI PASS (`e400-white-flowers-isolated-values-cli-wine-05w416tw`); sample join PASS (`e400-white-flowers-isolated-values-sample-residual-urhx1g0d`). All Wine servers drained.
+- Limits: only 3,600 copied-code support bytes remain unowned in the E362 address-only sample; that dependency and other paths/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHITE-FLOWERS-CODE-SUPPORT
+
+- Outcome: completed for selected EUR static reconciliation; parent remains partial
+- Verified criteria: `7yeu1i9c` proves the 3,600 E400 residual addresses equal E246's copied-IWRAM support set and the 48-byte metadata alias is owned.
+- Limits: executable support is excluded from decoded assets and remains in ROM; individual byte classifications, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-ROULETTE-NATIVE-RESIDUAL
+
+- Outcome: completed for selected EUR static reconciliation; parent remains partial
+- Verified criteria: `ycaxc95s` verifies 732/732 formerly unowned E108 native sample bytes are E291-owned and authenticates 175 source spans.
+- Limits: 12 native-API frames only; interpreter/host readers, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-RAW
+
+- Outcome: completed for selected EUR/Wine address inventory; parent remains partial.
+- Verified criteria: `us0nqlxx` compares all 480 retained E291 raw/managed frames, with matching complete state/clock/video/OAM/dispatch and five nonempty audio streams; Wine drained. 7,359 of 243,297 distinct physical bytes read lack E291 owners.
+- Limits: address-only selected readers; PCs, source extents, other readers/scenes, earlier save history, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-RESIDUAL-GROUPS
+
+- Outcome: completed for the selected EUR static grouping; parent remains partial.
+- Verified criteria: `7vnaqwjc` groups 7,359 E403 unowned sampled bytes into 37 intervals; none overlap the documented copied-IWRAM source block. Largest intervals `affc70..b00d96` 4,390 bytes and `6bad16..6bb4f4` 2,014 bytes.
+- Limits: observed intervals, reader classes and candidate Thumb bit patterns do not establish source extents or execution sites. Other scenes/readers, Linux, USA and native Windows remain open; no performance comparison.
+
+### ROMDATA-01-STAR-CROSS-BANK-PLAN
+
+- Outcome: completed for selected EUR source geometry; parent remains partial.
+- Verified criteria: `liuwuxg7` authenticates selectors 0/1 with 24 frames and 23 lists/328 objects, preserves E291 selectors 2/3 and lists 23–28, and identifies 2,116 new bytes. All are sampled through bus, including 2,014 list bytes through sprite peek.
+- Limits: original source geometry and address-level overlap only; runtime integration, individual selector timing, callers, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-BANK-RUNTIME
+
+- Outcome: completed for selected EUR/Wine bank integration; parent remains partial.
+- Verified criteria: E292-d291 serves 2,116 added bytes. Reader `mooa591q` preserves earlier banks and 147 other resources, checks original readers, altered-source boundaries, 22 typed lists and coherent-edit rejection. Scene `gf1aql83` matches all 480 frames with the new source altered and observes positive bus/typed-sprite use, zero raw sprite peeks. CLI `v988px6y` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one recorded continuation; other selectors/callers/scenes, source-save history, real BIOS, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E292-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `lgz7_nd7` joins the E403 sample against E292: 2,116 previously unowned sampled compact-bank bytes now have owners, leaving 5,243 in 33 intervals; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-LZ-PLAN
+
+- Outcome: completed for selected EUR static source geometry; parent remains partial.
+- Verified criteria: `vx5hei60` authenticates two type-10 streams at `affc70..b00d96` and `b00d9c..b00fd6`, totaling 4,960 encoded and 9,296 decoded bytes; all encoded bytes were sampled by the E403 bus and have no E292 owner.
+- Limits: format/geometry and sampled address overlap only; asset identity, original PCs, runtime integration, DMA/real BIOS, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-LZ-RUNTIME
+
+- Outcome: completed for selected EUR/Wine LZ integration; parent remains partial.
+- Verified criteria: E293-d292 serves 4,960 encoded and 9,296 decoded bytes. Reader `d2ksd6ci` preserves 20 previous streams and 147 other resources and checks SWI, DMA/CpuSet/CpuFastSet, forged-file rejection, mirrors/boundaries and snapshot ownership. Scene `lqmy00iv` matches all 480 frames with sources altered and one managed HLE call for each new stream. CLI `m_69fwj8` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one retained continuation; asset identity, other callers/scenes, save ancestry, real BIOS, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E293-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `0_a1p9o7` joins the E403 sample against E293: 4,960 previously unowned sampled LZ bytes now have owners, leaving 283 in 31 intervals; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-LITERALS-PLAN
+
+- Outcome: completed for selected EUR/Wine disassembly/source plan; parent remains partial.
+- Verified criteria: `2u_db_rz` authenticates 19 original Thumb PC-relative reader/word pairs covering 76 E403 sampled bytes with no E293 owner; Wine drained.
+- Limits: static instruction relationships do not prove execution or scene ancestry; runtime consumption, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-STAR-CROSS-LITERALS-RUNTIME
+
+- Outcome: completed for selected EUR/Wine literal integration; parent remains partial.
+- Verified criteria: E294-d293 serves 19 words/76 bytes. Reader `2_yy7brj` preserves earlier literal representation and 147 other resources, checks forged data, mirrors/boundaries, snapshot ownership and 38 interpreter/generated reader cases. Scene `lhr7hg1i` matches all 480 frames with 19 source words altered and observes all words served. CLI `da0uz463` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one retained continuation; exact scene PCs, other callers/scenes, save ancestry, real BIOS, Linux, USA and native Windows remain open. Old revision-sensitive Wine fixtures are listed for recovery. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E294-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `6zwywcjb` joins the E403 sample against E294: 76 previously unowned sampled literal bytes now have owners, leaving 207 in 22 intervals; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-COPIED-TABLES-PLAN
+
+- Outcome: completed for selected EUR static source geometry; parent remains partial.
+- Verified criteria: `3j15jgkp` authenticates four contiguous copied spans totaling 60 sampled unowned bytes, their separately owned roots, original direct/helper copy paths and adjacent Soil Evidence owner.
+- Limits: sampled addresses and static code do not prove exact scene branches or all callers; runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.

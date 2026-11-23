@@ -5317,14 +5317,1469 @@ subsequently owned, 105 would remain. The plan publishes no resource. Linear
 disassembly and the address-only sample do not prove that any individual PC
 executed for a sampled access.
 
-Runtime publication and the altered-source scene remain to be verified. Other
-readers, values, scenes, real BIOS, UI save/Load, Linux, USA and native Windows
+Runtime publication and an altered-source scene were subsequently verified in
+E337 below. Other readers, values, scenes, real BIOS, UI save/Load, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E337 Firaga residual Thumb literal runtime
+
+EUR E266-d265 extends `engine.thumb-pc-literals` with the E336 52 authenticated
+source words (208 bytes), preserving previous literals, other resources and
+fallback for addresses without an owner. Original guest instructions remain
+active; no other reader or source bound is inferred.
+
+Wine reader `e337-firaga-residual-literals-readers-wine-tmmrcebi` confirms all prior literals and 145 other resources are
+unchanged, rejects coherent data/hash edits, checks poisoned mirrors and mixed
+boundaries, and compares 104 interpreted/generated original-reader cases. DMA,
+CpuSet, CpuFastSet and snapshot owner retention pass.
+
+Wine scene `e337-firaga-residual-literals-scene-wine-m1fas74s` compares 606 retained Firaga frames with the selected
+backing bytes altered; all 52 words are consumed (mask `0xfffffffffffff`).
+State, guest clock, video, OAM, dispatch and five nonempty audio streams match
+at every frame. The source save's earlier history is unknown. Wine CLI `e337-firaga-residual-literals-cli-wine-qgtz2kbo`
+creates, reuses and verifies 147 matching files. All Wine servers drained with
+the local Bluetooth overlay.
+
+The original build unit `e337-firaga-residual-literals-build-mve1jq1_` remains
+FAIL after a broken pipe at the paused session's output; its command exited 0
+and cleanup completed. Protected independent reconciliation
+`e337-residual-build-evidence-reconciled-06cq110j` verified source/driver and
+evidence hashes, executable hash and PE architecture; no rebuild was needed.
+
+Static join `e337-firaga-residual-literals-sample-residual-29h_ckxv` leaves 105 E302 sampled addresses outside E266 sources.
+The address-only sample does not establish every original reader or full-ROM
+coverage. Other readers, values and scenes, real BIOS, UI save/Load, older
+revision-sensitive fixtures, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+## E340 Firaga scoped index 2 source plan
+
+Protected source plan `e340-firaga-scoped-index2-source-plan-b3kir03p`
+reconciles the E302 address sample with E267 and the earlier authenticated
+Soil scoped readers. The sample includes an unowned word at `39a820` and a
+byte at `39a876`, corresponding to index 2 of bases `39a818` and `39a874`.
+The original instructions at `080e61cc` and `080e61d6` can read these
+entries, using the same guest byte index. The second read is conditional on
+the word being nonzero; the authenticated index-2 word is nonzero. E267
+already owns index 4 of each table.
+
+The sample contains no executing PCs and does not establish that either
+access used these readers, or that they occurred in one invocation. The
+five-byte source plan publishes no runtime data and does not establish table
+extents, all indices, callers or scenes. Runtime publication and selected Wine
+validation were subsequently verified in E342 below. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+## E342 Firaga scoped index 2 runtime
+
+EUR E268-d267 extends `engine.soil-scoped-values` with the E340 word and
+byte at physical index 2, retaining the six earlier values and the previous
+serialized representation. The guest index remains unrestricted; other
+physical entries retain prior-owner or ROM fallback. The two added values
+are validated as a pair and authenticated against the original ROM.
+
+Wine reader `e342-firaga-scoped-index2-readers-wine-4cdn3xwg` verifies the earlier representation and all 145
+other resources, rejects incomplete or forged data, checks altered mirrors and
+mixed boundaries, and compares 12 original interpreted/generated load cases
+for indices 2, 3 and 4. Wine scene `e342-firaga-scoped-index2-scene-wine-5o3bgt5b` compares 606 retained Firaga
+frames with the five source bytes altered and consumes both new entries. Full
+state, guest clock, video, OAM, dispatch and five nonempty audio streams match
+at every frame. The source save's earlier history remains unknown. Wine CLI
+`e342-firaga-scoped-index2-cli-wine-54wdcjp2` creates, reuses and verifies 147 matching files. Wine drained with the
+local Bluetooth overlay.
+
+Static join `e342-firaga-scoped-index2-sample-residual-81qecn8v` leaves 78 E302 sampled bytes outside E268 sources.
+The address-only sample does not establish individual executing PCs, a common
+invocation, all consumers or complete table extent. Other indices and scenes,
+real BIOS, UI save/Load, older revision-sensitive Wine fixtures, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E344 Firaga palette switch source plan
+
+Protected plan `e344-firaga-palette-switch-source-plan-o0cbwelm` authenticates
+two EUR palette-command dispatches at roots `0d7b7c` and `0d7d70`, whose root
+words already belong to `engine.thumb-pc-literals`. Original unsigned guards
+select 12 and 14 word destinations at `0d7b80..0d7bb0` and `0d7d74..0d7dac`.
+All 26 destination values are even and lie in `08000000..081fffff`; the 104
+source bytes are disjoint from E268 sources. Twelve bytes appear in the E302
+address-only sample, so publication would leave 66 sampled bytes outside its
+sources. The plan does not publish data or attribute individual sample reads to PCs.
+
+Sol consultation `/root/sol_e343_residual_diagnosis` identified the candidates
+from the retained palette disassemblies; GPT-6.1 Sol/xhigh was requested, with
+effective configuration unconfirmed. The protected plan independently checks
+the EUR ROM, original instructions, roots, targets, owner ranges and sample.
+Runtime publication and selected Wine validation were subsequently verified
+in E345 below. Other consumers/scenes, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E345 Firaga palette switch runtime
+
+EUR E269-d268 extends `engine.thumb-switch-tables` with the two E344
+palette-command destination arrays: 26 words, 104 source bytes. Prior literal
+roots and tables remain owned by their existing resources; original guest guards
+and fallback remain active. The previous 32-table representation remains
+parseable, and incomplete 33-table data is rejected.
+
+Wine reader `e345-firaga-palette-switch-readers-wine-n12uhnkp` verifies the earlier tables and 145 other resources,
+rejects forged data, checks altered mirrors and mixed boundaries, and compares
+52 guarded interpreter/generated cases and eight out-of-range paths. The
+indirect `MOV pc` uses interpreter fallback. Direct out-of-range loads, DMA,
+CpuSet, CpuFastSet and snapshot owner retention also pass.
+
+Wine scene `e345-firaga-palette-switch-scene-wine-19we6cc1` compares 606 retained Firaga frames with all 104 source
+bytes altered; both new tables are consumed. State, guest clock, video, OAM,
+dispatch and five nonempty audio streams match at each frame. The source save's
+earlier history is unknown. Wine CLI `e345-firaga-palette-switch-cli-wine-lkro3br9` creates, reuses and verifies 147
+matching files. Wine drained with the local Bluetooth overlay.
+
+Static join `e345-firaga-palette-switch-sample-residual-no7zdoby` leaves 66 E302 sampled bytes outside E269 sources. The
+address-only sample does not establish individual executing PCs, all readers,
+scenes or full-ROM coverage. Other cases, real BIOS, UI save/Load, older
+revision-sensitive Wine fixtures, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+## E346 Firaga short native residual context
+
+Wine observer `e346-firaga-residual-native-context-wine-hle43zmn` reused the
+E269 dataset and retained Firaga checkpoint for 12 frames. The observed and
+unwrapped native paths matched complete state, guest clock, video, OAM,
+dispatch and nonempty audio at each frame; Wine drained. Joining the observer
+with the 66 addresses remaining in the E302 sample found no intersection.
+
+This is a negative result only for the short selected native-API capture. It
+does not exclude later reads, interpreter fallback, host/HLE or direct DMA
+reads, other scenes or different source-save history. Native exported PCs may
+be stale and outer dispatch can include chained blocks. A longer targeted
+Wine capture or an independently authenticated source contract is required
+before using those addresses to attribute readers. No performance comparison
+was made.
+
+## E347 Firaga signed halfword reader candidates
+
+Protected pointer scan `e347-firaga-14cf-pointer-xrefs-zh94vzfa` joins the
+E302 sample to E269 and finds 24 unowned bytes in two parallel halfword
+clusters. Retained Wine disassembly
+`e336-firaga-residual-literals-disassembly-wine-d9ijk6ak` shows original signed
+halfword readers at `08007aba` and `08007ad0`, using base `14cf30` and, for
+the latter, an additional `80` bytes. Each scales the low input byte by two.
+The sampled pairs match physical indices 18, 23, 24, 25, 26 and 32 in both
+views. The address-only E302 sample does not establish the executing PCs.
+
+The full low-byte physical read domain was subsequently authenticated in E348
+below; neither reader establishes a complete semantic table extent. Runtime
+publication, other indices, readers, scenes, Linux, USA and native Windows
 remain open. No performance comparison was made.
 
-The E337 E266-d265 publication is a draft, not an accepted runtime result. The
-user paused the work during Windows build
-`e337-firaga-residual-literals-build-mve1jq1_`; its session exited 130 while
-its unit receipt remained running and its local lease remained present. Before
-any restart or lease action on resume, inspect ownership, child processes and
-outputs. The affected Wine reader, transfer, altered-scene, CLI and residual
-join checks have not run.
+## E348 Firaga signed halfword physical projection plan
+
+Protected plan `e348-firaga-14cf-projection-source-plan-bq_cnj9n` authenticates
+the exact EUR instruction sequences and prior literal roots for the E347
+readers. For each arbitrary low input byte, the first reads a signed halfword
+from `14cf30 + 2 * index` and the second from `14cfb0 + 2 * index`. The two
+256-entry physical views overlap by 384 bytes; their union is the 640-byte
+interval `14cf30..14d1b0`, with no E269 owner. All 24 E347 sample bytes occur
+in that union, so publication would leave 42 sampled bytes outside its sources.
+
+This union describes addresses permitted by the instructions, not proven
+reachable inputs or one semantic table. The E302 sample does not establish
+executing PCs. Runtime publication and selected Wine validation were later
+verified in E349 below; other consumers, scenes, Linux, USA and native Windows
+remain open. No performance comparison was made.
+
+## E349 Firaga signed halfword physical projection runtime
+
+EUR E270-d269 adds the 640-byte E348 union as an explicit signed physical
+projection in `engine.copied-halfword-lookups`. The two new readers access
+this projection directly; no claim is made that it is copied by the guest.
+Previous halfword groups and the separately owned literal roots are preserved,
+and guest indices and fallback remain unchanged. The preceding representation
+without the projection remains parseable.
+
+Wine reader `e349-firaga-signed-halfwords-readers-wine-lh4xw9gy` verifies prior data and 145 other resources, rejects
+invalid or forged content, checks altered mirrors and mixed boundaries, and
+compares 84 original interpreted/generated reader cases including low-byte
+aliases. DMA, CpuSet, CpuFastSet and snapshot owner retention also pass.
+Wine scene `e349-firaga-signed-halfwords-scene-wine-0w4y_z_n` compares 606 retained Firaga frames with all 640 source
+bytes altered; both physical regions are consumed. State, guest clock, video,
+OAM, dispatch and five nonempty audio streams match at each frame. The source
+save's earlier history is unknown. Wine CLI `e349-firaga-signed-halfwords-cli-wine-q2nr5p9n` creates, reuses and
+verifies 147 matching files. Wine drained with the local Bluetooth overlay.
+
+Static join `e349-firaga-signed-halfwords-sample-residual-io3xsjg4` leaves 42 E302 sampled bytes outside E270 sources. The
+source union does not prove arbitrary input reachability, a semantic table
+extent, individual sample PCs, all readers or full-ROM coverage. Other scenes,
+real BIOS, UI save/Load, older revision-sensitive Wine fixtures, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E350 Firaga indexed field candidates
+
+Protected pointer scan `e350-firaga-39a-39cc-pointer-xrefs-u0fvo5nk` examines
+40 residual E302 bytes near `39a` and `39cc`. Retained Firaga constructor
+disassemblies show five compatible index-2 physical fields: bytes at `39cc96`,
+`39ccba` and `39ccd2`, a halfword at `39cca8`, and a word at `39ccfc`. Their
+original reader instructions are `080eb93e`, `080ebc10`, `080eb962`,
+`080eb8c0` and `080eb990`, respectively; existing literal roots point to the
+corresponding bases. These nine bytes are in the address-only E302 sample,
+which does not establish their executing PCs or a complete table extent.
+
+The source contracts were subsequently authenticated in E351 below. Runtime
+publication, the other residual addresses, indices, readers, scenes, Linux,
+USA and native Windows remain open. No performance comparison was made.
+
+## E351 Firaga indexed field source plan
+
+Protected plan `e351-firaga-index2-fields-source-plan-tmv0x8by` authenticates
+the exact EUR instruction sequences, five existing literal roots and five
+index-2 physical fields identified in E350. The nine source bytes are disjoint
+from E270 owners and all occur in the E302 address-only sample; publication
+would leave 33 sampled bytes outside its sources. Widths and original guest
+indexing are preserved. The source plan publishes no runtime data.
+
+The sample lacks executing PCs and these physical fields do not establish
+complete tables or guest index bounds. Runtime publication and selected Wine
+validation were later verified in E352 below; other consumers/scenes, Linux,
+USA and native Windows remain open. No performance comparison was made.
+
+## E352 Firaga indexed field runtime
+
+EUR E271-d270 extends `graphics.firaga-compact-cells` with the five E351
+index-2 physical fields, totaling nine source bytes. Existing compact data,
+the separately owned literal roots and original guest fallback are preserved.
+The preceding representation without these fields remains parseable; the
+resource does not impose a guest index bound.
+
+Wine reader `e352-firaga-index2-fields-readers-wine-enxi8h4h` verifies prior data and 145 other resources, rejects
+forged content, checks altered mirrors and mixed boundaries, and compares 40
+original interpreted/generated field and root cases including adjacent
+indices. DMA, CpuSet, CpuFastSet and snapshot owner retention also pass.
+Wine scene `e352-firaga-index2-fields-scene-wine-jn68cocs` compares 606 retained Firaga frames with the nine source
+bytes altered; all five fields are consumed. State, guest clock, video, OAM,
+dispatch and five nonempty audio streams match at each frame. The source save's
+earlier history is unknown. Wine CLI `e352-firaga-index2-fields-cli-wine-zbyfd8qq` creates, reuses and verifies 147
+matching files. Wine drained with the local Bluetooth overlay.
+
+Static join `e352-firaga-index2-fields-sample-residual-pxnn7sao` leaves 33 E302 sampled bytes outside E271 sources. The
+address-only sample does not establish individual executing PCs, complete
+table extents, all readers or full-ROM coverage. Other scenes, real BIOS, UI
+save/Load, older revision-sensitive Wine fixtures, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+## E353 Firaga indirect index 2 source plan
+
+Protected plan `e353-firaga-indirect-index2-source-plan-lojq8qbl` authenticates
+the existing eight-byte-stride reader and its prior literal root at `0e4b84`.
+Index 2 selects the record at `39aac4..39aacc`, disjoint from E271 owners.
+Seven of the eight bytes occur in the E302 address-only sample, so publishing
+the record would leave 26 sampled bytes outside its sources. The established
+record layout preserves its halfword, byte and halfword fields; no guest
+index bound is inferred. The source plan publishes no runtime data.
+
+The sample does not establish executing PCs or pointer ancestry. Runtime
+publication and selected Wine validation were later verified in E354 below;
+other indices, callers, scenes, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+## E354 Firaga indirect index 2 runtime
+
+EUR E272-d271 extends `engine.soil-indirect-records` with the authenticated
+index-2 record at `39aac4..39aacc`. The previous five records, their literal
+roots, serialized representation and original guest fallback are preserved;
+no guest index bound is asserted.
+
+Wine reader `e354-firaga-indirect-index2-readers-wine-b7cio2t3` verifies 20
+original interpreter/generated cases, altered source mirrors and mixed
+boundaries, authentication, the prior representation and 145 unchanged
+resources, plus snapshot ownership. Wine scene
+`e354-firaga-indirect-index2-scene-wine-lx36oq5k` consumes the new record
+with its eight original bytes altered over 606 retained Firaga frames. State,
+guest clock, video, OAM, dispatch and five nonempty audio streams match at
+each frame. The source save's earlier history is unknown. Wine CLI
+`e354-firaga-indirect-index2-cli-wine-_s7qf3ro` creates, reuses and verifies
+147 matching files; Wine drained with the local Bluetooth overlay.
+
+Static join `e354-firaga-indirect-index2-sample-residual-61erx_sh` leaves 26
+E302 sampled bytes outside E272 sources. Seven of the eight new source bytes
+occur in that address-only sample; this does not establish executing PCs,
+pointer ancestry, all consumers or complete coverage. Other indices, callers,
+scenes, real BIOS, UI save/Load, older revision-sensitive Wine fixtures,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E355 Firaga linked transfer candidates
+
+Wine disassembly `e355-firaga-residual-readers-disassembly-wine-fvczyws1`
+and the existing E342 scoped values identify a conditional one-row path:
+`080e61c4..080e61de` loads the index-2 word at `39a820` and byte at
+`39a876`, passing pointer `0839a758` and count one to `080db580`. The exact
+EUR bytes at `39a758..39a764` match the existing type-3 transfer row layout
+and point to an eight-byte descriptor at `39a678..39a680`. That descriptor
+points to wrapper `b0dd58`, already owned by
+`graphics.observed-tilemap-descriptor`; its compressed stream has a separate
+existing owner. Prior E286/E287 evidence identifies the row stride and the
+original type-3 row and descriptor readers. Neither candidate span is owned
+in E272; 17 of their 20 bytes are in the address-only E302 residual.
+
+The original count-one path is conditional on index 2 and unchanged list
+state; it does not bound arbitrary callers or later modifications. The E302
+sample does not establish executing PCs or prove this ancestry was used in
+that continuation. The protected linked-source plan in E356 below authenticates the original
+instructions, spans, dependencies, disjointness and intersection; runtime
+publication and selected Wine validation were later verified in E357 below. Other scenes, Linux, USA and native Windows
+remain open. Focused Sol `/root/sol_e343_residual_diagnosis` was requested
+with xhigh; effective model and effort were not independently confirmed.
+No performance comparison was made.
+
+## E356 Firaga linked transfer source plan
+
+Protected plan `e356-firaga-linked-transfer-source-plan-8or7qly_` verifies
+the exact EUR index-2 pointer and count, original instruction fingerprints,
+type-3 row `39a758..39a764`, descriptor `39a678..39a680`, and the links
+to existing wrapper `b0dd58` and its 55-byte compressed stream at `b0dd5c`.
+Both new spans are disjoint from E272 owners, while the pointer/count, wrapper
+and stream retain their existing owners. Seventeen of the 20 source bytes
+occur in the E302 address-only residual; publishing them would leave nine.
+
+This plan publishes no runtime data; selected runtime publication and Wine
+validation were later verified in E357 below. The one-row path is conditional
+on index 2 and unchanged task state; the sample does not establish executing
+PCs or prove that path. Other indices, callers, scenes, Linux, USA and native Windows
+remain open. No performance comparison was made.
+
+## E357 Firaga linked transfer runtime
+
+EUR E273-d272 extends the existing tilemap row and descriptor resources with
+the E356 12-byte type-3 row and eight-byte descriptor. The previously owned
+wrapper and compressed stream remain uniquely owned; prior fields, serialized
+representations, guest indexing and fallback are preserved.
+
+Wine reader `e357-firaga-linked-transfer-readers-wine-be8l1_ah` verifies six
+original interpreter/generated reader cases, the previous representations and
+144 unchanged resources, shared ownership, forged-data rejection, altered
+mirrors and mixed boundaries, and snapshot ownership. Wine scene
+`e357-firaga-linked-transfer-scene-wine-izp2e4pq` consumes both new spans
+with all 20 original bytes altered over 606 retained Firaga frames. State,
+guest clock, video, OAM, dispatch and five nonempty audio streams match at
+each frame. The source save's earlier history is unknown. Wine CLI
+`e357-firaga-linked-transfer-cli-wine-6dug_n2c` creates, reuses and verifies
+147 matching files; Wine drained with the local Bluetooth overlay.
+
+Static join `e357-firaga-linked-transfer-sample-residual-ah1pd9hx` leaves
+nine E302 sampled bytes outside E273 sources. The address-only sample does
+not establish individual PCs or prove the conditional index-2 path was used.
+Other indices, callers, scenes, real BIOS, UI save/Load, older revision-sensitive
+Wine fixtures, Linux, USA and native Windows remain open. The first build
+`8st6vdhe` was superseded after a test-only scene flag collision was separated;
+corrected build `akrs7470` passes. No performance comparison was made.
+
+## E358 Firaga caller-bounded palette projection plan
+
+Protected plan `e358-firaga-palette-projection-source-plan-dtoi3884`
+authenticates the EUR reader at `080138ec..0801390a`, its root literal
+`01390c` and the selected caller at `08013918`. The caller accepts nonzero
+values 1–4 for this path; combined with the reader's low two selector bits,
+the physical halfword indices are 0–15 at `40fd70..40fd90`. The selected
+caller writes the result to palette memory. This 32-byte interval is unowned
+in E273, directly between two existing UI palette banks; its literal remains
+owned by `engine.thumb-pc-literals`. Two bytes occur in the address-only
+E302 residual, so publication would leave seven.
+
+The bound applies only to this caller, not arbitrary calls or later changes.
+The sample supplies no executing PCs and does not prove this path. Runtime
+publication and selected Wine validation were later verified in E359 below;
+other callers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E359 Firaga palette projection runtime
+
+EUR E274-d273 extends `graphics.ui-raw-palettes` with the 32-byte E358
+physical projection at `40fd70..40fd90`. The 21 previous banks, their source
+bytes and the separately owned literal root remain unchanged. The original
+reader and guest fallback remain active for values outside the selected span;
+the caller-specific bound is not applied to other callers.
+
+Wine reader `e359-firaga-palette-projection-readers-wine-4vc70dqr` verifies
+32 original interpreter/generated cases across the 16 selected halfwords,
+the prior representation and 145 unchanged resources, altered mirrors and
+mixed boundaries, source authentication, an out-of-projection fallback and
+snapshot ownership. Wine scene
+`e359-firaga-palette-projection-scene-wine-mrf6k1gq` consumes the new source
+with all 32 original bytes altered over 606 retained Firaga frames. State,
+guest clock, video, OAM, dispatch and five nonempty audio streams match at each
+frame. The source save's earlier history is unknown. Wine CLI
+`e359-firaga-palette-projection-cli-wine-x3vrl3f5` creates, reuses and verifies
+147 matching files; Wine drained with the local Bluetooth overlay.
+
+Static join `e359-firaga-palette-projection-sample-residual-w9mdf6yf` leaves
+seven E302 sampled bytes outside E274 sources. The address-only sample does
+not establish individual PCs or prove the caller path was used. Other callers,
+scenes, real BIOS, UI save/Load, older revision-sensitive Wine fixtures,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E360 Firaga CCEC indirect record source plan
+
+Protected plan `e360-firaga-ccec-indirect-source-plan-zt7zwucy` authenticates
+the EUR indexed reader at `080eb988..080eb9a0`, its separately owned literal
+root and the E352 index-2 word `39ccfc`. That word points to the eight-byte
+physical record `39ccec..39ccf4`; the selected caller passes it with count one
+to the already authenticated indirect-record consumer at `080e389c`. The
+record is unowned in E274, and seven of its eight bytes comprise the remaining
+E302 address-only residual. Publication would leave no unowned bytes in that
+one sample.
+
+The pointer/count relationship is conditional; the sample does not establish
+executing PCs or prove that ancestry. Runtime publication and selected Wine
+validation were later verified in E361 below; other indices, callers, scenes
+and full-ROM coverage remain open. Linux,
+USA and native Windows remain open. No performance comparison was made.
+
+## E361 Firaga CCEC indirect record runtime
+
+EUR E275-d274 extends `engine.soil-indirect-records` with the E360 eight-byte
+record at `39ccec..39ccf4`. The previous records and serialized representation
+remain valid; the indexed pointer and literal root keep their existing owners.
+Original guest indexing and fallback remain active.
+
+Wine reader `e361-firaga-ccec-indirect-readers-wine-zcuhebx4` verifies 20
+original interpreter/generated cases, including the separately owned indexed
+pointer, previous representation and 145 unchanged resources, source
+authentication, altered mirrors and mixed boundaries, fallback and snapshot
+ownership. Wine scene `e361-firaga-ccec-indirect-scene-wine-_jvgs94x` consumes
+the new record with all eight original bytes altered over 606 retained Firaga
+frames. State, guest clock, video, OAM, dispatch and five nonempty audio
+streams match at each frame. The source save's earlier history is unknown.
+Wine CLI `e361-firaga-ccec-indirect-cli-wine-z4yf7_da` creates, reuses and
+verifies 147 matching files; Wine drained with the local Bluetooth overlay.
+
+Static join `e361-firaga-ccec-indirect-sample-residual-idrflo71` finds zero
+E302 sampled bytes outside E275 declared sources. This is limited to that
+one address-only continuation; it does not establish individual executing PCs,
+prove the conditional pointer path, or establish full-ROM coverage. Other
+indices, callers, scenes, real BIOS, UI save/Load, older revision-sensitive
+Wine fixtures, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+## E362 White Flowers ROM read inventory
+
+Wine `e362-white-flowers-audit-wine-tqqmw74v` inventories selected bus and
+host readers during 700 recorded EUR White Flowers battle-entry frames with
+E275-d274. It reuses the authenticated checkpoint and existing input. Raw and
+managed machines match complete state, guest clock, video, OAM, dispatch and
+five nonempty audio streams at every frame; Wine drained with the local
+Bluetooth overlay.
+
+Of 250,884 distinct observed physical ROM bytes, 8,039 are outside declared
+E275 sources: 2,708 below `300000` and 5,331 at or above it. The retained
+`audit.json` records address, width and selected reader but not executing PCs.
+These are source leads, not proven data extents or a claim that every byte is
+an asset; original readers and code/support exclusions require classification.
+The selected continuation does not cover every reader or scene, and the source
+save's earlier history is unknown. Linux, USA and native Windows remain open;
+no performance comparison was made.
+
+## E363 White Flowers residual grouping
+
+Protected static unit `e363-white-flowers-residual-groups-fa24opzf` joins the
+E362 address-only report to the exact EUR ROM and E275 manifest without replay.
+All 8,039 sampled bytes outside declared sources occur in Bus reads, grouped
+into 326 contiguous sampled intervals. Of these, 3,600 fall within the copied
+IWRAM source block `d968e8..d97728` previously documented as executable support
+in E246; its separately owned metadata remains unchanged. The other 4,439
+sampled bytes still require classification. The largest include 1,270 bytes at
+`43b36e..43b864` and 320 at `3ba0d8..3ba218`; ranges describe observations,
+not established assets.
+
+The bounded scan records 647 possible Thumb literal words; raw instruction
+bit patterns may occur in data and do not establish execution or ownership.
+The report does not establish individual PCs, extents, other scenes or full-ROM
+coverage. Linux, USA and native Windows remain open; no performance comparison
+was made.
+
+## E364 White Flowers indexed archive candidate
+
+Protected static scan `e364-white-flowers-high-xrefs-2v0ucvhi` records four
+possible literal links around the three largest high-ROM E363 intervals. The
+`3ba0d8..3ba218` halfword interval has candidate roots at `12bf7c/12bf80`;
+bit-pattern matches alone do not establish executing instructions or a format.
+
+A focused read-only diagnosis identifies a stronger lead for the
+`43b36e..43b864` byte interval: the candidate indexed archive begins at
+`43b36c`, and the original caller at `08089eb4..08089eca` selects a pointer
+from `395560` using a live language byte and calls existing indexed decoder
+`0800537c`. The first pointer addresses that archive. Preliminary parsing is
+consistent with 33 fixed-size programs. E365 below authenticates the selected
+pointer group, reconstruction, original code, ownership and sampled intersection
+before publication. The sampled addresses
+do not establish that this particular caller executed. Other languages,
+callers, scenes, Linux, USA and native Windows remain open. Focused Sol
+`/root/sol_e343_residual_diagnosis` was requested with xhigh; effective model
+and effort were not independently confirmed. No performance comparison was
+made.
+
+## E365 White Flowers localized indexed archive source plan
+
+Protected plan `e365-white-flowers-indexed-archive-source-plan-5d3a1lp3`
+authenticates the EUR five-pointer group at `395560`, four caller literals at
+`089fbc..089fcc`, original selector and decoder code, and five disjoint source
+archives at `43b36c`, `44c99c`, `45e4c8`, `46f4f4`, and `480ffc`. Their
+respective source lengths are 1,272, 1,281, 1,286, 1,271, and 1,285 bytes.
+An independent static parser reconstructs each as 33 programs of 64 decoded
+bytes. E366 below verifies production parsing and selected runtime consumption.
+
+The selected 6,431 source bytes do not overlap E275 owners and include 1,274
+E362 sampled bytes; publication would leave 6,765 sampled bytes outside
+declared sources, including 3,600 previously documented copied-code support
+bytes. The sample lacks executing PCs and does not prove caller ancestry.
+Selection of five physical slots is conditional; arbitrary guest selector
+values remain unrestricted. Other paths and scenes, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+## E366 White Flowers localized indexed archive runtime
+
+EUR E276-d275 extends `graphics.indexed-archives` with the E365 five physical
+archives, their pointer group and four caller literals. All 6,431 selected
+source bytes are reconstructed from typed data; existing sources and the
+previous serialized representation remain valid. The guest still evaluates
+the live selector and reads outside the five selected slots normally.
+
+Wine reader `e366-white-flowers-indexed-readers-wine-3d7s19no` verifies all
+five production-parser reconstructions and 2,112-byte outputs, with 15
+original interpreter/generated cases, 145 unchanged resources, altered
+mirrors and mixed boundaries, the adjacent existing owner, unselected fallback,
+source validation and snapshot ownership. Initial attempt
+`e366-white-flowers-indexed-readers-wine-hh_l3ixb` failed because its test
+incorrectly assumed slot 5 was unowned; the corrected test verifies that owner
+and uses unowned slot 30. Wine drained in both runs.
+
+Wine scene `e366-white-flowers-indexed-scene-wine-y_1th6uh` verifies 700
+retained White Flowers frames with all selected backing bytes altered. The
+first archive is consumed while full state, guest clock, video, OAM, dispatch
+and five nonempty audio streams match every frame; other language scenes are
+not established by this continuation. Wine CLI
+`e366-white-flowers-indexed-cli-wine-j6kabfzv` creates, reuses and verifies
+147 matching files with the local Bluetooth overlay and Wine server drain.
+
+Static join `e366-white-flowers-indexed-sample-residual-djytd17l` leaves 6,765
+E362 address-only sampled bytes outside declared sources: 3,600 are previously
+documented copied-code support and 3,165 require classification. The sample
+lacks executing PCs and does not establish the conditional caller's ancestry,
+other scenes, callers or full-ROM coverage. Other ordinary language paths,
+real BIOS, UI save/Load, revision-sensitive older Wine fixtures, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E367 White Flowers queued halfword rows source plan
+
+Wine disassemblies `e367-white-flowers-halfword-roots-dis-wine-z47ofoc0`,
+`e367-white-flowers-copy-routine-dis-wine-jk8i1ag1` and
+`e367-white-flowers-queue-executor-dis-wine-lqsxdeqq` identify an original
+conditional source selection at `0812bf10..0812bf38`. Zero selects `3ba0d8`;
+nonzero selects `3ba218`. The caller registers a queued transfer via
+`08000be4`, and the original queue executor uses eight rows of 20 halfwords,
+with 40-byte source and 64-byte destination strides. Both 320-byte source
+projections and the three contiguous literal words at `12bf7c..12bf88` have
+no E276 owner.
+
+Protected plan `e367-white-flowers-queued-rows-source-plan-f2kk2tp7`
+authenticates source and code fingerprints, original constants, prior owners
+and the address-only sample. The 652 selected source bytes include 328 E362
+sampled bytes; publication would leave 6,437, including 3,600 previously
+documented copied-code support. E368 below publishes the selected runtime
+sources, but this conditional plan does not establish executing PCs, caller
+ancestry, all transfer states or other scenes. Linux, USA and native Windows remain open. No performance comparison
+was made.
+
+## E368 White Flowers queued halfword rows runtime
+
+EUR E277-d276 extends `graphics.observed-tilemap` with two conditional
+20 × 8 halfword projections at `3ba0d8` and `3ba218`, and three original
+caller literal words at `12bf7c..12bf88`. The original selector, producer,
+queue and DMA execution remain guest work. Previous source owners and the
+prior serialized representation remain valid.
+
+Wine reader `e368-white-flowers-queued-readers-wine-xeokmdlp` verifies six interpreter/generated selector cases and
+three original selector/queue/DMA cases for zero and nonzero flags, including
+both destination projections. It checks all selected bytes through ROM mirrors
+and mixed boundaries, 145 unchanged resources, source validation and snapshot
+ownership. Wine scene `e368-white-flowers-queued-scene-wine-8n1stan0` verifies 700 retained White Flowers frames
+with all selected backing bytes altered: state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match every frame, with the first
+projection consumed. The second projection is covered by controlled readers,
+not established in this ordinary scene. Wine CLI `e368-white-flowers-queued-cli-wine-oxrskpdo` creates, reuses and
+verifies 147 matching files. All Wine servers drained with the local Bluetooth
+overlay.
+
+Static join `e368-white-flowers-queued-sample-residual-ce_e0lx3` leaves 6,437 E362 address-only sampled bytes outside
+E277 declared sources: 3,600 are previously documented copied-code support
+and 2,837 require classification. This sample lacks executing PCs and does
+not establish caller ancestry, other scenes or full-ROM coverage. Other
+selector paths, callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E369 White Flowers remaining source candidates
+
+Protected grouping `e369-white-flowers-residual-groups-47pkvd93` reconciles
+the E362 address-only sample against E277 without replay: 6,437 bytes remain
+outside declared sources, in 323 sampled intervals. Of these, 3,600 are the
+previously documented copied-IWRAM executable support and 2,837 need further
+classification. A bounded bit-pattern scan finds 645 candidate lower-ROM
+literal words; it does not establish executed instructions or ownership.
+
+Focused read-only diagnosis identified a candidate indexed archive beginning
+at `3c94bc`, whose independently parsed extent is `3c94bc..3cad91` and
+includes 131 remaining sampled bytes. Original Wine disassembly
+`e369-white-flowers-indexed-caller-dis-wine-gljcbz8v` identifies a caller at
+`080cf3e0..080cf3f4`: it loads literal `0cf3f8`, projects its selector to
+eight bits and calls indexed decoder `0800537c` for one program. The literal
+word contributes four sampled bytes. These are conditional source leads; a
+protected plan E370 below authenticates reconstruction, prior owners and
+sample intersection before runtime publication. The address-only sample does
+not establish that this caller executed. Other scenes, Linux, USA and native
+Windows remain open. Focused Sol `/root/sol_e343_residual_diagnosis` was
+requested with xhigh; effective model and effort were not independently
+confirmed. No performance comparison was made.
+
+## E370 White Flowers directly rooted indexed archive source plan
+
+Protected plan `e370-white-flowers-direct-indexed-source-plan-0oy7mnn2`
+authenticates the original wrapper `080cf3e0..080cf3f6`, its literal word
+`0cf3f8`, and a directly rooted indexed archive at `3c94bc..3cad91`. An
+independent static parser reconstructs 62 programs of 128 decoded bytes each;
+program 16 spans the sampled `3c9d94..3c9df5` interval. E371 below verifies
+production parsing and selected runtime consumption.
+
+The 6,361 selected source bytes have no E277 owner. The prior indexed archive
+starts at `3cad94`; the intervening three bytes are not included. The selected
+sources cover 135 E362 residual bytes, leaving 6,302 if published, including
+3,600 previously documented copied-code support. The original wrapper passes
+an unsigned byte selector and requests one program; no new guest selector
+cap is inferred. The address-only sample does not establish executing PCs or
+caller ancestry. Other scenes, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+## E371 White Flowers directly rooted indexed archive runtime
+
+EUR E278-d277 extends `graphics.indexed-archives` with the E370 62-program
+archive at `3c94bc` and original literal at `0cf3f8`. The existing neighboring
+archive keeps its owner and the intervening three bytes remain outside both
+projections. The original wrapper and decoder retain their own selector
+handling; the previous serialized representation remains valid.
+
+Wine reader `e371-white-flowers-direct-readers-wine-ywvmnh46` verifies production reconstruction, program 16 and
+boundary selectors in six original interpreter/generated cases, including
+low-byte projection and out-of-range behavior. It checks 145 unchanged
+resources, altered ROM mirrors, mixed boundaries, the adjacent existing
+owner and gap, source authentication and snapshot ownership. Wine scene
+`e371-white-flowers-direct-scene-wine-9pwn72wh` compares 700 retained White Flowers frames with both new backing
+sources altered: full state, guest clock, video, OAM, dispatch and five
+nonempty audio streams match each frame, with the archive and literal consumed.
+Wine CLI `e371-white-flowers-direct-cli-wine-t_d5oash` creates, reuses and verifies 147 matching files. All Wine
+servers drained with the local Bluetooth overlay.
+
+Static join `e371-white-flowers-direct-sample-residual-2casb5p1` leaves 6,302 E362 address-only sampled bytes outside
+E278 declared sources: 3,600 are previously documented copied-code support
+and 2,702 require classification. This sample does not establish executing
+PCs, caller ancestry, other scenes or full-ROM coverage. Other programs and
+callers, source-save history, real BIOS, UI save/Load, revision-sensitive
+older Wine fixtures, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+## E372 White Flowers four literal pools source plan
+
+Wine disassemblies `e372-white-flowers-literal-pools-dis-wine-1cfeb1yt` and
+`e372-white-flowers-literal-tail-dis-wine-dcgqeh_6` examine four original
+Thumb contexts and their PC-relative literal loads. Protected plan
+`e372-white-flowers-literal-pools-source-plan-bur61cim` authenticates 49
+selected words in `023a74..023a9c`, `03d170..03d1a8`, `0bbc78..0bbc9c` and
+`127b0c..127b4c`, including the original opcodes, four context fingerprints,
+E278 owner disjointness and all 196 sampled bytes. If published, the E362
+sample would leave 6,106 bytes outside declared sources, including 3,600
+previously documented copied-code support.
+
+The selected words retain their literal values without assigning semantics.
+The sample lacks executing PCs and does not prove that the authenticated
+readers caused those observations. Other candidate pools, callers, scenes,
+Linux, USA and native Windows remain open. E373 below verifies selected
+runtime publication. No performance comparison was made.
+
+## E373 White Flowers four literal pools runtime
+
+EUR E279-d278 extends `engine.thumb-pc-literals` with the E372 49 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e373-white-flowers-literals-readers-wine-6ot86e3c` verifies 98 original interpreter/generated reader
+cases, all 49 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e373-white-flowers-literals-scene-wine-th4l8fim` compares 700 retained White Flowers frames with all 49 backing
+words altered. All 49 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e373-white-flowers-literals-cli-wine-eixsrqj_`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e373-white-flowers-literals-sample-residual-wzleu30g` leaves 6,106 E362 address-only sampled bytes outside
+E279 declared sources: 3,600 are previously documented copied-code support
+and 2,506 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E374 White Flowers eight literal pools source plan
+
+Wine disassembly `e374-white-flowers-literal-pools-dis-wine-x8vvx3in` and
+protected plan `e374-white-flowers-literal-pools-source-plan-_dh5w4pb`
+authenticate 62 selected PC-relative Thumb literal readers across eight
+additional original code contexts. Their 248 source bytes have no E279 owner
+and are all in the E362 address-only sample. Publication would leave 5,858
+sampled bytes outside declared sources, including 3,600 previously documented
+copied-code support. The selected offsets, opcodes and context fingerprints are
+retained in the protected plan.
+
+Literal values are preserved without assigning semantics. The sample lacks
+executing PCs and does not prove that these readers caused the observations.
+Other candidate pools, callers, scenes, Linux, USA and native Windows remain
+open. E375 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E375 White Flowers eight literal pools runtime
+
+EUR E280-d279 extends `engine.thumb-pc-literals` with the E374 62 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e375-white-flowers-more-literals-readers-wine-g7ci2tnq` verifies 124 original interpreter/generated reader
+cases, all 62 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e375-white-flowers-more-literals-scene-wine-0kdrgo3_` compares 700 retained White Flowers frames with all 62 backing
+words altered. All 62 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e375-white-flowers-more-literals-cli-wine-ucmhxrmh`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e375-white-flowers-more-literals-sample-residual-cjcrgtzy` leaves 5,858 E362 address-only sampled bytes outside
+E280 declared sources: 3,600 are previously documented copied-code support
+and 2,258 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E376 White Flowers ten literal pools source plan
+
+Wine disassembly `e376-white-flowers-literal-pools-dis-wine-q6818iy7` and
+protected plan `e376-white-flowers-literal-pools-source-plan-ei2nr32i`
+authenticate 62 selected PC-relative Thumb literal readers across ten
+additional original code contexts. Their 248 source bytes have no E280 owner
+and are all in the E362 address-only sample. Publication would leave 5,610
+sampled bytes outside declared sources, including 3,600 previously documented
+copied-code support. The selected offsets, opcodes and context fingerprints are
+retained in the protected plan.
+
+Literal values are preserved without assigning semantics. The sample lacks
+executing PCs and does not prove that these readers caused the observations.
+Other candidate pools, callers, scenes, Linux, USA and native Windows remain
+open. E377 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E377 White Flowers ten literal pools runtime
+
+EUR E281-d280 extends `engine.thumb-pc-literals` with the E376 62 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e377-white-flowers-later-literals-readers-wine-sfa40qnd` verifies 124 original interpreter/generated reader
+cases, all 62 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e377-white-flowers-later-literals-scene-wine-4aph05lq` compares 700 retained White Flowers frames with all 62 backing
+words altered. All 62 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e377-white-flowers-later-literals-cli-wine-se9n4l2l`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e377-white-flowers-later-literals-sample-residual-kxz4n64i` leaves 5,610 E362 address-only sampled bytes outside
+E281 declared sources: 3,600 are previously documented copied-code support
+and 2,010 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E378 White Flowers thirteen literal pools source plan
+
+Wine disassembly `e378-white-flowers-literal-pools-dis-wine-5yhjeio9` and
+protected plan `e378-white-flowers-literal-pools-source-plan-ro9nq2gs`
+authenticate 60 selected PC-relative Thumb literal readers across thirteen
+additional original code contexts. Their 240 source bytes have no E281 owner
+and are all in the E362 address-only sample. Publication would leave 5,370
+sampled bytes outside declared sources, including 3,600 previously documented
+copied-code support. The selected offsets, opcodes and context fingerprints are
+retained in the protected plan.
+
+Literal values are preserved without assigning semantics. The sample lacks
+executing PCs and does not prove that these readers caused the observations.
+Other candidate pools, callers, scenes, Linux, USA and native Windows remain
+open. E379 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E379 White Flowers thirteen literal pools runtime
+
+EUR E282-d281 extends `engine.thumb-pc-literals` with the E378 60 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e379-white-flowers-thirteen-literals-readers-wine-xhl37t_m` verifies 120 original interpreter/generated reader
+cases, all 60 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e379-white-flowers-thirteen-literals-scene-wine-ukju6ylf` compares 700 retained White Flowers frames with all 60 backing
+words altered. All 60 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e379-white-flowers-thirteen-literals-cli-wine-hjw0548p`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e379-white-flowers-thirteen-literals-sample-residual-pte_4_ze` leaves 5,370 E362 address-only sampled bytes outside
+E282 declared sources: 3,600 are previously documented copied-code support
+and 1,770 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E380 White Flowers twenty-eight literal pools source plan
+
+Wine disassembly `e380-white-flowers-literal-candidates-dis-wine-umy1ze7f` and
+protected plan `e380-white-flowers-literal-pools-source-plan-ig_ne93b`
+authenticate 92 selected PC-relative Thumb literal readers across 28
+original code contexts. Their 368 source bytes have no E282 owner and are all
+in the E362 address-only sample. Publication would leave 5,002 sampled bytes
+outside declared sources, including 3,600 previously documented copied-code
+support. The selected offsets, opcodes and context fingerprints are retained in
+the protected plan.
+
+Literal values are preserved without assigning semantics. The sample lacks
+executing PCs and does not prove that these readers caused the observations.
+Other candidate pools, callers, scenes, Linux, USA and native Windows remain
+open. E381 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E381 White Flowers twenty-eight literal pools runtime
+
+EUR E283-d282 extends `engine.thumb-pc-literals` with the E380 92 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e381-white-flowers-many-literals-readers-wine-sn2kn037` verifies 184 original interpreter/generated reader
+cases, all 92 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e381-white-flowers-many-literals-scene-wine-qnj53ytl` compares 700 retained White Flowers frames with all 92 backing
+words altered. All 92 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e381-white-flowers-many-literals-cli-wine-n4ygbw8g`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e381-white-flowers-many-literals-sample-residual-l4g6pt_j` leaves 5,002 E362 address-only sampled bytes outside
+E283 declared sources: 3,600 are previously documented copied-code support
+and 1,402 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E382 White Flowers sixty-two literal pools source plan
+
+Wine disassembly `e382-white-flowers-literal-candidates-dis-wine-hrfc36ve` and
+protected plan `e382-white-flowers-literal-pools-source-plan-vh86eqhl`
+authenticate 128 selected PC-relative Thumb literal readers across 62
+original code contexts. Their 512 source bytes have no E283 owner and are all
+in the E362 address-only sample. Publication would leave 4,490 sampled bytes
+outside declared sources, including 3,600 previously documented copied-code
+support. The selected offsets, opcodes and context fingerprints are retained in
+the protected plan.
+
+The first static selection `e382-white-flowers-literal-candidates-t3dztdqn`
+failed because its inherited minimum range length excluded two-word ranges; the
+corrected selection `e382-white-flowers-literal-candidates-oty9qqm6` passes.
+No Wine process was involved in that failed selection. Literal values are
+preserved without assigning semantics. The sample lacks executing PCs and does
+not prove that these readers caused the observations. Other candidate pools,
+callers, scenes, Linux, USA and native Windows remain open. E383 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E383 White Flowers sixty-two literal pools runtime
+
+EUR E284-d283 extends `engine.thumb-pc-literals` with the E382 128 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved.
+
+Wine reader `e383-white-flowers-bulk-literals-readers-wine-ibbq6jvp` verifies 256 original interpreter/generated reader
+cases, all 128 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e383-white-flowers-bulk-literals-scene-wine-8caa5f6p` compares 700 retained White Flowers frames with all 128 backing
+words altered. All 128 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e383-white-flowers-bulk-literals-cli-wine-q0eg09u7`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e383-white-flowers-bulk-literals-sample-residual-fb5qs3bk` leaves 4,490 E362 address-only sampled bytes outside
+E284 declared sources: 3,600 are previously documented copied-code support
+and 890 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E384 White Flowers remaining sampled literal pools source plan
+
+Wine disassembly `e384-white-flowers-literal-candidates-dis-wine-4lyi07_z` and
+protected plan `e384-white-flowers-literal-pools-source-plan-6teqz1tq`
+authenticate 182 selected PC-relative Thumb literal readers across 163
+original code contexts. Their 728 source bytes have no E284 owner and are all
+in the E362 address-only sample. Publication would leave 3,762 sampled bytes
+outside declared sources, including 3,600 previously documented copied-code
+support. The selected offsets, opcodes and context fingerprints are retained in
+the protected plan.
+
+Candidate source word `03320c` is excluded: its only bounded-scan candidate
+reader `032eb8` is part of a jump-table pointer sequence and is not established
+as an instruction. The true reader and source contract for `03320c` remain
+open. Literal values are preserved without assigning semantics. The sample lacks
+executing PCs and does not prove that the accepted readers caused observations.
+Other candidate pools, callers, scenes, Linux, USA and native Windows remain
+open. E385 below verifies selected runtime publication. No performance
+comparison was made.
+
+## E385 White Flowers remaining sampled literal pools runtime
+
+EUR E285-d284 extends `engine.thumb-pc-literals` with the E384 182 selected
+words and their original PC-relative readers. The original guest instructions
+and fallback remain active; the previous representation and source owners are
+preserved. The false candidate reader for `03320c` remains excluded.
+
+Wine reader `e385-white-flowers-remaining-literals-readers-wine-fm569axt` verifies 364 original interpreter/generated reader
+cases, all 182 source words through altered mirrors and mixed boundaries, 145
+unchanged resources, source authentication and snapshot ownership. Wine scene
+`e385-white-flowers-remaining-literals-scene-wine-tf_2k_48` compares 700 retained White Flowers frames with all 182 backing
+words altered. All 182 are consumed; full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e385-white-flowers-remaining-literals-cli-wine-rm83cqb2`
+creates, reuses and verifies 147 matching files. All Wine servers drained
+with the local Bluetooth overlay.
+
+Static join `e385-white-flowers-remaining-literals-sample-residual-x6f12no9` leaves 3,762 E362 address-only sampled bytes outside
+E285 declared sources: 3,600 are previously documented copied-code support
+and 162 require classification. This sample does not establish executing
+PCs, specific reader ancestry, other scenes or full-ROM coverage. Other
+literal pools and callers, source-save history, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E386 White Flowers byte-indexed switch source plan
+
+Protected static plan `e386-white-flowers-032e-switch-source-plan-0x7b7450`
+uses the retained Wine disassembly `e384-white-flowers-literal-candidates-dis-wine-4lyi07_z`
+to authenticate the original byte-indexed dispatch at `032dfa..032e0e`. It
+loads the root at `032e10`, which is already owned by `engine.thumb-pc-literals`,
+then reads a destination at `032e14 + 4 * index` and branches through the guest
+instruction. The byte load bounds the index to 0..255. The 256 destination
+words span `032e14..033214`, reconstruct exactly from 61 distinct even ROM
+targets, and do not overlap E285 source owners. The source SHA-256 is
+`8b1cd081e8694bc98b608a3fce6b2f34449b907612e64b997d124e6103804e7f`.
+
+The E362 address-only sample contains three unowned entries, indices 5, 45 and
+254; the last is `03320c`, previously excluded because the apparent literal
+reader `032eb8` is itself a jump-table pointer. Publication of the full
+destination domain would remove 12 sampled bytes. The actual sampled PCs,
+selector ancestry, other readers and whether each index occurs remain open.
+E387 below verifies selected runtime publication. Other scenes, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E387 White Flowers byte-indexed switch runtime
+
+EUR E286-d285 extends `engine.thumb-switch-tables` with all 256 E386
+destinations. Their existing root remains owned by `engine.thumb-pc-literals`;
+the original guest dispatch and fallback remain active. Previous switch
+representations and all other resources remain preserved.
+
+Wine reader `e387-white-flowers-switch-readers-wine-rzmpfvqn` verifies ten original interpreter/generated dispatch
+cases at indices 0, 5, 45, 254 and 255, two out-of-domain guard cases, two
+out-of-projection fallback cases, all 1,024 bytes through altered mirrors and
+mixed boundaries, 145 unchanged resources and snapshot ownership. Wine scene
+`e387-white-flowers-switch-scene-wine-dvb87b5n` consumes the selected table over 700 retained White Flowers frames
+with its root and destinations altered. Full state, guest clock, video, OAM,
+dispatch and five nonempty audio streams match each frame. Wine CLI `e387-white-flowers-switch-cli-wine-4zd4hs5l`
+creates, reuses and verifies 147 matching files. All Wine servers drained with
+the local Bluetooth overlay. The initial reader `7d7zef1n` failed after
+stopping inside a generated chain at the guard's BL; Wine drained. The corrected
+test stops at the original fused BL destination. A focused Sol consultation
+was requested with xhigh; effective model and effort were not independently
+confirmed.
+
+Static join `e387-white-flowers-switch-sample-residual-3unoh3bm` leaves 3,750 E362 address-only sampled bytes outside
+E286 declared sources: 3,600 are previously documented copied-code support
+and 150 require classification. The sample does not establish executing PCs
+or selector ancestry; other callers and scenes, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E388 White Flowers residual switch source plan
+
+Protected static plan `e388-white-flowers-residual-switch-source-plan-c4c67ilr`
+authenticates seven EUR original Thumb switches using retained Wine disassembly.
+Their roots `031618`, `036320`, `03ce28`, `043f90`, `0465a8`, `08d344` and
+`0d1f58` are already owned by `engine.thumb-pc-literals`. Their 373 destination
+words occupy 1,492 bytes and have no E286 source overlap. The original guards,
+shifts, root loads and indirect transfers determine each bounded source domain;
+the exact code and destination hashes are retained in the plan.
+
+The E362 address-only sample intersects 40 of these bytes; publication would
+leave 3,710 sampled bytes outside declared sources, including 3,600 previously
+documented copied-code support. At root `031618`, an out-of-range selector can
+call a helper that may return: the guest path and fallback beyond the projected
+255 entries must stay intact. Sampled PCs, selector ancestry, other readers
+and reachability remain open. E389 below verifies selected runtime publication. Other scenes, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+## E389 White Flowers residual switches runtime
+
+EUR E287-d286 extends `engine.thumb-switch-tables` with all 373 E388
+destinations in seven arrays. Their existing roots remain owned by
+`engine.thumb-pc-literals`; original guest dispatch and fallback stay active.
+Previous switch representations and all other resources remain preserved.
+
+Wine reader `e389-white-flowers-residual-switches-readers-wine-rf3njife` verifies 46 original interpreter/generated dispatch
+cases including sampled indices and boundaries, 14 out-of-domain guard cases,
+14 out-of-projection fallback cases, all 1,492 bytes through altered mirrors
+and mixed boundaries, 145 unchanged resources and snapshot ownership. The
+`031618` helper's possible return is preserved; its subsequent behavior remains
+outside this controlled check. Wine scene `e389-white-flowers-residual-switches-scene-wine-6x87yzpb` consumes all seven tables
+over 700 retained White Flowers frames with their roots and destinations
+altered. Full state, guest clock, video, OAM, dispatch and five nonempty audio
+streams match each frame. Wine CLI `e389-white-flowers-residual-switches-cli-wine-4yz9hng2` creates, reuses and verifies 147
+matching files. All Wine servers drained with the local Bluetooth overlay.
+
+Static join `e389-white-flowers-residual-switches-sample-residual-6uy1wu37` leaves 3,710 E362 address-only sampled bytes outside
+E287 declared sources: 3,600 are previously documented copied-code support
+and 110 require classification. The sample does not establish executing PCs
+or selector ancestry; other callers and scenes, real BIOS, UI save/Load,
+revision-sensitive older Wine fixtures, Linux, USA and native Windows remain
+open. No performance comparison was made.
+
+## E390 White Flowers mixed switch source plan
+
+Protected static plan `e390-white-flowers-mixed-switch-source-plan-_u4vahgs`
+authenticates five EUR Thumb switches at roots `04e038`, `08dfd0`, `0bbffc`,
+`0cd950` and `125c88` using retained Wine disassembly. Their 89 destinations
+occupy 356 bytes and do not overlap E287 source owners. Four roots and an
+adjacent literal at `08dfcc` are also unowned; root `0cd950` already belongs
+to `engine.thumb-pc-literals`. The five newly selected literal words occupy
+20 bytes. Original guards, shifts, root loads, transfers and source hashes are
+retained in the plan.
+
+The E362 address-only sample intersects 80 selected bytes; publication would
+leave 3,630 sampled bytes outside declared sources, including 3,600 previously
+documented copied-code support. The `0bbffc` out-of-range helper may return,
+so the original guest fallback must remain active beyond 37 destinations.
+Sampled PCs, selector ancestry, other readers and reachability remain open.
+E391 below validates the selected runtime publication. Other scenes, Linux,
+USA and native Windows remain open. No performance comparison was made.
+
+
+## E391 White Flowers mixed switches runtime
+
+EUR E288-d287 extends `engine.thumb-switch-tables` with five selected
+switch tables (89 destinations, 356 bytes) and `engine.thumb-pc-literals`
+with five authenticated literal words (20 bytes). The existing root owner
+at `0cd950` is retained, as are previous representations and other resource
+files. Unowned bytes beyond each projection continue through their original
+owner or ROM backing; the `0bbffc` helper can return and its post-return path
+is not established by this check.
+
+Wine reader validation `e391-white-flowers-mixed-switches-readers-wine-ge_wrdqh`
+passes 42 original interpreter/generated dispatch cases, 10 guard cases,
+10 out-of-projection cases, and two standalone literal-reader cases. It checks
+mirrors, mixed-width boundaries, altered original sources, coherent-edit
+rejection, missing-dataset handling and snapshot owner retention.
+
+Wine scene `e391-white-flowers-mixed-switches-scene-wine-s_vunzae` passes 700
+retained White Flowers battle-entry frames with all selected tables and
+literals consumed while their original bytes are altered; state, guest clock,
+video, OAM, dispatch and five nonempty audio streams match on each frame.
+Wine CLI `e391-white-flowers-mixed-switches-cli-wine-ausnc_j0` creates, reuses and verifies 147 files;
+all Wine servers drained. Static join
+`e391-white-flowers-mixed-switches-sample-residual-y9chyeki` accounts for
+80 E362 sampled bytes and leaves 3,630 unowned sampled bytes: 3,600 previously
+documented copied-code support and 30 other bytes. The address-only sample
+does not establish executing PCs, selector ancestry or full-ROM coverage.
+Other readers, scenes and post-return behavior, Linux, USA, real BIOS and
+native Windows remain open. No performance comparison was made.
+
+
+## E392 White Flowers final sampled switch source plan
+
+Protected candidate map `e392-white-flowers-final-sample-candidates-_bg_fj4z`
+locates the 30 non-support bytes remaining in the E362 address-only sample.
+Wine disassembly `e392-white-flowers-final-sample-dis-wine-7edn_8m0` and
+protected plan `e392-white-flowers-final-switch-source-plan-5w_6ycut`
+authenticate three EUR Thumb switch tables rooted at `02a7b0`, `125fe4` and
+`1279b8`, with 11, 12 and 7 even destinations respectively. Their destination
+sources occupy 120 disjoint bytes. Three new literal words occupy 12 bytes:
+`02a7ac`, `02a7b0` and `125fe4`; the third switch root `1279b8` is already
+owned by `engine.thumb-pc-literals`. The first dispatch subtracts one before
+its guard; the second obtains a byte and subtracts three; the third guards
+register `r5`. Preserve these original selectors and all fallback behavior.
+
+The 132 selected source bytes include 24 sampled bytes. Publication would leave
+3,606 sampled bytes outside declared sources: 3,600 previously documented
+copied-code support bytes and six isolated bytes at `397b1e..397b21`,
+`3c9460` and `6e89aa..6e89ac`. Their meanings and producers are not established
+by proximity or linear decoding. E393 below validates selected runtime use.
+Sampled PCs and ancestry, other readers and scenes remain open; Linux, USA and
+native Windows remain pending.
+No performance comparison was made.
+
+
+## E393 White Flowers final sampled switches runtime
+
+EUR E289-d288 serves three switch destination arrays (30 destinations,
+120 bytes) and three literal words (12 bytes) from authenticated resources.
+The already-owned root `1279b8` and earlier representations remain intact;
+the original selector transformations and out-of-projection fallback remain
+active. Wine reader `e393-white-flowers-final-switches-readers-wine-7kkhhjbu` passes 14 original
+interpreter/generated dispatch cases, six guards, six fallback cases and two
+standalone literal-reader cases, plus mirror, mixed-boundary, coherent-edit,
+missing-dataset and snapshot-owner checks.
+
+Wine scene `e393-white-flowers-final-switches-scene-wine-vwkx19aq` passes 700 retained
+White Flowers battle-entry frames with all selected sources consumed while
+their original bytes are altered. State, guest clock, video, OAM, dispatch
+and five nonempty audio streams match on each frame. Wine CLI `e393-white-flowers-final-switches-cli-wine-wdmf8psu`
+creates, reuses and verifies 147 files. All Wine servers drained. Protected
+join `e393-white-flowers-final-switches-sample-residual-4a4mml6z` confirms 24 E362 sampled bytes
+are covered and 3,606 remain outside declared sources, including 3,600
+previously documented copied-code support bytes and six isolated bytes with
+unknown producers. This address-only sample cannot establish executing PCs,
+ancestry or full-ROM coverage. Other readers, scenes, real BIOS, Linux, USA
+and native Windows remain open. No performance comparison was made.
+
+
+## E394 White Flowers isolated sampled reader scopes
+
+Wine observation `e394-white-flowers-isolated-sites-wine-9vq22s5t` reuses the
+E289 dataset and first 600 frames of the retained White Flowers continuation.
+All six E393 isolated sampled bytes occur: byte reads at `397b1e..397b21` have
+no interpreter scope, the `3c9460` byte read occurs in Thumb scope `080cf406`,
+and the halfword read at `6e89aa..6e89ac` occurs in Thumb scope `0802edcc`.
+Retained Wine disassembly `e384-white-flowers-literal-candidates-dis-wine-4lyi07_z`
+shows `LDRB` and `LDRH` at the respective scoped PCs, consistent with those
+access widths. This scope may include nested DMA or HLE accesses; register
+operands, exact attribution and source extents still need proof. The unscoped
+reads may be native or host accesses, so no instruction is inferred.
+
+This is one source-site observation, not a new scene-equivalence claim.
+Native context, other scenes, real BIOS, Linux, USA and native Windows remain
+open. The Wine server drained; no performance comparison was made.
+
+
+## E395 White Flowers 397b1e native context
+
+The test-only observer in `native_rom_data_residue_tests` follows the retained
+EUR White Flowers continuation for 600 frames. Wine unit
+`e395-white-flowers-397b1e-context-wine-95w54vo0` sees all three byte reads at
+`397b1e..397b21` through the native read API. The filtered DMA capture records
+three non-DMA requests and no DMA request. All three native records have outer
+dispatch `08083bd1` and exported PC `08083bf2`; the latter may be stale and
+the dispatch may include chained blocks, so neither proves the load instruction.
+
+Retained disassembly shows a possible byte reader at `08083c00`, based on a
+pointer loaded at `08083bf2`; its original selector domain and source extent
+need independent authentication before use. The observer makes no new
+scene-equivalence claim. Other readers, scenes, real BIOS, Linux, USA and native
+Windows remain open. The Wine server drained; no performance comparison was
+made.
+
+
+## E396 White Flowers 397b1e bounded source plan
+
+Wine disassemblies `e396-white-flowers-397b1e-dis-wine-o1ejpxi9` and
+`e396-white-flowers-397b1e-helper-dis-wine-qvbss5me`, together with protected
+plan `e396-white-flowers-397b1e-source-plan-g28z8ftk`, identify the original
+`08083c00` signed-byte access sequence using base `08397b0a`. The existing
+literal owner retains its root at `083c14`. The E395 native context is
+consistent with indices 20, 21 and 22; it does not independently establish an
+exact instruction.
+
+The plan selects the non-overlapping 48-byte projection `397b0a..397b3a`,
+matching the `0x30` argument passed to the subsequent cursor helper. The read
+occurs *before* that helper, so an initially out-of-range cursor must continue
+to use original fallback. This projection is not a proven asset boundary or
+proof that every initial index is bounded. E397 below validates the selected
+original-reader and helper execution and runtime publication. Producer ancestry
+and other paths remain open. Linux, USA and native Windows remain pending; all Wine servers
+drained and no performance comparison was made.
+
+
+## E397 White Flowers signed-byte projection runtime
+
+EUR E290-d289 adds `engine.white-flowers-signed-bytes` for the authenticated
+48-byte projection at `397b0a..397b3a`. Original source bytes are represented
+as signed values and reconstructed for guest reads. The existing literal root
+remains separately owned; all addresses outside the projection retain their
+prior owner or ROM fallback, including out-of-range initial cursors.
+
+Wine reader `e397-white-flowers-signed-bytes-readers-wine-dagykkmv` passes 14 original interpreter/generated
+reader cases, including sampled indices 20–22, both projection boundaries and
+outside indices 48 and 255; the original helper is interpreted. Mixed-width
+reads across boundaries, three mirrors, coherent-edit rejection, missing
+dataset and snapshot owner retention also pass. The 146 earlier resources
+and their files remain unchanged.
+
+Wine scene `e397-white-flowers-signed-bytes-scene-wine-_s3ccy3e` passes 700 retained White Flowers battle-entry
+frames with the 48 original source bytes altered and all three sampled values
+consumed. State, guest clock, video, OAM, dispatch and five nonempty audio
+streams match on each frame. Wine CLI `e397-white-flowers-signed-bytes-cli-wine-c2h7zruq` creates, reuses and
+verifies 148 files. All Wine servers drained. Static join `e397-white-flowers-signed-bytes-sample-residual-9x1r8abz`
+leaves 3,603 E362 sampled bytes outside declared sources: 3,600 previously
+documented copied-code support and three isolated bytes. This address-only
+sample does not establish full-ROM coverage. Source asset extent, producer
+ancestry, other scenes, real BIOS, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+
+## E398 White Flowers isolated original operands
+
+Wine unit `e398-white-flowers-operands-wine-s86speyz` observes the two
+remaining isolated E362 accesses during 600 retained EUR White Flowers frames.
+Immediately before the interpreter executes the original instructions,
+`080cf406` has byte operand `083c9460` with base `083c943c`; `0802edcc` has
+halfword operand `086e89aa`, base register `086e8994`, and already-incremented
+cursor value 12. Both are normal missing-block interpreter steps, removing the
+ambiguity that a nested access supplied these selected operands.
+
+The retained original instruction sequence selects the observed first-row
+halfword at index 11 and computes the observed byte from index 16. The complete
+asset extents, caller ancestry and initial selector domains remain unproved;
+no source ownership or additional scene equivalence is claimed. Linux, USA
+and native Windows remain pending. The Wine server drained and no performance
+comparison was made.
+
+
+## E399 White Flowers isolated source plan
+
+Protected plan `e399-white-flowers-isolated-source-plan-lnthon5v` combines
+E398's direct Wine operands with retained original disassembly. It selects a
+20-halfword first row at `6e8994..6e89bc` and the single byte `3c9460`,
+covering the final three non-support bytes in the E362 sample. The original
+row selector advances by 40 bytes per row; the observed halfword is index 11.
+The other original reader obtains the selected byte at index 16 and extracts
+its high nibble. Both pointer literals are already owned by
+`engine.thumb-pc-literals`; the selected sources do not overlap prior owners.
+
+The initial indices and other row selectors are not bounded by these source
+projections. Original fallback outside the selected physical bytes is required.
+The plan does not establish complete asset extents or caller ancestry. E400
+below validates the selected runtime publication; 3,600 E362 sampled bytes
+remain outside declared sources, all previously classified as copied-code support. Other
+scenes, Linux, USA and native Windows remain open; no performance comparison
+was made.
+
+
+## E400 White Flowers isolated values runtime
+
+EUR E291-d290 adds `engine.white-flowers-isolated-values`: a first row of 20
+halfwords and the selected byte used by the original nibble reader. Both root
+literals remain separately owned, while reads outside these physical sources
+retain their prior owner or original ROM fallback. The 147 previous resources
+and files are unchanged.
+
+Wine reader `e400-white-flowers-isolated-values-readers-wine-i8jfpb3l` passes four original selector-setup, 12
+row-reader and 12 byte-reader interpreter/generated cases, including selected
+indices, boundary values, other rows and out-of-projection fallback. Mixed
+reads, three mirrors, coherent-edit rejection, missing-dataset handling and
+snapshot owner retention pass. Wine scene `e400-white-flowers-isolated-values-scene-wine-ohe96xlp` passes 700
+retained White Flowers frames with all selected backing bytes altered and both
+projections consumed; state, guest clock, video, OAM, dispatch and five nonempty
+audio streams match per frame. Wine CLI `e400-white-flowers-isolated-values-cli-wine-05w416tw` creates, reuses and
+verifies 149 files. All Wine servers drained.
+
+Protected join `e400-white-flowers-isolated-values-sample-residual-urhx1g0d` leaves 3,600 unowned sampled bytes, all
+previously classified as copied-code support, and zero other unclassified
+bytes in the E362 address-only sample. This does not prove full-ROM coverage
+or remove the copied-code dependency. Complete source extents, caller ancestry,
+other scenes, real BIOS, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+
+## E401 White Flowers copied-code support reconciliation
+
+Protected static join `e401-white-flowers-code-support-reconcile-7yeu1i9c`
+confirms that the 3,600 E400 residual sample bytes are exactly the same
+physical bytes left by E246 in the `d968e8..d97728` copied-IWRAM source block.
+The separate 48-byte metadata alias `d976e8..d97718` is already owned by
+`graphics.obj-dimensions`. The block contains executable support and remains
+in the original ROM under the [inventory contract](development/ROM_DATA_INVENTORY.md);
+the address join does not classify every individual byte as an instruction.
+
+No byte outside that block remains unclassified in the selected E362 sample.
+This does not establish other scene coverage or ROM-free startup. A separate
+code-migration design would be needed to change the executable-code exclusion;
+Linux, USA, native Windows and other consumers remain open. No game was
+replayed and no performance comparison was made.
+
+
+## E402 Roulette native sample reconciliation
+
+Protected static join `e402-roulette-native-residual-join-ycaxc95s` compares
+the retained E108 EUR Roulette native API inventory against E291. All 732
+physical bytes that lacked E108 owners are now declared: 672 by Thumb literal
+resources, 24 by switch tables, 20 by UI context templates, eight by DMA
+directories and eight by IWRAM helper metadata. The join authenticates 175
+intersecting source spans against the exact EUR ROM and performs no replay.
+
+This is limited to native API reads in the retained 12-frame continuation;
+it does not prove executing PCs, interpreter or host readers, other scenes or
+full-ROM coverage. Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E403 Star Cross ROM read inventory
+
+Wine `e403-star-cross-audit-wine-us0nqlxx` inventories selected bus, audio and
+OBJ readers during the previously recorded 480-frame European Star Cross
+confirmation with E291-d290. It reuses the authenticated checkpoint, input,
+Windows test executable and dataset. Raw and managed machines match complete
+state, guest clock, video, OAM, dispatch and five nonempty audio streams at
+every frame; Wine drained with the local Bluetooth overlay.
+
+Of 243,297 distinct observed physical ROM bytes, 7,359 are outside declared
+E291 sources: 136 below `300000` and 7,223 at or above it. The retained
+`audit.json` records addresses, widths and selected reader classes but no
+executing PCs. These are investigation leads, not proven data extents or a
+claim that each byte is an asset; code and copied support require separate
+classification. Unselected readers, other scenes, the source save's earlier
+history and full-ROM coverage remain open. Linux, USA and native Windows are
+unverified; no performance comparison was made.
+
+
+## E404 Star Cross residual grouping
+
+Protected static unit `e404-star-cross-residual-groups-7vnaqwjc` groups the
+retained E403 E291 address inventory against the authenticated EUR ROM without
+a replay. Its 7,359 sampled, unowned bytes form 37 contiguous intervals; none
+overlap the earlier `d968e8..d97728` copied-IWRAM source block. Largest sampled
+intervals are `affc70..b00d96` (4,390 bytes), `b00d9c..b00fd6` (570 bytes)
+and `6bad16..6bb4f4` (2,014 bytes). Bus reads cover the first two; bus and
+sprite-peek observations intersect the third. A bounded linear bit-pattern scan
+also finds 19 potential Thumb literal words below `300000`.
+
+The intervals are observed bytes, not authenticated resource extents. Their
+reader classes do not establish executing PCs or data formats, and linear scan
+candidates can be data; original control flow and ownership require individual
+proof. Other scenes/readers, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+
+## E407 Star Cross sample reconciliation
+
+Protected static join `e407-star-cross-bank-sample-residual-lgz7_nd7` compares
+the retained E403 EUR address inventory with E292. All 2,116 E405 bank bytes
+were among the 7,359 previously unowned sampled bytes and are now declared by
+the compact catalog; the other resource metadata remains unchanged. The
+sample has 5,243 remaining unowned bytes in 33 intervals. The largest are
+`affc70..b00d96` (4,390 bytes) and `b00d9c..b00fd6` (570 bytes).
+
+This is an address-only selected-reader sample, not proof of instruction sites,
+source extents, other scenes or full-ROM coverage. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E410 Star Cross sample reconciliation
+
+Protected static join `e410-star-cross-lz-sample-residual-0_a1p9o7` compares
+the retained E403 EUR address inventory with E293. All 4,960 E408 LZ bytes
+were among the 5,243 E407 unowned sampled bytes and are now declared by the
+observed LZ resource; the other resource metadata remains unchanged. The sample
+has 283 unowned bytes in 31 intervals, including 60 bytes at
+`14d69c..14d6d8`, scattered bytes around `39dd98..39de38`, and 19 potential
+Thumb literal words identified by the earlier bounded bit-pattern scan.
+
+This address-only selected-reader sample and its candidate opcodes do not
+prove instruction sites, data extents, other scenes or full-ROM coverage.
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E411 Star Cross literal source plan
+
+Wine disassembly and protected source plan
+`e411-star-cross-literal-source-plan-wine-2u_db_rz` authenticate 19 original
+EUR PC-relative Thumb load instructions and their corresponding 19 distinct
+words. All 76 source bytes occur in the E403 sample and have no E293 owner.
+Four bounded code windows and exact opcodes, values and source hashes are
+retained in the plan; integrating these words would leave 207 E410 sampled
+bytes outside declared sources. Wine drained with the local Bluetooth overlay.
+
+These are authenticated static instruction/word relationships, not proof that
+each instruction executed in the retained scene. Other readers, source-save
+history, consumers and scenes remain open. Runtime publication and selected
+altered-source checks were subsequently completed in E412 below. Linux, USA
+and native Windows remain pending. No performance comparison was made.
+
+
+## E412 Star Cross literal runtime
+
+EUR extractor E294/decoder D293 extends `engine.thumb-pc-literals` with the
+19 E411 words and their original PC-relative readers. The existing bus owner
+serves the 76 source bytes; guest reads outside the authenticated projection
+keep their previous routing. The prior literal representation and 147 other
+resources remain unchanged.
+
+Wine `e412-star-cross-literals-readers-wine-2_yy7brj` verifies source and
+reader identities, prior representations, forged-file rejection, altered-source
+mirrors and mixed boundaries, missing-dataset snapshot ownership and 38
+original-interpreter/generated-reader complete-state/clock comparisons. Wine
+`e412-star-cross-literals-scene-wine-lhr7hg1i` compares the 480 recorded
+Star Cross frames while all 19 selected words are altered in the managed ROM.
+Complete state, guest clock, central/wide video, OAM, dispatch and five
+nonempty audio streams match at every frame; the resource serves all 19 words.
+This demonstrates word consumption, not exact scene instruction attribution.
+
+Production CLI `e412-star-cross-literals-cli-wine-da0uz463` creates, reuses
+and verifies 149 files matching the tested E294 generation. All Wine servers
+drained. Other readers/callers and scenes, earlier save history, real BIOS,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E413 Star Cross sample reconciliation
+
+Protected static join `e413-star-cross-literals-sample-residual-6zwywcjb`
+compares the retained E403 EUR address inventory with E294. All 76 E411 literal
+bytes were among the 283 E410 unowned sampled bytes and are now declared by
+the Thumb literal resource; the other resource metadata remains unchanged.
+The sample has 207 unowned bytes in 22 intervals. They include 60 bytes at
+`14d69c..14d6d8`, scattered bytes near `39dd98..39de38`, ten bytes at
+`af2040..af204a` and four bytes preceding the E409 LZ streams. No E404
+candidate Thumb literal words remain in this sample.
+
+This address-only selected-reader sample does not establish instruction sites,
+source extents, other scenes or full-ROM coverage. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E414 Star Cross copied tables source plan
+
+Protected source plan `e414-star-cross-copied-tables-source-plan-3j15jgkp`
+authenticates four contiguous EUR spans `14d69c..14d6d8`, totaling 60 bytes
+observed in E403 without an E294 owner. Original Thumb readers reference
+separately owned literal roots at `0eeb58`, `0eeca4`, `0eeca8` and `0eecac`.
+The original code copies two 16-byte halfword groups directly to the stack,
+then copies four bytes and twelve halfwords through the existing `147dc0`
+helper. The code uses signed halfword coordinates from the first group and
+compares the twelve copied halfwords on the later branch. The adjacent
+`14d6d8..14d6e0` Soil Evidence table already has a separate owner.
+
+The sampled addresses and static instructions do not attribute the exact
+scene branch or prove all consumers and guest index domains. Runtime
+integration and altered-source Wine checks remain open, as do Linux, USA and
+native Windows. No performance comparison was made.

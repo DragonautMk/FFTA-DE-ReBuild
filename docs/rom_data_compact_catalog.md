@@ -755,6 +755,10 @@ byte is forced. The existing travel proof and earlier Roulette pair are not
 repeated. The normal-input route is consolidated from its recorded edges and
 hashes without replaying it to reconstruct context.
 
+A later [E403 selected-reader inventory](rom_data_runtime.md#e403-star-cross-rom-read-inventory)
+records the same continuation against E291 and identifies additional address
+leads without attributing them to the compact bank.
+
 One reduced Wine case advances frames 7857..8337. The production native CLI
 serves 15,830 reads and 19,330 source bytes from the new catalog. The existing
 native raw/managed filter passes complete state and clock, central/wide pixels,
@@ -1131,3 +1135,54 @@ complete pointer table. Other callers, pointers, scenes, real BIOS and UI
 save/Load remain open. Older revision-sensitive fixtures were updated but
 not rerun; Linux, USA and native Windows remain pending. No performance
 comparison was made.
+
+
+## E405 Star Cross compact-bank source plan
+
+Protected static unit `e405-star-cross-bank-source-plan-liuwuxg7` authenticates
+the EUR compact bank at `6bacd8`. Existing selectors 2/3 and lists 23–28
+remain byte-for-byte consistent with the E291 catalog. Source geometry also
+links selectors 0/1 to 6 and 18 frames and lists 0–22, comprising 328 objects
+including empty list 22. Together all four selectors and 29 lists cover the
+continuous `6bacd8..6bb572` interval of 2,202 bytes. Reconstructing each
+object's GBA attributes preserves all original bits.
+
+The 2,116 additional bytes have no E291 owner. All were observed through the
+guest bus in the retained E403 sample; all 2,014 additional list-body bytes
+were observed through sprite peeks. These address-level overlaps do not prove
+individual selector timing, a bound on arbitrary guest arithmetic, every
+consumer or earlier save history. Integration and altered-source runtime
+proof were subsequently completed for the selected continuation in E406 below.
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E406 Star Cross compact-bank runtime
+
+EUR extractor E292/decoder D291 extends the existing
+`graphics.conditional-compact-obj-catalog` to selectors 0–3 and lists 0–28
+of the source-backed `6bacd8` bank, in `compact-obj-catalog-v14-json`. The
+existing guest bus and typed host sprite-list paths now serve the 2,116 added
+bytes. Original accesses outside represented source ranges retain their
+previous raw fallback. The prior selectors, lists, other banks and 147 other
+resources are preserved.
+
+Wine `e406-star-cross-bank-readers-wine-mooa591q` verifies the original source
+geometry, catalog round trip, unchanged earlier projections and resources,
+coherent edited-file rejection, altered-source mirrored and boundary reads,
+three original-interpreter/compiled reader prefixes and 22 nonempty typed host
+lists. Empty list 22 is retained. The existing E291 dataset and authenticated
+compiled reader are used as inputs.
+
+The retained ordinary Wine continuation
+`e406-star-cross-bank-scene-wine-gf1aql83` matches complete state, guest
+clock, central/wide video, OAM, dispatch and five nonempty audio streams for
+all 480 frames while the 2,116 added bytes are altered in the managed ROM.
+The selected spans record 2,091 distinct bus requests and 45 typed sprite
+requests, with no raw sprite peek. Production CLI unit
+`e406-star-cross-bank-cli-wine-v988px6y` creates, reuses and verifies all 149
+files, matching the tested E292 dataset. All Wine units drained.
+
+These checks establish the selected continuation, not individual selector
+timing, all guest arithmetic, other consumers/scenes or full ROM independence.
+The source save's earlier history and real BIOS are not proved. Linux, USA and
+native Windows remain open; no performance comparison was made.

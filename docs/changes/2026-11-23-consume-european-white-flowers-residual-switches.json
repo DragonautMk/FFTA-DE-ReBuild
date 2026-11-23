@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-residual-switches",
+  "title": "Consume European White Flowers residual switch destinations",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the authenticated Thumb switch resource with seven arrays and 373 destination words while preserving existing roots, previous representations and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e389-white-flowers-residual-switches-readers-wine-rf3njife verifies 46 original interpreter/generated dispatch cases, 14 guard and 14 out-of-projection fallback cases, all destinations through altered mirrors and mixed boundaries, and previous resources.",
+    "Wine scene e389-white-flowers-residual-switches-scene-wine-6x87yzpb consumes all seven tables over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e389-white-flowers-residual-switches-cli-wine-4yz9hng2 creates, reuses and verifies 147 matching files; static join e389-white-flowers-residual-switches-sample-residual-6uy1wu37 leaves 3,710 unowned E362 sampled bytes including 3,600 documented copied-code support bytes."
+  ],
+  "limitations": [
+    "The 031618 out-of-range helper may return; the original fallback is preserved, but behavior after that helper remains outside this controlled test.",
+    "The address-only sample does not establish executing PCs or selector ancestry. Other readers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_residual_switches_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

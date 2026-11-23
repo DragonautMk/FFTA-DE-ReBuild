@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 
 pub const OFFSETS: [u32; 5] = [0x39aaac, 0x39aad4, 0x39ab5c, 0x39e214, 0x39e21c];
 pub const RECORD_BYTES: usize = 8;
+pub const FIRAGA_INDEX2_OFFSET: u32 = 0x39aac4;
+pub const FIRAGA_CCEC_OFFSET: u32 = 0x39ccec;
 const ROLES: [&str; 5] = [
     "soil-indirect-record-0",
     "soil-indirect-record-1",
@@ -12,12 +14,14 @@ const ROLES: [&str; 5] = [
     "soil-indirect-record-3",
     "soil-indirect-record-4",
 ];
-const HASHES: [&str; 5] = [
+const HASHES: [&str; 7] = [
     "4d8aef96c6d8c1d6428723dfede1dcd3587a7f64511f44d5a0ec72c0f023472a",
     "9521db027bf863bcfa16500b438045789f55c55e95db189f09b4ff8617072ab9",
     "08264f8b86ee077c13000c74df52736899e8feca41d9ee526b3610afd218531e",
     "80e64384f9f84c0908408db53db8e983b86b1d89b0afca60b00c9374363c0e37",
     "9998fe3fa03b15880d32b9894730f28d79f9a80d956b198d5ad72af211956103",
+    "2984269080c40f5c6dbdc8e8ee6e2312f2feb1d606430caf0e4dcca4eb06051a",
+    "5650272d09ffd65ab9ee764ac2e7bd32f19fa26c0179cc264bbd26f772de9147",
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -49,6 +53,10 @@ impl IndirectRecord {
 #[serde(deny_unknown_fields)]
 pub struct SoilIndirectRecords {
     pub records: [IndirectRecord; 5],
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub firaga_index2: Option<IndirectRecord>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub firaga_ccec: Option<IndirectRecord>,
 }
 impl SoilIndirectRecords {
     pub fn validate(&self) -> Result<(), String> {
@@ -60,22 +68,43 @@ impl SoilIndirectRecords {
         {
             return Err("Invalid Soil indirect record offsets".into());
         }
+        if self.firaga_index2.as_ref().is_some_and(|row| row.offset != FIRAGA_INDEX2_OFFSET) {
+            return Err("Invalid Firaga indirect index-2 record offset".into());
+        }
+        if self.firaga_ccec.as_ref().is_some_and(|row| row.offset != FIRAGA_CCEC_OFFSET) {
+            return Err("Invalid Firaga CCEC indirect record offset".into());
+        }
         Ok(())
     }
     pub fn source_spans(&self) -> Result<Vec<(u32, Vec<u8>, &'static str)>, String> {
         self.validate()?;
-        Ok(self
+        let mut spans: Vec<_> = self
             .records
             .iter()
             .zip(ROLES)
             .map(|(row, role)| (row.offset, row.source_bytes().to_vec(), role))
-            .collect())
+            .collect();
+        if let Some(row) = &self.firaga_index2 {
+            spans.push((row.offset, row.source_bytes().to_vec(), "firaga-indirect-index2-record"));
+        }
+        if let Some(row) = &self.firaga_ccec {
+            spans.push((row.offset, row.source_bytes().to_vec(), "firaga-ccec-indirect-record"));
+        }
+        Ok(spans)
     }
     /// These are the owned physical records, not a bound on guest pointers.
     pub fn byte_at(&self, offset: u32) -> Option<(u8, usize)> {
         self.records.iter().enumerate().find_map(|(i, row)| {
             let at = offset.checked_sub(row.offset)? as usize;
             row.source_bytes().get(at).copied().map(|byte| (byte, i))
+        }).or_else(|| {
+            let row = self.firaga_index2.as_ref()?;
+            let at = offset.checked_sub(row.offset)? as usize;
+            row.source_bytes().get(at).copied().map(|byte| (byte, 5))
+        }).or_else(|| {
+            let row = self.firaga_ccec.as_ref()?;
+            let at = offset.checked_sub(row.offset)? as usize;
+            row.source_bytes().get(at).copied().map(|byte| (byte, 6))
         })
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -131,6 +160,11 @@ impl Catalog {
                 0xf0a10,
                 "323c5497d9c5a28b66c2716ded3dcd064ea73d4004174dfba8859b4bddda6f42",
             ),
+            (
+                0xeb988,
+                0xeb9a2,
+                "e87a9408b43880215412f41e0a12df78be4b28ccc5af2c3ccfec9d39a5e90302",
+            ),
         ] {
             if ffta_rom::digest(&rom[start..end]) != hash {
                 return Err("Soil indirect reader fingerprint mismatch".into());
@@ -142,6 +176,7 @@ impl Catalog {
             (0xe4c6e, 0xe4c88, 0x39ab5c, 0),
             (0xf0a02, 0xf0a24, 0x39e214, 0),
             (0xf05d2, 0xf0600, 0x39e21c, 0),
+            (0xe4b10, 0xe4b84, 0x39aab4, 2),
         ];
         let literals = previous
             .iter()
@@ -163,7 +198,8 @@ impl Catalog {
             if op & 0xf800 != 0x4800
                 || ((reader + 4) & !3) + u32::from(op & 255) * 4 != literal
                 || target != 0x0800_0000 + base
-                || !OFFSETS.contains(&(base + index as u32 * RECORD_BYTES as u32))
+                || !(OFFSETS.contains(&(base + index as u32 * RECORD_BYTES as u32))
+                    || base + index as u32 * RECORD_BYTES as u32 == FIRAGA_INDEX2_OFFSET)
             {
                 return Err("Soil indirect reader literal mismatch".into());
             }
@@ -176,10 +212,21 @@ impl Catalog {
                 return Err("Missing separately owned Soil indirect literal".into());
             }
         }
-        let records = std::array::from_fn(|i| {
-            let at = OFFSETS[i] as usize;
+        // The indexed pointer is published by the later compact-cells resource;
+        // only its separately owned instruction literal is needed here.
+        let (reader, literal) = (0xeb988u32, 0xeb9d8u32);
+        let op = u16::from_le_bytes(rom[reader as usize..reader as usize + 2].try_into().unwrap());
+        if op & 0xf800 != 0x4800
+            || ((reader + 4) & !3) + u32::from(op & 255) * 4 != literal
+            || u32::from_le_bytes(rom[literal as usize..literal as usize + 4].try_into().unwrap()) != 0x0839_ccf4
+            || u32::from_le_bytes(rom[0x39ccfc..0x39cd00].try_into().unwrap()) != 0x0800_0000 + FIRAGA_CCEC_OFFSET
+            || literals.is_some_and(|owner| !owner.sources.iter().any(|source| source.offset == literal && source.length == 4)) {
+            return Err("Firaga CCEC indexed pointer provenance mismatch".into());
+        }
+        let record_at = |offset: u32| {
+            let at = offset as usize;
             IndirectRecord {
-                offset: OFFSETS[i],
+                offset,
                 field0: u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()),
                 fields: [rom[at + 2], rom[at + 3]],
                 values: [
@@ -187,8 +234,9 @@ impl Catalog {
                     u16::from_le_bytes(rom[at + 6..at + 8].try_into().unwrap()),
                 ],
             }
-        });
-        let decoded = SoilIndirectRecords { records };
+        };
+        let records = std::array::from_fn(|i| record_at(OFFSETS[i]));
+        let decoded = SoilIndirectRecords { records, firaga_index2: Some(record_at(FIRAGA_INDEX2_OFFSET)), firaga_ccec: Some(record_at(FIRAGA_CCEC_OFFSET)) };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();
         for (i, (offset, bytes, role)) in decoded.source_spans()?.into_iter().enumerate() {

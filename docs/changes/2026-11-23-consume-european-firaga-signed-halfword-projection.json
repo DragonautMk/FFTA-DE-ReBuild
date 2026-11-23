@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-signed-halfword-projection",
+  "title": "Consume European Firaga signed halfword physical projection",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Add an authenticated signed 640-byte physical projection for two low-byte indexed readers to the existing halfword source resource, preserving prior data and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e349-firaga-signed-halfwords-readers-wine-lh4xw9gy checks previous representation and 145 other resources, source authentication, boundaries, 84 interpreted/generated reader cases, transfers and snapshot ownership.",
+    "Wine scene e349-firaga-signed-halfwords-scene-wine-0w4y_z_n consumes both physical regions across 606 altered-source frames while state, clock, video, OAM, dispatch and audio match.",
+    "Wine CLI e349-firaga-signed-halfwords-cli-wine-q2nr5p9n creates, reuses and verifies 147 matching files; static join e349-firaga-signed-halfwords-sample-residual-io3xsjg4 leaves 42 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "The physical union does not prove arbitrary input reachability, a semantic table extent or individual sample PCs. Other readers/scenes, source-save history, real BIOS and UI save/Load remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_signed_halfwords_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

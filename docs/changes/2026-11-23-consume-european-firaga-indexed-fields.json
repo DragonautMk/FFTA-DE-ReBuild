@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-indexed-fields",
+  "title": "Consume European Firaga indexed fields",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the Firaga compact resource with five authenticated index-2 fields while preserving prior data, literal roots and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e352-firaga-index2-fields-readers-wine-enxi8h4h checks previous representation and 145 other resources, source authentication, boundaries, 40 interpreted/generated field and root cases, transfers and snapshot ownership.",
+    "Wine scene e352-firaga-index2-fields-scene-wine-jn68cocs consumes all five fields across 606 altered-source frames while state, clock, video, OAM, dispatch and audio match.",
+    "Wine CLI e352-firaga-index2-fields-cli-wine-zbyfd8qq creates, reuses and verifies 147 matching files; static join e352-firaga-index2-fields-sample-residual-pxnn7sao leaves 33 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "The address-only sample does not establish individual PCs, complete semantic tables or all readers. Other scenes, source-save history, real BIOS and UI save/Load remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/firaga_compact_cells.rs",
+    "crates/gba-core/src/rom_data/runtime/firaga_compact_cells.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_index2_fields_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

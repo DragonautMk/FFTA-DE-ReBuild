@@ -10,6 +10,10 @@ pub struct CopiedHalfwordLookupsStats {
     pub table_mask: u8,
     pub root_mask: u8,
     pub soil_source_mask: u8,
+    pub signed_projection_bytes: u64,
+    pub signed_projection_regions_mask: u8,
+    pub star_cross_bytes: u64,
+    pub star_cross_regions_mask: u8,
 }
 
 pub(super) struct CopiedHalfwordLookupsResources {
@@ -20,6 +24,10 @@ pub(super) struct CopiedHalfwordLookupsResources {
     tables: AtomicU64,
     roots: AtomicU64,
     soil_source: AtomicU64,
+    signed_projection_bytes: AtomicU64,
+    signed_projection_regions: AtomicU64,
+    star_cross_bytes: AtomicU64,
+    star_cross_regions: AtomicU64,
 }
 impl CopiedHalfwordLookupsResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -54,6 +62,10 @@ impl CopiedHalfwordLookupsResources {
             tables: AtomicU64::new(0),
             roots: AtomicU64::new(0),
             soil_source: AtomicU64::new(0),
+            signed_projection_bytes: AtomicU64::new(0),
+            signed_projection_regions: AtomicU64::new(0),
+            star_cross_bytes: AtomicU64::new(0),
+            star_cross_regions: AtomicU64::new(0),
         })
     }
 
@@ -68,6 +80,8 @@ impl CopiedHalfwordLookupsResources {
             return prior;
         }
         let (mut table_bytes, mut root_bytes, mut tables, mut roots, mut soil_source) = (0u64, 0u64, 0u64, 0u64, 0u64);
+        let (mut projection_bytes, mut projection_regions) = (0u64, 0u64);
+        let (mut star_cross_bytes, mut star_cross_regions) = (0u64, 0u64);
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, entry, root)) => {
                 if root {
@@ -77,6 +91,15 @@ impl CopiedHalfwordLookupsResources {
                     table_bytes += 1;
                     tables |= 1 << entry;
                     if entry == 3 { soil_source |= 1 << (index + i - model::SOIL_EVIDENCE_OFFSET as usize); }
+                    if entry == 4 {
+                        projection_bytes += 1;
+                        projection_regions |= if index + i < model::SIGNED_PROJECTION_SECOND_VIEW as usize { 1 } else { 2 };
+                    }
+                    if entry == 5 {
+                        star_cross_bytes += 1;
+                        let relative = index + i - model::STAR_CROSS_OFFSET as usize;
+                        star_cross_regions |= if relative < 16 { 1 } else if relative < 32 { 2 } else if relative < 36 { 4 } else { 8 };
+                    }
                 }
                 byte
             }
@@ -90,6 +113,10 @@ impl CopiedHalfwordLookupsResources {
         self.tables.fetch_or(tables, Ordering::Relaxed);
         self.roots.fetch_or(roots, Ordering::Relaxed);
         self.soil_source.fetch_or(soil_source, Ordering::Relaxed);
+        self.signed_projection_bytes.fetch_add(projection_bytes, Ordering::Relaxed);
+        self.signed_projection_regions.fetch_or(projection_regions, Ordering::Relaxed);
+        self.star_cross_bytes.fetch_add(star_cross_bytes, Ordering::Relaxed);
+        self.star_cross_regions.fetch_or(star_cross_regions, Ordering::Relaxed);
         Some(result)
     }
 
@@ -101,10 +128,15 @@ impl CopiedHalfwordLookupsResources {
             table_mask: self.tables.load(Ordering::Relaxed) as u8,
             root_mask: self.roots.load(Ordering::Relaxed) as u8,
             soil_source_mask: self.soil_source.load(Ordering::Relaxed) as u8,
+            signed_projection_bytes: self.signed_projection_bytes.load(Ordering::Relaxed),
+            signed_projection_regions_mask: self.signed_projection_regions.load(Ordering::Relaxed) as u8,
+            star_cross_bytes: self.star_cross_bytes.load(Ordering::Relaxed),
+            star_cross_regions_mask: self.star_cross_regions.load(Ordering::Relaxed) as u8,
         }
     }
 
     pub(super) fn resident_bytes(&self) -> usize {
-        std::mem::size_of::<Self>()
+        std::mem::size_of::<Self>() + self.data.signed_byte_index_projection.as_ref()
+            .map_or(0, |projection| projection.values.capacity() * std::mem::size_of::<i16>())
     }
 }

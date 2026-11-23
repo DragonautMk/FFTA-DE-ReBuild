@@ -5,6 +5,10 @@ use serde::{Deserialize, Serialize};
 mod roots;
 pub use roots::{Reference, BANK_ROOTS, REFERENCES};
 const ROM_LIMIT: u32 = 32 * 1024 * 1024;
+/// A physical projection bounded by one EUR caller; other guest inputs stay unrestricted.
+pub const FIRAGA_PALETTE_PROJECTION_OFFSET: u32 = 0x40fd70;
+pub const FIRAGA_PALETTE_PROJECTION_BYTES: usize = 32;
+pub const FIRAGA_PALETTE_PROJECTION_SHA256: &str = "a77b168c9ce3155e400ee4d53aa12aafadfa6cff52ecc007c6799994c268e4d3";
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Bank {
@@ -105,6 +109,14 @@ impl Catalog {
         if ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("UI raw palettes require exact EUR ROM; USA pending".into());
         }
+        if ffta_rom::digest(&rom[0x138ec..0x1390c]) != "6bf3e3620e1b6c18627fc01319d8ac391d4fbb07dcc24d360aa8551ecc852a42"
+            || ffta_rom::digest(&rom[0x13918..0x13952]) != "8d3bc8ce2fc755898626d42a6e76c7dbdaa9b64494ba55e4c1677bc8c00f2ecf"
+            || ffta_rom::digest(&rom[FIRAGA_PALETTE_PROJECTION_OFFSET as usize..FIRAGA_PALETTE_PROJECTION_OFFSET as usize + FIRAGA_PALETTE_PROJECTION_BYTES]) != FIRAGA_PALETTE_PROJECTION_SHA256 {
+            return Err("Firaga palette projection source or reader mismatch".into());
+        }
+        // The literal remains owned by the separate Thumb PC-literal resource.
+        literal(rom, 0x138f0, 0x1390c, 0x0800_0000 + FIRAGA_PALETTE_PROJECTION_OFFSET)?;
+        call(rom, 0x1392e, 0x138ec)?;
         // The callback is code, retained in ROM and copied by original startup.
         literal(rom, 0x27ee, 0x2810, 0x08d968e8)?;
         literal(rom, 0x27f0, 0x2814, 0x08d96838)?;

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-star-cross-literals",
+  "title": "Consume European Star Cross literals",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing Thumb literal owner and its page routing to serve 19 original Star Cross source words."
+  ],
+  "validation": [
+    "Wine 2_yy7brj preserves the prior representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and 38 interpreter/generated reader cases.",
+    "Wine lhr7hg1i matches all 480 frames with the 19 source words altered and observes all 19 through the managed owner. Wine da0uz463 creates, reuses and verifies 149 matching E294 files; all servers drained."
+  ],
+  "limitations": [
+    "Word consumption does not identify exact scene PCs. Other callers/scenes, save ancestry, real BIOS, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_literals_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_literals_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

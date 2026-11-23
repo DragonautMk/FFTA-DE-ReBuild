@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-firaga-palette-projection",
+  "title": "Authenticate European Firaga palette projection",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source plan"
+  ],
+  "changes": [
+    "Authenticate a 16-halfword physical palette projection bounded by one original caller and retain the existing literal owner."
+  ],
+  "validation": [
+    "Protected source plan e358-firaga-palette-projection-source-plan-dtoi3884 verifies the original reader and caller, selector arithmetic, E273 disjointness and two sampled bytes."
+  ],
+  "limitations": [
+    "The bound is conditional on the selected caller. Sample PCs and scene ancestry, runtime publication, other callers and scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

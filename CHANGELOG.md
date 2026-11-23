@@ -3,6 +3,1633 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-23 — Validate European Firaga residual literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Validate the existing E266 Thumb literal resource extension for 52 selected source words while preserving prior owners and guest fallback.
+
+**Validation**
+
+- Wine reader e337-firaga-residual-literals-readers-wine-tmmrcebi checks unchanged prior resources, forged-data rejection, poisoned boundaries and mirrors, 104 original reader cases, transfers and snapshot ownership.
+- Wine scene e337-firaga-residual-literals-scene-wine-m1fas74s compares 606 altered-source frames and consumes all 52 words, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e337-firaga-residual-literals-cli-wine-qgtz2kbo creates, reuses and verifies 147 matching files; static join e337-firaga-residual-literals-sample-residual-29h_ckxv leaves 105 unowned addresses in the E302 sample.
+- Independent unit e337-residual-build-evidence-reconciled-06cq110j authenticates the completed Windows test executable and its inputs after original build unit mve1jq1_ retained FAIL for a broken output pipe.
+- Sol /root/sol_e337_io_diagnosis, GPT-6.1 Sol/xhigh requested and effective settings unconfirmed, diagnosed a shared target I/O wait; both live executions subsequently advanced.
+
+**Limitations**
+
+- Other readers, values and scenes, source-save history, real BIOS and UI save/Load remain open; the residual is an address-only sample.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-validate-european-firaga-residual-literals.json)
+
+## 2026-11-23 — Reconcile European White Flowers copied code support
+
+Type: changed. Platforms: European ROM; static protected evidence reconciliation.
+
+**Changes**
+
+- Reconcile the remaining White Flowers sampled addresses with the documented copied-IWRAM code exclusion and owned metadata alias.
+
+**Validation**
+
+- Protected join 7yeu1i9c proves the 3,600 E400 residual addresses equal E246 remaining addresses, with the separate 48-byte alias owned.
+
+**Limitations**
+
+- The block contains executable support but individual bytes are not all classified. It remains in ROM under the inventory contract; separate code-migration design is needed for ROM-free startup. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-white-flowers-copied-code-support.json)
+
+## 2026-11-23 — Reconcile European Star Cross LZ sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E293 manifest after LZ integration.
+
+**Validation**
+
+- Protected join 0_a1p9o7 verifies 4,960 more sampled bytes now have declared sources and 283 remain unowned in 31 intervals; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-lz-sample.json)
+
+## 2026-11-23 — Reconcile European Star Cross literal sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E294 manifest after literal integration.
+
+**Validation**
+
+- Protected join 6zwywcjb verifies 76 more sampled bytes now have declared sources and 207 remain unowned in 22 intervals; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-literal-sample.json)
+
+## 2026-11-23 — Reconcile European Star Cross bank sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E292 manifest after compact-bank integration.
+
+**Validation**
+
+- Protected join lgz7_nd7 verifies that 2,116 sampled bytes now have declared sources and 5,243 remain unowned in 33 intervals; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-bank-sample.json)
+
+## 2026-11-23 — Reconcile European Roulette native sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Compare the old Roulette native API sample against current E291 source ownership.
+
+**Validation**
+
+- Protected join ycaxc95s verifies all 732 formerly unowned E108 sampled bytes are declared by E291 and authenticates 175 intersecting source spans against the exact ROM.
+
+**Limitations**
+
+- The retained evidence covers 12 native-API frames, not interpreter or host readers, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_ui.md](docs/rom_data_ui.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-roulette-native-sample.json)
+
+## 2026-11-23 — Preserve validation success after closed output
+
+Type: fixed. Platforms: Wine validation.
+
+**Changes**
+
+- Keep final status output outside the archived-input retirement failure handler and close a broken stdout stream after a successful receipt.
+
+**Validation**
+
+- EUR E267 production CLI verification with deliberately closed runner stdout passed in Wine: e341-closed-stdout-wine-proof-v6cjp6xu; exit 0, PASS receipt, removed scratch and drained server.
+
+**Limitations**
+
+- The first proof e341-closed-stdout-wine-proof-qsu55wxi remains FAIL because Python final flushing returned 120; its inner unit completed and drained. Dedicated Linux host regression tests and native Windows remain pending. No performance comparison was made.
+
+Documentation: [validation_unit.py](scripts/validation_unit.py), [LOCAL_ARTIFACTS.md](docs/development/LOCAL_ARTIFACTS.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-preserve-validation-success-after-closed-output.json)
+
+## 2026-11-23 — Plan European White Flowers signed byte projection
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Identify a signed-byte reader sequence and 48 non-overlapping source bytes covering three sampled offsets.
+
+**Validation**
+
+- Wine disassemblies o1ejpxi9 and qvbss5me and protected source plan g28z8ftk fingerprint the reader, root owner, cursor helper and selected bytes.
+
+**Limitations**
+
+- The read occurs before cursor normalization; preserve fallback for initial indices outside the projection. Controlled original-reader/helper proof, asset extent, ancestry, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-plan-european-white-flowers-signed-byte-projection.json)
+
+## 2026-11-23 — Plan European White Flowers isolated values
+
+Type: changed. Platforms: European ROM; retained Wine evidence and static source plan.
+
+**Changes**
+
+- Select a non-overlapping first row of 20 halfwords and one byte covering the last three non-support sampled bytes.
+
+**Validation**
+
+- Protected plan lnthon5v checks E398 direct Wine operands, original reader instructions, separately owned roots, exact source hashes and ownership.
+
+**Limitations**
+
+- Preserve fallback outside selected physical bytes; initial selector domains, full asset extents, runtime publication, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-plan-european-white-flowers-isolated-values.json)
+
+## 2026-11-23 — Observe European White Flowers native byte context
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Add a bounded test-only native API and DMA observer for three isolated White Flowers byte reads.
+
+**Validation**
+
+- Windows build k2ivw3je and Wine unit 95w54vo0 pass: three target bytes are native non-DMA reads in one 600-frame continuation; Wine server drained.
+
+**Limitations**
+
+- Exported PC and outer dispatch do not identify the exact instruction; selector domain, source extent, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [native_rom_data_residue_tests.rs](crates/recomp/src/rom_data/native_rom_data_residue_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-observe-european-white-flowers-native-byte-context.json)
+
+## 2026-11-23 — Observe European White Flowers isolated reader scopes
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Observe six residual sampled bytes in one filtered White Flowers continuation and retain two interpreter scopes without inferring unscoped native sites.
+
+**Validation**
+
+- Wine source-site unit 9vq22s5t passes for all six bytes over 600 frames; retained Wine disassembly matches LDRB and LDRH at the two scoped PCs; Wine server drained.
+
+**Limitations**
+
+- Interpreter scope may include nested accesses; direct operands, three unscoped byte readers, source extents, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-observe-european-white-flowers-isolated-reader-scopes.json)
+
+## 2026-11-23 — Observe European White Flowers isolated read operands
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Add a bounded test-only observer for the pre-step operands of two original White Flowers source reads.
+
+**Validation**
+
+- Windows build vdeeh6qg and Wine unit s86speyz observe both exact byte and halfword operands in normal interpreter steps over 600 retained frames; Wine server drained.
+
+**Limitations**
+
+- Caller ancestry, selector domains, complete asset extents, runtime publication, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/recomp/src/rom_data.rs), [white_flowers_operand_sites_tests.rs](crates/recomp/src/rom_data/white_flowers_operand_sites_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-observe-european-white-flowers-isolated-operands.json)
+
+## 2026-11-23 — Inventory European White Flowers ROM reads
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Inventory selected original-ROM reads during an existing White Flowers battle-entry continuation against the current E275 resources.
+
+**Validation**
+
+- Wine unit e362-white-flowers-audit-wine-tqqmw74v compares 700 raw/managed frames with matching state, clock, video, OAM, dispatch and nonempty audio; server drained.
+- The address-only report identifies 8,039 sampled bytes outside E275 declared sources for subsequent classification.
+
+**Limitations**
+
+- Address and reader do not prove executing PCs, source extents or data formats. Other scenes/readers, source-save history, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-inventory-european-white-flowers-rom-reads.json)
+
+## 2026-11-23 — Inventory European Star Cross ROM reads
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Inventory selected original-ROM reads during the retained Star Cross confirmation against E291 resources.
+
+**Validation**
+
+- Wine unit e403-star-cross-audit-wine-us0nqlxx compares 480 raw/managed frames with matching state, clock, video, OAM, dispatch and nonempty audio; server drained.
+- The address-only report identifies 7,359 sampled bytes outside E291 declared sources for subsequent classification.
+
+**Limitations**
+
+- Address and reader do not prove executing PCs, source extents or data formats. Other scenes/readers, source-save history, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-inventory-european-star-cross-rom-reads.json)
+
+## 2026-11-23 — Inspect short European Firaga residual context
+
+Type: docs. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Record a 12-frame native API observer and its negative join against the E269 Firaga sample residual.
+
+**Validation**
+
+- Wine observer e346-firaga-residual-native-context-wine-hle43zmn passes per-frame state and output comparisons and drains Wine; none of the 66 E302 residual bytes appears in its native API capture.
+
+**Limitations**
+
+- This does not exclude later frames, interpreter fallback, host/HLE, direct DMA or other scenes. Exported PCs and dispatch contexts are not exact instruction sites. Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-inspect-short-european-firaga-residual-context.json)
+
+## 2026-11-23 — Identify remaining European White Flowers source candidates
+
+Type: changed. Platforms: European ROM; static grouping and Wine disassembly.
+
+**Changes**
+
+- Regroup the E362 sample against E277 and identify a conditional indexed archive candidate.
+
+**Validation**
+
+- Protected grouping e369-white-flowers-residual-groups-47pkvd93 and Wine disassembly e369-white-flowers-indexed-caller-dis-wine-gljcbz8v identify the leading original decoder call; focused Sol xhigh requested, effective settings unconfirmed.
+
+**Limitations**
+
+- The sample lacks executing PCs; exact source authentication and runtime publication are pending. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-white-flowers-remaining-sources.json)
+
+## 2026-11-23 — Identify European White Flowers indexed archive candidate
+
+Type: changed. Platforms: European ROM; static diagnosis.
+
+**Changes**
+
+- Identify a candidate language-indexed archive and separate halfword root leads in the E362 residual.
+
+**Validation**
+
+- Protected static scan e364-white-flowers-high-xrefs-2v0ucvhi and retained original caller disassembly provide bounded candidate links; focused Sol xhigh requested, effective settings unconfirmed.
+
+**Limitations**
+
+- The sample lacks executing PCs; archive reconstruction, language alternatives, source ownership and runtime publication require a protected source plan. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-white-flowers-indexed-archive.json)
+
+## 2026-11-23 — Identify European Firaga vertical lookup projection
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate an 11-halfword physical projection adjacent to the existing uncapped vertical lookup fragment.
+
+**Validation**
+
+- Protected source plan e338-firaga-vertical-extension-source-plan-hmwlk2jk verifies the original reader fingerprint, six prior entries, 22 sampled and previously unowned bytes, and indices 10 through 20.
+
+**Limitations**
+
+- The address-only sample does not identify the executing PC; this plan does not publish data or establish a guest bound or full semantic table extent. Other consumers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-vertical-lookup.json)
+
+## 2026-11-23 — Identify European Firaga signed halfword readers
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Identify two signed-halfword readers whose physical views match 24 bytes in the Firaga residual sample.
+
+**Validation**
+
+- Protected pointer scan e347-firaga-14cf-pointer-xrefs-zh94vzfa and retained Wine disassembly e336-firaga-residual-literals-disassembly-wine-d9ijk6ak identify the base, second-view displacement and six matching indices.
+
+**Limitations**
+
+- The address-only sample does not attribute executing PCs. A full source plan and runtime publication, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-signed-halfword-readers.json)
+
+## 2026-11-23 — Identify European Firaga scoped index 2 projections
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate a sampled word and byte as physical index-2 projections of two existing scoped-reader bases.
+
+**Validation**
+
+- Protected source plan e340-firaga-scoped-index2-source-plan-b3kir03p verifies the EUR reader fingerprint, existing literal owners, index arithmetic and five unowned sampled bytes.
+
+**Limitations**
+
+- The address-only sample does not identify executing PCs or prove a common invocation. Publication, other indices, callers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-scoped-index2.json)
+
+## 2026-11-23 — Identify European Firaga palette switch tables
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate two guarded palette-command switch destination arrays and their previously owned literal roots.
+
+**Validation**
+
+- Protected source plan e344-firaga-palette-switch-source-plan-o0cbwelm checks exact EUR code, roots, 26 destinations, E268 disjointness and 12 sampled bytes among 104 total.
+
+**Limitations**
+
+- The sample does not attribute executing PCs. Runtime publication, other readers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-palette-switches.json)
+
+## 2026-11-23 — Identify European Firaga linked transfer candidates
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Identify a conditional original index-2 path to a type-3 row and descriptor that reference an existing wrapper and compressed stream.
+
+**Validation**
+
+- Wine disassembly e355-firaga-residual-readers-disassembly-wine-fvczyws1 passes with server drained; existing E342 data and E286/E287 reader evidence identify the candidate source links.
+- Exact EUR inspection finds both candidate spans unowned in E272 and 17 of their 20 bytes in the address-only E302 residual.
+
+**Limitations**
+
+- The sample does not establish executing PCs or prove the conditional ancestry occurred. Source authentication, runtime publication, other callers and scenes remain open.
+- Linux, USA and native Windows remain pending. No performance comparison was made. Focused Sol xhigh requested, effective settings unconfirmed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-linked-transfer-candidates.json)
+
+## 2026-11-23 — Authenticate European Firaga indirect index 2 record
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate an eight-byte index-2 physical record for a previously established indirect reader.
+
+**Validation**
+
+- Protected source plan e353-firaga-indirect-index2-source-plan-lojq8qbl checks exact EUR code, existing root, record ownership and seven sampled bytes.
+
+**Limitations**
+
+- The sample does not attribute executing PCs or pointer ancestry and does not establish guest bounds. Runtime publication, other indices/callers/scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-indirect-index2-record.json)
+
+## 2026-11-23 — Authenticate European Firaga indexed fields
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate five original index-2 physical fields and their previously owned literal roots.
+
+**Validation**
+
+- Protected source plan e351-firaga-index2-fields-source-plan-tmv0x8by checks exact EUR code, roots, nine disjoint source bytes and their E302 intersection.
+
+**Limitations**
+
+- The sample does not attribute executing PCs or establish guest bounds or complete semantic tables. Runtime publication, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-indexed-fields.json)
+
+## 2026-11-23 — Identify European Firaga indexed field candidates
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Identify five original indexed readers compatible with nine bytes in the Firaga residual sample.
+
+**Validation**
+
+- Protected pointer scan e350-firaga-39a-39cc-pointer-xrefs-u0fvo5nk and retained Firaga constructor disassemblies identify the candidate roots and index-2 physical fields.
+
+**Limitations**
+
+- The address-only sample does not attribute executing PCs. A protected source plan and runtime publication, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-indexed-field-candidates.json)
+
+## 2026-11-23 — Identify European Firaga signed halfword physical domain
+
+Type: docs. Platforms: European ROM.
+
+**Changes**
+
+- Authenticate the physical union of two overlapping low-byte signed-halfword reader domains.
+
+**Validation**
+
+- Protected source plan e348-firaga-14cf-projection-source-plan-bq_cnj9n checks both EUR instruction sequences and existing roots, 640 disjoint source bytes and the 24-byte E302 intersection.
+
+**Limitations**
+
+- The physical union does not prove reachable inputs or a semantic table extent; the sample lacks executing PCs. Runtime publication, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-23-identify-european-firaga-halfword-physical-domain.json)
+
+## 2026-11-23 — Group European White Flowers ROM residual
+
+Type: changed. Platforms: European ROM; static grouping.
+
+**Changes**
+
+- Group the E362 address-only residual by interval, reader and bounded possible literal sites without replay.
+
+**Validation**
+
+- Protected static unit e363-white-flowers-residual-groups-fa24opzf verifies all 8,039 addresses against the exact EUR ROM and E275 manifest; 3,600 lie in previously documented copied-code support.
+
+**Limitations**
+
+- The other 4,439 sampled bytes require classification; possible Thumb bit patterns do not prove execution or source extents. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-group-european-white-flowers-rom-residual.json)
+
+## 2026-11-23 — Group European Star Cross ROM residual
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static grouping.
+
+**Changes**
+
+- Group the E403 sampled unowned bytes by physical range and selected reader, retaining bounded candidate literal hints.
+
+**Validation**
+
+- Protected unit 7vnaqwjc groups 7,359 bytes into 37 intervals and finds no overlap with the previously documented copied-IWRAM source block.
+
+**Limitations**
+
+- Observed intervals and candidate Thumb bit patterns do not establish resource extents, executing PCs or data formats. Linux, USA, native Windows, other scenes and readers remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-group-european-star-cross-rom-residual.json)
+
+## 2026-11-23 — Consume twenty-eight European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 92 authenticated words in 28 further pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e381-white-flowers-many-literals-readers-wine-sn2kn037 verifies 184 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e381-white-flowers-many-literals-scene-wine-qnj53ytl consumes all 92 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e381-white-flowers-many-literals-cli-wine-n4ygbw8g creates, reuses and verifies 147 matching files; static join e381-white-flowers-many-literals-sample-residual-l4g6pt_j leaves 5,002 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-twenty-eight-literal-pools.json)
+
+## 2026-11-23 — Consume thirteen European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 60 authenticated words in thirteen further pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e379-white-flowers-thirteen-literals-readers-wine-xhl37t_m verifies 120 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e379-white-flowers-thirteen-literals-scene-wine-ukju6ylf consumes all 60 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e379-white-flowers-thirteen-literals-cli-wine-hjw0548p creates, reuses and verifies 147 matching files; static join e379-white-flowers-thirteen-literals-sample-residual-pte_4_ze leaves 5,370 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-thirteen-literal-pools.json)
+
+## 2026-11-23 — Consume additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 62 authenticated words in ten further pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e377-white-flowers-later-literals-readers-wine-sfa40qnd verifies 124 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e377-white-flowers-later-literals-scene-wine-4aph05lq consumes all 62 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e377-white-flowers-later-literals-cli-wine-se9n4l2l creates, reuses and verifies 147 matching files; static join e377-white-flowers-later-literals-sample-residual-kxz4n64i leaves 5,610 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-ten-literal-pools.json)
+
+## 2026-11-23 — Consume sixty-two European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 128 authenticated words in 62 further pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e383-white-flowers-bulk-literals-readers-wine-ibbq6jvp verifies 256 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e383-white-flowers-bulk-literals-scene-wine-8caa5f6p consumes all 128 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e383-white-flowers-bulk-literals-cli-wine-q0eg09u7 creates, reuses and verifies 147 matching files; static join e383-white-flowers-bulk-literals-sample-residual-fb5qs3bk leaves 4,490 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-sixty-two-literal-pools.json)
+
+## 2026-11-23 — Consume European White Flowers signed byte projection
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Publish and serve a 48-byte signed projection while retaining the existing root owner and original fallback for outside cursors.
+
+**Validation**
+
+- Wine reader passes 14 original interpreter/generated cases including original helper and outside indices 48 and 255; mirrors, mixed boundaries, source authentication and snapshots pass.
+- Wine scene compares 700 altered-source White Flowers frames; production CLI creates, reuses and verifies 148 files; static join accounts for three sampled bytes. All Wine servers drained.
+
+**Limitations**
+
+- The E362 sample leaves 3,603 unowned bytes including 3,600 copied-code support; true asset extent, producer ancestry, other scenes, Linux, USA and native Windows remain open. No performance measurements were made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [white_flowers_signed_bytes.rs](crates/gba-core/src/rom_data/white_flowers_signed_bytes.rs), [runtime.rs](crates/gba-core/src/rom_data/runtime.rs), [white_flowers_signed_bytes.rs](crates/gba-core/src/rom_data/runtime/white_flowers_signed_bytes.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [white_flowers_signed_bytes_tests.rs](crates/recomp/src/rom_data/white_flowers_signed_bytes_tests.rs), [bg_packet_managed_tests.rs](crates/recomp/src/rom_data/bg_packet_managed_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-signed-byte-projection.json)
+
+## 2026-11-23 — Consume European White Flowers residual switch destinations
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb switch resource with seven arrays and 373 destination words while preserving existing roots, previous representations and guest fallback.
+
+**Validation**
+
+- Wine reader e389-white-flowers-residual-switches-readers-wine-rf3njife verifies 46 original interpreter/generated dispatch cases, 14 guard and 14 out-of-projection fallback cases, all destinations through altered mirrors and mixed boundaries, and previous resources.
+- Wine scene e389-white-flowers-residual-switches-scene-wine-6x87yzpb consumes all seven tables over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e389-white-flowers-residual-switches-cli-wine-4yz9hng2 creates, reuses and verifies 147 matching files; static join e389-white-flowers-residual-switches-sample-residual-6uy1wu37 leaves 3,710 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The 031618 out-of-range helper may return; the original fallback is preserved, but behavior after that helper remains outside this controlled test.
+- The address-only sample does not establish executing PCs or selector ancestry. Other readers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-residual-switches.json)
+
+## 2026-11-23 — Consume remaining sampled European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 182 authenticated words in 163 further pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e385-white-flowers-remaining-literals-readers-wine-fm569axt verifies 364 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e385-white-flowers-remaining-literals-scene-wine-tf_2k_48 consumes all 182 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e385-white-flowers-remaining-literals-cli-wine-rm83cqb2 creates, reuses and verifies 147 matching files; static join e385-white-flowers-remaining-literals-sample-residual-x6f12no9 leaves 3,762 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Candidate 03320c is excluded because its apparent reader is jump-table data. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-remaining-literal-pools.json)
+
+## 2026-11-23 — Consume European White Flowers queued rows
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend observed tilemaps with two authenticated conditional 20 by 8 queued halfword projections and original selector literals while preserving prior owners and the guest queue.
+
+**Validation**
+
+- Wine reader e368-white-flowers-queued-readers-wine-xeokmdlp verifies six original interpreter/generated selector cases and three original queue/DMA cases, both projections, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e368-white-flowers-queued-scene-wine-8n1stan0 consumes the first projection over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e368-white-flowers-queued-cli-wine-oxrskpdo creates, reuses and verifies 147 matching files; static join e368-white-flowers-queued-sample-residual-ce_e0lx3 leaves 6,437 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or conditional ancestry. The nonzero ordinary scene, other callers, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-queued-rows.json)
+
+## 2026-11-23 — Consume European White Flowers mixed switches
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Serve five authenticated Thumb switch destination arrays and five literal words from extracted resources while preserving previous owners and out-of-range behavior.
+
+**Validation**
+
+- Wine E391 readers pass 42 original interpreter/generated dispatches, 10 guards, 10 fallback and two literal cases, mirror and boundary reads, source authentication and snapshot preservation.
+- Wine E391 compares 700 altered-source White Flowers frames and production CLI create, reuse and verify; static join accounts for 80 sampled bytes. All Wine servers drained.
+
+**Limitations**
+
+- The E362 address-only sample leaves 3,630 unowned bytes, including 3,600 copied-code support; executing PCs, helper-return behavior and other scenes remain open.
+- Linux, USA and native Windows validation remain pending. No performance measurements were made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [thumb_switch_tables.rs](crates/gba-core/src/rom_data/thumb_switch_tables.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/thumb_pc_literals.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [white_flowers_mixed_switches_tests.rs](crates/recomp/src/rom_data/white_flowers_mixed_switches_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-mixed-switches.json)
+
+## 2026-11-23 — Consume European White Flowers isolated values
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Publish a selected 20-halfword row and one byte while preserving separately owned roots and fallback for other selectors.
+
+**Validation**
+
+- Wine readers pass four original setup, 12 row and 12 byte cases, outside fallbacks, mirrors, mixed boundaries, source authentication and snapshot preservation.
+- Wine scene compares 700 altered-source White Flowers frames; production CLI creates, reuses and verifies 149 files. Static join leaves only 3,600 copied-code support bytes unowned in the E362 sample; all Wine servers drained.
+
+**Limitations**
+
+- The sample is address-only and does not establish full-ROM coverage or remove the copied-code dependency. Asset extents, ancestry, other scenes, Linux, USA and native Windows remain open. No performance measurements were made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [white_flowers_isolated_values.rs](crates/gba-core/src/rom_data/white_flowers_isolated_values.rs), [runtime.rs](crates/gba-core/src/rom_data/runtime.rs), [white_flowers_isolated_values.rs](crates/gba-core/src/rom_data/runtime/white_flowers_isolated_values.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [white_flowers_isolated_values_tests.rs](crates/recomp/src/rom_data/white_flowers_isolated_values_tests.rs), [bg_packet_managed_tests.rs](crates/recomp/src/rom_data/bg_packet_managed_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-isolated-values.json)
+
+## 2026-11-23 — Consume European White Flowers indexed archives
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend indexed graphics with five authenticated archives, the language pointer group and caller literals while preserving prior owners and unrestricted guest fallback.
+
+**Validation**
+
+- Wine reader e366-white-flowers-indexed-readers-wine-3d7s19no verifies all five decoder outputs, 15 original interpreter/generated cases, 145 unchanged resources, old representation, mixed boundaries, adjacent owner and unselected fallback.
+- Wine scene e366-white-flowers-indexed-scene-wine-y_1th6uh consumes the first archive over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e366-white-flowers-indexed-cli-wine-j6kabfzv creates, reuses and verifies 147 matching files; static join e366-white-flowers-indexed-sample-residual-djytd17l leaves 6,765 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or conditional ancestry. Other language scenes, callers, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-indexed-archives.json)
+
+## 2026-11-23 — Consume European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 49 authenticated words in four pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e373-white-flowers-literals-readers-wine-6ot86e3c verifies 98 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e373-white-flowers-literals-scene-wine-th4l8fim consumes all 49 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e373-white-flowers-literals-cli-wine-eixsrqj_ creates, reuses and verifies 147 matching files; static join e373-white-flowers-literals-sample-residual-wzleu30g leaves 6,106 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-four-literal-pools.json)
+
+## 2026-11-23 — Consume European White Flowers final sampled switches
+
+Type: changed. Platforms: European ROM; Windows under Wine.
+
+**Changes**
+
+- Serve three authenticated Thumb switch destination arrays and three literal words while preserving prior owners and original selector transformations.
+
+**Validation**
+
+- Wine E393 readers pass 14 original interpreter/generated dispatches, six guards, six fallback and two literal cases, mirror and boundary reads, source authentication and snapshot preservation.
+- Wine E393 compares 700 altered-source White Flowers frames and production CLI create, reuse and verify; static join accounts for 24 sampled bytes. All Wine servers drained.
+
+**Limitations**
+
+- The E362 address-only sample leaves 3,606 unowned bytes, including 3,600 copied-code support; executing PCs, six isolated bytes and other scenes remain open.
+- Linux, USA and native Windows validation remain pending. No performance measurements were made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [thumb_switch_tables.rs](crates/gba-core/src/rom_data/thumb_switch_tables.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/thumb_pc_literals.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [white_flowers_final_switches_tests.rs](crates/recomp/src/rom_data/white_flowers_final_switches_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-final-switches.json)
+
+## 2026-11-23 — Consume additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Thumb literal resource with 62 authenticated words in eight additional pools while preserving previous owners, representation and guest fallback.
+
+**Validation**
+
+- Wine reader e375-white-flowers-more-literals-readers-wine-g7ci2tnq verifies 124 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.
+- Wine scene e375-white-flowers-more-literals-scene-wine-0kdrgo3_ consumes all 62 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e375-white-flowers-more-literals-cli-wine-ucmhxrmh creates, reuses and verifies 147 matching files; static join e375-white-flowers-more-literals-sample-residual-cjcrgtzy leaves 5,858 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-eight-literal-pools.json)
+
+## 2026-11-23 — Consume European White Flowers direct indexed archive
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend indexed graphics with the directly rooted 62-program archive and original literal while preserving the adjacent source owner and original selector behavior.
+
+**Validation**
+
+- Wine reader e371-white-flowers-direct-readers-wine-ywvmnh46 verifies production parsing, program 16, six original interpreter/generated wrapper cases including boundary selectors, 145 unchanged resources, previous representation, mixed boundaries, adjacent owner and snapshot ownership.
+- Wine scene e371-white-flowers-direct-scene-wine-9pwn72wh consumes the archive and literal over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e371-white-flowers-direct-cli-wine-t_d5oash creates, reuses and verifies 147 matching files; static join e371-white-flowers-direct-sample-residual-2casb5p1 leaves 6,302 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or conditional ancestry. Other programs, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-direct-indexed-archive.json)
+
+## 2026-11-23 — Consume European White Flowers byte-indexed switch destinations
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the authenticated Thumb switch resource with 256 destination words while preserving the existing literal root, previous representations and guest fallback.
+
+**Validation**
+
+- Wine reader e387-white-flowers-switch-readers-wine-rzmpfvqn verifies ten original interpreter/generated dispatch cases, guard and out-of-projection behavior, all destinations through altered mirrors and mixed boundaries, and previous resources.
+- Wine scene e387-white-flowers-switch-scene-wine-dvb87b5n consumes the selected table over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e387-white-flowers-switch-cli-wine-4zd4hs5l creates, reuses and verifies 147 matching files; static join e387-white-flowers-switch-sample-residual-3unoh3bm leaves 3,750 unowned E362 sampled bytes including 3,600 documented copied-code support bytes.
+- Initial reader 7d7zef1n failed after a guard stop inside a chained native block; Wine drained. The corrected check stops at the original fused BL destination. Sol xhigh was requested; effective model and effort were not independently confirmed.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or selector ancestry. Other readers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-white-flowers-byte-indexed-switch.json)
+
+## 2026-11-23 — Consume European Star Cross LZ streams
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing observed LZ owner to serve two Star Cross source streams and decoded HLE output, preserving old stream indices and counters.
+
+**Validation**
+
+- Wine d2ksd6ci preserves 20 earlier streams and 147 other resources, rejects coherent edits, checks mirrors/boundaries, two original SWI and six DMA/CpuSet/CpuFastSet cases, and snapshot owner retention.
+- Wine lqmy00iv matches 480 frames with both source streams altered and one managed HLE call per stream. Wine m_69fwj8 creates, reuses and verifies the 149-file E293 dataset; all three servers drained.
+
+**Limitations**
+
+- One retained continuation does not establish asset identities, all callers and scenes, save ancestry or real BIOS behavior. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [observed_lz.rs](crates/gba-core/src/rom_data/observed_lz.rs), [observed_lz.rs](crates/gba-core/src/rom_data/runtime/observed_lz.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_lz_tests.rs](crates/recomp/src/rom_data/star_cross_lz_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_graphics.md](docs/rom_data_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-lz-streams.json)
+
+## 2026-11-23 — Consume European Star Cross literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing Thumb literal owner and its page routing to serve 19 original Star Cross source words.
+
+**Validation**
+
+- Wine 2_yy7brj preserves the prior representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and 38 interpreter/generated reader cases.
+- Wine lhr7hg1i matches all 480 frames with the 19 source words altered and observes all 19 through the managed owner. Wine da0uz463 creates, reuses and verifies 149 matching E294 files; all servers drained.
+
+**Limitations**
+
+- Word consumption does not identify exact scene PCs. Other callers/scenes, save ancestry, real BIOS, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/thumb_pc_literals.rs), [thumb_pc_literals.rs](crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_literals_tests.rs](crates/recomp/src/rom_data/star_cross_literals_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-literals.json)
+
+## 2026-11-23 — Consume European Star Cross compact bank
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing compact catalog to selectors 0/1 and their 23 source-backed Star Cross lists, so guest and typed host paths can use 2,116 additional bytes without original-ROM data fallback.
+
+**Validation**
+
+- Wine mooa591q preserves the prior bank projections and 147 other resources, verifies altered-source mirrors and boundaries, three original reader prefixes, 22 nonempty typed sprite lists and coherent edited-file rejection.
+- Wine gf1aql83 matches all 480 ordinary frames with added source bytes altered and observes positive bus and typed-sprite consumption without raw sprite peeks. Wine v988px6y creates, reuses and verifies the 149-file E292 dataset; all three servers drained.
+
+**Limitations**
+
+- One retained continuation does not establish every selector timing, guest bound, consumer, scene, save ancestry or real BIOS. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [contracts.rs](crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [compact_starcross_tests.rs](crates/recomp/src/rom_data/compact_starcross_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-compact-bank.json)
+
+## 2026-11-23 — Consume European Firaga vertical lookup projection
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing task-parameter vertical lookup projection by 11 signed halfwords without capping guest indices, preserving older representations and isolating usage accounting.
+
+**Validation**
+
+- Wine reader e339-firaga-vertical-extension-readers-wine-tzkb51gc checks previous resources and representations, source authentication, mixed boundaries and mirrors, isolated counters, 56 interpreted/generated reader cases, transfers and snapshot ownership.
+- Wine scene e339-firaga-vertical-extension-scene-wine-kf23c29b compares 606 altered-source frames and consumes all 11 new entries, matching state, clock, video, OAM, dispatch and audio.
+- Wine CLI e339-firaga-vertical-extension-cli-wine-huxmebx6 creates, reuses and verifies 147 matching files; static join e339-firaga-vertical-extension-sample-residual-o6wga3mh leaves 83 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- Other indices, callers and scenes, source-save history, real BIOS and UI save/Load remain open; the sample is address-only and does not establish a table bound.
+- Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-vertical-projection.json)
+
+## 2026-11-23 — Consume European Firaga signed halfword physical projection
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Add an authenticated signed 640-byte physical projection for two low-byte indexed readers to the existing halfword source resource, preserving prior data and guest fallback.
+
+**Validation**
+
+- Wine reader e349-firaga-signed-halfwords-readers-wine-lh4xw9gy checks previous representation and 145 other resources, source authentication, boundaries, 84 interpreted/generated reader cases, transfers and snapshot ownership.
+- Wine scene e349-firaga-signed-halfwords-scene-wine-0w4y_z_n consumes both physical regions across 606 altered-source frames while state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e349-firaga-signed-halfwords-cli-wine-q2nr5p9n creates, reuses and verifies 147 matching files; static join e349-firaga-signed-halfwords-sample-residual-io3xsjg4 leaves 42 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The physical union does not prove arbitrary input reachability, a semantic table extent or individual sample PCs. Other readers/scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-signed-halfword-projection.json)
+
+## 2026-11-23 — Consume European Firaga scoped index 2 projections
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing scoped-value resource with a sampled word and byte, preserving earlier serialized data and unrestricted guest fallback.
+
+**Validation**
+
+- Wine reader e342-firaga-scoped-index2-readers-wine-4cdn3xwg verifies prior values and 145 other resources, source authentication, mixed boundaries and mirrors, and 12 interpreted/generated original load cases.
+- Wine scene e342-firaga-scoped-index2-scene-wine-5o3bgt5b compares 606 altered-source frames, consumes both new values and matches state, clock, video, OAM, dispatch and audio.
+- Wine CLI e342-firaga-scoped-index2-cli-wine-54wdcjp2 creates, reuses and verifies 147 matching files; static join e342-firaga-scoped-index2-sample-residual-81qecn8v leaves 78 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The sample lacks executing PCs and does not establish a common invocation, complete table extents, other indices, callers or scenes; source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-scoped-index2.json)
+
+## 2026-11-23 — Consume European Firaga palette switch tables
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend authenticated Thumb switch data with 26 guarded palette-command destinations, preserving prior literal roots, previous representation and guest fallback.
+
+**Validation**
+
+- Wine reader e345-firaga-palette-switch-readers-wine-n12uhnkp checks earlier tables and 145 other resources, source authentication, boundaries, 52 interpreted/generated guarded cases, out-of-range paths, transfers and snapshot ownership.
+- Wine scene e345-firaga-palette-switch-scene-wine-19we6cc1 consumes both new tables across 606 altered-source frames while state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e345-firaga-palette-switch-cli-wine-lkro3br9 creates, reuses and verifies 147 matching files; static join e345-firaga-palette-switch-sample-residual-no7zdoby leaves 66 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs or full-ROM coverage. Other readers/scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-palette-switches.json)
+
+## 2026-11-23 — Consume European Firaga palette projection
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the raw UI palette resource with the authenticated 16-halfword physical projection while preserving prior banks, the literal root and guest fallback.
+
+**Validation**
+
+- Wine reader e359-firaga-palette-projection-readers-wine-4vc70dqr verifies 32 original interpreter/generated cases, 145 unchanged resources, previous representation, source authentication, boundaries, out-of-projection fallback and snapshot ownership.
+- Wine scene e359-firaga-palette-projection-scene-wine-mrf6k1gq consumes the source across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e359-firaga-palette-projection-cli-wine-x3vrl3f5 creates, reuses and verifies 147 matching files; static join e359-firaga-palette-projection-sample-residual-w9mdf6yf leaves seven unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs or prove the conditional caller path. Other callers, scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-palette-projection.json)
+
+## 2026-11-23 — Consume European Firaga linked transfer sources
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend existing row and descriptor resources with the authenticated Firaga transfer pair, preserving the shared wrapper, compressed stream, earlier representations and guest fallback.
+
+**Validation**
+
+- Wine reader e357-firaga-linked-transfer-readers-wine-be8l1_ah verifies six original interpreter/generated cases, 144 unchanged resources, shared ownership, authentication, boundaries and snapshot ownership.
+- Wine scene e357-firaga-linked-transfer-scene-wine-izp2e4pq consumes both sources across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e357-firaga-linked-transfer-cli-wine-6dug_n2c creates, reuses and verifies 147 matching files; static join e357-firaga-linked-transfer-sample-residual-ah1pd9hx leaves nine unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs or prove the conditional pointer ancestry. Other indices, callers, scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-linked-transfer.json)
+
+## 2026-11-23 — Consume European Firaga indirect index 2 record
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Soil indirect record resource with the authenticated eight-byte Firaga index-2 record while preserving prior records, literal roots, serialized representation and guest fallback.
+
+**Validation**
+
+- Wine reader e354-firaga-indirect-index2-readers-wine-b7cio2t3 verifies 20 original interpreter/generated cases, prior representation and 145 unchanged resources, source authentication, mixed boundaries and snapshot ownership.
+- Wine scene e354-firaga-indirect-index2-scene-wine-lx36oq5k consumes the record across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e354-firaga-indirect-index2-cli-wine-_s7qf3ro creates, reuses and verifies 147 matching files; static join e354-firaga-indirect-index2-sample-residual-61erx_sh leaves 26 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs, pointer ancestry or all consumers. Other indices, callers, scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-indirect-index2.json)
+
+## 2026-11-23 — Consume European Firaga indexed fields
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the Firaga compact resource with five authenticated index-2 fields while preserving prior data, literal roots and guest fallback.
+
+**Validation**
+
+- Wine reader e352-firaga-index2-fields-readers-wine-enxi8h4h checks previous representation and 145 other resources, source authentication, boundaries, 40 interpreted/generated field and root cases, transfers and snapshot ownership.
+- Wine scene e352-firaga-index2-fields-scene-wine-jn68cocs consumes all five fields across 606 altered-source frames while state, clock, video, OAM, dispatch and audio match.
+- Wine CLI e352-firaga-index2-fields-cli-wine-zbyfd8qq creates, reuses and verifies 147 matching files; static join e352-firaga-index2-fields-sample-residual-pxnn7sao leaves 33 unowned addresses in the E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs, complete semantic tables or all readers. Other scenes, source-save history, real BIOS and UI save/Load remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-indexed-fields.json)
+
+## 2026-11-23 — Consume European Firaga CCEC indirect record
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the indirect-record resource with the authenticated eight-byte CCEC record while preserving prior records, the indexed pointer, literal root and guest fallback.
+
+**Validation**
+
+- Wine reader e361-firaga-ccec-indirect-readers-wine-zcuhebx4 verifies 20 original interpreter/generated cases, prior representation and 145 unchanged resources, separate pointer/root owners, boundaries and snapshot ownership.
+- Wine scene e361-firaga-ccec-indirect-scene-wine-_jvgs94x consumes the record across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.
+- Wine CLI e361-firaga-ccec-indirect-cli-wine-z4yf7_da creates, reuses and verifies 147 matching files; static join e361-firaga-ccec-indirect-sample-residual-idrflo71 leaves zero unowned addresses in the selected E302 sample.
+
+**Limitations**
+
+- The address-only sample does not establish individual PCs or prove conditional ancestry. Other indices, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.
+- Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-firaga-ccec-indirect-record.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 92 sampled original Thumb literal words in 28 selected source pools.
+
+**Validation**
+
+- Wine disassembly umy1ze7f and protected source plan e380-white-flowers-literal-pools-source-plan-ig_ne93b verify original PC-relative readers, context hashes, owner disjointness and 368 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-twenty-eight-literal-pools.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 60 sampled original Thumb literal words in thirteen selected source pools.
+
+**Validation**
+
+- Wine disassembly 5yhjeio9 and protected source plan e378-white-flowers-literal-pools-source-plan-ro9nq2gs verify original PC-relative readers, context hashes, owner disjointness and 240 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-thirteen-literal-pools.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 62 sampled original Thumb literal words in ten selected source pools.
+
+**Validation**
+
+- Wine disassembly q6818iy7 and protected source plan e376-white-flowers-literal-pools-source-plan-ei2nr32i verify original PC-relative readers, context hashes, owner disjointness and 248 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-ten-literal-pools.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 128 sampled original Thumb literal words in 62 selected source pools.
+
+**Validation**
+
+- Wine disassembly hrfc36ve and protected source plan e382-white-flowers-literal-pools-source-plan-vh86eqhl verify original PC-relative readers, context hashes, owner disjointness and 512 sampled bytes.
+
+**Limitations**
+
+- Initial selection t3dztdqn excluded two-word ranges and failed before Wine; corrected selection oty9qqm6 passes.
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-sixty-two-literal-pools.json)
+
+## 2026-11-23 — Authenticate European White Flowers residual switches
+
+Type: changed. Platforms: European ROM; retained Wine disassembly and static source plan.
+
+**Changes**
+
+- Identify seven original Thumb switches and their 373 destinations.
+
+**Validation**
+
+- Protected source plan e388-white-flowers-residual-switch-source-plan-c4c67ilr verifies seven original dispatches, existing root owners, 1,492 disjoint destination bytes and 40 sampled bytes.
+
+**Limitations**
+
+- The 031618 out-of-range helper may return; preserve the original fallback beyond 255 projected entries.
+- The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-residual-switches.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 182 sampled original Thumb literal words in 163 selected source pools.
+
+**Validation**
+
+- Wine disassembly 4lyi07_z and protected source plan e384-white-flowers-literal-pools-source-plan-6teqz1tq verify original PC-relative readers, context hashes, owner disjointness and 728 sampled bytes.
+
+**Limitations**
+
+- Candidate 03320c remains open: its only bounded-scan candidate reader 032eb8 is data inside a jump-table pointer sequence.
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-remaining-literal-pools.json)
+
+## 2026-11-23 — Authenticate European White Flowers queued rows
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate two conditional queued 20 by 8 halfword projections and three original literal roots.
+
+**Validation**
+
+- Wine disassemblies z47ofoc0, jk8i1ag1 and lqsxdeqq identify the selector, queue producer and executor; protected source plan e367-white-flowers-queued-rows-source-plan-f2kk2tp7 verifies original code, source hashes, prior ownership and 328 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the address-only sample lacks PCs, other scenes, callers, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-queued-rows.json)
+
+## 2026-11-23 — Authenticate European White Flowers mixed switches
+
+Type: changed. Platforms: European ROM; retained Wine disassembly and static source plan.
+
+**Changes**
+
+- Identify five original Thumb switches, 89 destinations and five unowned literals.
+
+**Validation**
+
+- Protected source plan e390-white-flowers-mixed-switch-source-plan-_u4vahgs verifies five original dispatches, five literal readers, 376 disjoint source bytes and 80 sampled bytes.
+
+**Limitations**
+
+- The 0bbffc out-of-range helper may return; preserve the original fallback beyond 37 projected entries.
+- The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-mixed-switches.json)
+
+## 2026-11-23 — Authenticate European White Flowers indexed archives
+
+Type: changed. Platforms: European ROM; static source plan.
+
+**Changes**
+
+- Authenticate five conditional language-indexed archive sources and original selector roots.
+
+**Validation**
+
+- Protected source plan e365-white-flowers-indexed-archive-source-plan-5d3a1lp3 verifies independent reconstruction, code fingerprints, E275 ownership disjointness and sampled intersection.
+
+**Limitations**
+
+- Production parser and runtime remain unverified; the address-only sample lacks PCs, other scenes and Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-indexed-archives.json)
+
+## 2026-11-23 — Authenticate European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 49 sampled original Thumb literal words in four selected source pools.
+
+**Validation**
+
+- Wine disassemblies 1cfeb1yt and dcgqeh_6 and protected source plan e372-white-flowers-literal-pools-source-plan-bur61cim verify original PC-relative readers, context hashes, owner disjointness and 196 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-four-literal-pools.json)
+
+## 2026-11-23 — Authenticate European White Flowers final sampled switches
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Map the remaining 30 non-support sampled bytes and authenticate three original switch tables, 30 destinations and three new literal words.
+
+**Validation**
+
+- Protected candidate map _bg_fj4z, Wine disassembly 7edn_8m0 and source plan 5w_6ycut identify 132 disjoint source bytes covering 24 sampled bytes.
+
+**Limitations**
+
+- Six sampled bytes have unknown producers; sample PCs, selector ancestry, runtime publication, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-final-switches.json)
+
+## 2026-11-23 — Authenticate additional European White Flowers literal pools
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Authenticate 62 sampled original Thumb literal words in eight selected source pools.
+
+**Validation**
+
+- Wine disassembly x8vvx3in and protected source plan e374-white-flowers-literal-pools-source-plan-_dh5w4pb verify original PC-relative readers, context hashes, owner disjointness and 248 sampled bytes.
+
+**Limitations**
+
+- Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-eight-literal-pools.json)
+
+## 2026-11-23 — Authenticate European White Flowers direct indexed archive
+
+Type: changed. Platforms: European ROM; static source plan.
+
+**Changes**
+
+- Authenticate one directly rooted 62-program indexed archive and original wrapper literal.
+
+**Validation**
+
+- Protected source plan e370-white-flowers-direct-indexed-source-plan-0oy7mnn2 verifies independent packet reconstruction, original code, neighboring owner disjointness and 135 sampled bytes.
+
+**Limitations**
+
+- The production parser and runtime are unverified; the address-only sample lacks PCs, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-direct-indexed-archive.json)
+
+## 2026-11-23 — Authenticate European White Flowers byte-indexed switch
+
+Type: changed. Platforms: European ROM; retained Wine disassembly and static source plan.
+
+**Changes**
+
+- Identify a 256-destination original Thumb switch and the actual bounded reader candidate for sampled word 03320c.
+
+**Validation**
+
+- Protected source plan e386-white-flowers-032e-switch-source-plan-0x7b7450 verifies the byte-indexed dispatch, existing root owner, 1,024 disjoint destination bytes and three sampled entries.
+
+**Limitations**
+
+- The sample lacks executing PCs; selector ancestry, other readers, runtime publication, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-byte-indexed-switch.json)
+
+## 2026-11-23 — Authenticate European Star Cross LZ streams
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate two previously unowned type-10 compressed sources observed in the Star Cross continuation.
+
+**Validation**
+
+- Protected unit vx5hei60 decodes 4,960 source bytes to 9,296 bytes with exact consumption, verifies every source byte was sampled by the bus and excludes overlap with E292 owners.
+
+**Limitations**
+
+- Game-level asset identities, instruction PCs, all callers, runtime integration, real BIOS and DMA, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-lz-streams.json)
+
+## 2026-11-23 — Authenticate European Star Cross literals
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Authenticate 19 candidate original PC-relative Thumb loads and their sampled source words.
+
+**Validation**
+
+- Wine unit 2u_db_rz disassembles four bounded code windows and verifies all 19 opcode/word relationships, their 76 sampled bytes and absence of E293 owners; server drained.
+
+**Limitations**
+
+- Static instruction relationships do not prove execution in the sampled scene, source-save ancestry, all readers, runtime consumption, other scenes, Linux, USA or native Windows. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-literals.json)
+
+## 2026-11-23 — Authenticate European Star Cross copied tables
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate four contiguous Star Cross copied spans and their separately owned original root literals and copy paths.
+
+**Validation**
+
+- Protected unit 3j15jgkp verifies 60 sampled unowned bytes, two 16-byte direct copies, four- and 24-byte helper copies, original consumer instructions and adjacent Soil Evidence ownership.
+
+**Limitations**
+
+- Static code and sampled addresses do not establish exact scene PCs, all consumers or guest index domains. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-copied-tables.json)
+
+## 2026-11-23 — Authenticate European Star Cross compact bank
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate the remaining source-backed selectors and list geometry in the existing Star Cross compact bank.
+
+**Validation**
+
+- Protected unit liuwuxg7 checks 2,116 unowned source bytes in selectors 0/1 and 23 lists, all observed on the bus; 2,014 list bytes were also observed by sprite peeks. Existing E291 bank projection is preserved.
+
+**Limitations**
+
+- The source plan does not implement runtime consumption or establish individual selector timing, all callers, other scenes, Linux, USA or native Windows. No performance comparison was made.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-compact-bank.json)
+
+## 2026-11-23 — Authenticate European Firaga palette projection
+
+Type: changed. Platforms: European ROM; static source plan.
+
+**Changes**
+
+- Authenticate a 16-halfword physical palette projection bounded by one original caller and retain the existing literal owner.
+
+**Validation**
+
+- Protected source plan e358-firaga-palette-projection-source-plan-dtoi3884 verifies the original reader and caller, selector arithmetic, E273 disjointness and two sampled bytes.
+
+**Limitations**
+
+- The bound is conditional on the selected caller. Sample PCs and scene ancestry, runtime publication, other callers and scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-firaga-palette-projection.json)
+
+## 2026-11-23 — Authenticate European Firaga linked transfer sources
+
+Type: changed. Platforms: European ROM; static source plan.
+
+**Changes**
+
+- Authenticate a conditional type-3 row and descriptor linked to an existing wrapper and compressed stream.
+
+**Validation**
+
+- Protected source plan e356-firaga-linked-transfer-source-plan-8or7qly_ verifies original code and pointer/count, exact data, existing owners and 17 sampled bytes.
+
+**Limitations**
+
+- Runtime publication remains open. Sample PCs and conditional scene ancestry are unproved; other callers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-firaga-linked-transfer.json)
+
+## 2026-11-23 — Authenticate European Firaga CCEC indirect record
+
+Type: changed. Platforms: European ROM; static source plan.
+
+**Changes**
+
+- Authenticate the conditional index-2 pointer, indirect-record consumer and eight-byte physical source.
+
+**Validation**
+
+- Protected source plan e360-firaga-ccec-indirect-source-plan-zt7zwucy verifies original code, existing pointer/root owners, E274 disjointness and all seven sampled residual bytes.
+
+**Limitations**
+
+- The address-only sample does not establish executing PCs or prove conditional ancestry. Runtime publication, other callers, scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-firaga-ccec-indirect-record.json)
+
 ## 2026-11-22 — Trace European Soil upper reader sites
 
 Type: changed. Platforms: European ROM; Windows via Wine.

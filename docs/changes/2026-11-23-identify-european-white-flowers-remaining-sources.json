@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "identify-european-white-flowers-remaining-sources",
+  "title": "Identify remaining European White Flowers source candidates",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static grouping and Wine disassembly"
+  ],
+  "changes": [
+    "Regroup the E362 sample against E277 and identify a conditional indexed archive candidate."
+  ],
+  "validation": [
+    "Protected grouping e369-white-flowers-residual-groups-47pkvd93 and Wine disassembly e369-white-flowers-indexed-caller-dis-wine-gljcbz8v identify the leading original decoder call; focused Sol xhigh requested, effective settings unconfirmed."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs; exact source authentication and runtime publication are pending. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

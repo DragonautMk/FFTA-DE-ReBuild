@@ -13,9 +13,11 @@ pub const SIGNED_LOOKUP_SHA256: &str = "108926562b2303b9fffdfaa34f5aeeaf701a7852
 /// Conditional phases in the original wrap sequence, not a prelookup guest cap.
 pub const PHASE_COUNT: usize = 3;
 pub const VERTICAL_SOURCE: u32 = 0x394e14;
+/// Represented physical entries start at original index 4; the lookup is uncapped.
+pub const VERTICAL_COUNT: usize = 17;
 pub const PHASE_SHA256: &str = "ee8357f0303dac80be96e10b1b49913c294c163771824fca6152057a6e1da957";
 pub const VERTICAL_SHA256: &str =
-    "0e03eb227902a1b34389e6c7333ce03887b46f7386b2c7b120fbdd496295f43a";
+    "1cab8f8664d3b7b8ee9552251c0c3df4272f57e184fdfb01505818d220211481";
 pub type SourceSpan = (u32, Vec<u8>, String);
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -80,7 +82,7 @@ pub struct VerticalCorrections {
 impl VerticalCorrections {
     pub fn validate(&self) -> Result<(), String> {
         if self.source_offset != VERTICAL_SOURCE
-            || !matches!(self.entries.len(), 4 | 6)
+            || !matches!(self.entries.len(), 4 | 6 | VERTICAL_COUNT)
             || self
                 .entries
                 .iter()
@@ -91,7 +93,7 @@ impl VerticalCorrections {
         }
         Ok(())
     }
-    /// Older datasets contain indices 4..7; newer ones include observed 8..9.
+    /// Older datasets contain indices 4..7 or 4..9; current data includes 4..20.
     /// Other indices retain earlier owners/raw memory; no global cap is imposed.
     pub fn correction(&self, task_byte: u8) -> Option<i16> {
         self.entries
@@ -206,7 +208,7 @@ impl Catalog {
             }
         }
         let phases = &rom[PHASE_SOURCE as usize..PHASE_SOURCE as usize + PHASE_COUNT];
-        let vertical = &rom[VERTICAL_SOURCE as usize..VERTICAL_SOURCE as usize + 12];
+        let vertical = &rom[VERTICAL_SOURCE as usize..VERTICAL_SOURCE as usize + VERTICAL_COUNT * 2];
         let battle = &rom[BATTLE_PHASE_SOURCE as usize..BATTLE_PHASE_SOURCE as usize + 3];
         let draw = &rom[BATTLE_DRAW_SEQUENCE_SOURCE as usize..BATTLE_DRAW_SEQUENCE_SOURCE as usize + 32];
         let signed = &rom[SIGNED_LOOKUP_SOURCE as usize..SIGNED_LOOKUP_SOURCE as usize + SIGNED_LOOKUP_BYTES];

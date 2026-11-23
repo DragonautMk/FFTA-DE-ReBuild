@@ -106,7 +106,9 @@ and normal enablement retain their existing acceptance gates.
   active; a sandbox-only process listing is insufficient.
   New local validation uses `scripts/validation_unit.py`: success-only scratch
   retirement after PASS results and input guards, durable evidence, retained
-  failure diagnostics and one coordinated Wine prefix. `--wine-host` runs native
+  failure diagnostics and one coordinated Wine prefix. A closed final output
+  pipe no longer changes a successful retirement receipt; host regressions remain
+  pending. `--wine-host` runs native
   GUI drivers under that same lease across Wine children/restarts and final
   server drain; `--wine` retains direct Windows-command behavior. Keep one current dataset
   per ROM/profile and only explicitly needed comparison baselines; avoid full
@@ -1394,9 +1396,176 @@ and normal enablement retain their existing acceptance gates.
   serves one selected transfer and literals; Wine producer/queue/DMA, CLI and
   606 altered-source frames pass. 801 E302 bytes remain outside E261 sources.
 
-- EUR [E336 Firaga residual literals](../rom_data_runtime.md#e336-firaga-residual-thumb-literal-source-plan)
-  has a 52-word source plan; an unvalidated E337 publication draft is paused.
-  Its interrupted build retains a local lease; inspect ownership on resume.
+- EUR [E414 Star Cross copied tables plan](../rom_data_runtime.md#e414-star-cross-copied-tables-source-plan)
+  authenticates 60 sampled bytes and four original copy paths; runtime
+  integration remains open.
+
+- EUR [E413 Star Cross reconciliation](../rom_data_runtime.md#e413-star-cross-sample-reconciliation)
+  leaves 207 sampled bytes outside E294 after literal integration; source
+  identity and other readers remain open.
+
+- EUR [E412 Star Cross literal runtime](../rom_data_runtime.md#e412-star-cross-literal-runtime)
+  serves 19 sampled words; original readers, altered-source 480-frame scene
+  and CLI pass on Wine. Other scenes and platforms remain open.
+
+- EUR [E410 Star Cross reconciliation](../rom_data_runtime.md#e410-star-cross-sample-reconciliation)
+  leaves 283 sampled bytes outside E293 after LZ integration; source identity
+  and other readers remain open.
+
+- EUR [E409 Star Cross LZ runtime](../rom_data_graphics.md#e409-star-cross-lz77-runtime)
+  serves two streams totaling 4,960 encoded bytes; original readers,
+  altered-source 480-frame scene and CLI pass on Wine.
+
+- EUR [E407 Star Cross reconciliation](../rom_data_runtime.md#e407-star-cross-sample-reconciliation)
+  leaves 5,243 sampled bytes outside E292 after the bank integration; source
+  identity and other readers remain open.
+
+- EUR [E406 Star Cross bank runtime](../rom_data_compact_catalog.md#e406-star-cross-compact-bank-runtime)
+  serves 2,116 added bank bytes; original readers, altered-source 480-frame
+  scene and CLI pass on Wine. Other scenes and platforms remain open.
+
+- EUR [E404 Star Cross grouping](../rom_data_runtime.md#e404-star-cross-residual-grouping)
+  finds 37 sampled intervals outside E291 and no overlap with the known
+  copied-IWRAM block; their readers and extents remain unproved.
+
+- EUR [E403 Star Cross inventory](../rom_data_runtime.md#e403-star-cross-rom-read-inventory)
+  compares 480 Wine frames; 7,359 sampled bytes outside E291 sources need
+  classification. Address-only reads do not establish formats or PCs.
+
+- EUR [E402 Roulette native reconciliation](../rom_data_runtime.md#e402-roulette-native-sample-reconciliation)
+  finds all 732 formerly unowned E108 native sample bytes declared by E291;
+  other readers, scenes and full-ROM coverage remain open.
+
+- EUR [E401 copied-code reconciliation](../rom_data_runtime.md#e401-white-flowers-copied-code-support-reconciliation)
+  matches the remaining 3,600 E362 sample bytes to E246's copied-IWRAM block;
+  the code exclusion and original-ROM dependency remain in force.
+
+- EUR [E400 isolated values runtime](../rom_data_runtime.md#e400-white-flowers-isolated-values-runtime)
+  serves 20 halfwords and one byte; Wine original readers, altered-source scene
+  and CLI pass. In E362, only 3,600 copied-code support bytes remain unowned.
+
+- EUR [E398 isolated read operands](../rom_data_runtime.md#e398-white-flowers-isolated-original-operands)
+  confirms byte and halfword source operands in original interpreter steps;
+  source extents, ancestry and runtime use remain open.
+
+- EUR [E397 signed-byte projection runtime](../rom_data_runtime.md#e397-white-flowers-signed-byte-projection-runtime)
+  serves 48 bytes with original-reader, fallback, 700 altered-source frame and
+  CLI Wine evidence. Source extent, ancestry and other contexts remain open.
+
+- EUR [E395 native byte context](../rom_data_runtime.md#e395-white-flowers-397b1e-native-context)
+  observes three non-DMA byte reads through native API; original load, selector
+  domain and extent remain open.
+
+- EUR [E394 isolated sampled reader scopes](../rom_data_runtime.md#e394-white-flowers-isolated-sampled-reader-scopes)
+  observes six bytes on Wine; three have two interpreter scopes and three lack
+  one. Direct operands, native context and extents remain open.
+
+- EUR [E393 final sampled switches runtime](../rom_data_runtime.md#e393-white-flowers-final-sampled-switches-runtime)
+  serves three switches, 30 destinations and three literals; Wine readers,
+  700 altered-source frames and CLI pass. Six isolated sampled bytes and
+  3,600 copied-code support bytes remain outside declared sources.
+
+- EUR [E391 mixed switches runtime](../rom_data_runtime.md#e391-white-flowers-mixed-switches-runtime)
+  serves five switches, 89 destinations and five literals; original readers,
+  700 altered-source frames and CLI pass on Wine. The E362 sample has 3,630
+  unowned bytes, including 3,600 copied-code support; other contexts remain open.
+
+- EUR [E389 residual switches](../rom_data_runtime.md#e389-white-flowers-residual-switches-runtime)
+  serve seven arrays and 373 destinations; Wine dispatch, 700 altered-source
+  frames and CLI pass. Selector ancestry and other contexts remain open.
+
+- EUR [E387 byte-indexed switch](../rom_data_runtime.md#e387-white-flowers-byte-indexed-switch-runtime)
+  serves 256 destinations including sampled `03320c`; Wine dispatch, 700
+  altered-source frames and CLI pass. Selector ancestry and other contexts remain open.
+
+- EUR [E385 remaining sampled literal pools](../rom_data_runtime.md#e385-white-flowers-remaining-sampled-literal-pools-runtime)
+  serve 182 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. The `03320c` candidate remains excluded.
+
+- EUR [E383 sixty-two literal pools](../rom_data_runtime.md#e383-white-flowers-sixty-two-literal-pools-runtime)
+  serve 128 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E381 twenty-eight literal pools](../rom_data_runtime.md#e381-white-flowers-twenty-eight-literal-pools-runtime)
+  serve 92 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E379 thirteen literal pools](../rom_data_runtime.md#e379-white-flowers-thirteen-literal-pools-runtime)
+  serve 60 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E377 ten literal pools](../rom_data_runtime.md#e377-white-flowers-ten-literal-pools-runtime)
+  serve 62 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E375 eight literal pools](../rom_data_runtime.md#e375-white-flowers-eight-literal-pools-runtime)
+  serve 62 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E373 four literal pools](../rom_data_runtime.md#e373-white-flowers-four-literal-pools-runtime)
+  serve 49 sampled words; Wine original readers, 700 altered-source frames and
+  CLI pass. Remaining candidate contexts remain open.
+
+- EUR [E371 directly rooted archive](../rom_data_runtime.md#e371-white-flowers-directly-rooted-indexed-archive-runtime)
+  serves 62 programs; Wine original wrapper, 700 altered-source frames and CLI
+  pass. E369 also lists lower-ROM literal candidates; other paths remain open.
+
+- EUR [E368 White Flowers queued rows](../rom_data_runtime.md#e368-white-flowers-queued-halfword-rows-runtime)
+  serve two conditional 20 × 8 projections and three literals; Wine readers,
+  700 altered-source frames and CLI pass. Other paths remain open.
+
+- EUR [E366 White Flowers indexed archives](../rom_data_runtime.md#e366-white-flowers-localized-indexed-archive-runtime)
+  serve five language-indexed sources; Wine readers, 700 altered-source frames
+  and CLI pass. E276 left 3,165 other sampled bytes; other scenes remain open.
+
+- EUR [E363 White Flowers residual grouping](../rom_data_runtime.md#e363-white-flowers-residual-grouping)
+  identified 3,600 previously documented copied-code bytes and 4,439 other
+  sampled bytes at E275. Address-only reads do not establish formats or PCs.
+
+- EUR [E361 CCEC indirect record runtime](../rom_data_runtime.md#e361-firaga-ccec-indirect-record-runtime)
+  serves eight bytes; Wine readers, 606 altered-source frames and CLI pass.
+  Zero E302 sampled bytes remain outside E275 sources; other coverage is open.
+
+- EUR [E359 palette projection runtime](../rom_data_runtime.md#e359-firaga-palette-projection-runtime)
+  serves 16 halfwords; Wine readers, 606 altered-source frames and CLI pass.
+  Seven E302 sampled bytes remain outside E274 sources.
+
+- EUR [E357 linked transfer runtime](../rom_data_runtime.md#e357-firaga-linked-transfer-runtime)
+  serves 20 bytes with shared wrapper/stream; Wine readers, 606 altered-source
+  frames and CLI pass. Nine E302 sampled bytes remain outside E273 sources.
+
+- EUR [E354 indirect index 2 runtime](../rom_data_runtime.md#e354-firaga-indirect-index-2-runtime)
+  serves eight bytes; Wine readers, 606 altered-source frames and CLI pass.
+  26 E302 sampled bytes remain outside E272 sources; exact PCs remain open.
+
+- EUR [E352 indexed field runtime](../rom_data_runtime.md#e352-firaga-indexed-field-runtime)
+  serves nine bytes; Wine readers, 606 altered-source frames and CLI pass.
+  33 E302 sampled bytes remain outside E271 sources; exact PCs remain open.
+
+- EUR [E349 signed halfword physical projection](../rom_data_runtime.md#e349-firaga-signed-halfword-physical-projection-runtime)
+  serves 640 bytes; Wine readers, 606 altered-source frames and CLI pass.
+  42 E302 sampled bytes remain outside E270 sources; exact PCs remain open.
+
+- EUR [E346 short native context](../rom_data_runtime.md#e346-firaga-short-native-residual-context)
+  finds no E302 residual in 12 frames; longer/native-blind-spot evidence remains open.
+
+- EUR [E345 palette switch runtime](../rom_data_runtime.md#e345-firaga-palette-switch-runtime)
+  serves two guarded tables; Wine readers, 606 altered-source frames and CLI
+  pass. 66 E302 sampled bytes remain outside E269 sources; exact PCs remain open.
+
+- EUR [E342 scoped index 2 runtime](../rom_data_runtime.md#e342-firaga-scoped-index-2-runtime)
+  serves five selected bytes; Wine readers, 606 altered-source frames and CLI
+  pass. 78 E302 sampled bytes remain outside E268 sources; exact PCs remain open.
+
+- EUR [E339 vertical lookup projection](../rom_data_gameplay.md#e339-firaga-vertical-lookup-runtime-projection)
+  serves 11 selected halfwords with isolated accounting; Wine readers, 606
+  altered-source frames and CLI pass. 83 E302 sampled bytes remain outside
+  E267 sources; other indices, callers and scenes remain open.
+
+- EUR [E337 Firaga residual literals](../rom_data_runtime.md#e337-firaga-residual-thumb-literal-runtime)
+  serves 52 selected words; Wine readers, transfers, 606 altered-source frames
+  and CLI pass. 105 E302 sampled bytes remain outside E266 sources; other
+  readers and scenes remain open.
 
 - EUR [E335 Firaga mixed literals](../rom_data_runtime.md#e335-firaga-mixed-thumb-literal-runtime)
   serves 57 selected words; Wine readers, transfers, 606 altered-source frames

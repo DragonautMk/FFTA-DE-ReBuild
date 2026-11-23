@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "preserve-validation-success-after-closed-output",
+  "title": "Preserve validation success after closed output",
+  "kind": "fixed",
+  "platforms": [
+    "Wine validation"
+  ],
+  "changes": [
+    "Keep final status output outside the archived-input retirement failure handler and close a broken stdout stream after a successful receipt."
+  ],
+  "validation": [
+    "EUR E267 production CLI verification with deliberately closed runner stdout passed in Wine: e341-closed-stdout-wine-proof-v6cjp6xu; exit 0, PASS receipt, removed scratch and drained server."
+  ],
+  "limitations": [
+    "The first proof e341-closed-stdout-wine-proof-qsu55wxi remains FAIL because Python final flushing returned 120; its inner unit completed and drained. Dedicated Linux host regression tests and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "scripts/validation_unit.py",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "scripts/validation_unit.py",
+    "docs/development/LOCAL_ARTIFACTS.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

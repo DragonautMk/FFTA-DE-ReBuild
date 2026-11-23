@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "observe-european-white-flowers-isolated-reader-scopes",
+  "title": "Observe European White Flowers isolated reader scopes",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows under Wine"
+  ],
+  "changes": [
+    "Observe six residual sampled bytes in one filtered White Flowers continuation and retain two interpreter scopes without inferring unscoped native sites."
+  ],
+  "validation": [
+    "Wine source-site unit 9vq22s5t passes for all six bytes over 600 frames; retained Wine disassembly matches LDRB and LDRH at the two scoped PCs; Wine server drained."
+  ],
+  "limitations": [
+    "Interpreter scope may include nested accesses; direct operands, three unscoped byte readers, source extents, other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

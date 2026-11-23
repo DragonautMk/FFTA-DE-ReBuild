@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "inventory-european-star-cross-rom-reads",
+  "title": "Inventory European Star Cross ROM reads",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Inventory selected original-ROM reads during the retained Star Cross confirmation against E291 resources."
+  ],
+  "validation": [
+    "Wine unit e403-star-cross-audit-wine-us0nqlxx compares 480 raw/managed frames with matching state, clock, video, OAM, dispatch and nonempty audio; server drained.",
+    "The address-only report identifies 7,359 sampled bytes outside E291 declared sources for subsequent classification."
+  ],
+  "limitations": [
+    "Address and reader do not prove executing PCs, source extents or data formats. Other scenes/readers, source-save history, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

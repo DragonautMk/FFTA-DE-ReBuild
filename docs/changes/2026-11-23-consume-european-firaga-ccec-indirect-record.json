@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-ccec-indirect-record",
+  "title": "Consume European Firaga CCEC indirect record",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the indirect-record resource with the authenticated eight-byte CCEC record while preserving prior records, the indexed pointer, literal root and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e361-firaga-ccec-indirect-readers-wine-zcuhebx4 verifies 20 original interpreter/generated cases, prior representation and 145 unchanged resources, separate pointer/root owners, boundaries and snapshot ownership.",
+    "Wine scene e361-firaga-ccec-indirect-scene-wine-_jvgs94x consumes the record across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e361-firaga-ccec-indirect-cli-wine-z4yf7_da creates, reuses and verifies 147 matching files; static join e361-firaga-ccec-indirect-sample-residual-idrflo71 leaves zero unowned addresses in the selected E302 sample."
+  ],
+  "limitations": [
+    "The address-only sample does not establish individual PCs or prove conditional ancestry. Other indices, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/soil_indirect_records.rs",
+    "crates/gba-core/src/rom_data/runtime/soil_indirect_records.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_ccec_indirect_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

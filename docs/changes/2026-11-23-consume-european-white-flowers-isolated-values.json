@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-isolated-values",
+  "title": "Consume European White Flowers isolated values",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows under Wine"
+  ],
+  "changes": [
+    "Publish a selected 20-halfword row and one byte while preserving separately owned roots and fallback for other selectors."
+  ],
+  "validation": [
+    "Wine readers pass four original setup, 12 row and 12 byte cases, outside fallbacks, mirrors, mixed boundaries, source authentication and snapshot preservation.",
+    "Wine scene compares 700 altered-source White Flowers frames; production CLI creates, reuses and verifies 149 files. Static join leaves only 3,600 copied-code support bytes unowned in the E362 sample; all Wine servers drained."
+  ],
+  "limitations": [
+    "The sample is address-only and does not establish full-ROM coverage or remove the copied-code dependency. Asset extents, ancestry, other scenes, Linux, USA and native Windows remain open. No performance measurements were made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/white_flowers_isolated_values.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/white_flowers_isolated_values.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/white_flowers_isolated_values_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/white_flowers_isolated_values.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/white_flowers_isolated_values.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/white_flowers_isolated_values_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

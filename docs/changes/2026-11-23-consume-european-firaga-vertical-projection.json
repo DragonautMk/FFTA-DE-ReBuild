@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-vertical-projection",
+  "title": "Consume European Firaga vertical lookup projection",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing task-parameter vertical lookup projection by 11 signed halfwords without capping guest indices, preserving older representations and isolating usage accounting."
+  ],
+  "validation": [
+    "Wine reader e339-firaga-vertical-extension-readers-wine-tzkb51gc checks previous resources and representations, source authentication, mixed boundaries and mirrors, isolated counters, 56 interpreted/generated reader cases, transfers and snapshot ownership.",
+    "Wine scene e339-firaga-vertical-extension-scene-wine-kf23c29b compares 606 altered-source frames and consumes all 11 new entries, matching state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e339-firaga-vertical-extension-cli-wine-huxmebx6 creates, reuses and verifies 147 matching files; static join e339-firaga-vertical-extension-sample-residual-o6wga3mh leaves 83 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "Other indices, callers and scenes, source-save history, real BIOS and UI save/Load remain open; the sample is address-only and does not establish a table bound.",
+    "Affected older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_task_parameters.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_task_parameters.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_vertical_extension_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

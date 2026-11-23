@@ -1,31 +1,37 @@
-//! Authenticated EUR Soil values observed at six indexed source locations.
+//! Authenticated EUR values observed at scoped indexed source locations.
 use super::{script39_registry_poses::PriorSources, Resource, SourceRange, THUMB_PC_LITERALS_ID};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
-pub const SPANS: [(u32, usize); 6] = [
+pub const SPANS: [(u32, usize); 8] = [
     (0x39a498, 4),
     (0x39a828, 4),
     (0x39a878, 1),
     (0x39aa84, 1),
     (0x39abf4, 4),
     (0x39ac14, 2),
+    (0x39a820, 4),
+    (0x39a876, 1),
 ];
-const HASHES: [&str; 6] = [
+const HASHES: [&str; 8] = [
     "276b3ca9faa03714364c3fa5aa0e8f0797e4e64319085afd89404ddeef599141",
     "0f96f525eccde306c9a85b2ac7adc907d0f5772a3481f62780db88742aec435a",
     "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
     "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
     "8ababe54cd4854b81dc3f07477eefcbc4afdfe9a158cea9a07d24a4523a26338",
     "8cd4ae7da223953050b55b0ee9e4d3830f3b35138a0e1b6cc5f6e6b1e52d1314",
+    "6affd63c245acb59aec6e4dec1fa4d1b5d02b154672d9f37b0340dfcfbcfead8",
+    "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
 ];
-const ROLES: [&str; 6] = [
+const ROLES: [&str; 8] = [
     "soil-scoped-word-a498",
     "soil-scoped-word-a828",
     "soil-scoped-byte-a878",
     "soil-scoped-byte-aa84",
     "soil-scoped-thumb-pointer-abf4",
     "soil-scoped-halfword-ac14",
+    "soil-scoped-word-a820",
+    "soil-scoped-byte-a876",
 ];
 
 /// Keep unknown meanings opaque while preserving the widths and Thumb pointer.
@@ -38,11 +44,18 @@ pub struct SoilScopedValues {
     pub byte_aa84: u8,
     pub thumb_pointer_abf4: u32,
     pub halfword_ac14: u16,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub word_a820: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub byte_a876: Option<u8>,
 }
 impl SoilScopedValues {
     pub fn validate(&self) -> Result<(), String> {
         if self.thumb_pointer_abf4 & 1 == 0 {
             return Err("Soil scoped Thumb pointer must retain its mode bit".into());
+        }
+        if self.word_a820.is_some() != self.byte_a876.is_some() {
+            return Err("Soil scoped index-2 values must be present together".into());
         }
         Ok(())
     }
@@ -56,12 +69,17 @@ impl SoilScopedValues {
             self.thumb_pointer_abf4.to_le_bytes().to_vec(),
             self.halfword_ac14.to_le_bytes().to_vec(),
         ];
-        Ok(SPANS
+        let mut spans: Vec<_> = SPANS
             .into_iter()
             .zip(bytes)
             .zip(ROLES)
             .map(|(((offset, _), bytes), role)| (offset, bytes, role))
-            .collect())
+            .collect();
+        if let (Some(word), Some(byte)) = (self.word_a820, self.byte_a876) {
+            spans.push((SPANS[6].0, word.to_le_bytes().to_vec(), ROLES[6]));
+            spans.push((SPANS[7].0, vec![byte], ROLES[7]));
+        }
+        Ok(spans)
     }
     /// Only witnessed physical entries are owned; guest indices remain unrestricted.
     pub fn byte_at(&self, offset: u32) -> Option<(u8, usize)> {
@@ -89,6 +107,12 @@ impl SoilScopedValues {
                 let at = offset.checked_sub(start)? as usize;
                 (at < len).then(|| (bytes[at], index))
             })
+            .or_else(|| {
+                let word = self.word_a820?;
+                let at = offset.checked_sub(SPANS[6].0)? as usize;
+                (at < 4).then(|| (word.to_le_bytes()[at], 6))
+            })
+            .or_else(|| (offset == SPANS[7].0).then_some((self.byte_a876?, 7)))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
@@ -140,6 +164,8 @@ impl Catalog {
             (0xe4ae4, 0xe4b7c, 0x39aa80, 4, 1),
             (0xe6214, 0xe6238, 0x39abf4, 0, 4),
             (0xe621e, 0xe623c, 0x39ac14, 0, 2),
+            (0xe61c4, 0xe61e8, 0x39a818, 2, 4),
+            (0xe61d2, 0xe61ec, 0x39a874, 2, 1),
         ];
         let literals = previous.iter().find(|r| r.id == THUMB_PC_LITERALS_ID);
         if !previous.is_empty() && literals.is_none() {
@@ -176,6 +202,8 @@ impl Catalog {
             byte_aa84: rom[0x39aa84],
             thumb_pointer_abf4: word(0x39abf4),
             halfword_ac14: u16::from_le_bytes(rom[0x39ac14..0x39ac16].try_into().unwrap()),
+            word_a820: Some(word(0x39a820)),
+            byte_a876: Some(rom[0x39a876]),
         };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();

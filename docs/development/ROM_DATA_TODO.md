@@ -1529,6 +1529,144 @@ Direct consumption is now connected in 04; normal enablement awaits gate 05.
 
 **Dependencies:** ROMDATA-01/02/03. **Core of the main objective.**
 
+**ROMDATA-04-WHITE-FLOWERS-ISOLATED-VALUES scoped EUR/Wine:** E291 serves 20
+halfwords and one byte. Original readers, outside fallback, 700 altered-source
+frames and CLI pass; other contexts and platforms remain open.
+[Evidence](../rom_data_runtime.md#e400-white-flowers-isolated-values-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-397B1E-PROJECTION scoped EUR/Wine:** E290 serves
+48 signed bytes; original reader/helper, outside fallback, 700 altered-source
+frames and CLI pass. Other contexts and platforms remain open.
+[Evidence](../rom_data_runtime.md#e397-white-flowers-signed-byte-projection-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-FINAL-SWITCHES scoped EUR/Wine:** E289 serves three
+switches, 30 destinations and three literals. Original Wine readers, 700
+altered-source frames and CLI pass; other contexts and platforms remain open.
+[Evidence](../rom_data_runtime.md#e393-white-flowers-final-sampled-switches-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-MIXED-SWITCHES scoped EUR/Wine:** E288 serves five
+switches, 89 destinations and five literals. Original Wine readers, 700
+altered-source frames and CLI pass; helper return, other contexts and platforms
+remain open. [Evidence](../rom_data_runtime.md#e391-white-flowers-mixed-switches-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-RESIDUAL-SWITCHES scoped EUR/Wine:** E287 serves
+seven arrays and 373 original destinations. Wine dispatch, 700 altered-source
+frames and CLI pass; selector ancestry, other scenes and platforms remain open.
+[Evidence](../rom_data_runtime.md#e389-white-flowers-residual-switches-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-032E-SWITCH scoped EUR/Wine:** E286 serves 256
+original destinations. Wine dispatch, 700 altered-source frames and CLI pass;
+selector ancestry, other callers, scenes and platforms remain open.
+[Evidence](../rom_data_runtime.md#e387-white-flowers-byte-indexed-switch-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-REMAINING-LITERAL-POOLS scoped EUR/Wine:** E285
+serves 182 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other sources, including `03320c`, remain open.
+[Evidence](../rom_data_runtime.md#e385-white-flowers-remaining-sampled-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS scoped EUR/Wine:** E284
+serves 128 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e383-white-flowers-sixty-two-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS scoped EUR/Wine:** E283
+serves 92 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e381-white-flowers-twenty-eight-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS scoped EUR/Wine:** E282
+serves 60 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e379-white-flowers-thirteen-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-TEN-LITERAL-POOLS scoped EUR/Wine:** E281
+serves 62 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e377-white-flowers-ten-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-EIGHT-LITERAL-POOLS scoped EUR/Wine:** E280
+serves 62 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e375-white-flowers-eight-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-FOUR-LITERAL-POOLS scoped EUR/Wine:** E279
+serves 49 authenticated words. Wine original readers, 700 altered-source
+frames and CLI pass; other pools, readers and sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e373-white-flowers-four-literal-pools-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-3C94BC scoped EUR/Wine:** E278 serves one
+62-program archive and its original literal. Wine wrapper/decoder, 700
+altered-source frames and CLI pass; other programs, paths and sampled sources
+remain open.
+[Evidence](../rom_data_runtime.md#e371-white-flowers-directly-rooted-indexed-archive-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-QUEUED-ROWS scoped EUR/Wine:** E277 serves two
+conditional 20 × 8 halfword projections and their three caller literals. Wine
+original selector/queue/DMA, 700 altered-source frames and CLI pass; other
+paths and remaining sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e368-white-flowers-queued-halfword-rows-runtime).
+
+**ROMDATA-04-WHITE-FLOWERS-INDEXED-ARCHIVES scoped EUR/Wine:** E276 serves
+five authenticated localized archives and their conditional selector. Wine
+readers, 700 altered-source frames and CLI pass; other language scenes and
+remaining sampled sources remain open.
+[Evidence](../rom_data_runtime.md#e366-white-flowers-localized-indexed-archive-runtime).
+
+**ROMDATA-04-FIRAGA-CCEC-INDIRECT scoped EUR/Wine:** E275 serves one
+physical record while retaining prior pointer/root owners and guest fallback.
+Wine readers, altered-source scene and CLI pass. The selected E302 sample has
+zero bytes outside declared sources; other scenes and coverage remain open.
+[Evidence](../rom_data_runtime.md#e361-firaga-ccec-indirect-record-runtime).
+
+**ROMDATA-04-FIRAGA-PALETTE-PROJECTION scoped EUR/Wine:** E274 serves
+16 source halfwords, preserving the previous banks, root and guest fallback.
+Wine readers, altered-source scene and CLI pass; other callers and scenes
+remain open.
+[Evidence](../rom_data_runtime.md#e359-firaga-palette-projection-runtime).
+
+**ROMDATA-04-FIRAGA-LINKED-TRANSFER scoped EUR/Wine:** E273 serves a
+selected type-3 row and descriptor while retaining their existing shared
+wrapper and stream. Wine readers, altered-source scene and CLI pass; other
+indices, callers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e357-firaga-linked-transfer-runtime).
+
+**ROMDATA-04-FIRAGA-INDIRECT-INDEX2 scoped EUR/Wine:** E272 serves one
+observed eight-byte physical record, preserving previous records, roots and
+guest fallback. Wine readers, altered-source scene and CLI pass; other
+indices, callers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e354-firaga-indirect-index-2-runtime).
+
+**ROMDATA-04-FIRAGA-INDEX2-FIELDS scoped EUR/Wine:** E271 serves five observed
+physical fields, preserving prior compact data and guest fallback. Wine readers,
+altered-source scene and CLI pass; other scenes remain open.
+[Evidence](../rom_data_runtime.md#e352-firaga-indexed-field-runtime).
+
+**ROMDATA-04-FIRAGA-14CF-PROJECTION scoped EUR/Wine:** E270 serves the physical
+union for two signed-halfword readers, preserving prior sources and guest index
+behavior. Wine readers, altered-source scene and CLI pass; other scenes remain
+open. [Evidence](../rom_data_runtime.md#e349-firaga-signed-halfword-physical-projection-runtime).
+
+**ROMDATA-04-FIRAGA-PALETTE-SWITCH scoped EUR/Wine:** E269 serves two guarded
+palette-command destination arrays, preserving prior literal roots and fallback.
+Wine readers, altered-source scene and CLI pass; other scenes remain open.
+[Evidence](../rom_data_runtime.md#e345-firaga-palette-switch-runtime).
+
+**ROMDATA-04-FIRAGA-SCOPED-INDEX2 scoped EUR/Wine:** E268 serves the selected
+word and byte while preserving prior entries and fallback. Wine original readers,
+altered-source scene and CLI pass; other indices and scenes remain open.
+[Evidence](../rom_data_runtime.md#e342-firaga-scoped-index-2-runtime).
+
+**ROMDATA-04-FIRAGA-VERTICAL-EXTENSION scoped EUR/Wine:** E267 serves the
+selected uncapped vertical-lookup projection with isolated usage accounting.
+Wine original readers, altered-source scene and CLI pass; other indices,
+callers and scenes remain open.
+[Evidence](../rom_data_gameplay.md#e339-firaga-vertical-lookup-runtime-projection).
+
+**ROMDATA-04-FIRAGA-RESIDUAL-LITERALS scoped EUR/Wine:** E266 serves 52
+selected Thumb literal words; original readers, transfers, altered-source scene
+and CLI pass. Other readers and scenes remain open.
+[Evidence](../rom_data_runtime.md#e337-firaga-residual-thumb-literal-runtime).
+
 **ROMDATA-04-FIRAGA-MIXED-LITERALS scoped EUR/Wine:** E265 serves 57 selected
 Thumb literal words; original readers, transfers, altered-source scene and CLI
 pass. Other readers and scenes remain open.

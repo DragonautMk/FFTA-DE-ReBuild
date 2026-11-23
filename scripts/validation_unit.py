@@ -236,8 +236,6 @@ def run_unit(args, *, root=ROOT):
         report = json.loads(receipt.read_text())
         report['cold_inputs_retired'] = [data['source'] for _, data in inputs.restored]
         write_json(receipt, report)
-        print(f'PASS; scratch {report["cleanup"]}; storage {report["retention_storage"]}; receipt: {receipt}', flush=True)
-        return unit
     except BaseException as error:
         inputs.close(success=False)
         if unit:
@@ -247,6 +245,18 @@ def run_unit(args, *, root=ROOT):
             report['errors'].append(f'Archived input retirement failed: {error}')
             write_json(receipt, report)
         raise
+    # A caller may close its output pipe after the validation has finished.
+    # Keep that presentation error outside the input-retirement failure path.
+    try:
+        print(f'PASS; scratch {report["cleanup"]}; storage {report["retention_storage"]}; receipt: {receipt}', flush=True)
+    except BrokenPipeError:
+        # Drop any buffered output so interpreter shutdown does not retry the
+        # same broken pipe and replace a successful exit with status 120.
+        try:
+            sys.stdout.close()
+        except BrokenPipeError:
+            pass
+    return unit
 
 
 def _run_unit(args, *, root, inputs, admission):

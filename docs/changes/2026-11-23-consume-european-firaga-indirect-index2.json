@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-indirect-index2",
+  "title": "Consume European Firaga indirect index 2 record",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the Soil indirect record resource with the authenticated eight-byte Firaga index-2 record while preserving prior records, literal roots, serialized representation and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e354-firaga-indirect-index2-readers-wine-b7cio2t3 verifies 20 original interpreter/generated cases, prior representation and 145 unchanged resources, source authentication, mixed boundaries and snapshot ownership.",
+    "Wine scene e354-firaga-indirect-index2-scene-wine-lx36oq5k consumes the record across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e354-firaga-indirect-index2-cli-wine-_s7qf3ro creates, reuses and verifies 147 matching files; static join e354-firaga-indirect-index2-sample-residual-61erx_sh leaves 26 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "The address-only sample does not establish individual PCs, pointer ancestry or all consumers. Other indices, callers, scenes, source-save history, real BIOS and UI save/Load remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/soil_indirect_records.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_indirect_index2_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

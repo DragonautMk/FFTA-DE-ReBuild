@@ -34,7 +34,7 @@ impl ThumbSwitchTablesResources {
 
     pub(super) fn new(data: model::ThumbSwitchTables, sources: &[SourceRange]) -> Result<Self, String> {
         data.validate()?;
-        if sources.len() != model::TABLE_COUNT + model::ADDITIONAL_TABLE_COUNT { return Err("Thumb switch source count mismatch".into()); }
+        if sources.len() != model::TABLE_COUNT + data.additional_tables.len() { return Err("Thumb switch source count mismatch".into()); }
         for ((table, spec), source) in data.tables.iter().zip(model::TABLES).zip(&sources[..model::TABLE_COUNT]) {
             let bytes = table.source_bytes();
             if source.offset != spec.root || source.length as usize != bytes.len()

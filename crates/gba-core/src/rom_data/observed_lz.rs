@@ -77,6 +77,12 @@ pub const ADDITIONAL_SPECS: &[StreamSpec] = &[
     StreamSpec { offset: 0xaf5660, encoded_length: 29, decoded_length: 48,
         source_sha256: "d0c14fd944f302b7970694a8b1d2df2dd15a2e7dce7e0f5a491bb749818a12e0",
         decoded_sha256: "e29a2b0c5e5484a012841a484b76d1da4d69c1bbd848a9ec740c418de8afe821" },
+    StreamSpec { offset: 0xaffc70, encoded_length: 4390, decoded_length: 8192,
+        source_sha256: "2ef16acfc5fd820fa6bd70f45f80bcc42b521ce92e400777d786a613dde6a6f0",
+        decoded_sha256: "a364981b58994d1b191d2ff045014e2787c78aa713083569da76b018bdd46aae" },
+    StreamSpec { offset: 0xb00d9c, encoded_length: 570, decoded_length: 1104,
+        source_sha256: "69f58f5e9d44a320d138d10408c9f07424b363f5b758fb30a0ea578708ae3fc4",
+        decoded_sha256: "438fdf18899a99207371c3a129d4e5d538a5745a08701c5392a01760bfad99b3" },
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

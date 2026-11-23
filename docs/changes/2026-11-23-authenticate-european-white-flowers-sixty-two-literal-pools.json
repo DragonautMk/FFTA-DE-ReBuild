@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-white-flowers-sixty-two-literal-pools",
+  "title": "Authenticate additional European White Flowers literal pools",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Authenticate 128 sampled original Thumb literal words in 62 selected source pools."
+  ],
+  "validation": [
+    "Wine disassembly hrfc36ve and protected source plan e382-white-flowers-literal-pools-source-plan-vh86eqhl verify original PC-relative readers, context hashes, owner disjointness and 512 sampled bytes."
+  ],
+  "limitations": [
+    "Initial selection t3dztdqn excluded two-word ranges and failed before Wine; corrected selection oty9qqm6 passes.",
+    "Runtime publication is pending; the sample lacks executing PCs, other pools, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

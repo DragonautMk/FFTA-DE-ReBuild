@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-final-switches",
+  "title": "Consume European White Flowers final sampled switches",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows under Wine"
+  ],
+  "changes": [
+    "Serve three authenticated Thumb switch destination arrays and three literal words while preserving prior owners and original selector transformations."
+  ],
+  "validation": [
+    "Wine E393 readers pass 14 original interpreter/generated dispatches, six guards, six fallback and two literal cases, mirror and boundary reads, source authentication and snapshot preservation.",
+    "Wine E393 compares 700 altered-source White Flowers frames and production CLI create, reuse and verify; static join accounts for 24 sampled bytes. All Wine servers drained."
+  ],
+  "limitations": [
+    "The E362 address-only sample leaves 3,606 unowned bytes, including 3,600 copied-code support; executing PCs, six isolated bytes and other scenes remain open.",
+    "Linux, USA and native Windows validation remain pending. No performance measurements were made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/white_flowers_final_switches_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "crates/recomp/src/rom_data/white_flowers_final_switches_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

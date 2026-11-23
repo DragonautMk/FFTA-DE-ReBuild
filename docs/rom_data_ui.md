@@ -257,7 +257,10 @@ of all ordinary UI consumers or native Windows, Linux or USA behavior.
 
 A fresh e108 native API address inventory over the accepted EUR Roulette Do it
 seed, guest frames 11960..11972, preserves complete state, clock, video, OAM,
-dispatch and all five audio streams with its observer active. It records 20,835
+dispatch and all five audio streams with its observer active. The later
+[E402 reconciliation](rom_data_runtime.md#e402-roulette-native-sample-reconciliation)
+finds all 732 previously unowned sampled bytes declared by E291; its scope
+remains the same 12 native-API frames. It records 20,835
 unique read contexts, 21,845 image bytes and 732 unowned bytes in 87 merged
 ranges. Those ranges are observations, not catalog extents. Interpreter,
 host/HLE/direct DMA and other scenes remain outside this native API sample.

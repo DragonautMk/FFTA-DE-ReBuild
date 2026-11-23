@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-direct-indexed-archive",
+  "title": "Consume European White Flowers direct indexed archive",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend indexed graphics with the directly rooted 62-program archive and original literal while preserving the adjacent source owner and original selector behavior."
+  ],
+  "validation": [
+    "Wine reader e371-white-flowers-direct-readers-wine-ywvmnh46 verifies production parsing, program 16, six original interpreter/generated wrapper cases including boundary selectors, 145 unchanged resources, previous representation, mixed boundaries, adjacent owner and snapshot ownership.",
+    "Wine scene e371-white-flowers-direct-scene-wine-9pwn72wh consumes the archive and literal over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e371-white-flowers-direct-cli-wine-t_d5oash creates, reuses and verifies 147 matching files; static join e371-white-flowers-direct-sample-residual-2casb5p1 leaves 6,302 unowned E362 sampled bytes including 3,600 documented copied-code support bytes."
+  ],
+  "limitations": [
+    "The address-only sample does not establish executing PCs or conditional ancestry. Other programs, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_direct_indexed_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

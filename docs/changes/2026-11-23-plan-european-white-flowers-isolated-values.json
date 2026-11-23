@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "plan-european-white-flowers-isolated-values",
+  "title": "Plan European White Flowers isolated values",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and static source plan"
+  ],
+  "changes": [
+    "Select a non-overlapping first row of 20 halfwords and one byte covering the last three non-support sampled bytes."
+  ],
+  "validation": [
+    "Protected plan lnthon5v checks E398 direct Wine operands, original reader instructions, separately owned roots, exact source hashes and ownership."
+  ],
+  "limitations": [
+    "Preserve fallback outside selected physical bytes; initial selector domains, full asset extents, runtime publication, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

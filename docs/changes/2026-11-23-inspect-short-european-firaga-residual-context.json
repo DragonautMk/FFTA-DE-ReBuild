@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "inspect-short-european-firaga-residual-context",
+  "title": "Inspect short European Firaga residual context",
+  "kind": "docs",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Record a 12-frame native API observer and its negative join against the E269 Firaga sample residual."
+  ],
+  "validation": [
+    "Wine observer e346-firaga-residual-native-context-wine-hle43zmn passes per-frame state and output comparisons and drains Wine; none of the 66 E302 residual bytes appears in its native API capture."
+  ],
+  "limitations": [
+    "This does not exclude later frames, interpreter fallback, host/HLE, direct DMA or other scenes. Exported PCs and dispatch contexts are not exact instruction sites. Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

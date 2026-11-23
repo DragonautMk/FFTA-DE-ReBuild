@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "identify-european-firaga-vertical-lookup",
+  "title": "Identify European Firaga vertical lookup projection",
+  "kind": "docs",
+  "platforms": [
+    "European ROM"
+  ],
+  "changes": [
+    "Authenticate an 11-halfword physical projection adjacent to the existing uncapped vertical lookup fragment."
+  ],
+  "validation": [
+    "Protected source plan e338-firaga-vertical-extension-source-plan-hmwlk2jk verifies the original reader fingerprint, six prior entries, 22 sampled and previously unowned bytes, and indices 10 through 20."
+  ],
+  "limitations": [
+    "The address-only sample does not identify the executing PC; this plan does not publish data or establish a guest bound or full semantic table extent. Other consumers, scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

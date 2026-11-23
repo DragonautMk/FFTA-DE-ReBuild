@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-white-flowers-sixty-two-literal-pools",
+  "title": "Consume sixty-two European White Flowers literal pools",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the Thumb literal resource with 128 authenticated words in 62 further pools while preserving previous owners, representation and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e383-white-flowers-bulk-literals-readers-wine-ibbq6jvp verifies 256 original interpreter/generated reader cases, 145 unchanged resources, previous representation, mixed boundaries and snapshot ownership.",
+    "Wine scene e383-white-flowers-bulk-literals-scene-wine-8caa5f6p consumes all 128 literals over 700 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e383-white-flowers-bulk-literals-cli-wine-q0eg09u7 creates, reuses and verifies 147 matching files; static join e383-white-flowers-bulk-literals-sample-residual-fb5qs3bk leaves 4,490 unowned E362 sampled bytes including 3,600 documented copied-code support bytes."
+  ],
+  "limitations": [
+    "The address-only sample does not establish executing PCs or reader ancestry. Other literal pools, callers, scenes, source-save history, real BIOS, UI save/Load and full-ROM coverage remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/white_flowers_bulk_literals_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

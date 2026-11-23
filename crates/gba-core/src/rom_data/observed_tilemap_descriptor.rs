@@ -49,6 +49,9 @@ pub const SOIL_TRANSFER_SPECS: [(u32, &str, u32, &str); 4] = [
 ];
 pub const SOIL_MODE7_DESCRIPTOR_OFFSET: u32 = 0x39a6e8;
 pub const SOIL_MODE7_DESCRIPTOR_SHA256: &str = "5ca26bf8018ba2427b843e68c358658461051edd681d581d7fd32331d468d38b";
+pub const FIRAGA_TRANSFER_DESCRIPTOR_OFFSET: u32 = 0x39a678;
+pub const FIRAGA_TRANSFER_DESCRIPTOR_SHA256: &str = "cfb5f0da300004be29361875fbeecfc9b1fe02b76412d676c1c480b42841163a";
+pub const FIRAGA_TRANSFER_WRAPPER_OFFSET: u32 = 0xb0dd58;
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -127,6 +130,8 @@ pub struct ObservedTilemapDescriptor {
     pub soil_transfer_descriptors: Option<[AdditionalDescriptor; 4]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub soil_mode7_descriptor: Option<DirectTilemapDescriptor>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub firaga_transfer_descriptor: Option<AdditionalDescriptor>,
 }
 
 impl ObservedTilemapDescriptor {
@@ -174,6 +179,13 @@ impl ObservedTilemapDescriptor {
                 return Err("Invalid Soil mode-7 descriptor".into());
             }
         }
+        if let Some(entry) = &self.firaga_transfer_descriptor {
+            if entry.source_offset != FIRAGA_TRANSFER_DESCRIPTOR_OFFSET
+                || entry.asset_pointer != 0x0800_0000 + FIRAGA_TRANSFER_WRAPPER_OFFSET
+                || entry.wrapper != self.additional_descriptors[1].wrapper {
+                return Err("Invalid Firaga transfer descriptor or shared wrapper".into());
+            }
+        }
         Ok(())
     }
 
@@ -203,7 +215,8 @@ impl ObservedTilemapDescriptor {
         lz.validate()?;
         for entry in self.additional_descriptors.iter().chain(&self.transfer_descriptors)
             .chain(self.interleaved_lz_descriptors.iter().flatten())
-            .chain(self.soil_transfer_descriptors.iter().flatten()) {
+            .chain(self.soil_transfer_descriptors.iter().flatten())
+            .chain(self.firaga_transfer_descriptor.iter()) {
             if !lz.streams().any(|(offset, _, _)| offset == entry.wrapper.source_offset + WRAPPER_LENGTH as u32) {
                 return Err("Missing linked observed LZ stream".into());
             }
@@ -249,6 +262,10 @@ impl ObservedTilemapDescriptor {
         if let Some(entry) = &self.soil_mode7_descriptor {
             spans.push((entry.source_offset, entry.source_bytes().to_vec(), "soil-mode7-descriptor"));
         }
+        if let Some(entry) = &self.firaga_transfer_descriptor {
+            // The wrapper already belongs to additional_descriptors[1].
+            spans.push((entry.source_offset, entry.source_bytes().to_vec(), "firaga-transfer-descriptor"));
+        }
         spans
     }
 }
@@ -282,6 +299,10 @@ impl Catalog {
         let mode7_entry = &rom[mode7_at..mode7_at + SOURCE_LENGTH];
         if ffta_rom::digest(mode7_entry) != SOIL_MODE7_DESCRIPTOR_SHA256 {
             return Err("Soil mode-7 descriptor source mismatch".into());
+        }
+        let firaga_at = FIRAGA_TRANSFER_DESCRIPTOR_OFFSET as usize;
+        if ffta_rom::digest(&rom[firaga_at..firaga_at + SOURCE_LENGTH]) != FIRAGA_TRANSFER_DESCRIPTOR_SHA256 {
+            return Err("Firaga transfer descriptor source mismatch".into());
         }
         let lz = previous.iter().find(|resource| resource.id == OBSERVED_LZ_ID).ok_or("Missing observed LZ dependency")?;
         for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS).chain(&SOIL_TRANSFER_SPECS) {
@@ -333,6 +354,7 @@ impl Catalog {
                 parameter16: u16::from_le_bytes(mode7_entry[4..6].try_into().unwrap()),
                 parameter8: mode7_entry[6], opaque_byte: mode7_entry[7],
             }),
+            firaga_transfer_descriptor: Some(read_descriptor(FIRAGA_TRANSFER_DESCRIPTOR_OFFSET, FIRAGA_TRANSFER_WRAPPER_OFFSET)),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

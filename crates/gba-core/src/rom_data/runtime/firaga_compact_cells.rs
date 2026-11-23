@@ -6,11 +6,13 @@ use crate::rom_data::firaga_compact_cells as model;
 pub struct FiragaCompactCellsStats {
     pub bus_reads: u64,
     pub source_bytes: [u64; 4],
+    pub indexed_source_bytes: [u64; 5],
 }
 pub(super) struct FiragaCompactCellsResources {
     data: model::FiragaCompactCells,
     reads: AtomicU64,
     counts: [AtomicU64; 4],
+    indexed_counts: [AtomicU64; 5],
 }
 impl FiragaCompactCellsResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -39,6 +41,7 @@ impl FiragaCompactCellsResources {
             data,
             reads: AtomicU64::new(0),
             counts: std::array::from_fn(|_| AtomicU64::new(0)),
+            indexed_counts: std::array::from_fn(|_| AtomicU64::new(0)),
         })
     }
     pub(super) fn guest_read<const N: usize>(
@@ -52,9 +55,10 @@ impl FiragaCompactCellsResources {
             return prior;
         }
         let mut counts = [0u64; 4];
+        let mut indexed_counts = [0u64; 5];
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, owner)) => {
-                counts[owner] += 1;
+                if owner < 4 { counts[owner] += 1; } else { indexed_counts[owner - 4] += 1; }
                 byte
             }
             None => prior
@@ -63,6 +67,9 @@ impl FiragaCompactCellsResources {
         });
         self.reads.fetch_add(1, Ordering::Relaxed);
         for (counter, count) in self.counts.iter().zip(counts) {
+            counter.fetch_add(count, Ordering::Relaxed);
+        }
+        for (counter, count) in self.indexed_counts.iter().zip(indexed_counts) {
             counter.fetch_add(count, Ordering::Relaxed);
         }
         Some(result)
@@ -74,6 +81,7 @@ impl FiragaCompactCellsResources {
                 .counts
                 .each_ref()
                 .map(|counter| counter.load(Ordering::Relaxed)),
+            indexed_source_bytes: self.indexed_counts.each_ref().map(|counter| counter.load(Ordering::Relaxed)),
         }
     }
     pub(super) fn resident_bytes(&self) -> usize {

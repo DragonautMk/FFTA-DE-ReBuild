@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-scoped-index2",
+  "title": "Consume European Firaga scoped index 2 projections",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the existing scoped-value resource with a sampled word and byte, preserving earlier serialized data and unrestricted guest fallback."
+  ],
+  "validation": [
+    "Wine reader e342-firaga-scoped-index2-readers-wine-4cdn3xwg verifies prior values and 145 other resources, source authentication, mixed boundaries and mirrors, and 12 interpreted/generated original load cases.",
+    "Wine scene e342-firaga-scoped-index2-scene-wine-5o3bgt5b compares 606 altered-source frames, consumes both new values and matches state, clock, video, OAM, dispatch and audio.",
+    "Wine CLI e342-firaga-scoped-index2-cli-wine-54wdcjp2 creates, reuses and verifies 147 matching files; static join e342-firaga-scoped-index2-sample-residual-81qecn8v leaves 78 unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "The sample lacks executing PCs and does not establish a common invocation, complete table extents, other indices, callers or scenes; source-save history, real BIOS and UI save/Load remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/soil_scoped_values.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_scoped_index2_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

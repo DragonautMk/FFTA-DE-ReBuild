@@ -1226,23 +1226,462 @@ current evidence before running another check.
 - [x] **ROMDATA-01-FIRAGA-RESIDUAL-LITERALS scoped EUR/static:** E336
   authenticates 52 original LDR instruction/source pairs, 208 sampled bytes.
   [Evidence](../rom_data_runtime.md#e336-firaga-residual-thumb-literal-source-plan).
-- [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS:** the E266 draft publishes the
-  selected words but remains unvalidated. Its Windows build
-  `e337-firaga-residual-literals-build-mve1jq1_` was interrupted on user pause
-  (session exit 130); its receipt still says running and a unit-local lease is
-  retained. Inspect ownership, child processes and outputs before any restart or
-  lease action. Wine readers/transfers, altered-source scene, CLI and residual
-  join remain to be validated after the user resumes the work.
+- [x] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS scoped EUR/Wine:** E266 publishes
+  the 52 words. Reader `e337-firaga-residual-literals-readers-wine-tmmrcebi`, scene `e337-firaga-residual-literals-scene-wine-m1fas74s`, CLI `e337-firaga-residual-literals-cli-wine-qgtz2kbo` and
+  join `e337-firaga-residual-literals-sample-residual-29h_ckxv` pass; build evidence `06cq110j` reconciles the original FAIL.
+  [Evidence](../rom_data_runtime.md#e337-firaga-residual-thumb-literal-runtime).
+- [ ] **ROMDATA-REGRESSION-E266-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [x] **ROMDATA-VALIDATION-STDOUT-BROKEN-PIPE scoped Wine:** E341 keeps a
+  successful receipt and exit when only the final output pipe is closed. Wine
+  CLI proof `e341-closed-stdout-wine-proof-v6cjp6xu` passed and drained; its
+  inner unit is `e341-closed-stdout-cli-wine-zf76dich`. The earlier proof
+  `e341-closed-stdout-wine-proof-qsu55wxi` remains FAIL: its inner receipt
+  passed and drained, but Python's final flush returned 120.
+- [ ] **ROMDATA-VALIDATION-STDOUT-BROKEN-PIPE-LINUX:** run dedicated host-side
+  runner regressions, including true retirement and output failure cases, when
+  Linux testing is selected.
 - [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-OTHER:** establish other readers,
   values, scenes, real BIOS and UI save/Load.
 - [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-LINUX:** validate publication, readers,
   selected scene and CLI when that platform is selected.
 - [ ] **ROMDATA-04-FIRAGA-RESIDUAL-LITERALS-USA:** identify and validate
   corresponding sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-VERTICAL-EXTENSION scoped EUR/static:** E338
+  authenticates the 22-byte physical projection for indices 10..20; prior
+  indices 4..9 remain intact. [Evidence](../rom_data_gameplay.md#e338-firaga-vertical-lookup-source-projection).
+- [x] **ROMDATA-04-FIRAGA-VERTICAL-EXTENSION scoped EUR/Wine:** E267 publishes
+  indices 10..20 with isolated accounting. Reader `e339-firaga-vertical-extension-readers-wine-tzkb51gc`, scene `e339-firaga-vertical-extension-scene-wine-kf23c29b`,
+  CLI `e339-firaga-vertical-extension-cli-wine-huxmebx6` and join `e339-firaga-vertical-extension-sample-residual-o6wga3mh` pass.
+  [Evidence](../rom_data_gameplay.md#e339-firaga-vertical-lookup-runtime-projection).
+- [ ] **ROMDATA-REGRESSION-E267-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-VERTICAL-OTHER:** establish other indices, callers,
+  scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-FIRAGA-VERTICAL-LINUX:** validate publication and the
+  selected readers, scene and CLI when Linux is selected.
+- [ ] **ROMDATA-04-FIRAGA-VERTICAL-USA:** identify and validate corresponding
+  sources; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-SCOPED-INDEX2 scoped EUR/static:** E340
+  authenticates five sampled bytes as physical index-2 projections of two
+  existing Soil scoped-reader bases. [Evidence](../rom_data_runtime.md#e340-firaga-scoped-index-2-source-plan).
+- [x] **ROMDATA-04-FIRAGA-SCOPED-INDEX2 scoped EUR/Wine:** E342 publishes
+  the selected word and byte with previous values and fallback preserved.
+  Reader `e342-firaga-scoped-index2-readers-wine-4cdn3xwg`, scene `e342-firaga-scoped-index2-scene-wine-5o3bgt5b`, CLI `e342-firaga-scoped-index2-cli-wine-54wdcjp2` and join `e342-firaga-scoped-index2-sample-residual-81qecn8v` pass.
+  [Evidence](../rom_data_runtime.md#e342-firaga-scoped-index-2-runtime).
+- [ ] **ROMDATA-REGRESSION-E268-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-SCOPED-INDEX2-OTHER:** establish other indices,
+  callers and scenes, real BIOS and UI save/Load; the sample lacks PCs.
+- [ ] **ROMDATA-04-FIRAGA-SCOPED-INDEX2-LINUX-USA:** validate the changed
+  projection on Linux and identify/validate USA; native Windows is unverified.
+- [x] **ROMDATA-01-FIRAGA-PALETTE-SWITCH-PLAN scoped EUR/static:** E344
+  authenticates 104 bytes in two guarded 12/14-way tables, including 12
+  sampled bytes. [Evidence](../rom_data_runtime.md#e344-firaga-palette-switch-source-plan).
+- [x] **ROMDATA-04-FIRAGA-PALETTE-SWITCH scoped EUR/Wine:** E345 publishes
+  both destination arrays, keeping previous literal roots and guest guards.
+  Reader `e345-firaga-palette-switch-readers-wine-n12uhnkp`, scene `e345-firaga-palette-switch-scene-wine-19we6cc1`, CLI `e345-firaga-palette-switch-cli-wine-lkro3br9` and join `e345-firaga-palette-switch-sample-residual-no7zdoby` pass.
+  [Evidence](../rom_data_runtime.md#e345-firaga-palette-switch-runtime).
+- [ ] **ROMDATA-REGRESSION-E269-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-PALETTE-SWITCH-OTHER:** establish other readers,
+  scenes, real BIOS and UI save/Load; sample executing PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-PALETTE-SWITCH-LINUX-USA:** validate the changed
+  sources on Linux and identify/validate USA; native Windows is unverified.
+- [ ] **ROMDATA-01-FIRAGA-RESIDUAL-CONTEXT-606:** select a targeted longer
+  Wine capture or obtain independent source contracts before attributing the
+  remaining E302 addresses. E346's 12-frame native-API observer intersects
+  none of the E269 residual; its blind spots and stale-PC limits remain.
+  [Evidence](../rom_data_runtime.md#e346-firaga-short-native-residual-context).
+- [x] **ROMDATA-01-FIRAGA-14CF-READERS scoped EUR/static:** E347 identifies
+  two compatible signed-halfword readers and six paired sampled indices.
+  [Evidence](../rom_data_runtime.md#e347-firaga-signed-halfword-reader-candidates).
+- [x] **ROMDATA-01-FIRAGA-14CF-PROJECTION-PLAN scoped EUR/static:** E348
+  authenticates both readers and the 640-byte union of their low-byte physical
+  domains. [Evidence](../rom_data_runtime.md#e348-firaga-signed-halfword-physical-projection-plan).
+- [x] **ROMDATA-04-FIRAGA-14CF-PROJECTION scoped EUR/Wine:** E349 publishes
+  the 640-byte physical union, retaining literal roots and guest indexing.
+  Reader `e349-firaga-signed-halfwords-readers-wine-lh4xw9gy`, scene `e349-firaga-signed-halfwords-scene-wine-0w4y_z_n`, CLI `e349-firaga-signed-halfwords-cli-wine-q2nr5p9n` and join `e349-firaga-signed-halfwords-sample-residual-io3xsjg4` pass.
+  [Evidence](../rom_data_runtime.md#e349-firaga-signed-halfword-physical-projection-runtime).
+- [ ] **ROMDATA-REGRESSION-E270-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-14CF-PROJECTION-OTHER:** establish input reachability,
+  other readers, scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-14CF-PROJECTION-LINUX-USA:** validate the changed
+  sources on Linux and identify/validate USA; native Windows is unverified.
+- [x] **ROMDATA-01-FIRAGA-INDEX2-FIELDS scoped EUR/static:** E350 identifies
+  five compatible original readers for nine sampled bytes.
+  [Evidence](../rom_data_runtime.md#e350-firaga-indexed-field-candidates).
+- [x] **ROMDATA-01-FIRAGA-INDEX2-FIELDS-PLAN scoped EUR/static:** E351
+  authenticates the five readers, prior literal roots and nine source bytes.
+  [Evidence](../rom_data_runtime.md#e351-firaga-indexed-field-source-plan).
+- [x] **ROMDATA-04-FIRAGA-INDEX2-FIELDS scoped EUR/Wine:** E352 publishes
+  five physical fields, retaining literal roots and guest fallback. Reader
+  `e352-firaga-index2-fields-readers-wine-enxi8h4h`, scene `e352-firaga-index2-fields-scene-wine-jn68cocs`, CLI `e352-firaga-index2-fields-cli-wine-zbyfd8qq` and join `e352-firaga-index2-fields-sample-residual-pxnn7sao` pass.
+  [Evidence](../rom_data_runtime.md#e352-firaga-indexed-field-runtime).
+- [ ] **ROMDATA-REGRESSION-E271-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-INDEX2-FIELDS-OTHER:** establish other indices,
+  readers/scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-INDEX2-FIELDS-LINUX-USA:** validate the changed
+  sources on Linux and identify/validate USA; native Windows is unverified.
+- [x] **ROMDATA-01-FIRAGA-INDIRECT-INDEX2-PLAN scoped EUR/static:** E353
+  authenticates the eight-byte physical record, including seven sampled bytes.
+  [Evidence](../rom_data_runtime.md#e353-firaga-indirect-index-2-source-plan).
+- [x] **ROMDATA-04-FIRAGA-INDIRECT-INDEX2 scoped EUR/Wine:** E354 publishes
+  the eight-byte record with existing roots and guest fallback. Reader
+  `e354-firaga-indirect-index2-readers-wine-b7cio2t3`, scene `e354-firaga-indirect-index2-scene-wine-lx36oq5k`, CLI `e354-firaga-indirect-index2-cli-wine-_s7qf3ro` and join `e354-firaga-indirect-index2-sample-residual-61erx_sh` pass.
+  [Evidence](../rom_data_runtime.md#e354-firaga-indirect-index-2-runtime).
+- [ ] **ROMDATA-REGRESSION-E272-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-INDIRECT-INDEX2-OTHER:** establish other indices,
+  callers and scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-INDIRECT-INDEX2-LINUX-USA:** validate the changed
+  source on Linux and identify/validate USA; native Windows is unverified.
+- [x] **ROMDATA-01-FIRAGA-LINKED-TRANSFER-CANDIDATE scoped EUR/Wine:** E355
+  identifies a conditional index-2 one-row path to a type-3 row and linked
+  descriptor. Disassembly `e355-firaga-residual-readers-disassembly-wine-fvczyws1` passes and drains.
+  [Evidence](../rom_data_runtime.md#e355-firaga-linked-transfer-candidates).
+- [x] **ROMDATA-01-FIRAGA-LINKED-TRANSFER-PLAN scoped EUR/static:** E356
+  authenticates the 20-byte row/descriptor, original readers, prior
+  wrapper/stream owners and 17-byte sampled intersection.
+  [Evidence](../rom_data_runtime.md#e356-firaga-linked-transfer-source-plan).
+- [x] **ROMDATA-04-FIRAGA-LINKED-TRANSFER scoped EUR/Wine:** E357 publishes
+  the row and descriptor, reusing prior wrapper/stream owners. Reader
+  `e357-firaga-linked-transfer-readers-wine-be8l1_ah`, scene `e357-firaga-linked-transfer-scene-wine-izp2e4pq`, CLI `e357-firaga-linked-transfer-cli-wine-6dug_n2c` and join `e357-firaga-linked-transfer-sample-residual-ah1pd9hx` pass.
+  [Evidence](../rom_data_runtime.md#e357-firaga-linked-transfer-runtime).
+- [ ] **ROMDATA-REGRESSION-E273-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-LINKED-TRANSFER-OTHER:** establish other indices,
+  callers and scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-LINKED-TRANSFER-LINUX-USA:** validate the changed
+  source on Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-PALETTE-PROJECTION-PLAN scoped EUR/static:** E358
+  authenticates a conditional 16-halfword projection and two sampled bytes.
+  [Evidence](../rom_data_runtime.md#e358-firaga-caller-bounded-palette-projection-plan).
+- [x] **ROMDATA-04-FIRAGA-PALETTE-PROJECTION scoped EUR/Wine:** E359 publishes
+  the 32-byte projection with prior root and guest fallback. Reader
+  `e359-firaga-palette-projection-readers-wine-4vc70dqr`, scene `e359-firaga-palette-projection-scene-wine-mrf6k1gq`, CLI `e359-firaga-palette-projection-cli-wine-x3vrl3f5` and join `e359-firaga-palette-projection-sample-residual-w9mdf6yf` pass.
+  [Evidence](../rom_data_runtime.md#e359-firaga-palette-projection-runtime).
+- [ ] **ROMDATA-REGRESSION-E274-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-PALETTE-PROJECTION-OTHER:** establish other callers
+  and scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-PALETTE-PROJECTION-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-FIRAGA-CCEC-INDIRECT-PLAN scoped EUR/static:** E360
+  authenticates the eight-byte physical record, existing index-2 pointer,
+  original consumer and all seven sampled residual bytes.
+  [Evidence](../rom_data_runtime.md#e360-firaga-ccec-indirect-record-source-plan).
+- [x] **ROMDATA-04-FIRAGA-CCEC-INDIRECT scoped EUR/Wine:** E361 publishes
+  the eight-byte record with prior pointer/root owners and guest fallback.
+  Reader `e361-firaga-ccec-indirect-readers-wine-zcuhebx4`, scene `e361-firaga-ccec-indirect-scene-wine-_jvgs94x`, CLI `e361-firaga-ccec-indirect-cli-wine-z4yf7_da` and join `e361-firaga-ccec-indirect-sample-residual-idrflo71` pass.
+  [Evidence](../rom_data_runtime.md#e361-firaga-ccec-indirect-record-runtime).
+- [ ] **ROMDATA-REGRESSION-E275-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-FIRAGA-CCEC-INDIRECT-OTHER:** establish other indices,
+  callers and scenes, real BIOS and UI save/Load; sample PCs remain unknown.
+- [ ] **ROMDATA-04-FIRAGA-CCEC-INDIRECT-LINUX-USA:** validate on Linux and
+  identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-STAR-CROSS-RAW scoped EUR/Wine:** E403 inventories selected
+  readers during 480 matching frames; 7,359 sampled bytes are outside E291
+  declared sources. [Evidence](../rom_data_runtime.md#e403-star-cross-rom-read-inventory).
+- [x] **ROMDATA-01-STAR-CROSS-RESIDUAL-GROUPS scoped EUR/static:** E404 groups
+  7,359 sampled bytes into 37 intervals, none in the known copied-IWRAM block;
+  original readers and extents remain unproved. [Evidence](../rom_data_runtime.md#e404-star-cross-residual-grouping).
+- [x] **ROMDATA-01-STAR-CROSS-BANK-PLAN scoped EUR/static:** E405 authenticates
+  selectors 0/1, lists 0–22 and 2,116 unowned source bytes, all observed by
+  bus; 2,014 list bytes also appear in sprite peeks. [Evidence](../rom_data_compact_catalog.md#e405-star-cross-compact-bank-source-plan).
+- [x] **ROMDATA-01-STAR-CROSS-BANK-RUNTIME scoped EUR/Wine:** E406 serves the
+  2,116 added compact-bank bytes through guest and typed host paths; original
+  readers, altered-source 480-frame scene and CLI pass with Wine drained.
+  [Evidence](../rom_data_compact_catalog.md#e406-star-cross-compact-bank-runtime).
+- [ ] **ROMDATA-01-STAR-CROSS-BANK-OTHER:** establish other callers, selectors
+  outside the projection, scenes and full animation without imposing guest bounds.
+- [x] **ROMDATA-01-STAR-CROSS-E292-RESIDUAL scoped EUR/static:** E407 joins
+  E403 to E292: 2,116 sampled bytes now owned, 5,243 still unowned in 33
+  intervals. [Evidence](../rom_data_runtime.md#e407-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-LZ-PLAN scoped EUR/static:** E408 authenticates
+  two observed unowned LZ77 sources totaling 4,960 encoded/9,296 decoded bytes.
+  [Evidence](../rom_data_graphics.md#e408-star-cross-lz77-source-plan).
+- [x] **ROMDATA-01-STAR-CROSS-LZ-RUNTIME scoped EUR/Wine:** E409 serves both
+  streams, preserves earlier owners and passes original SWI/transfer,
+  altered-source 480-frame scene and CLI checks with Wine drained.
+  [Evidence](../rom_data_graphics.md#e409-star-cross-lz77-runtime).
+- [ ] **ROMDATA-01-STAR-CROSS-LZ-OTHER:** identify asset/callers and verify
+  other scenes, real BIOS, Linux, USA and native Windows.
+- [x] **ROMDATA-01-STAR-CROSS-E293-RESIDUAL scoped EUR/static:** E410 joins
+  E403 to E293: 4,960 further sampled bytes now owned, leaving 283 in 31
+  intervals. [Evidence](../rom_data_runtime.md#e410-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-LITERALS-PLAN scoped EUR/Wine:** E411 authenticates
+  19 original Thumb readers and 76 unowned sampled bytes.
+  [Evidence](../rom_data_runtime.md#e411-star-cross-literal-source-plan).
+- [x] **ROMDATA-04-STAR-CROSS-LITERALS-RUNTIME scoped EUR/Wine:** E412 serves
+  19 words; original readers, altered-source 480-frame scene and CLI pass
+  with Wine drained. [Evidence](../rom_data_runtime.md#e412-star-cross-literal-runtime).
+- [ ] **ROMDATA-04-STAR-CROSS-LITERALS-OTHER:** establish other readers, scenes,
+  real BIOS, Linux, USA and native Windows.
+- [ ] **ROMDATA-REGRESSION-E292-WINE:** adapt and rerun affected older
+  revision-sensitive compact-bank fixtures when selected.
+- [ ] **ROMDATA-REGRESSION-E293-WINE:** adapt and rerun affected older
+  revision-sensitive observed-LZ fixtures when selected.
+- [ ] **ROMDATA-REGRESSION-E294-WINE:** adapt and rerun affected older
+  revision-sensitive literal fixtures when selected.
+- [x] **ROMDATA-01-STAR-CROSS-E294-RESIDUAL scoped EUR/static:** E413 joins
+  E403 to E294: 76 further sampled bytes now owned, leaving 207 in 22
+  intervals. [Evidence](../rom_data_runtime.md#e413-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-COPIED-TABLES-PLAN scoped EUR/static:** E414
+  authenticates four copied spans totaling 60 sampled unowned bytes, their
+  roots and original copy paths. [Evidence](../rom_data_runtime.md#e414-star-cross-copied-tables-source-plan).
+- [ ] **ROMDATA-04-STAR-CROSS-COPIED-TABLES-RUNTIME:** integrate the four spans
+  with original fallback and neighboring ownership, then verify copied readers,
+  altered-source scene and CLI on Wine.
+- [ ] **ROMDATA-01-STAR-CROSS-RESIDUAL:** classify the 207 remaining sampled bytes,
+  authenticate original readers and integrate concrete data dependencies;
+  distinguish executable/copied support and retain other scenes as open.
+- [ ] **ROMDATA-01-STAR-CROSS-LINUX-USA:** verify selected coverage on Linux,
+  identify and validate USA and check native Windows separately.
+- [x] **ROMDATA-01-ROULETTE-NATIVE-RESIDUAL scoped EUR/static:** E402 joins
+  the retained 12-frame E108 native inventory to E291; all 732 previously
+  unowned bytes now have source owners. [Evidence](../rom_data_runtime.md#e402-roulette-native-sample-reconciliation).
+- [ ] **ROMDATA-01-ROULETTE-OTHER-READERS:** investigate interpreter, host,
+  other scenes and full-ROM coverage separately; native PCs remain hints.
+- [x] **ROMDATA-01-WHITE-FLOWERS-RAW scoped EUR/Wine:** E362 inventories
+  selected readers during 700 matching frames; 8,039 sampled bytes are outside
+  E275 declared sources. [Evidence](../rom_data_runtime.md#e362-white-flowers-rom-read-inventory).
+- [x] **ROMDATA-01-WHITE-FLOWERS-RESIDUAL-GROUPS scoped static:** E363 groups
+  8,039 addresses; 3,600 lie in previously documented copied-code support and
+  4,439 require classification. [Evidence](../rom_data_runtime.md#e363-white-flowers-residual-grouping).
+- [x] **ROMDATA-01-WHITE-FLOWERS-SOURCE-CANDIDATES scoped static:** E364
+  identifies an indexed archive candidate and separate halfword-root leads.
+  [Evidence](../rom_data_runtime.md#e364-white-flowers-indexed-archive-candidate).
+- [x] **ROMDATA-01-WHITE-FLOWERS-INDEXED-ARCHIVE-PLAN scoped EUR/static:** E365
+  authenticates five archives, original code, roots, owners and sampled
+  intersection. [Evidence](../rom_data_runtime.md#e365-white-flowers-localized-indexed-archive-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-INDEXED-ARCHIVES scoped EUR/Wine:** E366
+  publishes five archives, group and literals; original readers, altered-source
+  scene and CLI pass. [Evidence](../rom_data_runtime.md#e366-white-flowers-localized-indexed-archive-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-INDEXED-ARCHIVES-OTHER:** establish other
+  ordinary language scenes, callers, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E276-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-INDEXED-ARCHIVES-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-3BA0D8-ROOTS scoped EUR/static:** E367
+  authenticates the conditional queued transfer, two 20 × 8 halfword sources,
+  three literals and prior owners. [Evidence](../rom_data_runtime.md#e367-white-flowers-queued-halfword-rows-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-QUEUED-ROWS scoped EUR/Wine:** E368
+  publishes both projections and literals; original selector/queue/DMA,
+  altered-source scene and CLI pass. [Evidence](../rom_data_runtime.md#e368-white-flowers-queued-halfword-rows-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-QUEUED-ROWS-OTHER:** establish the other
+  ordinary selector path, callers and scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E277-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-QUEUED-ROWS-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-RESIDUAL-E277 scoped static:** E369 groups
+  6,437 remaining sampled bytes and identifies a conditional indexed archive
+  lead. [Evidence](../rom_data_runtime.md#e369-white-flowers-remaining-source-candidates).
+- [x] **ROMDATA-01-WHITE-FLOWERS-3C94BC-PLAN scoped EUR/static:** E370
+  authenticates the archive, original caller, source reconstruction, owners
+  and sample. [Evidence](../rom_data_runtime.md#e370-white-flowers-directly-rooted-indexed-archive-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-3C94BC scoped EUR/Wine:** E371 publishes
+  the archive and literal; original wrapper/decoder, altered-source scene and
+  CLI pass. [Evidence](../rom_data_runtime.md#e371-white-flowers-directly-rooted-indexed-archive-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-3C94BC-OTHER:** establish other ordinary
+  programs, callers and scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E278-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-3C94BC-LINUX-USA:** validate on Linux and
+  identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-FOUR-LITERAL-POOLS scoped EUR/static:**
+  E372 authenticates 49 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e372-white-flowers-four-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-FOUR-LITERAL-POOLS scoped EUR/Wine:** E373
+  publishes 49 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e373-white-flowers-four-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-FOUR-LITERAL-POOLS-OTHER:** establish other
+  readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E279-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-FOUR-LITERAL-POOLS-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-EIGHT-LITERAL-POOLS scoped EUR/static:**
+  E374 authenticates 62 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e374-white-flowers-eight-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-EIGHT-LITERAL-POOLS scoped EUR/Wine:** E375
+  publishes 62 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e375-white-flowers-eight-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-EIGHT-LITERAL-POOLS-OTHER:** establish other
+  readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E280-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-EIGHT-LITERAL-POOLS-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-TEN-LITERAL-POOLS scoped EUR/static:**
+  E376 authenticates 62 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e376-white-flowers-ten-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-TEN-LITERAL-POOLS scoped EUR/Wine:** E377
+  publishes 62 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e377-white-flowers-ten-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-TEN-LITERAL-POOLS-OTHER:** establish other
+  readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E281-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-TEN-LITERAL-POOLS-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS scoped EUR/static:**
+  E378 authenticates 60 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e378-white-flowers-thirteen-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS scoped EUR/Wine:** E379
+  publishes 60 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e379-white-flowers-thirteen-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS-OTHER:** establish other
+  readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E282-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-THIRTEEN-LITERAL-POOLS-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS scoped EUR/static:**
+  E380 authenticates 92 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e380-white-flowers-twenty-eight-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS scoped EUR/Wine:** E381
+  publishes 92 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e381-white-flowers-twenty-eight-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS-OTHER:** establish
+  other readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E283-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-TWENTY-EIGHT-LITERAL-POOLS-LINUX-USA:**
+  validate on Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS scoped EUR/static:**
+  E382 authenticates 128 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e382-white-flowers-sixty-two-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS scoped EUR/Wine:** E383
+  publishes 128 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e383-white-flowers-sixty-two-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS-OTHER:** establish
+  other readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E284-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-SIXTY-TWO-LITERAL-POOLS-LINUX-USA:**
+  validate on Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-REMAINING-LITERAL-POOLS scoped EUR/static:**
+  E384 authenticates 182 original readers and disjoint source words.
+  [Evidence](../rom_data_runtime.md#e384-white-flowers-remaining-sampled-literal-pools-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-REMAINING-LITERAL-POOLS scoped EUR/Wine:** E385
+  publishes 182 words; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e385-white-flowers-remaining-sampled-literal-pools-runtime).
+- [ ] **ROMDATA-04-WHITE-FLOWERS-REMAINING-LITERAL-POOLS-OTHER:** establish
+  other readers, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-REGRESSION-E285-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-REMAINING-LITERAL-POOLS-LINUX-USA:**
+  validate on Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-3320C-READER scoped EUR/static:** E386
+  identifies original byte-indexed switch dispatch and its 256-word source;
+  candidate `032eb8` is jump-table data. Sampled PC/ancestry remains unknown.
+  [Evidence](../rom_data_runtime.md#e386-white-flowers-byte-indexed-switch-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-032E-SWITCH scoped EUR/Wine:** E387
+  publishes 256 destinations; original dispatch, altered-source scene and CLI
+  pass. [Evidence](../rom_data_runtime.md#e387-white-flowers-byte-indexed-switch-runtime).
+- [ ] **ROMDATA-REGRESSION-E286-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-032E-SWITCH-OTHER:** verify other readers,
+  selector ancestry, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-032E-SWITCH-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-RESIDUAL-SWITCHES scoped EUR/static:** E388
+  authenticates seven switches, 373 destinations and disjoint sources.
+  [Evidence](../rom_data_runtime.md#e388-white-flowers-residual-switch-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-RESIDUAL-SWITCHES scoped EUR/Wine:** E389
+  publishes seven arrays; original dispatch, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e389-white-flowers-residual-switches-runtime).
+- [ ] **ROMDATA-REGRESSION-E287-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-RESIDUAL-SWITCHES-OTHER:** verify other readers,
+  selector ancestry, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-RESIDUAL-SWITCHES-LINUX-USA:** validate on
+  Linux and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-MIXED-SWITCHES scoped EUR/static:** E390
+  authenticates five switches, 89 destinations and five unowned literals.
+  [Evidence](../rom_data_runtime.md#e390-white-flowers-mixed-switch-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-MIXED-SWITCHES scoped EUR/Wine:** E391
+  publishes five switches and five literals; original readers, altered-source
+  scene and CLI pass. [Evidence](../rom_data_runtime.md#e391-white-flowers-mixed-switches-runtime).
+- [ ] **ROMDATA-REGRESSION-E288-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-MIXED-HELPER-RETURN:** investigate the
+  original `0bbffc` out-of-domain helper return and any resulting later reads.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-MIXED-SWITCHES-OTHER:** verify other readers,
+  selector ancestry, scenes, real BIOS and UI save/Load.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-MIXED-SWITCHES-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [x] **ROMDATA-01-WHITE-FLOWERS-FINAL-SAMPLE scoped EUR/static:** E392 maps
+  30 sampled bytes and authenticates three switches, 30 destinations and three
+  literals covering 24 bytes. [Evidence](../rom_data_runtime.md#e392-white-flowers-final-sampled-switch-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-FINAL-SWITCHES scoped EUR/Wine:** E393 serves
+  three arrays and literals; original readers, altered-source scene and CLI pass.
+  [Evidence](../rom_data_runtime.md#e393-white-flowers-final-sampled-switches-runtime).
+- [ ] **ROMDATA-REGRESSION-E289-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-FINAL-SWITCHES-OTHER:** verify other readers,
+  selector ancestry, scenes, real BIOS and UI save/Load.
+- [x] **ROMDATA-01-WHITE-FLOWERS-ISOLATED-SITES scoped EUR/Wine:** E394 observes
+  all six bytes, with two interpreter scopes covering three bytes; remaining
+  three are unscoped. [Evidence](../rom_data_runtime.md#e394-white-flowers-isolated-sampled-reader-scopes).
+- [x] **ROMDATA-01-WHITE-FLOWERS-397B1E-CONTEXT scoped EUR/Wine:** E395 records
+  three native non-DMA byte reads with shared dispatch context; exact load and
+  extent remain unproved. [Evidence](../rom_data_runtime.md#e395-white-flowers-397b1e-native-context).
+- [x] **ROMDATA-01-WHITE-FLOWERS-397B1E-SOURCE scoped EUR/static:** E396
+  fingerprints the original byte-reader sequence and a non-overlapping 48-byte
+  projection; [evidence](../rom_data_runtime.md#e396-white-flowers-397b1e-bounded-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-397B1E-PROJECTION scoped EUR/Wine:** E397
+  publishes 48 signed bytes; original reader/helper, fallback, altered-source
+  scene and CLI pass. [Evidence](../rom_data_runtime.md#e397-white-flowers-signed-byte-projection-runtime).
+- [ ] **ROMDATA-REGRESSION-E290-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-397B1E-LINUX-USA:** validate on Linux and
+  identify/validate USA; native Windows remains unverified.
+- [ ] **ROMDATA-01-WHITE-FLOWERS-397B1E-DOMAIN:** identify producer ancestry,
+  true asset extent, other readers and all possible initial cursor values.
+- [x] **ROMDATA-01-WHITE-FLOWERS-ISOLATED-OPERANDS scoped EUR/Wine:** E398
+  proves direct byte and halfword operands at the two sampled interpreter
+  instructions. [Evidence](../rom_data_runtime.md#e398-white-flowers-isolated-original-operands).
+- [x] **ROMDATA-01-WHITE-FLOWERS-ISOLATED-SOURCE-PLAN scoped EUR/static:** E399
+  selects 20 halfwords and one byte with prior root ownership and original
+  fallback. [Evidence](../rom_data_runtime.md#e399-white-flowers-isolated-source-plan).
+- [x] **ROMDATA-04-WHITE-FLOWERS-ISOLATED-VALUES scoped EUR/Wine:** E400
+  publishes both projections; original readers, outside fallback, 700-frame
+  scene and CLI pass. [Evidence](../rom_data_runtime.md#e400-white-flowers-isolated-values-runtime).
+- [ ] **ROMDATA-REGRESSION-E291-WINE:** adapt and rerun affected older
+  revision-sensitive fixtures when selected.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-ISOLATED-VALUES-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [ ] **ROMDATA-01-WHITE-FLOWERS-ISOLATED-SAMPLE:** determine full source
+  extents, ancestry and other readers for the E397/E400 bounded projections.
+- [ ] **ROMDATA-04-WHITE-FLOWERS-FINAL-SWITCHES-LINUX-USA:** validate on Linux
+  and identify/validate USA; native Windows remains unverified.
+- [ ] **ROMDATA-01-WHITE-FLOWERS-LOW-LITERAL-CANDIDATES:** authenticate the
+  remaining lower-ROM candidate instruction contexts and source ownership.
+- [x] **ROMDATA-01-WHITE-FLOWERS-SAMPLE-RECONCILIATION scoped EUR/static:**
+  E401 confirms the E362 residual matches E246's 3,600 bytes inside the
+  copied-IWRAM source block; its 48-byte metadata alias is already owned.
+  [Evidence](../rom_data_runtime.md#e401-white-flowers-copied-code-support-reconciliation).
+- [ ] **ROMDATA-01-WHITE-FLOWERS-RESIDUAL:** investigate other data readers and
+  scenes; the selected address-only sample has no unclassified bytes outside
+  the copied-code support block and does not prove full-ROM coverage.
+- [ ] **ROMDATA-01-COPIED-IWRAM-CODE-DEPENDENCY:** the inventory excludes
+  executable code from decoded assets and retains this block in ROM. A separate
+  code-migration design and validation are required for ROM-free startup; do
+  not publish the block as a decoded data asset.
+- [ ] **ROMDATA-01-WHITE-FLOWERS-LINUX-USA:** repeat selected validation on
+  Linux and identify/validate USA; native Windows remains unverified.
 - [ ] **ROMDATA-01-FIRAGA-SCENE-RESIDUAL:** attribute the E302 sampled
-  addresses to original readers and source contracts; 313 remain outside E265
-  source ownership. Integrate authenticated unmigrated data and preserve code
-  or other justified exclusions separately.
+  addresses to original readers and source contracts; zero remain outside E275
+  source ownership in the selected E302 sample, but individual executing PCs
+  and conditional ancestry remain open. Preserve code or other justified
+  exclusions separately.
   Other scenes, consumers and full-ROM coverage remain open.
 - [ ] **ROMDATA-01-FIRAGA-SCENE-LINUX:** reproduce the selected inventory and
   equivalent scene on Linux when that platform is selected.

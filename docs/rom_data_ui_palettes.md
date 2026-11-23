@@ -1,10 +1,11 @@
 # Raw UI palette resources
 
 EUR schema 1/extractor 20/decoder 19 adds fixed `ui-palettes.json`, resource
-`graphics.ui-raw-palettes`, format `ui-raw-palettes-v1-json`. The declared catalog
-contains 21 raw banks/1328 full u16 color words, 21 disjoint source ranges/2656
-bytes and 23 checked direct, derived or conditional references. These colors
-serve both BG and OBJ halves of the original UI palette shadow. This is a
+`graphics.ui-raw-palettes`, format `ui-raw-palettes-v1-json`. Its initial catalog
+contained 21 raw banks/1328 full u16 color words, 21 disjoint source ranges/2656
+bytes and 23 checked direct, derived or conditional references. E274-d273 adds
+one 16-word physical projection, for 22 banks/1344 words and 2688 source bytes.
+The original banks serve both BG and OBJ halves of the UI palette shadow. This is a
 separate source catalog from the 162-descriptor BG base/alternate palettes and
 is not a complete inventory of every game palette or indirect source.
 
@@ -90,3 +91,13 @@ Evidence stays private under ignored `target/rom-data-obj-palettes/`:
 Broader indirect palette roots, other ordinary scenes, GUI/archives, native
 Windows and new Linux/USA verification remain pending. No performance/startup/
 RSS/space campaign, AndroidPort work, commit or push is part of this change.
+
+## E359 caller-bounded palette projection
+
+The EUR bank `40fd70..40fd90` contains 16 original halfwords selected by the
+reader at `080138ec`; the caller at `08013918` bounds its argument to 1–4,
+while the reader uses the low two selector bits. Other callers retain original
+indexing and fallback. Wine readers, a 606-frame altered-source Firaga scene and
+CLI pass for E274-d273. The address-only sample does not prove the caller path;
+other scenes, Linux, USA and native Windows remain open.
+[Evidence](rom_data_runtime.md#e359-firaga-palette-projection-runtime).

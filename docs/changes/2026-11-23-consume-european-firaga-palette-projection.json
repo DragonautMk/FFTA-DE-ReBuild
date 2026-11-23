@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-firaga-palette-projection",
+  "title": "Consume European Firaga palette projection",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the raw UI palette resource with the authenticated 16-halfword physical projection while preserving prior banks, the literal root and guest fallback."
+  ],
+  "validation": [
+    "Wine reader e359-firaga-palette-projection-readers-wine-4vc70dqr verifies 32 original interpreter/generated cases, 145 unchanged resources, previous representation, source authentication, boundaries, out-of-projection fallback and snapshot ownership.",
+    "Wine scene e359-firaga-palette-projection-scene-wine-mrf6k1gq consumes the source across 606 altered-source frames while state, guest clock, video, OAM, dispatch and five audio streams match.",
+    "Wine CLI e359-firaga-palette-projection-cli-wine-x3vrl3f5 creates, reuses and verifies 147 matching files; static join e359-firaga-palette-projection-sample-residual-w9mdf6yf leaves seven unowned addresses in the E302 sample."
+  ],
+  "limitations": [
+    "The address-only sample does not establish individual PCs or prove the conditional caller path. Other callers, scenes, source-save history, real BIOS and UI save/Load remain open.",
+    "Older revision-sensitive Wine fixtures need adaptation and rerun; Linux, USA and native Windows remain pending. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_palettes.rs",
+    "crates/gba-core/src/rom_data/ui_palettes/roots.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/firaga_palette_projection_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_palettes.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_ui_palettes.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

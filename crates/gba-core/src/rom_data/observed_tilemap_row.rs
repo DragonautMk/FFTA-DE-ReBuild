@@ -54,6 +54,8 @@ pub const SOIL_OTHER_ROW_SPECS: [(u32, u32, u8, &str); 2] = [
     (0x39e0a0, 0x0839e088, 2, "b3fd44665dc46e637300c936c4e03b7599b46764f2350a3375c23569e4f02cac"),
     (0x39a704, 0x0839a6e8, 4, "05b1e8c34e9f9c0bc1afa180b012f1a33310abff0645fdead826b4077175836a"),
 ];
+pub const FIRAGA_TRANSFER_ROW_OFFSET: u32 = 0x39a758;
+pub const FIRAGA_TRANSFER_ROW_SHA256: &str = "853052904759011e4afd9d823a5b7ad35fa1d0b0f4c87c72c755f458c9835c6e";
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -103,6 +105,8 @@ pub struct ObservedTilemapRow {
     pub soil_transfer_rows: Option<[AdditionalRow; 4]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub soil_other_rows: Option<[AdditionalRow; 2]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub firaga_transfer_row: Option<AdditionalRow>,
 }
 
 impl ObservedTilemapRow {
@@ -148,6 +152,12 @@ impl ObservedTilemapRow {
                 }
             }
         }
+        if let Some(row) = &self.firaga_transfer_row {
+            if row.source_offset != FIRAGA_TRANSFER_ROW_OFFSET || row.field0 != 3
+                || row.descriptor_pointer != 0x0800_0000 + observed_tilemap_descriptor::FIRAGA_TRANSFER_DESCRIPTOR_OFFSET {
+                return Err("Invalid Firaga transfer row".into());
+            }
+        }
         Ok(())
     }
 
@@ -185,6 +195,12 @@ impl ObservedTilemapRow {
             let entry = descriptor.soil_mode7_descriptor.as_ref().ok_or("Missing Soil mode-7 descriptor dependency")?;
             if rows[1].descriptor_pointer != 0x0800_0000 + entry.source_offset {
                 return Err("Soil mode-7 row descriptor dependency mismatch".into());
+            }
+        }
+        if let Some(row) = &self.firaga_transfer_row {
+            let entry = descriptor.firaga_transfer_descriptor.as_ref().ok_or("Missing Firaga transfer descriptor dependency")?;
+            if row.descriptor_pointer != 0x0800_0000 + entry.source_offset {
+                return Err("Firaga transfer row descriptor dependency mismatch".into());
             }
         }
         Ok(())
@@ -230,6 +246,9 @@ impl ObservedTilemapRow {
         if let Some(rows) = &self.soil_other_rows {
             for row in rows { spans.push((row.source_offset, row.source_bytes(), "soil-other-row")); }
         }
+        if let Some(row) = &self.firaga_transfer_row {
+            spans.push((row.source_offset, row.source_bytes(), "firaga-transfer-row"));
+        }
         spans
     }
 }
@@ -270,6 +289,14 @@ impl Catalog {
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOIL_MODE7_DESCRIPTOR_OFFSET
             && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
             return Err("Missing Soil mode-7 descriptor source dependency".into());
+        }
+        if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::FIRAGA_TRANSFER_DESCRIPTOR_OFFSET
+            && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
+            return Err("Missing Firaga transfer descriptor source dependency".into());
+        }
+        let firaga_at = FIRAGA_TRANSFER_ROW_OFFSET as usize;
+        if ffta_rom::digest(&rom[firaga_at..firaga_at + SOURCE_LENGTH]) != FIRAGA_TRANSFER_ROW_SHA256 {
+            return Err("Firaga transfer row source mismatch".into());
         }
         let start = SOURCE_OFFSET as usize;
         let bytes = &rom[start..start + SOURCE_LENGTH];
@@ -313,6 +340,7 @@ impl Catalog {
             interleaved_lz_rows: Some(std::array::from_fn(|i| read_row(INTERLEAVED_LZ_ROW_SPECS[i].0))),
             soil_transfer_rows: Some(std::array::from_fn(|i| read_row(SOIL_TRANSFER_ROW_SPECS[i].0))),
             soil_other_rows: Some(std::array::from_fn(|i| read_row(SOIL_OTHER_ROW_SPECS[i].0))),
+            firaga_transfer_row: Some(read_row(FIRAGA_TRANSFER_ROW_OFFSET)),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

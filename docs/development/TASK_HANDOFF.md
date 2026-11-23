@@ -31,7 +31,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - State: active
 - Outcome: partial
-- E260 owned E248; E302 residual 313 in E265 (`77a2186_`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
+- E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
+- White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
+- Star Cross E414: four copied spans/60 bytes planned; runtime pending.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -187,9 +189,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: E337 ROMDATA-04-FIRAGA-RESIDUAL-LITERALS paused by user; EUR/Wine; Linux/USA deferred.
-- Last verified result: E336 source plan 52 words/208 bytes; E335 sample residual 313.
-- Remaining work: E266 draft unvalidated; Wine readers/transfers, scene, CLI and join; other family criteria open.
-- Errors or blockers: build `mve1jq1_` session 90946 exited 130; receipt says running, local lease retained, child status unknown.
-- Next action: only on user resume, inspect build outputs and ownership before restart or lease action; then validate.
-- References: `docs/rom_data_runtime.md` E336; recovery checklist.
+- Task: E415 Star Cross copied tables runtime; EUR/Wine, no metrics/space limits.
+- Last verified result: `3j15jgkp` PASS; four copied spans, 60 bytes.
+- Remaining work: owner, Wine copy readers/poisoned scene/CLI; others open.
+- Errors or blockers: preserve neighboring owner, old fields and raw fallback.
+- Next action: implement E414 spans; stop at PASS or recorded prerequisite.
+- References: `docs/rom_data_runtime.md` E414; recovery checklist.

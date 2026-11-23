@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "reconcile-european-white-flowers-copied-code-support",
+  "title": "Reconcile European White Flowers copied code support",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static protected evidence reconciliation"
+  ],
+  "changes": [
+    "Reconcile the remaining White Flowers sampled addresses with the documented copied-IWRAM code exclusion and owned metadata alias."
+  ],
+  "validation": [
+    "Protected join 7yeu1i9c proves the 3,600 E400 residual addresses equal E246 remaining addresses, with the separate 48-byte alias owned."
+  ],
+  "limitations": [
+    "The block contains executable support but individual bytes are not all classified. It remains in ROM under the inventory contract; separate code-migration design is needed for ROM-free startup. Other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

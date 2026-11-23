@@ -2996,3 +2996,49 @@ every access to an instruction. Additional rows, other selectors, producers,
 consumers and scenes, real BIOS and UI save/Load remain open. Older revision-
 sensitive fixtures need adaptation and rerun; Linux, USA and native Windows
 remain to be checked. No performance comparison was made.
+
+
+## E408 Star Cross LZ77 source plan
+
+Protected static unit `e408-star-cross-lz-source-plan-vx5hei60` authenticates
+two previously unowned EUR type-10 streams observed on the bus in the retained
+E403 Star Cross continuation. `affc70..b00d96` consumes exactly 4,390 bytes
+and decodes to 8,192 bytes; `b00d9c..b00fd6` consumes exactly 570 bytes and
+decodes to 1,104 bytes. Their decoded SHA-256 values are respectively
+`a364981b58994d1b191d2ff045014e2787c78aa713083569da76b018bdd46aae` and
+`438fdf18899a99207371c3a129d4e5d538a5745a08701c5392a01760bfad99b3`.
+Every encoded byte was sampled by the guest bus and neither span overlaps an
+E292 source. Excluding these 4,960 candidate bytes leaves 283 E407 sampled
+bytes for separate investigation.
+
+The source inspection does not establish game-level asset identity, executing
+PCs, all callers or real-BIOS behavior. E409 below subsequently integrates the
+streams and validates the selected Wine paths. Other scenes, Linux, USA and
+native Windows remain open. No performance comparison was made.
+
+
+## E409 Star Cross LZ77 runtime
+
+EUR extractor E293/decoder D292 adds the two E408 streams to the existing
+`graphics.observed-lz-block` resource. The guest bus can consume the exact
+4,960 encoded source bytes, while the matching LZ77 HLE consumes their 9,296
+decoded bytes. Source-address mirrors and mixed boundaries retain the existing
+routing contract. The 20 earlier streams and 147 other resources are
+preserved; independent counters for the new streams do not change old indices.
+
+Wine `e409-star-cross-lz-readers-wine-d2ksd6ci` checks source authentication,
+coherent edited-file rejection, prior resource identity, altered-source
+mirrors and boundaries, two original SWI complete-state/clock cases, six
+DMA/CpuSet/CpuFastSet cases, and snapshot owner retention when a dataset is
+unavailable. Wine `e409-star-cross-lz-scene-wine-lqmy00iv` matches complete
+state, guest clock, central/wide video, OAM, dispatch and five nonempty audio
+streams across the 480 recorded Star Cross frames while both encoded sources
+are altered. Source-byte counters are `[0, 0]`; HLE calls are `[1, 1]`,
+showing that the selected continuation consumes both decoded outputs.
+
+Wine production CLI `e409-star-cross-lz-cli-wine-m_69fwj8` creates, reuses
+and verifies 149 files matching the tested generation. All three Wine servers
+drained. One continuation and selected transfers do not establish game-level
+asset identities, all callers/scenes, real-BIOS behavior, earlier save history
+or full ROM independence. Linux, USA and native Windows remain open; no
+performance comparison was made.

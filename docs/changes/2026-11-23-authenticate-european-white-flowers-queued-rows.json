@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-white-flowers-queued-rows",
+  "title": "Authenticate European White Flowers queued rows",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Wine disassembly and static source plan"
+  ],
+  "changes": [
+    "Authenticate two conditional queued 20 by 8 halfword projections and three original literal roots."
+  ],
+  "validation": [
+    "Wine disassemblies z47ofoc0, jk8i1ag1 and lqsxdeqq identify the selector, queue producer and executor; protected source plan e367-white-flowers-queued-rows-source-plan-f2kk2tp7 verifies original code, source hashes, prior ownership and 328 sampled bytes."
+  ],
+  "limitations": [
+    "Runtime publication is pending; the address-only sample lacks PCs, other scenes, callers, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

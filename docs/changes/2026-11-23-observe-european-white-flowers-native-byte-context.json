@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "observe-european-white-flowers-native-byte-context",
+  "title": "Observe European White Flowers native byte context",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows under Wine"
+  ],
+  "changes": [
+    "Add a bounded test-only native API and DMA observer for three isolated White Flowers byte reads."
+  ],
+  "validation": [
+    "Windows build k2ivw3je and Wine unit 95w54vo0 pass: three target bytes are native non-DMA reads in one 600-frame continuation; Wine server drained."
+  ],
+  "limitations": [
+    "Exported PC and outer dispatch do not identify the exact instruction; selector domain, source extent, other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/recomp/src/rom_data/native_rom_data_residue_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}
