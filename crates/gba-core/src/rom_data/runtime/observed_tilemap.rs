@@ -4,18 +4,18 @@ use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2], pub root_bytes: [u64; 2], pub alternate_rectangle_bytes: [u64; 2], pub alternate_selector_bytes: u64, pub indexed_pointer_bytes: u64, pub additional_stream_bytes: [u64; 7], pub additional_rectangle_bytes: [u64; 5], pub additional_rectangle_pointer_bytes: u64, pub soil_list_bytes: u64, pub soil_entry_bytes: u64, pub soil_rectangle_bytes: [u64; 2], pub soil_mode7_header_bytes: u64, pub soil_mode7_run_bytes: u64, pub white_flowers_queued_bytes: [u64; 3] }
+pub struct ObservedTilemapStats { pub bus_reads: u64, pub source_bytes: u64, pub rectangle_bytes: [u64; 2], pub root_bytes: [u64; 2], pub alternate_rectangle_bytes: [u64; 2], pub alternate_selector_bytes: u64, pub indexed_pointer_bytes: u64, pub additional_stream_bytes: [u64; 7], pub additional_rectangle_bytes: [u64; 5], pub additional_rectangle_pointer_bytes: u64, pub soil_list_bytes: u64, pub soil_entry_bytes: u64, pub soil_rectangle_bytes: [u64; 2], pub soil_mode7_header_bytes: u64, pub soil_mode7_run_bytes: u64, pub white_flowers_queued_bytes: [u64; 3], pub star_cross_source_bytes: [u64; 4] }
 
 pub(super) struct ObservedTilemapResources {
     data: model::ObservedTilemap,
     reads: AtomicU64,
     bytes: AtomicU64,
-    selected_bytes: [AtomicU64; 30],
+    selected_bytes: [AtomicU64; 34],
 }
 
 impl ObservedTilemapResources {
     pub(super) fn source_page(index: usize) -> bool {
-        ((index >> 12)..=(index.saturating_add(3) >> 12)).any(|page| matches!(page, 0x12b | 0x39e | 0x3a4 | 0x3ba | 0xae6 | 0xae7 | 0xaf2))
+        ((index >> 12)..=(index.saturating_add(3) >> 12)).any(|page| matches!(page, 0x12b | 0x39d | 0x39e | 0x3a4 | 0x3ba | 0xae6 | 0xae7 | 0xaf2))
     }
 
     pub(super) fn new(data: model::ObservedTilemap, sources: &[SourceRange]) -> Result<Self, String> {
@@ -100,6 +100,16 @@ impl ObservedTilemapResources {
                 .or_else(|| index.checked_sub(model::SOIL_MODE7_OFFSET as usize + 6)
                     .and_then(|at| soil.mode7.run_bytes().get(at).copied()).map(|value| (value, Some(26))))
         }).or_else(|| {
+            let star = self.data.star_cross_transfer_sources.as_ref()?;
+            index.checked_sub(model::STAR_CROSS_RECTANGLE_ENTRY_OFFSET as usize)
+                .and_then(|at| star.entry_bytes().get(at).copied()).map(|value| (value, Some(30)))
+                .or_else(|| index.checked_sub(model::STAR_CROSS_RECTANGLE_LIST_OFFSET as usize)
+                    .and_then(|at| star.list_bytes().get(at).copied()).map(|value| (value, Some(31))))
+                .or_else(|| index.checked_sub(model::STAR_CROSS_MODE7_OFFSET as usize)
+                    .and_then(|at| star.mode7.header_bytes().get(at).copied()).map(|value| (value, Some(32))))
+                .or_else(|| index.checked_sub(model::STAR_CROSS_MODE7_OFFSET as usize + 6)
+                    .and_then(|at| star.mode7.run_bytes().get(at).copied()).map(|value| (value, Some(33))))
+        }).or_else(|| {
             let rows = self.data.white_flowers_queued.as_ref()?;
             index.checked_sub(model::WHITE_FLOWERS_QUEUED_LITERALS as usize).and_then(|at| {
                 rows.caller_literals.get(at / 4).map(|value| (value.to_le_bytes()[at % 4], Some(27)))
@@ -121,7 +131,7 @@ impl ObservedTilemapResources {
         let count = cells.iter().filter(|cell| cell.is_some()).count();
         if count == 0 { return prior; }
         let result = std::array::from_fn(|i| cells[i].map(|(value, _)| value).unwrap_or_else(|| prior.as_ref().map_or_else(|| rom[index + i], |v| v[i])));
-        let mut selected = [0u64; 30];
+        let mut selected = [0u64; 34];
         for (_, index) in cells.iter().flatten() { if let Some(index) = index { selected[*index] += 1; } }
         self.reads.fetch_add(1, Ordering::Relaxed);
         self.bytes.fetch_add(count as u64, Ordering::Relaxed);
@@ -130,12 +140,12 @@ impl ObservedTilemapResources {
     }
 
     pub(super) fn stats(&self) -> ObservedTilemapStats {
-        let [rect0, rect1, root0, root1, alt0, alt1, selector, pointers, stream0, stream1, stream2, stream3, stream4, stream5, stream6, extra0, extra1, extra2, extra3, extra4, extra_pointers, soil_list, soil_entries, soil_rect0, soil_rect1, soil_header, soil_run, white_literals, white_first, white_second] = self.selected_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
+        let [rect0, rect1, root0, root1, alt0, alt1, selector, pointers, stream0, stream1, stream2, stream3, stream4, stream5, stream6, extra0, extra1, extra2, extra3, extra4, extra_pointers, soil_list, soil_entries, soil_rect0, soil_rect1, soil_header, soil_run, white_literals, white_first, white_second, star_entry, star_list, star_header, star_run] = self.selected_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed));
         ObservedTilemapStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: self.bytes.load(Ordering::Relaxed),
             rectangle_bytes: [rect0, rect1], root_bytes: [root0, root1], alternate_rectangle_bytes: [alt0, alt1], alternate_selector_bytes: selector, indexed_pointer_bytes: pointers,
             additional_stream_bytes: [stream0, stream1, stream2, stream3, stream4, stream5, stream6],
             additional_rectangle_bytes: [extra0, extra1, extra2, extra3, extra4], additional_rectangle_pointer_bytes: extra_pointers,
-            soil_list_bytes: soil_list, soil_entry_bytes: soil_entries, soil_rectangle_bytes: [soil_rect0, soil_rect1], soil_mode7_header_bytes: soil_header, soil_mode7_run_bytes: soil_run, white_flowers_queued_bytes: [white_literals, white_first, white_second] }
+            soil_list_bytes: soil_list, soil_entry_bytes: soil_entries, soil_rectangle_bytes: [soil_rect0, soil_rect1], soil_mode7_header_bytes: soil_header, soil_mode7_run_bytes: soil_run, white_flowers_queued_bytes: [white_literals, white_first, white_second], star_cross_source_bytes: [star_entry, star_list, star_header, star_run] }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.rectangles.iter().map(|rectangle| rectangle.cells.capacity() * std::mem::size_of::<u16>()).sum::<usize>()

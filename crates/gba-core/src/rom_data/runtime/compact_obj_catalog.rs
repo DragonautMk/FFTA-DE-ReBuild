@@ -3,12 +3,13 @@ use super::*;
 use crate::rom_data::compact_obj_catalog as model;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64, pub host_reads: u64, pub red_spring_record_bytes: [u64; 3], pub soil_metadata_bytes: [u64; 2], pub soil_metadata_mask: [u64; 2] }
+pub struct CompactObjCatalogStats { pub bus_reads: u64, pub source_bytes: u64, pub host_reads: u64, pub red_spring_record_bytes: [u64; 3], pub star_cross_record_bytes: [u64; 2], pub soil_metadata_bytes: [u64; 2], pub soil_metadata_mask: [u64; 2] }
 
 pub(super) struct CompactObjCatalogResources {
     data: model::CompactObjCatalog,
     counters: [AtomicU64; 3],
     red_spring_record_bytes: [AtomicU64; 3],
+    star_cross_record_bytes: [AtomicU64; 2],
     soil_metadata_bytes: [AtomicU64; 2],
     soil_metadata_mask: [AtomicU64; 2],
 }
@@ -24,12 +25,13 @@ impl CompactObjCatalogResources {
                 return Err("Compact catalog source binding mismatch".into());
             }
         }
-        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)), red_spring_record_bytes: std::array::from_fn(|_| AtomicU64::new(0)), soil_metadata_bytes: std::array::from_fn(|_| AtomicU64::new(0)), soil_metadata_mask: std::array::from_fn(|_| AtomicU64::new(0)) })
+        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)), red_spring_record_bytes: std::array::from_fn(|_| AtomicU64::new(0)), star_cross_record_bytes: std::array::from_fn(|_| AtomicU64::new(0)), soil_metadata_bytes: std::array::from_fn(|_| AtomicU64::new(0)), soil_metadata_mask: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
         if !model::SOURCE_SPANS.iter().any(|&(start, end)| index < end as usize && index.saturating_add(N) > start as usize) { return prior; }
         let mut source_bytes = 0;
         let mut record_bytes = [0u64; 3];
+        let mut star_cross_bytes = [0u64; 2];
         let mut soil_bytes = [0u64; 2];
         let mut soil_mask = [0u64; 2];
         let bytes = std::array::from_fn(|i| {
@@ -38,6 +40,9 @@ impl CompactObjCatalogResources {
                 source_bytes += 1;
                 if let Some(relative) = at.checked_sub(model::RED_SPRING_RECORD_OFFSET as usize) {
                     if relative < model::RED_SPRING_RECORD_LENGTH * 3 { record_bytes[relative / model::RED_SPRING_RECORD_LENGTH] += 1; }
+                }
+                if let Some(relative) = at.checked_sub(model::STAR_CROSS_RECORD_OFFSET as usize) {
+                    if relative < model::STAR_CROSS_RECORD_LENGTH * 2 { star_cross_bytes[relative / model::STAR_CROSS_RECORD_LENGTH] += 1; }
                 }
                 for (group, (start, end)) in model::SOIL_EVIDENCE_METADATA_RANGES.iter().copied().enumerate() {
                     if (start as usize..end as usize).contains(&at) {
@@ -52,6 +57,7 @@ impl CompactObjCatalogResources {
         self.counters[0].fetch_add(1, Ordering::Relaxed);
         self.counters[1].fetch_add(source_bytes, Ordering::Relaxed);
         for (counter, count) in self.red_spring_record_bytes.iter().zip(record_bytes) { counter.fetch_add(count, Ordering::Relaxed); }
+        for (counter, count) in self.star_cross_record_bytes.iter().zip(star_cross_bytes) { counter.fetch_add(count, Ordering::Relaxed); }
         for (counter, count) in self.soil_metadata_bytes.iter().zip(soil_bytes) { counter.fetch_add(count, Ordering::Relaxed); }
         for (counter, mask) in self.soil_metadata_mask.iter().zip(soil_mask) { counter.fetch_or(mask, Ordering::Relaxed); }
         Some(bytes)
@@ -63,7 +69,7 @@ impl CompactObjCatalogResources {
         Some(&list.list)
     }
     pub(super) fn stats(&self) -> CompactObjCatalogStats {
-        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed), host_reads: self.counters[2].load(Ordering::Relaxed), red_spring_record_bytes: self.red_spring_record_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)), soil_metadata_bytes: self.soil_metadata_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)), soil_metadata_mask: self.soil_metadata_mask.each_ref().map(|counter| counter.load(Ordering::Relaxed)) }
+        CompactObjCatalogStats { bus_reads: self.counters[0].load(Ordering::Relaxed), source_bytes: self.counters[1].load(Ordering::Relaxed), host_reads: self.counters[2].load(Ordering::Relaxed), red_spring_record_bytes: self.red_spring_record_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)), star_cross_record_bytes: self.star_cross_record_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)), soil_metadata_bytes: self.soil_metadata_bytes.each_ref().map(|counter| counter.load(Ordering::Relaxed)), soil_metadata_mask: self.soil_metadata_mask.each_ref().map(|counter| counter.load(Ordering::Relaxed)) }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>()

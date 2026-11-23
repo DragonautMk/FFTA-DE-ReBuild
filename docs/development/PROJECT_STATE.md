@@ -1396,9 +1396,41 @@ and normal enablement retain their existing acceptance gates.
   serves one selected transfer and literals; Wine producer/queue/DMA, CLI and
   606 altered-source frames pass. 801 E302 bytes remain outside E261 sources.
 
-- EUR [E414 Star Cross copied tables plan](../rom_data_runtime.md#e414-star-cross-copied-tables-source-plan)
-  authenticates 60 sampled bytes and four original copy paths; runtime
-  integration remains open.
+- EUR [E425 Star Cross runtime partial](../rom_data_runtime.md#e425-star-cross-linked-source-runtime-partial)
+  serves selected rows and linked sources; Wine readers/scene pass. Production
+  CLI Wine verification and sample reconciliation remain open at user pause.
+
+- EUR [E424 Star Cross linked-source plan](../rom_data_runtime.md#e424-star-cross-linked-source-plan)
+  authenticates 58 linked source bytes, including 44 sampled bytes; the E423
+  rows and linked sources await runtime integration.
+
+- EUR [E423 Star Cross row-list plan](../rom_data_runtime.md#e423-star-cross-row-list-source-plan)
+  authenticates four rows and their count-four caller; 42 sampled bytes have
+  no E297 owner. Linked sources and runtime integration remain open.
+
+- EUR [E422 Star Cross reconciliation](../rom_data_runtime.md#e422-star-cross-sample-reconciliation)
+  leaves 86 sampled bytes outside E297 after descriptor integration;
+  source identity and other readers remain open.
+
+- EUR [E421 Star Cross descriptor runtime](../rom_data_compact_catalog.md#e421-star-cross-compact-descriptor-runtime)
+  serves two 24-byte records; original readers, altered-source 480-frame
+  scene and CLI pass on Wine. Other scenes and platforms remain open.
+
+- EUR [E419 Star Cross reconciliation](../rom_data_runtime.md#e419-star-cross-sample-reconciliation)
+  leaves 126 sampled bytes outside E296 after indirect-record integration;
+  source identity and other readers remain open.
+
+- EUR [E418 Star Cross indirect records runtime](../rom_data_runtime.md#e418-star-cross-indirect-records-runtime)
+  serves three records; original readers, altered-source 480-frame scene and
+  CLI pass on Wine. Other scenes and platforms remain open.
+
+- EUR [E416 Star Cross reconciliation](../rom_data_runtime.md#e416-star-cross-sample-reconciliation)
+  leaves 147 sampled bytes outside E295 after copied-table integration; source
+  identity and other readers remain open.
+
+- EUR [E415 Star Cross copied tables runtime](../rom_data_runtime.md#e415-star-cross-copied-tables-runtime)
+  serves 60 sampled bytes; original copy paths, altered-source 480-frame scene
+  and CLI pass on Wine. Other scenes and platforms remain open.
 
 - EUR [E413 Star Cross reconciliation](../rom_data_runtime.md#e413-star-cross-sample-reconciliation)
   leaves 207 sampled bytes outside E294 after literal integration; source

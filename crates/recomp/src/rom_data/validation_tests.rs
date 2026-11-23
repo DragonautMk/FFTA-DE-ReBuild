@@ -6,6 +6,15 @@ use crate::{
 };
 use std::time::Instant;
 
+pub(super) fn star_cross_transfer_ranges() -> Vec<(usize, usize)> {
+    use gba_core::rom_data::{observed_tilemap as map, observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
+    let start = map::STAR_CROSS_RECTANGLE_ENTRY_OFFSET as usize;
+    let end = row::STAR_CROSS_ROW_SPECS[3].0 as usize + row::SOURCE_LENGTH;
+    let mut ranges = vec![(start, end - start), (map::STAR_CROSS_MODE7_OFFSET as usize, 10)];
+    for &(_, _, wrapper, _) in &descriptor::STAR_CROSS_LZ_SPECS { ranges.push((wrapper as usize, 4)); }
+    ranges
+}
+
 #[derive(serde::Serialize)]
 struct StartupObservation {
     cached: bool,
@@ -206,10 +215,13 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_soil_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_TRANSFER").is_some();
     let poison_firaga_linked_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_LINKED_TRANSFER").is_some();
     let poison_soil_other_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_OTHER_TRANSFER").is_some();
+    let poison_star_cross_transfer = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_TRANSFER").is_some();
     let poison_soil_scene_records = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_SCENE_RECORDS").is_some();
     let poison_soil_indirect_records = std::env::var_os("FFTA_STATE_TEST_POISON_SOIL_INDIRECT_RECORDS").is_some();
     let poison_firaga_indirect_index2 = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_INDIRECT_INDEX2").is_some();
     let poison_firaga_ccec_indirect = std::env::var_os("FFTA_STATE_TEST_POISON_FIRAGA_CCEC_INDIRECT").is_some();
+    let poison_star_cross_indirect = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_INDIRECT").is_some();
+    let poison_star_cross_descriptors = std::env::var_os("FFTA_STATE_TEST_POISON_STAR_CROSS_DESCRIPTORS").is_some();
     let poison_white_flowers_indexed = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_INDEXED").is_some();
     let poison_white_flowers_queued = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_QUEUED").is_some();
     let poison_white_flowers_direct = std::env::var_os("FFTA_STATE_TEST_POISON_WHITE_FLOWERS_DIRECT").is_some();
@@ -458,6 +470,16 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::soil_indirect_records::{FIRAGA_CCEC_OFFSET, RECORD_BYTES};
                 for at in FIRAGA_CCEC_OFFSET as usize..FIRAGA_CCEC_OFFSET as usize + RECORD_BYTES { machine.bus.rom[at] = !rom[at]; }
             }
+            if index == 1 && poison_star_cross_indirect {
+                use gba_core::rom_data::soil_indirect_records::{STAR_CROSS_OFFSETS, RECORD_BYTES};
+                for offset in STAR_CROSS_OFFSETS {
+                    for at in offset as usize..offset as usize + RECORD_BYTES { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
+            if index == 1 && poison_star_cross_descriptors {
+                use gba_core::rom_data::compact_obj_catalog::{STAR_CROSS_RECORD_LENGTH, STAR_CROSS_RECORD_OFFSET};
+                for at in STAR_CROSS_RECORD_OFFSET as usize..STAR_CROSS_RECORD_OFFSET as usize + 2 * STAR_CROSS_RECORD_LENGTH { machine.bus.rom[at] = !rom[at]; }
+            }
             if index == 1 && poison_white_flowers_indexed {
                 use gba_core::rom_data::indexed_graphics as model;
                 for (start, len) in [(model::WHITE_FLOWERS_LITERALS, 16), (model::WHITE_FLOWERS_GROUP, 20)]
@@ -610,6 +632,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::soil_remaining_rectangles::{ALT_LITERAL,RECTS};
                 for at in ALT_LITERAL as usize..ALT_LITERAL as usize+4 { machine.bus.rom[at]=!rom[at]; }
                 for (offset,height,width) in RECTS { for at in offset as usize..offset as usize+2+2*usize::from(height)*usize::from(width) { machine.bus.rom[at]=!rom[at]; } }
+            }
+            if index == 1 && poison_star_cross_transfer {
+                for (start, len) in star_cross_transfer_ranges() {
+                    for at in start..start + len { machine.bus.rom[at] = !rom[at]; }
+                }
             }
             if index == 1 && poison_soil_other_transfer {
                 use gba_core::rom_data::{observed_tilemap as tilemap, observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
@@ -1225,6 +1252,17 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::soil_indirect_records::{FIRAGA_CCEC_OFFSET, RECORD_BYTES};
                 let at = FIRAGA_CCEC_OFFSET as usize; machine.bus.rom[at..at + RECORD_BYTES].copy_from_slice(&rom[at..at + RECORD_BYTES]);
             }
+            if index == 1 && poison_star_cross_indirect {
+                use gba_core::rom_data::soil_indirect_records::{STAR_CROSS_OFFSETS, RECORD_BYTES};
+                for offset in STAR_CROSS_OFFSETS {
+                    let at = offset as usize; machine.bus.rom[at..at + RECORD_BYTES].copy_from_slice(&rom[at..at + RECORD_BYTES]);
+                }
+            }
+            if index == 1 && poison_star_cross_descriptors {
+                use gba_core::rom_data::compact_obj_catalog::{STAR_CROSS_RECORD_LENGTH, STAR_CROSS_RECORD_OFFSET};
+                let at = STAR_CROSS_RECORD_OFFSET as usize;
+                machine.bus.rom[at..at + 2 * STAR_CROSS_RECORD_LENGTH].copy_from_slice(&rom[at..at + 2 * STAR_CROSS_RECORD_LENGTH]);
+            }
             if index == 1 && poison_white_flowers_indexed {
                 use gba_core::rom_data::indexed_graphics as model;
                 for (start, len) in [(model::WHITE_FLOWERS_LITERALS, 16), (model::WHITE_FLOWERS_GROUP, 20)]
@@ -1377,6 +1415,9 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                 use gba_core::rom_data::soil_remaining_rectangles::{ALT_LITERAL,RECTS};
                 let at=ALT_LITERAL as usize; machine.bus.rom[at..at+4].copy_from_slice(&rom[at..at+4]);
                 for (offset,height,width) in RECTS { let at=offset as usize; let len=2+2*usize::from(height)*usize::from(width); machine.bus.rom[at..at+len].copy_from_slice(&rom[at..at+len]); }
+            }
+            if index == 1 && poison_star_cross_transfer {
+                for (start, len) in star_cross_transfer_ranges() { machine.bus.rom[start..start + len].copy_from_slice(&rom[start..start + len]); }
             }
             if index == 1 && poison_soil_other_transfer {
                 use gba_core::rom_data::{observed_tilemap as tilemap, observed_tilemap_descriptor as descriptor, observed_tilemap_row as row};
@@ -2157,6 +2198,18 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
         assert!(stats.source_bytes > 0 && stats.record_mask & 0x40 != 0, "scene must consume the CCEC record: {stats:?}");
         eprintln!("ROM_DATA_FIRAGA_CCEC_INDIRECT_POISON source_bytes={} mask={}", stats.source_bytes, stats.record_mask);
     }
+    if poison_star_cross_indirect {
+        let stats = decoded.bus.rom_resources().unwrap().soil_indirect_records_stats().expect("Star Cross indirect record owner");
+        assert!(stats.star_cross_bytes > 0 && stats.star_cross_mask == 7,
+            "scene must consume all three Star Cross indirect records: {stats:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_INDIRECT_POISON source_bytes={} mask={}", stats.star_cross_bytes, stats.star_cross_mask);
+    }
+    if poison_star_cross_descriptors {
+        let stats = decoded.bus.rom_resources().unwrap().compact_obj_catalog_stats().expect("Star Cross compact descriptor owner");
+        assert!(stats.star_cross_record_bytes.iter().all(|&count| count > 0),
+            "scene must consume both Star Cross compact descriptors: {stats:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_DESCRIPTORS_POISON source_bytes={:?}", stats.star_cross_record_bytes);
+    }
     if poison_white_flowers_indexed {
         let stats = decoded.bus.rom_resources().unwrap().indexed_graphics_stats().expect("White Flowers indexed archive owner");
         assert!(stats.white_flowers_archive_bytes[0] > 0, "scene must consume the observed first archive: {stats:?}");
@@ -2250,6 +2303,17 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             && stats.sequence_mask & 0x3f == 0x3f, "scene must consume all witnessed record groups: {stats:?}");
         eprintln!("ROM_DATA_SOIL_SCENE_RECORDS_POISON range_bytes={} sequence_bytes={} ranges={} sequence={}",
             stats.range_bytes, stats.sequence_bytes, stats.range_mask, stats.sequence_mask);
+    }
+    if poison_star_cross_transfer {
+        let owner = decoded.bus.rom_resources().unwrap();
+        let rows = owner.observed_tilemap_row_stats().expect("Star Cross row owner");
+        let descriptor = owner.observed_tilemap_descriptor_stats().expect("Star Cross descriptor owner");
+        let map = owner.observed_tilemap_stats().expect("Star Cross tilemap owner");
+        assert!(rows.star_cross_row_mask == 0xf && descriptor.star_cross_descriptor_bytes.iter().all(|&n| n > 0)
+            && descriptor.star_cross_wrapper_bytes.iter().all(|&n| n > 0) && map.star_cross_source_bytes.iter().all(|&n| n > 0),
+            "scene must consume all selected Star Cross source groups: {rows:?} {descriptor:?} {map:?}");
+        eprintln!("ROM_DATA_STAR_CROSS_TRANSFER_POISON rows={} descriptors={:?} wrappers={:?} map={:?}",
+            rows.star_cross_row_mask, descriptor.star_cross_descriptor_bytes, descriptor.star_cross_wrapper_bytes, map.star_cross_source_bytes);
     }
     if poison_soil_other_transfer {
         let owner = decoded.bus.rom_resources().unwrap();

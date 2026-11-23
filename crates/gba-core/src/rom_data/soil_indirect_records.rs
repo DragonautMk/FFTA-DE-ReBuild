@@ -7,6 +7,7 @@ pub const OFFSETS: [u32; 5] = [0x39aaac, 0x39aad4, 0x39ab5c, 0x39e214, 0x39e21c]
 pub const RECORD_BYTES: usize = 8;
 pub const FIRAGA_INDEX2_OFFSET: u32 = 0x39aac4;
 pub const FIRAGA_CCEC_OFFSET: u32 = 0x39ccec;
+pub const STAR_CROSS_OFFSETS: [u32; 3] = [0x39de20, 0x39de28, 0x39de30];
 const ROLES: [&str; 5] = [
     "soil-indirect-record-0",
     "soil-indirect-record-1",
@@ -14,7 +15,7 @@ const ROLES: [&str; 5] = [
     "soil-indirect-record-3",
     "soil-indirect-record-4",
 ];
-const HASHES: [&str; 7] = [
+const HASHES: [&str; 10] = [
     "4d8aef96c6d8c1d6428723dfede1dcd3587a7f64511f44d5a0ec72c0f023472a",
     "9521db027bf863bcfa16500b438045789f55c55e95db189f09b4ff8617072ab9",
     "08264f8b86ee077c13000c74df52736899e8feca41d9ee526b3610afd218531e",
@@ -22,6 +23,9 @@ const HASHES: [&str; 7] = [
     "9998fe3fa03b15880d32b9894730f28d79f9a80d956b198d5ad72af211956103",
     "2984269080c40f5c6dbdc8e8ee6e2312f2feb1d606430caf0e4dcca4eb06051a",
     "5650272d09ffd65ab9ee764ac2e7bd32f19fa26c0179cc264bbd26f772de9147",
+    "78100552611ca8134cefcd291288be46ef17ed61d9f0fa13e3f24335950b6c32",
+    "62661ffea973b070e050f4d86ee04bf361c2b02677b4d6e6c7086c512f89803c",
+    "1c60f3c60466edbf01ae8bc1ea9e88f0384d84ceca2bc9bc59a699480f6b09cf",
 ];
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -57,6 +61,8 @@ pub struct SoilIndirectRecords {
     pub firaga_index2: Option<IndirectRecord>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub firaga_ccec: Option<IndirectRecord>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_records: Option<[IndirectRecord; 3]>,
 }
 impl SoilIndirectRecords {
     pub fn validate(&self) -> Result<(), String> {
@@ -74,6 +80,9 @@ impl SoilIndirectRecords {
         if self.firaga_ccec.as_ref().is_some_and(|row| row.offset != FIRAGA_CCEC_OFFSET) {
             return Err("Invalid Firaga CCEC indirect record offset".into());
         }
+        if self.star_cross_records.as_ref().is_some_and(|rows| rows.iter().zip(STAR_CROSS_OFFSETS).any(|(row, offset)| row.offset != offset)) {
+            return Err("Invalid Star Cross indirect record offsets".into());
+        }
         Ok(())
     }
     pub fn source_spans(&self) -> Result<Vec<(u32, Vec<u8>, &'static str)>, String> {
@@ -90,6 +99,11 @@ impl SoilIndirectRecords {
         if let Some(row) = &self.firaga_ccec {
             spans.push((row.offset, row.source_bytes().to_vec(), "firaga-ccec-indirect-record"));
         }
+        if let Some(rows) = &self.star_cross_records {
+            for (row, role) in rows.iter().zip(["star-cross-indirect-record-0", "star-cross-indirect-record-1", "star-cross-indirect-record-2"]) {
+                spans.push((row.offset, row.source_bytes().to_vec(), role));
+            }
+        }
         Ok(spans)
     }
     /// These are the owned physical records, not a bound on guest pointers.
@@ -105,6 +119,11 @@ impl SoilIndirectRecords {
             let row = self.firaga_ccec.as_ref()?;
             let at = offset.checked_sub(row.offset)? as usize;
             row.source_bytes().get(at).copied().map(|byte| (byte, 6))
+        }).or_else(|| {
+            self.star_cross_records.as_ref()?.iter().enumerate().find_map(|(i, row)| {
+                let at = offset.checked_sub(row.offset)? as usize;
+                row.source_bytes().get(at).copied().map(|byte| (byte, 7 + i))
+            })
         })
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -165,6 +184,11 @@ impl Catalog {
                 0xeb9a2,
                 "e87a9408b43880215412f41e0a12df78be4b28ccc5af2c3ccfec9d39a5e90302",
             ),
+            (
+                0xeedc8,
+                0xeedd6,
+                "7843fff64586f5b9016ba2d4187021f00925aab1c0032e8e82a4b5bd7acfb1f6",
+            ),
         ] {
             if ffta_rom::digest(&rom[start..end]) != hash {
                 return Err("Soil indirect reader fingerprint mismatch".into());
@@ -223,6 +247,14 @@ impl Catalog {
             || literals.is_some_and(|owner| !owner.sources.iter().any(|source| source.offset == literal && source.length == 4)) {
             return Err("Firaga CCEC indexed pointer provenance mismatch".into());
         }
+        let (reader, literal) = (0xeedc8u32, 0xeede8u32);
+        let op = u16::from_le_bytes(rom[reader as usize..reader as usize + 2].try_into().unwrap());
+        if op & 0xf800 != 0x4800
+            || ((reader + 4) & !3) + u32::from(op & 255) * 4 != literal
+            || u32::from_le_bytes(rom[literal as usize..literal as usize + 4].try_into().unwrap()) != 0x0800_0000 + STAR_CROSS_OFFSETS[0]
+            || literals.is_some_and(|owner| !owner.sources.iter().any(|source| source.offset == literal && source.length == 4)) {
+            return Err("Star Cross indirect record root mismatch".into());
+        }
         let record_at = |offset: u32| {
             let at = offset as usize;
             IndirectRecord {
@@ -236,7 +268,7 @@ impl Catalog {
             }
         };
         let records = std::array::from_fn(|i| record_at(OFFSETS[i]));
-        let decoded = SoilIndirectRecords { records, firaga_index2: Some(record_at(FIRAGA_INDEX2_OFFSET)), firaga_ccec: Some(record_at(FIRAGA_CCEC_OFFSET)) };
+        let decoded = SoilIndirectRecords { records, firaga_index2: Some(record_at(FIRAGA_INDEX2_OFFSET)), firaga_ccec: Some(record_at(FIRAGA_CCEC_OFFSET)), star_cross_records: Some(STAR_CROSS_OFFSETS.map(record_at)) };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();
         for (i, (offset, bytes, role)) in decoded.source_spans()?.into_iter().enumerate() {

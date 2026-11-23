@@ -26,6 +26,15 @@ pub const RECTANGLE_TABLE_LENGTH: usize = 4;
 pub const SOIL_RECTANGLE_ENTRIES_OFFSET: u32 = 0x39e078;
 pub const SOIL_RECTANGLE_LIST_OFFSET: u32 = 0x39e088;
 pub const SOIL_MODE7_OFFSET: u32 = 0xaf270c;
+pub const STAR_CROSS_RECTANGLE_ENTRY_OFFSET: u32 = 0x39dd98;
+pub const STAR_CROSS_RECTANGLE_LIST_OFFSET: u32 = 0x39dda0;
+pub const STAR_CROSS_MODE7_OFFSET: u32 = 0xaf2040;
+pub const STAR_CROSS_SOURCE_HASHES: [&str; 4] = [
+    "488e708a1a515b57fae6c9a26282d3309c37837ccd7c75580075fda3a966ca91",
+    "cd77fee089fd870bbee49ee9ec68c1f1af39f1803e61afe74f5b4fd3cd10b556",
+    "145cbdd4606ac9a259c48a23d92ea3324f45caea83505ec4779ee6a9258728a6",
+    "ba58d09fc5389f6b2e2b63aa86990b062aca9a93ecab14165f4f1af7254c6432",
+];
 pub const SOIL_RECTANGLE_SPECS: [(u32, u8, u8, &str); 2] = [
     (0xae71bc, 2, 7, "dec0ebac9845e0c20c3f0682658f83038c566b6549241783cb3298f8c743b9d6"),
     (0xae777c, 1, 3, "eae139744ee6cb08823e20c9feab24047538f30d39bf3ed575fcadb2969b4ca6"),
@@ -256,6 +265,33 @@ impl SoilTransferSources {
     }
 }
 
+/// One Star Cross rectangle entry and the sampled mode-7 prefix.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct StarCrossTransferSources {
+    pub entry_count: u8,
+    pub list_padding: [u8; 3],
+    pub entries_pointer: u32,
+    pub entry: SoilRectangleEntry,
+    pub mode7: SoilMode7Prefix,
+}
+
+impl StarCrossTransferSources {
+    pub fn list_bytes(&self) -> [u8; 8] {
+        let mut bytes = [0; 8];
+        bytes[0] = self.entry_count;
+        bytes[1..4].copy_from_slice(&self.list_padding);
+        bytes[4..8].copy_from_slice(&self.entries_pointer.to_le_bytes());
+        bytes
+    }
+    pub fn entry_bytes(&self) -> [u8; 8] {
+        let mut bytes = [0; 8];
+        bytes[..4].copy_from_slice(&self.entry.rectangle_pointer.to_le_bytes());
+        bytes[4..8].copy_from_slice(&self.entry.parameters);
+        bytes
+    }
+}
+
 /// One observed descriptor, its one-entry list and a separate table pointer.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -314,6 +350,8 @@ pub struct ObservedTilemap {
     pub additional_rectangles: Option<[Rectangle; 5]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub soil_transfer_sources: Option<SoilTransferSources>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_transfer_sources: Option<StarCrossTransferSources>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub white_flowers_queued: Option<WhiteFlowersQueuedRows>,
 }
@@ -407,6 +445,15 @@ impl ObservedTilemap {
                 }
             }
         }
+        if let Some(star) = &self.star_cross_transfer_sources {
+            if star.entry_count != 1 || star.entries_pointer != 0x0800_0000 + STAR_CROSS_RECTANGLE_ENTRY_OFFSET
+                || star.entry.rectangle_pointer != 0x08ae_6e14
+                || !self.alternate_rectangles.as_ref().is_some_and(|rows| rows.iter().any(|row| row.source_offset == 0xae6e14))
+                || (star.mode7.width, star.mode7.height, star.mode7.mode) != (16, 16, 7)
+                || star.mode7.flags & 2 == 0 || star.mode7.first_run.control != 0x8100 {
+                return Err("Invalid Star Cross rectangle list or mode-7 prefix".into());
+            }
+        }
         if let Some(rows) = &self.white_flowers_queued {
             if rows.caller_literals != [0x083ba0d8, 0x083ba218, 0x03000990]
                 || rows.halfwords.iter().any(|cells| cells.len() != WHITE_FLOWERS_QUEUED_HALFWORDS)
@@ -476,6 +523,12 @@ impl ObservedTilemap {
             for (i, cells) in rows.halfwords.iter().enumerate() {
                 spans.push((WHITE_FLOWERS_QUEUED_OFFSETS[i], cells.iter().flat_map(|v| v.to_le_bytes()).collect(), "white-flowers-queued-halfwords"));
             }
+        }
+        if let Some(star) = &self.star_cross_transfer_sources {
+            spans.push((STAR_CROSS_RECTANGLE_ENTRY_OFFSET, star.entry_bytes().to_vec(), "star-cross-rectangle-entry"));
+            spans.push((STAR_CROSS_RECTANGLE_LIST_OFFSET, star.list_bytes().to_vec(), "star-cross-rectangle-list"));
+            spans.push((STAR_CROSS_MODE7_OFFSET, star.mode7.header_bytes().to_vec(), "star-cross-mode7-header"));
+            spans.push((STAR_CROSS_MODE7_OFFSET + 6, star.mode7.run_bytes().to_vec(), "star-cross-mode7-first-run"));
         }
         spans
     }
@@ -651,6 +704,23 @@ impl Catalog {
             mode7: SoilMode7Prefix { width: mode7[0], height: mode7[1], opaque_header: u16::from_le_bytes(mode7[2..4].try_into().unwrap()),
                 mode: mode7[4], flags: mode7[5], first_run: Run { control: u16::from_le_bytes(mode7[6..8].try_into().unwrap()), value: u16::from_le_bytes(mode7[8..10].try_into().unwrap()) } },
         };
+        for ((offset, length), expected) in [
+            (STAR_CROSS_RECTANGLE_ENTRY_OFFSET, 8usize), (STAR_CROSS_RECTANGLE_LIST_OFFSET, 8),
+            (STAR_CROSS_MODE7_OFFSET, 6), (STAR_CROSS_MODE7_OFFSET + 6, 4),
+        ].into_iter().zip(STAR_CROSS_SOURCE_HASHES) {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + length]) != expected { return Err("Star Cross tilemap source mismatch".into()); }
+        }
+        let list = &rom[STAR_CROSS_RECTANGLE_LIST_OFFSET as usize..STAR_CROSS_RECTANGLE_LIST_OFFSET as usize + 8];
+        let entry = &rom[STAR_CROSS_RECTANGLE_ENTRY_OFFSET as usize..STAR_CROSS_RECTANGLE_ENTRY_OFFSET as usize + 8];
+        let mode7 = &rom[STAR_CROSS_MODE7_OFFSET as usize..STAR_CROSS_MODE7_OFFSET as usize + 10];
+        let star_cross_transfer_sources = StarCrossTransferSources {
+            entry_count: list[0], list_padding: list[1..4].try_into().unwrap(),
+            entries_pointer: u32::from_le_bytes(list[4..8].try_into().unwrap()),
+            entry: SoilRectangleEntry { rectangle_pointer: u32::from_le_bytes(entry[..4].try_into().unwrap()), parameters: entry[4..8].try_into().unwrap() },
+            mode7: SoilMode7Prefix { width: mode7[0], height: mode7[1], opaque_header: u16::from_le_bytes(mode7[2..4].try_into().unwrap()),
+                mode: mode7[4], flags: mode7[5], first_run: Run { control: u16::from_le_bytes(mode7[6..8].try_into().unwrap()), value: u16::from_le_bytes(mode7[8..10].try_into().unwrap()) } },
+        };
         for (i, (offset, length)) in [(WHITE_FLOWERS_QUEUED_LITERALS, 12usize),
             (WHITE_FLOWERS_QUEUED_OFFSETS[0], WHITE_FLOWERS_QUEUED_LENGTH),
             (WHITE_FLOWERS_QUEUED_OFFSETS[1], WHITE_FLOWERS_QUEUED_LENGTH)].into_iter().enumerate() {
@@ -678,6 +748,7 @@ impl Catalog {
             additional_rectangle_pointers: Some(additional_rectangle_pointers),
             additional_rectangles: Some(additional_rectangles),
             soil_transfer_sources: Some(soil_transfer_sources),
+            star_cross_transfer_sources: Some(star_cross_transfer_sources),
             white_flowers_queued: Some(white_flowers_queued),
         };
         let cells = decoded.decoded_cells()?;

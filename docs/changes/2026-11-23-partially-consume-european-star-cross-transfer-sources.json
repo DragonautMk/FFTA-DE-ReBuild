@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "partially-consume-european-star-cross-transfer-sources",
+  "title": "Partially consume European Star Cross transfer sources",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend existing tilemap, descriptor and row resources with four Star Cross rows and their linked list, wrappers and selected mode-7 prefix; preserve earlier owners and guest fallback."
+  ],
+  "validation": [
+    "Wine wqepgepj preserves earlier fields and 145 other resources, rejects coherent edits, verifies altered-source mirrors and mixed boundaries, and passes 44 original interpreter/generated reader and caller-prefix cases.",
+    "Wine st36aju0 matches all 480 frames with 106 source bytes altered and observes every selected group served; both Wine servers drained. Windows CLI cross-build kfcdze6k passes."
+  ],
+  "limitations": [
+    "User paused before Wine CLI create/reuse/verify and E298 sample reconciliation. Other callers and scenes, full source extents, real BIOS, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_transfer_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/observed_tilemap_row.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_transfer_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

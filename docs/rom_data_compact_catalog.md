@@ -1186,3 +1186,30 @@ These checks establish the selected continuation, not individual selector
 timing, all guest arithmetic, other consumers/scenes or full ROM independence.
 The source save's earlier history and real BIOS are not proved. Linux, USA and
 native Windows remain open; no performance comparison was made.
+
+
+## E421 Star Cross compact descriptor runtime
+
+EUR extractor E297/decoder D296 extends the existing
+`graphics.conditional-compact-obj-catalog` with two authenticated 24-byte
+descriptors at `39ddf0..39de20`, using `compact-obj-catalog-v15-json`. Their
+bank pointer targets the existing `6bacd8` bank and selects its represented
+sequences 0 and 1. The guest bus serves their source bytes; accesses outside
+the represented spans retain their prior routing. The separately owned caller
+literal, earlier catalog fields and 147 other resources remain unchanged.
+
+Wine `e421-star-cross-descriptors-readers-wine-fffwz1o9` verifies source and
+caller identity, coherent edited-file rejection, altered-source mirrors and
+mixed boundaries, snapshot ownership and 14 interpreter/generated original
+reader and caller-prefix cases with equal complete state and guest clock.
+Wine `e421-star-cross-descriptors-scene-wine-c1uygc6q` compares 480 recorded
+Star Cross frames with both descriptors altered in the managed ROM: complete
+state, guest clock, central/wide video, OAM, dispatch and five nonempty audio
+streams match at each frame, and both descriptors are served.
+
+Wine production CLI `e421-star-cross-descriptors-cli-wine-vk87fr13` creates,
+reuses and verifies 149 files matching the tested E297 generation. All Wine
+servers drained. The selected continuation does not establish exact scene PCs,
+all callers or guest index domains, other scenes, earlier save history or real
+BIOS. Linux, USA and native Windows remain open. No performance comparison
+was made.

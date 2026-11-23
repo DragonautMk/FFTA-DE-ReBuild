@@ -7,12 +7,15 @@ pub struct SoilIndirectRecordsStats {
     pub bus_reads: u64,
     pub source_bytes: u64,
     pub record_mask: u8,
+    pub star_cross_bytes: u64,
+    pub star_cross_mask: u8,
 }
 pub(super) struct SoilIndirectRecordsResources {
     data: model::SoilIndirectRecords,
     reads: AtomicU64,
     source_bytes: AtomicU64,
     records: AtomicU64,
+    star_cross_bytes: AtomicU64,
 }
 impl SoilIndirectRecordsResources {
     pub(super) fn source_page(index: usize) -> bool {
@@ -41,6 +44,7 @@ impl SoilIndirectRecordsResources {
             reads: AtomicU64::new(0),
             source_bytes: AtomicU64::new(0),
             records: AtomicU64::new(0),
+            star_cross_bytes: AtomicU64::new(0),
         })
     }
     pub(super) fn guest_read<const N: usize>(
@@ -53,11 +57,12 @@ impl SoilIndirectRecordsResources {
         if cells.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut count, mut mask) = (0u64, 0u64);
+        let (mut count, mut mask, mut star_cross_bytes) = (0u64, 0u64, 0u64);
         let result = std::array::from_fn(|i| match cells[i] {
             Some((byte, entry)) => {
                 count += 1;
                 mask |= 1 << entry;
+                if entry >= 7 { star_cross_bytes += 1; }
                 byte
             }
             None => prior
@@ -67,13 +72,16 @@ impl SoilIndirectRecordsResources {
         self.reads.fetch_add(1, Ordering::Relaxed);
         self.source_bytes.fetch_add(count, Ordering::Relaxed);
         self.records.fetch_or(mask, Ordering::Relaxed);
+        self.star_cross_bytes.fetch_add(star_cross_bytes, Ordering::Relaxed);
         Some(result)
     }
     pub(super) fn stats(&self) -> SoilIndirectRecordsStats {
         SoilIndirectRecordsStats {
             bus_reads: self.reads.load(Ordering::Relaxed),
             source_bytes: self.source_bytes.load(Ordering::Relaxed),
-            record_mask: self.records.load(Ordering::Relaxed) as u8,
+            record_mask: (self.records.load(Ordering::Relaxed) & 0x7f) as u8,
+            star_cross_bytes: self.star_cross_bytes.load(Ordering::Relaxed),
+            star_cross_mask: ((self.records.load(Ordering::Relaxed) >> 7) & 0x7) as u8,
         }
     }
     pub(super) fn resident_bytes(&self) -> usize {

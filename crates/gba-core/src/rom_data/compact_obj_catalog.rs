@@ -10,6 +10,12 @@ pub mod selector_tables;
 
 pub const RED_SPRING_RECORD_OFFSET: u32 = 0x3a4ca0;
 pub const RED_SPRING_RECORD_LENGTH: usize = 24;
+pub const STAR_CROSS_RECORD_OFFSET: u32 = 0x39ddf0;
+pub const STAR_CROSS_RECORD_LENGTH: usize = 24;
+pub const STAR_CROSS_RECORD_HASHES: [&str; 2] = [
+    "7c4c8eeeefd39bb7772a6b0eb865f754d9239a57947817c6eb4863a62cc68549",
+    "8368b81372d8270970d547faf30d13ec223dd3d45d44553f53679600fc97c9fa",
+];
 pub const RED_SPRING_RECORD_HASHES: [&str; 3] = [
     "136d1fe86b9516ea174e441624542ee6dba018ff18aa4615ffc91e88c8491ccb",
     "4680d3c3b164751c6c56f30a63878bc37ad0547257e964e7a078acd4b2d8c31b",
@@ -19,13 +25,16 @@ pub const RED_SPRING_RECORD_HASHES: [&str; 3] = [
 /// Preserve the observed fields without asserting semantics beyond the bank and selector.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
-pub struct RedSpringRecord {
+pub struct CompactRecord {
     pub source_offset: u32,
     pub bank_pointer: u32,
     pub halfwords: [u16; 10],
 }
 
-impl RedSpringRecord {
+pub type RedSpringRecord = CompactRecord;
+pub type StarCrossRecord = CompactRecord;
+
+impl CompactRecord {
     pub fn source_bytes(&self) -> [u8; RED_SPRING_RECORD_LENGTH] {
         let mut bytes = [0; RED_SPRING_RECORD_LENGTH];
         bytes[..4].copy_from_slice(&self.bank_pointer.to_le_bytes());
@@ -231,6 +240,8 @@ pub struct CompactObjCatalog {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub red_spring_records: Option<[RedSpringRecord; 3]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_records: Option<[StarCrossRecord; 2]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub soil_evidence_metadata: Option<SoilEvidenceMetadata>,
 }
 
@@ -280,6 +291,14 @@ impl CompactObjCatalog {
                 return Err("Invalid Red Spring compact record binding".into());
             }
         }
+        let bank = self.banks.iter().find(|bank| bank.root == 0x6bacd8).ok_or("Missing Star Cross compact bank")?;
+        for (index, record) in self.star_cross_records.as_ref().ok_or("Missing Star Cross compact records")?.iter().enumerate() {
+            if record.source_offset != STAR_CROSS_RECORD_OFFSET + (index * STAR_CROSS_RECORD_LENGTH) as u32
+                || record.bank_pointer != 0x0800_0000 + bank.root || record.halfwords[0] != index as u16
+                || bank.sequence(record.halfwords[0]).is_none() {
+                return Err("Invalid Star Cross compact record binding".into());
+            }
+        }
         self.soil_evidence_metadata.as_ref().ok_or("Missing Soil Evidence compact metadata")?.validate()?;
         Ok(())
     }
@@ -289,6 +308,7 @@ impl CompactObjCatalog {
         let mut pieces: Vec<_> = self.banks.iter().map(Bank::source_pieces).collect::<Result<Vec<_>, _>>()?.into_iter().flatten().collect();
         pieces.extend(self.selector_tables.as_ref().unwrap().source_pieces());
         pieces.extend(self.red_spring_records.as_ref().unwrap().iter().map(|record| (record.source_offset, record.source_bytes().to_vec())));
+        pieces.extend(self.star_cross_records.as_ref().unwrap().iter().map(|record| (record.source_offset, record.source_bytes().to_vec())));
         pieces.extend(self.soil_evidence_metadata.as_ref().unwrap().source_pieces()?);
         let spans = merge_pieces(pieces)?;
         if spans.len() != SOURCE_SPANS.len() || spans.iter().zip(SOURCE_SPANS).any(|((at, bytes), &(start, end))| *at != start || bytes.len() != (end - start) as usize) {
@@ -301,6 +321,9 @@ impl CompactObjCatalog {
         self.banks.iter().find_map(|bank| bank.byte_at(offset))
             .or_else(|| self.selector_tables.as_ref().and_then(|tables| tables.byte_at(offset)))
             .or_else(|| self.red_spring_records.as_ref()?.iter().find_map(|record| {
+                offset.checked_sub(record.source_offset).and_then(|at| record.source_bytes().get(at as usize).copied())
+            }))
+            .or_else(|| self.star_cross_records.as_ref()?.iter().find_map(|record| {
                 offset.checked_sub(record.source_offset).and_then(|at| record.source_bytes().get(at as usize).copied())
             }))
             .or_else(|| self.soil_evidence_metadata.as_ref()?.byte_at(offset))
@@ -364,6 +387,23 @@ impl Catalog {
                 bank_pointer: u32::from_le_bytes(rom[start..start + 4].try_into().unwrap()),
                 halfwords: std::array::from_fn(|index| half(offset + 4 + index as u32 * 2)), }
         });
+        if ffta_rom::digest(&rom[0xeedfa..0xeee16]) != "eab8b65698b20bfe5e9071ec63cdd19207bb8ed72ca022dea34c9bb753be0527"
+            || u32::from_le_bytes(rom[0xeee24..0xeee28].try_into().unwrap()) != 0x0800_0000 + STAR_CROSS_RECORD_OFFSET {
+            return Err("Star Cross compact record caller mismatch".into());
+        }
+        for (index, expected) in STAR_CROSS_RECORD_HASHES.iter().enumerate() {
+            let start = STAR_CROSS_RECORD_OFFSET as usize + index * STAR_CROSS_RECORD_LENGTH;
+            if ffta_rom::digest(&rom[start..start + STAR_CROSS_RECORD_LENGTH]) != *expected {
+                return Err("Star Cross compact record source mismatch".into());
+            }
+        }
+        let star_cross_records = std::array::from_fn(|index| {
+            let offset = STAR_CROSS_RECORD_OFFSET + (index * STAR_CROSS_RECORD_LENGTH) as u32;
+            let start = offset as usize;
+            CompactRecord { source_offset: offset,
+                bank_pointer: u32::from_le_bytes(rom[start..start + 4].try_into().unwrap()),
+                halfwords: std::array::from_fn(|index| half(offset + 4 + index as u32 * 2)), }
+        });
         for (start, end, expected) in [
             (0x6c173c, 0x6c1768, "5c110e015c1a947f9a9cfd203c290decfa8e0dcc3980c26d072fea8513d73b9d"),
             (0x6c19b4, 0x6c19e0, "033d9442a96b97430edc149c1513c68e4d01e06ea4a2ae637aa4bc9645a15c76"),
@@ -381,7 +421,7 @@ impl Catalog {
             }).collect(),
         };
         if half(SOIL_EVIDENCE_SEQUENCE_ROOT + 2) != 20 { return Err("Soil Evidence compact frame count mismatch".into()); }
-        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)), red_spring_records: Some(red_spring_records), soil_evidence_metadata: Some(soil_evidence_metadata) };
+        let decoded = CompactObjCatalog { banks, selector_tables: Some(selector_tables::SelectorTables::from_rom(rom)), red_spring_records: Some(red_spring_records), star_cross_records: Some(star_cross_records), soil_evidence_metadata: Some(soil_evidence_metadata) };
         let sources = decoded.source_spans()?.into_iter().map(|(offset, bytes, role)| SourceRange {
             offset, length: bytes.len() as u32, sha256: ffta_rom::digest(&bytes), role,
         }).collect();

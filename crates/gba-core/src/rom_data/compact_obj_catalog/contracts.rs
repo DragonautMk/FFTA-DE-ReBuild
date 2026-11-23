@@ -67,6 +67,7 @@ pub const BANK_SPECS: &[BankSpec] = &[
 ];
 pub const SOURCE_SPANS: &[(u32, u32)] = &[
     (0x39dc50, 0x39dd40),
+    (0x39ddf0, 0x39de20),
     (0x39defc, 0x39df4d),
     (0x39df4e, 0x39df50),
     (0x39df5c, 0x39df94),

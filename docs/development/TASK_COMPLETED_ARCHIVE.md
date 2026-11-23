@@ -26576,3 +26576,63 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Outcome: completed for selected EUR static source geometry; parent remains partial.
 - Verified criteria: `3j15jgkp` authenticates four contiguous copied spans totaling 60 sampled unowned bytes, their separately owned roots, original direct/helper copy paths and adjacent Soil Evidence owner.
 - Limits: sampled addresses and static code do not prove exact scene branches or all callers; runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-STAR-CROSS-COPIED-TABLES-RUNTIME
+
+- Outcome: completed for selected EUR/Wine copied-table integration; parent remains partial.
+- Verified criteria: E295-d294 serves four groups/60 bytes. Reader `je7pmhcs` preserves earlier representation and 147 other resources, checks forged data, mirrors/boundaries, adjacent owner, snapshot ownership and eight interpreter/generated copy prefixes. Scene `zui7wer8` matches all 480 frames with source bytes altered and observes all four groups served. CLI `u68dxkft` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one retained continuation; exact scene PCs, other callers/scenes and guest domains, save ancestry, DMA/real BIOS, Linux, USA and native Windows remain open. Old revision-sensitive Wine fixtures are listed for recovery. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E295-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `hplibhvt` joins the E403 sample against E295: 60 previously unowned copied-table bytes now have owners, leaving 147 in 21 intervals; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-INDIRECT-RECORDS-PLAN
+
+- Outcome: completed for selected EUR static source geometry; parent remains partial.
+- Verified criteria: `8evjfzvi` authenticates three eight-byte records, 21 sampled unowned bytes, separately owned root, original count-three caller and existing indirect-record consumer.
+- Limits: sampled addresses and static code do not prove exact scene execution or all callers; runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-STAR-CROSS-INDIRECT-RECORDS-RUNTIME
+
+- Outcome: completed for selected EUR/Wine indirect-record integration; parent remains partial.
+- Verified criteria: E296-d295 serves three records/24 bytes. Reader `k4a2e7il` preserves earlier representation and 147 other resources, checks forged data, mirrors/boundaries, snapshot ownership and 44 interpreter/generated reader, fallback and caller-prefix cases. Scene `a47ngrrg` matches all 480 frames with all records altered and observes all three served. CLI `_c1pwxal` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one retained continuation; exact scene PCs, other callers/scenes and pointer/count domains, save ancestry, real BIOS, Linux, USA and native Windows remain open. Old revision-sensitive Wine fixtures are listed for recovery. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E296-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `ux3w7c0x` joins the E403 sample against E296: 21 previously unowned sampled indirect-record bytes now have owners, leaving 126; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-DESCRIPTORS-PLAN
+
+- Outcome: completed for selected EUR static source geometry; parent remains partial.
+- Verified criteria: `5inrm3__` authenticates two 24-byte descriptors, 40 sampled unowned bytes, the existing bank and original count-two caller and callback.
+- Limits: sampled addresses and static code do not prove exact scene execution or all callers; runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-STAR-CROSS-DESCRIPTORS-RUNTIME
+
+- Outcome: completed for selected EUR/Wine compact descriptor integration; parent remains partial.
+- Verified criteria: E297-d296 serves two descriptors/48 bytes. Reader `fffwz1o9` preserves prior catalog and 147 other resources, checks forged data, mirrors/boundaries, snapshot ownership and 14 interpreter/generated reader and caller-prefix cases. Scene `c1uygc6q` matches all 480 frames with both descriptors altered and observes both served. CLI `vk87fr13` creates/reuses/verifies 149 matching files; all servers drained.
+- Limits: one retained continuation; exact scene PCs, other callers/scenes and guest domains, save ancestry, real BIOS, Linux, USA and native Windows remain open. Old revision-sensitive Wine fixtures are listed for recovery. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E297-RESIDUAL
+
+- Outcome: completed for the selected EUR static reconciliation; parent remains partial.
+- Verified criteria: `8m719re6` joins the E403 sample against E297: 40 previously unowned sampled descriptor bytes now have owners, leaving 86; other resource metadata is unchanged.
+- Limits: address-only selected readers; source extents, PCs, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-ROWS-PLAN
+
+- Outcome: completed for selected EUR static row geometry; parent remains partial.
+- Verified criteria: `1u3y2pqu` authenticates four 12-byte rows, 42 sampled unowned bytes, their separately owned root and original count-four constructor and 12-byte list reader.
+- Limits: static code and sampled addresses do not prove exact scene execution, all consumers or guest bounds; linked sources and runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-STAR-CROSS-LINKED-PLAN
+
+- Outcome: completed for selected EUR static linked-source geometry; parent remains partial.
+- Verified criteria: `mrt9gl4w` authenticates 58 linked bytes, 44 sampled unowned bytes, a separately owned rectangle, two separately owned LZ streams and original type-2/type-4 readers. E423 rows account for the other 42 sampled E422 bytes.
+- Limits: only the sampled mode-7 prefix is represented; exact scene PCs, all consumers and guest domains, runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.

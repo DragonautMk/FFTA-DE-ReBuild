@@ -88,6 +88,66 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.m
 
 [Change record](docs/changes/2026-11-23-reconcile-european-star-cross-literal-sample.json)
 
+## 2026-11-23 — Reconcile European Star Cross indirect sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E296 manifest after indirect-record integration.
+
+**Validation**
+
+- Protected join ux3w7c0x verifies 21 more sampled bytes now have declared sources and 126 remain unowned; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-indirect-sample.json)
+
+## 2026-11-23 — Reconcile European Star Cross descriptor sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E297 manifest after descriptor integration.
+
+**Validation**
+
+- Protected join 8m719re6 verifies 40 more sampled bytes now have declared sources and 86 remain unowned; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-descriptor-sample.json)
+
+## 2026-11-23 — Reconcile European Star Cross copied-table sample
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
+
+**Changes**
+
+- Join the retained E403 Star Cross address inventory to the E295 manifest after copied-table integration.
+
+**Validation**
+
+- Protected join hplibhvt verifies 60 more sampled bytes now have declared sources and 147 remain unowned in 21 intervals; other resource metadata is unchanged.
+
+**Limitations**
+
+- This is an address-only selected-reader sample and does not establish instruction sites, source extents, other scenes or full-ROM coverage. Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-reconcile-european-star-cross-copied-table-sample.json)
+
 ## 2026-11-23 — Reconcile European Star Cross bank sample
 
 Type: changed. Platforms: European ROM; retained Wine evidence and protected static reconciliation.
@@ -187,6 +247,27 @@ Type: changed. Platforms: European ROM; retained Wine evidence and static source
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-23-plan-european-white-flowers-isolated-values.json)
+
+## 2026-11-23 — Partially consume European Star Cross transfer sources
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend existing tilemap, descriptor and row resources with four Star Cross rows and their linked list, wrappers and selected mode-7 prefix; preserve earlier owners and guest fallback.
+
+**Validation**
+
+- Wine wqepgepj preserves earlier fields and 145 other resources, rejects coherent edits, verifies altered-source mirrors and mixed boundaries, and passes 44 original interpreter/generated reader and caller-prefix cases.
+- Wine st36aju0 matches all 480 frames with 106 source bytes altered and observes every selected group served; both Wine servers drained. Windows CLI cross-build kfcdze6k passes.
+
+**Limitations**
+
+- User paused before Wine CLI create/reuse/verify and E298 sample reconciliation. Other callers and scenes, full source extents, real BIOS, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [observed_tilemap.rs](crates/gba-core/src/rom_data/observed_tilemap.rs), [observed_tilemap_descriptor.rs](crates/gba-core/src/rom_data/observed_tilemap_descriptor.rs), [observed_tilemap_row.rs](crates/gba-core/src/rom_data/observed_tilemap_row.rs), [observed_tilemap.rs](crates/gba-core/src/rom_data/runtime/observed_tilemap.rs), [observed_tilemap_descriptor.rs](crates/gba-core/src/rom_data/runtime/observed_tilemap_descriptor.rs), [observed_tilemap_row.rs](crates/gba-core/src/rom_data/runtime/observed_tilemap_row.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_transfer_tests.rs](crates/recomp/src/rom_data/star_cross_transfer_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-partially-consume-european-star-cross-transfer-sources.json)
 
 ## 2026-11-23 — Observe European White Flowers native byte context
 
@@ -978,6 +1059,69 @@ Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [thumb_pc_literal
 
 [Change record](docs/changes/2026-11-23-consume-european-star-cross-literals.json)
 
+## 2026-11-23 — Consume European Star Cross indirect records
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing indirect-record owner to serve three Star Cross records while preserving earlier observation masks and guest pointer/count behavior.
+
+**Validation**
+
+- Wine k4a2e7il preserves earlier representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and 44 interpreter/generated reader, fallback and caller cases.
+- Wine a47ngrrg matches all 480 frames with all three records altered and observes each record served. Wine _c1pwxal creates, reuses and verifies 149 matching E296 files; all servers drained.
+
+**Limitations**
+
+- One continuation does not prove exact scene PCs, every caller, guest pointer/count domains or real BIOS. Other scenes, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [soil_indirect_records.rs](crates/gba-core/src/rom_data/soil_indirect_records.rs), [soil_indirect_records.rs](crates/gba-core/src/rom_data/runtime/soil_indirect_records.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_indirect_records_tests.rs](crates/recomp/src/rom_data/star_cross_indirect_records_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-indirect-records.json)
+
+## 2026-11-23 — Consume European Star Cross copied tables
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the copied-halfword owner to serve four source-backed Star Cross groups while preserving the adjacent Soil Evidence table.
+
+**Validation**
+
+- Wine je7pmhcs preserves prior representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and eight interpreter/generated direct/helper copy cases.
+- Wine zui7wer8 matches all 480 frames with all 60 source bytes altered and observes use of all four groups. Wine u68dxkft creates, reuses and verifies 149 matching E295 files; all servers drained.
+
+**Limitations**
+
+- One continuation does not prove exact scene PCs, every caller, guest index domains, DMA or real BIOS. Other scenes, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [copied_halfword_lookups.rs](crates/gba-core/src/rom_data/copied_halfword_lookups.rs), [copied_halfword_lookups.rs](crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_copied_tables_tests.rs](crates/recomp/src/rom_data/star_cross_copied_tables_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-copied-tables.json)
+
+## 2026-11-23 — Consume European Star Cross compact descriptors
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extend the existing compact OBJ catalog to serve two source-authenticated Star Cross descriptors while preserving earlier banks, fallback and independently owned caller literal.
+
+**Validation**
+
+- Wine fffwz1o9 preserves prior catalog representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and 14 interpreter/generated original reader and caller-prefix cases.
+- Wine c1uygc6q matches all 480 frames with both descriptors altered and observes both served. Wine vk87fr13 creates, reuses and verifies 149 matching E297 files; all servers drained.
+
+**Limitations**
+
+- One continuation does not prove exact scene PCs, every caller, guest index domains or real BIOS. Other scenes, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made.
+
+Documentation: [rom_data.rs](crates/gba-core/src/rom_data.rs), [compact_obj_catalog.rs](crates/gba-core/src/rom_data/compact_obj_catalog.rs), [contracts.rs](crates/gba-core/src/rom_data/compact_obj_catalog/contracts.rs), [compact_obj_catalog.rs](crates/gba-core/src/rom_data/runtime/compact_obj_catalog.rs), [rom_data.rs](crates/recomp/src/rom_data.rs), [star_cross_descriptors_tests.rs](crates/recomp/src/rom_data/star_cross_descriptors_tests.rs), [validation_tests.rs](crates/recomp/src/rom_data/validation_tests.rs), [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-consume-european-star-cross-compact-descriptors.json)
+
 ## 2026-11-23 — Consume European Star Cross compact bank
 
 Type: changed. Platforms: European ROM; Windows via Wine.
@@ -1490,6 +1634,26 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.m
 
 [Change record](docs/changes/2026-11-23-authenticate-european-white-flowers-byte-indexed-switch.json)
 
+## 2026-11-23 — Authenticate European Star Cross rows
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate four Star Cross rows and their original count-four caller.
+
+**Validation**
+
+- Protected unit 1u3y2pqu verifies four 12-byte rows, 42 sampled unowned bytes, their count-four caller and the existing list reader.
+
+**Limitations**
+
+- Static code and sampled addresses do not establish exact scene PCs, all consumers or guest index domains or linked source extents. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-rows.json)
+
 ## 2026-11-23 — Authenticate European Star Cross LZ streams
 
 Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
@@ -1530,6 +1694,46 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.m
 
 [Change record](docs/changes/2026-11-23-authenticate-european-star-cross-literals.json)
 
+## 2026-11-23 — Authenticate European Star Cross linked sources
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate Star Cross linked rectangle, LZ and mode-7 sources and existing targets.
+
+**Validation**
+
+- Protected unit mrt9gl4w verifies 58 linked bytes, including 44 sampled unowned bytes, and bindings to existing rectangle and LZ resources.
+
+**Limitations**
+
+- Static code and sampled addresses do not establish exact scene PCs, all consumers or guest index domains or linked source extents. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-linked-sources.json)
+
+## 2026-11-23 — Authenticate European Star Cross indirect records
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate three Star Cross indirect records and their separately owned root and original caller.
+
+**Validation**
+
+- Protected unit 8evjfzvi verifies three eight-byte records, 21 sampled unowned bytes, count three, original caller and the existing indirect-record consumer.
+
+**Limitations**
+
+- Static code and sampled addresses do not establish exact scene PCs, all consumers or guest pointer/count domains. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-indirect-records.json)
+
 ## 2026-11-23 — Authenticate European Star Cross copied tables
 
 Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
@@ -1549,6 +1753,26 @@ Type: changed. Platforms: European ROM; retained Wine evidence and protected sta
 Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-23-authenticate-european-star-cross-copied-tables.json)
+
+## 2026-11-23 — Authenticate European Star Cross compact descriptors
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static source plan.
+
+**Changes**
+
+- Authenticate two Star Cross compact descriptors and their existing bank and original caller.
+
+**Validation**
+
+- Protected unit 5inrm3__ verifies two 24-byte descriptors, 40 sampled unowned bytes, the existing bank, count two and the original caller and callback.
+
+**Limitations**
+
+- Static code and sampled addresses do not establish exact scene PCs, all consumers or guest index domains. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-23-authenticate-european-star-cross-compact-descriptors.json)
 
 ## 2026-11-23 — Authenticate European Star Cross compact bank
 

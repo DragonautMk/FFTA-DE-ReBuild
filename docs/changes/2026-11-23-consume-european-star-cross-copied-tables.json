@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "consume-european-star-cross-copied-tables",
+  "title": "Consume European Star Cross copied tables",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Extend the copied-halfword owner to serve four source-backed Star Cross groups while preserving the adjacent Soil Evidence table."
+  ],
+  "validation": [
+    "Wine je7pmhcs preserves prior representation and 147 other resources, rejects coherent edits, and verifies mirrors/boundaries, snapshot ownership and eight interpreter/generated direct/helper copy cases.",
+    "Wine zui7wer8 matches all 480 frames with all 60 source bytes altered and observes use of all four groups. Wine u68dxkft creates, reuses and verifies 149 matching E295 files; all servers drained."
+  ],
+  "limitations": [
+    "One continuation does not prove exact scene PCs, every caller, guest index domains, DMA or real BIOS. Other scenes, Linux, USA and native Windows remain open; revision-sensitive older Wine fixtures are listed for recovery. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_copied_tables_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/star_cross_copied_tables_tests.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

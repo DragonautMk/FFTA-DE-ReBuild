@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-23",
+  "slug": "authenticate-european-star-cross-rows",
+  "title": "Authenticate European Star Cross rows",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static source plan"
+  ],
+  "changes": [
+    "Authenticate four Star Cross rows and their original count-four caller."
+  ],
+  "validation": [
+    "Protected unit 1u3y2pqu verifies four 12-byte rows, 42 sampled unowned bytes, their count-four caller and the existing list reader."
+  ],
+  "limitations": [
+    "Static code and sampled addresses do not establish exact scene PCs, all consumers or guest index domains or linked source extents. Runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

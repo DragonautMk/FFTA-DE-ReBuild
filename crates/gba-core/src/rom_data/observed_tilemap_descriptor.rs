@@ -52,6 +52,12 @@ pub const SOIL_MODE7_DESCRIPTOR_SHA256: &str = "5ca26bf8018ba2427b843e68c3586584
 pub const FIRAGA_TRANSFER_DESCRIPTOR_OFFSET: u32 = 0x39a678;
 pub const FIRAGA_TRANSFER_DESCRIPTOR_SHA256: &str = "cfb5f0da300004be29361875fbeecfc9b1fe02b76412d676c1c480b42841163a";
 pub const FIRAGA_TRANSFER_WRAPPER_OFFSET: u32 = 0xb0dd58;
+pub const STAR_CROSS_LZ_SPECS: [(u32, &str, u32, &str); 2] = [
+    (0x39dda8, "17ec52de0d72f91b7dfc28d3d02774b8c7da08f4d1faae7a517a0b4cd181ddda", 0xaffc6c, "94c10d40b71da4f993f690c1fde54c00d00d0767c916543d093e93df848b8c93"),
+    (0x39ddb0, "59489d6ea59d37b27b2a25c1a232e85ee0a9b34e5e998afd989a0c61a80b4e12", 0xb00d98, "6554507a2423f81b672d1cc607ed142449ed621e72ec74dec669d31b7730951e"),
+];
+pub const STAR_CROSS_MODE7_DESCRIPTOR_OFFSET: u32 = 0x39ddb8;
+pub const STAR_CROSS_MODE7_DESCRIPTOR_SHA256: &str = "3c2441e55f7080d135f8358314851f891dc90c740aad9012d2e9914f8b014032";
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -132,6 +138,10 @@ pub struct ObservedTilemapDescriptor {
     pub soil_mode7_descriptor: Option<DirectTilemapDescriptor>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub firaga_transfer_descriptor: Option<AdditionalDescriptor>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_lz_descriptors: Option<[AdditionalDescriptor; 2]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_mode7_descriptor: Option<DirectTilemapDescriptor>,
 }
 
 impl ObservedTilemapDescriptor {
@@ -186,6 +196,20 @@ impl ObservedTilemapDescriptor {
                 return Err("Invalid Firaga transfer descriptor or shared wrapper".into());
             }
         }
+        if let Some(entries) = &self.star_cross_lz_descriptors {
+            for (entry, &(offset, _, wrapper, _)) in entries.iter().zip(&STAR_CROSS_LZ_SPECS) {
+                if entry.source_offset != offset || entry.asset_pointer != 0x0800_0000 + wrapper
+                    || entry.wrapper.source_offset != wrapper || entry.wrapper.flags & 2 == 0 {
+                    return Err("Invalid Star Cross LZ descriptor or wrapper".into());
+                }
+            }
+        }
+        if let Some(entry) = &self.star_cross_mode7_descriptor {
+            if entry.source_offset != STAR_CROSS_MODE7_DESCRIPTOR_OFFSET
+                || entry.tilemap_pointer != 0x0800_0000 + observed_tilemap::STAR_CROSS_MODE7_OFFSET {
+                return Err("Invalid Star Cross mode-7 descriptor".into());
+            }
+        }
         Ok(())
     }
 
@@ -207,6 +231,12 @@ impl ObservedTilemapDescriptor {
                 return Err("Missing Soil mode-7 source dependency".into());
             }
         }
+        if let Some(entry) = &self.star_cross_mode7_descriptor {
+            if tilemap.star_cross_transfer_sources.is_none()
+                || entry.tilemap_pointer != 0x0800_0000 + observed_tilemap::STAR_CROSS_MODE7_OFFSET {
+                return Err("Missing Star Cross mode-7 source dependency".into());
+            }
+        }
         Ok(())
     }
 
@@ -216,7 +246,8 @@ impl ObservedTilemapDescriptor {
         for entry in self.additional_descriptors.iter().chain(&self.transfer_descriptors)
             .chain(self.interleaved_lz_descriptors.iter().flatten())
             .chain(self.soil_transfer_descriptors.iter().flatten())
-            .chain(self.firaga_transfer_descriptor.iter()) {
+            .chain(self.firaga_transfer_descriptor.iter())
+            .chain(self.star_cross_lz_descriptors.iter().flatten()) {
             if !lz.streams().any(|(offset, _, _)| offset == entry.wrapper.source_offset + WRAPPER_LENGTH as u32) {
                 return Err("Missing linked observed LZ stream".into());
             }
@@ -266,6 +297,15 @@ impl ObservedTilemapDescriptor {
             // The wrapper already belongs to additional_descriptors[1].
             spans.push((entry.source_offset, entry.source_bytes().to_vec(), "firaga-transfer-descriptor"));
         }
+        if let Some(entries) = &self.star_cross_lz_descriptors {
+            for entry in entries {
+                spans.push((entry.source_offset, entry.source_bytes().to_vec(), "star-cross-lz-descriptor"));
+                spans.push((entry.wrapper.source_offset, entry.wrapper.source_bytes().to_vec(), "star-cross-lz-wrapper"));
+            }
+        }
+        if let Some(entry) = &self.star_cross_mode7_descriptor {
+            spans.push((entry.source_offset, entry.source_bytes().to_vec(), "star-cross-mode7-descriptor"));
+        }
         spans
     }
 }
@@ -295,6 +335,14 @@ impl Catalog {
         if !map.sources.iter().any(|source| source.offset == observed_tilemap::SOIL_MODE7_OFFSET && source.length == 6) {
             return Err("Missing Soil mode-7 header dependency".into());
         }
+        if !map.sources.iter().any(|source| source.offset == observed_tilemap::STAR_CROSS_MODE7_OFFSET && source.length == 6) {
+            return Err("Missing Star Cross mode-7 header dependency".into());
+        }
+        let star_mode7_at = STAR_CROSS_MODE7_DESCRIPTOR_OFFSET as usize;
+        let star_mode7_entry = &rom[star_mode7_at..star_mode7_at + SOURCE_LENGTH];
+        if ffta_rom::digest(star_mode7_entry) != STAR_CROSS_MODE7_DESCRIPTOR_SHA256 {
+            return Err("Star Cross mode-7 descriptor source mismatch".into());
+        }
         let mode7_at = SOIL_MODE7_DESCRIPTOR_OFFSET as usize;
         let mode7_entry = &rom[mode7_at..mode7_at + SOURCE_LENGTH];
         if ffta_rom::digest(mode7_entry) != SOIL_MODE7_DESCRIPTOR_SHA256 {
@@ -305,7 +353,7 @@ impl Catalog {
             return Err("Firaga transfer descriptor source mismatch".into());
         }
         let lz = previous.iter().find(|resource| resource.id == OBSERVED_LZ_ID).ok_or("Missing observed LZ dependency")?;
-        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS).chain(&SOIL_TRANSFER_SPECS) {
+        for &(offset, hash, wrapper_offset, wrapper_hash) in ADDITIONAL_SPECS.iter().chain(&TRANSFER_SPECS).chain(&INTERLEAVED_LZ_SPECS).chain(&SOIL_TRANSFER_SPECS).chain(&STAR_CROSS_LZ_SPECS) {
             let at = offset as usize;
             let wrapper = wrapper_offset as usize;
             if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash
@@ -355,6 +403,13 @@ impl Catalog {
                 parameter8: mode7_entry[6], opaque_byte: mode7_entry[7],
             }),
             firaga_transfer_descriptor: Some(read_descriptor(FIRAGA_TRANSFER_DESCRIPTOR_OFFSET, FIRAGA_TRANSFER_WRAPPER_OFFSET)),
+            star_cross_lz_descriptors: Some(std::array::from_fn(|i| read_descriptor(STAR_CROSS_LZ_SPECS[i].0, STAR_CROSS_LZ_SPECS[i].2))),
+            star_cross_mode7_descriptor: Some(DirectTilemapDescriptor {
+                source_offset: STAR_CROSS_MODE7_DESCRIPTOR_OFFSET,
+                tilemap_pointer: u32::from_le_bytes(star_mode7_entry[..4].try_into().unwrap()),
+                parameter16: u16::from_le_bytes(star_mode7_entry[4..6].try_into().unwrap()),
+                parameter8: star_mode7_entry[6], opaque_byte: star_mode7_entry[7],
+            }),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

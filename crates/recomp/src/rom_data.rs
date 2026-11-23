@@ -644,6 +644,12 @@ mod star_cross_lz_tests;
 mod star_cross_literals_tests;
 #[cfg(test)]
 mod star_cross_copied_tables_tests;
+#[cfg(test)]
+mod star_cross_indirect_records_tests;
+#[cfg(test)]
+mod star_cross_descriptors_tests;
+#[cfg(test)]
+mod star_cross_transfer_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod redspring_lz_source_tests;
 #[cfg(test)]

@@ -54,6 +54,12 @@ pub const SOIL_OTHER_ROW_SPECS: [(u32, u32, u8, &str); 2] = [
     (0x39e0a0, 0x0839e088, 2, "b3fd44665dc46e637300c936c4e03b7599b46764f2350a3375c23569e4f02cac"),
     (0x39a704, 0x0839a6e8, 4, "05b1e8c34e9f9c0bc1afa180b012f1a33310abff0645fdead826b4077175836a"),
 ];
+pub const STAR_CROSS_ROW_SPECS: [(u32, u32, u8, &str); 4] = [
+    (0x39ddc0, 0x0839dda0, 2, "31894032df802b082f72e839ba98d8ac526af206b9121ca2b1b5ba6339fdce04"),
+    (0x39ddcc, 0x0839dda8, 3, "dd077704758965c681664a3c07750838e0f99475dd2f4ed28706ef4144ab54d7"),
+    (0x39ddd8, 0x0839ddb0, 3, "42696edcd3ef4048acc3229352bdc2c6c9c3a7bf21e0586f8de8a5af3eaaa31c"),
+    (0x39dde4, 0x0839ddb8, 4, "790de6c0806b05a471b7220749640bea9eb68db9a845df8d3c5bece383dae980"),
+];
 pub const FIRAGA_TRANSFER_ROW_OFFSET: u32 = 0x39a758;
 pub const FIRAGA_TRANSFER_ROW_SHA256: &str = "853052904759011e4afd9d823a5b7ad35fa1d0b0f4c87c72c755f458c9835c6e";
 
@@ -107,6 +113,8 @@ pub struct ObservedTilemapRow {
     pub soil_other_rows: Option<[AdditionalRow; 2]>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub firaga_transfer_row: Option<AdditionalRow>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub star_cross_rows: Option<[AdditionalRow; 4]>,
 }
 
 impl ObservedTilemapRow {
@@ -158,6 +166,13 @@ impl ObservedTilemapRow {
                 return Err("Invalid Firaga transfer row".into());
             }
         }
+        if let Some(rows) = &self.star_cross_rows {
+            for (row, &(offset, pointer, kind, _)) in rows.iter().zip(&STAR_CROSS_ROW_SPECS) {
+                if row.source_offset != offset || row.descriptor_pointer != pointer || row.field0 != kind {
+                    return Err("Invalid Star Cross tilemap row".into());
+                }
+            }
+        }
         Ok(())
     }
 
@@ -203,6 +218,14 @@ impl ObservedTilemapRow {
                 return Err("Firaga transfer row descriptor dependency mismatch".into());
             }
         }
+        if let Some(rows) = &self.star_cross_rows {
+            let entries = descriptor.star_cross_lz_descriptors.as_ref().ok_or("Missing Star Cross LZ descriptors")?;
+            let mode7 = descriptor.star_cross_mode7_descriptor.as_ref().ok_or("Missing Star Cross mode-7 descriptor")?;
+            if rows[1..3].iter().zip(entries).any(|(row, entry)| row.descriptor_pointer != 0x0800_0000 + entry.source_offset)
+                || rows[3].descriptor_pointer != 0x0800_0000 + mode7.source_offset {
+                return Err("Star Cross row descriptor dependency mismatch".into());
+            }
+        }
         Ok(())
     }
 
@@ -216,6 +239,12 @@ impl ObservedTilemapRow {
             if tilemap.soil_transfer_sources.is_none()
                 || rows[0].descriptor_pointer != 0x0800_0000 + observed_tilemap::SOIL_RECTANGLE_LIST_OFFSET {
                 return Err("Missing Soil rectangle list dependency".into());
+            }
+        }
+        if let Some(rows) = &self.star_cross_rows {
+            if tilemap.star_cross_transfer_sources.is_none()
+                || rows[0].descriptor_pointer != 0x0800_0000 + observed_tilemap::STAR_CROSS_RECTANGLE_LIST_OFFSET {
+                return Err("Missing Star Cross rectangle list dependency".into());
             }
         }
         Ok(())
@@ -249,6 +278,9 @@ impl ObservedTilemapRow {
         if let Some(row) = &self.firaga_transfer_row {
             spans.push((row.source_offset, row.source_bytes(), "firaga-transfer-row"));
         }
+        if let Some(rows) = &self.star_cross_rows {
+            for row in rows { spans.push((row.source_offset, row.source_bytes(), "star-cross-row")); }
+        }
         spans
     }
 }
@@ -276,6 +308,9 @@ impl Catalog {
         if !tilemap.sources.iter().any(|source| source.offset == observed_tilemap::SOIL_RECTANGLE_LIST_OFFSET && source.length == 8) {
             return Err("Missing Soil rectangle list source dependency".into());
         }
+        if !tilemap.sources.iter().any(|source| source.offset == observed_tilemap::STAR_CROSS_RECTANGLE_LIST_OFFSET && source.length == 8) {
+            return Err("Missing Star Cross rectangle list source dependency".into());
+        }
         let descriptor = previous.iter().find(|resource| resource.id == OBSERVED_TILEMAP_DESCRIPTOR_ID).ok_or("Missing observed tilemap descriptor dependency")?;
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::SOURCE_OFFSET && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
             return Err("Observed tilemap row source dependency mismatch".into());
@@ -293,6 +328,19 @@ impl Catalog {
         if !descriptor.sources.iter().any(|source| source.offset == observed_tilemap_descriptor::FIRAGA_TRANSFER_DESCRIPTOR_OFFSET
             && source.length as usize == observed_tilemap_descriptor::SOURCE_LENGTH) {
             return Err("Missing Firaga transfer descriptor source dependency".into());
+        }
+        for &(_, pointer, _, _) in &STAR_CROSS_ROW_SPECS[1..] {
+            if !descriptor.sources.iter().any(|source| source.offset == pointer - 0x0800_0000 && source.length == 8) {
+                return Err("Missing Star Cross descriptor source dependency".into());
+            }
+        }
+        if ffta_rom::digest(&rom[0xeed4e..0xeed5e]) != "2c65799cf5793a99f9e8f8f1f28f137871c2bcafa3ed9e58199ee4180c1fe2f6"
+            || u32::from_le_bytes(rom[0xeed64..0xeed68].try_into().unwrap()) != 0x0839_ddc0 {
+            return Err("Star Cross row caller mismatch".into());
+        }
+        for &(offset, _, _, hash) in &STAR_CROSS_ROW_SPECS {
+            let at = offset as usize;
+            if ffta_rom::digest(&rom[at..at + SOURCE_LENGTH]) != hash { return Err("Star Cross row source mismatch".into()); }
         }
         let firaga_at = FIRAGA_TRANSFER_ROW_OFFSET as usize;
         if ffta_rom::digest(&rom[firaga_at..firaga_at + SOURCE_LENGTH]) != FIRAGA_TRANSFER_ROW_SHA256 {
@@ -341,6 +389,7 @@ impl Catalog {
             soil_transfer_rows: Some(std::array::from_fn(|i| read_row(SOIL_TRANSFER_ROW_SPECS[i].0))),
             soil_other_rows: Some(std::array::from_fn(|i| read_row(SOIL_OTHER_ROW_SPECS[i].0))),
             firaga_transfer_row: Some(read_row(FIRAGA_TRANSFER_ROW_OFFSET)),
+            star_cross_rows: Some(std::array::from_fn(|i| read_row(STAR_CROSS_ROW_SPECS[i].0))),
         };
         decoded.validate()?;
         let prior = PriorSources::new(previous)?;

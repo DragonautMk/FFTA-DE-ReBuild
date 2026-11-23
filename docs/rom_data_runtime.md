@@ -6780,6 +6780,200 @@ compares the twelve copied halfwords on the later branch. The adjacent
 `14d6d8..14d6e0` Soil Evidence table already has a separate owner.
 
 The sampled addresses and static instructions do not attribute the exact
-scene branch or prove all consumers and guest index domains. Runtime
-integration and altered-source Wine checks remain open, as do Linux, USA and
-native Windows. No performance comparison was made.
+scene branch or prove all consumers and guest index domains. E415 below
+subsequently integrates the selected sources and validates their Wine paths.
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E415 Star Cross copied tables runtime
+
+EUR extractor E295/decoder D294 extends the existing
+`engine.copied-halfword-lookups` resource with the four E414 source groups,
+represented as two signed-halfword groups, four bytes and twelve comparison
+halfwords. Its existing guest bus path serves the 60 source bytes; accesses
+outside the authenticated span retain their previous routing. The adjacent
+Soil Evidence table, prior representation and 147 other resources remain
+unchanged.
+
+Wine `e415-star-cross-copied-tables-readers-wine-je7pmhcs` verifies source
+and root identities, coherent edited-file rejection, altered-source mirrors
+and mixed boundaries including the adjacent owner, snapshot ownership, and
+eight original-interpreter/generated direct/helper copy prefix comparisons
+with equal complete state and guest clock. Wine
+`e415-star-cross-copied-tables-scene-wine-zui7wer8` compares 480 recorded
+Star Cross frames while all four groups are altered in the managed ROM.
+Complete state, guest clock, central/wide video, OAM, dispatch and five
+nonempty audio streams match at every frame; all four groups are served.
+
+Wine production CLI `e415-star-cross-copied-tables-cli-wine-u68dxkft`
+creates, reuses and verifies 149 files matching the tested E295 generation.
+All Wine servers drained. Source use does not establish exact scene PCs, all
+callers, guest index domains, other scenes, earlier save history or real BIOS.
+Linux, USA and native Windows remain open; no performance comparison was made.
+
+
+## E416 Star Cross sample reconciliation
+
+Protected static join `e416-star-cross-copied-tables-sample-residual-hplibhvt`
+compares the retained E403 EUR address inventory with E295. All 60 E414 copied
+table bytes were among the 207 E413 unowned sampled bytes and are now declared
+by the copied-table resource; other resource metadata remains unchanged. The
+sample has 147 unowned bytes in 21 intervals, predominantly scattered across
+`39dd98..39de38`, plus ten bytes at `af2040..af204a` and four bytes preceding
+the E409 LZ streams.
+
+This address-only selected-reader sample does not establish instruction sites,
+source extents, other scenes or full-ROM coverage. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E417 Star Cross indirect records source plan
+
+Protected plan `e417-star-cross-indirect-records-source-plan-8evjfzvi`
+authenticates three EUR eight-byte indirect records at `39de20..39de38`,
+without E295 owners. Twenty-one of their 24 bytes are in the E403 sample.
+The original caller at `080eedc8` loads their separately owned literal root,
+passes count three and calls the already authenticated `080e389c` consumer.
+Each record reconstructs the existing indirect-record field layout.
+
+This static pointer/count relationship and address sample do not prove exact
+scene instruction attribution or establish other consumers and guest
+pointer/count domains. E418 below subsequently integrates these records and
+validates the selected Wine paths. Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+
+## E418 Star Cross indirect records runtime
+
+EUR extractor E296/decoder D295 extends the existing
+`engine.soil-indirect-records` resource with the three E417 records at
+`39de20..39de38`. Their separately owned literal root and the guest's original
+pointer/count arithmetic remain unchanged; accesses outside represented records
+retain their previous routing. Earlier records, their observation mask and 147
+other resources remain unchanged.
+
+Wine `e418-star-cross-indirect-readers-wine-k4a2e7il` checks source/root
+authentication, prior representation, coherent edited-file rejection,
+altered-source mirrors and mixed boundaries, snapshot ownership, 44 original
+interpreter/generated reader, fallback and caller-prefix cases, with equal
+complete state and guest clock. Wine
+`e418-star-cross-indirect-scene-wine-a47ngrrg` compares 480 recorded Star
+Cross frames while all three records are altered in the managed ROM. Complete
+state, guest clock, central/wide video, OAM, dispatch and five nonempty audio
+streams match at every frame; all three records are served.
+
+Wine production CLI `e418-star-cross-indirect-cli-wine-_c1pwxal` creates,
+reuses and verifies 149 files matching the tested E296 generation. All Wine
+servers drained. Record use does not establish exact scene PCs, all callers,
+guest pointer/count domains, other scenes, earlier save history or real BIOS.
+Linux, USA and native Windows remain open; no performance comparison was made.
+
+
+## E419 Star Cross sample reconciliation
+
+Protected static join `e419-star-cross-indirect-sample-residual-ux3w7c0x`
+compares the retained E403 EUR address inventory with E296. Twenty-one of the
+24 E417 indirect-record bytes were among the 147 E416 unowned sampled bytes
+and are now declared by the indirect-record resource; other resource metadata
+remains unchanged. The sample has 126 unowned bytes, predominantly near
+`39dd98..39de20`, plus ten bytes at `af2040..af204a` and four bytes preceding
+the E409 LZ streams.
+
+This address-only selected-reader sample does not establish instruction sites,
+source extents, other scenes or full-ROM coverage. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E420 Star Cross compact descriptor source plan
+
+Protected plan `e420-star-cross-descriptors-source-plan-5inrm3__` authenticates
+two EUR 24-byte compact descriptors at `39ddf0..39de20` without E296 owners.
+Forty of their 48 bytes occur in the E403 address sample. Both point to the
+existing bank `6bacd8` and use represented selectors 0 and 1. The original
+caller at `080eedfa` passes count two, loads the separately owned root literal
+at `0eee24` and calls `080d9ba8`; the retained original callback disassembly
+confirms the existing descriptor stride and field layout. The authenticated
+descriptor SHA-256 values are `7c4c8eeeefd39bb7772a6b0eb865f754d9239a57947817c6eb4863a62cc68549`
+and `8368b81372d8270970d547faf30d13ec223dd3d45d44553f53679600fc97c9fa`.
+
+Static code and sampled addresses do not prove that the selected scene executed
+this exact caller or establish other consumers or guest index domains. E421
+integrates the two descriptors and validates selected Wine paths; other scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+
+## E422 Star Cross sample reconciliation
+
+Protected static join `e422-star-cross-descriptors-sample-residual-8m719re6`
+compares the retained E403 EUR address inventory with E297. Forty of the
+48 E420 descriptor bytes were among the 126 E419 unowned sampled bytes
+and are now declared by the compact catalog; other resource metadata
+remains unchanged. The sample has 86 unowned bytes in 12 intervals, predominantly near
+`39dd98..39ddf0`, plus ten bytes at `af2040..af204a` and four bytes preceding
+the E409 LZ streams.
+
+This address-only selected-reader sample does not establish instruction sites,
+source extents, other scenes or full-ROM coverage. Linux, USA and native
+Windows remain open. No performance comparison was made.
+
+
+## E423 Star Cross row-list source plan
+
+Protected plan `e423-star-cross-rows-source-plan-1u3y2pqu` authenticates four
+EUR 12-byte rows at `39ddc0..39ddf0`, without E297 owners. Forty-two of the
+48 bytes occur in the E403 sample. The original caller at `080eed4e` loads
+a separately owned literal at `0eed64`, passes the row-list base and count four
+to `080e3f08`, and the existing list task reads with a 12-byte stride. The
+rows point to four nearby source records at `39dda0..39ddc0`, whose ownership
+and linked data require separate integration. Their first bytes are 2, 3, 3
+and 4; other fields retain their original guest interpretation.
+
+This static caller and address sample do not prove exact scene PCs, all
+consumers, guest index bounds or the extents of linked sources. Runtime
+integration, other scenes, Linux, USA and native Windows remain open. No
+performance comparison was made.
+
+
+## E424 Star Cross linked-source plan
+
+Protected plan `e424-star-cross-linked-source-plan-mrt9gl4w` authenticates 58
+unowned EUR bytes linked to the E423 rows: one rectangle entry and its list
+header, two eight-byte LZ descriptors and their four-byte wrappers, one direct
+descriptor and ten bytes of a mode-7 header and first run. Forty-four are in
+the E403 sample. The rectangle points to the already owned `ae6e14` rectangle;
+the wrappers lead to E409 LZ streams at `affc70` and `b00d9c`. The original
+list, type-2 and type-4 dispatch and nested readers are authenticated by the
+retained Wine disassembly. Together with the 42 sampled E423 row bytes, these
+selected sources account for the remaining 86 E422 sampled bytes. This plan
+does not install source ownership.
+
+Only the first sampled mode-7 run is represented in the plan; its total source
+extent is not established. Static dispatch and sampled addresses do not prove
+exact scene PCs, all callers, guest domains or other scenes. Runtime
+integration, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+
+## E425 Star Cross linked-source runtime (partial)
+
+EUR extractor E298/decoder D297 extends the existing tilemap, descriptor and
+row resources with the 106 bytes planned in E423/E424, while keeping the
+previous rectangle and LZ stream owners and ROM fallback beyond the selected
+mode-7 prefix. No full guest index or source extent is implied.
+
+Wine `e425-star-cross-transfer-readers-wine-wqepgepj` passes source and
+dependency checks, previous fields and 145 other resources, coherent-edit
+rejection, altered-source mirrors and mixed boundaries, retained snapshot
+ownership and 44 original interpreter/generated reader and caller-prefix
+cases. The next mode-7 byte remains ROM-backed. Wine
+`e425-star-cross-transfer-scene-wine-st36aju0` matches state, guest clock,
+central/wide video, OAM, dispatch and five nonempty audio streams across 480
+recorded frames with all 106 backing bytes altered. All four rows and every
+selected descriptor, wrapper and tilemap source group are observed served.
+Both Wine servers drained.
+
+The production CLI cross-build `e425-star-cross-transfer-cli-build-kfcdze6k`
+passed. At the user's pause, its Wine create/reuse/verify check and the E403
+sample reconciliation against E298 had not run. Other readers, scenes, real
+BIOS, Linux, USA and native Windows remain open; no performance comparison was
+made. Resume only when requested.

@@ -1433,10 +1433,56 @@ current evidence before running another check.
 - [x] **ROMDATA-01-STAR-CROSS-COPIED-TABLES-PLAN scoped EUR/static:** E414
   authenticates four copied spans totaling 60 sampled unowned bytes, their
   roots and original copy paths. [Evidence](../rom_data_runtime.md#e414-star-cross-copied-tables-source-plan).
-- [ ] **ROMDATA-04-STAR-CROSS-COPIED-TABLES-RUNTIME:** integrate the four spans
-  with original fallback and neighboring ownership, then verify copied readers,
-  altered-source scene and CLI on Wine.
-- [ ] **ROMDATA-01-STAR-CROSS-RESIDUAL:** classify the 207 remaining sampled bytes,
+- [x] **ROMDATA-04-STAR-CROSS-COPIED-TABLES-RUNTIME scoped EUR/Wine:** E415
+  serves 60 bytes; original copy prefixes, altered-source 480-frame scene and
+  CLI pass with Wine drained. [Evidence](../rom_data_runtime.md#e415-star-cross-copied-tables-runtime).
+- [ ] **ROMDATA-04-STAR-CROSS-COPIED-TABLES-OTHER:** establish other readers,
+  guest domains, scenes, DMA/real BIOS, Linux, USA and native Windows.
+- [ ] **ROMDATA-REGRESSION-E295-WINE:** adapt and rerun affected older
+  revision-sensitive copied-table fixtures when selected.
+- [x] **ROMDATA-01-STAR-CROSS-E295-RESIDUAL scoped EUR/static:** E416 joins
+  E403 to E295: 60 further sampled bytes now owned, leaving 147 in 21
+  intervals. [Evidence](../rom_data_runtime.md#e416-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-INDIRECT-RECORDS-PLAN scoped EUR/static:** E417
+  authenticates three eight-byte records and their original caller; 21 bytes
+  were sampled unowned. [Evidence](../rom_data_runtime.md#e417-star-cross-indirect-records-source-plan).
+- [x] **ROMDATA-04-STAR-CROSS-INDIRECT-RECORDS-RUNTIME scoped EUR/Wine:** E418
+  serves three records; original readers/fallback, altered-source 480-frame
+  scene and CLI pass with Wine drained. [Evidence](../rom_data_runtime.md#e418-star-cross-indirect-records-runtime).
+- [ ] **ROMDATA-04-STAR-CROSS-INDIRECT-RECORDS-OTHER:** establish other readers,
+  pointer/count domains, scenes, real BIOS, Linux, USA and native Windows.
+- [ ] **ROMDATA-REGRESSION-E296-WINE:** adapt and rerun affected older
+  revision-sensitive indirect-record fixtures when selected.
+- [x] **ROMDATA-01-STAR-CROSS-E296-RESIDUAL scoped EUR/static:** E419 joins
+  E403 to E296: 21 further sampled bytes now owned, leaving 126.
+  [Evidence](../rom_data_runtime.md#e419-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-DESCRIPTORS-PLAN scoped EUR/static:** E420
+  authenticates two 24-byte descriptors, the existing bank and their original
+  caller; 40 bytes were sampled unowned. [Evidence](../rom_data_runtime.md#e420-star-cross-compact-descriptor-source-plan).
+- [x] **ROMDATA-04-STAR-CROSS-DESCRIPTORS-RUNTIME scoped EUR/Wine:** E421
+  serves both descriptors; original readers, altered-source 480-frame scene
+  and CLI pass with Wine drained. [Evidence](../rom_data_compact_catalog.md#e421-star-cross-compact-descriptor-runtime).
+- [ ] **ROMDATA-04-STAR-CROSS-DESCRIPTORS-OTHER:** establish other readers,
+  guest domains, scenes, real BIOS, Linux, USA and native Windows.
+- [ ] **ROMDATA-REGRESSION-E297-WINE:** adapt and rerun affected older
+  revision-sensitive compact-catalog fixtures when selected.
+- [x] **ROMDATA-01-STAR-CROSS-E297-RESIDUAL scoped EUR/static:** E422 joins
+  E403 to E297: 40 further sampled bytes now owned, leaving 86.
+  [Evidence](../rom_data_runtime.md#e422-star-cross-sample-reconciliation).
+- [x] **ROMDATA-01-STAR-CROSS-ROWS-PLAN scoped EUR/static:** E423 authenticates
+  four 12-byte rows and their original count-four caller; 42 bytes were
+  sampled unowned. [Evidence](../rom_data_runtime.md#e423-star-cross-row-list-source-plan).
+- [x] **ROMDATA-01-STAR-CROSS-LINKED-PLAN scoped EUR/static:** E424 authenticates
+  58 linked source bytes, including 44 sampled bytes and existing rectangle/LZ
+  targets. [Evidence](../rom_data_runtime.md#e424-star-cross-linked-source-plan).
+- [ ] **ROMDATA-04-STAR-CROSS-ROWS-RUNTIME paused EUR/Wine:** E425 implements
+  four rows and linked sources; 44 original reader cases and a 480-frame
+  altered-source scene pass with Wine drained. The production CLI build passes;
+  Wine CLI create/reuse/verify and the E298 sample join remain to do after
+  resumption. [Evidence](../rom_data_runtime.md#e425-star-cross-linked-source-runtime-partial).
+- [ ] **ROMDATA-REGRESSION-E298-WINE:** adapt and rerun affected older
+  revision-sensitive tilemap/descriptor/row fixtures when selected.
+- [ ] **ROMDATA-01-STAR-CROSS-RESIDUAL:** classify the 86 remaining sampled bytes,
   authenticate original readers and integrate concrete data dependencies;
   distinguish executable/copied support and retain other scenes as open.
 - [ ] **ROMDATA-01-STAR-CROSS-LINUX-USA:** verify selected coverage on Linux,
