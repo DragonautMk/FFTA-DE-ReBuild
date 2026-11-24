@@ -212,16 +212,22 @@ pub struct DynamicFragmentsStats {
     pub source_bytes: u64,
     pub selector_bytes: u64,
     pub payload_bytes: u64,
+    pub bank_start_bytes: [u64; 5],
+    pub localized_queued_bank_bytes: [u64; 5],
 }
 
 /// Independent bounded owner; missing bytes preserve earlier owners and raw ROM.
 pub(super) struct DynamicFragmentsResources {
     data: model::dynamic_fragments::Fragments,
     counters: [AtomicU64; 4],
+    bank_start_bytes: [AtomicU64; 5],
+    localized_queued_bank_bytes: [AtomicU64; 5],
 }
 impl DynamicFragmentsResources {
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x399 | 0x441 | 0x452 | 0x464 | 0x475 | 0x487)
+        matches!(index >> 12,
+            0x092 | 0x397 | 0x398 | 0x399 | 0x438 | 0x439 | 0x441 | 0x449 | 0x44a |
+            0x452 | 0x45b | 0x464 | 0x46c | 0x46d | 0x475 | 0x47e | 0x486 | 0x487)
     }
     pub(super) fn new(data: model::dynamic_fragments::Fragments, sources: &[SourceRange]) -> Result<Self, String> {
         let spans = data.source_spans()?;
@@ -229,7 +235,8 @@ impl DynamicFragmentsResources {
             *at != source.offset || bytes.len() != source.length as usize || *role != source.role || ffta_rom::digest(bytes) != source.sha256) {
             return Err("Dynamic fragments typed source binding mismatch".into());
         }
-        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)) })
+        Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)), bank_start_bytes: std::array::from_fn(|_| AtomicU64::new(0)),
+            localized_queued_bank_bytes: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
         if !Self::source_page(index) { return prior; }
@@ -237,27 +244,52 @@ impl DynamicFragmentsResources {
         if values.iter().all(Option::is_none) { return prior; }
         let mut selector_bytes = 0u64;
         let mut payload_bytes = 0u64;
+        let mut bank_starts = [0u64; 5];
+        let mut queued_banks = [0u64; 5];
         for (i, value) in values.iter().enumerate() {
             if value.is_some() {
                 let at = index + i;
-                if self.data.rows.iter().any(|row| (row.source_offset as usize..row.source_offset as usize + 12).contains(&at)) {
+                let queued = &self.data.localized_queued;
+                let table_bytes = model::localized_queued::BANKS.len() * model::localized_queued::ENTRIES_PER_LANGUAGE * 4;
+                if self.data.rows.iter().any(|row| (row.source_offset as usize..row.source_offset as usize + 12).contains(&at))
+                    || (queued.is_some() && [model::localized_queued::POINTERS, model::localized_queued::LENGTHS]
+                        .into_iter().any(|start| (start as usize..start as usize + table_bytes).contains(&at))) {
                     selector_bytes += 1;
                 } else {
                     payload_bytes += 1;
+                    for (slot, bank) in self.data.bank_starts.iter().enumerate() {
+                        if (bank.bank_offset as usize..bank.bank_offset as usize + model::dynamic_fragments::BANK_START_LENGTH).contains(&at) {
+                            bank_starts[slot] += 1;
+                        }
+                    }
+                    if let Some(catalog) = queued {
+                        for (slot, bank) in catalog.banks.iter().enumerate() {
+                            if (bank.bank_offset as usize..bank.bank_offset as usize + model::localized_queued::BANK_BYTES).contains(&at) {
+                                queued_banks[slot] += 1;
+                            }
+                        }
+                    }
                 }
             }
         }
         for (counter, count) in self.counters.iter().zip([1, selector_bytes + payload_bytes, selector_bytes, payload_bytes]) {
             counter.fetch_add(count, Ordering::Relaxed);
         }
+        for (counter, count) in self.bank_start_bytes.iter().zip(bank_starts) { counter.fetch_add(count, Ordering::Relaxed); }
+        for (counter, count) in self.localized_queued_bank_bytes.iter().zip(queued_banks) { counter.fetch_add(count, Ordering::Relaxed); }
         Some(std::array::from_fn(|i| values[i].unwrap_or_else(|| prior.as_ref().map_or_else(|| rom[index + i], |p| p[i]))))
     }
     pub(super) fn stats(&self) -> DynamicFragmentsStats {
         let [bus_reads, source_bytes, selector_bytes, payload_bytes] = self.counters.each_ref().map(|v| v.load(Ordering::Relaxed));
-        DynamicFragmentsStats { bus_reads, source_bytes, selector_bytes, payload_bytes }
+        DynamicFragmentsStats { bus_reads, source_bytes, selector_bytes, payload_bytes, bank_start_bytes: self.bank_start_bytes.each_ref().map(|v| v.load(Ordering::Relaxed)),
+            localized_queued_bank_bytes: self.localized_queued_bank_bytes.each_ref().map(|v| v.load(Ordering::Relaxed)) }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         self.data.rows.len() * std::mem::size_of::<model::dynamic_fragments::Rows>() +
-        self.data.banks.iter().map(|b| std::mem::size_of::<model::BankView>() + b.words.len() * 4).sum::<usize>()
+        self.data.banks.iter().chain(&self.data.bank_starts).map(|b| std::mem::size_of::<model::BankView>() + b.words.len() * 4).sum::<usize>() +
+        self.data.localized_queued.as_ref().map_or(0, |catalog| {
+            (catalog.pointers.capacity() + catalog.lengths.capacity()) * std::mem::size_of::<u32>() +
+                catalog.banks.iter().map(|b| std::mem::size_of::<model::BankView>() + b.words.len() * 4).sum::<usize>()
+        })
     }
 }

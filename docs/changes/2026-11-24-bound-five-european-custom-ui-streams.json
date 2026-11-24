@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-five-european-custom-ui-streams",
+  "title": "Bound five European custom UI streams",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source reconstruction"
+  ],
+  "changes": [
+    "Reconstruct all five original-reader custom streams and establish their currently unowned source projections."
+  ],
+  "validation": [
+    "Protected source plan av4gexqa reconstructs 8320 decoded bytes and 3061 source bytes in seven spans without overlaps against E301."
+  ],
+  "limitations": [
+    "Original execution of these streams, trailing bytes, ordinary invocation, runtime integration, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -960,3 +960,236 @@ transfer bytes with ROM sources poisoned
 (`e136-context-lifecycle-wine-5ncguagd`). This covers the backend operations;
 the frontend UI, other scenes, Linux, USA and native Windows remain open.
 No performance measurement was made.
+
+
+## E428 European 71e6f8 bounded bank plan
+
+Protected source plan `e428-eur-71e6f8-whole-bank-source-plan-8cnwq6rl`
+reconciles all five EUR pointers in the `71e6f8` group with E298. Each
+source-rooted physical interval is 896 bytes: `441288..441608`,
+`4528fc..452c7c`, `464498..464818`, `475460..4757e0` and
+`486f30..4872b0`. Their ends coincide exactly with independently rooted
+existing resources: four indexed archives and the map raster palette bank.
+
+Each interval's `0100..0200` bytes already belong to
+`graphics.dynamic-raw-fragments`, and `0200..0380` to
+`graphics.ui-raw-transfers`. All five `0000..0100` prefixes are unowned:
+1,280 bytes out of 4,480 bounded bank bytes. The join validates the existing
+source hashes and no overlapping owner for every byte. Four prefixes have the
+same source hash; the fifth differs. Their words can be preserved as opaque
+source data without inventing visual semantics or guest selector bounds.
+
+The original fixed and dynamic readers establish the linked transfer views,
+not ordinary use of every prefix or a global live-index domain. Neighbor
+roots establish these physical interval ends, not every semantic relationship
+between adjacent data. E428 is a source plan only; integration, other readers
+and scenes, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+## E429 European five bounded banks runtime
+
+EUR extractor 299 / decoder 298 adds the five previously unowned 256-byte
+prefixes to `graphics.dynamic-raw-fragments`. Together with the existing
+dynamic and fixed transfer owners, the complete five E428 physical intervals
+now comprise 4,480 managed source bytes. Their independently rooted successors
+retain their existing owners. Source authentication preserves all previous
+fragment fields and the other 147 resource records and files.
+
+Wine reader `e429-localized-whole-bank-readers-wine-qa7y9h7g` passes all bank
+bytes with their ROM backing altered, including all three ROM mirrors, mixed
+owner boundaries and the fifth bank's page boundary. It rejects a coherent
+source edit and preserves the attached owner through a missing dataset and
+snapshot restore. Thirty controlled original transfer cases cover selectors
+4–6, both flag branches and all five language slots; their source offsets cover
+all four quarters of each new prefix. Original interpreted, resource-backed
+interpreted and generated execution agree on complete state and guest clock.
+The original selector tables are still read from the ROM for those cases, and
+the existing raw guest index calculation remains unchanged.
+
+Wine production CLI `e429-localized-whole-bank-cli-wine-4j2h1iqg` creates,
+reuses and verifies 149 files matching the reader-tested generation. The
+generation and its files remain unchanged on reuse and verification. Both Wine
+servers drained, and their logs contain no D-Bus assertion with the local
+overlay.
+
+Physical intervals and controlled transfers do not establish ordinary gameplay
+use of every prefix or a global guest selector bound. Other consumers and
+scenes, real BIOS, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+## E430 European remaining raw bank census
+
+Protected source census `e430-eur-localized-raw-other-banks-census-ynlrsmfq`
+reconciles the other six declared pointer groups against the exact EUR ROM and
+the E299 manifest. All 30 pointer values and their existing original-transfer
+views are source-authenticated; those fixed views total 36,160 bytes. For each
+view the census records the next greater target among the 100 retained E427
+pointer values and partitions the interval by current source ownership.
+
+All five `71e608` transfer views reach that next known pointer without a gap.
+The 25 other intervals contain 115,352 bytes in total: 101,587 currently have
+no owner and the remainder already belong to other resources. In particular,
+the five `71e66c` intervals include independently owned custom and indexed
+archives. Three other groups have equal per-language intervals after their
+fixed views: 68 bytes for `71e5f4`, 1,168 for `71e694` and 20 for `71e6e4`.
+These observations identify candidates for reader and format investigation;
+they do not establish that any interval belongs to the preceding bank.
+
+The census finds candidate physical neighbors, not a global inventory or
+logical bank ends. It does not prove the meaning or ordinary use of unowned
+bytes, and it does not authorize merging the neighboring owners. More original
+reader and root evidence is needed before integrating additional ranges.
+Linux, USA and native Windows remain pending; no performance comparison or
+gameplay replay was performed.
+
+## E431 Repeated-gap pointer candidates
+
+Protected census `e431-eur-localized-raw-gap-roots-z5tr1bdh` checks all
+4,194,304 aligned little-endian words of the exact EUR ROM for `08`-region
+values into the 15 equal-sized candidate gaps of E430. Thirty consecutive
+values at `397fbc..398034` target the five `71e694` gaps: six per language,
+with successive targets 192 bytes apart. A further candidate value into a
+`71e5f4` gap lies in an already owned packet program; no candidate targets
+the `71e6e4` gaps. The other five `71e5f4` and five `71e6e4` gap contents
+have identical hashes within their respective groups.
+
+The 30 consecutive values are a promising source catalog, but the pattern by
+itself does not prove a live pointer table, a reader, 192-byte resource lengths
+or ownership of the 16 bytes after six such intervals. The scan covers aligned
+values only; unaligned, indirect and computed references and other address
+mirrors remain open. Original reader/root evidence is required before claiming
+or integrating the candidate resources. Linux, USA and native Windows remain
+pending; no gameplay replay or performance comparison was made.
+
+## E432 Thirty localized queued-transfer resources
+
+Wine disassembly `e432-eur-gap-catalog-disassembly-wine-a3h2cux_` identifies
+the original selector at `0809279c..080927e2`. It indexes the pointer table at
+`397fbc` and the parallel length table at `398034` with the live language byte
+and a task byte, using `language * 6 + selector`. For the five physical
+languages and six listed entries, all 30 lengths are 192 bytes. The original
+`08000be4` helper and queue executor use four rows of 24 halfwords, with
+48-byte source and 64-byte destination strides. This describes the selected
+source projection; it does not impose a bound on the original index arithmetic.
+
+Protected source plan `e432-eur-localized-thirty-resource-source-plan-it7ywjrs`
+authenticates the 30 pointers, both 120-byte tables, two original root literals,
+reader instructions and five contiguous 1,152-byte payloads against E299. All
+6,008 selected source bytes are unowned at that revision. The original guest
+selector and queued transfer remain the intended runtime consumers; the plan
+does not yet publish them. Sixteen following bytes per language remain outside
+the selected projection. Ordinary invocation, other indices/readers/scenes,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E433 Thirty-resource queued catalog runtime
+
+EUR extractor 300 / decoder 299 publishes the complete E432 source projection
+inside `graphics.dynamic-raw-fragments`. The catalog retains both original
+tables, their root literals and all five contiguous banks: 30 resources of
+192 bytes, adding 6,008 authenticated source bytes. Existing fragment fields,
+147 other resource records and their files remain unchanged. The original
+uncapped index arithmetic, queue registration and DMA execution remain guest
+work; reads outside the declared spans continue through earlier owners or ROM.
+
+Wine reader `e433-localized-queued-catalog-readers-wine-z19k6u4o` verifies all
+new bytes on ROM mirrors, mixed boundaries and page crossings with the backing
+ROM altered. It rejects a coherent source edit and preserves the attached owner
+across a missing dataset and snapshot restore. For all five languages and six
+entries, interpreted and generated original selector paths match complete
+state and guest clock; the original interpreter selector, queue and DMA copy
+all 30 resources correctly. The Wine server drained.
+
+Wine production CLI `e433-localized-queued-catalog-cli-wine-0vd50_u1` creates,
+reuses and verifies 149 files matching the reader-tested generation. The
+generation and files remain unchanged on reuse and verification. Both Wine
+servers drained and their logs contain no D-Bus assertion with the local overlay.
+
+Ordinary invocation, other readers and scenes, unrestricted guest indices,
+the 16 following bytes per bank, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+## E434 Larger-gap pointer candidates
+
+Protected census `e434-eur-large-localized-gap-census-xuhbm61i` reconciles
+the unowned portions of ten larger E430 intervals with E300. Across 95,307
+unowned bytes it finds 66 aligned little-endian `08`-region values, including
+four consecutive five-language candidate tables at `39554c`, `3955d8`,
+`397d94` and `3adfb0`. All four table spans are unowned in E300. The first two
+target gaps after `71e66c` transfer views and the other two target gaps after
+`71e6a8` views; two groups point exactly to the existing view ends.
+
+These are candidate address patterns, not established readers, logical bank
+ends or proof that all intervening bytes share an owner. Other owned archives
+within the larger intervals remain separate. Unaligned, indirect, computed
+and other-mirror references, ordinary use, Linux, USA and native Windows remain
+open. No gameplay replay or performance comparison was made.
+
+## E435 Four original-reader classifications
+
+Wine disassembly `e435-eur-four-localized-table-disassembly-wine-lgzvdwq6`
+and protected classification `e435-eur-four-localized-family-classification-aigv45cr`
+identify original language-selected readers for all four E434 tables. Three
+groups use indexed wrapper `0800537c`: `39554c` selects five archives whose
+headers declare 30 programs each; `3955d8` selects five declaring
+225/249/231/235/278; and `397d94` selects five structures with an archive at
+offset `b4`, each declaring 44 programs. Their dictionary headers declare
+mode 0 / width 5; decoded program sizes are 64, 64 and 256 bytes respectively.
+The 15 headers declare 1,588 programs in total.
+
+The fourth group, `3adfb0`, selects five streams used by the original custom
+decoder `080054a0`; each declares 1,664 output bytes, matching the following
+copy control. These decoder calls and source headers establish candidate
+families, not the full consumed source extents or successful decoding of every
+program. The prefixes before the five embedded archives are separate sources.
+Ordinary invocation, guest indices, Linux, USA and native Windows remain open.
+No performance comparison was made.
+
+## E440 E301 ownership of the remaining gaps
+
+The `audit-ownership` CLI compared all 25 nonempty E430 intervals against
+the E301 manifest on Wine (`e440-eur-raw-gap-residual-wine-d8smp7pd`). The
+same intervals had 101,587 unowned bytes in E299 and now have 3,607. The
+E438 plan accounts for 3,037 of those bytes as five unpublished stream
+payloads. Its 24 bytes of selector and caller metadata are outside these
+intervals.
+
+The other 570 bytes break down by E430 group as follows. `71e5f4` has 340,
+`71e66c` has 38, `71e694` has 80, `71e6a8` has 12 and `71e6e4` has 100.
+The evidence records the exact residual spans. Assigning these intervals
+requires independent evidence of a source or padding boundary. This check
+uses retained metadata and establishes no new runtime or gameplay coverage.
+
+## E441 Shape of the 570 unattributed bytes
+
+The static census `e441-eur-localized-raw-residual-census-retry-xbrt1szy`
+checks the exact EUR ROM and E301 manifest for all 41 residual intervals. In
+26 intervals, 50 zero bytes extend a bounded source end to the next 4-byte
+boundary, where a separate source begins. The other 520 bytes form fifteen
+intervals. Each language has a 68-byte `71e5f4` gap, a 16-byte `71e694` gap,
+and a 20-byte `71e6e4` gap. The 68-byte and 20-byte contents are identical
+across all five languages within their respective groups. The 16-byte
+intervals have four distinct hashes.
+
+A census of little-endian words at all four byte phases and the three ROM
+mirrors finds five values in the exact residual ranges. It reproduces the
+applicable E431 hit. Three of the five word cells intersect existing resource
+sources. The other two cells, `6d8f38` and `b176bf`, point into a `71e5f4` gap
+if interpreted as addresses. Original reader evidence is still needed for
+both. Zero fill and alignment describe the physical layout. They do not
+establish that guest reads skip those bytes. The census publishes metadata
+only. Runtime, Linux and USA validation remain open.
+
+## E442 Context of the two uncovered address-shaped words
+
+Static inspection `e442-eur-localized-raw-residual-pointer-context-engiyyrd`
+checks both word cells from E441 against the exact EUR ROM and E301 manifest.
+Neither occurs in a consecutive five-language table at the same relative
+offset in each `71e5f4` interval. A full-ROM search for exact addresses of
+the cells finds no words in the three ROM mirrors. The aligned cell has no
+matching immediate Thumb or ARM PC-relative word load in the encodable
+distance. The other cell is unaligned and cannot be the target of those
+aligned literal loads.
+
+No selected evidence identifies an original reader for either cell. A live
+or source-anchored indirect reader is still required for attribution. Computed
+references, other encodings, runtime use, Linux and USA remain open.

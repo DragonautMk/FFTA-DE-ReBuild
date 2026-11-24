@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "catalog-european-localized-raw-bank-neighbors",
+  "title": "Catalog European localized raw bank neighbors",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source census"
+  ],
+  "changes": [
+    "Reconcile all 30 remaining localized raw transfer roots and their candidate neighboring intervals against the E299 source owners."
+  ],
+  "validation": [
+    "Protected static census ynlrsmfq authenticates the exact ROM, six tables, all 30 existing source views and their ownership partitions."
+  ],
+  "limitations": [
+    "Candidate intervals are not proven logical bank extents; unknown bytes require original-reader and independent-root evidence. Linux, USA and native Windows remain pending. No gameplay replay or performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -3,6 +3,386 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-24 — Verify European Star Cross transfer CLI
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Complete the production CLI verification for the E298 Star Cross transfer sources and document its remaining sample and platform criteria.
+
+**Validation**
+
+- Wine zym9tqj7 creates, reuses and verifies 149 files matching the previously validated dataset; Wine drained and no D-Bus assertion appeared.
+
+**Limitations**
+
+- The E403-to-E298 address reconciliation, other scenes and consumers, real BIOS, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-star-cross-transfer-production-cli.json)
+
+## 2026-11-24 — Verify declared extents of European graphics banks
+
+Type: changed. Platforms: European manifest through Wine.
+
+**Changes**
+
+- Reconcile all 20 retained tables and 100 declared source intervals against the exact E301 manifest using independently authenticated lengths.
+
+**Validation**
+
+- Wine _ifl87zb confirms expected ownership of all 177,593 distinct bytes, with no gaps or cross-owner overlaps inside the selected ranges. Protected inputs passed and the Wine server drained.
+
+**Limitations**
+
+- Additional bank tails, other readers, ordinary use, Linux, USA and native Windows remain open. No gameplay execution or performance comparison was made.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-graphics-bank-extents.json)
+
+## 2026-11-24 — Serve thirty European localized queued resources
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Extract and serve the complete source-backed 30-entry localized queued-transfer catalog, preserving prior owners and the original guest selector and queue.
+
+**Validation**
+
+- Wine e433-localized-queued-catalog-readers-wine-z19k6u4o verifies all source bytes and 30 original selector/queue/DMA cases; Wine e433-localized-queued-catalog-cli-wine-0vd50_u1 validates production CLI create, reuse and verify. Both servers drained.
+
+**Limitations**
+
+- Ordinary invocation, unrestricted guest selector domains, the 16 following bytes per bank, other consumers, Linux, USA and native Windows remain pending. No performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-serve-thirty-european-localized-queued-resources.json)
+
+## 2026-11-24 — Serve five complete European raw UI banks
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Preserve and serve the previously missing prefixes of five source-bounded localized raw banks, retaining existing resource owners and original guest transfers.
+
+**Validation**
+
+- Wine qa7y9h7g validates all 4,480 bank bytes, mixed boundaries and 30 original interpreted and generated transfer cases; Wine 4j2h1iqg validates production CLI create, reuse and verify. Both servers drained.
+
+**Limitations**
+
+- The selector tables remain ROM-backed for these cases; ordinary use, unrestricted indices, other consumers, Linux, USA and native Windows are pending. No performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-serve-five-complete-european-raw-ui-banks.json)
+
+## 2026-11-24 — Serve fifteen European indexed graphics archives
+
+Type: changed. Platforms: European ROM; Windows via Wine.
+
+**Changes**
+
+- Publish three complete source-backed indexed graphics families, including their language selectors, caller literals and embedded metadata prefixes, while retaining original guest decoding.
+
+**Validation**
+
+- Wine e437-additional-indexed-families-readers-wine-8rpdw185 validates 1588 programs through all fifteen original archive decoders, source boundaries and generated representative paths; Wine e437-additional-indexed-families-cli-wine-ba5u5ozl validates production CLI create, reuse and verify. Both servers drained.
+
+**Limitations**
+
+- Ordinary invocation, other readers and guest index domains, later dictionary tails, Linux, USA and native Windows remain pending. One diagnostic attempt had a test-only hash typo; its evidence is retained. No performance comparison was made.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-serve-fifteen-european-indexed-graphics-archives.json)
+
+## 2026-11-24 — Reconcile European localized bank gaps
+
+Type: changed. Platforms: European manifest through Wine.
+
+**Changes**
+
+- Reconcile the 25 E430 gaps against E301 and the E438 plan, keeping proven unpublished streams separate from unattributed ranges.
+
+**Validation**
+
+- Wine d8smp7pd reports 3607 selected bytes without a declared E301 owner. The E438 streams account for 3037 of those bytes, leaving 570. Wine drained.
+
+**Limitations**
+
+- Metadata comparison only. E438 publication, original runtime use and attribution of the 570 bytes remain open. Linux and USA are pending. No performance comparison ran.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-24-reconcile-european-localized-bank-gaps.json)
+
+## 2026-11-24 — Reconcile European graphics pointer groups
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static census.
+
+**Changes**
+
+- Reconcile 20 retained European five-slot graphics pointer groups against the current E298 manifest to select whole-bank extraction work.
+
+**Validation**
+
+- Protected unit gkitv981 validates all 100 pointer values: all 20 tables and 95 target starts have owners, while the five 71e6f8 starts do not.
+
+**Limitations**
+
+- An owned target start does not prove complete payload ownership, and candidate literals do not prove live control flow. Full bank extents, other groups and platform work remain open; no performance comparison was made.
+
+Documentation: [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-24-reconcile-european-graphics-pointer-groups.json)
+
+## 2026-11-24 — Prioritize complete European resource banks
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static census.
+
+**Changes**
+
+- Prioritize complete source-backed resource banks and classify bounded direct references to the known relative-directory resolver before selecting further extraction work.
+
+**Validation**
+
+- Protected unit 6lzwu92a authenticates the EUR ROM and resolver pins, finding six bounded Thumb BL patterns with nearby literals only for the two already managed 103-entry directories.
+
+**Limitations**
+
+- Nearby literals are not proven arguments and a linear pattern scan does not prove absence of indirect calls, other readers, ARM code or banks outside its interval. Other pointer groups and runtime/platform work remain open; no performance comparison was made.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-24-prioritize-european-whole-resource-banks.json)
+
+## 2026-11-24 — Locate large European localized gap candidates
+
+Type: changed. Platforms: European ROM; static source census.
+
+**Changes**
+
+- Identify four candidate five-language pointer groups inside the remaining unowned portions of ten larger localized intervals.
+
+**Validation**
+
+- Protected static census xuhbm61i reconciles E300 ownership and scans aligned little-endian 08-region values into 95307 unowned bytes.
+
+**Limitations**
+
+- Candidate values do not prove execution, original readers, source boundaries or ownership of intervening bytes. Linux, USA and native Windows remain pending. No gameplay replay or performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-locate-large-european-localized-gap-candidates.json)
+
+## 2026-11-24 — Locate European localized gap pointer candidates
+
+Type: changed. Platforms: European ROM; static source census.
+
+**Changes**
+
+- Identify a 30-value candidate catalog targeting six locations in each of five localized raw gaps, without attributing it to an unverified reader.
+
+**Validation**
+
+- Protected static census z5tr1bdh scans aligned little-endian 08-region values for all fifteen repeated E430 gaps and records source ownership.
+
+**Limitations**
+
+- The values are candidate data patterns; original execution, exact resource boundaries, other addressing modes, Linux, USA and native Windows remain unverified. No gameplay replay or performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-locate-european-localized-gap-pointer-candidates.json)
+
+## 2026-11-24 — Identify thirty European queued transfer resources
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
+
+**Changes**
+
+- Establish the original selector and source contract for thirty localized queued transfer resources across all five language banks.
+
+**Validation**
+
+- Wine disassembly a3h2cux_ and protected source plan it7ywjrs authenticate the 30 pointers, sizes, payloads, reader instructions and existing queue helper, totaling 6008 previously unowned bytes.
+
+**Limitations**
+
+- Managed extraction and runtime consumption, ordinary invocation, unrestricted guest indices, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-identify-thirty-european-queued-transfer-resources.json)
+
+## 2026-11-24 — Classify European bank residual shapes
+
+Type: changed. Platforms: European static source analysis.
+
+**Changes**
+
+- Classify all 41 unresolved source intervals by geometry and record direct address-shaped values at all byte phases and ROM mirrors.
+
+**Validation**
+
+- Static census xbrt1szy reconciles 570 bytes with E301 and E438. It records 50 alignment-shaped zero bytes and five address-shaped word cells. The first attempt ztekptbp stopped before reading inputs because the driver used its scratch directory as the repository root.
+
+**Limitations**
+
+- Original reader and padding semantics remain open. No extraction, runtime tests or performance measurement ran. Linux and USA remain pending.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md).
+
+[Change record](docs/changes/2026-11-24-classify-european-bank-residual-shapes.json)
+
+## 2026-11-24 — Classify additional European localized graphics families
+
+Type: changed. Platforms: European ROM; Wine disassembly and static source classification.
+
+**Changes**
+
+- Identify three original indexed archive groups and one custom stream group across all five languages.
+
+**Validation**
+
+- Wine disassembly lgzvdwq6 and protected classification aigv45cr authenticate four original decoder call paths, fifteen indexed headers declaring 1588 programs and five custom output lengths.
+
+**Limitations**
+
+- Full consumed source extents, all decoded programs, ordinary invocation, runtime integration, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-classify-additional-european-localized-graphics-families.json)
+
+## 2026-11-24 — Catalog European localized raw bank neighbors
+
+Type: changed. Platforms: European ROM; static source census.
+
+**Changes**
+
+- Reconcile all 30 remaining localized raw transfer roots and their candidate neighboring intervals against the E299 source owners.
+
+**Validation**
+
+- Protected static census ynlrsmfq authenticates the exact ROM, six tables, all 30 existing source views and their ownership partitions.
+
+**Limitations**
+
+- Candidate intervals are not proven logical bank extents; unknown bytes require original-reader and independent-root evidence. Linux, USA and native Windows remain pending. No gameplay replay or performance comparison was made.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-catalog-european-localized-raw-bank-neighbors.json)
+
+## 2026-11-24 — Bound five European custom UI streams
+
+Type: changed. Platforms: European ROM; static source reconstruction.
+
+**Changes**
+
+- Reconstruct all five original-reader custom streams and establish their currently unowned source projections.
+
+**Validation**
+
+- Protected source plan av4gexqa reconstructs 8320 decoded bytes and 3061 source bytes in seven spans without overlaps against E301.
+
+**Limitations**
+
+- Original execution of these streams, trailing bytes, ordinary invocation, runtime integration, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-five-european-custom-ui-streams.json)
+
+## 2026-11-24 — Bound fifteen European indexed graphics archives
+
+Type: changed. Platforms: European ROM; static source reconstruction.
+
+**Changes**
+
+- Reconstruct all 1588 programs of fifteen original-reader indexed archives and establish their currently unowned source projections.
+
+**Validation**
+
+- Protected source plan dojboxqe reconstructs 143872 decoded bytes and 92304 source bytes in 29 spans without overlaps against E300.
+
+**Limitations**
+
+- Original execution for these streams, later dictionary tails, ordinary invocation, runtime integration, Linux, USA and native Windows remain open. No performance comparison was made.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-fifteen-european-indexed-graphics-archives.json)
+
+## 2026-11-24 — Bound European residual pointer contexts
+
+Type: changed. Platforms: European static source analysis.
+
+**Changes**
+
+- Check the two uncovered E441 literal candidates for language peers, exact address words and encodable PC-relative loads.
+
+**Validation**
+
+- Protected static analysis engiyyrd finds no matching five-language table, direct address word or applicable literal-load pattern for either cell.
+
+**Limitations**
+
+- Computed and indirect references, original runtime execution and padding semantics remain open. No payload output, runtime test or performance comparison ran. Linux and USA are pending.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-residual-pointer-contexts.json)
+
+## 2026-11-24 — Bound European localized raw banks
+
+Type: changed. Platforms: European ROM; retained Wine evidence and protected static census.
+
+**Changes**
+
+- Bound all five European 71e6f8 physical banks using existing partial owners and independently rooted successor resources.
+
+**Validation**
+
+- Protected unit 8cnwq6rl validates five independent 896-byte physical intervals and their existing source hashes, finding 1280 unowned prefix bytes of 4480 total.
+
+**Limitations**
+
+- Physical boundaries and source views do not prove exact prefix semantics, ordinary use, other consumers or unrestricted guest indices. Runtime integration, other families and platforms remain open; no performance comparison was made.
+
+Documentation: [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-localized-raw-banks.json)
+
+## 2026-11-24 — Audit whole resource bank ownership
+
+Type: added. Platforms: European and synthetic manifests through Wine.
+
+**Changes**
+
+- Add a read-only CLI to compare complete physical bank plans against a versioned manifest, with exact gaps and distinct byte counts for overlapping views.
+
+**Validation**
+
+- Wine f19ckm1j validates shared ranges, repeated bank views, gap and boundary accounting, input rejection and the 105853-byte EUR plan against E300 and E301. Wine drained.
+
+**Limitations**
+
+- The audit reads manifest claims only. Source authentication, file integrity and runtime coverage have separate evidence. E438 publication, Linux and USA checks remain open. The first Wine attempt 27d4e1nd exited without a diagnostic and drained. The retry used file-backed output. No performance comparison ran.
+
+Documentation: [rom_data.md](docs/rom_data.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-audit-whole-resource-bank-ownership.json)
+
 ## 2026-11-23 — Validate European Firaga residual literals
 
 Type: changed. Platforms: European ROM; Windows via Wine.

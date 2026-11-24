@@ -29,11 +29,11 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425 paused: 106 bytes, Wine readers/scene PASS; CLI Wine/join open.
+- E425 Wine PASS, E298 join open; E429/E433/E437/E443 Wine PASS.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -189,9 +189,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: E425 suspended at user request; EUR/Wine, no metrics.
-- Last verified result: `wqepgepj`/`st36aju0` Wine PASS, drained; CLI build `kfcdze6k` PASS.
-- Remaining work: Wine CLI, E298 sample join, other scenes/platforms.
-- Errors or blockers: none known; user paused the goal.
-- Next action: resume only on user request; use `/tmp/e425-cli-run.py`.
-- References: `docs/rom_data_runtime.md` E425; recovery checklist.
+- Task: `ROM-DATA-FULL-EUR`; EUR/Wine, no metrics.
+- Last verified result: E443 `_ifl87zb` verifies ownership of 177,593 bytes across 20 tables and 100 views; Wine drained.
+- Remaining work: E438 runtime, E441/E442 residual readers, other extents, Linux and USA.
+- Errors or blockers: direct reference checks do not resolve residual use.
+- Next action: require independent bounds or readers for further source attribution.
+- References: indexed graphics guide E443; recovery checklist.

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reconcile-european-graphics-pointer-groups",
+  "title": "Reconcile European graphics pointer groups",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static census"
+  ],
+  "changes": [
+    "Reconcile 20 retained European five-slot graphics pointer groups against the current E298 manifest to select whole-bank extraction work."
+  ],
+  "validation": [
+    "Protected unit gkitv981 validates all 100 pointer values: all 20 tables and 95 target starts have owners, while the five 71e6f8 starts do not."
+  ],
+  "limitations": [
+    "An owned target start does not prove complete payload ownership, and candidate literals do not prove live control flow. Full bank extents, other groups and platform work remain open; no performance comparison was made."
+  ],
+  "files": [
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_indexed_graphics.md"
+  ],
+  "references": [
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

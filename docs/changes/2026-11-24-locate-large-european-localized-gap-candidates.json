@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "locate-large-european-localized-gap-candidates",
+  "title": "Locate large European localized gap candidates",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source census"
+  ],
+  "changes": [
+    "Identify four candidate five-language pointer groups inside the remaining unowned portions of ten larger localized intervals."
+  ],
+  "validation": [
+    "Protected static census xuhbm61i reconciles E300 ownership and scans aligned little-endian 08-region values into 95307 unowned bytes."
+  ],
+  "limitations": [
+    "Candidate values do not prove execution, original readers, source boundaries or ownership of intervening bytes. Linux, USA and native Windows remain pending. No gameplay replay or performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

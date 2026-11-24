@@ -1,5 +1,57 @@
 # Indexed graphics archives
 
+E435 identifies three additional five-language indexed groups at `39554c`,
+`3955d8` and `397d94`, with 1,588 programs declared by their 15 source headers.
+The last group's archives begin at selected structures plus `b4`. Full source
+extents, decoding and runtime integration remain open; see the
+[original-reader classification](rom_data_ui_raw_transfers.md#e435-four-original-reader-classifications).
+
+## E436 Fifteen additional European archives source plan
+
+Protected reconstruction `e436-eur-fifteen-indexed-archive-source-plan-dojboxqe`
+decodes every program in the three E435 language groups. All 15 archives use
+the previously established canonical mode-0/width-5 layout: their 1,588 programs
+produce 143,872 bytes. Each program's declared offset, packet boundaries and
+decoded size agree; encoded streams are contiguous, and each preserved dictionary
+prefix ends at the highest actually referenced byte.
+
+The selected 29 spans total 92,304 source bytes: 15 archive projections, three
+five-pointer tables, six caller literals and five 180-byte prefixes preceding
+the embedded archives. None overlaps an existing E300 source owner. The prefix
+spans preserve the selected structures used by the original metadata reader;
+they do not establish a bound on its live index. Dictionary tails, original
+execution for these streams, runtime integration, ordinary use, other readers,
+Linux, USA and native Windows remain open. No performance comparison was made.
+
+## E437 Fifteen additional European archives runtime
+
+EUR extractor 301 / decoder 300 publishes the three E436 language groups
+inside `graphics.indexed-archives`: 15 archives, 1,588 programs, their three
+pointer tables, five embedded prefixes and six original caller literals. The
+29 new spans add 92,304 authenticated source bytes. Previous indexed fields,
+147 other resource records and their files are preserved, and the original
+selector and decoder continue running in guest code.
+
+Wine reader `e437-additional-indexed-families-readers-wine-8rpdw185` compares
+all 15 original decoder outputs against the independently reconstructed
+143,872 bytes with the selected ROM sources altered. Three representative
+original decoders and 25 selector/metadata cases also agree under generated
+execution. The check covers all new source bytes, mixed-owner and page
+boundaries, source authentication, prior resources and snapshot ownership.
+The Wine server drained. The first attempt `ggucm2wx` stopped on a mistyped
+expected test hash; that fixture value was corrected against the E436 plan.
+
+Wine production CLI `e437-additional-indexed-families-cli-wine-ba5u5ozl`
+creates, reuses and verifies 149 files matching the reader-tested generation;
+reuse and verification leave that generation unchanged. The production binary
+was built before the test-only hash correction, and the preflight verified that
+the corrected, `cfg(test)`-only file was the sole changed build input. Both Wine
+servers drained and their logs contain no D-Bus assertion with the local overlay.
+
+Ordinary invocation, other readers and scenes, guest index domains, later
+dictionary tails, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
 ## E212 European color-mode archive publication
 
 E204-d203 publishes the three color-mode archives as part of
@@ -580,3 +632,45 @@ control flow. The checkpoint is a legacy `FFTA-SL1` state with no recorded
 ancestry metadata, so it cannot independently prove a cheat-free history. A
 previously recorded neutral continuation is available for a bounded diagnostic;
 this is a source lead, not an ordinary-use witness.
+
+
+## E427 European graphics pointer-group reconciliation
+
+Protected static join `e427-eur-graphics-groups-owner-reconciliation-gkitv981`
+reconciles all 20 previously retained five-slot pointer groups with the exact
+EUR E298 manifest. All 400 table bytes have existing owners. Ninety-five of
+the 100 target start addresses have owners; the five starts selected by
+`71e6f8` do not. That group's existing ownership starts at offset `0100`
+for dynamic fragments and `0200` for fixed transfer views, as described in
+[the raw-transfer contract](rom_data_ui_raw_transfers.md).
+
+The join authenticates each pointer against the ROM and reports the retained
+candidate literal cells and matching Thumb load patterns. Ownership at a target
+start alone does not establish its entire extent, and matching instruction
+patterns do not establish live control flow. This is a reconciliation of a
+previous bounded census, not a global count of graphics groups. Other callers,
+full bank extents, Linux, USA and native Windows remain open. No performance
+comparison was made.
+
+## E443 Declared extents of the 20 retained European groups
+
+Wine `e443-eur-graphics-declared-extents-wine-_ifl87zb` reconciles the E427
+groups against the exact EUR E301/D300 manifest. The audit checks the 20
+tables and all 100 declared source intervals using authenticated lengths from
+the indexed archive and custom stream contracts, the clan alias contract and
+the E428 and E430 raw transfer plans. All 177,593 distinct bytes, including
+400 table bytes, have the expected owners. No byte within those intervals is
+unowned or shared between owners.
+
+`graphics.indexed-archives` owns the four indexed groups.
+`graphics.ui-custom-banks` owns the eight custom groups and the five clan
+alias entries, which reuse the bank intervals selected by the existing inline
+clan literals. `graphics.ui-raw-transfers` owns the six fixed transfer groups
+and the `71e6f8` table. Each of its five 896-byte intervals has 512 prefix bytes
+owned by `graphics.dynamic-raw-fragments` and 384 suffix bytes owned by
+`graphics.ui-raw-transfers`.
+
+This audit establishes ownership of the declared source projections. The fixed
+transfer lengths bound the known views. Additional bank tails, other readers
+and ordinary execution remain open. The Wine server drained and protected
+inputs passed. Linux, USA and native Windows remain pending.

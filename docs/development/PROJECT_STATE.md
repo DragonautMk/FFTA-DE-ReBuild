@@ -1396,17 +1396,72 @@ and normal enablement retain their existing acceptance gates.
   serves one selected transfer and literals; Wine producer/queue/DMA, CLI and
   606 altered-source frames pass. 801 E302 bytes remain outside E261 sources.
 
-- EUR [E425 Star Cross runtime partial](../rom_data_runtime.md#e425-star-cross-linked-source-runtime-partial)
-  serves selected rows and linked sources; Wine readers/scene pass. Production
-  CLI Wine verification and sample reconciliation remain open at user pause.
+- EUR [E429 five bounded UI banks](../rom_data_ui_raw_transfers.md#e429-european-five-bounded-banks-runtime)
+  serve all 4,480 bytes through the E299 managed owners; 30 controlled original
+  transfer cases and production CLI pass on Wine. Ordinary use, other consumers
+  and platforms remain open.
+
+- EUR [E430 remaining raw groups census](../rom_data_ui_raw_transfers.md#e430-european-remaining-raw-bank-census)
+  authenticates 30 fixed transfer views and catalogs candidate successor gaps.
+  [E440](../rom_data_ui_raw_transfers.md#e440-e301-ownership-of-the-remaining-gaps)
+  finds 3,607 bytes without a declared E301 owner across those gaps. The E438
+  source plan accounts for 3,037 of them. [E441](../rom_data_ui_raw_transfers.md#e441-shape-of-the-570-unattributed-bytes)
+  describes the remaining 570 as 50 zero bytes at alignment boundaries and
+  520 bytes in repeated intervals. Original use remains open.
+
+- EUR [E431 repeated-gap candidates](../rom_data_ui_raw_transfers.md#e431-repeated-gap-pointer-candidates)
+  finds a 30-value pattern into five gaps; original readers and resource
+  extents are established by E432.
+
+- EUR [E432 thirty queued-transfer resources](../rom_data_ui_raw_transfers.md#e432-thirty-localized-queued-transfer-resources)
+  authenticates 30 entries, their original selector and 6,008 unowned source
+  bytes. E433 publishes them; ordinary use remains open.
+
+- EUR [E433 queued catalog runtime](../rom_data_ui_raw_transfers.md#e433-thirty-resource-queued-catalog-runtime)
+  serves all 30 entries; Wine selector/queue/DMA and production CLI pass.
+  Ordinary use and other platforms remain open.
+
+- EUR [E434 larger-gap candidates](../rom_data_ui_raw_transfers.md#e434-larger-gap-pointer-candidates)
+  identifies four five-language tables in the remaining unowned intervals.
+
+- EUR [E435 original-reader classifications](../rom_data_ui_raw_transfers.md#e435-four-original-reader-classifications)
+  identifies 15 indexed archives with 1,588 declared programs and five custom
+  streams. E436 bounds the indexed sources; runtime integration remains open.
+
+- EUR [E436 fifteen indexed archives plan](../rom_data_indexed_graphics.md#e436-fifteen-additional-european-archives-source-plan)
+  reconstructs all 1,588 programs and 92,304 unowned source bytes; original
+  decoder execution and managed publication pass in E437.
+
+- EUR [E437 fifteen indexed archives runtime](../rom_data_indexed_graphics.md#e437-fifteen-additional-european-archives-runtime)
+  serves all 15 archives and selected metadata; Wine original decoder and
+  generated-reader checks and production CLI pass. Other paths and platforms
+  remain open.
+
+- EUR [E438 five custom streams plan](../rom_data_ui_graphics.md#e438-additional-european-custom-stream-source-plan)
+  reconstructs 8,320 decoded bytes and 3,061 unowned source bytes. Original
+  execution and managed publication remain open.
+
+- [Bank ownership audit](../rom_data.md#inspect-source-ownership-across-banks)
+  compares bounded plans across dataset manifests without opening ROM or
+  payload files. Wine validation covers repeated views, shared owners, gaps
+  and the E300 to E301 coverage change. Linux and USA checks are deferred.
+
+- EUR [E443 graphics group extent audit](../rom_data_indexed_graphics.md#e443-declared-extents-of-the-20-retained-european-groups)
+  verifies E301 ownership of all 177,593 declared bytes across the 20 E427
+  tables and 100 source intervals on Wine. Additional extents and readers
+  remain open.
+
+- EUR [E425 Star Cross runtime](../rom_data_runtime.md#e425-star-cross-linked-source-runtime)
+  serves selected rows and linked sources; Wine readers, scene and CLI pass.
+  Sample reconciliation, other scenes and platforms remain open.
 
 - EUR [E424 Star Cross linked-source plan](../rom_data_runtime.md#e424-star-cross-linked-source-plan)
   authenticates 58 linked source bytes, including 44 sampled bytes; the E423
-  rows and linked sources await runtime integration.
+  rows and linked sources are integrated in E425.
 
 - EUR [E423 Star Cross row-list plan](../rom_data_runtime.md#e423-star-cross-row-list-source-plan)
   authenticates four rows and their count-four caller; 42 sampled bytes have
-  no E297 owner. Linked sources and runtime integration remain open.
+  no E297 owner. Linked sources and runtime integration are covered by E425.
 
 - EUR [E422 Star Cross reconciliation](../rom_data_runtime.md#e422-star-cross-sample-reconciliation)
   leaves 86 sampled bytes outside E297 after descriptor integration;

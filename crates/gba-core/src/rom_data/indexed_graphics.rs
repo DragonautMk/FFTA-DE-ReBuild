@@ -3,6 +3,8 @@ use super::SourceRange;
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
+pub mod additional;
+
 pub const GROUPS: [u32; 4] = [0x71e57c, 0x71e61c, 0x71e630, 0x71e658];
 pub const ARCHIVES: [u32; 20] = [
     0x430248, 0x441608, 0x452c7c, 0x464818, 0x4757e0, 0x434418, 0x44566c, 0x457058, 0x468608,
@@ -361,6 +363,8 @@ pub struct IndexedGraphics {
     pub white_flowers: Option<WhiteFlowersIndexed>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub white_flowers_direct: Option<WhiteFlowersDirectIndexed>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub additional: Option<additional::AdditionalIndexed>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -463,6 +467,9 @@ impl IndexedGraphics {
             spans.push((WHITE_FLOWERS_DIRECT_LITERAL, direct.caller_literal.to_le_bytes().to_vec(), "white-flowers-direct-indexed-literal".into()));
             spans.push((WHITE_FLOWERS_DIRECT_ROOT, bytes, "white-flowers-direct-indexed-archive".into()));
         }
+        if let Some(additional) = &self.additional {
+            spans.extend(additional.source_spans()?);
+        }
         spans.sort_by_key(|v| v.0);
         for pair in spans.windows(2) {
             if pair[0].0 as usize + pair[0].1.len() > pair[1].0 as usize {
@@ -528,7 +535,7 @@ impl Catalog {
             index: i as u8, value: row[0], secondary_program: row[1],
             primary_program: row[2], opaque: row[3],
         }).collect();
-        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None, white_flowers: None, white_flowers_direct: None };
+        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None, white_flowers: None, white_flowers_direct: None, additional: None };
         let source: Vec<u8> = decoded.source_spans()?
             .iter()
             .flat_map(|(_, b, _)| b.iter().copied())
@@ -589,6 +596,7 @@ impl Catalog {
         let archive = Archive::from_source(bytes, WHITE_FLOWERS_DIRECT_ROOT)?;
         if archive.source_bytes()? != bytes { return Err(invalid()); }
         decoded.white_flowers_direct = Some(WhiteFlowersDirectIndexed { caller_literal, archive });
+        decoded.additional = Some(additional::from_rom(rom)?);
         let spans = decoded.source_spans()?;
         let sources = spans
             .into_iter()

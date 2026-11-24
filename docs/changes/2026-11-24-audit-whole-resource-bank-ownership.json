@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audit-whole-resource-bank-ownership",
+  "title": "Audit whole resource bank ownership",
+  "kind": "added",
+  "platforms": [
+    "European and synthetic manifests through Wine"
+  ],
+  "changes": [
+    "Add a read-only CLI to compare complete physical bank plans against a versioned manifest, with exact gaps and distinct byte counts for overlapping views."
+  ],
+  "validation": [
+    "Wine f19ckm1j validates shared ranges, repeated bank views, gap and boundary accounting, input rejection and the 105853-byte EUR plan against E300 and E301. Wine drained."
+  ],
+  "limitations": [
+    "The audit reads manifest claims only. Source authentication, file integrity and runtime coverage have separate evidence. E438 publication, Linux and USA checks remain open. The first Wine attempt 27d4e1nd exited without a diagnostic and drained. The retry used file-backed output. No performance comparison ran."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/bank_ownership.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/main.rs",
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

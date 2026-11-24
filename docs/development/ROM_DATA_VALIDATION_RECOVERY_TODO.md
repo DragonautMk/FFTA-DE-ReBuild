@@ -39,6 +39,115 @@ Honor existing pauses and ownership. Obtain authorization before resuming a
 paused task, restarting interrupted work, changing shared Wine resources or
 changing another agent's selected goal.
 
+## Whole-bank extraction priority
+
+- [x] **ROMDATA-01-WHOLE-BANK-OWNERSHIP-AUDIT scoped EUR/Wine:** compare
+  complete declared bank intervals against retained manifests with
+  `rom-data audit-ownership`. Wine `f19ckm1j` checks synthetic alias, overlap
+  and gap accounting and compares the same four EUR source projections against
+  E300 and E301. E301 declares 102,792 of 105,853 selected bytes owned.
+  [Usage](../rom_data.md#inspect-source-ownership-across-banks).
+- [ ] **ROMDATA-05-WHOLE-BANK-OWNERSHIP-AUDIT-LINUX:** run the same synthetic
+  ownership and rejection cases and the E443 declared-range audit on the native
+  Linux CLI when Linux validation is selected. Review USA plans against separately
+  authenticated USA evidence.
+- [x] **ROMDATA-01-EUR-RELATIVE-BANK-CENSUS scoped static:** E426 scans
+  bounded direct Thumb-call patterns to the known relative-directory resolver;
+  nearby candidates are the two already managed 103-entry directories.
+  [Evidence](../rom_data_graphics.md#e426-relative-bank-resolver-census).
+- [x] **ROMDATA-01-EUR-GRAPHICS-GROUP-RECONCILIATION scoped static:** E427
+  reconciles 20 retained groups against E298: all tables and 95 target starts
+  have owners; five `71e6f8` bank starts remain unowned.
+  [Evidence](../rom_data_indexed_graphics.md#e427-european-graphics-pointer-group-reconciliation).
+- [x] **ROMDATA-01-EUR-GRAPHICS-DECLARED-EXTENTS scoped EUR/Wine metadata**
+  E443 `_ifl87zb` verifies E301 ownership of 177,593 declared bytes across
+  20 tables and all 100 selected source intervals.
+  [Evidence](../rom_data_indexed_graphics.md#e443-declared-extents-of-the-20-retained-european-groups).
+- [ ] **ROMDATA-01-EUR-INDEXED-GRAPHICS-OTHER-GROUPS** Establish source-backed
+  extents beyond the E443 projections, including additional groups and view
+  tails, and authenticate their original readers.
+- [x] **ROMDATA-01-LOCALIZED-RAW-71E6F8-WHOLE-BANK scoped EUR/static:** E428
+  bounds five 896-byte physical intervals with independent successor roots and
+  finds 1,280 unowned prefix bytes. [Evidence](../rom_data_ui_raw_transfers.md#e428-european-71e6f8-bounded-bank-plan).
+- [x] **ROMDATA-04-LOCALIZED-RAW-71E6F8-WHOLE-BANK scoped EUR/Wine:** E429
+  integrates all five prefixes preserving prior owners and fallback. Wine reader
+  `qa7y9h7g` passes source binding, boundaries and 30 original transfer cases;
+  production CLI `4j2h1iqg` passes create, reuse and verify.
+- [ ] **ROMDATA-04-LOCALIZED-RAW-71E6F8-OTHER:** establish ordinary prefix use, other
+  guest domains, scenes, real BIOS, Linux, USA and native Windows.
+- [x] **ROMDATA-01-LOCALIZED-RAW-OTHER-BANKS-CENSUS scoped EUR/static:** E430
+  authenticates 30 existing transfer views and records candidate successor gaps
+  and current owners in `ynlrsmfq`; adjacency does not prove bank extents.
+- [x] **ROMDATA-01-LOCALIZED-RAW-GAP-RESIDUAL-E301 scoped EUR/Wine metadata:**
+  E440 `d8smp7pd` reconciles all 25 E430 gaps. Of 3,607 unowned E301 bytes,
+  3,037 are the E438 stream payloads and 570 still lack attribution.
+  [Evidence](../rom_data_ui_raw_transfers.md#e440-e301-ownership-of-the-remaining-gaps).
+- [x] **ROMDATA-01-LOCALIZED-RAW-RESIDUAL-CENSUS scoped EUR/static:** E441
+  `xbrt1szy` records 50 zero bytes at minimal 4-byte alignment boundaries and
+  520 bytes in repeated intervals. Five pointer-shaped words include two whose
+  4-byte cells have no E301 source claim. No reader or padding semantics proved.
+  [Evidence](../rom_data_ui_raw_transfers.md#e441-shape-of-the-570-unattributed-bytes).
+- [x] **ROMDATA-01-LOCALIZED-RAW-RESIDUAL-POINTER-CONTEXT scoped EUR/static:**
+  E442 `engiyyrd` finds no matching peer table, exact address word or bounded
+  literal-load pattern for the uncovered E441 cells. Indirect reader proof
+  remains part of `ROMDATA-01-LOCALIZED-RAW-OTHER-BANKS-ROOTS`.
+- [ ] **ROMDATA-01-LOCALIZED-RAW-OTHER-BANKS-ROOTS:** identify original readers
+  or independent padding boundaries for the 570 unattributed bytes in the
+  E440 reconciliation. Earlier source plans account for the other bytes in
+  the selected E430 gaps. Adjacency alone does not establish ownership.
+- [x] **ROMDATA-01-LOCALIZED-RAW-LARGE-GAP-CENSUS scoped EUR/static:** E434
+  `xuhbm61i` identifies four five-language pointer-pattern tables in ten
+  larger gaps; their source provenance and readers remain unproved.
+- [x] **ROMDATA-01-LOCALIZED-RAW-LARGE-GAP-CANDIDATES scoped EUR/readers:**
+  E435 `aigv45cr` identifies three indexed archive groups and one custom
+  stream group using original reader code; source extents remain open.
+- [x] **ROMDATA-01-EUR-ADDITIONAL-INDEXED-FAMILIES scoped EUR/static:** E436
+  `dojboxqe` reconstructs all 1,588 programs in 15 archives and identifies
+  92,304 unowned bytes across 29 spans, including tables, caller literals and
+  selected embedded prefixes; original execution and later tails remain open.
+- [x] **ROMDATA-04-EUR-ADDITIONAL-INDEXED-FAMILIES scoped EUR/Wine:** E437
+  Wine reader `8rpdw185` passes all 15 original decoders and generated
+  representative paths; production CLI `ba5u5ozl` passes create/reuse/verify.
+- [ ] **ROMDATA-04-EUR-ADDITIONAL-INDEXED-OTHER:** establish ordinary use,
+  other callers, live index domains and later dictionary tails.
+- [ ] **ROMDATA-REGRESSION-E301-WINE:** adapt and rerun affected older
+  revision-pinned indexed and dynamic fixtures against E301 when broader
+  regression testing is selected; the focused E437 Wine checks passed.
+- [x] **ROMDATA-01-EUR-ADDITIONAL-CUSTOM-FAMILY scoped EUR/static:** E438
+  `av4gexqa` reconstructs all five streams and identifies 3,061 currently
+  unowned bytes in seven spans, including table and caller literal.
+- [ ] **ROMDATA-04-EUR-ADDITIONAL-CUSTOM-FAMILY:** integrate the identified
+  custom family and validate its original decoder and CLI on Wine. E438
+  bounds all five streams. The E301 ownership audit still finds all 3,061
+  planned bytes undeclared. Publication, runtime use and Linux/USA remain open.
+- [x] **ROMDATA-01-LOCALIZED-RAW-GAPS-ALIGNED-CENSUS scoped EUR/static:** E431
+  `z5tr1bdh` finds 30 consecutive candidate values targeting the `71e694`
+  gaps, six per language at 192-byte steps; their original use is unproved.
+- [x] **ROMDATA-01-LOCALIZED-RAW-GAPS-30-READER scoped EUR/static:** E432
+  `it7ywjrs` authenticates the original selector, queue-helper inputs and 30
+  192-byte projections, plus their two tables and root literals; original guest
+  bounds and ordinary invocation remain open.
+- [x] **ROMDATA-04-LOCALIZED-RAW-GAPS-30-RUNTIME scoped EUR/Wine:** E433
+  extracts all 30 selected resources and their tables, preserving prior owners
+  and fallback. Wine reader `z19k6u4o` passes original selector/queue/DMA;
+  production CLI `0vd50_u1` passes create, reuse and verify.
+- [ ] **ROMDATA-04-LOCALIZED-RAW-GAPS-30-OTHER:** establish ordinary use, other
+  readers and live index domains, and identify the 16 following bytes per bank.
+- [ ] **ROMDATA-REGRESSION-E300-WINE:** adapt and rerun affected older
+  revision-pinned dynamic fragment and E429 fixtures against E300 when broader
+  regression testing is selected; the focused E433 Wine checks passed.
+- [ ] **ROMDATA-04-LOCALIZED-RAW-OTHER-BANKS-RUNTIME:** extract and integrate
+  additional source-backed ranges once their readers and boundaries are proven,
+  preserving existing owners and the raw fallback; validate on Wine.
+- [ ] **ROMDATA-REGRESSION-E299-WINE:** adapt and rerun affected older
+  revision-pinned dynamic fragment fixtures against E299 when regression testing
+  is selected; the focused E429 reader and CLI checks passed.
+- [ ] **ROMDATA-02-EUR-WHOLE-RESOURCE-FAMILIES:** discover and extract other
+  complete source-backed resource banks, preserve aliases and integrate
+  runtime consumption; record unknown bounds and unproved consumers.
+- [ ] **ROMDATA-05-EUR-WHOLE-RESOURCE-FAMILIES-LINUX-USA:** validate selected
+  new families on Linux, USA and native Windows when those platforms are in scope.
+
 ## Recovered items
 
 - [x] **ROMDATA-04-LOOP-AUDIT-BUILD-ENOSPC:** complete the audit CLI compilation
@@ -1475,11 +1584,14 @@ current evidence before running another check.
 - [x] **ROMDATA-01-STAR-CROSS-LINKED-PLAN scoped EUR/static:** E424 authenticates
   58 linked source bytes, including 44 sampled bytes and existing rectangle/LZ
   targets. [Evidence](../rom_data_runtime.md#e424-star-cross-linked-source-plan).
-- [ ] **ROMDATA-04-STAR-CROSS-ROWS-RUNTIME paused EUR/Wine:** E425 implements
-  four rows and linked sources; 44 original reader cases and a 480-frame
-  altered-source scene pass with Wine drained. The production CLI build passes;
-  Wine CLI create/reuse/verify and the E298 sample join remain to do after
-  resumption. [Evidence](../rom_data_runtime.md#e425-star-cross-linked-source-runtime-partial).
+- [x] **ROMDATA-04-STAR-CROSS-ROWS-RUNTIME scoped EUR/Wine:** E425 implements
+  four rows and linked sources; 44 original reader cases, a 480-frame
+  altered-source scene and CLI create/reuse/verify pass with Wine drained.
+  [Evidence](../rom_data_runtime.md#e425-star-cross-linked-source-runtime).
+- [ ] **ROMDATA-01-STAR-CROSS-E298-RESIDUAL:** join the retained E403 sample to
+  E298 and verify whether all 86 previously unowned sampled bytes are covered.
+- [ ] **ROMDATA-04-STAR-CROSS-ROWS-OTHER:** verify other callers, guest domains,
+  scenes, real BIOS, Linux, USA and native Windows.
 - [ ] **ROMDATA-REGRESSION-E298-WINE:** adapt and rerun affected older
   revision-sensitive tilemap/descriptor/row fixtures when selected.
 - [ ] **ROMDATA-01-STAR-CROSS-RESIDUAL:** classify the 86 remaining sampled bytes,

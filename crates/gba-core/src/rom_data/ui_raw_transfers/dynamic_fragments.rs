@@ -1,10 +1,19 @@
 //! Bounded dynamic-transfer fragments; guest selector arithmetic remains unchanged.
-use super::{BankView, SourceSpan};
+use super::{localized_queued, BankView, SourceSpan};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 const ROW_STARTS: [u32; 2] = [0x399700, 0x399718];
-const BANKS: [u32; 5] = [0x441288, 0x4528fc, 0x464498, 0x475460, 0x486f30];
+pub const BANKS: [u32; 5] = [0x441288, 0x4528fc, 0x464498, 0x475460, 0x486f30];
+pub const BANK_LENGTH: usize = 0x380;
+pub const BANK_START_LENGTH: usize = 0x100;
+const BANK_START_SHA256: [&str; 5] = [
+    "d5f69eedc3b373cf99770e8fa091f8aa7f2c5be47af7401d20842e334214237d",
+    "d5f69eedc3b373cf99770e8fa091f8aa7f2c5be47af7401d20842e334214237d",
+    "d5f69eedc3b373cf99770e8fa091f8aa7f2c5be47af7401d20842e334214237d",
+    "d5f69eedc3b373cf99770e8fa091f8aa7f2c5be47af7401d20842e334214237d",
+    "45d216788cd046552bbb0c9ee6b6f8b28b195077dbbba08c3662642ae22599aa",
+];
 const SOURCE_SHA256: &str = "09c6e92d1483c47b38ef9e905b0f5df6c47f1233b0131d6a7856ab4af90e768b";
 
 fn invalid() -> String { "Invalid dynamic raw-transfer fragments".into() }
@@ -22,6 +31,12 @@ pub struct Rows {
 pub struct Fragments {
     pub rows: Vec<Rows>,
     pub banks: Vec<BankView>,
+    /// Source-rooted bank starts, kept distinct from the existing transfer views.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub bank_starts: Vec<BankView>,
+    /// A separate source-rooted catalog, preserving earlier fragment fields.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub localized_queued: Option<localized_queued::Catalog>,
 }
 
 impl Fragments {
@@ -45,6 +60,18 @@ impl Fragments {
             }
             spans.push((bank.source_offset().ok_or_else(invalid)?, bank.source_bytes(), format!("dynamic-prefix/{:08x}", bank.bank_offset)));
         }
+        if !self.bank_starts.is_empty() {
+            if self.bank_starts.len() != BANKS.len() { return Err(invalid()); }
+            for (bank, expected) in self.bank_starts.iter().zip(BANKS) {
+                if bank.bank_offset != expected || bank.relative_offset != 0 || bank.words.len() != BANK_START_LENGTH / 4 {
+                    return Err(invalid());
+                }
+                spans.push((bank.bank_offset, bank.source_bytes(), format!("dynamic-bank-start/{:08x}", bank.bank_offset)));
+            }
+        }
+        if let Some(catalog) = &self.localized_queued {
+            spans.extend(catalog.source_spans()?);
+        }
         Ok(spans)
     }
 
@@ -57,7 +84,8 @@ impl Fragments {
                 return Some(row.pairs[i as usize / 4][(i as usize % 4) / 2].to_le_bytes()[i as usize % 2]);
             }
         }
-        self.banks.iter().find_map(|bank| bank.byte_at(offset))
+        self.banks.iter().chain(&self.bank_starts).find_map(|bank| bank.byte_at(offset))
+            .or_else(|| self.localized_queued.as_ref().and_then(|catalog| catalog.byte_at(offset)))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
@@ -83,9 +111,18 @@ pub fn from_rom(rom: &[u8]) -> Result<Fragments, String> {
         let at = bank_offset as usize + 0x100;
         BankView { bank_offset, relative_offset: 0x100, words: rom[at..at+0x100].chunks_exact(4).map(|b| u32::from_le_bytes(b.try_into().unwrap())).collect() }
     }).collect();
-    let data = Fragments { rows, banks };
+    let mut data = Fragments { rows, banks, bank_starts: Vec::new(), localized_queued: None };
     let bytes: Vec<u8> = data.source_spans()?.into_iter().flat_map(|v| v.1).collect();
     if ffta_rom::digest(&bytes) != SOURCE_SHA256 { return Err("Dynamic fragment source fingerprint mismatch".into()); }
+    for (bank_offset, expected) in BANKS.into_iter().zip(BANK_START_SHA256) {
+        let at = bank_offset as usize;
+        let bytes = &rom[at..at + BANK_START_LENGTH];
+        if ffta_rom::digest(bytes) != expected { return Err("Localized bank start source fingerprint mismatch".into()); }
+        data.bank_starts.push(BankView { bank_offset, relative_offset: 0,
+            words: bytes.chunks_exact(4).map(|b| u32::from_le_bytes(b.try_into().unwrap())).collect() });
+    }
+    data.localized_queued = Some(localized_queued::from_rom(rom)?);
+    data.validate()?;
     Ok(data)
 }
 

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "classify-european-bank-residual-shapes",
+  "title": "Classify European bank residual shapes",
+  "kind": "changed",
+  "platforms": [
+    "European static source analysis"
+  ],
+  "changes": [
+    "Classify all 41 unresolved source intervals by geometry and record direct address-shaped values at all byte phases and ROM mirrors."
+  ],
+  "validation": [
+    "Static census xbrt1szy reconciles 570 bytes with E301 and E438. It records 50 alignment-shaped zero bytes and five address-shaped word cells. The first attempt ztekptbp stopped before reading inputs because the driver used its scratch directory as the repository root."
+  ],
+  "limitations": [
+    "Original reader and padding semantics remain open. No extraction, runtime tests or performance measurement ran. Linux and USA remain pending."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

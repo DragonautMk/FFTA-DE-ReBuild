@@ -560,6 +560,45 @@ recomp rom-data prepare /path/to/your-game.gba target/rom-data/managed-resources
 recomp play /path/to/your-game.gba --rom-data
 ```
 
+## Inspect source ownership across banks
+
+Use the same bank plan with two manifests to see which source intervals a new
+generation covers. The command reads the manifest and plan and writes JSON to
+standard output. It needs no ROM or resource payload files.
+
+```sh
+recomp rom-data audit-ownership manifest.toml bank-plan.json
+```
+
+The JSON plan uses schema 1. Copy `source_rom_sha256`, `source_rom_size` and
+`profile` from the manifest you want to inspect. Give each bank a unique `id`
+and list its confirmed physical ranges as byte `offset` and `length` pairs.
+This synthetic example describes two disjoint ranges of the same bank.
+
+```json
+{
+  "schema": 1,
+  "source_rom_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_rom_size": 128,
+  "profile": "synthetic",
+  "banks": [
+    {"id": "icons", "ranges": [{"offset": 16, "length": 8}, {"offset": 32, "length": 12}]}
+  ]
+}
+```
+
+The report lists half-open segments with their manifest resource IDs. Empty
+owner lists identify gaps. `shared_bytes` counts bytes declared by multiple
+resource IDs and is included in `owned_bytes`. Multiple roles of one resource
+count as one owner. The `distinct` totals count overlapping bank views once.
+Input hashes, the profile and the generation let you identify the exact
+manifests and plans behind two reports. Gaps are reported in JSON with exit
+status zero. Invalid ranges or mismatched source identities return an error.
+
+Use authenticated source plans to establish the ranges and their provenance.
+The report describes declared ownership. Actual runtime consumption and the
+integrity of resource files require their own validation.
+
 ## Run extraction with Docker
 
 Only Docker Engine/Desktop with Buildx is needed on the host. Rust, Python and

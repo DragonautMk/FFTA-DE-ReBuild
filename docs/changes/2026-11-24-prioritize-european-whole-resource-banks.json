@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "prioritize-european-whole-resource-banks",
+  "title": "Prioritize complete European resource banks",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; retained Wine evidence and protected static census"
+  ],
+  "changes": [
+    "Prioritize complete source-backed resource banks and classify bounded direct references to the known relative-directory resolver before selecting further extraction work."
+  ],
+  "validation": [
+    "Protected unit 6lzwu92a authenticates the EUR ROM and resolver pins, finding six bounded Thumb BL patterns with nearby literals only for the two already managed 103-entry directories."
+  ],
+  "limitations": [
+    "Nearby literals are not proven arguments and a linear pattern scan does not prove absence of indirect calls, other readers, ARM code or banks outside its interval. Other pointer groups and runtime/platform work remain open; no performance comparison was made."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

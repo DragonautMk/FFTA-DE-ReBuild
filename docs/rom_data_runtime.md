@@ -6954,7 +6954,7 @@ integration, Linux, USA and native Windows remain open. No performance
 comparison was made.
 
 
-## E425 Star Cross linked-source runtime (partial)
+## E425 Star Cross linked-source runtime
 
 EUR extractor E298/decoder D297 extends the existing tilemap, descriptor and
 row resources with the 106 bytes planned in E423/E424, while keeping the
@@ -6972,8 +6972,8 @@ recorded frames with all 106 backing bytes altered. All four rows and every
 selected descriptor, wrapper and tilemap source group are observed served.
 Both Wine servers drained.
 
-The production CLI cross-build `e425-star-cross-transfer-cli-build-kfcdze6k`
-passed. At the user's pause, its Wine create/reuse/verify check and the E403
-sample reconciliation against E298 had not run. Other readers, scenes, real
-BIOS, Linux, USA and native Windows remain open; no performance comparison was
-made. Resume only when requested.
+Wine production CLI `e425-star-cross-transfer-cli-wine-zym9tqj7` creates,
+reuses and verifies all 149 files matching the tested E298 dataset. The server
+drained; the E403 sample reconciliation against E298 remains to be done. Other
+readers, scenes, real BIOS, Linux, USA and native Windows remain open; no
+performance comparison was made.

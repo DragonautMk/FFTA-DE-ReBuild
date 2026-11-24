@@ -1,5 +1,24 @@
 # Custom UI graphics resources
 
+E435 identifies a further five-language custom stream group at `3adfb0`.
+The original decoder and output length are identified, while exact consumed
+source extents and runtime integration remain open; see the
+[original-reader classification](rom_data_ui_raw_transfers.md#e435-four-original-reader-classifications).
+
+## E438 Additional European custom stream source plan
+
+Protected reconstruction `e438-eur-five-custom-stream-source-plan-av4gexqa`
+decodes all five `3adfb0` streams to 1,664 bytes each. It records the exact
+consumed packet extents, source and output fingerprints, table and original
+caller literal. The seven selected spans total 3,061 bytes and have no E301
+owner. Two compressed streams end exactly where an E437 embedded-prefix owner
+begins; the other three leave one byte between those sources.
+
+The original selector and `080054a0` decoder are identified by E435, but this
+plan does not execute those streams or establish ordinary use. Trailing bytes,
+other readers, unrestricted guest language values, Linux, USA and native
+Windows remain open. No performance comparison was made.
+
 ## Additional European table-selected source contract
 
 `ROMDATA-01-LOCALIZED-TABLE-GRAPHICS` declares eight additional, independently

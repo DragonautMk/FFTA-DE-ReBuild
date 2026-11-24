@@ -307,8 +307,8 @@ const HELP: &[(&str, &str, &[&str], &str)] = &[
         "--dataset DIR      inspect an explicit dataset",
         "--require-rom-audit fail if this binary lacks rom-data-read-audit",
     ], "Read-only session preflight shared with Debug > Copy diagnosis. No game execution, translation, resource preparation or save writes. Exit 1 with a report on invalid inputs."),
-    ("rom-data", "recomp rom-data <extract|verify> <rom> <dataset-directory> | prepare <rom> [resources-root]", &[],
-     "Extract, verify or prepare source-authenticated decoded OBJ dimensions, BG descriptors and base palettes for exact FFTA EUR/USA images. Managed preparation reuses or repairs versioned application data. Use --rom-data with play/frames/runc to consume verified base data; the source ROM is still required."),
+    ("rom-data", "recomp rom-data <extract|verify> <rom> <dataset-directory> | prepare <rom> [resources-root] | audit-ownership <manifest.toml> <plan.json>", &[],
+     "Extract, verify or prepare source-authenticated decoded data for exact FFTA EUR/USA images. Managed preparation reuses or repairs versioned application data. Audit declared bank spans against a manifest to report ownership and gaps using metadata alone."),
     ("controllers", "recomp controllers [--poll]", &["--poll    sample each DirectInput controller"], "List detected gilrs and Windows DirectInput controllers without loading a ROM."),
     ("build", "recomp build <rom> [--ram] [--bios file] [--labels file] [--gamedb file]", &[
         "--ram    profile a short interpreter run first, translating the RAM-resident \

@@ -161,8 +161,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 298;
-pub const DECODER_REV: u32 = 297;
+pub const EXTRACTOR_REV: u32 = 301;
+pub const DECODER_REV: u32 = 300;
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -357,7 +357,7 @@ pub const UI_RAW_TRANSFERS_FORMAT: &str = "ui-raw-transfers-v1-json";
 pub const MAX_UI_RAW_TRANSFERS_FILE_BYTES: u64 = 64 * 1024 * 1024;
 pub const DYNAMIC_RAW_FRAGMENTS_ID: &str = "graphics.dynamic-raw-fragments";
 pub const DYNAMIC_RAW_FRAGMENTS_FILE: &str = "dynamic-raw-fragments.json";
-pub const DYNAMIC_RAW_FRAGMENTS_FORMAT: &str = "dynamic-raw-fragments-v1-json";
+pub const DYNAMIC_RAW_FRAGMENTS_FORMAT: &str = "dynamic-raw-fragments-v3-json";
 pub const MAX_DYNAMIC_RAW_FRAGMENTS_FILE_BYTES: u64 = 64 * 1024 * 1024;
 pub const CONDITIONAL_FOUR_BYTE_LOOKUP_ID: &str = "gameplay.conditional-four-byte-lookup";
 pub const CONDITIONAL_FOUR_BYTE_LOOKUP_FILE: &str = "conditional-four-byte-lookup.json";
@@ -449,7 +449,7 @@ pub const LAYERED_OBJ_ANIMATIONS_FORMAT: &str = "layered-obj-animations-v1-json"
 pub const MAX_LAYERED_OBJ_ANIMATIONS_FILE_BYTES: u64 = 4 * 1024 * 1024;
 pub const INDEXED_GRAPHICS_ID: &str = "graphics.indexed-archives";
 pub const INDEXED_GRAPHICS_FILE: &str = "indexed-graphics.json";
-pub const INDEXED_GRAPHICS_FORMAT: &str = "indexed-graphics-v1-json";
+pub const INDEXED_GRAPHICS_FORMAT: &str = "indexed-graphics-v2-json";
 pub const MAX_INDEXED_GRAPHICS_FILE_BYTES: u64 = 64 * 1024 * 1024;
 pub const DIRECT_INDEXED_GRAPHICS_ID: &str = "graphics.direct-indexed-archive";
 pub const DIRECT_INDEXED_GRAPHICS_FILE: &str = "direct-indexed-archive.json";

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "locate-european-localized-gap-pointer-candidates",
+  "title": "Locate European localized gap pointer candidates",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; static source census"
+  ],
+  "changes": [
+    "Identify a 30-value candidate catalog targeting six locations in each of five localized raw gaps, without attributing it to an unverified reader."
+  ],
+  "validation": [
+    "Protected static census z5tr1bdh scans aligned little-endian 08-region values for all fifteen repeated E430 gaps and records source ownership."
+  ],
+  "limitations": [
+    "The values are candidate data patterns; original execution, exact resource boundaries, other addressing modes, Linux, USA and native Windows remain unverified. No gameplay replay or performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

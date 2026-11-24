@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-star-cross-transfer-production-cli",
+  "title": "Verify European Star Cross transfer CLI",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Complete the production CLI verification for the E298 Star Cross transfer sources and document its remaining sample and platform criteria."
+  ],
+  "validation": [
+    "Wine zym9tqj7 creates, reuses and verifies 149 files matching the previously validated dataset; Wine drained and no D-Bus assertion appeared."
+  ],
+  "limitations": [
+    "The E403-to-E298 address reconciliation, other scenes and consumers, real BIOS, Linux, USA and native Windows remain open. No performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

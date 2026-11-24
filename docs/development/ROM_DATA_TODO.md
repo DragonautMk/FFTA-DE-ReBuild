@@ -44,6 +44,11 @@ Updated platform priority: **reduce tests and run them only on Wine**; mark new
 Linux checks as pending. Completed Linux checks remain historical without
 repeating them for new integrations. Equivalence evidence remains necessary,
 including guest clock, actual file use and native/save/Load compatibility.
+Updated extraction priority: **investigate complete resource banks and types**
+through their original directories, readers and validated boundaries. Prefer a
+source-backed whole-bank extraction over adding isolated observed resources.
+Preserve aliases and existing owners, and distinguish a verified directory from
+a claim that all indirect callers or related banks have been found.
 
 Order: **inventory → extraction and decoding → startup preparation → direct
 consumption → verification → mods → extended changes**. Creating files the game

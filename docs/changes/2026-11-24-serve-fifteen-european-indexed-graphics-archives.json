@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "serve-fifteen-european-indexed-graphics-archives",
+  "title": "Serve fifteen European indexed graphics archives",
+  "kind": "changed",
+  "platforms": [
+    "European ROM; Windows via Wine"
+  ],
+  "changes": [
+    "Publish three complete source-backed indexed graphics families, including their language selectors, caller literals and embedded metadata prefixes, while retaining original guest decoding."
+  ],
+  "validation": [
+    "Wine e437-additional-indexed-families-readers-wine-8rpdw185 validates 1588 programs through all fifteen original archive decoders, source boundaries and generated representative paths; Wine e437-additional-indexed-families-cli-wine-ba5u5ozl validates production CLI create, reuse and verify. Both servers drained."
+  ],
+  "limitations": [
+    "Ordinary invocation, other readers and guest index domains, later dictionary tails, Linux, USA and native Windows remain pending. One diagnostic attempt had a test-only hash typo; its evidence is retained. No performance comparison was made."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/additional.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/additional_indexed_graphics_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

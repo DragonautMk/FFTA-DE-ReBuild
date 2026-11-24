@@ -321,6 +321,8 @@ mod firaga_ccec_indirect_tests;
 #[cfg(test)]
 mod white_flowers_indexed_archive_tests;
 #[cfg(test)]
+mod additional_indexed_graphics_tests;
+#[cfg(test)]
 mod white_flowers_queued_rows_tests;
 #[cfg(test)]
 mod white_flowers_direct_indexed_tests;
@@ -588,6 +590,10 @@ mod indexed_graphics_runtime_tests;
 mod ui_raw_transfers_runtime_tests;
 #[cfg(test)]
 mod dynamic_raw_fragments_runtime_tests;
+#[cfg(test)]
+mod localized_whole_bank_tests;
+#[cfg(test)]
+mod localized_queued_catalog_tests;
 #[cfg(test)]
 mod clan_table_alias_runtime_tests;
 #[cfg(test)]
@@ -966,6 +972,7 @@ mod native_tests;
 mod palette_data_tests;
 #[cfg(test)]
 mod palette_runtime_tests;
+mod bank_ownership;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -4718,11 +4725,16 @@ fn write_dataset_inner(
 
 pub fn cmd(args: &[String]) -> Result<(), String> {
     let operation = args.first().map(String::as_str);
+    if let [operation, manifest, plan] = args {
+        if operation == "audit-ownership" {
+            return bank_ownership::run(Path::new(manifest), Path::new(plan));
+        }
+    }
     if !matches!(
         (operation, args.len()),
         (Some("extract" | "verify"), 3) | (Some("prepare"), 2 | 3)
     ) {
-        return Err("usage: recomp rom-data <extract|verify> <rom> <dataset-directory> OR rom-data prepare <rom> [resources-root]".into());
+        return Err("usage: recomp rom-data <extract|verify> <rom> <dataset-directory> | prepare <rom> [resources-root] | audit-ownership <manifest.toml> <plan.json>".into());
     }
     let rom = fs::read(&args[1]).map_err(|e| format!("Cannot read ROM: {e}"))?;
     let mut source = Extraction::from_rom(&rom)?;

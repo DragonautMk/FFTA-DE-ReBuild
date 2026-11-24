@@ -3042,3 +3042,22 @@ drained. One continuation and selected transfers do not establish game-level
 asset identities, all callers/scenes, real-BIOS behavior, earlier save history
 or full ROM independence. Linux, USA and native Windows remain open; no
 performance comparison was made.
+
+
+## E426 relative bank resolver census
+
+Protected static census `e426-relative-bank-resolver-pattern-census-6lzwu92a`
+scans aligned Thumb BL bit patterns to EUR resolver `0800720c` over the bounded
+`08000400..08160000` code-candidate interval, with the exact ROM hash and
+original resolver instructions checked. It finds six patterns, including the
+known custom-graphics call. The only directory-shaped nearby PC-relative ROM
+literals name `3d63d4` and `40d300`, whose full 103-entry directories are
+already covered by E210 and E150 respectively. This bounded result did not
+yield a new source-backed complete bank; previously recorded nearby indexed
+graphics pointer groups remain a separate investigation.
+
+Linear bit patterns may be data; nearby literals are not proven arguments.
+The scan excludes indirect calls, tail branches, ARM code, other readers and
+callers outside the interval, so it does not establish a global catalog or
+absence of other banks. No runtime, regional or performance claim follows.
+Linux, USA and native Windows remain open.

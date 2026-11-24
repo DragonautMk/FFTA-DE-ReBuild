@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reconcile-european-localized-bank-gaps",
+  "title": "Reconcile European localized bank gaps",
+  "kind": "changed",
+  "platforms": [
+    "European manifest through Wine"
+  ],
+  "changes": [
+    "Reconcile the 25 E430 gaps against E301 and the E438 plan, keeping proven unpublished streams separate from unattributed ranges."
+  ],
+  "validation": [
+    "Wine d8smp7pd reports 3607 selected bytes without a declared E301 owner. The E438 streams account for 3037 of those bytes, leaving 570. Wine drained."
+  ],
+  "limitations": [
+    "Metadata comparison only. E438 publication, original runtime use and attribution of the 570 bytes remain open. Linux and USA are pending. No performance comparison ran."
+  ],
+  "files": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ]
+}

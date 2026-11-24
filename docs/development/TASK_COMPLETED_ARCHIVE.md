@@ -26636,3 +26636,118 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Outcome: completed for selected EUR static linked-source geometry; parent remains partial.
 - Verified criteria: `mrt9gl4w` authenticates 58 linked bytes, 44 sampled unowned bytes, a separately owned rectangle, two separately owned LZ streams and original type-2/type-4 readers. E423 rows account for the other 42 sampled E422 bytes.
 - Limits: only the sampled mode-7 prefix is represented; exact scene PCs, all consumers and guest domains, runtime integration, other scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-STAR-CROSS-ROWS-RUNTIME
+
+- Outcome: completed for the selected EUR/Wine source integration; parent remains partial.
+- Verified criteria: E298-d297 serves 106 row and linked-source bytes. Reader `wqepgepj` preserves 145 resources and validates 44 interpreted/generated cases, boundaries, fallback and rejected edits. Scene `st36aju0` matches 480 frames with all selected source groups used and backing altered. CLI `zym9tqj7` creates/reuses/verifies 149 matching files; all Wine servers drained.
+- Limits: E403 sample reconciliation, other scenes/callers, full source extents, real BIOS, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-EUR-RELATIVE-BANK-CENSUS
+
+- Outcome: bounded EUR static census completed; no new source-backed bank identified by the selected resolver search. Parent remains partial.
+- Verified criteria: `6lzwu92a` checks exact ROM and resolver pins and finds six aligned Thumb BL patterns to `0800720c` in `08000400..08160000`; nearby directory-shaped literals name the two existing 103-entry managed directories.
+- Limits: code/data attribution, actual arguments, indirect and ARM calls, other readers and global coverage remain unproved. Separate indexed pointer groups remain open. Linux, USA and native Windows pending; no performance comparison.
+
+### ROMDATA-01-EUR-GRAPHICS-GROUP-RECONCILIATION
+
+- Outcome: completed for the 20 previously retained EUR pointer groups; parent remains partial.
+- Verified criteria: `gkitv981` authenticates 100 pointers and reconciles E298: all 20 tables and 95 target starts are owned; all five `71e6f8` starts remain unowned.
+- Limits: start ownership does not establish whole-payload coverage; code-pattern matches do not prove execution or global group count. Full bank extents, readers, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-71E6F8-WHOLE-BANK
+
+- Outcome: completed for the five EUR source-rooted physical intervals; parent remains partial.
+- Verified criteria: `8cnwq6rl` authenticates the five pointer roots and their independently rooted successors, existing source hashes and owner union. Each interval is 896 bytes; five 256-byte prefixes are unowned and the remaining 3200 bytes retain existing owners.
+- Limits: prefix semantics and ordinary use, all guest index domains, other scenes/families, Linux, USA and native Windows remain open. Runtime integration is separate. No performance comparison.
+
+### ROMDATA-04-LOCALIZED-RAW-71E6F8-WHOLE-BANK
+
+- Outcome: completed for five bounded EUR banks on Wine; parent remains partial.
+- Verified criteria: E299-d298 owns 1,280 additional prefix bytes and serves all 4,480 bank bytes with existing owners. Wine reader `qa7y9h7g` checks all bytes, mirrors and boundaries, source rejection and 30 interpreted/generated original-transfer cases across all five languages. CLI `4j2h1iqg` creates/reuses/verifies 149 matching files; both servers drained.
+- Limits: controlled selectors 4–6 and two branches only; original row tables still ROM-backed, ordinary use, other guest domains, consumers/scenes, real BIOS, Linux, USA and native Windows remain open. Older revision-sensitive fixtures remain on the recovery checklist. No performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-OTHER-BANKS-CENSUS
+
+- Outcome: completed for the six previously retained EUR groups; parent remains partial.
+- Verified criteria: `ynlrsmfq` authenticates 30 original fixed views/36,160 bytes against E299, their 30 roots and 25 gaps to candidate successor pointers. Five views touch the next known pointer; 101,587 gap bytes have no current owner.
+- Limits: candidate neighbors do not prove logical bank bounds or byte semantics; some gaps include separately owned archives. Reader/root investigations, other families/scenes, Linux, USA and native Windows remain open. No gameplay replay or performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-GAPS-ALIGNED-CENSUS
+
+- Outcome: completed for the 15 EUR repeated gaps and aligned 08-region values; parent remains partial.
+- Verified criteria: `z5tr1bdh` authenticates the ROM and E430 plan and finds 30 consecutive values at 397fbc..398034 targeting six positions at 192-byte intervals in each 71e694 gap; one unrelated candidate appears in an owned packet program.
+- Limits: no original reader, execution, logical lengths, ownership or all-reference claim. Other families/scenes, Linux, USA and native Windows remain open; no gameplay replay or performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-GAPS-30-READER
+
+- Outcome: completed for the selected EUR source contract; parent remains partial.
+- Verified criteria: Wine disassembly `a3h2cux_` and protected plan `it7ywjrs` authenticate the original language/task selector, 30 pointers and 192-byte lengths, two root literals, and five 1,152-byte payloads. The original queue uses four 48-byte rows; all 6,008 selected bytes are unowned in E299.
+- Limits: no guest index bound or ordinary invocation claimed; 16 trailing bytes per bank, runtime integration, other readers/scenes, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-LOCALIZED-RAW-GAPS-30-RUNTIME
+
+- Outcome: completed for all 30 source-backed EUR queued resources on Wine; parent remains partial.
+- Verified criteria: E300-d299 adds 6,008 bytes from five 1,152-byte payloads, two tables and original literals. Wine reader `z19k6u4o` checks all source bytes, boundaries, forged data, preserved owners and 30 interpreter/generated selector plus original queue/DMA cases. CLI `0vd50_u1` creates/reuses/verifies 149 matching files; both servers drained.
+- Limits: ordinary invocation, other readers/scenes, unrestricted guest indices, 16 trailing bytes per bank, Linux, USA and native Windows remain open. Older revision-sensitive fixtures remain on the recovery checklist. No performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-LARGE-GAP-CENSUS
+
+- Outcome: completed for ten EUR larger candidate gaps; parent remains partial.
+- Verified criteria: `xuhbm61i` reconciles 95,307 unowned bytes with E300 and finds four aligned five-language pointer-pattern tables at 39554c, 3955d8, 397d94 and 3adfb0.
+- Limits: patterns do not establish original readers, bounds or logical ownership; other families/scenes, Linux, USA and native Windows remain open. No gameplay replay or performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-LARGE-GAP-CANDIDATES
+
+- Outcome: completed for EUR original-reader and header classification; parent remains partial.
+- Verified criteria: Wine disassembly `lgzvdwq6` and protected source classification `aigv45cr` identify indexed wrapper calls for three five-language groups (15 archives, 1,588 declared programs) and the custom decoder for a fourth group (five 1,664-byte outputs).
+- Limits: consumed extents and full program decoding are unproved; embedded prefixes remain separate, and runtime integration, ordinary invocation, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-EUR-ADDITIONAL-INDEXED-FAMILIES
+
+- Outcome: completed for the 15 selected EUR canonical source projections; parent remains partial.
+- Verified criteria: `dojboxqe` reconstructs all 1,588 programs/143,872 decoded bytes; 15 archives, three pointer tables, five embedded prefixes and six caller literals comprise 29 disjoint spans/92,304 bytes unowned in E300.
+- Limits: static decoder, not original execution of these streams; later dictionary tails, ordinary use, guest index domains, runtime integration, other families, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-04-EUR-ADDITIONAL-INDEXED-FAMILIES
+
+- Outcome: completed for 15 selected EUR indexed archives on Wine; parent remains partial.
+- Verified criteria: E301-d300 serves 29 spans/92,304 bytes and all 1,588 programs; Wine reader `8rpdw185` compares all 15 original decoder outputs, three generated decoders and 25 selector/metadata cases, with preserved prior resources and source boundaries. CLI `ba5u5ozl` creates/reuses/verifies 149 matching files; both servers drained. Production build predated only an exact cfg(test)-only fixture correction, checked by CLI preflight.
+- Limits: failed `ggucm2wx` retained; it exposed a mistyped expected hash in the test. Ordinary use, other readers/scenes, unrestricted guest indices, later dictionary tails, Linux, USA and native Windows remain open. Older revision-sensitive fixtures remain on the checklist. No performance comparison.
+
+### ROMDATA-01-EUR-ADDITIONAL-CUSTOM-FAMILY
+
+- Outcome: completed for five selected EUR custom source projections; parent remains partial.
+- Verified criteria: `av4gexqa` reconstructs all five 1,664-byte outputs and identifies 3,061 unowned E301 bytes across streams, selector table and caller literal; source ends preserve the adjacent E437 prefix owners.
+- Limits: static decoder, not original execution of these streams; trailing bytes, ordinary use, guest index domains, runtime integration, other families, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-WHOLE-BANK-OWNERSHIP-AUDIT
+
+- Outcome: completed for read-only source-range accounting and selected Wine checks. Parent remains partial.
+- Verified criteria: build `j3fwtg2m` and Wine `f19ckm1j` pass synthetic gaps, shared ownership, repeated ranges and input rejection. Comparing the same 105,853 planned EUR bytes gives 10,488 declared owned in E300 and 102,792 in E301. The 3,061 E438 bytes remain undeclared. The Wine server drained.
+- Limits: initial `27d4e1nd` returned without a diagnostic, drained and is retained. The passing retry captures file-backed output. The audit uses manifest metadata only. Runtime, file integrity, other families, Linux and USA remain separate. No performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-GAP-RESIDUAL-E301
+
+- Outcome: completed for the 25 selected E430 intervals. Parent remains partial.
+- Verified criteria: `d8smp7pd` compares retained EUR metadata with the E301 manifest under Wine. Unowned bytes decline from 101,587 to 3,607. E438 accounts for 3,037 and 570 remain outside its plan. The Wine server drained.
+- Limits: whole selected intervals only. The audit neither assigns the residual bytes nor establishes runtime reads. E438 publication, other families, Linux and USA remain open. No performance comparison.
+
+### ROMDATA-01-LOCALIZED-RAW-RESIDUAL-CENSUS
+
+- Outcome: completed for whole selected residual geometry and direct literal-pattern census. Parent remains partial.
+- Verified criteria: `xbrt1szy` authenticates the EUR ROM and E301 manifest. It records 41 intervals, including 50 zero bytes at minimal alignment boundaries, and five mirror-aware address-shaped words. Two cells have no E301 source claim.
+- Limits: `ztekptbp` stopped at a driver cwd error and is retained. No output payload, original reader, padding semantics, runtime test or performance measurement. Linux and USA remain open.
+
+### ROMDATA-01-LOCALIZED-RAW-RESIDUAL-POINTER-CONTEXT
+
+- Outcome: completed for the bounded EUR direct-reference paths. Residual attribution remains open.
+- Verified criteria: `engiyyrd` checks both uncovered E441 cells for contiguous language peers, exact words referencing either cell in three mirrors and immediate PC-relative load patterns. None establishes a root.
+- Limits: indirect/computed readers and other encodings are unproved. Original use, padding semantics, other families, Linux and USA remain open. No gameplay replay or performance comparison.
+
+### ROMDATA-01-EUR-GRAPHICS-DECLARED-EXTENTS
+
+- Outcome: completed for declarations in the 20 retained European groups. Parent remains partial.
+- Verified criteria: all 20 tables and 100 source intervals have expected E301 owners, totaling 177,593 distinct bytes. Five clan aliases reuse the existing bank intervals. Each `71e6f8` view has its expected split ownership.
+- Evidence: Wine `_ifl87zb` authenticated the ROM and retained source contracts, matched the exact E301 manifest and drained successfully. Protected inputs passed.
+- Limits: fixed views use their declared lengths. Additional extents, original use, other readers, Linux and USA remain open. No gameplay execution or performance comparison.
