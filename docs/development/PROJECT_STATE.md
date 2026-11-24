@@ -1453,7 +1453,130 @@ and normal enablement retain their existing acceptance gates.
 
 - EUR [E425 Star Cross runtime](../rom_data_runtime.md#e425-star-cross-linked-source-runtime)
   serves selected rows and linked sources; Wine readers, scene and CLI pass.
-  Sample reconciliation, other scenes and platforms remain open.
+  [E444](../rom_data_runtime.md#e444-star-cross-sample-reconciliation) verifies
+  that all 243,297 distinct E403 sampled bytes have declared owners in E298
+  and E301. Other readers, scenes and platforms remain open.
+
+- EUR [E445 mode-7 source bounds](../rom_data_runtime.md#e445-european-mode-7-source-bounds)
+  follows all ten declared type-4 tilemap rows. Both mode-7 streams end at
+  the last declared byte in E301. The two bytes after the Soil stream remain
+  unclassified.
+
+- EUR [E446 tilemap transfer directories](../rom_data_runtime.md#e446-european-tilemap-transfer-directories)
+  derives 230 base/count pairs and 937 rows from local original call setup.
+  [E447](../rom_data_runtime.md#e447-european-type-4-tilemap-stream-bounds) bounds
+  all 61 E445/E446 type-4 streams. E301 owns 844 of their 7,380 source bytes.
+  Live use, unresolved callers and integration remain open.
+
+- EUR [E448 type-3 transfer bounds](../rom_data_runtime.md#e448-european-type-3-transfer-source-bounds)
+  follows 628 rows to 262 LZ77 streams and 13 raw copy views. E301 declares
+  15,820 of the 245,116 linked source bytes, including the shared four-byte
+  descriptor field owned by the compact primary alias.
+
+- EUR [E449 type-2 rectangle bounds](../rom_data_runtime.md#e449-european-type-2-rectangle-transfer-bounds)
+  follows 213 rows to 217 unique copy windows in 162 rectangles. E301 owns
+  356 of 10,750 source bytes in the selected lists and windows. The nominal
+  extent is larger for 24 rectangles.
+
+- EUR [E450 type-5 byte streams](../rom_data_runtime.md#e450-european-type-5-byte-stream-bounds)
+  bounds seven streams and verifies that all 937 E446 rows are represented in
+  the type-2 through type-5 inventories. Runtime integration and other callers
+  remain open.
+
+- EUR E451 accounts for the remaining 26 physical direct-call sites and
+  expands the E446 inventory to 335 base/count pairs and 1,261 rows. The
+  live selector for 36 added rows at `0e7352` and additional producers
+  remain open. [E451 call setup](../rom_data_runtime.md#e451-european-tilemap-transfer-call-setup)
+
+- EUR E452 bounds 152,473 distinct source bytes linked from the 324 E451
+  rows in the declared selector scopes. E301 owns 14,098 of these bytes.
+  [E452 linked source extents](../rom_data_runtime.md#e452-european-tilemap-linked-source-extents)
+
+- EUR E453 ties all 36 auxiliary transfer rows to the bounded registration
+  route for primary IDs 199–207 and the two mode predicates. E454 traces
+  the separate ID 360 handle to dispatcher field `+4` through queue state
+  4. E455 identifies the state-37 command-11 entry without a matching
+  retained checkpoint. E456 excludes secondary ID 361 within both
+  declared directories and the byte frontdoor. The live byte domain,
+  other callers and event indices outside the declared directory remain open.
+  [E453 selector](../rom_data_runtime.md#e453-european-tilemap-auxiliary-selector)
+  [E454 actor source](../rom_data_runtime.md#e454-european-auxiliary-task-360-actor-source)
+  [E455 entry condition](../rom_data_runtime.md#e455-european-auxiliary-task-360-entry-condition)
+  [E456 secondary callers](../rom_data_runtime.md#e456-european-secondary-task-361-caller-audit)
+
+- EUR E457 verifies a contiguous 78-stream tilemap bank at
+  `af1818..af3ea0`. All 302 aligned reference words target stream starts.
+  E301 owns 844 of 9,864 bank bytes. Mode 3 remains open outside the
+  verified bank. E458 classifies the reference words and traces origin
+  reads for 76 streams. E459 accounts for 162 direct origin-reader calls
+  within that projection. The six retained E460 scene windows sample three
+  bank streams. E301 declares all 140 sampled stream and pointer bytes.
+  E461 bounds all 12 indexed sources under their initializer conditions.
+  IDs 9, 10, 130 and 133 identify four unowned paths. E462 links those IDs
+  to actions 8, 9, 133 and 136 through the default dispatcher. E463 finds
+  learned-job candidates for IDs 9/10 in IN-08/IN-19 and ID 130 in IN-13.
+  Both E465 IN-08 casts reach task 345 slot 0 and read the same 253
+  unowned bytes, including the full type-3 stream. E466 bounds all 23
+  task-345 selections and 15 LZ77 inputs. Of 4,358 distinct bytes, 155
+  have existing owners to preserve in E301. E468's e302-d301 owns the
+  complete control metadata, with 461 newly covered bytes. The E302 plan
+  has 3,742 uncovered LZ77 input bytes. Direct E461 paths for the four
+  slots and ordinary nonzero selections remain open.
+  [E457 bank](../rom_data_runtime.md#e457-european-tilemap-stream-bank)
+  [E458 consumers](../rom_data_runtime.md#e458-european-tilemap-bank-consumers)
+  [E460 sample](../rom_data_runtime.md#e460-european-tilemap-bank-reads-in-recorded-scenes)
+  [E461 producers](../rom_data_runtime.md#e461-european-tilemap-indexed-producers)
+  [E462 action routes](../rom_data_runtime.md#e462-european-tilemap-action-routes)
+  [E463 checkpoints](../rom_data_runtime.md#e463-european-tilemap-action-checkpoint-candidates)
+  [E464 menu](../rom_data_runtime.md#e464-european-shell-and-protect-menu)
+  [E465 transfer reads](../rom_data_runtime.md#e465-european-white-magic-auxiliary-transfer)
+  [E466 task-345 bank](../rom_data_runtime.md#e466-european-task-345-transfer-bank)
+  E467's `rom-data plan-tilemap-bank` generates the complete task-345
+  plan from the exact European ROM.
+  [Command and results](../rom_data_runtime.md#generate-and-audit-the-task-345-bank-plan)
+  [E468 managed metadata](../rom_data_runtime.md#e468-european-task-345-managed-transfer-metadata)
+  E469 verifies the e302-d301 publication transaction and reuse with a
+  test writer linking E301 files. Default CLI creation remains open.
+  [Publication evidence](../rom_data_runtime.md#e469-e302-publication-and-reuse)
+  E470 connects all 23 slots to the action catalog under the dispatcher
+  and message conditions, and verifies the retained slot-2 and slot-4
+  readers. Both traced streams already have owners.
+  [Route evidence](../rom_data_runtime.md#e470-european-task-345-action-and-selector-routes)
+  E471 verifies ordinary use of slot 1 from the IN-08 action-12 preview.
+  E472 verifies the managed slot-1 controls against the original replay
+  with altered backing. The 57-byte stream still has no E302 owner.
+  [Slot-1 input](../rom_data_runtime.md#e471-ordinary-european-task-345-slot-1-input)
+  [Managed control proof](../rom_data_runtime.md#e472-managed-european-task-345-slot-1-controls)
+  E473 uses one extent parser for the plan and activation. The runtime
+  binds 13 encoded inputs from the authenticated ROM in memory and
+  retains the two earlier LZ77 owners. All 15 HLE inputs and the
+  ordinary slot-1 pair pass in Wine. Persistent input coverage
+  remains open.
+  [Bank input binding](../rom_data_runtime.md#e473-european-task-345-lz77-input-binding)
+  E474 serves the same bindings through the cartridge bus. Direct and
+  ABI reads of all 15 inputs and a mixed DMA boundary pass in Wine.
+  The ordinary replay still exercises the HLE input.
+  [Bus and DMA proof](../rom_data_runtime.md#e474-european-task-345-cartridge-and-dma-reads)
+  E475 binds 8,810 uncovered bytes in memory across the complete E457
+  halfword and byte stream bank. Its 78 extents retain the original
+  origins and exclude both kinds of padding. Both original controlled
+  cell readers match in Wine. Ordinary directory and geometry callers
+  and persistent stream coverage remain open.
+  [Stream bank binding](../rom_data_runtime.md#e475-european-halfword-and-byte-tilemap-bank-binding)
+  E476 proves the dispatcher can run task 345 before the direct action
+  task in the same cast. Both IN-08 continuations reach IDs 9 and 10 and
+  read the two slots at `39bcbc`. E475 supplies the observed stream ranges.
+  [Direct action continuations](../rom_data_runtime.md#e476-european-direct-tilemap-action-continuations)
+  E477 binds the 96 uncovered control bytes of the complete 12-slot E461
+  projection in memory and preserves 192 bytes served by earlier owners.
+  Both ordinary `39bcbc` routes match in Wine with their managed sources
+  altered.
+  [Indexed control proof](../rom_data_runtime.md#e477-european-indexed-tilemap-controls)
+  E478 persists all 12 indexed control slots in EUR e303-d302. The file
+  owns 96 control bytes, and 192 retain their earlier owners. E302
+  explicit verification and activation remain supported. Persistent
+  streams and ordinary `3a1c58` use remain open.
+  [Persistent control proof](../rom_data_runtime.md#e478-european-indexed-tilemap-control-resource)
 
 - EUR [E424 Star Cross linked-source plan](../rom_data_runtime.md#e424-star-cross-linked-source-plan)
   authenticates 58 linked source bytes, including 44 sampled bytes; the E423

@@ -2528,8 +2528,10 @@ The constructor and callbacks in `amu94h3q`, `enzv4iwu`, `_tv6i5rb`,
 zero-count branch does not start the list through this path.
 
 Static audit `e202-selector-dataflow-9jydyc_i` pins the relevant original
-instructions and records 30 candidate direct Thumb calls to the list constructor
-in the bounded `08000400..08160000` scan. If the row index starts at zero and
+instructions and records 30 candidate direct Thumb calls to the lower-level
+list entry `080db580` in the bounded `08000400..08160000` scan. E446 resolves
+their target and inventories the higher-level constructor separately.
+If the row index starts at zero and
 its pointer, count and index are not subsequently modified, count four covers
 indices 0–3 before termination. The first E201 interleaved LZ row is index 6;
 the first E200 direct tilemap row is index 7. This conditional result does not

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-tilemap-linked-source-extents",
+  "title": "Bound European tilemap linked source extents",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Follow all 324 E451 rows through the four established source-reader contracts. Preserve prior source aliases and the conditional auxiliary selector scope."
+  ],
+  "validation": [
+    "Wine 69eiy13_ verifies 152,473 distinct selected bytes. E301 declares 14,098 owned bytes, and 108,295 selected bytes extend the preceding inventories. Protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "The live auxiliary selector, mode-3 streams, other producers and callers, ordinary use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

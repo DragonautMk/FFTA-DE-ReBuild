@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "link-european-tilemap-index-producers",
+  "title": "Link European tilemap indexes to their producers",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Project 12 original task IDs through their bounded initializers to three geometry tables. Verify that every slot and its corresponding type-4 transfer row select the same stream."
+  ],
+  "validation": [
+    "Wine 8vqao49y authenticates five original code windows. Wine mkryi11b applies the one-based task IDs and verifies E301 ownership for the selected geometry pointers, rows, descriptors and streams. Both servers drained and protected inputs passed."
+  ],
+  "limitations": [
+    "The four slots for IDs 9, 10, 130 and 133 have 140 unowned bytes. Ordinary triggers, external writes, managed reads, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

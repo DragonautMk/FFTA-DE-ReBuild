@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "manage-european-indexed-tilemap-controls",
+  "title": "Manage the European indexed tilemap controls",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows interpreter via Wine"
+  ],
+  "changes": [
+    "Resolve every E461 geometry slot to its original type-4 row, descriptor and E475 halfword stream during authenticated EUR resource activation.",
+    "Serve 96 previously unowned control bytes in memory across the two small groups and retain the earlier owners of 192 bytes in the eight-slot group.",
+    "Count indexed control reads separately and compose them with neighboring raw lanes and earlier resources."
+  ],
+  "validation": [
+    "Windows harness build 3udkc2bn and focused Wine test jlv4j9qj pass. Altered-backing bus and read ABI checks cover all 12 slots and three cartridge mirrors.",
+    "Both 425-frame IN-08 interpreter pairs match clock and audio per frame and framebuffer, OAM and serialized state at the endpoints. Each pair reaches state 36 and reads 23 distinct managed control bytes and ten E475 stream bytes.",
+    "The passing unit reuses 148 files, preserves 32 protected paths, drains Wine and retires scratch. The first 900-frame attempt lsaq175e timed out and drained."
+  ],
+  "limitations": [
+    "Activation still requires the source ROM. Persistent backing, ordinary IDs 130 and 133, translated guest execution, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_stream_bank.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_stream_bank.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_stream_bank_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

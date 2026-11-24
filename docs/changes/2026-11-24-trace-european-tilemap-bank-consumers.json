@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "trace-european-tilemap-bank-consumers",
+  "title": "Trace the European tilemap bank consumers",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Classify all 302 aligned bank references and identify readers of the two origin bytes at 76 stream roots.",
+    "Identify the three indexed pointer groups and both alternate paths that supply the additional type-4 list row."
+  ],
+  "validation": [
+    "Wine zy0fdg0i verifies the original instruction windows and E301 ownership. E301 owns 20 of 152 origin bytes. All 22 protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "Live selector bounds, ordinary use, runtime integration, other banks, Linux, USA and native Windows remain open. No payload export or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

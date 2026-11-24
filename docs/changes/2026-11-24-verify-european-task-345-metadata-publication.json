@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-task-345-metadata-publication",
+  "title": "Verify European task-345 metadata publication and reuse",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows test harness via Wine"
+  ],
+  "changes": [
+    "Add a focused E302 preparation regression check that reuses the 148 protected E301 files after comparing the writer input hashes. Publish the new transfer metadata and manifest with the standard file writer."
+  ],
+  "validation": [
+    "Wine azu4reeg passes the empty-root publication transaction, exact E468 manifest comparison, same-generation reuse without a write and CLI verify handler. Wine drains, scratch is removed and all 20 protected inputs pass. Windows build xdqe99cg passes."
+  ],
+  "limitations": [
+    "The initial publication uses a test writer for the predecessor files. Fresh creation through the default CLI writer, managed LZ77 inputs, native Windows, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/preparation.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

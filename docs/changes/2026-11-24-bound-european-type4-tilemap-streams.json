@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-type4-tilemap-streams",
+  "title": "Bound European type-4 tilemap streams",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Use the common original cell reader and per-mode dispatch to bound the 61 distinct type-4 streams referenced by the E445 and E446 inventories."
+  ],
+  "validation": [
+    "Wine 9xsy1p68 authenticates the remaining dispatcher instructions. Wine 78zzrsqb confirms 844 of 7,380 stream bytes and 81 of 856 descriptor bytes have declared E301 owners. Both Wine servers drained."
+  ],
+  "limitations": [
+    "The 51 unowned streams, mode-3 roots, other callers, ordinary use, integration, Linux, USA and native Windows remain open. No gameplay replay or performance comparison was made."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

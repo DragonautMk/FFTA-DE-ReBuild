@@ -1,0 +1,144 @@
+//! Immutable bus views of the tilemap streams and their indexed controls.
+
+use super::super::{
+    script39_registry_poses::PriorSources,
+    tilemap_stream_bank::{self, IndexedTilemapControls},
+    Resource,
+};
+use std::sync::atomic::{AtomicU64, Ordering};
+
+struct BoundSource {
+    offset: usize,
+    bytes: Box<[u8]>,
+    kind: SourceKind,
+}
+
+#[derive(Clone, Copy)]
+enum SourceKind {
+    Stream,
+    IndexedControl,
+}
+
+pub(super) struct TilemapStreamBankResources {
+    sources: Vec<BoundSource>,
+    bytes_read: [AtomicU64; 2],
+}
+
+impl TilemapStreamBankResources {
+    pub(super) fn new(
+        rom: &[u8],
+        existing: &[Resource],
+        controls: Option<&IndexedTilemapControls>,
+    ) -> Result<Self, String> {
+        let prior = PriorSources::new(existing)?;
+        let mut sources = Vec::new();
+        let streams = tilemap_stream_bank::from_verified_rom(rom)?;
+        let legacy;
+        let controls = match controls {
+            Some(controls) => controls,
+            None => {
+                legacy = IndexedTilemapControls::from_verified_rom(rom, &streams)?;
+                &legacy
+            }
+        };
+        for stream in streams {
+            for source in stream.sources {
+                let offset = source.start as usize;
+                let bytes = &rom[offset..source.end as usize];
+                if !prior.contains(source.start, bytes.len())? {
+                    sources.push(BoundSource {
+                        offset,
+                        bytes: bytes.into(),
+                        kind: SourceKind::Stream,
+                    });
+                }
+            }
+        }
+        for field in controls.uncovered_fields(&prior)? {
+            let offset = field.offset as usize;
+            if !Self::source_range(offset) || !Self::source_range(offset + field.bytes.len() - 1) {
+                return Err(format!(
+                    "Indexed tilemap control outside the source pages at {offset:#x}"
+                ));
+            }
+            sources.push(BoundSource {
+                offset,
+                bytes: field.bytes,
+                kind: SourceKind::IndexedControl,
+            });
+        }
+        sources.sort_unstable_by_key(|source| source.offset);
+        if sources
+            .windows(2)
+            .any(|pair| pair[0].offset + pair[0].bytes.len() > pair[1].offset)
+        {
+            return Err("Overlapping tilemap stream bank bindings".into());
+        }
+        Ok(Self {
+            sources,
+            bytes_read: std::array::from_fn(|_| AtomicU64::new(0)),
+        })
+    }
+
+    pub(super) fn source_range(index: usize) -> bool {
+        let last = index.saturating_add(3);
+        (last >= tilemap_stream_bank::START as usize && index < tilemap_stream_bank::END as usize)
+            || ((index >> 12)..=(last >> 12)).any(|page| matches!(page, 0x39b | 0x3a1 | 0x3a4))
+    }
+
+    fn byte(&self, offset: usize) -> Option<(u8, SourceKind)> {
+        let at = self
+            .sources
+            .partition_point(|source| source.offset <= offset);
+        let source = self.sources.get(at.checked_sub(1)?)?;
+        Some((*source.bytes.get(offset - source.offset)?, source.kind))
+    }
+
+    pub(super) fn guest_read<const N: usize>(
+        &self,
+        index: usize,
+        rom: &[u8],
+        prior: Option<[u8; N]>,
+    ) -> Option<[u8; N]> {
+        if !Self::source_range(index) {
+            return prior;
+        }
+        let cells: [_; N] = std::array::from_fn(|i| self.byte(index + i));
+        let mut served = [0; 2];
+        for (_, kind) in cells.iter().flatten() {
+            served[*kind as usize] += 1;
+        }
+        if served == [0; 2] {
+            return prior;
+        }
+        for (counter, count) in self.bytes_read.iter().zip(served) {
+            if count != 0 {
+                counter.fetch_add(count, Ordering::Relaxed);
+            }
+        }
+        Some(std::array::from_fn(|i| {
+            cells[i].map_or_else(
+                || prior.as_ref().map_or_else(|| rom[index + i], |v| v[i]),
+                |(value, _)| value,
+            )
+        }))
+    }
+
+    pub(super) fn source_bytes_read(&self) -> u64 {
+        self.bytes_read[SourceKind::Stream as usize].load(Ordering::Relaxed)
+    }
+
+    pub(super) fn indexed_control_bytes_read(&self) -> u64 {
+        self.bytes_read[SourceKind::IndexedControl as usize].load(Ordering::Relaxed)
+    }
+
+    pub(super) fn resident_bytes(&self) -> usize {
+        std::mem::size_of::<Self>()
+            + self.sources.capacity() * std::mem::size_of::<BoundSource>()
+            + self
+                .sources
+                .iter()
+                .map(|source| source.bytes.len())
+                .sum::<usize>()
+    }
+}

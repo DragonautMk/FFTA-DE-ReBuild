@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-type2-rectangle-transfers",
+  "title": "Bound European type-2 rectangle transfers",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Follow counted type-2 lists and derive actual rectangle windows from the original copy reader. Distinguish selected rows from other rows in the declared rectangles."
+  ],
+  "validation": [
+    "Wine 2hz2xkoy wrote the E301 ownership report and drained before a postprocessing interval-type error. Protected recovery bftzb469 verifies the unchanged report and all 217 selected windows. E301 owns 356 of 10,750 selected bytes."
+  ],
+  "limitations": [
+    "Other callers, unselected rows, live use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay or performance measurement was performed."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

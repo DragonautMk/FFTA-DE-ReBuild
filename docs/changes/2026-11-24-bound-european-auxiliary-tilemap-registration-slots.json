@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-auxiliary-tilemap-registration-slots",
+  "title": "Bound European auxiliary tilemap registration slots",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Tie both auxiliary tilemap tables to the original registration message for primary task IDs 199–207. Identify the five direct setter calls on the separate live selector path."
+  ],
+  "validation": [
+    "Wine w4fmebht and 64e2i50z authenticate the producer and selector instruction windows and join 18 base/count pairs and 36 rows to E451/E452. Both servers drained and protected inputs passed."
+  ],
+  "limitations": [
+    "Primary ID 360 live object ancestry and writer domains, secondary ID 361 reachability, ordinary use, integration, Linux, USA and native Windows remain open. The checks cover source metadata and use no performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reach-european-shell-protect-menu",
+  "title": "Reach Shell and Protect in the European White Magic menu",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows interpreter via Wine"
+  ],
+  "changes": [
+    "Continue IN-08 from its authenticated deployment checkpoint with the learned bank 4 caster. Retain the ordinary-input White Magic checkpoint as a source for focused read validation."
+  ],
+  "validation": [
+    "Wine fi8j7kzm, qacqfcxk and 7yv1vg9p pass and drain. Visual review shows Wanda at the ordinary turn menu and both Shell and Protect at frame 7593. Protected inputs passed."
+  ],
+  "limitations": [
+    "The menu proves the commands are present. Target confirmation, action reads, integration, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -247,37 +247,47 @@ fn bit_unpack<B: Bus>(cpu: &mut Cpu, bus: &mut B) {
 /// (MSB first); bit clear = literal byte, bit set = back-reference
 /// (disp = 12 bits + 1, len = 4 bits + 3).
 fn lz77_uncomp<B: Bus>(cpu: &mut Cpu, bus: &mut B) {
-    let mut src = cpu.regs[0];
+    let start = cpu.regs[0];
     let dst = cpu.regs[1];
-    if let Some(palette) = bus.decoded_base_palette(src) {
+    if let Some(palette) = bus.decoded_base_palette(start) {
         write_out(bus, dst, palette.bytes());
         return;
     }
-    if let Some(packet) = bus.decoded_packet_body(src) {
+    if let Some(packet) = bus.decoded_packet_body(start) {
         write_out(bus, dst, packet.bytes());
         return;
     }
-    if let Some(block) = bus.decoded_observed_lz(src) {
+    if let Some(block) = bus.decoded_observed_lz(start) {
         write_out(bus, dst, block.bytes());
         return;
     }
-    let size = (bus.read32(src) >> 8) as usize;
-    src += 4;
+    let input = bus.bound_tilemap_lz77(start);
+    let encoded = input.as_ref().map(|input| input.bytes());
+    let header = match encoded {
+        Some(bytes) => u32::from_le_bytes(bytes[..4].try_into().unwrap()),
+        None => bus.read32(start),
+    };
+    let size = (header >> 8) as usize;
+    let mut src = start + 4;
+    let mut read_byte = |address| match encoded {
+        Some(bytes) => bytes[(address - start) as usize],
+        None => bus.read8(address),
+    };
 
     let mut out: Vec<u8> = Vec::with_capacity(size);
     while out.len() < size {
-        let flags = bus.read8(src);
+        let flags = read_byte(src);
         src += 1;
         for bit in (0..8).rev() {
             if out.len() >= size {
                 break;
             }
             if flags & (1 << bit) == 0 {
-                out.push(bus.read8(src));
+                out.push(read_byte(src));
                 src += 1;
             } else {
-                let b0 = bus.read8(src) as usize;
-                let b1 = bus.read8(src + 1) as usize;
+                let b0 = read_byte(src) as usize;
+                let b1 = read_byte(src + 1) as usize;
                 src += 2;
                 let len = (b0 >> 4) + 3;
                 let disp = ((b0 & 0xF) << 8 | b1) + 1;

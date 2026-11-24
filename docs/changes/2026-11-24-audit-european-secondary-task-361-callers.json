@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audit-european-secondary-task-361-callers",
+  "title": "Audit European secondary task 361 callers",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Verify the three direct secondary constructor call sites against both complete declared event and effect selector directories. Check the byte frontdoor domain and the physical 16-bit descriptor alias."
+  ],
+  "validation": [
+    "Wine 50vko1z1 authenticates six source windows, 75 event rows, 51 effect selector rows and all 256 byte input projections. ID 361 lies outside the verified input paths. The server drained and protected inputs passed."
+  ],
+  "limitations": [
+    "Indirect entries, event indices outside the declared directory, the task 360 selector writer, ordinary use, integration, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_events.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

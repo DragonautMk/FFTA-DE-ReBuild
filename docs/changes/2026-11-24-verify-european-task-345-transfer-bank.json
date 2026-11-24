@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-task-345-transfer-bank",
+  "title": "Verify the European task-345 transfer bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Reconcile all 23 task-345 selectors with their 18 distinct rows, 16 descriptors and 15 wrapped LZ77 inputs. Preserve null slots, aliases and the five existing E301 owners."
+  ],
+  "validation": [
+    "Managed Wine unit e466-eur-tilemap-id345-bank-wine-xg51sldn passed, drained the server and preserved 26 inputs. CLI ownership and independent interval accounting agree on 4,358 distinct source bytes, 155 owned and 4,203 unowned. The 258-byte slot-zero plan matches E465 and reuses its 253-byte ordinary observation."
+  ],
+  "limitations": [
+    "This verifies structural coverage for the bounded European initialization call. Managed use, raw/managed equivalence, extra caller paths, ordinary nonzero selections, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

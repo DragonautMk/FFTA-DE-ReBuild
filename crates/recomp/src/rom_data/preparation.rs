@@ -353,6 +353,308 @@ mod tests {
             .count()
     }
 
+    #[cfg(feature = "rom-data-read-audit")]
+    #[test]
+    #[ignore = "requires the exact EUR ROM and authenticated E302 and E461 inputs"]
+    fn european_indexed_tilemap_controls_persist_and_verify() {
+        use crate::rom_data::tilemap_stream_bank_tests::{check_indexed_controls, SlotEvidence};
+        use gba_core::{ffta_rom::digest, Machine};
+        use std::collections::{BTreeMap, BTreeSet};
+
+        let input = |name: &str| PathBuf::from(std::env::var_os(name).unwrap());
+        let rom_path = input("FFTA_STATE_TEST_ROM");
+        let rom = fs::read(&rom_path).unwrap();
+        let predecessor = input("FFTA_TILEMAP_SLOT1_DATASET");
+        let prior: Manifest = parse(
+            &fs::read(predecessor.join(MANIFEST_FILE)).unwrap(),
+            "E302 manifest",
+        )
+        .unwrap();
+        assert_eq!(
+            (prior.extractor_revision, prior.decoder_revision),
+            (302, 301)
+        );
+        let old_files: BTreeMap<_, _> = prior
+            .resources
+            .iter()
+            .map(|resource| (resource.path.as_str(), resource.sha256.as_str()))
+            .collect();
+        assert_eq!(old_files.len(), 149);
+        let groups: BTreeMap<String, Vec<SlotEvidence>> =
+            serde_json::from_slice(&fs::read(input("FFTA_TILEMAP_INDEXED_GROUPS")).unwrap())
+                .unwrap();
+        let root = tempfile::tempdir_in(input("FFTA_TILEMAP_INDEXED_WORK")).unwrap();
+        let mut source = Extraction::from_rom(&rom).unwrap();
+        let mut linked = 0;
+        let mut written = Vec::new();
+        let prepared = prepare_with_writer(
+            root.path(),
+            &mut source,
+            &mut |_| Ok(()),
+            &mut |path, bytes| {
+                let name = path.file_name().and_then(|name| name.to_str()).unwrap();
+                if let Some(&hash) = old_files.get(name) {
+                    if digest(bytes) != hash {
+                        return Err(format!("Prepared file differs from its E302 input: {name}"));
+                    }
+                    fs::hard_link(predecessor.join(name), path)
+                        .map_err(|error| format!("Cannot link E302 resource {name}: {error}"))?;
+                    linked += 1;
+                    return Ok(());
+                }
+                if !matches!(name, MANIFEST_FILE | INDEXED_TILEMAP_CONTROLS_FILE) {
+                    return Err(format!("Unexpected new E303 file: {name}"));
+                }
+                write_synced(path, bytes)?;
+                written.push(name.to_owned());
+                Ok(())
+            },
+        )
+        .unwrap();
+        assert_eq!(prepared.action, "created");
+        assert_eq!(linked, 149);
+        assert_eq!(written, [INDEXED_TILEMAP_CONTROLS_FILE, MANIFEST_FILE]);
+        let manifest_path = prepared.directory.join(MANIFEST_FILE);
+        let manifest_bytes = fs::read(&manifest_path).unwrap();
+        let published: Manifest = parse(&manifest_bytes, "E303 manifest").unwrap();
+        assert_eq!(
+            (published.extractor_revision, published.decoder_revision),
+            (303, 302)
+        );
+        let (resource, previous) = published.resources.split_last().unwrap();
+        assert_eq!(previous, &prior.resources);
+        assert_eq!(resource.id, INDEXED_TILEMAP_CONTROLS_ID);
+        assert_eq!(resource.sources.len(), 12);
+        let spans: BTreeSet<_> = resource
+            .sources
+            .iter()
+            .map(|span| {
+                let end = span.offset + span.length;
+                assert_eq!(
+                    span.sha256,
+                    digest(&rom[span.offset as usize..end as usize])
+                );
+                (span.offset, end)
+            })
+            .collect();
+        let expected: BTreeSet<_> = ["39bcbc", "3a1c58"]
+            .into_iter()
+            .flat_map(|name| groups[name].iter())
+            .flat_map(SlotEvidence::control_ranges)
+            .map(|span| (span.start, span.end))
+            .collect();
+        assert_eq!(spans, expected);
+
+        let reused =
+            prepare_with_writer(root.path(), &mut source, &mut |_| Ok(()), &mut |path, _| {
+                Err(format!("Reuse attempted to write {}", path.display()))
+            })
+            .unwrap();
+        assert_eq!(reused.action, "reused");
+        assert_eq!(reused.directory, prepared.directory);
+        assert_eq!(generation_count(prepared.directory.parent().unwrap()), 1);
+        drop(source);
+
+        let mut raw = Machine::new(rom.clone());
+        let mut managed = Machine::new(rom.clone());
+        for directory in [&predecessor, &prepared.directory] {
+            super::super::cmd(&[
+                "verify".into(),
+                rom_path.to_str().unwrap().into(),
+                directory.to_str().unwrap().into(),
+            ])
+            .unwrap();
+            attach_from_directory(&mut managed, directory).unwrap();
+            assert_eq!(
+                check_indexed_controls(&rom, &prior, &groups, &mut raw, &mut managed),
+                [48, 48, 0],
+            );
+        }
+        let active = managed.bus.rom_resources().unwrap().clone();
+        let controls_path = prepared.directory.join(INDEXED_TILEMAP_CONTROLS_FILE);
+        let controls_bytes = fs::read(&controls_path).unwrap();
+        let mut controls: serde_json::Value = serde_json::from_slice(&controls_bytes).unwrap();
+        let parameter = &mut controls["slots"][0]["descriptor"]["parameter8"];
+        *parameter = serde_json::json!(parameter.as_u64().unwrap() ^ 1);
+        let edited_bytes = serde_json::to_vec_pretty(&controls).unwrap();
+        let mut edited: Manifest = published.clone();
+        edited.resources.last_mut().unwrap().sha256 = digest(&edited_bytes);
+        fs::write(&controls_path, edited_bytes).unwrap();
+        fs::write(&manifest_path, toml::to_string_pretty(&edited).unwrap()).unwrap();
+        assert_eq!(
+            attach_from_directory(&mut managed, &prepared.directory).unwrap_err(),
+            "Decoded indexed tilemap controls differ from authenticated source",
+        );
+        fs::write(&controls_path, controls_bytes).unwrap();
+        edited.resources.pop();
+        edited.coverage.pop();
+        fs::write(&manifest_path, toml::to_string_pretty(&edited).unwrap()).unwrap();
+        assert_eq!(
+            attach_from_directory(&mut managed, &prepared.directory).unwrap_err(),
+            "Missing or unexpected indexed tilemap controls",
+        );
+        assert!(std::sync::Arc::ptr_eq(
+            &active,
+            managed.bus.rom_resources().unwrap()
+        ));
+        fs::write(&manifest_path, &manifest_bytes).unwrap();
+        root.close().unwrap();
+
+        let result = serde_json::json!({
+            "status": "PASS",
+            "revision": [303, 302],
+            "indexed_slots": groups.values().map(Vec::len).sum::<usize>(),
+            "published_control_bytes": resource.sources.iter().map(|span| span.length).sum::<u32>(),
+            "retained_control_bytes": 192,
+            "linked_e302_files": linked,
+            "written": written,
+            "published_manifest_sha256": digest(&manifest_bytes),
+            "reused_generation": true,
+            "e302_verify_and_attach": true,
+            "e303_verify_and_attach": true,
+            "coherent_edit_rejected": true,
+            "missing_claim_rejected": true,
+            "previous_owner_preserved_on_error": true,
+        });
+        fs::write(
+            input("FFTA_TILEMAP_INDEXED_RESULT"),
+            serde_json::to_vec_pretty(&result).unwrap(),
+        )
+        .unwrap();
+    }
+
+    #[test]
+    #[ignore = "requires the exact EUR ROM and protected E301 and E468 evidence"]
+    fn european_tilemap_metadata_publishes_and_reuses_verified_files() {
+        use gba_core::ffta_rom::digest;
+        use std::collections::BTreeMap;
+
+        let input = |name: &str| {
+            PathBuf::from(std::env::var_os(name).unwrap_or_else(|| panic!("Missing {name}")))
+        };
+        let rom_path = input("FFTA_TILEMAP_PUBLICATION_ROM");
+        let predecessor = input("FFTA_TILEMAP_PUBLICATION_E301");
+        let reference = fs::read(input("FFTA_TILEMAP_PUBLICATION_E468")).unwrap();
+        let work = input("FFTA_TILEMAP_PUBLICATION_WORK");
+        let root = tempfile::Builder::new()
+            .prefix("tilemap-publication-")
+            .tempdir_in(&work)
+            .unwrap();
+
+        let old: Manifest = parse(
+            &fs::read(predecessor.join(MANIFEST_FILE)).unwrap(),
+            "E301 manifest",
+        )
+        .unwrap();
+        assert_eq!((old.extractor_revision, old.decoder_revision), (301, 300));
+        let old_files: BTreeMap<_, _> = old
+            .resources
+            .iter()
+            .map(|resource| (resource.path.as_str(), resource.sha256.as_str()))
+            .collect();
+        assert_eq!(old_files.len(), 148);
+
+        let rom = fs::read(&rom_path).unwrap();
+        let reference_manifest = parse(&reference, "E468 manifest").unwrap();
+        let mut source = Extraction::from_rom_for_manifest(&rom, &reference_manifest).unwrap();
+        let mut stages = Vec::new();
+        let mut linked = 0;
+        let mut written = Vec::new();
+        let prepared = prepare_with_writer(
+            root.path(),
+            &mut source,
+            &mut |stage| {
+                stages.push(stage);
+                Ok(())
+            },
+            &mut |path, bytes| {
+                let name = path.file_name().and_then(|name| name.to_str()).unwrap();
+                if let Some(&sha) = old_files.get(name) {
+                    if digest(bytes) != sha {
+                        return Err(format!("Prepared file differs from the E301 input: {name}"));
+                    }
+                    fs::hard_link(predecessor.join(name), path)
+                        .map_err(|error| format!("Cannot link E301 resource {name}: {error}"))?;
+                    linked += 1;
+                    return Ok(());
+                }
+                if !matches!(name, MANIFEST_FILE | TILEMAP_TRANSFER_DIRECTORY_FILE) {
+                    return Err(format!("Unexpected additional file in E302: {name}"));
+                }
+                write_synced(path, bytes)?;
+                written.push(name.to_owned());
+                Ok(())
+            },
+        )
+        .unwrap();
+        assert_eq!(prepared.action, "created");
+        assert_eq!(
+            stages,
+            [
+                Stage::Checking,
+                Stage::Extracting,
+                Stage::Validating,
+                Stage::Publishing,
+                Stage::Ready,
+            ],
+        );
+        assert_eq!(linked, old_files.len());
+        assert_eq!(written, [TILEMAP_TRANSFER_DIRECTORY_FILE, MANIFEST_FILE]);
+
+        let revision = prepared.directory.parent().unwrap();
+        assert_eq!(revision.file_name().unwrap(), "e302-d301");
+        let pointer = fs::read(revision.join(ACTIVE)).unwrap();
+        let name = prepared.directory.file_name().unwrap().to_str().unwrap();
+        assert_eq!(pointer, format!("{name}\n").as_bytes());
+        assert_eq!(generation_count(revision), 1);
+        let manifest = fs::read(prepared.directory.join(MANIFEST_FILE)).unwrap();
+        assert!(manifest == reference, "Published manifest differs from E468");
+        assert!(prepared.directory.join(TILEMAP_TRANSFER_DIRECTORY_FILE).is_file());
+
+        let mut reuse_stages = Vec::new();
+        let reused = prepare_with_writer(
+            root.path(),
+            &mut source,
+            &mut |stage| {
+                reuse_stages.push(stage);
+                Ok(())
+            },
+            &mut |path, _| Err(format!("Reuse attempted to write {}", path.display())),
+        )
+        .unwrap();
+        assert_eq!(reused.action, "reused");
+        assert_eq!(reused.directory, prepared.directory);
+        assert_eq!(reuse_stages, [Stage::Checking, Stage::Ready]);
+        assert_eq!(fs::read(revision.join(ACTIVE)).unwrap(), pointer);
+        assert_eq!(generation_count(revision), 1);
+        assert!(fs::read(prepared.directory.join(MANIFEST_FILE)).unwrap() == manifest);
+        drop(source);
+        super::super::cmd(&[
+            "verify".into(),
+            rom_path.to_str().unwrap().into(),
+            prepared.directory.to_str().unwrap().into(),
+        ])
+        .unwrap();
+        root.close().unwrap();
+
+        let result = serde_json::json!({
+            "status": "PASS",
+            "revision": [302, 301],
+            "linked_E301_files": linked,
+            "written": written,
+            "expected_manifest_sha256": digest(&reference),
+            "published_manifest_sha256": digest(&manifest),
+            "active_generations": 1,
+            "reused_without_writing": true,
+            "cli_verify": true,
+        });
+        fs::write(
+            work.join("publication-result.json"),
+            serde_json::to_vec_pretty(&result).unwrap(),
+        )
+        .unwrap();
+    }
+
     #[test]
     #[ignore = "requires a protected supported ROM and isolated FFTA_RESOURCES_DIR"]
     fn menu_real_rom_estimate_and_reuse() {

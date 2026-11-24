@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "identify-european-tilemap-checkpoints",
+  "title": "Identify European tilemap action checkpoints",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows state loader via Wine"
+  ],
+  "changes": [
+    "Join the eight kind-1 descriptor slots for the four unowned actions to the retained European snapshots and their direct current job ranges."
+  ],
+  "validation": [
+    "After resolving the private save paths, Wine 8srv4b7k authenticates 345 distinct snapshots and verifies the original learned-bit reader. The retained state loader independently matches all 24 IN-08 roster records. All 372 protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "The 112 candidates establish saved prerequisites. Task 133 has no active direct job-range match. Visible ability availability, original dispatch, positive reads, integration, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

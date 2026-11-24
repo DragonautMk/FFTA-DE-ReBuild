@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "trace-european-auxiliary-task-360-actor",
+  "title": "Trace the European auxiliary task 360 actor",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Trace dispatcher state 113 allocation, state 114 polling and queue state 4 into the original primary task 360 selector. Identify the retained handle and three source writes to its dispatcher field."
+  ],
+  "validation": [
+    "Wine 1t4505gy authenticates ten windows and ten original call links. The Wine server drained and protected inputs passed."
+  ],
+  "limitations": [
+    "The live selector writer and domain, secondary ID 361 reachability, ordinary consumption, integration, Linux, USA and native Windows remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

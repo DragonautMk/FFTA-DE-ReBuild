@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-star-cross-sample-ownership",
+  "title": "Verify ownership of the full European Star Cross sample",
+  "kind": "changed",
+  "platforms": [
+    "European manifests through Wine"
+  ],
+  "changes": [
+    "Reconcile every distinct address of the retained E403 sample against E297, E298 and E301. Match the E423 and E424 source identities and close the bounded Star Cross residual criteria."
+  ],
+  "validation": [
+    "Wine qv1g8xda confirms 86 unowned bytes in E297 and all 243,297 sampled bytes owned in E298 and E301. Inputs were protected and Wine drained."
+  ],
+  "limitations": [
+    "The audit reuses a 480-frame selected-reader sample. Other readers, later mode-7 runs, exact instruction sites, scenes, Linux, USA and native Windows remain open. No replay or performance measurements ran."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

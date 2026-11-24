@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bind-european-task-345-lz77-inputs",
+  "title": "Bind the European task-345 LZ77 inputs at runtime",
+  "kind": "added",
+  "platforms": [
+    "European ROM, interpreter via Wine"
+  ],
+  "changes": [
+    "Use the directory model to derive the 15 distinct exact input extents for both the bank plan and runtime activation.",
+    "Bind the 13 uncovered inputs from the authenticated ROM in memory and route both HLE decompression calls through the existing decoder. Preserve the two earlier stream owners."
+  ],
+  "validation": [
+    "Windows test harness build 0iy9gyy_ passed. Wine ulsona5y matched the E466 ownership and E467 plan and checked both SWIs across all 15 inputs and three cartridge mirrors.",
+    "The guarded 300-frame E471 replay used one bound 57-byte input and matched the original clock, audio, video, OAM and serialized endpoint. The host run drained Wine and preserved 35 input paths.",
+    "Sandbox attempt xf68wnf3 refused a read-only Wine runtime directory before acquiring a lease."
+  ],
+  "limitations": [
+    "Activation still requires the authenticated ROM, and the 3,742 input bytes remain outside persistent dataset coverage. Direct reads, native execution, further ordinary selectors, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/gba-core/src/bus.rs",
+    "crates/gba-core/src/hle.rs",
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_bank_plan.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

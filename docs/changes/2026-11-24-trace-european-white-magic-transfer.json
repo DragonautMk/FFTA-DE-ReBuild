@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "trace-european-white-magic-transfer",
+  "title": "Trace the European White Magic auxiliary transfer",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows interpreter via Wine"
+  ],
+  "changes": [
+    "Follow both ordinary IN-08 casts to task 345 slot zero and identify the shared type-3 row, descriptor, wrapper and LZ77 input.",
+    "Identify 258 unowned bytes in the linked E301 source plan, including 253 directly observed bytes."
+  ],
+  "validation": [
+    "Wine u9gno321 observes the special constructor path. Wine lxd_65mg records both slot-zero transfers and drains; g1qq66op resolves the tuple/list qualifier error, verifies the saved traces and rechecks all 41 original guards with no replay."
+  ],
+  "limitations": [
+    "The retained scene proves raw service for one bank slot. The wider bank, direct E461 routes, managed integration, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

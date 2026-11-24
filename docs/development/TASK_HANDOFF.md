@@ -33,7 +33,7 @@ Archive completed tasks; preserve closed children and other jobs.
 - Outcome: partial
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425 Wine PASS, E298 join open; E429/E433/E437/E443 Wine PASS.
+- E425/E444 Star Cross, E445–E478 tilemap checks; E429/E433/E437/E443 Wine PASS.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -189,9 +189,9 @@ Archive completed tasks; preserve closed children and other jobs.
 
 ## Final handover
 
-- Task: `ROM-DATA-FULL-EUR`; EUR/Wine, no metrics.
-- Last verified result: E443 `_ifl87zb` verifies ownership of 177,593 bytes across 20 tables and 100 views; Wine drained.
-- Remaining work: E438 runtime, E441/E442 residual readers, other extents, Linux and USA.
-- Errors or blockers: direct reference checks do not resolve residual use.
-- Next action: require independent bounds or readers for further source attribution.
-- References: indexed graphics guide E443; recovery checklist.
+- Task: ROM-DATA-FULL-EUR paused by user after E478 (EUR/Wine).
+- Last verified result: E478 persists 12 slots, loads E302/E303 and passes Wine.
+- Remaining work: persistent streams, ordinary IDs 130/133, Linux/USA, recovery checklist.
+- Errors or blockers: Wine drained; preserve inputs and pause.
+- Next action: only on resume, review the remaining 3a1c58 ordinary-use proof.
+- References: Wine urfx6b8z, build q6ehr4lw, recovery checklist.

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "resolve-european-tilemap-transfer-call-setups",
+  "title": "Resolve European tilemap transfer call setups",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Use the original task catalogs and caller dataflow to classify all 26 remaining E446 direct call sites and add 105 directory pairs with 324 distinct rows."
+  ],
+  "validation": [
+    "Wine hniuxufm, fdhqvpxi and qrfmjqvi authenticate the caller and producer windows and compare ownership against E301. E301 owns 264 of 3,888 added row bytes and 35 of 730 selected control bytes. All Wine servers drained and protected inputs passed."
+  ],
+  "limitations": [
+    "The 36 rows at the auxiliary selector use a conditional physical projection. The live selector domain, other producers, indirect callers, linked source extents, ordinary use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

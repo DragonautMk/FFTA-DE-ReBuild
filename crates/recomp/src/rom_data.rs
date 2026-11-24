@@ -112,6 +112,10 @@ use gba_core::rom_data::{
     firaga_queued_transfer::FiragaQueuedTransfer, FIRAGA_QUEUED_TRANSFER_ID, FIRAGA_QUEUED_TRANSFER_FILE, MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES,
     white_flowers_signed_bytes::WhiteFlowersSignedBytes, WHITE_FLOWERS_SIGNED_BYTES_ID, WHITE_FLOWERS_SIGNED_BYTES_FILE, MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES,
     white_flowers_isolated_values::WhiteFlowersIsolatedValues, WHITE_FLOWERS_ISOLATED_VALUES_ID, WHITE_FLOWERS_ISOLATED_VALUES_FILE, MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES,
+    tilemap_transfer_directory::TilemapTransferDirectory, TILEMAP_TRANSFER_DIRECTORY_ID,
+    TILEMAP_TRANSFER_DIRECTORY_FILE, MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES,
+    tilemap_stream_bank::IndexedTilemapControls, INDEXED_TILEMAP_CONTROLS_ID,
+    INDEXED_TILEMAP_CONTROLS_FILE, MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -973,6 +977,11 @@ mod palette_data_tests;
 #[cfg(test)]
 mod palette_runtime_tests;
 mod bank_ownership;
+mod tilemap_bank_plan;
+#[cfg(test)]
+mod tilemap_transfer_directory_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_stream_bank_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -1411,6 +1420,12 @@ fn parse_firaga_stack_initialization(bytes: &[u8]) -> Result<FiragaStackInitiali
 fn parse_firaga_queued_transfer(bytes: &[u8]) -> Result<FiragaQueuedTransfer, String> { let value: FiragaQueuedTransfer = serde_json::from_slice(bytes).map_err(|e| format!("Invalid firaga_queued_transfer: {e}"))?; value.validate()?; Ok(value) }
 fn parse_white_flowers_signed_bytes(bytes: &[u8]) -> Result<WhiteFlowersSignedBytes, String> { let value: WhiteFlowersSignedBytes = serde_json::from_slice(bytes).map_err(|e| format!("Invalid white_flowers_signed_bytes: {e}"))?; value.validate()?; Ok(value) }
 fn parse_white_flowers_isolated_values(bytes: &[u8]) -> Result<WhiteFlowersIsolatedValues, String> { let value: WhiteFlowersIsolatedValues = serde_json::from_slice(bytes).map_err(|e| format!("Invalid white_flowers_isolated_values: {e}"))?; value.validate()?; Ok(value) }
+fn parse_tilemap_transfer_directory(bytes: &[u8]) -> Result<TilemapTransferDirectory, String> {
+    let value: TilemapTransferDirectory = serde_json::from_slice(bytes)
+        .map_err(|error| format!("Invalid tilemap transfer directory: {error}"))?;
+    value.validate()?;
+    Ok(value)
+}
 fn encode_conditional_property_masks(value:&ConditionalPropertyMasks)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode conditional_property_masks: {e}"))}
 fn encode_compact_obj_animations(value:&CompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode compact_obj_animations: {e}"))}
 fn encode_secondary_compact_obj_animations(value:&SecondaryCompactObjAnimations)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode secondary_compact_obj_animations: {e}"))}
@@ -1470,6 +1485,10 @@ fn encode_firaga_stack_initialization(value: &FiragaStackInitialization) -> Resu
 fn encode_firaga_queued_transfer(value: &FiragaQueuedTransfer) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode firaga_queued_transfer: {e}")) }
 fn encode_white_flowers_signed_bytes(value: &WhiteFlowersSignedBytes) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode white_flowers_signed_bytes: {e}")) }
 fn encode_white_flowers_isolated_values(value: &WhiteFlowersIsolatedValues) -> Result<Vec<u8>, String> { serde_json::to_vec_pretty(value).map_err(|e| format!("Cannot encode white_flowers_isolated_values: {e}")) }
+fn encode_tilemap_transfer_directory(value: &TilemapTransferDirectory) -> Result<Vec<u8>, String> {
+    serde_json::to_vec_pretty(value)
+        .map_err(|error| format!("Cannot encode tilemap transfer directory: {error}"))
+}
 fn encode_ui_raw_transfers(value:&RawTransfers)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode ui_raw_transfers: {e}"))}
 fn encode_dynamic_raw_fragments(value:&DynamicRawFragments)->Result<Vec<u8>,String> {serde_json::to_vec_pretty(value).map_err(|e|format!("Cannot encode dynamic_raw_fragments: {e}"))}
 fn parse_indexed_graphics(bytes:&[u8])->Result<IndexedGraphics,String> {let value:IndexedGraphics=serde_json::from_slice(bytes).map_err(|e|format!("Invalid indexed_graphics: {e}"))?;value.validate()?;Ok(value)}
@@ -1789,6 +1808,8 @@ struct Dataset {
     firaga_queued_transfer: Option<FiragaQueuedTransfer>,
     white_flowers_signed_bytes: Option<WhiteFlowersSignedBytes>,
     white_flowers_isolated_values: Option<WhiteFlowersIsolatedValues>,
+    tilemap_transfer_directory: Option<TilemapTransferDirectory>,
+    indexed_tilemap_controls: Option<IndexedTilemapControls>,
     map_raster_palettes: Option<MapRasterPalettes>,
     auxiliary_commands: Option<AuxiliaryCommands>,
     auxiliary_archive: Option<AuxiliaryArchive>,
@@ -1919,6 +1940,8 @@ struct Dataset {
     firaga_queued_transfer_bytes: Option<Vec<u8>>,
     white_flowers_signed_bytes_bytes: Option<Vec<u8>>,
     white_flowers_isolated_values_bytes: Option<Vec<u8>>,
+    tilemap_transfer_directory_bytes: Option<Vec<u8>>,
+    indexed_tilemap_controls_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2075,6 +2098,10 @@ impl Dataset {
             firaga_queued_transfer: self.firaga_queued_transfer.as_ref().zip(self.firaga_queued_transfer_bytes.as_deref()),
             white_flowers_signed_bytes: self.white_flowers_signed_bytes.as_ref().zip(self.white_flowers_signed_bytes_bytes.as_deref()),
             white_flowers_isolated_values: self.white_flowers_isolated_values.as_ref().zip(self.white_flowers_isolated_values_bytes.as_deref()),
+            tilemap_transfer_directory: self.tilemap_transfer_directory.as_ref()
+                .zip(self.tilemap_transfer_directory_bytes.as_deref()),
+            indexed_tilemap_controls: self.indexed_tilemap_controls.as_ref()
+                .zip(self.indexed_tilemap_controls_bytes.as_deref()),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2299,6 +2326,20 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let firaga_queued_transfer_bytes=manifest.coverage.iter().any(|id|id==FIRAGA_QUEUED_TRANSFER_ID).then(||read_bounded(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES)).transpose()?;
     let white_flowers_signed_bytes_bytes=manifest.coverage.iter().any(|id|id==WHITE_FLOWERS_SIGNED_BYTES_ID).then(||read_bounded(&path.join(WHITE_FLOWERS_SIGNED_BYTES_FILE),MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES)).transpose()?;
     let white_flowers_isolated_values_bytes=manifest.coverage.iter().any(|id|id==WHITE_FLOWERS_ISOLATED_VALUES_ID).then(||read_bounded(&path.join(WHITE_FLOWERS_ISOLATED_VALUES_FILE),MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES)).transpose()?;
+    let tilemap_transfer_directory_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_TRANSFER_DIRECTORY_ID)
+        .then(|| read_bounded(
+            &path.join(TILEMAP_TRANSFER_DIRECTORY_FILE),
+            MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES,
+        ))
+        .transpose()?;
+    let indexed_tilemap_controls_bytes = manifest.coverage.iter()
+        .any(|id| id == INDEXED_TILEMAP_CONTROLS_ID)
+        .then(|| read_bounded(
+            &path.join(INDEXED_TILEMAP_CONTROLS_FILE),
+            MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES,
+        ))
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2475,6 +2516,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_queued_transfer_bytes.as_ref().map_or(0, Vec::len),
         white_flowers_signed_bytes_bytes.as_ref().map_or(0, Vec::len),
         white_flowers_isolated_values_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_transfer_directory_bytes.as_ref().map_or(0, Vec::len),
+        indexed_tilemap_controls_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2606,6 +2649,11 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
     let firaga_queued_transfer=firaga_queued_transfer_bytes.as_deref().map(parse_firaga_queued_transfer).transpose()?;
     let white_flowers_signed_bytes=white_flowers_signed_bytes_bytes.as_deref().map(parse_white_flowers_signed_bytes).transpose()?;
     let white_flowers_isolated_values=white_flowers_isolated_values_bytes.as_deref().map(parse_white_flowers_isolated_values).transpose()?;
+    let tilemap_transfer_directory = tilemap_transfer_directory_bytes.as_deref()
+        .map(parse_tilemap_transfer_directory).transpose()?;
+    let indexed_tilemap_controls = indexed_tilemap_controls_bytes.as_deref()
+        .map(serde_json::from_slice).transpose()
+        .map_err(|error| format!("Invalid indexed tilemap controls: {error}"))?;
     let indexed_graphics=indexed_graphics_bytes.as_deref().map(parse_indexed_graphics).transpose()?;
     let world_records38=world_records38_bytes.as_deref().map(parse_world_records38).transpose()?;
     let parameter_records27=parameter_records27_bytes.as_deref().map(parse_parameter_records27).transpose()?;
@@ -2787,6 +2835,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_queued_transfer,
         white_flowers_signed_bytes,
         white_flowers_isolated_values,
+        tilemap_transfer_directory,
+        indexed_tilemap_controls,
         map_raster_palettes,
         auxiliary_commands,
         auxiliary_archive,
@@ -2917,6 +2967,8 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         firaga_queued_transfer_bytes,
         white_flowers_signed_bytes_bytes,
         white_flowers_isolated_values_bytes,
+        tilemap_transfer_directory_bytes,
+        indexed_tilemap_controls_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3075,6 +3127,8 @@ fn check_dataset_budget(
     firaga_queued_transfer: usize,
     white_flowers_signed_bytes: usize,
     white_flowers_isolated_values: usize,
+    tilemap_transfer_directory: usize,
+    indexed_tilemap_controls: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3221,6 +3275,8 @@ fn check_dataset_budget(
         || firaga_queued_transfer as u64 > MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES
         || white_flowers_signed_bytes as u64 > MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES
         || white_flowers_isolated_values as u64 > MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES
+        || tilemap_transfer_directory as u64 > MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES
+        || indexed_tilemap_controls as u64 > MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3373,6 +3429,8 @@ fn check_dataset_budget(
         .saturating_add(firaga_queued_transfer)
         .saturating_add(white_flowers_signed_bytes)
         .saturating_add(white_flowers_isolated_values)
+        .saturating_add(tilemap_transfer_directory)
+        .saturating_add(indexed_tilemap_controls)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3617,6 +3675,18 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.firaga_queued_transfer {eprintln!("ROM_DATA runtime=decoded resource={FIRAGA_QUEUED_TRANSFER_ID} file={} halfwords={}",dataset.manifest.resources[145].sha256,data.halfwords.len());}
     if let Some(data)=&dataset.white_flowers_signed_bytes {eprintln!("ROM_DATA runtime=decoded resource={WHITE_FLOWERS_SIGNED_BYTES_ID} file={} values={}",dataset.manifest.resources[146].sha256,data.values.len());}
     if let Some(data)=&dataset.white_flowers_isolated_values {eprintln!("ROM_DATA runtime=decoded resource={WHITE_FLOWERS_ISOLATED_VALUES_ID} file={} row_values={}",dataset.manifest.resources[147].sha256,data.row.len());}
+    if let Some(data) = &dataset.tilemap_transfer_directory {
+        eprintln!(
+            "ROM_DATA runtime=decoded resource={TILEMAP_TRANSFER_DIRECTORY_ID} slots={} rows={} descriptors={}",
+            data.slots.len(), data.rows.len(), data.descriptors.len(),
+        );
+    }
+    if let Some(data) = &dataset.indexed_tilemap_controls {
+        eprintln!(
+            "ROM_DATA runtime=decoded resource={INDEXED_TILEMAP_CONTROLS_ID} slots={}",
+            data.slots.len(),
+        );
+    }
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -3788,6 +3858,13 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.observed_lz_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_LZ_ID} dataset={} bus_reads={} source_bytes={} hle_calls={} soil_source_bytes={:?} soil_hle_calls={:?} firaga_source_bytes={:?} firaga_hle_calls={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.hle_calls,i.soil_source_bytes_by_block,i.soil_hle_calls_by_block,i.firaga_source_bytes_by_block,i.firaga_hle_calls_by_block);}
         if let Some(i)=resources.constructor_template64_stats() {eprintln!("ROM_DATA_USE resource={CONSTRUCTOR_TEMPLATE64_ID} dataset={} bus_reads={} source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.observed_tilemap_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ID} dataset={} bus_reads={} source_bytes={} rectangle_bytes={:?} root_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.rectangle_bytes,i.root_bytes);}
+        if let Some(bytes) = resources.tilemap_stream_bank_bytes_read() {
+            eprintln!(
+                "ROM_DATA_USE bank=tilemap-streams dataset={} bound_source_bytes={bytes} indexed_control_bytes={}",
+                resources.dataset_sha256(),
+                resources.tilemap_indexed_control_bytes_read().unwrap_or_default(),
+            );
+        }
         if let Some(i)=resources.observed_tilemap_descriptor_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} wrapper_bytes={} transfer_descriptor_bytes={} transfer_wrapper_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.descriptor_bytes,i.wrapper_bytes,i.transfer_descriptor_bytes,i.transfer_wrapper_bytes);}
         if let Some(i)=resources.observed_tilemap_row_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ROW_ID} dataset={} bus_reads={} source_bytes={} transfer_source_bytes={} list_source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.transfer_source_bytes,i.list_source_bytes);}
         if let Some(i)=resources.dma_register_directories_stats() {eprintln!("ROM_DATA_USE resource={DMA_REGISTER_DIRECTORIES_ID} dataset={} bus_reads={} directory_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.directory_bytes);}
@@ -3818,6 +3895,14 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.firaga_queued_transfer_stats() {eprintln!("ROM_DATA_USE resource={FIRAGA_QUEUED_TRANSFER_ID} dataset={} bus_reads={} source_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes);}
         if let Some(i)=resources.white_flowers_signed_bytes_stats() {eprintln!("ROM_DATA_USE resource={WHITE_FLOWERS_SIGNED_BYTES_ID} dataset={} bus_reads={} source_bytes={} values_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.values_mask);}
         if let Some(i)=resources.white_flowers_isolated_values_stats() {eprintln!("ROM_DATA_USE resource={WHITE_FLOWERS_ISOLATED_VALUES_ID} dataset={} bus_reads={} row_bytes={} byte_bytes={} row_mask={}",resources.dataset_sha256(),i.bus_reads,i.row_source_bytes,i.byte_source_bytes,i.row_values_mask);}
+        if let Some(i) = resources.tilemap_transfer_directory_stats() {
+            eprintln!(
+                "ROM_DATA_USE resource={TILEMAP_TRANSFER_DIRECTORY_ID} dataset={} bus_reads={} pointer_bytes={} count_bytes={} row_bytes={} descriptor_bytes={} wrapper_bytes={} bound_lz77_bus_bytes={} bound_lz77_calls={} bound_lz77_input_bytes={}",
+                resources.dataset_sha256(), i.bus_reads, i.pointer_bytes, i.count_bytes,
+                i.row_bytes, i.descriptor_bytes, i.wrapper_bytes,
+                i.bound_lz77_bus_bytes, i.bound_lz77_calls, i.bound_lz77_input_bytes,
+            );
+        }
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
@@ -4254,6 +4339,11 @@ fn write_dataset_inner(
     let firaga_queued_transfer_data=source.firaga_queued_transfer.as_ref().map(|c|encode_firaga_queued_transfer(&c.decoded)).transpose()?;
     let white_flowers_signed_bytes_data=source.white_flowers_signed_bytes.as_ref().map(|c|encode_white_flowers_signed_bytes(&c.decoded)).transpose()?;
     let white_flowers_isolated_values_data=source.white_flowers_isolated_values.as_ref().map(|c|encode_white_flowers_isolated_values(&c.decoded)).transpose()?;
+    let tilemap_transfer_directory_data = source.tilemap_transfer_directory.as_ref()
+        .map(|catalog| encode_tilemap_transfer_directory(&catalog.decoded)).transpose()?;
+    let indexed_tilemap_controls_data = source.indexed_tilemap_controls.as_ref()
+        .map(serde_json::to_vec_pretty).transpose()
+        .map_err(|error| format!("Cannot encode indexed tilemap controls: {error}"))?;
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4416,6 +4506,8 @@ fn write_dataset_inner(
     if let Some(bytes)=&firaga_queued_transfer_data {files.push(bytes);}
     if let Some(bytes)=&white_flowers_signed_bytes_data {files.push(bytes);}
     if let Some(bytes)=&white_flowers_isolated_values_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_transfer_directory_data {files.push(bytes);}
+    if let Some(bytes) = &indexed_tilemap_controls_data {files.push(bytes);}
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4569,6 +4661,8 @@ fn write_dataset_inner(
         firaga_queued_transfer_data.as_ref().map_or(0, Vec::len),
         white_flowers_signed_bytes_data.as_ref().map_or(0, Vec::len),
         white_flowers_isolated_values_data.as_ref().map_or(0, Vec::len),
+        tilemap_transfer_directory_data.as_ref().map_or(0, Vec::len),
+        indexed_tilemap_controls_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4715,6 +4809,12 @@ fn write_dataset_inner(
     if let Some(bytes)=&firaga_queued_transfer_data {write(&path.join(FIRAGA_QUEUED_TRANSFER_FILE),bytes)?;}
     if let Some(bytes)=&white_flowers_signed_bytes_data {write(&path.join(WHITE_FLOWERS_SIGNED_BYTES_FILE),bytes)?;}
     if let Some(bytes)=&white_flowers_isolated_values_data {write(&path.join(WHITE_FLOWERS_ISOLATED_VALUES_FILE),bytes)?;}
+    if let Some(bytes) = &tilemap_transfer_directory_data {
+        write(&path.join(TILEMAP_TRANSFER_DIRECTORY_FILE), bytes)?;
+    }
+    if let Some(bytes) = &indexed_tilemap_controls_data {
+        write(&path.join(INDEXED_TILEMAP_CONTROLS_FILE), bytes)?;
+    }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_archive_data {write(&path.join(AUXILIARY_ARCHIVE_FILE),bytes)?;}
@@ -4725,19 +4825,30 @@ fn write_dataset_inner(
 
 pub fn cmd(args: &[String]) -> Result<(), String> {
     let operation = args.first().map(String::as_str);
-    if let [operation, manifest, plan] = args {
-        if operation == "audit-ownership" {
+    match (operation, args) {
+        (Some("audit-ownership"), [_, manifest, plan]) => {
             return bank_ownership::run(Path::new(manifest), Path::new(plan));
         }
+        (Some("plan-tilemap-bank"), [_, rom]) => {
+            return tilemap_bank_plan::run(Path::new(rom));
+        }
+        _ => {}
     }
     if !matches!(
         (operation, args.len()),
         (Some("extract" | "verify"), 3) | (Some("prepare"), 2 | 3)
     ) {
-        return Err("usage: recomp rom-data <extract|verify> <rom> <dataset-directory> | prepare <rom> [resources-root] | audit-ownership <manifest.toml> <plan.json>".into());
+        return Err("usage: recomp rom-data <extract|verify> <rom> <dataset-directory> | prepare <rom> [resources-root] | plan-tilemap-bank <rom> | audit-ownership <manifest.toml> <plan.json>".into());
     }
     let rom = fs::read(&args[1]).map_err(|e| format!("Cannot read ROM: {e}"))?;
-    let mut source = Extraction::from_rom(&rom)?;
+    let mut source = if operation == Some("verify") {
+        let dataset = read_dataset(Path::new(&args[2]))?;
+        let source = Extraction::from_rom_for_manifest(&rom, &dataset.manifest)?;
+        source.validate_files(dataset.files())?;
+        source
+    } else {
+        Extraction::from_rom(&rom)?
+    };
     if operation == Some("prepare") {
         let root = args
             .get(2)
@@ -4758,7 +4869,6 @@ pub fn cmd(args: &[String]) -> Result<(), String> {
     let action = if args[0] == "extract" {
         extract(path, &mut source)?
     } else {
-        verify(path, &source)?;
         "verified"
     };
     println!("ROM_DATA action={action} profile={} source={} schema={} decoded={} files={} runtime=offline",
@@ -5092,6 +5202,8 @@ mod tests {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5419,8 +5531,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

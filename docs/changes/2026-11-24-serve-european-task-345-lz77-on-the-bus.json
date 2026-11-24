@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "serve-european-task-345-lz77-on-the-bus",
+  "title": "Serve European task-345 LZ77 inputs through the cartridge bus",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows harness under Wine"
+  ],
+  "changes": [
+    "Serve the 13 memory-bound encoded inputs through the ordinary cartridge bus, with exact bounds and composition with neighboring control and ROM data.",
+    "Validate bound input pages during activation and report bus-served input bytes separately from HLE decoding."
+  ],
+  "validation": [
+    "Windows harness rvt7j7za built successfully. Wine c5hp1xyf matched direct byte and native ABI reads for all 15 inputs across three mirrors with inverted backing.",
+    "DMA3 halfword and word copies across a bound and raw boundary match destination, channel control and guest clock. The 300-frame slot-1 replay matches E473, including its state digest.",
+    "The Wine runner drained the server, preserved 35 input paths and retired scratch."
+  ],
+  "limitations": [
+    "The authenticated ROM supplies the in-memory bindings at activation. Persistent coverage, translated guest scenes, additional ordinary selectors, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -17,20 +17,33 @@ pub struct Block {
 /// clipped at the declared output size follow the BIOS/HLE stream contract.
 /// Invalid history references are rejected rather than synthesizing zeroes.
 pub fn decode(input: &[u8], output_budget: usize) -> Result<Block, String> {
-    decode_impl(input, output_budget, None)
+    let mut bytes = Vec::new();
+    let consumed = walk(input, output_budget, Some(&mut bytes), None)?;
+    Ok(Block { bytes, consumed })
+}
+
+/// Validate one stream and return its input extent without expanding its data.
+pub fn encoded_length(input: &[u8], output_budget: usize) -> Result<usize, String> {
+    walk(input, output_budget, None, None)
 }
 
 /// Exact literal source/output positions from the same verified parser.
 /// Kept out of serialized resource formats and ordinary decode results.
-pub(crate) fn literal_sources(input: &[u8], output_budget: usize) -> Result<Vec<(usize, usize)>, String> {
+pub(crate) fn literal_sources(
+    input: &[u8],
+    output_budget: usize,
+) -> Result<Vec<(usize, usize)>, String> {
     let mut sources = Vec::new();
-    decode_impl(input, output_budget, Some(&mut sources))?;
+    walk(input, output_budget, None, Some(&mut sources))?;
     Ok(sources)
 }
 
-fn decode_impl(
-    input: &[u8], output_budget: usize, mut sources: Option<&mut Vec<(usize, usize)>>,
-) -> Result<Block, String> {
+fn walk(
+    input: &[u8],
+    output_budget: usize,
+    mut decoded: Option<&mut Vec<u8>>,
+    mut sources: Option<&mut Vec<(usize, usize)>>,
+) -> Result<usize, String> {
     let header = input.get(..4).ok_or("Truncated LZ77 header")?;
     if header[0] != 0x10 {
         return Err("Expected GBA LZ77 type 0x10".into());
@@ -39,43 +52,50 @@ fn decode_impl(
     if size == 0 || size > output_budget {
         return Err(format!("LZ77 output size {size} exceeds budget or is zero"));
     }
-    let mut bytes = Vec::new();
-    bytes
-        .try_reserve_exact(size)
-        .map_err(|_| "Cannot allocate bounded LZ77 output")?;
+    if let Some(bytes) = &mut decoded {
+        bytes
+            .try_reserve_exact(size)
+            .map_err(|_| "Cannot allocate bounded LZ77 output")?;
+    }
     let mut position = 4;
-    while bytes.len() < size {
+    let mut produced = 0;
+    while produced < size {
         let flags = take(input, &mut position)?;
         for bit in (0..8).rev() {
-            if bytes.len() == size {
+            if produced == size {
                 break;
             }
             if flags & (1 << bit) == 0 {
                 if let Some(sources) = sources.as_mut() {
-                    sources.push((position, bytes.len()));
+                    sources.push((position, produced));
                 }
-                bytes.push(take(input, &mut position)?);
+                let byte = take(input, &mut position)?;
+                if let Some(bytes) = &mut decoded {
+                    bytes.push(byte);
+                }
+                produced += 1;
             } else {
                 let first = take(input, &mut position)? as usize;
                 let second = take(input, &mut position)? as usize;
                 let length = (first >> 4) + 3;
                 let distance = ((first & 15) << 8 | second) + 1;
-                if distance > bytes.len() {
+                if distance > produced {
                     return Err(format!(
                         "LZ77 back-reference before output start at {}",
                         position - 2
                     ));
                 }
-                for _ in 0..length.min(size - bytes.len()) {
-                    bytes.push(bytes[bytes.len() - distance]);
+                let copied = length.min(size - produced);
+                if let Some(bytes) = &mut decoded {
+                    for _ in 0..copied {
+                        bytes.push(bytes[bytes.len() - distance]);
+                    }
                 }
+                produced += copied;
             }
         }
     }
-    Ok(Block {
-        bytes,
-        consumed: position,
-    })
+    Ok(position)
 }
 
 fn take(input: &[u8], position: &mut usize) -> Result<u8, String> {
@@ -93,6 +113,8 @@ mod tests {
         // One literal, an overlapping18-byte match and a final literal.
         let source = [0x10, 20, 0, 0, 0x40, b'A', 0xf0, 0, b'B', 0xcc, 0xdd];
         let decoded = decode(&source, 20).unwrap();
+        assert_eq!(encoded_length(&source, 20), Ok(decoded.consumed));
+        assert_eq!(literal_sources(&source, 20), Ok(vec![(5, 0), (8, 19)]));
         let mut expected = vec![b'A'; 19];
         expected.push(b'B');
         assert_eq!(
@@ -121,6 +143,7 @@ mod tests {
     #[test]
     fn partial_final_match_and_flag_group_stop_at_declared_size() {
         let source = [0x10, 2, 0, 0, 0x40, b'X', 0xf0, 0];
+        assert_eq!(encoded_length(&source, 2), Ok(8));
         assert_eq!(
             decode(&source, 2).unwrap(),
             Block {
@@ -143,6 +166,7 @@ mod tests {
         let source = [0x10, 20, 0, 0, 0x40, b'A', 0xf0, 0, b'B'];
         for end in 0..source.len() {
             assert!(decode(&source[..end], 20).is_err());
+            assert!(encoded_length(&source[..end], 20).is_err());
         }
         for source in [
             &[0x10, 3, 0, 0, 0x80, 0, 0][..],
@@ -152,6 +176,7 @@ mod tests {
             &[0x10, 0xff, 0xff, 0xff][..],
         ] {
             assert!(decode(source, 8192).is_err());
+            assert!(encoded_length(source, 8192).is_err());
         }
         assert!(decode(&source, 19).is_err());
         assert!(decode(&source, 0).is_err());

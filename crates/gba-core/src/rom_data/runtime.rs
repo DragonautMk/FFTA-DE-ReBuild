@@ -170,6 +170,8 @@ pub use constructor_template64::ConstructorTemplate64Stats;
 mod observed_tilemap;
 use observed_tilemap::ObservedTilemapResources;
 pub use observed_tilemap::ObservedTilemapStats;
+mod tilemap_stream_bank;
+use tilemap_stream_bank::TilemapStreamBankResources;
 mod observed_tilemap_descriptor;
 use observed_tilemap_descriptor::ObservedTilemapDescriptorResources;
 pub use observed_tilemap_descriptor::ObservedTilemapDescriptorStats;
@@ -260,6 +262,9 @@ pub use white_flowers_signed_bytes::WhiteFlowersSignedBytesStats;
 mod white_flowers_isolated_values;
 use white_flowers_isolated_values::WhiteFlowersIsolatedValuesResources;
 pub use white_flowers_isolated_values::WhiteFlowersIsolatedValuesStats;
+mod tilemap_transfer_directory;
+use tilemap_transfer_directory::TilemapTransferDirectoryResources;
+pub use tilemap_transfer_directory::{TilemapLz77Input, TilemapTransferDirectoryStats};
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -524,6 +529,7 @@ pub struct RuntimeResources {
     observed_lz: Option<Box<ObservedLzResources>>,
     constructor_template64: Option<Box<ConstructorTemplate64Resources>>,
     observed_tilemap: Option<Box<ObservedTilemapResources>>,
+    tilemap_stream_bank: Option<Box<TilemapStreamBankResources>>,
     observed_tilemap_descriptor: Option<Box<ObservedTilemapDescriptorResources>>,
     observed_tilemap_row: Option<Box<ObservedTilemapRowResources>>,
     dma_register_directories: Option<Box<DmaRegisterDirectoriesResources>>,
@@ -554,6 +560,7 @@ pub struct RuntimeResources {
     firaga_queued_transfer: Option<Box<FiragaQueuedTransferResources>>,
     white_flowers_signed_bytes: Option<Box<WhiteFlowersSignedBytesResources>>,
     white_flowers_isolated_values: Option<Box<WhiteFlowersIsolatedValuesResources>>,
+    tilemap_transfer_directory: Option<Box<TilemapTransferDirectoryResources>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -640,7 +647,7 @@ impl RuntimeResources {
     /// digest is in the manifest. Reauthenticate the base against the actual
     /// selected image; no editable/mod resource can enter through this API.
     pub fn from_base_files(rom: &[u8], files: BaseFiles<'_>) -> Result<Arc<Self>, String> {
-        let source = Extraction::from_rom(rom)?;
+        let source = Extraction::from_rom_for_manifest(rom, files.manifest)?;
         source.validate_files(files)?;
         let manifest = files.manifest;
         let dimensions = files.dimensions.0.clone();
@@ -860,6 +867,16 @@ impl RuntimeResources {
         }
         if let Some((data, _)) = files.observed_tilemap {
             resources.observed_tilemap = Some(Box::new(ObservedTilemapResources::new(data.clone(), &source.observed_tilemap.as_ref().unwrap().sources)?));
+            if manifest.source_rom_sha256 == ffta_rom::EUROPE_SHA256 {
+                let controls = files.indexed_tilemap_controls.map(|(controls, _)| controls);
+                // The validated manifest appends the new claim after its earlier owners.
+                let prior_count = manifest.resources.len() - usize::from(controls.is_some());
+                resources.tilemap_stream_bank = Some(Box::new(TilemapStreamBankResources::new(
+                    rom,
+                    &manifest.resources[..prior_count],
+                    controls,
+                )?));
+            }
         }
         if let Some((data, _)) = files.observed_tilemap_descriptor {
             resources.observed_tilemap_descriptor = Some(Box::new(ObservedTilemapDescriptorResources::new(data.clone(), &source.observed_tilemap_descriptor.as_ref().unwrap().sources)?));
@@ -950,6 +967,17 @@ impl RuntimeResources {
         }
         if let Some((data, _)) = files.white_flowers_isolated_values {
             resources.white_flowers_isolated_values = Some(Box::new(WhiteFlowersIsolatedValuesResources::new(data.clone(), &source.white_flowers_isolated_values.as_ref().unwrap().sources)?));
+        }
+        if let Some((data, _)) = files.tilemap_transfer_directory {
+            let catalog = source.tilemap_transfer_directory.as_ref().unwrap();
+            resources.tilemap_transfer_directory = Some(Box::new(
+                TilemapTransferDirectoryResources::new(
+                    data,
+                    &catalog.sources,
+                    rom,
+                    &manifest.resources,
+                )?,
+            ));
         }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
@@ -1222,6 +1250,7 @@ impl RuntimeResources {
             observed_lz: None,
             constructor_template64: None,
             observed_tilemap: None,
+            tilemap_stream_bank: None,
             observed_tilemap_descriptor: None,
             observed_tilemap_row: None,
             dma_register_directories: None,
@@ -1252,6 +1281,7 @@ impl RuntimeResources {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1396,6 +1426,7 @@ impl RuntimeResources {
             + self.observed_lz.as_ref().map_or(0, |i| i.resident_bytes())
             + self.constructor_template64.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.tilemap_stream_bank.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap_descriptor.as_ref().map_or(0, |i| i.resident_bytes())
             + self.observed_tilemap_row.as_ref().map_or(0, |i| i.resident_bytes())
             + self.dma_register_directories.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1426,6 +1457,7 @@ impl RuntimeResources {
             + self.firaga_queued_transfer.as_ref().map_or(0, |i| i.resident_bytes())
             + self.white_flowers_signed_bytes.as_ref().map_or(0, |i| i.resident_bytes())
             + self.white_flowers_isolated_values.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.tilemap_transfer_directory.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1595,6 +1627,12 @@ impl RuntimeResources {
     pub fn observed_lz_stats(&self) -> Option<ObservedLzStats> { self.observed_lz.as_ref().map(|m| m.stats()) }
     pub fn constructor_template64_stats(&self) -> Option<ConstructorTemplate64Stats> { self.constructor_template64.as_ref().map(|m| m.stats()) }
     pub fn observed_tilemap_stats(&self) -> Option<ObservedTilemapStats> { self.observed_tilemap.as_ref().map(|m| m.stats()) }
+    pub fn tilemap_stream_bank_bytes_read(&self) -> Option<u64> {
+        self.tilemap_stream_bank.as_ref().map(|bank| bank.source_bytes_read())
+    }
+    pub fn tilemap_indexed_control_bytes_read(&self) -> Option<u64> {
+        self.tilemap_stream_bank.as_ref().map(|bank| bank.indexed_control_bytes_read())
+    }
     pub fn observed_tilemap_descriptor_stats(&self) -> Option<ObservedTilemapDescriptorStats> { self.observed_tilemap_descriptor.as_ref().map(|m| m.stats()) }
     pub fn observed_tilemap_row_stats(&self) -> Option<ObservedTilemapRowStats> { self.observed_tilemap_row.as_ref().map(|m| m.stats()) }
     pub fn dma_register_directories_stats(&self) -> Option<DmaRegisterDirectoriesStats> { self.dma_register_directories.as_ref().map(|m| m.stats()) }
@@ -1625,6 +1663,9 @@ impl RuntimeResources {
     pub fn firaga_queued_transfer_stats(&self) -> Option<FiragaQueuedTransferStats> { self.firaga_queued_transfer.as_ref().map(|m| m.stats()) }
     pub fn white_flowers_signed_bytes_stats(&self) -> Option<WhiteFlowersSignedBytesStats> { self.white_flowers_signed_bytes.as_ref().map(|m| m.stats()) }
     pub fn white_flowers_isolated_values_stats(&self) -> Option<WhiteFlowersIsolatedValuesStats> { self.white_flowers_isolated_values.as_ref().map(|m| m.stats()) }
+    pub fn tilemap_transfer_directory_stats(&self) -> Option<TilemapTransferDirectoryStats> {
+        self.tilemap_transfer_directory.as_ref().map(|model| model.stats())
+    }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1983,6 +2024,10 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.tilemap_stream_bank {
+                Some(bank) => bank.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.observed_tilemap_descriptor {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2100,6 +2145,10 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.white_flowers_isolated_values {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.tilemap_transfer_directory {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -2496,6 +2545,7 @@ impl crate::MemMap {
             || ObservedLzResources::source_page(index)
             || ConstructorTemplate64Resources::source_page(index)
             || ObservedTilemapResources::source_page(index)
+            || TilemapStreamBankResources::source_range(index)
             || ObservedTilemapDescriptorResources::source_page(index)
             || ObservedTilemapRowResources::source_page(index)
             || DmaRegisterDirectoriesResources::source_page(index)
@@ -2526,6 +2576,7 @@ impl crate::MemMap {
             || FiragaQueuedTransferResources::source_page(index)
             || WhiteFlowersSignedBytesResources::source_page(index)
             || WhiteFlowersIsolatedValuesResources::source_page(index)
+            || TilemapTransferDirectoryResources::source_page(index)
             || AudioDriverResources::source_page(index)
             || PaletteEffectDispatchResources::source_page(index)
             || PaletteProgramResources::source_page(index)

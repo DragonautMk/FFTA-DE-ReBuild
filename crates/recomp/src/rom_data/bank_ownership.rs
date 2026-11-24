@@ -8,28 +8,28 @@ use std::{
     path::Path,
 };
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
-struct Plan {
-    schema: u32,
-    source_rom_sha256: String,
-    source_rom_size: u32,
-    profile: String,
-    banks: Vec<Bank>,
+pub(super) struct Plan {
+    pub(super) schema: u32,
+    pub(super) source_rom_sha256: String,
+    pub(super) source_rom_size: u32,
+    pub(super) profile: String,
+    pub(super) banks: Vec<Bank>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
-struct Bank {
-    id: String,
-    ranges: Vec<Range>,
+pub(super) struct Bank {
+    pub(super) id: String,
+    pub(super) ranges: Vec<Range>,
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Copy, Deserialize, Eq, Ord, PartialEq, PartialOrd, Serialize)]
 #[serde(deny_unknown_fields)]
-struct Range {
-    offset: u32,
-    length: u32,
+pub(super) struct Range {
+    pub(super) offset: u32,
+    pub(super) length: u32,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]

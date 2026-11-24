@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "map-european-task-345-selector-routes",
+  "title": "Map European task-345 selectors to action and replay sources",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, interpreter via Wine"
+  ],
+  "changes": [
+    "Join the 341 primary descriptor arguments and all 347 action records against the complete 23-slot transfer directory. Record conditional selector mappings and availability candidates from the 345 protected rosters."
+  ],
+  "validation": [
+    "Wine rxwzcitl verifies slots 2 and 4 in the retained Firaga and Soil Evidence inputs, including both directory reader PCs and the complete 55- and 34-byte LZ77 reads in SWI scope. The first trace request 1z4cjccz exceeded the 32-range limit before execution. Retry preserves its whole-bank projection and all 391 input preimages. Wine drains and 398 protected inputs pass."
+  ],
+  "limitations": [
+    "Roster matches are conditional, and the earlier save ancestry remains open. Both traced streams already have E302 owners. Other selectors, remaining managed inputs, native Windows, Linux and USA remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

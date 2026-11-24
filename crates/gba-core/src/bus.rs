@@ -41,6 +41,10 @@ pub trait Bus {
     fn decoded_packet_body(&self, _source: u32) -> Option<crate::rom_data::PacketRead> { None }
     /// Authenticated output for an observed EUR LZ77 block.
     fn decoded_observed_lz(&self, _source: u32) -> Option<crate::rom_data::ObservedLzRead> { None }
+    /// Exact encoded input bound when the European transfer directory is loaded.
+    fn bound_tilemap_lz77(&self, _source: u32) -> Option<crate::rom_data::TilemapLz77Input> {
+        None
+    }
 
     /// SWI 0x02 Halt: sleep until any enabled interrupt is latched.
     fn hle_halt(&mut self) {}

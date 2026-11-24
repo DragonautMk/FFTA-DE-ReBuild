@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "map-european-tilemap-action-routes",
+  "title": "Map the European tilemap action routes",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Join the 12 indexed tilemap task IDs to the complete declared action and descriptor catalogs. Record the normal dispatcher predicates and the candidate slots for all four unowned routes."
+  ],
+  "validation": [
+    "Wine igckgky_ authenticates three original source windows and compares all 347 action records and 684 descriptors against the exact EUR source. All 18 protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "The validated source routes identify candidate action slots. Learned availability, live inputs, managed reads, integration, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

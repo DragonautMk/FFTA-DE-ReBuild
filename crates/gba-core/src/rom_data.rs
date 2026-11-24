@@ -10,6 +10,7 @@ pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, Observe
 pub use runtime::{CompactObjStats, SecondaryCompactObjStats, TertiaryCompactObjStats};
 pub use runtime::{LayeredObjStats, AudioExtendedDispatchStats, ConditionalItemParametersStats};
 pub use runtime::IndexedRecords16Stats;
+pub use runtime::{TilemapLz77Input, TilemapTransferDirectoryStats};
 pub mod bg_descriptors;
 pub mod bg_packets;
 pub mod bg_packet_data;
@@ -96,6 +97,8 @@ pub mod firaga_stack_initialization;
 pub mod firaga_queued_transfer;
 pub mod white_flowers_signed_bytes;
 pub mod white_flowers_isolated_values;
+pub mod tilemap_transfer_directory;
+pub mod tilemap_stream_bank;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -161,8 +164,9 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 301;
-pub const DECODER_REV: u32 = 300;
+pub const EXTRACTOR_REV: u32 = 303;
+pub const DECODER_REV: u32 = 302;
+const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -615,6 +619,14 @@ pub const MAX_FIRAGA_STACK_INITIALIZATION_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_FIRAGA_QUEUED_TRANSFER_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_WHITE_FLOWERS_SIGNED_BYTES_FILE_BYTES: u64 = 1024 * 1024;
 pub const MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES: u64 = 1024 * 1024;
+pub const TILEMAP_TRANSFER_DIRECTORY_ID: &str = "graphics.tilemap-transfer-directory";
+pub const TILEMAP_TRANSFER_DIRECTORY_FILE: &str = "tilemap-transfer-directory.json";
+pub const TILEMAP_TRANSFER_DIRECTORY_FORMAT: &str = "tilemap-transfer-directory-v1-json";
+pub const MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES: u64 = 64 * 1024;
+pub const INDEXED_TILEMAP_CONTROLS_ID: &str = "graphics.indexed-tilemap-controls";
+pub const INDEXED_TILEMAP_CONTROLS_FILE: &str = "indexed-tilemap-controls.json";
+pub const INDEXED_TILEMAP_CONTROLS_FORMAT: &str = "indexed-tilemap-controls-v1-json";
+pub const MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES: u64 = 16 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -1001,6 +1013,8 @@ pub struct Extraction {
     pub firaga_queued_transfer: Option<firaga_queued_transfer::Catalog>,
     pub white_flowers_signed_bytes: Option<white_flowers_signed_bytes::Catalog>,
     pub white_flowers_isolated_values: Option<white_flowers_isolated_values::Catalog>,
+    pub tilemap_transfer_directory: Option<tilemap_transfer_directory::Catalog>,
+    pub indexed_tilemap_controls: Option<tilemap_stream_bank::IndexedTilemapControls>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1155,6 +1169,8 @@ pub struct BaseFiles<'a> {
     pub firaga_queued_transfer: Option<(&'a firaga_queued_transfer::FiragaQueuedTransfer, &'a [u8])>,
     pub white_flowers_signed_bytes: Option<(&'a white_flowers_signed_bytes::WhiteFlowersSignedBytes, &'a [u8])>,
     pub white_flowers_isolated_values: Option<(&'a white_flowers_isolated_values::WhiteFlowersIsolatedValues, &'a [u8])>,
+    pub tilemap_transfer_directory: Option<(&'a tilemap_transfer_directory::TilemapTransferDirectory, &'a [u8])>,
+    pub indexed_tilemap_controls: Option<(&'a tilemap_stream_bank::IndexedTilemapControls, &'a [u8])>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1163,6 +1179,21 @@ pub struct BaseFiles<'a> {
 
 impl Extraction {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_indexed_tilemap_controls(rom, true)
+    }
+
+    /// Keep the preceding EUR revision readable for explicitly selected datasets.
+    /// The supplied manifest selects the revision only. Its content and source
+    /// identity are validated against the resulting extraction.
+    pub fn from_rom_for_manifest(rom: &[u8], manifest: &Manifest) -> Result<Self, String> {
+        let revision = (manifest.extractor_revision, manifest.decoder_revision);
+        Self::from_rom_with_indexed_tilemap_controls(rom, revision != PRE_INDEXED_TILEMAP_REVISION)
+    }
+
+    fn from_rom_with_indexed_tilemap_controls(
+        rom: &[u8],
+        include_indexed_tilemap_controls: bool,
+    ) -> Result<Self, String> {
         let hash = ffta_rom::digest(rom);
         let (profile, ranges): (&str, &[(u32, &str)]) = match hash.as_str() {
             ffta_rom::SHA256 => ("usa", &[(0x149510, "direct"), (0xa398dc, "iwram-copy")]),
@@ -2206,6 +2237,50 @@ impl Extraction {
                 dependencies: vec![THUMB_PC_LITERALS_ID.into()], sources: metadata.sources.clone(),
             });
             result.white_flowers_isolated_values = Some(metadata);
+            let metadata = tilemap_transfer_directory::Catalog::from_verified_rom(
+                rom,
+                &result.manifest.resources,
+            )?;
+            result.manifest.coverage.push(TILEMAP_TRANSFER_DIRECTORY_ID.into());
+            result.manifest.resources.push(Resource {
+                id: TILEMAP_TRANSFER_DIRECTORY_ID.into(),
+                path: TILEMAP_TRANSFER_DIRECTORY_FILE.into(),
+                format: TILEMAP_TRANSFER_DIRECTORY_FORMAT.into(),
+                sha256: String::new(),
+                dependencies: [
+                    THUMB_PC_LITERALS_ID,
+                    SOIL_SCOPED_VALUES_ID,
+                    OBSERVED_TILEMAP_ROW_ID,
+                    OBSERVED_TILEMAP_DESCRIPTOR_ID,
+                ].into_iter().map(str::to_owned).collect(),
+                sources: metadata.sources.clone(),
+            });
+            result.tilemap_transfer_directory = Some(metadata);
+            if include_indexed_tilemap_controls {
+                let streams = tilemap_stream_bank::from_verified_rom(rom)?;
+                let controls = tilemap_stream_bank::IndexedTilemapControls::from_verified_rom(rom, &streams)?;
+                let prior = script39_registry_poses::PriorSources::new(&result.manifest.resources)?;
+                let sources = controls.uncovered_fields(&prior)?.iter()
+                    .map(|field| field.source_range())
+                    .collect();
+                result.manifest.coverage.push(INDEXED_TILEMAP_CONTROLS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: INDEXED_TILEMAP_CONTROLS_ID.into(),
+                    path: INDEXED_TILEMAP_CONTROLS_FILE.into(),
+                    format: INDEXED_TILEMAP_CONTROLS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        OBSERVED_TILEMAP_ID,
+                        OBSERVED_TILEMAP_ROW_ID,
+                        OBSERVED_TILEMAP_DESCRIPTOR_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.indexed_tilemap_controls = Some(controls);
+            } else {
+                (result.manifest.extractor_revision, result.manifest.decoder_revision) =
+                    PRE_INDEXED_TILEMAP_REVISION;
+            }
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -2388,6 +2463,8 @@ impl Extraction {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2571,6 +2648,8 @@ impl Extraction {
             || self.firaga_stack_initialization.is_some() != self.firaga_queued_transfer.is_some()
             || self.firaga_queued_transfer.is_some() != self.white_flowers_signed_bytes.is_some()
             || self.white_flowers_signed_bytes.is_some() != self.white_flowers_isolated_values.is_some()
+            || self.white_flowers_isolated_values.is_some() != self.tilemap_transfer_directory.is_some()
+            || self.indexed_tilemap_controls.is_some() && self.tilemap_transfer_directory.is_none()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3760,6 +3839,37 @@ impl Extraction {
             (None, None) => {},
             _ => return Err("Missing or unexpected white_flowers_isolated_values".into()),
         }
+        match (&self.tilemap_transfer_directory, files.tilemap_transfer_directory) {
+            (Some(_), Some((_, bytes))) => {
+                if bytes.len() as u64 > MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES {
+                    return Err("Tilemap transfer directory exceeds input limit".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_TRANSFER_DIRECTORY_ID)
+                    .ok_or("Missing tilemap transfer directory in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected tilemap transfer directory".into()),
+        }
+        match (&self.indexed_tilemap_controls, files.indexed_tilemap_controls) {
+            (Some(controls), Some((decoded, bytes))) => {
+                if bytes.len() as u64 > MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES {
+                    return Err("Indexed tilemap controls exceed input limit".into());
+                }
+                if decoded != controls {
+                    return Err("Decoded indexed tilemap controls differ from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.last_mut()
+                    .filter(|resource| resource.id == INDEXED_TILEMAP_CONTROLS_ID)
+                    .ok_or("Missing indexed tilemap controls in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected indexed tilemap controls".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -4458,6 +4568,11 @@ impl Extraction {
             decoded.validate()?;
             if decoded != &expected.decoded { return Err("Decoded white_flowers_isolated_values differs from authenticated source".into()); }
         }
+        if let (Some(expected), Some((decoded, _))) = (&self.tilemap_transfer_directory, files.tilemap_transfer_directory) {
+            if decoded != &expected.decoded {
+                return Err("Decoded tilemap transfer directory differs from authenticated source".into());
+            }
+        }
         if let (Some(expected),Some((decoded,_))) = (&self.map_raster_palettes, files.map_raster_palettes) {
             let descriptors=files.background.ok_or("Missing raster palette descriptor dependency")?.0;
             decoded.validate_dependencies(descriptors)?;
@@ -4617,6 +4732,8 @@ impl Extraction {
             + usize::from(self.firaga_queued_transfer.is_some())
             + usize::from(self.white_flowers_signed_bytes.is_some())
             + usize::from(self.white_flowers_isolated_values.is_some())
+            + usize::from(self.tilemap_transfer_directory.is_some())
+            + usize::from(self.indexed_tilemap_controls.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4819,6 +4936,8 @@ mod tests {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -4974,6 +5093,8 @@ mod tests {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5139,6 +5260,8 @@ mod tests {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5293,6 +5416,8 @@ mod tests {
             firaga_queued_transfer: None,
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
+            tilemap_transfer_directory: None,
+            indexed_tilemap_controls: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

@@ -26751,3 +26751,359 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: all 20 tables and 100 source intervals have expected E301 owners, totaling 177,593 distinct bytes. Five clan aliases reuse the existing bank intervals. Each `71e6f8` view has its expected split ownership.
 - Evidence: Wine `_ifl87zb` authenticated the ROM and retained source contracts, matched the exact E301 manifest and drained successfully. Protected inputs passed.
 - Limits: fixed views use their declared lengths. Additional extents, original use, other readers, Linux and USA remain open. No gameplay execution or performance comparison.
+
+### ROMDATA-01-STAR-CROSS-E298-RESIDUAL
+
+- Outcome: completed for the selected EUR E403 address inventory.
+- Verified criteria: all 243,297 sampled bytes are covered by E298/E301. The 86 E297 residual bytes equal the E423/E424 sampled intersection. The 903 shared bytes and all E298 owner assignments persist in E301.
+- Evidence: Wine `qv1g8xda` verifies the E403 digest, all three manifests, both source plans and server drain.
+- Limits: address-only replay evidence reused. No new scene, source extents, exact PCs, Linux, USA or native Windows proof and no performance comparison.
+
+### ROMDATA-01-STAR-CROSS-RESIDUAL
+
+- Outcome: completed for the selected 86 bytes. Other readers and extents remain open.
+- Verified criteria: E423 and E424 classify the full residual as 42 sampled row bytes and 44 sampled linked-source bytes. E425 serves the affected groups in the 480-frame altered-source comparison. E298 and E301 preserve all 106 planned bytes and their source identities.
+- Evidence: `1u3y2pqu`, `mrt9gl4w`, Wine `wqepgepj`/`st36aju0`/`qv1g8xda`.
+- Limits: later mode-7 runs, other readers, scenes, guest domains, real BIOS, Linux, USA and native Windows remain open. No performance comparison.
+
+### ROMDATA-01-EUR-MODE7-STREAM-EXTENTS
+
+- Outcome: completed for the two mode-7 streams selected by all declared E301 tilemap rows. Parent remains partial.
+- Verified criteria: all 34 rows fingerprinted. Ten type-4 rows select eight mode-4 and two mode-7 streams through authenticated descriptors. Each mode-7 header and single run bounds exactly ten owned bytes. The Soil two-byte gap lies beyond that read extent.
+- Evidence: Wine `x6mub2vs` authenticates the helper disassembly and `u8bkowmo` joins both complete extents and the gap to E301. Protected inputs passed and both Wine servers drained.
+- Limits: other roots, original callers, scenes, the function of the Soil gap, Linux, USA and native Windows remain open. No gameplay replay or performance comparison.
+
+### ROMDATA-01-EUR-TILEMAP-LIST-DIRECTORIES
+
+- Outcome: completed for bounded EUR direct-call argument witnesses and the resulting mode-7 source extents. Parent remains partial.
+- Verified criteria: 224 high-level and 30 lower-level direct call encodings. Local analysis resolves 228 setups, 230 base/count pairs and 937 nonoverlapping rows. E301 owns 168 of 11,244 row bytes. The 100 type-4 rows point to 52 starts. Twenty-eight mode-7 references select nine complete streams, with 152 unowned bytes across eight streams.
+- Evidence: Wine `qs06dz3h` verifies the selected original caller windows, authenticates inputs and compares the derived ranges to E301. The Wine server drained.
+- Limits: 26 unresolved direct setups, wider caller reachability, other stream modes, runtime integration, Linux, USA and native Windows remain open. No replay, payload output or performance comparison.
+
+### ROMDATA-01-EUR-TYPE4-TILEMAP-EXTENTS
+
+- Outcome: completed for the combined E445/E446 selected type-4 streams and descriptor coverage. Parent remains partial.
+- Verified criteria: all 61 compressed roots end on a token boundary after the full first traversal. E301 owns 844 of 7,380 stream bytes and 81 of 856 descriptor bytes. One byte at `3aba8b` retains its compact primary alias owner.
+- Evidence: Wine `9xsy1p68` authenticates the remaining dispatch window. Wine `78zzrsqb` verifies all 61 stream extents and 107 descriptor intervals against E301. Both Wine servers drained and protected inputs passed.
+- Limits: mode-3 sources, other callers, ordinary use, integration, Linux, USA and native Windows remain open. No payload output, replay or performance comparison.
+
+### ROMDATA-01-EUR-TYPE3-TRANSFER-EXTENTS
+
+- Outcome: completed for the combined E446 and declared E301 type-3 projections. Parent remains partial.
+- Verified criteria: 628 rows select 627 descriptors and 275 wrappers. The original flag paths bound 262 LZ77 streams at 226,504 bytes and 13 raw views at 4,960 bytes. E301 owns 15,820 of 245,116 distinct bytes. Preserve the partial descriptor owner at `3abd78..3abd7c`.
+- Evidence: Wine `mxjdpoph` authenticates the halfword queue, source lengths, hashes and manifest ownership. Protected inputs passed and Wine drained.
+- Limits: positive ordinary use, unresolved callers, runtime integration, real BIOS, Linux, USA and native Windows remain open. No payload output, replay or performance comparison.
+
+### ROMDATA-01-EUR-TYPE2-TRANSFER-EXTENTS
+
+- Outcome: completed for the selected E446 and E320 European type-2 projections. Parent remains partial.
+- Verified criteria: 213 rows select 212 headers, 429 entries and 217 windows in 162 rectangles. E301 owns 356 of 10,750 selected bytes. The nominal rectangle extents include another 1,220 bytes beyond the selected windows.
+- Evidence: Wine `2hz2xkoy` wrote the ownership report and drained. Postprocessing failed on mixed list and tuple intervals. Protected recovery `bftzb469` validates that report against the exact regenerated plan and pinned E301 manifest.
+- Limits: other callers, wider copy windows, live use, integration, Linux, USA and native Windows remain open. No payload output, gameplay replay or performance measurement.
+
+### ROMDATA-01-EUR-TYPE5-TRANSFER-EXTENTS
+
+- Outcome: completed for the eight retained E446 European type-5 rows. Parent remains partial.
+- Verified criteria: eight descriptors reference seven byte streams. The occupied stream intervals total 1,730 bytes, including 82 positions skipped by the reader. E301 leaves all 1,792 selected row, descriptor and stream-read bytes unowned. Every E446 row is present in its type inventory.
+- Evidence: Wine `7h8krrgg` and `uhx_ek2y` authenticate the initializer and reader, verify their intervals against E301 and drain successfully. Protected inputs passed.
+- Limits: other callers, live use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement.
+
+### ROMDATA-01-EUR-TILEMAP-DIRECT-SETUPS
+
+- Outcome: completed for the bounded European projections of the remaining 26 E446 physical direct calls. Parent remains partial.
+- Verified criteria: 24 source-bounded list argument projections, one conditional nine-slot selector with two tables, and one forwarding path. E451 adds 105 pairs and 324 rows, of which 36 depend on the conditional selector interval. E301 owns 264 of 3,888 added row bytes and 35 of 730 selected control bytes.
+- Evidence: Wine hniuxufm and fdhqvpxi authenticate the selected original instruction windows. Wine qrfmjqvi confirms ownership by an independent interval join. All three Wine servers drained and protected inputs passed.
+- Limits: catalog IDs and retained initializer fields are conditions. The live byte at +0xe6, other producers and indirect calls, linked source extents, ordinary use, runtime integration, Linux, USA and native Windows remain open. No payload output, gameplay replay or performance measurement.
+
+### ROMDATA-01-EUR-TILEMAP-ADDITIONAL-SOURCE-EXTENTS
+
+- Outcome: completed for the original reader extents of all 324 added E451 rows under their declared selector scopes. Parent remains partial.
+- Verified criteria: 65 rectangle roots, 148 LZ77 streams, four raw copy roots, 26 halfword streams and one byte stream. E452 bounds 152,473 distinct selected bytes, of which 108,295 extend E447 through E450 and 14,098 have E301 owners. The auxiliary projection accounts for 8,008 selected bytes outside the other E452 reads.
+- Evidence: Wine 69eiy13_ checks the exact E301 ownership and independent interval accounting. The Wine server drained and protected inputs passed.
+- Limits: live auxiliary selector, mode 3, other and indirect producers, ordinary use, integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement.
+
+### ROMDATA-01-EUR-TILEMAP-AUXILIARY-REGISTERED-SLOTS
+
+- Outcome: completed for the European bounded primary registration route. The auxiliary selector parent remains partial.
+- Verified criteria: IDs 199 through 207 preserve the original parameter through 08104968 and the registration message. Auxiliary selector indices 0 through 8 validate all 18 base/count pairs and 36 rows under both mode predicates. E452 links 8,008 selected bytes.
+- Evidence: Wine w4fmebht authenticates accessors and five direct setter callers. Wine 64e2i50z authenticates the registration and mode route and matches E451/E452. Both Wine servers drained and protected inputs passed.
+- Limits: primary ID360 live selector destination and writer domains, secondary ID361 reachability, ordinary use, integration, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-EUR-TILEMAP-AUXILIARY-ID360-ACTOR
+
+- Outcome: completed for the European dispatcher and queue path to primary ID 360. The auxiliary selector parent remains partial.
+- Verified criteria: dispatcher states 113 and 114 and queue state 4 pass the handle in dispatcher field +4 through the primary constructor into the +0xe6 byte reader. The lookup and clear observations agree with the original instruction windows.
+- Evidence: Wine 1t4505gy pins ten source windows and ten call links against the exact EUR ROM. The server drained and protected inputs passed.
+- Limits: the writer and live domain on the selected unit, secondary ID 361 reachability, ordinary consumption, integration, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-EUR-TILEMAP-AUXILIARY-COMMAND11
+
+- Outcome: completed for the European state-37 entry and retained checkpoint check. The auxiliary selector parent remains partial.
+- Verified criteria: with nonzero context +0xc8, dispatcher state 37 routes command 11 to 08097878, which queues state 113. All 345 retained snapshots were authenticated. None matches the entry or states 113/114. The 49 gated state-37 boundaries each hold actor selector zero.
+- Evidence: Wine z5naxdzl pins six instruction windows and the command reader. Read-only snapshot metadata matched the retained cohort. Protected inputs passed and Wine drained.
+- Limits: effective writer and value at the task-360 read, ordinary use, ID361 reachability, integration, Linux, USA and native Windows remain open. An ordinary trace needs a source-backed input or later checkpoint.
+
+### ROMDATA-01-EUR-TILEMAP-AUXILIARY-SECONDARY-CALLERS
+
+- Outcome: completed for the bounded European secondary constructor callers and declared event and effect selector directories. The auxiliary selector parent remains partial.
+- Verified criteria: three direct Thumb call sites. The 75 event rows supply 19 opcode-zero references and the 51 selector rows map to IDs 363 through 413. All 256 inputs to the direct byte frontdoor project to IDs 362 through 617. ID 361 is the sole physical alias of the target callback and is outside both verified sources.
+- Evidence: Wine 50vko1z1 authenticates six caller windows, the whole-directory join and the 16-bit physical descriptor-address sweep. Protected inputs passed and Wine drained.
+- Limits: live event indices outside the directory, indirect callers, the task-360 actor writer, ordinary use, integration, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-EUR-TILEMAP-STREAM-BANK
+
+- Outcome: completed for the contiguous EUR physical stream bank at af1818 through af3ea0 (exclusive). The tilemap family remains partial.
+- Verified criteria: 71 halfword streams and seven byte streams account for 9,722 bytes plus 142 alignment bytes. All 302 aligned reference words select verified starts, and an independent type-3 wrapper begins at the upper boundary. Mode 3 has no header in this bank.
+- Evidence: Wine 58n8155h joins the E447, E450 and E452 lengths and hashes to the exact E301 ownership. E301 owns 844 of 9,864 bank bytes and 80 of 1,208 reference-word bytes. Protected inputs passed and Wine drained.
+- Limits: known physical bank only. Literal consumers, other sources, constructed headers, ordinary use, integration, Linux, USA and native Windows remain open. No payload export, gameplay replay or performance comparison.
+
+### ROMDATA-01-EUR-TILEMAP-LITERAL-CALLERS
+
+- Outcome: completed for the aligned reference words into the E457 European bank. The tilemap family remains partial.
+- Verified criteria: 153 code literals, 12 indexed cells and 137 descriptor words account for all 302 references. Six original functions read origin bytes from 76 unique starts. Two bounded branch paths supply the extra type-4 row at `39a71c`.
+- Evidence: Wine `zy0fdg0i` pins six instruction windows and audits E301 ownership. E301 owns 20 of 152 origin bytes, 8 of 612 literal pointer bytes and 32 of 48 indexed pointer bytes. All 22 protected inputs passed and Wine drained.
+- Limits: live table indices, ordinary use, additional banks, runtime integration, Linux, USA and native Windows remain open. No payload export, gameplay replay or performance measurement.
+
+### ROMDATA-01-EUR-TILEMAP-GEOMETRY-CALLERS
+
+- Outcome: completed for the European signed direct-call census of the six origin readers. The tilemap family remains partial.
+- Verified criteria: all 162 direct sites. E458 accounts for 153 literal-driven calls and three indexed calls. Six additional sites preserve an earlier source argument across the first origin-reader call. All six target previously verified roots, leaving 76 distinct physical origins in the bounded census.
+- Evidence: Wine `4us_dpy7` pins the six additional windows and checks the complete branch scan against the exact E457 and E458 inputs. The server drained and all 18 protected inputs passed.
+- Limits: local source argument paths and the physical index groups only. Indirect calls, live indices, ordinary use, integration, Linux, USA and native Windows remain open. No payload output, replay or performance measurement.
+
+### ROMDATA-04-EUR-TILEMAP-RETAINED-READS
+
+- Outcome: completed for the six retained European scene address inventories. The bank runtime parent remains partial.
+- Verified criteria: 2,383,964 selected address keys intersect three E457 halfword streams and five E458 pointer words. E301 owns all 140 distinct selected bytes. White Flowers and Llednar have no selected intersections. The shared interval merge accepts mixed list and tuple inputs.
+- Evidence: `rxzd10hx` reproduces the mixed interval failure before the CLI and drains. Corrected Wine `gnjd_0y0` authenticates the six captures and their original comparisons, and verifies exact E301 ownership against independent interval and owner calculations. All 42 protected inputs passed and Wine drained.
+- Limits: declared ownership and observed addresses in the selected windows only. No new replay, asset output or performance measurement. APIs serving the bytes, live index domains, unowned extents, Linux, USA and native Windows remain open.
+
+### ROMDATA-01-EUR-TILEMAP-INDEX-PRODUCERS
+
+- Outcome: completed for the bounded European original initializer routes of the three indexed geometry tables. The tilemap runtime parent remains partial.
+- Verified criteria: ID groups 9/10, 130/133 and 239–246 project to physical index counts 2, 2 and 8. For all 12 indices, the geometry pointer and type-4 transfer row resolve to the same verified stream. E301 owns all 1,016 selected source bytes of the eight-slot group. All 140 source bytes of the four other slots are unowned.
+- Evidence: Wine `8vqao49y` pins five source windows and zero-based registry rows. Wine `mkryi11b` joins original one-based IDs, reader arguments, E451/E202 rows, E457 stream hashes and E301 ownership. Both servers drained and protected inputs passed.
+- Limits: bounded original initializers and retained state. Ordinary execution of the four unowned routes, external writers, other callers, runtime adoption and Linux, USA and native Windows remain open. No gameplay replay, payload export or performance sampling.
+
+### ROMDATA-01-EUR-TILEMAP-ACTION-ROUTES
+
+- Outcome: completed for the E461 European tasks in the declared action and descriptor domains. The tilemap runtime parent remains partial.
+- Verified criteria: all 347 action records and 684 descriptors in 23 banks. Each of the 12 tasks has exactly one action record; 48 descriptor slots reference those actions, including 16 kind-1 slots. The default dispatcher selects property 32 from the active action and passes it to the primary constructor when the original type and flag predicates hold.
+- Evidence: Wine `igckgky_` verifies the original dispatcher and retained metadata getter, matches exact source hashes and cross-checks E461's selector index. All 18 protected inputs passed and Wine drained.
+- Limits: declared source domains and default dispatch only. Learned availability, ordinary use, integration, Linux, USA and native Windows remain open. No gameplay replay, payload export or performance sampling.
+
+### ROMDATA-04-EUR-TILEMAP-ACTION-CHECKPOINTS
+
+- Outcome: completed for the eight European kind-1 action slots in the retained cohort. The tilemap runtime parent remains partial.
+- Verified criteria: 345 distinct snapshots, 112 with learned flags and direct current job ranges for at least one candidate. IN-08 and IN-19 contain tasks 9 and 10 candidates. IN-13 contains task 130. Task 133 has 67 learned unit instances and zero direct current job-range matches.
+- Evidence: after an admission refusal through the save symlink, Wine `8srv4b7k` protects the actual save files, pins the original learned-bit reader and independently matches the 24 loaded IN-08 roster records. All 372 protected inputs passed and Wine drained.
+- Limits: saved roster prerequisites only. Visible menu use, dispatch, positive reads, task 133 job path, integration, Linux, USA and native Windows remain open. No guest instructions, save mutations, payload export or performance sampling.
+
+### ROMDATA-04-EUR-TILEMAP-PROTECT-MENU
+
+- Outcome: completed for in-battle menu availability in the selected European IN-08 branch. The tilemap runtime parent remains partial.
+- Verified criteria: the authenticated frame-5441 deployment state selects slot 15. Ordinary key input reaches Wanda's turn at frame 7465 and White Magic at frame 7593, with Shell and Protect visible at three MP each.
+- Evidence: Wine `fi8j7kzm`, `qacqfcxk` and `7yv1vg9p` pass with protected originals. All three servers drained. The final exact checkpoint and endpoint image are retained for the effect capture.
+- Limits: menu path only. Target confirmation, positive raw and managed reads, integration, Linux, USA and native Windows remain open. No state edits, payload export or performance sampling.
+
+### ROMDATA-04-EUR-TILEMAP-WHITE-MAGIC-READS
+
+- Outcome: completed for the observed ordinary European IN-08 auxiliary transfer. The broader bank and direct E461 paths remain partial.
+- Verified criteria: both ordinary cast previews target Wanda. Both casts take the original task-345 constructor path with a zero metadata selector. The slot-zero pointer and count select type-3 row `39a740`, and both windows read the same 253 E301-unowned bytes, including the complete 229-byte original LZ77 stream at `b0e074..b0e159`.
+- Evidence: Wine previews `dfjyb0as`; Windows diagnostic build `pcnezi7k` uses the retained Rust 1.94 core with thin LTO. Initial Wine `u9gno321` misses the E461 direct stream ranges and observes the special constructor. Wine `lxd_65mg` records both auxiliary traces and drains. Recovery `g1qq66op` corrects the tuple/list qualifier verdict, verifies all trace hashes and rechecks 41 original guards without gameplay replay.
+- Limits: original interpreter and selected input only. Five plan bytes were outside the observed reads. The E451 bank, managed adoption, direct E461 routes, Linux, USA and native Windows remain open. No payload export or performance sampling.
+
+### ROMDATA-01-EUR-TILEMAP-ID345-BANK-COVERAGE
+
+- Outcome: completed
+- Verified criteria: E466 joins all 23 bounded selectors to 18 distinct rows,
+  16 descriptors and 15 LZ77 inputs. Wine and independent interval calculations
+  agree on 4,358 distinct bytes, 155 already declared under five owners and
+  4,203 unowned. The slot-zero projection agrees with E465 for all six roles.
+- Evidence: E466 `e466-eur-tilemap-id345-bank-wine-xg51sldn`, PASS, server drained,
+  26 protected inputs. [Contract](../rom_data_runtime.md#e466-european-task-345-transfer-bank).
+- Limits: Bounded European source call only. Managed use, raw/managed
+  equivalence, remaining ordinary paths, Linux, USA and native Windows open.
+
+### ROMDATA-02-EUR-TILEMAP-BANK-PLAN-CLI
+
+- Outcome: completed
+- Verified criteria: E467 implements `rom-data plan-tilemap-bank`. The
+  Windows CLI reproduces the E466 plan for all 23 slots, the exact E301
+  ownership totals and all tested owner splits. It rejects a same-size
+  synthetic ROM. The four focused LZ77 tests pass under Wine.
+- Evidence: E467 build `wxkz7e3r`; Wine `xkte2drk` exit 0, server drained.
+  Recovery `kppbgu_4` reconciles the output and 23 unchanged input guards
+  after post-run scratch protection retained the synthetic .gba file.
+  [Command and results](../rom_data_runtime.md#generate-and-audit-the-task-345-bank-plan).
+- Limits: The CLI exports metadata ranges for the exact EUR ROM. Managed
+  reads, other banks, native Linux, USA and native Windows remain open.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-METADATA
+
+- Outcome: completed
+- Verified criteria: E468 adds a managed directory for all 23 task-345
+  selectors with 461 new metadata bytes, 148 preserved prior resources,
+  exact E467 plan equality and coherent-edit rejection. All new bytes
+  and mixed reads pass. The 300-frame ordinary Shell pair matches clock,
+  audio, final video/OAM and full saved state with altered metadata backing.
+- Evidence: E468 `fpyu2e7m`, PASS, server drained, 28 protected inputs. Build
+  `xdx2mspz` passes after the omitted budget-test argument in `3imvzd94`.
+  [Contract](../rom_data_runtime.md#e468-european-task-345-managed-transfer-metadata).
+- Limits: Staged e302-d301 loader and interpreter result. Standalone
+  publication, 3,742 remaining LZ77 input bytes, other selectors and callers,
+  native execution, Linux and USA remain open.
+
+### ROMDATA-05-EUR-TILEMAP-ID345-METADATA-PUBLISH-REUSE
+
+- Outcome: completed
+- Verified criteria: E469 publishes a byte-identical e302-d301 manifest in
+  an empty root, writes the new metadata and manifest, and links the 148
+  existing E301 files after checking their expected hashes. Preparation
+  reuses the same selected generation without calling the writer. The
+  CLI verify handler accepts it.
+- Evidence: E469 `azu4reeg`, PASS, server drained, 20 protected inputs.
+  Build `xdqe99cg` passes. [Publication evidence](../rom_data_runtime.md#e469-e302-publication-and-reuse).
+- Limits: The creation check uses a test writer. Default CLI creation,
+  remaining ROM sources and deferred platforms stay open.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-SELECTOR-ROUTES
+
+- Outcome: completed
+- Verified criteria: E470 projects all 23 selectors from 347 actions and
+  341 primary descriptors under the proved source conditions. The 345
+  retained rosters yield 114 learned action candidates across 17 slots.
+  Live Firaga and Soil Evidence continuations show slots 2 and 4 with
+  their reader PCs and the complete respective 55- and 34-byte stream reads.
+- Evidence: E470 `rxwzcitl`, PASS, Wine drained, 398 inputs protected. The
+  first `1z4cjccz` admission exceeded the 32 trace-range limit; the retry
+  reuses and verifies the retained roster projection.
+  [Route evidence](../rom_data_runtime.md#e470-european-task-345-action-and-selector-routes).
+- Limits: Retained input ancestry, other selectors, managed use of
+  further inputs, native Windows, Linux and USA stay open.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-SLOT1-ORDINARY
+
+- Outcome: completed
+- Verified criteria: E471 deploys IN-08 roster unit 10, reaches Marisa's
+  action preview through normal input and confirms action 12 with primary
+  argument 13. Both task-345 directory reader PCs select slot 1 and the
+  SWI reads all 57 bytes at b0de70..b0dea9 outside E302 ownership.
+- Evidence: E471 `t8zwfqer`, `l1xgftb2`, `97jkmpq9`, and final
+  `jzl685ht` PASS. The final unit preserves 36 inputs and drains Wine.
+  `ore7y6l0` and `m3od6xg3` precede the full two-confirmation sequence.
+  [Route evidence](../rom_data_runtime.md#e471-ordinary-european-task-345-slot-1-input).
+- Limits: Original interpreter input. Managed slot-1 equivalence, remaining
+  streams, other selectors, native Windows, Linux and USA remain open.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-SLOT1-MANAGED
+
+- Outcome: completed
+- Verified criteria: E472 matches 300 original and managed interpreter
+  frames with 29 control backing bytes altered. Both reader PCs serve
+  typed directory values. The trace covers 24 typed metadata bytes and
+  the complete 57-byte raw LZ77 input. Clock and audio match frame by frame;
+  video, OAM and serialized state match at the endpoint.
+- Evidence: E472 `sx4zdj9n`, PASS, Wine drained, 27 inputs preserved.
+  Audit build `afpj05jx` passes.
+  [Control proof](../rom_data_runtime.md#e472-managed-european-task-345-slot-1-controls).
+- Limits: Stream ownership and remaining selectors, native execution,
+  Linux and USA stay open.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-LZ77-BINDING
+
+- Outcome: completed
+- Verified criteria: E473 shares the input extent parser between the
+  bank plan and activation. The 15 extents match E466 and E467. Both
+  HLE SWIs match output on all three mirrors with altered guest backing,
+  using 13 bound inputs totaling 3,742 bytes and both earlier owners.
+  The E471 slot-1 replay uses one bound 57-byte input, serves the same
+  typed controls and matches 300 original interpreter frames.
+- Evidence: `ulsona5y` Wine PASS, server drained, 35 input paths preserved;
+  Windows harness build `0iy9gyy_` PASS. Sandbox `xf68wnf3` stopped before
+  lease acquisition.
+  [Binding proof](../rom_data_runtime.md#e473-european-task-345-lz77-input-binding).
+- Limits: The authenticated ROM supplies the in-memory inputs. The
+  parent retains persistent coverage, other readers, native execution,
+  other ordinary selectors and Linux/USA.
+
+### ROMDATA-04-EUR-TILEMAP-ID345-LZ77-BUS
+
+- Outcome: completed
+- Verified criteria: E474 serves the 13 memory-bound inputs through the
+  cartridge bus. Direct byte and 8-, 16- and 32-bit native ABI reads
+  match for all 15 input extents on three mirrors with inverted backing.
+  Both DMA3 widths match at a mixed boundary. The 300-frame ordinary
+  slot-1 replay retains E473 HLE, audio, clock, video, OAM and state results.
+- Evidence: Windows build `rvt7j7za`, Wine `c5hp1xyf`. Wine drained,
+  all 35 protected paths were preserved and scratch was retired.
+  [Bus and DMA proof](../rom_data_runtime.md#e474-european-task-345-cartridge-and-dma-reads).
+- Limits: Persistent input coverage, native guest execution, other
+  ordinary selectors, Linux and USA remain under the parent checklist.
+
+### ROMDATA-04-EUR-TILEMAP-STREAM-BANK-BUS
+
+- Outcome: completed
+- Verified criteria: E475 matches all 78 E457 extents and E450 internal
+  padding. The bus serves 8,810 previously unowned encoded bytes in memory
+  and preserves the 844 prior owner bytes. Direct and ABI reads match on
+  three mirrors with altered backing. Both original readers return
+  matching results for 12,418 cells and reach the verified cursor ends.
+  The serialized endpoint and guest clock match.
+- Evidence: Windows build `7y7qeoov` and Wine `7mu7rdhi` PASS. Wine drains
+  and all 27 protected inputs pass.
+  [Binding proof](../rom_data_runtime.md#e475-european-halfword-and-byte-tilemap-bank-binding).
+- Limits: Controlled reader proof. Persistent coverage, ordinary
+  constructor and geometry callers, other banks, Linux and USA remain open.
+
+### ROMDATA-01-EUR-TILEMAP-E461-DISPATCH-CONDITIONS
+
+- Outcome: completed
+- Verified criteria: E476 authenticates all 37 dispatcher entries and 12
+  projected action routes. The state-10 branch can stack state 30 under 22.
+  State 23 restores the pending state when its task handle clears. Both
+  retained IN-08 replays reach IDs 9 and 10 after task 345 and read both
+  geometry words, both original mode-7 streams and 38 row/descriptor bytes.
+  The 66 selected bytes fall outside the E302 manifest, and 20 are in E475.
+- Evidence: Wine `ak9n6nmu` and `qjyy7piy` passed and drained. Reconciliation
+  `dy80gsv8` verifies exact indexed reader `080e8442` without replay.
+  [Direct continuation proof](../rom_data_runtime.md#e476-european-direct-tilemap-action-continuations).
+- Limits: The Wine observations are original-service replays. Managed
+  equivalence, ordinary IDs 130 and 133, Linux and USA remain open.
+
+
+### ROMDATA-04-EUR-TILEMAP-39BCBC-MANAGED
+
+- Outcome: completed
+- Verified criteria: E477 covers all 12 E461 indexed slots. It binds 96
+  control bytes in memory and retains 192 earlier owner bytes. Altered-backing
+  checks pass across the three cartridge mirrors. Both ordinary 425-frame
+  IN-08 pairs reach dispatcher state 36. They match clock and audio per
+  frame and framebuffer, OAM and serialized state at the endpoints. Each
+  reads 23 distinct new control bytes and ten E475 stream bytes.
+- Evidence: Windows build `3udkc2bn`, Wine `jlv4j9qj`. The passing unit
+  preserves all 32 protected paths, drains Wine and retires scratch.
+  The earlier 900-frame Wine attempt `lsaq175e` timed out and drained.
+  [Indexed control proof](../rom_data_runtime.md#e477-european-indexed-tilemap-controls).
+- Limits: Activation still uses the authenticated ROM. Persistent backing,
+  ordinary IDs 130 and 133, translated guest execution, Linux, USA and
+  native Windows remain open. Performance measurement is deferred.
+
+
+### ROMDATA-04-EUR-TILEMAP-E461-METADATA-PERSISTENT
+
+- Outcome: completed
+- Verified criteria: EUR e303-d302 publishes the complete 12-slot control
+  resource. It declares 96 new control bytes and preserves 192 bytes in
+  earlier owners. E302 and E303 pass verification and normal activation.
+  The reader comparison alters all 288 bytes across the three mirrors.
+  Coherent edits and missing claims fail with the active owner intact.
+- Evidence: Windows build q6ehr4lw and Wine urfx6b8z PASS. Preparation
+  links 149 E302 files, writes the new resource and manifest, and reuses
+  the single published generation. All 26 protected inputs pass and the
+  Wine server drains. The initial build mnatrfna missed a budget test
+  argument and was corrected.
+  [Evidence](../rom_data_runtime.md#e478-european-indexed-tilemap-control-resource).
+- Limits: Exact ROM authentication remains required. Persistent streams,
+  ordinary IDs 130 and 133, a fresh run of the default writer for all
+  files, Linux, USA and native Windows remain open.

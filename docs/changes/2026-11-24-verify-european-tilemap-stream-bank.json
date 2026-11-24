@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-tilemap-stream-bank",
+  "title": "Verify the European tilemap stream bank",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Join all 78 retained tilemap streams into one contiguous physical bank and account for all 302 aligned reference words."
+  ],
+  "validation": [
+    "Wine 58n8155h checks the original source hashes, upper boundary, reference projection and E301 ownership. The manifest owns 844 of 9,864 bank bytes. Protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "Mode 3 is absent in the verified bank. Other sources, live callers, integration, Linux, USA and native Windows remain open. No payload export or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

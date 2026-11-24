@@ -3,8 +3,10 @@ import collections
 
 
 def union(ranges):
+    """Merge half-open ranges supplied as endpoint pairs or JSON lists."""
     result = []
-    for start, end in sorted(ranges):
+    ordered = sorted((start, end) for start, end in ranges)
+    for start, end in ordered:
         if start < 0 or end <= start:
             raise ValueError(f"invalid interval {start}..{end}")
         if result and start <= result[-1][1]:

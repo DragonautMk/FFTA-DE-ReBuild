@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "inventory-european-tilemap-transfer-directories",
+  "title": "Inventory European tilemap transfer directories",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Reconcile the high-level constructor and lower-level list entry, recover bounded row lists from local call setup and determine complete extents of their mode-7 streams."
+  ],
+  "validation": [
+    "Wine qs06dz3h authenticates 230 base/count pairs and 937 rows in the selected census. E301 owns 168 of 11,244 row bytes and 10 of 162 mode-7 bytes. The Wine server drained."
+  ],
+  "limitations": [
+    "The 26 unresolved direct setups, wider control flow, other mode extents, runtime integration, Linux, USA and native Windows remain open. No gameplay replay or performance measures ran."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

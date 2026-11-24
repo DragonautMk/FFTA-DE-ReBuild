@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "merge-mixed-rom-coverage-ranges",
+  "title": "Merge mixed ROM coverage intervals",
+  "kind": "fixed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Normalize interval endpoint pairs before sorting so ROM coverage merges combine decoded JSON lists with tuple ranges.",
+    "Join the verified tilemap bank and pointer sites to six authenticated retained scene address inventories."
+  ],
+  "validation": [
+    "E460 rxzd10hx reproduced the mixed interval failure before the CLI and drained. Corrected Wine gnjd_0y0 verifies the same join and E301 ownership for all 140 selected bytes. All 42 protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "The samples cover three already-owned streams. Unowned extents need a source-backed replay or ordinary trigger. Runtime service, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "scripts/rom_coverage_ranges.py",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

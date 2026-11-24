@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "trace-european-direct-tilemap-action-continuations",
+  "title": "Trace the direct European tilemap action continuations",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows interpreter via Wine"
+  ],
+  "changes": [
+    "Authenticate the 37 dispatcher states and project all 12 E461 action routes. Explain how state 10 schedules the auxiliary constructor before the original task.",
+    "Identify the positive ordinary reads from both slots of the 39bcbc table and separate the 20 observed E475 stream bytes from 46 observed metadata bytes that need management."
+  ],
+  "validation": [
+    "Wine ak9n6nmu verifies the original state table and producer. Wine qjyy7piy observes both direct IN-08 constructors after task 345, with 900 frames per retained preview.",
+    "Reconciliation dy80gsv8 corrects the qualifier from the lookup start at 080e843a to the indexed load at 080e8442 and verifies both traces without replay. The Wine units drained and their input guards passed."
+  ],
+  "limitations": [
+    "The E476 captures prove original service for primary IDs 9 and 10. Managed equivalence, ordinary IDs 130 and 133, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-indexed-tilemap-controls",
+  "title": "Persist European indexed tilemap controls",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Publish the complete 12-slot E461 projection as indexed-tilemap-controls.json in e303-d302. The manifest claims 96 previously uncovered control bytes and retains the earlier owners of the other 192.",
+    "Build the managed cartridge views from the verified file and retain explicit e302-d301 verification and attachment."
+  ],
+  "validation": [
+    "Windows harness build q6ehr4lw passes after correcting the budget test call reported by mnatrfna.",
+    "Wine urfx6b8z publishes and reuses E303 with 149 earlier files linked. Both revisions verify and attach, and altered-backing comparisons pass across all three mirrors.",
+    "Coherent edits and missing claims are rejected with the active owner preserved. All 26 protected paths pass, Wine drains and scratch is retired."
+  ],
+  "limitations": [
+    "Activation requires the authenticated ROM. Persistent stream backing, ordinary IDs 130 and 133, publication using the default writer for every resource, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/tilemap_stream_bank.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_stream_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/preparation.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_stream_bank_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

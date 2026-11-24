@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-task-345-slot-1-managed-controls",
+  "title": "Verify the managed European task-345 slot-1 controls",
+  "kind": "added",
+  "platforms": [
+    "European ROM, interpreter via Wine"
+  ],
+  "changes": [
+    "Add a focused guarded pair for the E471 action preview and reuse the existing interpreter replay loop. Trace the slot-1 control readers and the linked LZ77 SWI separately."
+  ],
+  "validation": [
+    "Wine sx4zdj9n verifies 300 equal interpreter frames with 29 control bytes altered, 24 distinct typed metadata bytes and all 57 LZ77 input bytes on the raw path. Clock and audio match per frame and video, OAM and state match at the endpoint. The trace drops zero requests, Wine drains and all 27 inputs are preserved. Audit build afpj05jx passes."
+  ],
+  "limitations": [
+    "The LZ77 input still uses the original ROM backing. Other selectors, native execution, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

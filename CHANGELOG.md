@@ -23,6 +23,106 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [PROJECT_STATE.m
 
 [Change record](docs/changes/2026-11-24-verify-star-cross-transfer-production-cli.json)
 
+## 2026-11-24 — Verify the European tilemap stream bank
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Join all 78 retained tilemap streams into one contiguous physical bank and account for all 302 aligned reference words.
+
+**Validation**
+
+- Wine 58n8155h checks the original source hashes, upper boundary, reference projection and E301 ownership. The manifest owns 844 of 9,864 bank bytes. Protected inputs passed and Wine drained.
+
+**Limitations**
+
+- Mode 3 is absent in the verified bank. Other sources, live callers, integration, Linux, USA and native Windows remain open. No payload export or performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-tilemap-stream-bank.json)
+
+## 2026-11-24 — Verify the European task-345 transfer bank
+
+Type: docs. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Reconcile all 23 task-345 selectors with their 18 distinct rows, 16 descriptors and 15 wrapped LZ77 inputs. Preserve null slots, aliases and the five existing E301 owners.
+
+**Validation**
+
+- Managed Wine unit e466-eur-tilemap-id345-bank-wine-xg51sldn passed, drained the server and preserved 26 inputs. CLI ownership and independent interval accounting agree on 4,358 distinct source bytes, 155 owned and 4,203 unowned. The 258-byte slot-zero plan matches E465 and reuses its 253-byte ordinary observation.
+
+**Limitations**
+
+- This verifies structural coverage for the bounded European initialization call. Managed use, raw/managed equivalence, extra caller paths, ordinary nonzero selections, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-task-345-transfer-bank.json)
+
+## 2026-11-24 — Verify the managed European task-345 slot-1 controls
+
+Type: added. Platforms: European ROM, interpreter via Wine.
+
+**Changes**
+
+- Add a focused guarded pair for the E471 action preview and reuse the existing interpreter replay loop. Trace the slot-1 control readers and the linked LZ77 SWI separately.
+
+**Validation**
+
+- Wine sx4zdj9n verifies 300 equal interpreter frames with 29 control bytes altered, 24 distinct typed metadata bytes and all 57 LZ77 input bytes on the raw path. Clock and audio match per frame and video, OAM and state match at the endpoint. The trace drops zero requests, Wine drains and all 27 inputs are preserved. Audit build afpj05jx passes.
+
+**Limitations**
+
+- The LZ77 input still uses the original ROM backing. Other selectors, native execution, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-task-345-slot-1-managed-controls.json)
+
+## 2026-11-24 — Verify European task-345 metadata publication and reuse
+
+Type: added. Platforms: European ROM, Windows test harness via Wine.
+
+**Changes**
+
+- Add a focused E302 preparation regression check that reuses the 148 protected E301 files after comparing the writer input hashes. Publish the new transfer metadata and manifest with the standard file writer.
+
+**Validation**
+
+- Wine azu4reeg passes the empty-root publication transaction, exact E468 manifest comparison, same-generation reuse without a write and CLI verify handler. Wine drains, scratch is removed and all 20 protected inputs pass. Windows build xdqe99cg passes.
+
+**Limitations**
+
+- The initial publication uses a test writer for the predecessor files. Fresh creation through the default CLI writer, managed LZ77 inputs, native Windows, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-task-345-metadata-publication.json)
+
+## 2026-11-24 — Verify ownership of the full European Star Cross sample
+
+Type: changed. Platforms: European manifests through Wine.
+
+**Changes**
+
+- Reconcile every distinct address of the retained E403 sample against E297, E298 and E301. Match the E423 and E424 source identities and close the bounded Star Cross residual criteria.
+
+**Validation**
+
+- Wine qv1g8xda confirms 86 unowned bytes in E297 and all 243,297 sampled bytes owned in E298 and E301. Inputs were protected and Wine drained.
+
+**Limitations**
+
+- The audit reuses a 480-frame selected-reader sample. Other readers, later mode-7 runs, exact instruction sites, scenes, Linux, USA and native Windows remain open. No replay or performance measurements ran.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-verify-european-star-cross-sample-ownership.json)
+
 ## 2026-11-24 — Verify declared extents of European graphics banks
 
 Type: changed. Platforms: European manifest through Wine.
@@ -42,6 +142,110 @@ Type: changed. Platforms: European manifest through Wine.
 Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-24-verify-european-graphics-bank-extents.json)
+
+## 2026-11-24 — Trace the European White Magic auxiliary transfer
+
+Type: changed. Platforms: European ROM, Windows interpreter via Wine.
+
+**Changes**
+
+- Follow both ordinary IN-08 casts to task 345 slot zero and identify the shared type-3 row, descriptor, wrapper and LZ77 input.
+- Identify 258 unowned bytes in the linked E301 source plan, including 253 directly observed bytes.
+
+**Validation**
+
+- Wine u9gno321 observes the special constructor path. Wine lxd_65mg records both slot-zero transfers and drains; g1qq66op resolves the tuple/list qualifier error, verifies the saved traces and rechecks all 41 original guards with no replay.
+
+**Limitations**
+
+- The retained scene proves raw service for one bank slot. The wider bank, direct E461 routes, managed integration, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-trace-european-white-magic-transfer.json)
+
+## 2026-11-24 — Trace the European tilemap bank consumers
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Classify all 302 aligned bank references and identify readers of the two origin bytes at 76 stream roots.
+- Identify the three indexed pointer groups and both alternate paths that supply the additional type-4 list row.
+
+**Validation**
+
+- Wine zy0fdg0i verifies the original instruction windows and E301 ownership. E301 owns 20 of 152 origin bytes. All 22 protected inputs passed and Wine drained.
+
+**Limitations**
+
+- Live selector bounds, ordinary use, runtime integration, other banks, Linux, USA and native Windows remain open. No payload export or performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-trace-european-tilemap-bank-consumers.json)
+
+## 2026-11-24 — Trace the European task-345 slot-1 transfer in ordinary play
+
+Type: docs. Platforms: European ROM, interpreter via Wine.
+
+**Changes**
+
+- Use the E470 bank projection to select a learned kind-1 action for IN-08 roster unit 10. Record the ordinary deployment, secondary action and target confirmation for slot 1.
+
+**Validation**
+
+- Wine t8zwfqer, l1xgftb2 and 97jkmpq9 establish the input. Final Wine jzl685ht confirms action 12, task argument 13, both slot-1 directory readers and all 57 E302-unowned input bytes in SWI scope. It preserves 36 inputs and drains Wine. Earlier ore7y6l0 and m3od6xg3 traces stopped before the full confirmation path.
+
+**Limitations**
+
+- The selected stream is still read from the original input. Managed equivalence, other slots, native Windows, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-24-trace-european-task-345-ordinary-slot-1.json)
+
+## 2026-11-24 — Trace the direct European tilemap action continuations
+
+Type: changed. Platforms: European ROM, Windows interpreter via Wine.
+
+**Changes**
+
+- Authenticate the 37 dispatcher states and project all 12 E461 action routes. Explain how state 10 schedules the auxiliary constructor before the original task.
+- Identify the positive ordinary reads from both slots of the 39bcbc table and separate the 20 observed E475 stream bytes from 46 observed metadata bytes that need management.
+
+**Validation**
+
+- Wine ak9n6nmu verifies the original state table and producer. Wine qjyy7piy observes both direct IN-08 constructors after task 345, with 900 frames per retained preview.
+- Reconciliation dy80gsv8 corrects the qualifier from the lookup start at 080e843a to the indexed load at 080e8442 and verifies both traces without replay. The Wine units drained and their input guards passed.
+
+**Limitations**
+
+- The E476 captures prove original service for primary IDs 9 and 10. Managed equivalence, ordinary IDs 130 and 133, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-trace-european-direct-tilemap-action-continuations.json)
+
+## 2026-11-24 — Trace the European auxiliary task 360 actor
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Trace dispatcher state 113 allocation, state 114 polling and queue state 4 into the original primary task 360 selector. Identify the retained handle and three source writes to its dispatcher field.
+
+**Validation**
+
+- Wine 1t4505gy authenticates ten windows and ten original call links. The Wine server drained and protected inputs passed.
+
+**Limitations**
+
+- The live selector writer and domain, secondary ID 361 reachability, ordinary consumption, integration, Linux, USA and native Windows remain open. No performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-trace-european-auxiliary-task-360-actor.json)
 
 ## 2026-11-24 — Serve thirty European localized queued resources
 
@@ -103,6 +307,49 @@ Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md)
 
 [Change record](docs/changes/2026-11-24-serve-fifteen-european-indexed-graphics-archives.json)
 
+## 2026-11-24 — Serve European task-345 LZ77 inputs through the cartridge bus
+
+Type: added. Platforms: European ROM, Windows harness under Wine.
+
+**Changes**
+
+- Serve the 13 memory-bound encoded inputs through the ordinary cartridge bus, with exact bounds and composition with neighboring control and ROM data.
+- Validate bound input pages during activation and report bus-served input bytes separately from HLE decoding.
+
+**Validation**
+
+- Windows harness rvt7j7za built successfully. Wine c5hp1xyf matched direct byte and native ABI reads for all 15 inputs across three mirrors with inverted backing.
+- DMA3 halfword and word copies across a bound and raw boundary match destination, channel control and guest clock. The 300-frame slot-1 replay matches E473, including its state digest.
+- The Wine runner drained the server, preserved 35 input paths and retired scratch.
+
+**Limitations**
+
+- The authenticated ROM supplies the in-memory bindings at activation. Persistent coverage, translated guest scenes, additional ordinary selectors, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-serve-european-task-345-lz77-on-the-bus.json)
+
+## 2026-11-24 — Resolve European tilemap transfer call setups
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Use the original task catalogs and caller dataflow to classify all 26 remaining E446 direct call sites and add 105 directory pairs with 324 distinct rows.
+
+**Validation**
+
+- Wine hniuxufm, fdhqvpxi and qrfmjqvi authenticate the caller and producer windows and compare ownership against E301. E301 owns 264 of 3,888 added row bytes and 35 of 730 selected control bytes. All Wine servers drained and protected inputs passed.
+
+**Limitations**
+
+- The 36 rows at the auxiliary selector use a conditional physical projection. The live selector domain, other producers, indirect callers, linked source extents, ordinary use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-resolve-european-tilemap-transfer-call-setups.json)
+
 ## 2026-11-24 — Reconcile European localized bank gaps
 
 Type: changed. Platforms: European manifest through Wine.
@@ -143,6 +390,46 @@ Documentation: [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_
 
 [Change record](docs/changes/2026-11-24-reconcile-european-graphics-pointer-groups.json)
 
+## 2026-11-24 — Reach Shell and Protect in the European White Magic menu
+
+Type: changed. Platforms: European ROM, Windows interpreter via Wine.
+
+**Changes**
+
+- Continue IN-08 from its authenticated deployment checkpoint with the learned bank 4 caster. Retain the ordinary-input White Magic checkpoint as a source for focused read validation.
+
+**Validation**
+
+- Wine fi8j7kzm, qacqfcxk and 7yv1vg9p pass and drain. Visual review shows Wanda at the ordinary turn menu and both Shell and Protect at frame 7593. Protected inputs passed.
+
+**Limitations**
+
+- The menu proves the commands are present. Target confirmation, action reads, integration, Linux, USA and native Windows remain open. No performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-reach-european-shell-protect-menu.json)
+
+## 2026-11-24 — Prove the European auxiliary task 360 entry condition
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Trace dispatcher state 37 and command 11 into the original task 360 queue. Record the observed actor selector at the matching dispatcher-state boundaries.
+
+**Validation**
+
+- Wine z5naxdzl verifies six original instruction windows and authenticates 345 retained snapshots. Forty-nine gated state-37 boundaries contain selector zero. The cohort has no command-11 entry or states 113 and 114. Wine drained and protected inputs passed.
+
+**Limitations**
+
+- An ordinary trace still needs a source-backed command-11 input or later checkpoint. The effective selector writer and live domain, secondary ID 361, integration, Linux, USA and native Windows remain open. No performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-prove-european-auxiliary-task-360-entry.json)
+
 ## 2026-11-24 — Prioritize complete European resource banks
 
 Type: changed. Platforms: European ROM; retained Wine evidence and protected static census.
@@ -162,6 +449,134 @@ Type: changed. Platforms: European ROM; retained Wine evidence and protected sta
 Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-24-prioritize-european-whole-resource-banks.json)
+
+## 2026-11-24 — Persist European indexed tilemap controls
+
+Type: added. Platforms: European ROM, Windows executable under Wine.
+
+**Changes**
+
+- Publish the complete 12-slot E461 projection as indexed-tilemap-controls.json in e303-d302. The manifest claims 96 previously uncovered control bytes and retains the earlier owners of the other 192.
+- Build the managed cartridge views from the verified file and retain explicit e302-d301 verification and attachment.
+
+**Validation**
+
+- Windows harness build q6ehr4lw passes after correcting the budget test call reported by mnatrfna.
+- Wine urfx6b8z publishes and reuses E303 with 149 earlier files linked. Both revisions verify and attach, and altered-backing comparisons pass across all three mirrors.
+- Coherent edits and missing claims are rejected with the active owner preserved. All 26 protected paths pass, Wine drains and scratch is retired.
+
+**Limitations**
+
+- Activation requires the authenticated ROM. Persistent stream backing, ordinary IDs 130 and 133, publication using the default writer for every resource, Linux, USA and native Windows remain open. Performance measurement is deferred.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-persist-european-indexed-tilemap-controls.json)
+
+## 2026-11-24 — Merge mixed ROM coverage intervals
+
+Type: fixed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Normalize interval endpoint pairs before sorting so ROM coverage merges combine decoded JSON lists with tuple ranges.
+- Join the verified tilemap bank and pointer sites to six authenticated retained scene address inventories.
+
+**Validation**
+
+- E460 rxzd10hx reproduced the mixed interval failure before the CLI and drained. Corrected Wine gnjd_0y0 verifies the same join and E301 ownership for all 140 selected bytes. All 42 protected inputs passed and Wine drained.
+
+**Limitations**
+
+- The samples cover three already-owned streams. Unowned extents need a source-backed replay or ordinary trigger. Runtime service, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-merge-mixed-rom-coverage-ranges.json)
+
+## 2026-11-24 — Map the European tilemap action routes
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Join the 12 indexed tilemap task IDs to the complete declared action and descriptor catalogs. Record the normal dispatcher predicates and the candidate slots for all four unowned routes.
+
+**Validation**
+
+- Wine igckgky_ authenticates three original source windows and compares all 347 action records and 684 descriptors against the exact EUR source. All 18 protected inputs passed and Wine drained.
+
+**Limitations**
+
+- The validated source routes identify candidate action slots. Learned availability, live inputs, managed reads, integration, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-map-european-tilemap-action-routes.json)
+
+## 2026-11-24 — Map European task-345 selectors to action and replay sources
+
+Type: docs. Platforms: European ROM, interpreter via Wine.
+
+**Changes**
+
+- Join the 341 primary descriptor arguments and all 347 action records against the complete 23-slot transfer directory. Record conditional selector mappings and availability candidates from the 345 protected rosters.
+
+**Validation**
+
+- Wine rxwzcitl verifies slots 2 and 4 in the retained Firaga and Soil Evidence inputs, including both directory reader PCs and the complete 55- and 34-byte LZ77 reads in SWI scope. The first trace request 1z4cjccz exceeded the 32-range limit before execution. Retry preserves its whole-bank projection and all 391 input preimages. Wine drains and 398 protected inputs pass.
+
+**Limitations**
+
+- Roster matches are conditional, and the earlier save ancestry remains open. Both traced streams already have E302 owners. Other selectors, remaining managed inputs, native Windows, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-24-map-european-task-345-selector-routes.json)
+
+## 2026-11-24 — Manage European task-345 transfer metadata
+
+Type: added. Platforms: European ROM, interpreter via Wine.
+
+**Changes**
+
+- Advance the European dataset to e302-d301 and bind all 461 uncovered pointer, count, row, descriptor and wrapper bytes in the task-345 bank. Share the authenticated model with plan-tilemap-bank and preserve all 148 predecessor resources.
+
+**Validation**
+
+- Wine fpyu2e7m passes the E467 plan and exact E466 ownership comparisons, malformed and coherently edited metadata guards, all byte and mixed-width mirror reads, and a 300-frame raw/managed Shell pair. Metadata backing is altered on the managed side, with matching guest clock and audio per frame and equal final video, OAM and serialized state. All five roles have positive use. Wine drains and preserves 28 inputs. Build xdx2mspz fixes the missing budget-test argument from 3imvzd94.
+
+**Limitations**
+
+- The ordinary loader uses a staged dataset with read-only E301 file aliases. Standalone creation and reuse, the remaining 3,742 LZ77 input bytes, ordinary nonzero selectors, native execution, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-manage-european-task-345-transfer-metadata.json)
+
+## 2026-11-24 — Manage the European indexed tilemap controls
+
+Type: added. Platforms: European ROM, Windows interpreter via Wine.
+
+**Changes**
+
+- Resolve every E461 geometry slot to its original type-4 row, descriptor and E475 halfword stream during authenticated EUR resource activation.
+- Serve 96 previously unowned control bytes in memory across the two small groups and retain the earlier owners of 192 bytes in the eight-slot group.
+- Count indexed control reads separately and compose them with neighboring raw lanes and earlier resources.
+
+**Validation**
+
+- Windows harness build 3udkc2bn and focused Wine test jlv4j9qj pass. Altered-backing bus and read ABI checks cover all 12 slots and three cartridge mirrors.
+- Both 425-frame IN-08 interpreter pairs match clock and audio per frame and framebuffer, OAM and serialized state at the endpoints. Each pair reaches state 36 and reads 23 distinct managed control bytes and ten E475 stream bytes.
+- The passing unit reuses 148 files, preserves 32 protected paths, drains Wine and retires scratch. The first 900-frame attempt lsaq175e timed out and drained.
+
+**Limitations**
+
+- Activation still requires the source ROM. Persistent backing, ordinary IDs 130 and 133, translated guest execution, Linux, USA and native Windows remain open. Performance measurement is deferred.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-manage-european-indexed-tilemap-controls.json)
 
 ## 2026-11-24 — Locate large European localized gap candidates
 
@@ -203,6 +618,46 @@ Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md)
 
 [Change record](docs/changes/2026-11-24-locate-european-localized-gap-pointer-candidates.json)
 
+## 2026-11-24 — Link European tilemap indexes to their producers
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Project 12 original task IDs through their bounded initializers to three geometry tables. Verify that every slot and its corresponding type-4 transfer row select the same stream.
+
+**Validation**
+
+- Wine 8vqao49y authenticates five original code windows. Wine mkryi11b applies the one-based task IDs and verifies E301 ownership for the selected geometry pointers, rows, descriptors and streams. Both servers drained and protected inputs passed.
+
+**Limitations**
+
+- The four slots for IDs 9, 10, 130 and 133 have 140 unowned bytes. Ordinary triggers, external writes, managed reads, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-link-european-tilemap-index-producers.json)
+
+## 2026-11-24 — Inventory European tilemap transfer directories
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Reconcile the high-level constructor and lower-level list entry, recover bounded row lists from local call setup and determine complete extents of their mode-7 streams.
+
+**Validation**
+
+- Wine qs06dz3h authenticates 230 base/count pairs and 937 rows in the selected census. E301 owns 168 of 11,244 row bytes and 10 of 162 mode-7 bytes. The Wine server drained.
+
+**Limitations**
+
+- The 26 unresolved direct setups, wider control flow, other mode extents, runtime integration, Linux, USA and native Windows remain open. No gameplay replay or performance measures ran.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-inventory-european-tilemap-transfer-directories.json)
+
 ## 2026-11-24 — Identify thirty European queued transfer resources
 
 Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
@@ -222,6 +677,26 @@ Type: changed. Platforms: European ROM; Wine disassembly and static source plan.
 Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-24-identify-thirty-european-queued-transfer-resources.json)
+
+## 2026-11-24 — Identify European tilemap action checkpoints
+
+Type: changed. Platforms: European ROM, Windows state loader via Wine.
+
+**Changes**
+
+- Join the eight kind-1 descriptor slots for the four unowned actions to the retained European snapshots and their direct current job ranges.
+
+**Validation**
+
+- After resolving the private save paths, Wine 8srv4b7k authenticates 345 distinct snapshots and verifies the original learned-bit reader. The retained state loader independently matches all 24 IN-08 roster records. All 372 protected inputs passed and Wine drained.
+
+**Limitations**
+
+- The 112 candidates establish saved prerequisites. Task 133 has no active direct job-range match. Visible ability availability, original dispatch, positive reads, integration, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-identify-european-tilemap-checkpoints.json)
 
 ## 2026-11-24 — Classify European bank residual shapes
 
@@ -323,6 +798,106 @@ Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md)
 
 [Change record](docs/changes/2026-11-24-bound-fifteen-european-indexed-graphics-archives.json)
 
+## 2026-11-24 — Bound European type-5 byte streams
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Identify every type-5 source in the E446 directory inventory using the original byte reader. Reconcile all E446 rows against the four per-type inventories.
+
+**Validation**
+
+- Wine 7h8krrgg and uhx_ek2y verify eight type-5 rows, seven streams and 1,792 selected source bytes outside E301 ownership. Both Wine servers drained and protected inputs passed.
+
+**Limitations**
+
+- The 26 unresolved E446 setups, other callers, live use, integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-type5-byte-streams.json)
+
+## 2026-11-24 — Bound European type-4 tilemap streams
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Use the common original cell reader and per-mode dispatch to bound the 61 distinct type-4 streams referenced by the E445 and E446 inventories.
+
+**Validation**
+
+- Wine 9xsy1p68 authenticates the remaining dispatcher instructions. Wine 78zzrsqb confirms 844 of 7,380 stream bytes and 81 of 856 descriptor bytes have declared E301 owners. Both Wine servers drained.
+
+**Limitations**
+
+- The 51 unowned streams, mode-3 roots, other callers, ordinary use, integration, Linux, USA and native Windows remain open. No gameplay replay or performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-type4-tilemap-streams.json)
+
+## 2026-11-24 — Bound European type-3 transfer sources
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Follow all selected type-3 rows through their descriptors and shared wrappers. Bound every LZ77 stream and raw copy view using the original flag-selected reader paths.
+
+**Validation**
+
+- Wine mxjdpoph verifies 262 compressed streams and 13 raw views across 628 rows. E301 owns 15,820 of 245,116 linked source bytes. The halfword queue disassembly, protected inputs and Wine server drain passed.
+
+**Limitations**
+
+- Other callers, live use, runtime integration, real BIOS, Linux, USA and native Windows remain open. No payload output, gameplay replay or performance comparison was produced.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-type3-transfer-sources.json)
+
+## 2026-11-24 — Bound European type-2 rectangle transfers
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Follow counted type-2 lists and derive actual rectangle windows from the original copy reader. Distinguish selected rows from other rows in the declared rectangles.
+
+**Validation**
+
+- Wine 2hz2xkoy wrote the E301 ownership report and drained before a postprocessing interval-type error. Protected recovery bftzb469 verifies the unchanged report and all 217 selected windows. E301 owns 356 of 10,750 selected bytes.
+
+**Limitations**
+
+- Other callers, unselected rows, live use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay or performance measurement was performed.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-type2-rectangle-transfers.json)
+
+## 2026-11-24 — Bound European tilemap linked source extents
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Follow all 324 E451 rows through the four established source-reader contracts. Preserve prior source aliases and the conditional auxiliary selector scope.
+
+**Validation**
+
+- Wine 69eiy13_ verifies 152,473 distinct selected bytes. E301 declares 14,098 owned bytes, and 108,295 selected bytes extend the preceding inventories. Protected inputs passed and Wine drained.
+
+**Limitations**
+
+- The live auxiliary selector, mode-3 streams, other producers and callers, ordinary use, runtime integration, Linux, USA and native Windows remain open. No gameplay replay, payload output or performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-tilemap-linked-source-extents.json)
+
 ## 2026-11-24 — Bound European residual pointer contexts
 
 Type: changed. Platforms: European static source analysis.
@@ -342,6 +917,26 @@ Type: changed. Platforms: European static source analysis.
 Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-24-bound-european-residual-pointer-contexts.json)
+
+## 2026-11-24 — Verify the full declared European mode-7 streams
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Follow every declared E301 type-4 tilemap row and establish the complete reader-derived bounds of the two mode-7 streams.
+
+**Validation**
+
+- Wine x6mub2vs authenticates the original helper. Wine u8bkowmo checks 34 rows and ten type-4 descriptor paths, verifies E301 ownership of all 20 mode-7 source bytes and leaves the two-byte Soil gap outside that extent. Both Wine servers drained.
+
+**Limitations**
+
+- Additional roots, other readers and scenes, the purpose of the Soil gap, Linux, USA and native Windows remain open. No gameplay replay or performance comparison was made.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-mode7-streams.json)
 
 ## 2026-11-24 — Bound European localized raw banks
 
@@ -363,6 +958,71 @@ Documentation: [PROJECT_STATE.md](docs/development/PROJECT_STATE.md), [ROM_DATA_
 
 [Change record](docs/changes/2026-11-24-bound-european-localized-raw-banks.json)
 
+## 2026-11-24 — Bound European auxiliary tilemap registration slots
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Tie both auxiliary tilemap tables to the original registration message for primary task IDs 199–207. Identify the five direct setter calls on the separate live selector path.
+
+**Validation**
+
+- Wine w4fmebht and 64e2i50z authenticate the producer and selector instruction windows and join 18 base/count pairs and 36 rows to E451/E452. Both servers drained and protected inputs passed.
+
+**Limitations**
+
+- Primary ID 360 live object ancestry and writer domains, secondary ID 361 reachability, ordinary use, integration, Linux, USA and native Windows remain open. The checks cover source metadata and use no performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bound-european-auxiliary-tilemap-registration-slots.json)
+
+## 2026-11-24 — Bind the European task-345 LZ77 inputs at runtime
+
+Type: added. Platforms: European ROM, interpreter via Wine.
+
+**Changes**
+
+- Use the directory model to derive the 15 distinct exact input extents for both the bank plan and runtime activation.
+- Bind the 13 uncovered inputs from the authenticated ROM in memory and route both HLE decompression calls through the existing decoder. Preserve the two earlier stream owners.
+
+**Validation**
+
+- Windows test harness build 0iy9gyy_ passed. Wine ulsona5y matched the E466 ownership and E467 plan and checked both SWIs across all 15 inputs and three cartridge mirrors.
+- The guarded 300-frame E471 replay used one bound 57-byte input and matched the original clock, audio, video, OAM and serialized endpoint. The host run drained Wine and preserved 35 input paths.
+- Sandbox attempt xf68wnf3 refused a read-only Wine runtime directory before acquiring a lease.
+
+**Limitations**
+
+- Activation still requires the authenticated ROM, and the 3,742 input bytes remain outside persistent dataset coverage. Direct reads, native execution, further ordinary selectors, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bind-european-task-345-lz77-inputs.json)
+
+## 2026-11-24 — Bind the complete European halfword and byte tilemap bank
+
+Type: added. Platforms: European ROM, Windows harness under Wine.
+
+**Changes**
+
+- Walk all 78 authenticated stream extents, deriving the seven byte roots from their original type-5 rows.
+- Allow the cartridge bus to serve 8,810 uncovered bytes from in-memory bindings, preserve 844 bytes served by prior owners, and retain the origin pairs and raw padding.
+
+**Validation**
+
+- Windows harness 7y7qeoov built successfully. Wine 7mu7rdhi matched E457 extents and digests and E450 token padding, then verified direct and ABI widths across three mirrors with altered backing.
+- The two original guest readers matched 12,418 cell results, every final cursor and the serialized endpoint. The unit preserved 27 input paths and drained Wine.
+
+**Limitations**
+
+- Activation uses the authenticated ROM. Persistent data coverage, ordinary constructors and geometry readers, additional producers, Linux and USA remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-bind-european-halfword-and-byte-tilemap-bank.json)
+
 ## 2026-11-24 — Audit whole resource bank ownership
 
 Type: added. Platforms: European and synthetic manifests through Wine.
@@ -382,6 +1042,66 @@ Type: added. Platforms: European and synthetic manifests through Wine.
 Documentation: [rom_data.md](docs/rom_data.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-24-audit-whole-resource-bank-ownership.json)
+
+## 2026-11-24 — Audit direct callers of European tilemap origin readers
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Account for all 162 signed direct Thumb calls to the six tilemap origin readers. The six additional calls reuse authenticated stream pointers within the existing bank.
+
+**Validation**
+
+- Wine 4us_dpy7 pins the six added instruction windows and checks the complete branch census against E457 and E458. All 18 protected inputs passed and Wine drained.
+
+**Limitations**
+
+- Direct source arguments only. Indirect calls, live index bounds, ordinary use, integration, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-audit-european-tilemap-origin-callers.json)
+
+## 2026-11-24 — Audit European secondary task 361 callers
+
+Type: changed. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Verify the three direct secondary constructor call sites against both complete declared event and effect selector directories. Check the byte frontdoor domain and the physical 16-bit descriptor alias.
+
+**Validation**
+
+- Wine 50vko1z1 authenticates six source windows, 75 event rows, 51 effect selector rows and all 256 byte input projections. ID 361 lies outside the verified input paths. The server drained and protected inputs passed.
+
+**Limitations**
+
+- Indirect entries, event indices outside the declared directory, the task 360 selector writer, ordinary use, integration, Linux, USA and native Windows remain open. No performance measurement.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [rom_data_events.md](docs/rom_data_events.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-audit-european-secondary-task-361-callers.json)
+
+## 2026-11-24 — Generate the European task-345 bank plan
+
+Type: added. Platforms: European ROM, Windows CLI via Wine.
+
+**Changes**
+
+- Add rom-data plan-tilemap-bank to follow the 23 source-backed selectors into the full type-3 transfer bank and emit a standard ownership plan for the exact European ROM. Share the bounded LZ77 token parser to find encoded input lengths without decoding payloads.
+
+**Validation**
+
+- Windows build wxkz7e3r passed. Wine xkte2drk matches E466 for every selector and role group and all tested E301 owner splits, rejects a same-size synthetic image, passes four focused LZ77 tests and drains Wine. Recovery kppbgu_4 confirms the logs and all 23 protected inputs after the scratch guard retained the synthetic file.
+
+**Limitations**
+
+- The CLI produces source metadata only. Managed reads, raw/managed equivalence, other banks, native Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-24-add-european-task-345-bank-plan-cli.json)
 
 ## 2026-11-23 — Validate European Firaga residual literals
 

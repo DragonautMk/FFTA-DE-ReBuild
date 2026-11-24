@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-type3-transfer-sources",
+  "title": "Bound European type-3 transfer sources",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows CLI via Wine"
+  ],
+  "changes": [
+    "Follow all selected type-3 rows through their descriptors and shared wrappers. Bound every LZ77 stream and raw copy view using the original flag-selected reader paths."
+  ],
+  "validation": [
+    "Wine mxjdpoph verifies 262 compressed streams and 13 raw views across 628 rows. E301 owns 15,820 of 245,116 linked source bytes. The halfword queue disassembly, protected inputs and Wine server drain passed."
+  ],
+  "limitations": [
+    "Other callers, live use, runtime integration, real BIOS, Linux, USA and native Windows remain open. No payload output, gameplay replay or performance comparison was produced."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

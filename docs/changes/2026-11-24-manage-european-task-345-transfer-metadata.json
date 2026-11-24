@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "manage-european-task-345-transfer-metadata",
+  "title": "Manage European task-345 transfer metadata",
+  "kind": "added",
+  "platforms": [
+    "European ROM, interpreter via Wine"
+  ],
+  "changes": [
+    "Advance the European dataset to e302-d301 and bind all 461 uncovered pointer, count, row, descriptor and wrapper bytes in the task-345 bank. Share the authenticated model with plan-tilemap-bank and preserve all 148 predecessor resources."
+  ],
+  "validation": [
+    "Wine fpyu2e7m passes the E467 plan and exact E466 ownership comparisons, malformed and coherently edited metadata guards, all byte and mixed-width mirror reads, and a 300-frame raw/managed Shell pair. Metadata backing is altered on the managed side, with matching guest clock and audio per frame and equal final video, OAM and serialized state. All five roles have positive use. Wine drains and preserves 28 inputs. Build xdx2mspz fixes the missing budget-test argument from 3imvzd94."
+  ],
+  "limitations": [
+    "The ordinary loader uses a staged dataset with read-only E301 file aliases. Standalone creation and reuse, the remaining 3,742 LZ77 input bytes, ordinary nonzero selectors, native execution, Linux and USA remain open."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_bank_plan.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1461,6 +1461,10 @@ impl Bus for MemMap {
         self.rom_resources.as_ref()?.decoded_observed_lz(source)
     }
 
+    fn bound_tilemap_lz77(&self, source: u32) -> Option<crate::rom_data::TilemapLz77Input> {
+        self.rom_resources.as_ref()?.bound_tilemap_lz77(source)
+    }
+
     fn read8(&mut self, addr: u32) -> u8 {
         let value = (|| {
         match addr >> 24 {
