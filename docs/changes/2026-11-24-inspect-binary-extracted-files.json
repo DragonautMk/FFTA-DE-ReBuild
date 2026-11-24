@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "inspect-binary-extracted-files",
+  "title": "Inspect binary extracted files",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow any local extracted file to be inspected as paginated hexadecimal bytes with offsets and printable ASCII, while preserving text and structured JSON views.",
+    "Support exact hexadecimal byte search with bounded reads and highlighted matching rows, including results across block boundaries."
+  ],
+  "validation": [
+    "Real-time Linux Chrome unit rom-data-viewer-hex-realtime-q9ny0kwp checked binary display and pagination, UTF-8 and hex boundary matches, repeated results, cancellation, mode switching and invalid byte input.",
+    "Protected EUR unit rom-data-viewer-hex-eur-vhuxoa4j checked a real extracted file’s hex display and byte search beyond 8 MiB using the browser File API."
+  ],
+  "limitations": [
+    "Hex search accepts up to 1024 bytes; printable ASCII is a convenience display and does not interpret binary formats.",
+    "Synthetic attempt bpvljb2q failed because its expected ASCII row omitted remaining bytes; the assertion was corrected."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

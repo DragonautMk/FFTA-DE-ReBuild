@@ -4,8 +4,10 @@ use super::{
     observed_tilemap_descriptor::DirectTilemapDescriptor,
     observed_tilemap_row::AdditionalRow,
     script39_registry_poses::PriorSources,
-    tilemap_transfer_directory::{bytes, row_at, target, Slot, ROM_BASE, ROW_BYTES},
-    SourceRange,
+    tilemap_transfer_directory::{
+        bytes, projected_row_offsets, row_at, target, Slot, ROM_BASE, ROW_BYTES,
+    },
+    Resource, SourceRange,
 };
 use crate::ffta_rom::{self, Version};
 use serde::{Deserialize, Serialize};
@@ -238,6 +240,126 @@ pub(super) fn from_verified_rom(rom: &[u8]) -> Result<Vec<Stream>, String> {
         return Err("Tilemap inputs do not delimit the verified bank".into());
     }
     Ok(streams)
+}
+
+pub(super) fn uncovered_ranges(
+    streams: &[Stream],
+    prior: &PriorSources,
+) -> Result<Vec<(Range<u32>, &'static str)>, String> {
+    let mut ranges = Vec::new();
+    for stream in streams {
+        let role = if stream.byte_values {
+            "byte-stream"
+        } else {
+            "halfword-stream"
+        };
+        for range in &stream.sources {
+            if !prior.contains(range.start, range.len())? {
+                ranges.push((range.clone(), role));
+            }
+        }
+    }
+    Ok(ranges)
+}
+
+/// Select the type-4 and type-5 controls that link to the encoded stream bank.
+pub(super) fn uncovered_direct_transfer_ranges(
+    rom: &[u8],
+    streams: &[Stream],
+    existing: &[Resource],
+    origin_controls: Option<&IndexedTilemapControls>,
+) -> Result<Vec<(Range<u32>, &'static str)>, String> {
+    let prior = PriorSources::new(existing)?;
+    let mut offsets = projected_row_offsets(rom)?;
+    // The E445 declared row and the alternate list verified in E458.
+    offsets.extend([0x39a704, 0x39a71c]);
+    let mut seen_streams = BTreeSet::new();
+    let mut descriptors = BTreeSet::new();
+    let mut ranges = Vec::new();
+    for at in offsets {
+        let [kind] = bytes(rom, at)?;
+        let (length, row_role, descriptor_role) = match kind {
+            4 => (8, "type4-transfer-row", "type4-transfer-descriptor"),
+            5 => (6, "type5-transfer-row", "type5-transfer-descriptor"),
+            _ => continue,
+        };
+        let row = row_at(rom, at)?;
+        let descriptor = target(row.descriptor_pointer, length)?;
+        let root = target(u32::from_le_bytes(bytes(rom, descriptor)?), 6)?;
+        let index = streams
+            .binary_search_by_key(&root, |stream| stream.extent.start)
+            .map_err(|_| format!("Direct tilemap stream is outside the bank at {at:#x}"))?;
+        if streams[index].byte_values != (kind == 5) {
+            return Err(format!("Direct tilemap stream kind mismatch at {at:#x}"));
+        }
+        seen_streams.insert(index);
+        descriptors.insert((descriptor, length, descriptor_role));
+        ranges.push((at..at + ROW_BYTES, row_role));
+    }
+    if seen_streams.len() != streams.len() {
+        return Err("Direct tilemap controls leave streams unreferenced".into());
+    }
+    if let Some(controls) = origin_controls {
+        let indexed_words: BTreeSet<_> = controls
+            .slots
+            .iter()
+            .map(|slot| slot.pointer_offset)
+            .collect();
+        let descriptor_words: BTreeSet<_> = descriptors.iter().map(|&(at, _, _)| at).collect();
+        let mut literal_count = 0;
+        // E458 classifies all aligned references in the authenticated ROM.
+        // Excluding descriptor and indexed words leaves the origin literals.
+        for (index, word) in rom.chunks_exact(4).enumerate() {
+            let pointer = u32::from_le_bytes(word.try_into().unwrap());
+            if !(ROM_BASE + START..ROM_BASE + END).contains(&pointer) {
+                continue;
+            }
+            let at = index as u32 * 4;
+            if streams
+                .binary_search_by_key(&(pointer - ROM_BASE), |stream| stream.extent.start)
+                .is_err()
+            {
+                return Err(format!(
+                    "Tilemap reference at {at:#x} misses the stream start"
+                ));
+            }
+            if descriptor_words.contains(&at) {
+                continue;
+            }
+            if indexed_words.contains(&at) {
+                if !prior.contains(at, 4)? {
+                    return Err(format!("Missing indexed tilemap pointer owner at {at:#x}"));
+                }
+                continue;
+            }
+            literal_count += 1;
+            ranges.push((at..at + 4, "origin-literal"));
+        }
+        if literal_count != 153 {
+            return Err("Unexpected size of the tilemap origin literal bank".into());
+        }
+    }
+    ranges.extend(
+        descriptors
+            .into_iter()
+            .map(|(at, length, role)| (at..at + length, role)),
+    );
+    ranges.sort_unstable_by_key(|(range, _)| range.start);
+    if ranges
+        .windows(2)
+        .any(|pair| pair[0].0.end > pair[1].0.start)
+    {
+        return Err("Overlapping direct tilemap transfer controls".into());
+    }
+    Ok(ranges
+        .into_iter()
+        .flat_map(|(range, role)| {
+            prior
+                .uncovered(range)
+                .into_iter()
+                .map(move |span| (span, role))
+        })
+        .collect())
 }
 
 fn pointer(rom: &[u8], at: u32) -> Result<u32, &'static str> {

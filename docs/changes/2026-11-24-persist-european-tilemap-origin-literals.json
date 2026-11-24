@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-tilemap-origin-literals",
+  "title": "Persist European tilemap origin literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Classify aligned pointers into the authenticated E457 bank by excluding the exact descriptor and indexed sources. Extend the direct tilemap control file with 151 unowned literal words in e309-d308.",
+    "Preserve E308 attachment, all earlier control ranges, two Thumb literal owners and the 12 indexed pointer owners. All 302 aligned bank references now have declared ownership."
+  ],
+  "validation": [
+    "Windows build kqw969ri and the focused Wine unit yi8i51yu pass. Standard preparation creates and reuses 155 resources. The E458/E459 oracle matches the file spans. E308 still attaches and a coherent edit to a new literal is rejected transactionally.",
+    "Altered-backing bus and ABI reads match across all three mirrors. All 153 original Thumb loads return the expected values and match full final state. The extended file serves 604 bytes across those calls. Wine drains and protects all 20 inputs."
+  ],
+  "limitations": [
+    "The original ROM still supplies authentication and other cartridge ranges. Ordinary scenes, live table domains, indirect and translated execution, other banks, native Linux, USA and native Windows remain open. Performance measurements are deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/tilemap_stream_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_direct_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_origin_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

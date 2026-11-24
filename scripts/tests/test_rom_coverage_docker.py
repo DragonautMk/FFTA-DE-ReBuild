@@ -111,7 +111,7 @@ exit "${DOCKER_TEST_RUN_STATUS:-0}"
         self.assertEqual(run[run.index('--cache-keep')+1], '2')
         self.assertNotIn('--translation', run)
         self.assertNotIn('--dataset', run)
-        output = self.repo / 'docs/development/rom-coverage'
+        output = self.repo / 'target/rom-coverage-local'
         self.assertIn(f'type=bind,source={output},target=/output', run)
         self.assertEqual(run[run.index('--network') + 1], 'none')
         self.assertEqual(run[run.index('--user') + 1], f'{os.getuid()}:{os.getgid()}')
@@ -121,6 +121,12 @@ exit "${DOCKER_TEST_RUN_STATUS:-0}"
         previous = latest.read_bytes()
         self.assertEqual(self.run_script('--help').returncode, 0)
         self.assertEqual(latest.read_bytes(), previous)
+
+    def test_docs_output_is_rejected(self):
+        result = self.run_script('--output', 'docs/development/rom-coverage')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('outside docs', result.stderr)
+        self.assertIsNone(self.call('run'))
 
     def test_relative_overrides_and_absolute_output_preserve_spaces(self):
         args = []

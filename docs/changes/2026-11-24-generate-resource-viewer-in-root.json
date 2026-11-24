@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "generate-resource-viewer-in-root",
+  "title": "Generate the offline resource viewer in the project root",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Default Python and Docker viewer generation to the Git-ignored rom_data_viewer_generated.html in the project root; retain explicit output directories and their index.html."
+  ],
+  "validation": [
+    "Synthetic local and Linux Docker default generation, custom output and source preservation passed in unit rom-data-viewer-root-output-cvgsmu9l.",
+    "Generated the local private root page from the EUR e303-d302 dataset using Docker and a cold-storage input lease; all implemented resource views are present."
+  ],
+  "limitations": [
+    "Windows Docker and browser walkthrough remain unverified."
+  ],
+  "files": [
+    ".gitignore",
+    "scripts/view_rom_data.py",
+    "scripts/linux/view_rom_data_docker.sh",
+    "scripts/windows/view_rom_data_docker.ps1",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

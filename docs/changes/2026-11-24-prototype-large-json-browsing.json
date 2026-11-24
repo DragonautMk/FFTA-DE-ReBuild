@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "prototype-large-json-browsing",
+  "title": "Prototype on-demand large JSON browsing",
+  "kind": "changed",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Prototype on-demand large JSON parsing and paged navigation in a cancellable browser worker while retaining raw file inspection."
+  ],
+  "validation": [
+    "The existing viewer Python suite passed inside synthetic unit rom-data-viewer-largejson-kdrp6i3r; its browser phase stopped on a test-harness TypeError before completing the checks."
+  ],
+  "limitations": [
+    "The prototype is paused and unverified: page-transfer bounds, browser behavior and protected EUR data remain to be checked. The generated local root page is still the previously validated version; Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

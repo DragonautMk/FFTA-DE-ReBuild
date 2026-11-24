@@ -2,11 +2,18 @@
 
 ## Operational status
 
-English-first; cross-tree audit open.
+English-first. [Resume](MEMORY_WORKFLOW.md).
 
-Retired artifacts do not invalidate acceptance. [Resume rules](MEMORY_WORKFLOW.md#resume-and-repeat-decisions).
 
-Archive completed tasks; preserve closed children and other jobs.
+### ROMDATA-VIEWER-PALETTE
+
+- State: active
+- Outcome: partial
+- Verified: folder 1p18b2r4 PASS.
+- Selection: CONTROLS audio progress/focus, text pin/commands, sprite frame/loop; browser EUR+synth.
+- Suspended: JSON prototype, kdrp6i3r harness FAIL; EUR unrun; resume only on request.
+- Missing: other previews/audio/scenes; Windows deferred.
+- Resume: implement controls; preserve JSON; stop on PASS.
 
 ## Running or suspended tasks
 
@@ -33,7 +40,7 @@ Archive completed tasks; preserve closed children and other jobs.
 - Outcome: partial
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425/E444 Star Cross, E445–E478 tilemap checks; E429/E433/E437/E443 Wine PASS.
+- E425/E444 Star Cross, E445–E489 tilemaps, E490–E492 compact cells; E429/E433/E437/E443 Wine PASS.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -182,16 +189,15 @@ Archive completed tasks; preserve closed children and other jobs.
 
 - A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
 
-- Host-check owners/handles/outputs; preserve other jobs and live/failed units. Sandbox visibility, lost handles or receipts do not prove inactivity.
-- Memory: shared lock and both preimage hashes; merge conflicts and preserve other locks/processes. See MEMORY_WORKFLOW.
+- Check owners; preserve units and locks. See MEMORY_WORKFLOW.
 - History: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration: TASK_HANDOFF_MIGRATION.json.
 - Godot assessment complete, implementation deferred. AndroidPort is separate; exclude ROM/BIOS, private catalogs, saves and recordings from commits/packages.
 
 ## Final handover
 
-- Task: ROM-DATA-FULL-EUR paused by user after E478 (EUR/Wine).
-- Last verified result: E478 persists 12 slots, loads E302/E303 and passes Wine.
-- Remaining work: persistent streams, ordinary IDs 130/133, Linux/USA, recovery checklist.
-- Errors or blockers: Wine drained; preserve inputs and pause.
-- Next action: only on resume, review the remaining 3a1c58 ordinary-use proof.
-- References: Wine urfx6b8z, build q6ehr4lw, recovery checklist.
+- Task: ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY suspended by user.
+- Last verified result: raw trace pmry89cu observes two records; build u9p3s6q9 PASS.
+- Remaining work: 497-frame Wine proof, checklist and project memory.
+- Errors or blockers: Wine 50415 (00378brf) last observed running.
+- Next action: on explicit resume, read the pair receipt or poll 50415.
+- References: E493 notes, Sol /root/sol_compact_ordinary_route xhigh unconfirmed.

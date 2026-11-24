@@ -1477,16 +1477,36 @@ and normal enablement retain their existing acceptance gates.
   follows 213 rows to 217 unique copy windows in 162 rectangles. E301 owns
   356 of 10,750 source bytes in the selected lists and windows. The nominal
   extent is larger for 24 rectangles.
+  E483 combines E449 and E452 and covers 294 rows and 205 full rectangles.
+  The e307-d306 file claims the 14,758 bytes remaining after earlier
+  ownership. Preparation, mirrored bus reads and all 294 original
+  reader calls pass in Wine. Ordinary scene use remains open.
+  [Type-2 transfer resource](../rom_data_runtime.md#e483-european-type-2-transfer-resource)
 
 - EUR [E450 type-5 byte streams](../rom_data_runtime.md#e450-european-type-5-byte-stream-bounds)
   bounds seven streams and verifies that all 937 E446 rows are represented in
-  the type-2 through type-5 inventories. Runtime integration and other callers
-  remain open.
+  the type-2 through type-5 inventories. E484 serves the residual direct
+  controls for all 145 E445/E446/E451/E458 type-4 and type-5 rows from
+  the e308-d307 dataset. All 78 streams keep their earlier owners, and
+  controlled calls through the original dispatcher pass in Wine.
+  Ordinary use and other callers remain open.
+  [Direct transfer controls](../rom_data_runtime.md#e484-european-direct-tilemap-transfer-controls)
 
 - EUR E451 accounts for the remaining 26 physical direct-call sites and
-  expands the E446 inventory to 335 base/count pairs and 1,261 rows. The
-  live selector for 36 added rows at `0e7352` and additional producers
-  remain open. [E451 call setup](../rom_data_runtime.md#e451-european-tilemap-transfer-call-setup)
+  expands the E446 inventory to 335 base/count pairs and 1,261 rows.
+  E486 matches all row bytes to existing owners and serves the remaining
+  1,494 directory control bytes from e310-d309. Wine verifies all 489
+  original literal and table loads. The live selector for 36 added rows
+  at `0e7352` and additional producers remain open.
+  [E451 call setup](../rom_data_runtime.md#e451-european-tilemap-transfer-call-setup)
+  [E486 directory sources](../rom_data_runtime.md#e486-european-transfer-list-directory-sources)
+
+- EUR [E487 tilemap source coverage](../rom_data_runtime.md#e487-european-tilemap-source-coverage)
+  confirms that e310-d309 claims all 378,999 required bytes in the
+  verified bank plans, including all 4,358 task-345 bytes. The 210
+  unclaimed bytes in the contiguous stream bank are classified padding.
+  Ordinary scene execution, further producers and other platforms
+  remain open.
 
 - EUR E452 bounds 152,473 distinct source bytes linked from the 324 E451
   rows in the declared selector scopes. E301 owns 14,098 of these bytes.
@@ -1506,10 +1526,25 @@ and normal enablement retain their existing acceptance gates.
 
 - EUR E457 verifies a contiguous 78-stream tilemap bank at
   `af1818..af3ea0`. All 302 aligned reference words target stream starts.
-  E301 owns 844 of 9,864 bank bytes. Mode 3 remains open outside the
-  verified bank. E458 classifies the reference words and traces origin
+  E301 owns 844 of 9,864 bank bytes. E489 finds no mode-3 root in the
+  scoped call routes. E310 owns the 64 verified routing bytes. An
+  additional mode-3 bank needs a source-backed producer.
+  E490 bounds the neighboring compact-cell region at 91 records and
+  630 control bytes. E491 publishes and serves its 31,634 source bytes
+  in `e311-d310`, with original reader equivalence under Wine. E492
+  decodes both cell widths and matches the original draw output for all
+  493 frames under controlled Wine inputs. Live selectors and ordinary
+  scenes remain open.
+  [E489 routing](../rom_data_runtime.md#e489-european-mode-3-dispatch-and-adjacent-compact-cell-bank)
+  [Compact-cell bank plan](../rom_data_graphics.md#e490-complete-european-adjacent-compact-cell-bank)
+  [Compact-cell bank resource](../rom_data_graphics.md#e491-european-compact-cell-bank-resource)
+  [Compact-cell frame decoder](../rom_data_graphics.md#e492-european-compact-cell-frame-decoder)
+  E458 classifies the reference words and traces origin
   reads for 76 streams. E459 accounts for 162 direct origin-reader calls
-  within that projection. The six retained E460 scene windows sample three
+  within that projection. E485 extends the direct control file in
+  e309-d308 with 151 literal words, completing declared ownership of
+  all 302 references. Wine verifies the 153 original literal loads.
+  The six retained E460 scene windows sample three
   bank streams. E301 declares all 140 sampled stream and pointer bytes.
   E461 bounds all 12 indexed sources under their initializer conditions.
   IDs 9, 10, 130 and 133 identify four unowned paths. E462 links those IDs
@@ -1524,6 +1559,7 @@ and normal enablement retain their existing acceptance gates.
   slots and ordinary nonzero selections remain open.
   [E457 bank](../rom_data_runtime.md#e457-european-tilemap-stream-bank)
   [E458 consumers](../rom_data_runtime.md#e458-european-tilemap-bank-consumers)
+  [E485 origin references](../rom_data_runtime.md#e485-european-tilemap-origin-references)
   [E460 sample](../rom_data_runtime.md#e460-european-tilemap-bank-reads-in-recorded-scenes)
   [E461 producers](../rom_data_runtime.md#e461-european-tilemap-indexed-producers)
   [E462 action routes](../rom_data_runtime.md#e462-european-tilemap-action-routes)
@@ -1542,6 +1578,10 @@ and normal enablement retain their existing acceptance gates.
   and message conditions, and verifies the retained slot-2 and slot-4
   readers. Both traced streams already have owners.
   [Route evidence](../rom_data_runtime.md#e470-european-task-345-action-and-selector-routes)
+  E488 verifies both ordinary continuations through E310 with the
+  selected metadata and streams altered in memory. The existing owners
+  supply both routes, and the 1,206-frame comparisons pass in Wine.
+  [Managed replays](../rom_data_runtime.md#e488-european-task-345-slot-2-and-slot-4-replays)
   E471 verifies ordinary use of slot 1 from the IN-08 action-12 preview.
   E472 verifies the managed slot-1 controls against the original replay
   with altered backing. The 57-byte stream still has no E302 owner.
@@ -1550,8 +1590,7 @@ and normal enablement retain their existing acceptance gates.
   E473 uses one extent parser for the plan and activation. The runtime
   binds 13 encoded inputs from the authenticated ROM in memory and
   retains the two earlier LZ77 owners. All 15 HLE inputs and the
-  ordinary slot-1 pair pass in Wine. Persistent input coverage
-  remains open.
+  ordinary slot-1 pair pass in Wine.
   [Bank input binding](../rom_data_runtime.md#e473-european-task-345-lz77-input-binding)
   E474 serves the same bindings through the cartridge bus. Direct and
   ABI reads of all 15 inputs and a mixed DMA boundary pass in Wine.
@@ -1561,7 +1600,7 @@ and normal enablement retain their existing acceptance gates.
   halfword and byte stream bank. Its 78 extents retain the original
   origins and exclude both kinds of padding. Both original controlled
   cell readers match in Wine. Ordinary directory and geometry callers
-  and persistent stream coverage remain open.
+  remain open.
   [Stream bank binding](../rom_data_runtime.md#e475-european-halfword-and-byte-tilemap-bank-binding)
   E476 proves the dispatcher can run task 345 before the direct action
   task in the same cast. Both IN-08 continuations reach IDs 9 and 10 and
@@ -1574,9 +1613,28 @@ and normal enablement retain their existing acceptance gates.
   [Indexed control proof](../rom_data_runtime.md#e477-european-indexed-tilemap-controls)
   E478 persists all 12 indexed control slots in EUR e303-d302. The file
   owns 96 control bytes, and 192 retain their earlier owners. E302
-  explicit verification and activation remain supported. Persistent
-  streams and ordinary `3a1c58` use remain open.
+  explicit verification and activation remain supported.
   [Persistent control proof](../rom_data_runtime.md#e478-european-indexed-tilemap-control-resource)
+  E479 persists 8,810 selected stream bytes in 130 ranges in EUR
+  e304-d303. Earlier owners and padding are preserved. Standard
+  publication and reuse, E302 and E303 attachment and the E475
+  original reader comparison pass in Wine. Ordinary `3a1c58` use
+  remains open.
+  [Persistent stream proof](../rom_data_runtime.md#e479-european-tilemap-stream-bank-resource)
+  E480 persists 3,742 bytes from 13 task-345 LZ77 inputs in e305-d304.
+  The two earlier inputs keep their owner. Standard preparation and
+  reuse, cartridge, DMA and HLE reads and the slot-1 replay pass in
+  Wine. E304 still attaches. Other ordinary selectors remain open.
+  [Persistent LZ77 proof](../rom_data_runtime.md#e480-european-task-345-lz77-resource)
+
+- EUR [E481 type-3 residual plan](../rom_data_runtime.md#e481-european-type-3-transfer-ownership)
+  joins 825 E448/E452 rows. E305 owns 23,247 of 349,097 selected bytes.
+  The 325,850-byte extraction plan preserves the partial descriptor owner
+  and records the conditional selector scope. E482 publishes and serves
+  that residual in e306-d305. The controlled SWI and DMA paths and an
+  ordinary Shell replay pass in Wine. Other producers, conditional
+  ordinary use and deferred platforms remain open.
+  [Persistent type-3 resource](../rom_data_runtime.md#e482-european-type-3-transfer-resource)
 
 - EUR [E424 Star Cross linked-source plan](../rom_data_runtime.md#e424-star-cross-linked-source-plan)
   authenticates 58 linked source bytes, including 44 sampled bytes; the E423

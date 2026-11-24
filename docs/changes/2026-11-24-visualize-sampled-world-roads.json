@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "visualize-sampled-world-roads",
+  "title": "Visualize sampled world roads",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Overlay uniquely linked sampled roads on the world-node plot using signed pixel offsets from the lower-index node; select a road or node link to inspect and animate its samples.",
+    "Preserve the recorded final point without extending a road to its neighboring node."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-roads-io3__c78 checked lower-node geometry, a short endpoint, reverse node links, sample selection and preview animation.",
+    "Protected EUR unit rom-data-viewer-roads-eur-h9_e9pfp compared all 45 road sample arrays and node pairs, then checked a short endpoint and marker in Chrome."
+  ],
+  "limitations": [
+    "The animation uses a fixed preview rate of ten samples per second, not game timing. Ambiguous or unavailable links are omitted from the overlay."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

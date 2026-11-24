@@ -394,6 +394,10 @@ def generate(args):
 
 
 def _generate(args, lease):
+    output_path = pathlib.Path(args.output).resolve()
+    docs_root = (ROOT / "docs").resolve()
+    if output_path == docs_root or output_path.is_relative_to(docs_root):
+        raise ValueError("Full coverage reports must be written outside docs")
     prepare_dataset(args)
     report = build(args)
     output = pathlib.Path(args.output)

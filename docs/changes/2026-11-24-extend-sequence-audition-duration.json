@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "extend-sequence-audition-duration",
+  "title": "Extend sequence audition duration",
+  "kind": "changed",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow sequence previews from one to 180 seconds, with bounded per-track work and paginated note tables.",
+    "Schedule audio progressively with a short lookahead, cancel future work on stop and report notes delayed or skipped when browser scheduling falls behind."
+  ],
+  "validation": [
+    "Real-time synthetic Chrome unit rom-data-viewer-longaudio-a5q2rn7d checked duration limits, note pages, progressive scheduling, cancellation and late-note reporting; PCM tkh5huj_ and mix ehd71h0c regression units passed.",
+    "Protected EUR unit rom-data-viewer-longaudio-eur-jds4jb_h checked a thirty-second twelve-track preview, a 180-second bounded trace and scheduler stop in Linux Chrome."
+  ],
+  "limitations": [
+    "Timing remains user-selected and playback is an approximation; browser throttling can delay or skip notes. Original driver tempo, envelopes, effects and physical audio remain unverified.",
+    "EUR attempt chfeg5l1 did not start audio because the automated browser lacked its autoplay test flag; the corrected test passed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

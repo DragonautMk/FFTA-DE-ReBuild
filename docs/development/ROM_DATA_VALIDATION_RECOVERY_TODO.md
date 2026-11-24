@@ -1136,6 +1136,46 @@ current evidence before running another check.
   affected scene and CLI on Linux when selected.
 - [ ] **ROMDATA-04-FIRAGA-COMPACT-CELLS-USA:** identify and validate corresponding
   USA sources when selected; native Windows also remains unverified.
+- [x] **ROMDATA-01-EUR-COMPACT-CELL-ADJACENT-BANK scoped EUR/Wine**
+  E489 `tkbc4ljc` links 77 original caller paths to 50 distinct records.
+  The plan records 347 frame slots and 412 sequence entries. E310 owns
+  zero of their 24,260 record bytes and 308 constructor literal bytes.
+  The final record independently bounds the start of the E457 tilemap bank.
+  [Evidence](../rom_data_graphics.md#e489-european-adjacent-compact-cell-source-plan).
+- [x] **ROMDATA-01-EUR-COMPACT-CELL-GAP-PRODUCERS scoped EUR/Wine**
+  E490 resolves the six E489 gaps as 41 records and 20 alignment
+  bytes. Wine `qktsor16` authenticates the original indexed and split
+  callers. Wine `x8kcm7a0` verifies the 91-record bank and 630 control
+  bytes against E310. The proof covers the declared physical slots.
+  [Evidence](../rom_data_graphics.md#e490-complete-european-adjacent-compact-cell-bank).
+- [x] **ROMDATA-04-EUR-COMPACT-CELL-BANK-PERSISTENT scoped EUR/Wine**
+  E491 `a1lyos30` prepares, reuses and serves the E490 bank's 31,004
+  record bytes and 630 control bytes. Both header variants, relative
+  offsets and the interior target at `af048c` are preserved. Original
+  reads and outputs match with altered backing. The previous EUR
+  `e310-d309` dataset attaches.
+  [Evidence](../rom_data_graphics.md#e491-european-compact-cell-bank-resource).
+- [ ] **ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY** Find a retained EUR
+  capture with an attributable constructor or indexed selector. Verify
+  managed reads and state, video and audio equivalence in ordinary Wine
+  replay. Attribute reads through the interior alias separately.
+- [x] **ROMDATA-01-EUR-COMPACT-CELL-ALTERNATE-DECODER scoped EUR/Wine**
+  E492 `vgbeflbq` proves byte runs for all ten value-14 frames and checks
+  the halfword decoder across the other 483 frames. The controlled
+  original maps match every decoded frame, with the E491 file hash
+  reproduced by normal extraction.
+  [Evidence](../rom_data_graphics.md#e492-european-compact-cell-frame-decoder).
+- [ ] **ROMDATA-05-EUR-COMPACT-CELL-ADJACENT-BANK-LINUX** Repeat the
+  E489 and E490 original source and ownership audit on native Linux.
+- [ ] **ROMDATA-05-EUR-COMPACT-CELL-BANK-PERSISTENT-LINUX** Verify E491
+  preparation, E310 attachment, mixed-width ABI reads and original
+  guest readers on native Linux.
+- [ ] **ROMDATA-05-EUR-COMPACT-CELL-DECODER-LINUX** Verify E492 frame
+  extents, packed file identity and original byte and halfword draw
+  output on native Linux.
+- [ ] **ROMDATA-04-COMPACT-CELL-BANK-USA** Authenticate the corresponding
+  USA constructors, selector tables and record bounds independently
+  before testing regional attachment.
 - [x] **ROMDATA-01-FIRAGA-412050-SOURCE scoped EUR/static:** E311 authenticates
   176 candidate bytes, 172 sampled, and the original indexed OBJ readers.
   [Evidence](../rom_data_obj.md#e311-firaga-indexed-obj-source-plan).
@@ -1611,16 +1651,58 @@ current evidence before running another check.
   E448 `mxjdpoph` bounds 262 LZ77 streams and 13 raw views selected by the
   628 combined E446/E301 type-3 rows. E301 owns 15,820 of 245,116 planned
   bytes. [Evidence](../rom_data_runtime.md#e448-european-type-3-transfer-source-bounds).
+- [x] **ROMDATA-01-EUR-TYPE3-CURRENT-OWNERSHIP scoped EUR/Wine**
+  E481 `hs7i9i6k` joins the E448 and E452 projections and verifies E305
+  ownership for all 825 distinct rows and their linked sources. Of
+  349,097 selected bytes, 325,850 remain unowned. The extraction plan
+  records the exact residual intervals and the partial descriptor.
+  [Evidence](../rom_data_runtime.md#e481-european-type-3-transfer-ownership).
+- [x] **ROMDATA-04-EUR-TYPE3-TRANSFER-RESOURCES scoped EUR/Wine**
+  E482 `n9qirmvq` extracts and serves the full 325,850-byte E481
+  residual and preserves the earlier owners, including the four-byte
+  compact primary alias. Direct and ABI reads, 323 SWI inputs, 14
+  raw DMA views and the ordinary Shell replay pass. The 18 conditional
+  rows retain their E453 source bounds. Ordinary auxiliary use follows
+  `ROMDATA-01-EUR-TILEMAP-AUXILIARY-SELECTOR`.
+  [Evidence](../rom_data_runtime.md#e482-european-type-3-transfer-resource).
 - [x] **ROMDATA-01-EUR-TYPE2-TRANSFER-EXTENTS scoped EUR/Wine**
   E449 verifies 217 distinct row windows across 162 rectangles and 213
   transfer rows. E301 owns 356 of 10,750 selected bytes. Protected recovery
   `bftzb469` validates the retained Wine report from `2hz2xkoy`.
   [Evidence](../rom_data_runtime.md#e449-european-type-2-rectangle-transfer-bounds).
+- [x] **ROMDATA-04-EUR-TYPE2-TRANSFER-RESOURCES scoped EUR/Wine**
+  E483 `rcph2aol` serves the complete 205-rectangle bank identified by
+  E449 and E452. The file owns 14,758 of the 15,120 distinct bytes.
+  Creation, reuse, E306 compatibility, split ownership, all three
+  mirrors and the original list reader on all 294 rows pass.
+  [Evidence](../rom_data_runtime.md#e483-european-type-2-transfer-resource).
+- [ ] **ROMDATA-04-EUR-TYPE2-TRANSFER-ORDINARY** Find an original scene
+  that reaches a type-2 row newly served by E483. The six retained E460
+  captures have no reads in the new file's intervals. Use a verified
+  trigger or a retained checkpoint with a matching read, then compare
+  the original and file-backed paths in Wine with altered ROM backing.
+  Reuse the controlled reader evidence for the bank. Keep the
+  conditional selector criterion under
+  `ROMDATA-01-EUR-TILEMAP-AUXILIARY-SELECTOR`.
+  [Bank](../rom_data_runtime.md#e483-european-type-2-transfer-resource).
 - [x] **ROMDATA-01-EUR-TYPE5-TRANSFER-EXTENTS scoped EUR/Wine**
   E450 `uhx_ek2y` bounds seven byte streams from all eight E446 type-5 rows.
   E301 leaves all 1,792 selected bytes unowned. The E447 through E450
   inventories account for all 937 E446 rows by type.
   [Evidence](../rom_data_runtime.md#e450-european-type-5-byte-stream-bounds).
+- [x] **ROMDATA-04-EUR-TYPE45-DIRECT-TRANSFERS scoped EUR/Wine**
+  E484 `drb46kuz` serves the 2,537 previously unowned control bytes
+  for all 145 verified type-4 and type-5 rows. Links cover all
+  78 E457 streams, including the alternate E458 row. Standard
+  publication, E307 attachment, mirrored mixed-owner reads and all
+  original dispatcher calls pass.
+  [Evidence](../rom_data_runtime.md#e484-european-direct-tilemap-transfer-controls).
+- [ ] **ROMDATA-04-EUR-TYPE45-DIRECT-TRANSFERS-ORDINARY** Find original
+  scenes that read newly persisted E484 controls for types 4 and 5.
+  The six E460 address inventories have no reads in those intervals.
+  Once a trigger or retained checkpoint has a positive read, compare
+  the original and file-backed paths in Wine with altered ROM backing.
+  [Bank](../rom_data_runtime.md#e484-european-direct-tilemap-transfer-controls).
 - [x] **ROMDATA-01-EUR-TILEMAP-DIRECT-SETUPS scoped EUR/Wine**
   E451 `qrfmjqvi` classifies the remaining 26 physical direct-call sites
   and adds 105 base/count pairs and 324 rows. Thirty-six rows are conditional
@@ -1669,6 +1751,16 @@ current evidence before running another check.
   including 142 alignment bytes. All 302 aligned references select known
   starts. Mode 3 is absent in this bank. E301 owns 844 of 9,864 bank bytes.
   [Evidence](../rom_data_runtime.md#e457-european-tilemap-stream-bank).
+- [x] **ROMDATA-01-EUR-TILEMAP-MODE3-SOURCE-ROUTES scoped EUR/Wine**
+  E489 `tkbc4ljc` links the mode-3 dispatcher to its bounded list
+  producers. The 136 verified type-4 rows and the 99 preceding aligned
+  pointer targets supply no mode-3 root under the verified reader
+  bounds. E310 owns all 64 routing bytes.
+  [Evidence](../rom_data_runtime.md#e489-european-mode-3-dispatch-and-adjacent-compact-cell-bank).
+- [ ] **ROMDATA-01-EUR-TILEMAP-MODE3-LIVE-SOURCE** Obtain a source-backed
+  input that supplies mode 3 at original load `080da560`, or prove an
+  additional producer from a live or indirect path. Record the exact
+  pointer, full encoded extent and reader before adding it to extraction.
 - [x] **ROMDATA-01-EUR-TILEMAP-LITERAL-CALLERS scoped EUR/Wine**
   E458 `zy0fdg0i` classifies all 302 aligned references, including 153
   literal words, 12 indexed cells and 137 descriptor words. Six original
@@ -1680,6 +1772,19 @@ current evidence before running another check.
   six origin readers. The six added sites reuse known literals within the
   E457 bank. Indirect calls and live index bounds remain open.
   [Evidence](../rom_data_runtime.md#e459-european-tilemap-origin-caller-census).
+- [x] **ROMDATA-04-EUR-TILEMAP-ORIGIN-POINTERS scoped EUR/Wine**
+  E485 `yi8i51yu` persists the 151 residual literal words, giving
+  declared ownership to all 302 aligned E457 references. E308
+  attaches and the earlier descriptor and indexed owners are
+  preserved. All 153 original loads and the mirrored read ABI pass.
+  [Evidence](../rom_data_runtime.md#e485-european-tilemap-origin-references).
+- [ ] **ROMDATA-04-EUR-TILEMAP-ORIGIN-POINTERS-ORDINARY** Verify an
+  original scene that reaches one of the newly published E485 literals.
+  E460 samples only earlier owners. Once a checkpoint or action has
+  a positive read, compare the original and file-backed runs in Wine
+  with altered backing. Keep the indexed and indirect callers under
+  their existing criteria.
+  [E485](../rom_data_runtime.md#e485-european-tilemap-origin-references).
 - [x] **ROMDATA-04-EUR-TILEMAP-RETAINED-READS scoped EUR/Wine**
   E460 `gnjd_0y0` joins six retained address inventories to the bank and
   E301. Four windows read three streams. All 140 sampled source and
@@ -1727,15 +1832,19 @@ current evidence before running another check.
   148 E301 resources. The Shell interpreter pair matches on clock, audio,
   final video and complete state with altered metadata backing.
   [Evidence](../rom_data_runtime.md#e468-european-task-345-managed-transfer-metadata).
-- [ ] **ROMDATA-04-EUR-TILEMAP-ID345-TRANSFER-BANK** The E302 manifest
-  covers 616 of 4,358 planned bytes. The 3,742 remaining bytes are LZ77
-  inputs bound from the authentic ROM during E473 runtime activation.
-  Persistent input coverage still requires independent authenticated
-  backing and acceptance through the standard data loader. E470 locates
-  ordinary reads at slots 2 and 4. E471 supplies the slot-1 replay, and
-  E473 verifies its bound input. E474 verifies direct bus reads, the
-  native read ABI and controlled DMA. Execution of translated guest
-  scenes and further ordinary selectors require their own evidence.
+- [ ] **ROMDATA-04-EUR-TILEMAP-ID345-TRANSFER-BANK** E480 persists the
+  3,742 LZ77 bytes outside the E302 manifest and verifies standard
+  preparation, attachment and the slot-1 replay. E487 confirms coverage
+  of all 4,358 planned bytes in E310. E470 verifies original reads for
+  slots 2 and 4, and E488 verifies their managed replays. Further ordinary
+  selectors and translated guest execution remain open.
+- [x] **ROMDATA-04-EUR-TILEMAP-ID345-SLOT2-SLOT4-MANAGED scoped EUR/Wine**
+  E488 `zmbcb0wa` reuses the E470 Firaga and Soil Evidence replays with
+  standard E310 preparation and attachment. Both runs attribute their
+  metadata and LZ77 inputs to the extracted resources with the backing
+  bytes altered. Clock and audio match across 1,206 frames. Both full
+  state, framebuffer and OAM endpoints match.
+  [Evidence](../rom_data_runtime.md#e488-european-task-345-slot-2-and-slot-4-replays).
 - [x] **ROMDATA-04-EUR-TILEMAP-ID345-SELECTOR-ROUTES scoped EUR/Wine**
   E470 `rxwzcitl` projects all 23 selectors from 347 actions and 341
   primary descriptors. The 345 saved rosters give 17 selector
@@ -1764,6 +1873,12 @@ current evidence before running another check.
   across three mirrors with altered backing. Both DMA widths match
   at a managed/raw boundary, and the E471 replay retains equivalence.
   [Evidence](../rom_data_runtime.md#e474-european-task-345-cartridge-and-dma-reads).
+- [x] **ROMDATA-04-EUR-TILEMAP-ID345-LZ77-PERSISTENT scoped EUR/Wine**
+  E480 `e5w8vr8k` persists 3,742 bytes in 13 ranges and retains the
+  earlier owner for two inputs. Standard publication and reuse, E304
+  attachment and rejection of a coherent edit pass. Direct, DMA and
+  SWI checks and the 300-frame ordinary slot-1 comparison match E474.
+  [Evidence](../rom_data_runtime.md#e480-european-task-345-lz77-resource).
 - [x] **ROMDATA-05-EUR-TILEMAP-ID345-METADATA-PUBLISH-REUSE scoped EUR/Wine**
   E469 `azu4reeg` publishes e302-d301 with the 148 verified E301
   files linked, matches the E468 manifest, reuses the active generation
@@ -1773,11 +1888,26 @@ current evidence before running another check.
   e302-d301 creation with the default CLI writer under Wine. E469
   verifies the preparation transaction, reuse and the CLI verify handler
   with an injected writer for the E301 files.
+- [x] **ROMDATA-04-EUR-TILEMAP-DIRECTORY-SOURCES scoped EUR/Wine**
+  E486 `fu029eck` closes the 1,494-byte E309 residual from the E446
+  and E451 directory arguments. All 1,261 projected rows have earlier
+  owners. Standard publication and reuse, E309 attachment and 489
+  original literal and table loads pass with altered backing.
+  [Evidence](../rom_data_runtime.md#e486-european-transfer-list-directory-sources).
+- [x] **ROMDATA-04-EUR-TILEMAP-VERIFIED-SOURCE-COVERAGE scoped EUR/Wine**
+  E487 `sgmwvtno` reconciles the verified bank plans with E310. All
+  378,999 required bytes have one resource owner. The only 210 unclaimed
+  bytes in the audit are the classified E457 stream padding. This
+  includes the full 4,358-byte task-345 bank.
+  [Evidence](../rom_data_runtime.md#e487-european-tilemap-source-coverage).
 - [ ] **ROMDATA-04-EUR-TILEMAP-LIST-DIRECTORIES-RUNTIME** Establish live use
   of the additional E446/E451 directories and the E458 alternate type-4
-  row. E475 binds the complete E457 stream bank and preserves the origin
-  byte pairs. E477 verifies the first two ordinary E461 routes and binds
-  all 96 previously unowned E461 control bytes in memory. The other
+  row. E479 loads the complete E457 stream bank from verified resources
+  and preserves the origin byte pairs. E477 verifies the first two
+  ordinary E461 routes. E478 loads all 96 newly owned E461 control
+  bytes from its file. E484 verifies the original dispatcher for all
+  145 known type-4 and type-5 rows, including the alternate row. E486
+  verifies the extracted controls for all 335 bounded directory pairs. The other
   constructor and geometry calls still need verified live table indices
   and attributable reads.
   Preserve selected row windows, shared targets, original bounds and
@@ -1785,18 +1915,21 @@ current evidence before running another check.
   Reuse E460 as a baseline for the three already-owned streams. For each
   remaining ordinary route, use a source-backed input and compare the
   end result with the selected ranges altered in the managed backing.
-  Mode-3 streams and any continuation below the first verified start at
-  `af1818` need independently linked sources and reader bounds.
+  E489 bounds the preceding compact-cell record and the start of the
+  tilemap bank at `af1818`. Any distinct mode-3 bank needs a verified
+  additional producer under ROMDATA-01-EUR-TILEMAP-MODE3-LIVE-SOURCE.
 - [x] **ROMDATA-04-EUR-TILEMAP-STREAM-BANK-BUS scoped EUR/Wine**
   E475 `7mu7rdhi` binds 8,810 selected bytes in memory across the
   complete E457 bank and preserves the 844 existing owner bytes.
   Direct and ABI reads match for all 78 extents. Both original cell
   readers match for 12,418 controlled calls with altered backing.
   [Evidence](../rom_data_runtime.md#e475-european-halfword-and-byte-tilemap-bank-binding).
-- [ ] **ROMDATA-04-EUR-TILEMAP-STREAM-BANK-PERSISTENT** Supply authenticated
-  persistent backing for the 8,810 selected bytes served by E475.
-  Verify the standard loader and attributable reads without those bytes
-  in the live ROM view.
+- [x] **ROMDATA-04-EUR-TILEMAP-STREAM-BANK-PERSISTENT scoped EUR/Wine**
+  E479 `wd9v3o6q` publishes 8,810 stream bytes in 130 ranges with the
+  standard preparation writer. Normal activation and altered-backing
+  bus and reader checks pass. All 78 streams retain the E475 results.
+  E302 and E303 still attach.
+  [Evidence](../rom_data_runtime.md#e479-european-tilemap-stream-bank-resource).
 - [x] **ROMDATA-01-EUR-TILEMAP-E461-DISPATCH-CONDITIONS scoped EUR/Wine**
   E476 `ak9n6nmu` authenticates the state table and 12 projected action
   routes. Wine `qjyy7piy` and reconciliation `dy80gsv8` establish both
@@ -1827,24 +1960,67 @@ current evidence before running another check.
 - [ ] **ROMDATA-05-EUR-TYPE3-TRANSFER-EXTENTS-LINUX** Repeat the E448 source
   extent and ownership audit on the native Linux CLI when selected.
   Authenticate USA row, descriptor, wrapper and payload bounds separately.
+- [ ] **ROMDATA-05-EUR-TYPE3-CURRENT-OWNERSHIP-LINUX** Repeat the E481
+  combined E448/E452 ownership and residual audit on native Linux.
+  Authenticate the corresponding USA projections separately.
+- [ ] **ROMDATA-05-EUR-TYPE3-TRANSFER-RESOURCES-LINUX** Repeat E482
+  preparation, reuse, split-descriptor, bus, SWI, DMA and Shell replay
+  checks on native Linux. Authenticate and verify the USA bank and
+  ordinary input separately.
 - [ ] **ROMDATA-05-EUR-TYPE2-TRANSFER-EXTENTS-LINUX** Repeat the E449 list and
   rectangle-window audit on the native Linux CLI when selected. Authenticate
   the USA reader and list and rectangle bounds separately.
+- [ ] **ROMDATA-05-EUR-TYPE2-TRANSFER-RESOURCES-LINUX** Verify preparation,
+  reuse, split ownership, mirrored bus and ABI reads, and the original
+  rectangle-list reader on native Linux. Authenticate and verify the
+  corresponding USA bank separately.
+  [E483](../rom_data_runtime.md#e483-european-type-2-transfer-resource).
 - [ ] **ROMDATA-05-EUR-TYPE5-TRANSFER-EXTENTS-LINUX** Repeat the E450 byte-stream
   ownership audit on the native Linux CLI when selected. Authenticate the USA
   initializer, byte reader and sources separately.
+- [ ] **ROMDATA-05-EUR-TYPE45-DIRECT-TRANSFERS-LINUX** Repeat E484
+  publication, reuse, split ownership, mirrored ABI reads and the
+  original dispatcher for both types on native Linux. Authenticate the
+  corresponding USA controls and stream bounds separately.
+  [E484](../rom_data_runtime.md#e484-european-direct-tilemap-transfer-controls).
 - [ ] **ROMDATA-05-EUR-TILEMAP-DIRECT-SETUPS-LINUX** Repeat the E451 ownership
   audit on the native Linux CLI when selected. Authenticate the USA task
   catalog, argument setup and linked lists separately when USA is in scope.
 - [ ] **ROMDATA-05-EUR-TILEMAP-ADDITIONAL-SOURCE-EXTENTS-LINUX** Repeat the
   E452 linked source audit on the native Linux CLI when selected. Verify the
   USA source formats and bank bounds separately when USA is in scope.
+- [ ] **ROMDATA-05-EUR-TILEMAP-DIRECTORY-SOURCES-LINUX** Verify the
+  E310 directory control file, E309 attachment and original literal,
+  pointer and count loads on native Linux. Authenticate the USA
+  directories and selector bounds independently.
+  [E486](../rom_data_runtime.md#e486-european-transfer-list-directory-sources).
+- [ ] **ROMDATA-05-EUR-TILEMAP-VERIFIED-SOURCE-COVERAGE-LINUX** Repeat
+  the E487 ownership audit with the native Linux CLI. Independently
+  authenticate the corresponding USA bank boundaries and selector
+  projections before auditing USA ownership.
+  [E487](../rom_data_runtime.md#e487-european-tilemap-source-coverage).
 - [ ] **ROMDATA-05-EUR-TILEMAP-STREAM-BANK-LINUX** Verify the E457 combined
   bank and reference ownership through the native Linux CLI. Authenticate
   the USA bank separately.
+- [ ] **ROMDATA-05-EUR-TILEMAP-MODE3-SOURCE-ROUTES-LINUX** Repeat the
+  E489 routing ownership audit on native Linux. Verify the corresponding
+  USA dispatcher and its producer bounds separately.
 - [ ] **ROMDATA-05-EUR-TILEMAP-STREAM-BANK-BUS-LINUX** Repeat the E475
   altered-backing bus and original reader comparison on native Linux.
   Verify the USA dispatch and stream bounds separately.
+- [ ] **ROMDATA-05-EUR-TILEMAP-STREAM-BANK-PERSISTENT-LINUX** Repeat
+  E479 publication, reuse, attachment and altered-backing readers on
+  native Linux. Authenticate and verify the corresponding USA family
+  separately.
+- [ ] **ROMDATA-05-EUR-TILEMAP-ID345-LZ77-PERSISTENT-LINUX** Repeat
+  E480 publication, reuse and altered-backing bus, DMA, SWI and slot-1
+  replay checks on native Linux. Authenticate the USA directory,
+  stream extents and ordinary input separately.
+- [ ] **ROMDATA-05-EUR-TILEMAP-ID345-SLOT2-SLOT4-MANAGED-LINUX** Repeat
+  the E488 altered-backing Firaga and Soil Evidence pairs on native
+  Linux. Authenticate the corresponding USA selectors, owners and inputs
+  independently before replaying them.
+  [E488](../rom_data_runtime.md#e488-european-task-345-slot-2-and-slot-4-replays).
 - [ ] **ROMDATA-05-EUR-TILEMAP-E461-DISPATCH-LINUX** Verify the E476
   dispatcher and both direct IN-08 continuations on native Linux.
   Authenticate the USA state table and source callers separately.
@@ -1862,6 +2038,11 @@ current evidence before running another check.
 - [ ] **ROMDATA-05-EUR-TILEMAP-GEOMETRY-CALLERS-LINUX** Verify the E459
   branch census and six reuse paths through the native Linux CLI.
   Authenticate the USA call sites and source arguments separately.
+- [ ] **ROMDATA-05-EUR-TILEMAP-ORIGIN-POINTERS-LINUX** Verify E309
+  publication, E308 attachment, mirrored ABI reads and the 153
+  original literal loads on native Linux. Authenticate the USA
+  reference bank separately.
+  [E485](../rom_data_runtime.md#e485-european-tilemap-origin-references).
 - [ ] **ROMDATA-05-EUR-TILEMAP-RETAINED-READS-LINUX** Verify the E460
   mixed interval merge and retained sample ownership with the native
   Linux CLI. Collect and authenticate USA windows separately.

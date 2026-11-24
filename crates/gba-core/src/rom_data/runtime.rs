@@ -265,6 +265,11 @@ pub use white_flowers_isolated_values::WhiteFlowersIsolatedValuesStats;
 mod tilemap_transfer_directory;
 use tilemap_transfer_directory::TilemapTransferDirectoryResources;
 pub use tilemap_transfer_directory::{TilemapLz77Input, TilemapTransferDirectoryStats};
+mod packed_tilemap_file;
+use packed_tilemap_file::PackedTilemapFile;
+mod tilemap_type3;
+use tilemap_type3::TilemapType3Resources;
+pub use tilemap_type3::TilemapType3Stats;
 mod audio_driver;
 use audio_driver::AudioDriverResources;
 pub use audio_driver::AudioDriverStats;
@@ -561,6 +566,10 @@ pub struct RuntimeResources {
     white_flowers_signed_bytes: Option<Box<WhiteFlowersSignedBytesResources>>,
     white_flowers_isolated_values: Option<Box<WhiteFlowersIsolatedValuesResources>>,
     tilemap_transfer_directory: Option<Box<TilemapTransferDirectoryResources>>,
+    tilemap_type3: Option<Box<TilemapType3Resources>>,
+    tilemap_type2: Option<Box<PackedTilemapFile>>,
+    tilemap_direct: Option<Box<PackedTilemapFile>>,
+    compact_cell_bank: Option<Box<PackedTilemapFile>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -869,12 +878,19 @@ impl RuntimeResources {
             resources.observed_tilemap = Some(Box::new(ObservedTilemapResources::new(data.clone(), &source.observed_tilemap.as_ref().unwrap().sources)?));
             if manifest.source_rom_sha256 == ffta_rom::EUROPE_SHA256 {
                 let controls = files.indexed_tilemap_controls.map(|(controls, _)| controls);
-                // The validated manifest appends the new claim after its earlier owners.
-                let prior_count = manifest.resources.len() - usize::from(controls.is_some());
+                let stream_file = files.tilemap_stream_bank.map(|bytes| {
+                    let resource = manifest.resources.iter()
+                        .find(|resource| resource.id == TILEMAP_STREAM_BANK_ID).unwrap();
+                    (bytes, resource.sources.as_slice())
+                });
+                let prior_count = manifest.resources.iter()
+                    .position(|resource| resource.id == INDEXED_TILEMAP_CONTROLS_ID)
+                    .unwrap_or(manifest.resources.len());
                 resources.tilemap_stream_bank = Some(Box::new(TilemapStreamBankResources::new(
                     rom,
                     &manifest.resources[..prior_count],
                     controls,
+                    stream_file,
                 )?));
             }
         }
@@ -970,14 +986,40 @@ impl RuntimeResources {
         }
         if let Some((data, _)) = files.tilemap_transfer_directory {
             let catalog = source.tilemap_transfer_directory.as_ref().unwrap();
+            let input_file = files.tilemap_transfer_lz77.map(|bytes| {
+                let resource = manifest.resources.iter()
+                    .find(|resource| resource.id == TILEMAP_TRANSFER_LZ77_ID).unwrap();
+                (bytes, resource.sources.as_slice())
+            });
             resources.tilemap_transfer_directory = Some(Box::new(
                 TilemapTransferDirectoryResources::new(
                     data,
                     &catalog.sources,
                     rom,
                     &manifest.resources,
+                    input_file,
                 )?,
             ));
+        }
+        if let Some(file) = files.tilemap_type3 {
+            let resource = manifest.resources.iter().find(|item| item.id == TILEMAP_TYPE3_ID)
+                .ok_or("Missing type-3 tilemap transfer resource")?;
+            resources.tilemap_type3 = Some(Box::new(TilemapType3Resources::new(file, &resource.sources)?));
+        }
+        if let Some(file) = files.tilemap_type2 {
+            let resource = manifest.resources.iter().find(|item| item.id == TILEMAP_TYPE2_ID)
+                .ok_or("Missing type-2 tilemap transfer resource")?;
+            resources.tilemap_type2 = Some(Box::new(PackedTilemapFile::new(file, &resource.sources)?));
+        }
+        if let Some(file) = files.tilemap_direct {
+            let resource = manifest.resources.iter().find(|item| item.id == TILEMAP_DIRECT_ID)
+                .ok_or("Missing direct tilemap transfer resource")?;
+            resources.tilemap_direct = Some(Box::new(PackedTilemapFile::new(file, &resource.sources)?));
+        }
+        if let Some(file) = files.compact_cell_bank {
+            let resource = manifest.resources.iter().find(|item| item.id == COMPACT_CELL_BANK_ID)
+                .ok_or("Missing compact-cell bank resource")?;
+            resources.compact_cell_bank = Some(Box::new(PackedTilemapFile::new(file, &resource.sources)?));
         }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
@@ -1282,6 +1324,10 @@ impl RuntimeResources {
             white_flowers_signed_bytes: None,
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1458,6 +1504,10 @@ impl RuntimeResources {
             + self.white_flowers_signed_bytes.as_ref().map_or(0, |i| i.resident_bytes())
             + self.white_flowers_isolated_values.as_ref().map_or(0, |i| i.resident_bytes())
             + self.tilemap_transfer_directory.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.tilemap_type3.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.tilemap_type2.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.tilemap_direct.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.compact_cell_bank.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1666,6 +1716,18 @@ impl RuntimeResources {
     pub fn tilemap_transfer_directory_stats(&self) -> Option<TilemapTransferDirectoryStats> {
         self.tilemap_transfer_directory.as_ref().map(|model| model.stats())
     }
+    pub fn tilemap_type3_stats(&self) -> Option<TilemapType3Stats> {
+        self.tilemap_type3.as_ref().map(|model| model.stats())
+    }
+    pub fn tilemap_type2_bus_bytes(&self) -> Option<u64> {
+        self.tilemap_type2.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn tilemap_direct_bus_bytes(&self) -> Option<u64> {
+        self.tilemap_direct.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn compact_cell_bank_bus_bytes(&self) -> Option<u64> {
+        self.compact_cell_bank.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1816,7 +1878,7 @@ impl RuntimeResources {
     }
 
     /// Only the ROM read arms call this, after their GPIO/EEPROM and bounds
-    /// checks, and only on the fixed metadata source pages. Crossing reads
+    /// checks, and only at registered source pages or file ranges. Crossing reads
     /// keep adjacent opaque ROM bytes without reading a migrated byte there.
     pub(crate) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8]) -> Option<[u8; N]> {
         let Some(base) = self.source_offset(index, N) else {
@@ -2152,6 +2214,22 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.tilemap_type3 {
+                Some(data) => data.file.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.tilemap_type2 {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.tilemap_direct {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.compact_cell_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2459,8 +2537,14 @@ impl crate::MemMap {
     }
 
     #[inline]
-    pub(crate) fn resource_page(index: usize) -> bool {
-        matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97
+    pub(crate) fn resource_page(&self, index: usize) -> bool {
+        self.rom_resources.as_ref().is_some_and(|resources| {
+            resources.tilemap_type3.as_ref().is_some_and(|data| data.file.overlaps(index, 4))
+                || resources.tilemap_type2.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.tilemap_direct.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.compact_cell_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+        })
+            || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97
             | 0x569..=0x56c | 0x766..=0x769)
             || PaletteResources::source_page(index)
             || AlternatePaletteResources::source_page(index)

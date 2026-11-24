@@ -116,6 +116,12 @@ use gba_core::rom_data::{
     TILEMAP_TRANSFER_DIRECTORY_FILE, MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES,
     tilemap_stream_bank::IndexedTilemapControls, INDEXED_TILEMAP_CONTROLS_ID,
     INDEXED_TILEMAP_CONTROLS_FILE, MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES,
+    TILEMAP_STREAM_BANK_ID, TILEMAP_STREAM_BANK_FILE, MAX_TILEMAP_STREAM_BANK_FILE_BYTES,
+    TILEMAP_TRANSFER_LZ77_ID, TILEMAP_TRANSFER_LZ77_FILE, MAX_TILEMAP_TRANSFER_LZ77_FILE_BYTES,
+    TILEMAP_TYPE3_ID, TILEMAP_TYPE3_FILE, MAX_TILEMAP_TYPE3_FILE_BYTES,
+    TILEMAP_TYPE2_ID, TILEMAP_TYPE2_FILE, MAX_TILEMAP_TYPE2_FILE_BYTES,
+    TILEMAP_DIRECT_ID, TILEMAP_DIRECT_FILE, MAX_TILEMAP_DIRECT_FILE_BYTES,
+    COMPACT_CELL_BANK_ID, COMPACT_CELL_BANK_FILE, MAX_COMPACT_CELL_BANK_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -982,6 +988,18 @@ mod tilemap_bank_plan;
 mod tilemap_transfer_directory_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod tilemap_stream_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_type3_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_type2_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_direct_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_origin_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_directory_sources_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod compact_cell_bank_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -1942,6 +1960,12 @@ struct Dataset {
     white_flowers_isolated_values_bytes: Option<Vec<u8>>,
     tilemap_transfer_directory_bytes: Option<Vec<u8>>,
     indexed_tilemap_controls_bytes: Option<Vec<u8>>,
+    tilemap_stream_bank_bytes: Option<Vec<u8>>,
+    tilemap_transfer_lz77_bytes: Option<Vec<u8>>,
+    tilemap_type3_bytes: Option<Vec<u8>>,
+    tilemap_type2_bytes: Option<Vec<u8>>,
+    tilemap_direct_bytes: Option<Vec<u8>>,
+    compact_cell_bank_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2102,6 +2126,12 @@ impl Dataset {
                 .zip(self.tilemap_transfer_directory_bytes.as_deref()),
             indexed_tilemap_controls: self.indexed_tilemap_controls.as_ref()
                 .zip(self.indexed_tilemap_controls_bytes.as_deref()),
+            tilemap_stream_bank: self.tilemap_stream_bank_bytes.as_deref(),
+            tilemap_transfer_lz77: self.tilemap_transfer_lz77_bytes.as_deref(),
+            tilemap_type3: self.tilemap_type3_bytes.as_deref(),
+            tilemap_type2: self.tilemap_type2_bytes.as_deref(),
+            tilemap_direct: self.tilemap_direct_bytes.as_deref(),
+            compact_cell_bank: self.compact_cell_bank_bytes.as_deref(),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2340,6 +2370,36 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
             MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES,
         ))
         .transpose()?;
+    let tilemap_stream_bank_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_STREAM_BANK_ID)
+        .then(|| read_bounded(
+            &path.join(TILEMAP_STREAM_BANK_FILE),
+            MAX_TILEMAP_STREAM_BANK_FILE_BYTES,
+        ))
+        .transpose()?;
+    let tilemap_transfer_lz77_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_TRANSFER_LZ77_ID)
+        .then(|| read_bounded(
+            &path.join(TILEMAP_TRANSFER_LZ77_FILE),
+            MAX_TILEMAP_TRANSFER_LZ77_FILE_BYTES,
+        ))
+        .transpose()?;
+    let tilemap_type3_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_TYPE3_ID)
+        .then(|| read_bounded(&path.join(TILEMAP_TYPE3_FILE), MAX_TILEMAP_TYPE3_FILE_BYTES))
+        .transpose()?;
+    let tilemap_type2_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_TYPE2_ID)
+        .then(|| read_bounded(&path.join(TILEMAP_TYPE2_FILE), MAX_TILEMAP_TYPE2_FILE_BYTES))
+        .transpose()?;
+    let tilemap_direct_bytes = manifest.coverage.iter()
+        .any(|id| id == TILEMAP_DIRECT_ID)
+        .then(|| read_bounded(&path.join(TILEMAP_DIRECT_FILE), MAX_TILEMAP_DIRECT_FILE_BYTES))
+        .transpose()?;
+    let compact_cell_bank_bytes = manifest.coverage.iter()
+        .any(|id| id == COMPACT_CELL_BANK_ID)
+        .then(|| read_bounded(&path.join(COMPACT_CELL_BANK_FILE), MAX_COMPACT_CELL_BANK_FILE_BYTES))
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2518,6 +2578,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         white_flowers_isolated_values_bytes.as_ref().map_or(0, Vec::len),
         tilemap_transfer_directory_bytes.as_ref().map_or(0, Vec::len),
         indexed_tilemap_controls_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_stream_bank_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_transfer_lz77_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_type3_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_type2_bytes.as_ref().map_or(0, Vec::len),
+        tilemap_direct_bytes.as_ref().map_or(0, Vec::len),
+        compact_cell_bank_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -2969,6 +3035,12 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         white_flowers_isolated_values_bytes,
         tilemap_transfer_directory_bytes,
         indexed_tilemap_controls_bytes,
+        tilemap_stream_bank_bytes,
+        tilemap_transfer_lz77_bytes,
+        tilemap_type3_bytes,
+        tilemap_type2_bytes,
+        tilemap_direct_bytes,
+        compact_cell_bank_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3129,6 +3201,12 @@ fn check_dataset_budget(
     white_flowers_isolated_values: usize,
     tilemap_transfer_directory: usize,
     indexed_tilemap_controls: usize,
+    tilemap_stream_bank: usize,
+    tilemap_transfer_lz77: usize,
+    tilemap_type3: usize,
+    tilemap_type2: usize,
+    tilemap_direct: usize,
+    compact_cell_bank: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3277,6 +3355,12 @@ fn check_dataset_budget(
         || white_flowers_isolated_values as u64 > MAX_WHITE_FLOWERS_ISOLATED_VALUES_FILE_BYTES
         || tilemap_transfer_directory as u64 > MAX_TILEMAP_TRANSFER_DIRECTORY_FILE_BYTES
         || indexed_tilemap_controls as u64 > MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES
+        || tilemap_stream_bank as u64 > MAX_TILEMAP_STREAM_BANK_FILE_BYTES
+        || tilemap_transfer_lz77 as u64 > MAX_TILEMAP_TRANSFER_LZ77_FILE_BYTES
+        || tilemap_type3 as u64 > MAX_TILEMAP_TYPE3_FILE_BYTES
+        || tilemap_type2 as u64 > MAX_TILEMAP_TYPE2_FILE_BYTES
+        || tilemap_direct as u64 > MAX_TILEMAP_DIRECT_FILE_BYTES
+        || compact_cell_bank as u64 > MAX_COMPACT_CELL_BANK_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3431,6 +3515,12 @@ fn check_dataset_budget(
         .saturating_add(white_flowers_isolated_values)
         .saturating_add(tilemap_transfer_directory)
         .saturating_add(indexed_tilemap_controls)
+        .saturating_add(tilemap_stream_bank)
+        .saturating_add(tilemap_transfer_lz77)
+        .saturating_add(tilemap_type3)
+        .saturating_add(tilemap_type2)
+        .saturating_add(tilemap_direct)
+        .saturating_add(compact_cell_bank)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3685,6 +3775,42 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
         eprintln!(
             "ROM_DATA runtime=decoded resource={INDEXED_TILEMAP_CONTROLS_ID} slots={}",
             data.slots.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.tilemap_stream_bank_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={TILEMAP_STREAM_BANK_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.tilemap_transfer_lz77_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={TILEMAP_TRANSFER_LZ77_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.tilemap_type3_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={TILEMAP_TYPE3_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.tilemap_type2_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={TILEMAP_TYPE2_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.tilemap_direct_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={TILEMAP_DIRECT_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.compact_cell_bank_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={COMPACT_CELL_BANK_ID} source_bytes={}",
+            bytes.len()
         );
     }
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
@@ -4344,6 +4470,12 @@ fn write_dataset_inner(
     let indexed_tilemap_controls_data = source.indexed_tilemap_controls.as_ref()
         .map(serde_json::to_vec_pretty).transpose()
         .map_err(|error| format!("Cannot encode indexed tilemap controls: {error}"))?;
+    let tilemap_stream_bank_data = source.tilemap_stream_bank.clone();
+    let tilemap_transfer_lz77_data = source.tilemap_transfer_lz77.clone();
+    let tilemap_type3_data = source.tilemap_type3.clone();
+    let tilemap_type2_data = source.tilemap_type2.clone();
+    let tilemap_direct_data = source.tilemap_direct.clone();
+    let compact_cell_bank_data = source.compact_cell_bank.clone();
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4508,6 +4640,14 @@ fn write_dataset_inner(
     if let Some(bytes)=&white_flowers_isolated_values_data {files.push(bytes);}
     if let Some(bytes) = &tilemap_transfer_directory_data {files.push(bytes);}
     if let Some(bytes) = &indexed_tilemap_controls_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_stream_bank_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_transfer_lz77_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_type3_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_type2_data {files.push(bytes);}
+    if let Some(bytes) = &tilemap_direct_data {files.push(bytes);}
+    if let Some(bytes) = &compact_cell_bank_data {
+        files.push(bytes);
+    }
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4663,6 +4803,12 @@ fn write_dataset_inner(
         white_flowers_isolated_values_data.as_ref().map_or(0, Vec::len),
         tilemap_transfer_directory_data.as_ref().map_or(0, Vec::len),
         indexed_tilemap_controls_data.as_ref().map_or(0, Vec::len),
+        tilemap_stream_bank_data.as_ref().map_or(0, Vec::len),
+        tilemap_transfer_lz77_data.as_ref().map_or(0, Vec::len),
+        tilemap_type3_data.as_ref().map_or(0, Vec::len),
+        tilemap_type2_data.as_ref().map_or(0, Vec::len),
+        tilemap_direct_data.as_ref().map_or(0, Vec::len),
+        compact_cell_bank_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -4814,6 +4960,24 @@ fn write_dataset_inner(
     }
     if let Some(bytes) = &indexed_tilemap_controls_data {
         write(&path.join(INDEXED_TILEMAP_CONTROLS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &tilemap_stream_bank_data {
+        write(&path.join(TILEMAP_STREAM_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &tilemap_transfer_lz77_data {
+        write(&path.join(TILEMAP_TRANSFER_LZ77_FILE), bytes)?;
+    }
+    if let Some(bytes) = &tilemap_type3_data {
+        write(&path.join(TILEMAP_TYPE3_FILE), bytes)?;
+    }
+    if let Some(bytes) = &tilemap_type2_data {
+        write(&path.join(TILEMAP_TYPE2_FILE), bytes)?;
+    }
+    if let Some(bytes) = &tilemap_direct_data {
+        write(&path.join(TILEMAP_DIRECT_FILE), bytes)?;
+    }
+    if let Some(bytes) = &compact_cell_bank_data {
+        write(&path.join(COMPACT_CELL_BANK_FILE), bytes)?;
     }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
@@ -5204,6 +5368,12 @@ mod tests {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5531,8 +5701,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

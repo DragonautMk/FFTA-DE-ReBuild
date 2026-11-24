@@ -691,6 +691,10 @@ Keep extracted game data under ignored `target/` and outside release packages.
 
 ## Extracted files
 
+To inspect the colors in an existing dataset, start with the palette example
+in the [extracted resource viewer checklist](development/ROM_DATA_VIEWER_TODO.md).
+That guide also describes Docker commands for generating the offline viewer.
+
 The output directory contains `manifest.toml`, `obj-dimensions.toml`,
 `bg-descriptors.json`, `bg-base-palettes.json`, `bg-alternate-palettes.json` and
 `bg-packet-programs.json`, plus EUR's `bg-main-graphics.json` and

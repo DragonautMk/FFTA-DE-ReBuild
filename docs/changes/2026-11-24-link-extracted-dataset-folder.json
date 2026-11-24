@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "link-extracted-dataset-folder",
+  "title": "Open indexed files from an extracted dataset folder",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow a reader to select an extracted folder once and open matching resource paths in the existing file inspector, with explicit path-only matching and disconnect controls.",
+    "Keep the folder chooser disabled until initialization and recover any selection that arrived before its listener was registered."
+  ],
+  "validation": [
+    "Synthetic units rom-data-viewer-directory-ready-id2lnqf6 and rom-data-viewer-directory-early-2ynmp1y9 checked real folder selection, nested paths, ambiguous names, file replacement, disconnect and early selection. Regression unit rom-data-viewer-directory-regression-n61r4p2c checked text and hexadecimal search.",
+    "Protected EUR unit rom-data-viewer-directory-eur-ready-1p18b2r4 matched all 150 indexed resources and checked a JSON tree and a large file in Linux Chrome. Initial is0fbozr timed out on an early selection; diagnostic 8o8n0vt6 confirmed the race before the fix."
+  ],
+  "limitations": [
+    "Matching uses relative paths and does not recheck selected contents against the generated manifest. Windows and physical browser interaction remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data.md"
+  ]
+}

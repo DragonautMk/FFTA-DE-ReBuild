@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-tilemap-stream-bank",
+  "title": "Persist the European tilemap stream bank",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Publish tilemap-stream-bank.bin in e304-d303 from the complete E457 extent model. The new resource claims 8,810 encoded bytes in 130 ranges, retaining 844 earlier owner bytes and 210 padding bytes.",
+    "Use the authenticated file for managed cartridge reads and preserve explicit E302 and E303 loading."
+  ],
+  "validation": [
+    "Windows harness build lnahlnsl and Wine wd9v3o6q pass. Standard preparation writes all 151 resources and reuses the generation. E302 and E303 attach, and a coherent edited file is rejected without replacing the active bindings.",
+    "The controlled test matches E475 across 78 streams and 12,418 original reader calls with altered backing. All three mirrors, guest clocks, cursor endpoints and serialized state match. Wine drains and all 18 protected paths pass."
+  ],
+  "limitations": [
+    "The exact ROM is still required. Ordinary IDs 130 and 133, persistent task-345 LZ77 data, other banks, translated guest execution, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/tilemap_stream_bank.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_stream_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_stream_bank_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

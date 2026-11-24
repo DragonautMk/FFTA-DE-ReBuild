@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audition-cgb-sequence-waves",
+  "title": "Audition extracted CGB waves in sequences",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Resolve supported CGB wave instruments through extracted sequence program and key mappings, with looped sample playback, approximate tuning and labelled sine fallbacks."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-cgbvoice-e6iutnqa checked sample mapping, shared identifiers, loops and fallback. Protected EUR unit rom-data-viewer-cgbvoice-eur-9_1pifpq compared both source waves and checked a mapped sequence note and Web Audio controls in Linux Chrome."
+  ],
+  "limitations": [
+    "Physical output and original driver tuning, tempo, envelopes and effects remain unverified; unsupported CGB channels and fixed-frequency PCM use sine fallbacks."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

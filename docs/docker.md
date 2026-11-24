@@ -250,8 +250,8 @@ On Linux:
 bash scripts/linux/rom_coverage_docker.sh
 ```
 
-Both use `Dockerfile.coverage` to generate
-`docs/development/rom-coverage/index.html` and `coverage.json`. Git and Docker
+Both use `Dockerfile.coverage` to generate the detailed local report at
+`target/rom-coverage-local/index.html` and `coverage.json`. Git and Docker
 are required on the host. A temporary context contains runtime sources archived
 from a fixed HEAD commit plus the current public coverage tools/evidence; local
 unfinished extraction changes and private inputs stay outside the image. The
@@ -307,6 +307,11 @@ on Bash or pass `-AuditPath @('a.json','b.json')` on PowerShell. `--compare FILE
 read-only runtime mounts, excluded from the image and build context. No gameplay
 replay is performed; no host Python is needed. Without audit arguments the new
 report has no scene inventory. See [scene coverage](development/ROM_COVERAGE.md#scene-letture-e-confronto-dbg-07).
+
+To update the public aggregate overview from a reviewed local report, run
+`python3 scripts/rom_coverage_public.py target/rom-coverage-local/coverage.json`.
+The exporter includes only an allowlist of aggregate numeric totals. The detailed
+report stays under `target/`.
 
 ## Environment and compatibility
 

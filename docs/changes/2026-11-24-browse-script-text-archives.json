@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-script-text-archives",
+  "title": "Browse script text archives",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Display physical script-text programs by language and bank, drawing referenced font glyphs and labeling the original command and operand bytes.",
+    "Use a compact private projection of extracted data; show an explicit marker when a referenced glyph is unavailable."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-script-text-gcw9ab5e passed generator tests and Linux Chrome selector, glyph pixel, command and missing-glyph checks.",
+    "Protected EUR unit rom-data-viewer-script-text-eur-0liwj5t4 checked five languages, all 385 bank counts, 1155 sampled programs and all 147 referenced glyphs; Linux Chrome selected the final program."
+  ],
+  "limitations": [
+    "Physical bank and program indices are not decoded gameplay message identifiers; dynamic substitutions and command semantics are not executed. Physical browser interaction on Windows was not checked.",
+    "Synthetic attempt rdna40zn failed because the test split JSON at a semicolon in a resource description; the test parser was corrected."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

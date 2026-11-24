@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-type-2-transfer-resources",
+  "title": "Persist the European type-2 transfer bank",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Follow the E446/E451 rows, both bounded E453 tables and the Firaga program to 260 counted lists, 545 entries and 205 rectangles. Extract every verified rectangle to its full declared dimensions.",
+    "Publish 14,758 previously unowned bytes as graphics.tilemap-type2-transfers in e307-d306. Reuse the packed cartridge reader, preserve all earlier owners and keep explicit E306 attachment."
+  ],
+  "validation": [
+    "Windows build eod6d6vx and focused Wine test rcph2aol pass. The default writer creates and reuses 154 resources. File and manifest edits are rejected transactionally. Altered source checks cover the read ABI, all three mirrors, the split rectangle and one E482 exact-start BIOS input.",
+    "The original interpreter list routine passes for all 294 rows. It copies 6,268 bytes, reads 15,993 file-backed bytes and matches the unmodified ROM across all destinations and the serialized endpoint. Both attempts drained Wine. The passing unit preserved 19 inputs."
+  ],
+  "limitations": [
+    "The first attempt cyov8p8f used an expected count that loaded the width at each skipped row. Correcting it to match the original one-time width load allowed the same executable to pass.",
+    "The original ROM still supplies authentication and the remaining cartridge. Ordinary play, other producers, translated guests, native Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/packed_tilemap_file.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_type3.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory/row_windows.rs",
+    "crates/gba-core/src/rom_data/tilemap_type2.rs",
+    "crates/gba-core/src/rom_data/tilemap_type3.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_type2_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_type3_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

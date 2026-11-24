@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-interface-tile-sheets",
+  "title": "Browse decoded interface tile sheets",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add paginated 4-bit views of extracted UI graphics banks with grayscale or manually selected UI palette banks.",
+    "Allow source selectors and language IDs to open linked UI banks, while labeling links outside the catalog and incomplete trailing tile words."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-uitiles-wzgtb2u7 checked pixel colors, palette subbanks, pagination, selector links and missing links; unit hegdmdgx checked the shared background renderer.",
+    "Protected EUR unit rom-data-viewer-uitiles-eur-bsaejp9_ compared all 56 UI graphics banks, 22 palette banks and 11 selectors and checked independent reference pixels and navigation in Chrome."
+  ],
+  "limitations": [
+    "Some decoded words are not necessarily pixels; the 4-bit display and manually chosen palettes do not establish a game pairing or reconstruct a complete screen."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

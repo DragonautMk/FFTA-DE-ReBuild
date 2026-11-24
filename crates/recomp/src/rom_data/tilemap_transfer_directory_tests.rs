@@ -3,6 +3,9 @@ use super::*;
 use gba_core::{capi::RT_API, ffta_rom::digest, rom_data::SourceRange, Bus, Machine};
 use std::{collections::BTreeSet, ffi::c_void};
 
+#[cfg(feature = "rom-data-read-audit")]
+use gba_core::rom_data::read_audit::TraceReport;
+
 fn input(name: &str) -> PathBuf {
     PathBuf::from(std::env::var_os(name).unwrap_or_else(|| panic!("Missing {name}")))
 }
@@ -357,6 +360,32 @@ fn check_bank_lz77_inputs(
     let ranges = catalog.lz77_input_ranges(rom).unwrap();
     assert_eq!(ranges.len(), 15);
     assert_eq!(ranges.len(), segments.len());
+    if let Some(file) = manifest
+        .resources
+        .iter()
+        .find(|item| item.id == TILEMAP_TRANSFER_LZ77_ID)
+    {
+        let uncovered = segments
+            .iter()
+            .filter(|segment| segment["owners"].as_array().unwrap().is_empty())
+            .map(|segment| {
+                (
+                    segment["start"].as_u64().unwrap(),
+                    segment["end"].as_u64().unwrap(),
+                )
+            });
+        assert!(
+            file.sources
+                .iter()
+                .map(|source| {
+                    (
+                        u64::from(source.offset),
+                        u64::from(source.offset + source.length),
+                    )
+                })
+                .eq(uncovered)
+        );
+    }
     let owner = managed.bus.rom_resources().unwrap().clone();
     let mut bound_streams = 0;
     let mut bound_bytes = 0u32;
@@ -476,11 +505,6 @@ fn check_bank_lz77_inputs(
 #[test]
 #[ignore = "exact EUR ROM, E302 generation, E466/E467 bank and E471 IN-08 action preview"]
 fn european_task_345_bank_lz77_binding() {
-    use gba_core::rom_data::{
-        read_audit::{Service, TraceCapture, TraceFilter},
-        tilemap_transfer_directory as model,
-    };
-
     let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
     let dataset = input("FFTA_TILEMAP_SLOT1_DATASET");
     let manifest: Manifest = parse(
@@ -492,6 +516,24 @@ fn european_task_345_bank_lz77_binding() {
         (manifest.extractor_revision, manifest.decoder_revision),
         (302, 301)
     );
+    let mut managed = Machine::new(rom.clone());
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let (result, report) = check_task_345_lz77_replay(&rom, &dataset, &manifest, managed);
+    write_lz77_result(&result, &report);
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn check_task_345_lz77_replay(
+    rom: &[u8],
+    dataset: &Path,
+    manifest: &Manifest,
+    mut managed: Machine,
+) -> (serde_json::Value, TraceReport) {
+    use gba_core::rom_data::{
+        read_audit::{Service, TraceCapture, TraceFilter},
+        tilemap_transfer_directory as model,
+    };
+
     let catalog = parse_tilemap_transfer_directory(
         &fs::read(dataset.join(TILEMAP_TRANSFER_DIRECTORY_FILE)).unwrap(),
     )
@@ -549,6 +591,7 @@ fn european_task_345_bank_lz77_binding() {
     assert!(manifest
         .resources
         .iter()
+        .filter(|item| item.id != TILEMAP_TRANSFER_LZ77_ID)
         .flat_map(|item| &item.sources)
         .all(|span| { span.offset >= stream_end || span.offset + span.length <= stream_start }));
     let ranges = sources
@@ -569,10 +612,8 @@ fn european_task_345_bank_lz77_binding() {
         .collect();
     let snapshot = fs::read(input("FFTA_TILEMAP_SLOT1_SNAPSHOT")).unwrap();
     assert_eq!(reference["preview_sha256"], digest(&snapshot));
-    let mut raw = Machine::new(rom.clone());
-    let mut managed = Machine::new(rom.clone());
-    attach_from_directory(&mut managed, &dataset).unwrap();
-    let bank = check_bank_lz77_inputs(&rom, &catalog, &manifest, &mut raw, &mut managed);
+    let mut raw = Machine::new(rom.to_vec());
+    let bank = check_bank_lz77_inputs(rom, &catalog, manifest, &mut raw, &mut managed);
     let owner = managed.bus.rom_resources().unwrap().clone();
     for machine in [&mut raw, &mut managed] {
         machine.load_state(&snapshot).unwrap();
@@ -580,7 +621,7 @@ fn european_task_345_bank_lz77_binding() {
     let first = raw.bus.frames;
     assert_eq!(reference["first_guest_frame"].as_u64().unwrap(), first);
 
-    set_backing(&mut managed, &rom, &sources, true);
+    set_backing(&mut managed, rom, &sources, true);
     let stream = stream_start as usize..stream_end as usize;
     managed.bus.rom[stream.clone()].fill(0);
     let before = owner.tilemap_transfer_directory_stats().unwrap();
@@ -643,7 +684,7 @@ fn european_task_345_bank_lz77_binding() {
                 && reference["slot_1"][frame_key].as_u64() == Some(event.first_guest_frame)
         }));
     }
-    set_backing(&mut managed, &rom, &sources, false);
+    set_backing(&mut managed, rom, &sources, false);
     managed.bus.rom[stream.clone()].copy_from_slice(&rom[stream]);
     assert!(raw.bus.framebuffer == managed.bus.framebuffer);
     assert!(raw.bus.oam == managed.bus.oam);
@@ -656,7 +697,7 @@ fn european_task_345_bank_lz77_binding() {
     let result = serde_json::json!({
         "status": "PASS",
         "source_rom_sha256": manifest.source_rom_sha256,
-        "revision": [302, 301],
+        "revision": [manifest.extractor_revision, manifest.decoder_revision],
         "bank": bank,
         "slot": 1,
         "poisoned_metadata_bytes": sources.iter().map(|span| span.length).sum::<u32>(),
@@ -673,14 +714,364 @@ fn european_task_345_bank_lz77_binding() {
         "end_state_sha256": digest(&endpoint),
         "equivalent": true,
     });
+    (result, report)
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+fn write_lz77_result(result: &serde_json::Value, report: &TraceReport) {
     fs::write(
         input("FFTA_TILEMAP_SLOT1_RESULT"),
-        serde_json::to_vec_pretty(&result).unwrap(),
+        serde_json::to_vec_pretty(result).unwrap(),
     )
     .unwrap();
     fs::write(
         input("FFTA_TILEMAP_SLOT1_TRACE"),
-        serde_json::to_vec_pretty(&report).unwrap(),
+        serde_json::to_vec_pretty(report).unwrap(),
+    )
+    .unwrap();
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "exact EUR ROM and retained E466, E467, E471, E474 and E479 evidence"]
+fn european_task_345_lz77_file_and_replay() {
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    let work = input("FFTA_TILEMAP_LZ77_WORK");
+    let root = tempfile::tempdir_in(&work).unwrap();
+    let mut revision: Manifest = parse(
+        &fs::read(input("FFTA_TILEMAP_LZ77_PREDECESSOR")).unwrap(),
+        "E304 manifest",
+    )
+    .unwrap();
+    (revision.extractor_revision, revision.decoder_revision) = (305, 304);
+    let mut source = Extraction::from_rom_for_manifest(&rom, &revision).unwrap();
+    let prepared = preparation::prepare(root.path(), &mut source, &mut |_| Ok(())).unwrap();
+    assert_eq!(prepared.action, "created");
+    let dataset = &prepared.directory;
+    let manifest_path = dataset.join(MANIFEST_FILE);
+    let manifest_bytes = fs::read(&manifest_path).unwrap();
+    let manifest: Manifest = parse(&manifest_bytes, "E305 manifest").unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (305, 304)
+    );
+    assert_eq!(manifest.resources.len(), 152);
+    let resource = manifest.resources.last().unwrap();
+    assert_eq!(resource.id, TILEMAP_TRANSFER_LZ77_ID);
+    assert_eq!(resource.sources.len(), 13);
+    let path = dataset.join(TILEMAP_TRANSFER_LZ77_FILE);
+    let mut encoded = fs::read(&path).unwrap();
+    assert_eq!(encoded.len(), 3742);
+    assert_eq!(digest(&encoded), resource.sha256);
+    let mut packed = encoded.as_slice();
+    for span in &resource.sources {
+        let (bytes, rest) = packed.split_at(span.length as usize);
+        let start = span.offset as usize;
+        assert!(bytes == &rom[start..start + bytes.len()]);
+        assert_eq!(span.role, "lz77-input");
+        assert_eq!(span.sha256, digest(bytes));
+        packed = rest;
+    }
+    assert!(packed.is_empty());
+    let reused = preparation::prepare(root.path(), &mut source, &mut |_| Ok(())).unwrap();
+    assert_eq!(reused.action, "reused");
+    assert_eq!(&reused.directory, dataset);
+    assert!(fs::read(&manifest_path).unwrap() == manifest_bytes);
+    drop(source);
+
+    let mut prior = manifest.clone();
+    assert_eq!(prior.resources.pop().unwrap().id, TILEMAP_TRANSFER_LZ77_ID);
+    assert_eq!(
+        prior.coverage.pop().as_deref(),
+        Some(TILEMAP_TRANSFER_LZ77_ID)
+    );
+    (prior.extractor_revision, prior.decoder_revision) = (304, 303);
+    let prior_bytes = toml::to_string_pretty(&prior).unwrap();
+    assert!(
+        prior_bytes.as_bytes() == fs::read(input("FFTA_TILEMAP_LZ77_PREDECESSOR")).unwrap(),
+        "E304 manifest prefix changed"
+    );
+    let mut managed = Machine::new(rom.clone());
+    fs::write(&manifest_path, prior_bytes).unwrap();
+    attach_from_directory(&mut managed, dataset).unwrap();
+    let first = &resource.sources[0];
+    let legacy_input = managed
+        .bus
+        .bound_tilemap_lz77(0x0800_0000 + first.offset)
+        .unwrap();
+    assert!(legacy_input.bytes() == &encoded[..first.length as usize]);
+    drop(legacy_input);
+    fs::write(&manifest_path, &manifest_bytes).unwrap();
+    attach_from_directory(&mut managed, dataset).unwrap();
+
+    // A matching file digest cannot authorize a changed base resource.
+    let active = managed.bus.rom_resources().unwrap().clone();
+    *encoded.last_mut().unwrap() ^= 1;
+    fs::write(&path, &encoded).unwrap();
+    let mut edited = manifest.clone();
+    edited.resources.last_mut().unwrap().sha256 = digest(&encoded);
+    fs::write(&manifest_path, toml::to_string_pretty(&edited).unwrap()).unwrap();
+    assert_eq!(
+        attach_from_directory(&mut managed, dataset).unwrap_err(),
+        "Tilemap transfer LZ77 file differs from authenticated source",
+    );
+    assert!(std::sync::Arc::ptr_eq(
+        &active,
+        managed.bus.rom_resources().unwrap()
+    ));
+
+    let (mut result, report) = check_task_345_lz77_replay(&rom, dataset, &manifest, managed);
+    result["published_lz77_bytes"] = serde_json::json!(encoded.len());
+    result["lz77_source_ranges"] = serde_json::json!(resource.sources.len());
+    result["lz77_file_sha256"] = serde_json::json!(resource.sha256);
+    result["published_manifest_sha256"] = serde_json::json!(digest(&manifest_bytes));
+    result["default_writer_publication_and_reuse"] = serde_json::json!(true);
+    result["e304_attach"] = serde_json::json!(true);
+    result["coherent_edit_rejected"] = serde_json::json!(true);
+    root.close().unwrap();
+    fs::write(work.join(MANIFEST_FILE), manifest_bytes).unwrap();
+    write_lz77_result(&result, &report);
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[derive(serde::Deserialize)]
+struct Task345Replay {
+    slot: u32,
+    snapshot: PathBuf,
+    snapshot_sha256: String,
+    steps: Vec<(u32, u16)>,
+    first_guest_frame: u64,
+    guest_frames: u64,
+    action_frame: u64,
+    action_task_field: u32,
+    primary_selector_field: u32,
+    first_pointer_frame: u64,
+    first_stream_frame: u64,
+    stream_bytes: u32,
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+#[test]
+#[ignore = "exact EUR ROM, E310 manifest and two retained E470 replays"]
+fn european_task_345_ordinary_existing_streams() {
+    use gba_core::rom_data::{
+        observed_lz,
+        read_audit::{Service, TraceCapture, TraceFilter},
+        tilemap_transfer_directory as model,
+    };
+
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    let work = input("FFTA_TILEMAP_EXISTING_STREAMS_WORK");
+    let expected_manifest = fs::read(input("FFTA_TILEMAP_EXISTING_STREAMS_MANIFEST")).unwrap();
+    let manifest: Manifest = parse(&expected_manifest, "E310 manifest").unwrap();
+    let cases: [Task345Replay; 2] =
+        serde_json::from_slice(&fs::read(input("FFTA_TILEMAP_EXISTING_STREAMS_REPLAYS")).unwrap())
+            .unwrap();
+    assert_eq!(cases.each_ref().map(|case| case.slot), [2, 4]);
+
+    let root = tempfile::tempdir_in(&work).unwrap();
+    let mut extraction = Extraction::from_rom_for_manifest(&rom, &manifest).unwrap();
+    let prepared = preparation::prepare(root.path(), &mut extraction, &mut |_| Ok(())).unwrap();
+    assert_eq!(prepared.action, "created");
+    let dataset = &prepared.directory;
+    assert_eq!(
+        fs::read(dataset.join(MANIFEST_FILE)).unwrap(),
+        expected_manifest
+    );
+    let catalog = parse_tilemap_transfer_directory(
+        &fs::read(dataset.join(TILEMAP_TRANSFER_DIRECTORY_FILE)).unwrap(),
+    )
+    .unwrap();
+    let inputs = catalog.lz77_input_ranges(&rom).unwrap();
+    let mut raw = Machine::new(rom.clone());
+    let mut managed = Machine::new(rom.clone());
+    attach_from_directory(&mut managed, dataset).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let mut results = Vec::new();
+
+    for case in cases {
+        let slot = case.slot;
+        let offsets: Vec<_> = catalog.slots[slot as usize]
+            .row_offsets()
+            .unwrap()
+            .collect();
+        let &[offset] = offsets.as_slice() else {
+            panic!("Expected one transfer row for slot {slot}");
+        };
+        let row = catalog
+            .rows
+            .iter()
+            .find(|row| row.source_offset == offset)
+            .unwrap();
+        let descriptor = catalog
+            .descriptors
+            .iter()
+            .find(|descriptor| model::ROM_BASE + descriptor.source_offset == row.descriptor_pointer)
+            .unwrap();
+        let wrapper = descriptor.wrapper.source_offset;
+        let stream = inputs
+            .iter()
+            .find(|range| range.start == wrapper + 4)
+            .unwrap();
+        assert_eq!(stream.end - stream.start, case.stream_bytes);
+        // The first counter belongs to the base block. Additional specs follow it.
+        let block = 1 + observed_lz::ADDITIONAL_SPECS
+            .iter()
+            .position(|spec| {
+                spec.offset == stream.start && spec.encoded_length == case.stream_bytes as usize
+            })
+            .unwrap();
+        let spans = [
+            (
+                model::POINTER_DIRECTORY + 4 * slot,
+                4,
+                SOIL_SCOPED_VALUES_ID,
+            ),
+            (model::COUNT_DIRECTORY + slot, 1, SOIL_SCOPED_VALUES_ID),
+            (offset, model::ROW_BYTES, OBSERVED_TILEMAP_ROW_ID),
+            (descriptor.source_offset, 8, OBSERVED_TILEMAP_DESCRIPTOR_ID),
+            (wrapper, 4, OBSERVED_TILEMAP_DESCRIPTOR_ID),
+            (stream.start, case.stream_bytes, OBSERVED_LZ_ID),
+        ];
+        let sources = spans.map(|(offset, length, id)| {
+            manifest
+                .resources
+                .iter()
+                .find(|resource| resource.id == id)
+                .unwrap()
+                .sources
+                .iter()
+                .find(|source| source.offset == offset && source.length == length)
+                .unwrap()
+                .clone()
+        });
+        let action_reads = [
+            (0x0a_a158, 4, 0x080a_a140),
+            (case.action_task_field, 2, 0x080d_08a6),
+            (case.primary_selector_field, 2, 0x080d_70a2),
+        ];
+        let ranges = spans
+            .iter()
+            .map(|&(start, length, _)| (start, start + length))
+            .chain(
+                action_reads
+                    .iter()
+                    .map(|&(start, length, _)| (start, start + length)),
+            )
+            .collect();
+        let snapshot = fs::read(case.snapshot).unwrap();
+        assert_eq!(digest(&snapshot), case.snapshot_sha256);
+        for machine in [&mut raw, &mut managed] {
+            machine.load_state(&snapshot).unwrap();
+            assert_eq!(machine.bus.frames, case.first_guest_frame);
+        }
+        set_backing(&mut managed, &rom, &sources, true);
+        let capture = TraceCapture::start(
+            TraceFilter {
+                readers: Vec::new(),
+                ranges,
+            },
+            4096,
+        )
+        .unwrap();
+        let hle_calls = || owner.observed_lz_stats().unwrap().hle_calls_by_block[block];
+        let mut calls = hle_calls();
+        let mut hle_frames = Vec::new();
+        let mut previous_managed_frame = None;
+        let mut trace_frame = |frame| {
+            if let Some(previous) = previous_managed_frame {
+                let after = hle_calls();
+                if after != calls {
+                    assert_eq!(after - calls, 1);
+                    hle_frames.push(previous);
+                    calls = after;
+                }
+            }
+            previous_managed_frame = frame;
+            capture.frame(frame);
+        };
+        let samples = replay_pair(&mut raw, &mut managed, &case.steps, &mut trace_frame);
+        trace_frame(None);
+        let report = capture.finish();
+        assert_eq!(hle_frames, [case.first_stream_frame], "slot {slot}");
+        assert_eq!(raw.bus.frames - case.first_guest_frame, case.guest_frames);
+        assert!(samples > 0 && report.dropped_requests == 0 && !report.truncated);
+
+        let mut served: [BTreeSet<u32>; 6] = std::array::from_fn(|_| BTreeSet::new());
+        for event in &report.events {
+            let read = event.key.read;
+            let start = read.physical_offset;
+            let end = start + read.length as u32;
+            for (&(offset, length, _), bytes) in spans.iter().zip(&mut served) {
+                let lower = start.max(offset);
+                let upper = end.min(offset + length);
+                if lower < upper {
+                    assert_eq!(event.key.service, Service::Typed, "slot {slot}: {event:?}");
+                    bytes.extend(lower..upper);
+                }
+            }
+        }
+        let metadata_bytes = served[..5].iter().map(BTreeSet::len).collect::<Vec<_>>();
+        assert_eq!(metadata_bytes, [4, 1, 12, 5, 2], "slot {slot}");
+        let observed_load = |offset, length, pc, frame, service: Option<Service>| {
+            report.events.iter().any(|event| {
+                let read = event.key.read;
+                read.physical_offset == offset
+                    && read.length == length
+                    && event
+                        .key
+                        .instruction
+                        .is_some_and(|site| site.thumb && site.pc == pc)
+                    && event.first_guest_frame == frame
+                    && service.is_none_or(|s| event.key.service == s)
+            })
+        };
+        for (offset, length, pc) in action_reads {
+            assert!(observed_load(
+                offset,
+                length as usize,
+                pc,
+                case.action_frame,
+                None
+            ));
+        }
+        for (&(offset, length, _), pc) in spans[..2].iter().zip([0x080e_61cc, 0x080e_61d6]) {
+            assert!(observed_load(
+                offset,
+                length as usize,
+                pc,
+                case.first_pointer_frame,
+                Some(Service::Typed)
+            ));
+        }
+        set_backing(&mut managed, &rom, &sources, false);
+        assert!(raw.bus.framebuffer == managed.bus.framebuffer && raw.bus.oam == managed.bus.oam);
+        let endpoint = raw.save_state().unwrap();
+        assert!(
+            endpoint == managed.save_state().unwrap(),
+            "slot {slot} endpoint differs"
+        );
+        fs::write(
+            work.join(format!("slot-{slot}-trace.json")),
+            serde_json::to_vec(&report).unwrap(),
+        )
+        .unwrap();
+        results.push(serde_json::json!({
+            "slot": slot, "guest_frames": case.guest_frames, "guest_first_frame": case.first_guest_frame,
+            "first_pointer_frame": case.first_pointer_frame, "stream_hle_frames": hle_frames,
+            "metadata_bytes": metadata_bytes, "altered_bytes": spans.iter().map(|span| span.1).sum::<u32>(),
+            "stream_bytes": case.stream_bytes, "stream_bus_bytes": served[5].len(),
+            "stream_owner": OBSERVED_LZ_ID, "audio_samples": samples, "end_state_sha256": digest(&endpoint),
+        }));
+    }
+    root.close().unwrap();
+    fs::write(
+        work.join("result.json"),
+        serde_json::to_vec_pretty(&serde_json::json!({
+            "status": "PASS", "manifest_sha256": digest(&expected_manifest),
+            "source_rom_sha256": manifest.source_rom_sha256, "replays": results,
+        }))
+        .unwrap(),
     )
     .unwrap();
 }

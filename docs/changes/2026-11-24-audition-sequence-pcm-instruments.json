@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audition-sequence-pcm-instruments",
+  "title": "Audition extracted PCM instruments in sequences",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Resolve sequence program and key selections through the extracted tone banks and key maps, and use linked PCM samples and stored loop flags where available.",
+    "Show each note’s program and mapped wave; unsupported or unavailable voices fall back to sine waves, and the user can select sine-only playback."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-pcmvoice-51yozacf checked direct and split mappings, PCM buffer values, approximate pitch, loop flags, fallback and sine-only mode; legacy unit emswkwfc checked datasets without instrument metadata.",
+    "Protected EUR unit rom-data-viewer-pcmvoice-eur-07frb244 compared four banks, 429 tones, 348 key links and 455 headers, checked mapped notes against the source and exercised PCM Web Audio start/stop in Chrome."
+  ],
+  "limitations": [
+    "Pitch uses the existing BIOS HLE approximation and is limited to 384000 Hz. Timing is user-selected; envelopes, note extensions, pitch changes, effects and unsupported channels are not reproduced. Physical audio and original-driver fidelity remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

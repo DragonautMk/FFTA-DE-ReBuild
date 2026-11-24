@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "search-extracted-files",
+  "title": "Search extracted files locally",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add case-sensitive UTF-8 search over bounded file blocks, highlight matches, support repeated and overlapping results, cancellation and restart."
+  ],
+  "validation": [
+    "Real-time Chrome unit rom-data-viewer-search-realtime-gbmtuu6n checked a UTF-8 match across a 256 KiB boundary, highlighting, repeated and overlapping matches, cancellation, file replacement and empty input.",
+    "Protected EUR unit rom-data-viewer-search-eur-q9gr1swj searched an actual extracted file beyond 8 MiB using the browser File API and checked the highlight and restart."
+  ],
+  "limitations": [
+    "Search is literal and case-sensitive; the text field is limited to 1024 characters. Earlier prototype t2dkxkfs remained incomplete; realtime unit h0_k4768 passed browser assertions but failed retention because Chrome singleton links remained, and the corrected harness closed Chrome cleanly."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

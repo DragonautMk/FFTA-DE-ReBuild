@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-name-entry-keyboard",
+  "title": "Browse the extracted name-entry keyboard",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Show the extracted keyboard pages and row widths, with selectable glyph and space codes and a local composition preview."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-keyboard-fqsl7l4j checked validation, fallback, composition and the viewer Python suite. Protected EUR unit rom-data-viewer-keyboard-eur-c8bwq3nz compared all 180 cells and row widths and checked a glyph pixel and cross-page composition in Linux Chrome."
+  ],
+  "limitations": [
+    "The preview does not enforce game name rules or infer Unicode or runtime palette colors; Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

@@ -3063,3 +3063,171 @@ The scan excludes indirect calls, tail branches, ARM code, other readers and
 callers outside the interval, so it does not establish a global catalog or
 absence of other banks. No runtime, regional or performance claim follows.
 Linux, USA and native Windows remain open.
+
+## E489 European adjacent compact-cell source plan
+
+The E309 compact-cell constructor at `080d8674` accepts a record root
+in `r1`. It passes `root + 4` as the relative frame directory and
+reads a little-endian halfword at root offset `+2` to locate the
+sequence. Seventy-six of the 85 direct call sites resolve to literal
+roots between the earlier Firaga record and the E457 tilemap bank.
+The call at `080e68b4` supplies the two split pointers directly to
+`0800b568`. These 77 references select 50 distinct records from
+`ae9ebc` through `af1816`. Two calls, for example, share the final
+record at `af0f34`.
+
+The first relative frame offset bounds the halfword directory. The
+directory offsets and the sequence address bound all 347 frame slots.
+The original sequence count reader and two-byte sequence entries
+bound 412 entries. Every low-six-bit frame selector is within its
+record's directory. The 48 records with header value 12 contain 340
+frames whose halfword runs match their dimensions and directory
+bounds. The other two, `aee1f0` and `af0930`, have header value 14.
+Directory and sequence geometry bound their seven frame spans. Their
+token interpretation remains open.
+
+Wine `tkbc4ljc` authenticates the constructor and count-reader windows
+and agrees with an independent source ownership join against E310.
+The plan identifies 24,260 unowned record bytes, including 60 bytes
+of within-record alignment after parsed frames, and 308 unowned bytes
+in the 77 constructor literals. Each bounded record has a source hash.
+The six longer intervals between linked records total 6,764 bytes
+and require their own producer evidence. Another 44 bytes mark
+alignment between linked records or at the E457 boundary.
+
+The evidence contains `compact-source-index.json`, `plan.json` and
+`ownership.json`. Runtime extraction and attachment, the remaining
+constructor arguments, indirect calls, ordinary scenes, Linux, USA
+and native Windows remain open. Performance measurement is deferred.
+[Tilemap boundary](rom_data_runtime.md#e489-european-mode-3-dispatch-and-adjacent-compact-cell-bank)
+
+## E490 Complete European adjacent compact-cell bank
+
+Wine `qktsor16` authenticates eight original indexed call sites and one
+split-pointer caller. The indexed sites use the same byte selector to
+load a four-byte root pointer and a two-byte parameter. At `080e73fa`,
+the state byte selects between two nine-slot tables. The other seven
+sites use one table each. The nine physical tables contain 41 slots,
+including one previously verified root. At `08117612`, the original
+call to `0800b480` supplies the directory and sequence pointers for
+`aee4b4` directly.
+
+The 85 direct calls to `080d8674` now reconcile with 76 E489 literal
+paths, the eight indexed sites and the earlier E309 Firaga path. The
+indexed proof covers the declared physical slots. Live selector domains
+remain open. The indexed array at `3a2bf0` ends where the independently
+verified blend table begins at `3a2c04`. The other arrays use the next
+pointer or parameter table as a physical boundary.
+
+The 41 new records account for 6,744 bytes of the six E489 gaps. The
+other 20 bytes in those gaps are zero-filled alignment. The complete
+interval `ae9ebc..af1818` contains 91 records with 31,004 record bytes
+and 64 bytes of inter-record alignment. Every record endpoint rounds
+up to the next verified root on a four-byte boundary. The word at
+`3cf5d8` points inside record `af0484`, at `af048c`. Its consumer needs
+separate attribution, and its target offset must be preserved.
+
+The source index records 493 frame slots and 563 sequence entries. The
+483 value-12 frames have a verified halfword-run extent, with 118 bytes
+of alignment after parsed frames within their records. Four records with
+header value 14 contain ten frames bounded by the relative directory and
+sequence. E492 identifies the latter frames as byte runs.
+
+Wine `x8kcm7a0` compares the seven source views against E310. All
+31,004 record bytes and 630 control bytes remain outside the manifest.
+The controls comprise 96 literal words, 41 indexed pointer words and
+41 indexed parameter halfwords. The retained `compact-bank-index.json`,
+`plan.json` and `ownership.json` preserve exact spans and source hashes
+for extraction. All 32 protected inputs pass and Wine drains.
+
+The first audit attempt `19jycbw9` stopped before the ownership command
+because the plan builder tried to deduplicate alignment lists. The
+corrected attempt serializes the alignment ranges and completes the same
+audit. E491 verifies the runtime attachment for EUR under Wine.
+
+## E491 European compact-cell bank resource
+
+EUR preparation advances to `e311-d310` and adds
+`graphics.compact-cell-bank` in `compact-cell-bank.bin`. The extractor
+follows the authenticated constructor literals and nine indexed tables,
+then bounds each of the 91 records by its sequence count and the next
+root. The file stores 31,004 record bytes and 630 control bytes across
+205 ordered source spans. The manifest maps the packed bytes back to
+their original offsets. The records retain both frame encodings, all
+relative offsets and the interior target at `af048c`. The declared spans
+exclude the 64 inter-record alignment bytes.
+
+Windows build `tt6f8y35` and Wine `a1lyos30` pass. Normal preparation
+creates and reuses the 156-resource dataset and matches all 155 prior
+manifest entries. Explicit attachment also accepts the `e310-d309`
+manifest and its files. With the current dataset attached, a rehashed
+file edit is rejected and the previous runtime owner remains in use.
+
+The Wine test inverts the ROM backing for all 31,634 published bytes
+and checks every managed byte. It compares one-, two- and four-byte ABI
+reads at span edges in all three Game Pak mirrors. Original guest code
+then runs the 78 literal loads, 41 indexed paths and readers for all 91
+record headers, 493 frame slots and 563 sequence entries. The resource
+serves 886 control bytes and 4,630 record bytes to those instructions.
+Register values, guest clocks and serialized state match the original.
+The evidence contains `manifest.toml`, `result.json` and the Wine log.
+All 14 protected inputs pass and the Wine server drains.
+
+Attribution of the interior alias reader, live selector domains, ordinary
+scene replay and translated dispatch remain open. Linux, USA and native
+Windows validation and performance measurement are deferred.
+
+## E492 European compact-cell frame decoder
+
+The 91-record bank contains 483 frames with halfword cells and ten frames
+with byte cells. The byte frames belong to the four records with header
+value 14. Both encodings begin with width, height and two placement bytes,
+then use little-endian halfword controls. The lower 14 control bits give
+the run length. Bit 15 selects an incrementing run, bit 14 selects a
+repeated value when bit 15 is clear, and a control with both bits clear
+copies literal values. Byte literals occupy an even number of bytes. A
+byte run with one seed or repeated value reserves a two-byte field and
+uses its low byte. The ten frames occupy 704 encoded bytes plus four
+bytes of alignment before sequences.
+
+The original background field at `02009000 + layer * 0x28 + 8` controls the
+constructor branch at `0800b4b8`. The draw path uses the resulting task
+flags to reach `0800a808` for halfwords or `0800ab40` for bytes. The header
+values identify the encodings in this bank. The original constructor
+passes the `4` and `8` header bits to `0800bff0` for the compact paths.
+Wine disassembly `u6btxs9v` authenticates the dispatcher and byte decoder.
+
+`gba_core::rom_data::compact_cell_bank::decode_frames` decodes the complete
+`compact-record` spans from `compact-cell-bank.bin`. It returns geometry,
+placement bytes, encoded extents and row-major values before renderer
+settings. Preparation validates every frame against its stated directory
+bound. The produced 31,634-byte file matches the E491 SHA-256, including
+the retained alignment bytes and opaque fields.
+
+Windows build `t6q8o82v` and one Wine test `vgbeflbq` pass. The test
+compares the original EWRAM map for each of the 493 frames against the
+decoded cells. Its controlled background setup exercises both constructor
+branches, both original decoders and transparency with marker zero. The
+35,124 cell positions include 32,771 halfword and 303 byte writes. All 20
+protected inputs pass and the Wine server drains.
+
+Ordinary background setup, live selectors, interior alias reads and
+translated dispatch remain open. Linux, USA and native Windows checks
+and performance measurement are deferred.
+
+## E493 Ordinary European compact-cell bank reads
+
+The retained IN-08 action-12 replay resumes at guest frame 7769 with the
+E471 confirmation input. The initial 300-frame probe `vxoi35oy` captures
+the action argument and ends at frame 8069. E476 supplies the continuation
+mechanism. State 22 installs task 345, state 23 waits for it, and the
+dispatcher restores state 30 to install the direct task.
+
+With only the neutral hold extended, Wine trace `pmry89cu` sees state 22
+at frame 7975, state 23 at 8080 and state 30 at 8081. The callback load at
+`080d7062` reads the task-13 descriptor at `399810` on frame 8081. The
+constructor literal at `0e92e8` and original header and cell readers
+reach record `aeba54` at frame 8097. Reads cover 146 distinct record bytes
+through frame 8217. The same continuation then reads 18 distinct bytes
+of record `aea760` from frames 8218 through 8265. All 26 protected
+inputs pass and Wine drains.

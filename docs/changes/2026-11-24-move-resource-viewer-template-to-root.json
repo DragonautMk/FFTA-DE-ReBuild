@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "move-resource-viewer-template-to-root",
+  "title": "Move the resource viewer template to the project root",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Move the viewer HTML template to the project root and update the Python generator and Docker bind mounts."
+  ],
+  "validation": [
+    "The local viewer unit test, Bash syntax check and Linux Docker synthetic generation passed; Docker validation unit rom-data-viewer-root-template-rzwjp9u6."
+  ],
+  "limitations": [
+    "The Windows Docker wrapper was updated but not executed."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/linux/view_rom_data_docker.sh",
+    "scripts/windows/view_rom_data_docker.ps1",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "organize-resource-viewer-as-wiki",
+  "title": "Organize the local resource viewer as a wiki",
+  "kind": "changed",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a contents sidebar and links from resource rows to available views; open linked sections when navigating.",
+    "Make each section independently collapsible, with open-all and close-all controls and a compact stacked layout on narrow screens."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-wiki-legs66p4 checked disclosure, contents and resource links, open/close all, filtering, script selection and compact layout.",
+    "Protected EUR unit rom-data-viewer-wiki-eur-s3qt2yel checked all ten contents entries, script selection, palette link, audio audition controls and section controls. Desktop layout was reviewed in the earlier screenshot unit bvkyj7m0; its narrow status column was corrected."
+  ],
+  "limitations": [
+    "Only resources with implemented views have dedicated links; other extracted files remain available through the local file inspector. Native Windows browser behavior was not checked."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

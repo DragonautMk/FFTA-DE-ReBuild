@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-direct-tilemap-controls",
+  "title": "Persist European type-4 and type-5 tilemap controls",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Follow all 145 verified type-4 and type-5 rows and their 137 shared or distinct descriptors to the 78 E457 streams. Publish the 2,537 residual control bytes in e308-d307 while preserving earlier owners, the compact alias and raw padding."
+  ],
+  "validation": [
+    "Windows build 5m1ymdyq and the focused Wine unit drb46kuz pass. Standard preparation creates and reuses 155 resources. E307 still attaches, the new file rejects a coherent file and digest edit, and altered-backing mirrored bus and ABI reads match.",
+    "The original dispatcher produces matching initializer arguments, output memory and final serialized state for all 145 rows. It reads 2,349 bytes from the new control file and 278,962 from the earlier stream file, including repeats. Wine drained and all 26 protected inputs passed."
+  ],
+  "limitations": [
+    "The first Wine attempt crs5ls20 reached the test instruction bound for a 1-by-1 tile repeated over a 32-by-32 map. The higher test bound permits the original writer to finish. Both Wine units drained.",
+    "Ordinary scene use, other producers, translated guest execution, Linux, USA and native Windows remain open. The source ROM supplies authentication and the remaining cartridge. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/tilemap_stream_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_direct_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_type2_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -6,7 +6,7 @@ param(
     [string]$TranslationPath,
     [string[]]$AuditPath = @(),
     [string]$ComparePath,
-    [string]$OutputDir = 'docs/development/rom-coverage',
+    [string]$OutputDir = 'target/rom-coverage-local',
     [string]$EvidencePath = 'docs/development/rom-coverage/evidence.json',
     [switch]$OpenReport
 )
@@ -49,6 +49,12 @@ if (-not (Get-Command git -CommandType Application -ErrorAction SilentlyContinue
     throw 'Git is required to isolate committed extraction sources.'
 }
 [System.IO.Directory]::CreateDirectory($output) | Out-Null
+$output = (Resolve-Path -LiteralPath $output).Path.TrimEnd('\', '/')
+$docsRoot = (Resolve-Path -LiteralPath (Join-Path $repoDir 'docs')).Path.TrimEnd('\', '/')
+if ($output.Equals($docsRoot, [StringComparison]::OrdinalIgnoreCase) -or
+    $output.StartsWith($docsRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+    throw 'Full coverage reports must be written outside docs.'
+}
 $image = 'ffta-rom-coverage:local'
 $sourceRevision = & git -C $repoDir rev-parse --verify HEAD
 if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve the committed extraction source.' }

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-relative-text-archives",
+  "title": "Browse relative text archives",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a separate wiki view of relative text programs by reader and language, drawing extracted glyphs and labeling original command bytes.",
+    "Keep pointer text available if relative archive metadata is invalid and link each text-catalog view separately."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-relative-text-hmje8ydk passed Linux Chrome selection, command, glyph fallback and links, as well as generator checks for invalid archive indices.",
+    "Protected EUR unit rom-data-viewer-relative-eur-zveyyx3w compared all 17035 programs across 145 language archives and 123 glyphs, confirmed previous text projections unchanged, and checked the final Chrome selection."
+  ],
+  "limitations": [
+    "Dynamic substitutions and command semantics are labeled but not executed; physical Windows browser behavior remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

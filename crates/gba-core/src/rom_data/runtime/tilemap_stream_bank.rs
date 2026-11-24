@@ -3,7 +3,7 @@
 use super::super::{
     script39_registry_poses::PriorSources,
     tilemap_stream_bank::{self, IndexedTilemapControls},
-    Resource,
+    Resource, SourceRange,
 };
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -29,31 +29,43 @@ impl TilemapStreamBankResources {
         rom: &[u8],
         existing: &[Resource],
         controls: Option<&IndexedTilemapControls>,
+        stream_file: Option<(&[u8], &[SourceRange])>,
     ) -> Result<Self, String> {
         let prior = PriorSources::new(existing)?;
         let mut sources = Vec::new();
-        let streams = tilemap_stream_bank::from_verified_rom(rom)?;
-        let legacy;
-        let controls = match controls {
-            Some(controls) => controls,
-            None => {
-                legacy = IndexedTilemapControls::from_verified_rom(rom, &streams)?;
-                &legacy
+        let mut legacy_controls = None;
+        if let Some((mut encoded, ranges)) = stream_file {
+            for range in ranges {
+                let (bytes, rest) = encoded
+                    .split_at_checked(range.length as usize)
+                    .ok_or("Truncated tilemap stream bank")?;
+                sources.push(BoundSource {
+                    offset: range.offset as usize,
+                    bytes: bytes.into(),
+                    kind: SourceKind::Stream,
+                });
+                encoded = rest;
             }
-        };
-        for stream in streams {
-            for source in stream.sources {
-                let offset = source.start as usize;
-                let bytes = &rom[offset..source.end as usize];
-                if !prior.contains(source.start, bytes.len())? {
-                    sources.push(BoundSource {
-                        offset,
-                        bytes: bytes.into(),
-                        kind: SourceKind::Stream,
-                    });
-                }
+            if !encoded.is_empty() {
+                return Err("Trailing bytes in tilemap stream bank".into());
+            }
+        } else {
+            let streams = tilemap_stream_bank::from_verified_rom(rom)?;
+            for (range, _) in tilemap_stream_bank::uncovered_ranges(&streams, &prior)? {
+                let offset = range.start as usize;
+                sources.push(BoundSource {
+                    offset,
+                    bytes: rom[offset..range.end as usize].into(),
+                    kind: SourceKind::Stream,
+                });
+            }
+            if controls.is_none() {
+                legacy_controls = Some(IndexedTilemapControls::from_verified_rom(rom, &streams)?);
             }
         }
+        let controls = controls
+            .or(legacy_controls.as_ref())
+            .ok_or("Missing indexed controls for the tilemap stream bank")?;
         for field in controls.uncovered_fields(&prior)? {
             let offset = field.offset as usize;
             if !Self::source_range(offset) || !Self::source_range(offset + field.bytes.len() - 1) {

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "animate-initial-sprite-frames",
+  "title": "Animate extracted initial sprite frames",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Play, loop and stop extracted initial-pose frame sequences at a user-selected preview rate using stored durations.",
+    "Use a shared origin and bounding box across frames so differing object offsets remain visible; reject empty or invalid frame sequences."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-spriteanim-58wsec92 checked frame alignment, reference pixels, durations, loop, stop, invalid rates and section closure.",
+    "Protected EUR unit rom-data-viewer-spriteanim-eur-4ekn367f compared 121 bindings and 477 frame durations with the extraction and checked independent bounds, pixel and animation in Chrome."
+  ],
+  "limitations": [
+    "Zero duration uses one preview tick; the chosen preview rate is not game timing. Unsupported object modes and live palette changes remain outside the preview."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

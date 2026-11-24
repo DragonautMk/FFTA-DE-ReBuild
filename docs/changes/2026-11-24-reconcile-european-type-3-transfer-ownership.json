@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reconcile-european-type-3-transfer-ownership",
+  "title": "Reconcile European type-3 transfer ownership",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows ownership CLI under Wine"
+  ],
+  "changes": [
+    "Join the complete E448 and E452 bounded type-3 projections. The original links resolve 825 distinct rows, 793 descriptors, 372 wrappers, 358 LZ77 inputs and 14 raw views.",
+    "Record 325,850 unowned bytes in the E305 extraction plan, including the uncovered half of the compact-primary-alias descriptor and the 7,744 bytes exclusive to the conditional selector projection."
+  ],
+  "validation": [
+    "Wine hs7i9i6k reports 23,247 owned of 349,097 selected bytes. An independent interval comparison matches every owner and reproduces both legacy E301 projections. Wine drains and 23 protected paths pass."
+  ],
+  "limitations": [
+    "The evidence contains source metadata and ownership. Extraction, runtime attribution, additional producers, ordinary auxiliary use, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

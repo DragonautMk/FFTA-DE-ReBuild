@@ -1,4 +1,4 @@
-//! Managed control reads and immutable LZ77 inputs from the authenticated ROM.
+//! Managed control reads and immutable authenticated LZ77 inputs.
 use super::super::{
     script39_registry_poses::PriorSources,
     tilemap_transfer_directory::{Field, Role, TilemapTransferDirectory},
@@ -33,20 +33,37 @@ struct BoundInput {
     encoded: Box<[u8]>,
 }
 
+enum TilemapLz77Bank {
+    TransferDirectory,
+    Type3,
+}
+
 pub struct TilemapLz77Input {
     owner: Arc<RuntimeResources>,
+    bank: TilemapLz77Bank,
     index: usize,
 }
 
 impl TilemapLz77Input {
     pub fn bytes(&self) -> &[u8] {
-        &self
-            .owner
-            .tilemap_transfer_directory
-            .as_ref()
-            .unwrap()
-            .inputs[self.index]
-            .encoded
+        match self.bank {
+            TilemapLz77Bank::TransferDirectory => {
+                &self
+                    .owner
+                    .tilemap_transfer_directory
+                    .as_ref()
+                    .unwrap()
+                    .inputs[self.index]
+                    .encoded
+            }
+            TilemapLz77Bank::Type3 => self
+                .owner
+                .tilemap_type3
+                .as_ref()
+                .unwrap()
+                .file
+                .input_bytes(self.index),
+        }
     }
 }
 
@@ -75,6 +92,7 @@ impl TilemapTransferDirectoryResources {
         sources: &[SourceRange],
         rom: &[u8],
         existing: &[Resource],
+        input_file: Option<(&[u8], &[SourceRange])>,
     ) -> Result<Self, String> {
         let mut expected = sources.iter().peekable();
         let mut fields = Vec::with_capacity(sources.len());
@@ -89,30 +107,40 @@ impl TilemapTransferDirectoryResources {
         if expected.peek().is_some() {
             return Err("Missing tilemap transfer directory source field".into());
         }
-        let prior = PriorSources::new(existing)?;
         let mut inputs = Vec::new();
-        for input in data.lz77_input_ranges(rom)? {
-            let encoded = &rom[input.start as usize..input.end as usize];
-            let owned = prior
-                .contains(input.start, encoded.len())
-                .map_err(|error| {
-                    format!("Tilemap LZ77 ownership at {:#x}: {error}", input.start)
-                })?;
-            if !owned {
-                let first_page = input.start as usize & !0xfff;
-                if (first_page..input.end as usize)
-                    .step_by(0x1000)
-                    .any(|page| !Self::source_page(page))
-                {
-                    return Err(format!(
-                        "Tilemap LZ77 input outside the source pages at {:#x}",
-                        input.start
-                    ));
-                }
+        if let Some((mut encoded, ranges)) = input_file {
+            for range in ranges {
+                let (bytes, rest) = encoded
+                    .split_at_checked(range.length as usize)
+                    .ok_or("Truncated tilemap transfer LZ77 file")?;
                 inputs.push(BoundInput {
-                    offset: input.start,
-                    encoded: encoded.into(),
+                    offset: range.offset,
+                    encoded: bytes.into(),
                 });
+                encoded = rest;
+            }
+            if !encoded.is_empty() {
+                return Err("Trailing bytes in tilemap transfer LZ77 file".into());
+            }
+        } else {
+            let prior = PriorSources::new(existing)?;
+            for range in data.uncovered_lz77_inputs(rom, &prior)? {
+                inputs.push(BoundInput {
+                    offset: range.start,
+                    encoded: rom[range.start as usize..range.end as usize].into(),
+                });
+            }
+        }
+        for input in &inputs {
+            let start = input.offset as usize;
+            let first_page = start & !0xfff;
+            if (first_page..start + input.encoded.len())
+                .step_by(0x1000)
+                .any(|page| !Self::source_page(page))
+            {
+                return Err(format!(
+                    "Tilemap LZ77 input outside the source pages at {start:#x}"
+                ));
             }
         }
         Ok(Self {
@@ -206,6 +234,17 @@ impl TilemapTransferDirectoryResources {
                 .map(|input| input.encoded.len())
                 .sum::<usize>()
     }
+
+    fn lz77_index(&self, offset: u32) -> Option<usize> {
+        let index = self
+            .inputs
+            .binary_search_by_key(&offset, |input| input.offset)
+            .ok()?;
+        self.lz77_calls.fetch_add(1, Ordering::Relaxed);
+        self.lz77_bytes
+            .fetch_add(self.inputs[index].encoded.len() as u64, Ordering::Relaxed);
+        Some(index)
+    }
 }
 
 impl RuntimeResources {
@@ -213,19 +252,22 @@ impl RuntimeResources {
         if !matches!(source >> 24, 0x08..=0x0d) {
             return None;
         }
-        let directory = self.tilemap_transfer_directory.as_ref()?;
         let offset = source & 0x01ff_ffff;
-        let index = directory
-            .inputs
-            .binary_search_by_key(&offset, |input| input.offset)
-            .ok()?;
-        let input = &directory.inputs[index];
-        directory.lz77_calls.fetch_add(1, Ordering::Relaxed);
-        directory
-            .lz77_bytes
-            .fetch_add(input.encoded.len() as u64, Ordering::Relaxed);
+        let (bank, index) = if let Some(index) = self
+            .tilemap_transfer_directory
+            .as_ref()
+            .and_then(|directory| directory.lz77_index(offset))
+        {
+            (TilemapLz77Bank::TransferDirectory, index)
+        } else {
+            (
+                TilemapLz77Bank::Type3,
+                self.tilemap_type3.as_ref()?.lz77_index(offset as usize)?,
+            )
+        };
         Some(TilemapLz77Input {
             owner: self.clone(),
+            bank,
             index,
         })
     }

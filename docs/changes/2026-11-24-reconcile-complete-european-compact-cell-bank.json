@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reconcile-complete-european-compact-cell-bank",
+  "title": "Reconcile the complete adjacent European compact-cell bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows ownership CLI under Wine"
+  ],
+  "changes": [
+    "Resolved all six E489 gaps with 41 indexed or split-pointer records and 20 inter-record alignment bytes.",
+    "Recorded 91 contiguous physical records, 493 frame slots, 563 sequence entries and the 630 control bytes needed by the known producers."
+  ],
+  "validation": [
+    "Wine qktsor16 original disassembly and x8kcm7a0 ownership audit pass. The audit finds all 31,004 record bytes and 630 control bytes unowned by E310. All 32 protected inputs pass and Wine drains. Initial attempt 19jycbw9 stopped before the ownership command on an alignment serialization error that the retry corrected."
+  ],
+  "limitations": [
+    "Value-14 token semantics, live selector domains, the interior reference consumer, runtime attachment, ordinary scenes, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

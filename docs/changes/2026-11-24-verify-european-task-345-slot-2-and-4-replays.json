@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "verify-european-task-345-slot-2-and-4-replays",
+  "title": "Verify European task-345 slot 2 and slot 4 replays",
+  "kind": "changed",
+  "platforms": [
+    "European ROM and Windows test executable under Wine"
+  ],
+  "changes": [
+    "Added one focused replay check for the retained Firaga and Soil Evidence inputs through the standard e310-d309 preparation and loader.",
+    "Verified original selector loads, 24 resource-served metadata bytes per scene and one call to the existing LZ77 resource per scene with all 147 selected cartridge bytes altered in memory."
+  ],
+  "validation": [
+    "Windows test build 0ey4354t and Wine zmbcb0wa PASS. Guest clock and audio match over 1,206 frames. Full state, framebuffer and OAM match at both endpoints. The 25 input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Original interpreter with HLE and retained continuations. Earlier snapshot ancestry, other selectors, translated execution, real BIOS, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

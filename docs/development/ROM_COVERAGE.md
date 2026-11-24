@@ -2,11 +2,14 @@
 
 # ROM coverage map
 
-The [navigable map](rom-coverage/index.html) represents the entire 16 MiB EUR ROM by offset, with 64 KiB cell selection, address navigation, family selection, linked evidence and the largest unclassified regions. Open the HTML file in a browser; it works offline without a server or dependencies. The [JSON data](rom-coverage/coverage.json) contains exact intervals, while cell colors summarize their density.
+The [public overview](rom-coverage/index.html) presents aggregate EUR coverage
+figures. The full navigable map and JSON report are generated locally under
+`target/rom-coverage-local/`. That map includes address intervals, resource
+references and optional audit details, and opens offline.
 
 The family treemap sizes each rectangle by the union of that family's identified ROM intervals. Families can overlap, so their areas are not a partition or a percentage of the ROM. Green denotes bounded ordinary-use evidence, yellow denotes runtime availability without ordinary-use validation, and gray denotes source-only data. Search or filter by evidence, select a rectangle for its notes and links, then inspect its first interval on the offset map. These are data families, not decompiled functions or function-matching percentages.
 
-The [public map](https://dragonautmk.github.io/FFTA-DE-ReBuild/development/rom-coverage/) is published by GitHub Pages from the `/docs` folder on the `decomp` branch. To update it, regenerate the report locally as described below, review its metadata-only output, then commit and push the updated report to `decomp`. Pages publishes the committed snapshot; it does not regenerate the report, extract a ROM or publish uncommitted changes. The page identifies the generation date and source revision. Candidate code is not a percentage of functions decompiled or matched.
+The [public overview](https://dragonautmk.github.io/FFTA-DE-ReBuild/development/rom-coverage/) is published by GitHub Pages from the `/docs` folder on the `decomp` branch. Generate the detailed report locally, then run `python3 scripts/rom_coverage_public.py target/rom-coverage-local/coverage.json` to update the aggregate overview. Review the resulting public files before committing. Pages publishes the committed snapshot. Candidate code is not a percentage of functions decompiled or matched.
 
 The **DBG-07 verification of October 28, 2026** uses the already authenticated **e76-d75** EUR snapshot without new extraction: ROM SHA-256 `8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632`, manifest `bd0881e0c16abbf9602a1faefd2243defbd64be3c884b37962b24081060ddf3b`. The extractor committed during verification is e79-d78, so the page explicitly identifies a **historical dataset**. The default path continues to follow the latest commit; dataset generation and evidence review are separate.
 
@@ -95,7 +98,7 @@ The default path needs only the **EUR ROM**: the container builds the CLI and an
 
 The 28,455 entry points are versioned metadata, hash-bound to the ROM, retained list and cache from which they were extracted. **The old local `.dll` is no longer needed**. ROM and evidence are mounted read-only; only local cache and output folder are writable. Extracted assets stay outside the image and Git. Generation uses disabled networking; the first build may download dependencies. On Linux files belong to the calling user.
 
-Output: **`docs/development/rom-coverage/index.html`** and **`coverage.json`**. A newly generated HTML report and terminal show the **actual regeneration date/time**, commit, dataset generation and separate date/revision of ordinary evidence. The log compares counts with the previous report, including small byte increments that percentage rounding can hide. If coverage matches it shows **“Coverage unchanged”**, but HTML/JSON are still rewritten with a new date. Analyzer recompilation and date are not presented as increased coverage.
+Local output is **`target/rom-coverage-local/index.html`** and **`coverage.json`**. The report and terminal show the regeneration time, commit, dataset generation and evidence date. The log compares counts with the previous local report, including small byte increments that percentage rounding can hide.
 
 The checked-in snapshot was subsequently presented in English by translating only saved resource notes and limits. Its original `generated_at` and `evidence_sha256` continue to identify the source analysis; `presentation_translation` separately records the translation and translated evidence hash. Fifteen coverage-layer comparisons showed no changes. This presentation update did not read a ROM or dataset, execute the guest, or generate new analysis or acceptance. Since the translated evidence file has a different byte hash, a future regenerated report may report a metadata difference even with zero coverage-layer deltas.
 
@@ -125,7 +128,7 @@ python3 scripts/rom_coverage.py \
   --rom 'rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba' \
   --dataset 'target/rom-data/coverage/8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632/e65-d64' \
   --analyzer target/release/examples/rom_code_ranges \
-  --output docs/development/rom-coverage
+  --output target/rom-coverage-local
 python3 -m unittest discover -s scripts -p test_rom_coverage.py -v
 ```
 

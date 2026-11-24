@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-type-3-transfer-resources",
+  "title": "Persist the European type-3 transfer resources",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Extract the complete 325,850-byte E481 residual into graphics.tilemap-type3-transfers in e306-d305. Follow verified row windows, descriptors and wrappers to bound every LZ77 input and raw view and preserve byte-granular prior ownership.",
+    "Serve verified ranges on the mirrored cartridge bus and route BIOS decompression by its exact source address. Preserve older generations and authenticate the new file against the source ROM on activation."
+  ],
+  "validation": [
+    "Windows test harness build 40gqbj31 and one focused Wine test n9qirmvq PASS. Standard preparation creates and reuses 153 resources, E305 still attaches, and a coordinated payload and manifest edit is rejected without losing the active bindings.",
+    "With the backing bytes inverted, direct and ABI reads match across the mirrors, the split descriptor preserves its prior owner, 323 inputs match through both BIOS decompression variants, and all 14 raw views match through halfword DMA3.",
+    "The ordinary 425-frame Shell pair serves both rows from the file, with 79 bus bytes and two LZ77 calls totaling 255 input bytes. Guest clock and audio match at each frame and video, OAM and serialized state match at the E477 endpoint. Wine drains and all 20 protected paths pass."
+  ],
+  "limitations": [
+    "The original ROM still supplies authentication and the remaining cartridge. Other producers, ordinary execution of the conditional auxiliary selector, translated guests, native Linux, USA and native Windows remain open. No performance measurements were run."
+  ],
+  "files": [
+    "crates/gba-core/src/mem.rs",
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/script39_registry_poses.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_type3.rs",
+    "crates/gba-core/src/rom_data/tilemap_type3/row_windows.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_type3.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_type3_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

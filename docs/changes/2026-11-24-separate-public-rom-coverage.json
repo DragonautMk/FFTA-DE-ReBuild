@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "separate-public-rom-coverage",
+  "title": "Separate public ROM coverage from detailed local reports",
+  "kind": "changed",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Keep full coverage HTML and JSON under target by default and publish an explicit allowlisted aggregate overview without per-resource ranges or audit labels.",
+    "Preserve the previously generated detailed report locally and reject repository docs as the full-report output in the standard launchers."
+  ],
+  "validation": [
+    "Preserved HTML and JSON byte-for-byte before publication, verified their embedded data agree, and matched all six public totals to the local snapshot.",
+    "Passed 28 coverage and audit tests, including public-export regression tests, and nine Docker launcher tests with mocked Docker."
+  ],
+  "limitations": [
+    "Windows PowerShell and Docker Desktop execution were not available for validation. Historical Git commits and already-published Pages content require independent review."
+  ],
+  "files": [
+    "scripts/rom_coverage.py",
+    "scripts/rom_coverage_public.py",
+    "scripts/test_rom_coverage_public.py",
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/windows/rom_coverage_docker.ps1",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "docs/development/rom-coverage/index.html",
+    "docs/development/rom-coverage/coverage.json",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/docker.md",
+    "README.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md"
+  ]
+}

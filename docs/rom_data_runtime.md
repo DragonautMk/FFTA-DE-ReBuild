@@ -8011,3 +8011,450 @@ drains its server and retires scratch. Persistent stream backing and
 ordinary IDs 130 and 133 remain open. Fresh publication with the
 default writer for all files, Linux, USA and native Windows remain
 unverified. Performance measurement is deferred.
+
+## E479 European tilemap stream bank resource
+
+EUR preparation advances to `e304-d303`. The `graphics.tilemap-stream-bank`
+resource in `tilemap-stream-bank.bin` contains the unowned encoded ranges
+from the complete E457 halfword and byte stream bank. The manifest lists
+each range in file order with its original ROM offset, length, stream
+kind and SHA-256. The stream headers retain their origin bytes. Both
+the inter-stream alignment and the byte tokens' internal padding remain
+in the cartridge backing. The 844 earlier owner bytes continue to come
+from `graphics.observed-tilemap`.
+
+The resource loader compares the file and manifest with the authenticated
+ROM and builds the cartridge bindings from the file. Explicit
+`e302-d301` and `e303-d302` datasets keep the verified in-memory stream
+binding. The source ROM remains required for authentication and the
+rest of the cartridge.
+
+Wine `wd9v3o6q` creates all 151 resources with the standard preparation
+writer and reuses the published generation. Its manifest adds 130
+ranges totaling 8,810 bytes and preserves the complete E303 manifest
+prefix. E302 and E303 attach with their original resource identities.
+An edited stream file with a matching file digest is rejected, and the
+active bindings stay available.
+
+The single Wine test alters all selected stream bytes after attachment
+and exercises byte, halfword and word reads on all three cartridge
+mirrors. Padding reads still see the altered cartridge backing. The
+two interpreter readers return matching values for 10,685 halfword
+cells and 1,733 byte cells. Guest clocks, cursor endpoints and the
+serialized state match E475. The file owner serves 38,707 bytes during
+those calls, including repeated accesses.
+
+Windows harness build `lnahlnsl` passes. Wine preserves all 18 protected
+paths, drains its server and retires the generated resources. The
+retained evidence contains the manifest and the check results.
+Ordinary IDs 130 and 133, the separate task-345 LZ77 inputs, other
+banks, translated guest execution, Linux, USA and native Windows
+remain open. Performance measurement is deferred.
+
+## E480 European task-345 LZ77 resource
+
+EUR preparation advances to `e305-d304`. The manifest adds
+`graphics.tilemap-transfer-lz77` in `tilemap-transfer-lz77.bin`.
+Preparation follows the authenticated directory and its distinct
+wrapper links. The LZ77 parser gives the encoded length of every input.
+The file stores the 13 uncovered inputs in physical order, and the
+manifest provides the source offset, length and SHA-256 for each one.
+Two inputs totaling 89 bytes retain their earlier owner.
+
+After source verification, the cartridge and HLE readers use the same
+immutable file-backed inputs. SWI 11 and 12 still resolve the exact
+physical start, and bus reads can cross the end of a stream into the
+cartridge backing. Older tilemap datasets keep their ROM-derived LZ77
+bindings. The ROM remains required for authentication and the rest of
+the cartridge.
+
+Wine `e5w8vr8k` publishes and reuses a fresh 152-resource generation
+with the standard preparation writer. The earlier resource entries
+and coverage match the E304 manifest. E304 still attaches and supplies
+its original LZ77 view. The new generation rejects an
+edited file even when its manifest digest is updated, and the previously
+attached bindings stay active.
+
+The single focused test matches the E474 bus, read ABI, DMA and SWI
+results with the live ROM inputs altered. All 15 extents match across
+the three cartridge mirrors. The 90 controlled SWI calls produce the
+same WRAM and VRAM results. Both DMA widths match at the boundary
+with adjacent ROM. The 300-frame IN-08 slot-1 replay uses 57 bytes
+from the file-backed input and records zero raw SWI reads of that
+stream. Clock and audio match per frame. The framebuffer, OAM and
+serialized state match at the endpoint. Its state hash matches E474.
+
+Windows harness build `5o8qopxw` and the Wine test pass. The runner
+preserves 25 protected paths, drains Wine and retires scratch. Other
+ordinary selectors and transfer banks, translated guest execution,
+Linux, USA and native Windows remain open. Performance measurement
+is deferred.
+
+## E481 European type-3 transfer ownership
+
+The combined E448 and E452 projection follows 825 distinct type-3 rows
+through 793 descriptors and 372 wrappers. The 628 E448 and 207 E452 rows
+share ten row addresses. The wrappers select 358 LZ77 inputs and 14
+raw copy views. The audit rechecks each original row, linked pointer,
+wrapper kind and flag. It matches the compressed lengths and hashes
+against both retained indexes and derives the raw windows from each
+row's original size field.
+
+Wine `hs7i9i6k` audits all 349,097 distinct selected bytes against the
+E305 manifest. The independent interval comparison matches every
+owner and reproduces the earlier E301 totals for both projections.
+E305 owns 23,247 bytes, up from 19,149 in E301. The task-345 metadata
+covers 356 of the added bytes and its LZ77 resource covers 3,742.
+
+The remaining 325,850 bytes include 785 rows, unowned descriptor and
+wrapper fields, 323 complete LZ77 streams totaling 304,054 bytes and all
+14 raw views totaling 4,992 bytes. The only partially owned extent is
+descriptor `3abd74..3abd7c`. Its final four bytes belong to the compact
+primary alias. The extraction plan selects the first four bytes of that
+descriptor. It includes 7,744 bytes reached only by the 18 type-3 rows
+in the conditional auxiliary-selector projection.
+
+The retained `components.json` records the row links, exact source extents
+and selector provenance. `unowned-plan.json` provides the ranges eligible
+for new ownership. Both outputs contain metadata. Wine drains and 23
+protected inputs pass. Extraction, runtime attribution, other producers,
+ordinary auxiliary use, Linux and USA remain open.
+
+## E482 European type-3 transfer resource
+
+EUR preparation advances to `e306-d305` and creates
+`graphics.tilemap-type3-transfers` in `tilemap-type3-transfers.bin`.
+The extractor follows the verified E446 and E451 row windows and both
+nine-slot E453 auxiliary tables. It selects the type-3 rows and follows
+their descriptor and wrapper links. The wrapper flag selects the
+bounded LZ77 token walk or the raw copy length computed from the row,
+wrapper kind and layout bit. Repeated pointers share their source extent.
+
+The resource stores the verified uncovered row, descriptor, wrapper,
+LZ77 and raw-input bytes in manifest order. It subtracts existing
+ownership at byte boundaries, including the four-byte compact primary
+alias at `3abd78`. Each newly owned LZ77 stream retains its entire
+encoded extent and start address.
+
+The cartridge bus uses the selected file ranges across all mirrors.
+Reads spanning multiple owners compose their byte lanes with prior
+resources and live ROM. HLE decompression resolves a file-backed
+stream by its exact physical start, using the existing decoder and
+destination writes. Older tilemap generations keep their prior
+bindings. The source ROM authenticates the dataset and supplies the
+rest of the cartridge.
+
+Wine `n9qirmvq` creates and reuses the standard 153-resource
+generation. The new file covers all 325,850 bytes of the E481
+extraction plan. E305 still attaches and its resource entries match
+the E306 prefix. The loader rejects a changed file with an updated
+manifest hash and keeps the active resource bindings.
+
+With the backing bytes altered, the focused test matches the bus and
+read ABI on all three cartridge mirrors. The split descriptor at
+`3abd74` reads correctly from both resources. The 323 controlled
+decompressions cover every new LZ77 extent and exercise both SWI
+variants. All 14 raw views match through the halfword DMA3 path.
+
+The ordinary 425-frame Shell replay reads both type-3 rows from the
+file. It consumes 79 bytes on the bus and 255 LZ77 input bytes in
+two HLE calls. Guest clocks and audio agree at each frame. Video,
+OAM and serialized state agree at the endpoint, which retains the
+E477 state hash.
+
+Windows harness build `40gqbj31` and the Wine test pass. Wine
+drains, 20 protected paths pass and scratch is retired. Other
+producers, ordinary execution of the conditional selector,
+translated guests, Linux, USA and native Windows remain open.
+Performance measurement is deferred.
+
+## E483 European type-2 transfer resource
+
+EUR preparation advances to `e307-d306` and adds
+`graphics.tilemap-type2-transfers` in `tilemap-type2-transfers.bin`.
+It selects the type-2 rows of the E446/E451 projection, including the
+18 conditional E453 rows, and follows the authenticated Firaga program.
+Each 12-byte row locates an eight-byte list header. The count and
+entry pointer in the header bound the eight-byte entries.
+
+Each entry locates a halfword rectangle and gives its starting row and
+row count. The extractor checks those against the two-byte height and
+width header. It keeps the full header and `height × width` cells.
+Shared list headers, entries and rectangle addresses are counted once.
+The model covers 294 type-2 rows, 260 list headers, 545 entries and 205
+rectangles. The 273 distinct copy windows select 13,962 bytes together
+with their controls. Nineteen rectangles have cells outside those
+windows. The full bank covers 15,120 distinct bytes.
+
+The E306 manifest already owns 362 of those bytes. The new file
+contains the remaining 14,758 bytes in manifest order. In particular,
+the header and first row of the rectangle at `ae6db8` retain their
+existing owner and the new file supplies its second and third rows.
+Cartridge reads can combine those resources in the same word.
+Activation checks the packed file against the authenticated source ROM.
+The original ROM supplies other cartridge ranges.
+
+The Windows build `eod6d6vx` and focused Wine test `rcph2aol` pass.
+Preparation creates and reuses 154 resources while preserving the E306
+manifest prefix. E306 still attaches, and the type-3 file supplies its
+120-byte BIOS input at the original start address. Replacing the type-2
+file and its manifest digest is rejected while the active binding stays
+available.
+
+The test compares every new range across all three cartridge mirrors
+with altered ROM backing. It covers the split rectangle, adjacent raw
+bytes and the byte, halfword and word read ABI. The interpreter enters
+the original counted-list routine at `080db374` for all 294 rows. It
+compares each resulting destination with the expected cells, including
+unchanged bytes outside the copy windows. The routine copies 6,268
+bytes and reads 15,993 file-backed bytes including repeated accesses.
+The complete final guest state agrees with the unmodified ROM.
+
+The first Wine attempt `cyov8p8f` passed the publication and bus checks
+and stopped at the read count for row `39aed0`. The skip loop in
+`080d80e0` loads the width once for a nonzero starting row and reuses
+its computed stride. Correcting the expected count from 32 to 28 for
+that row allowed the same Windows executable to pass the full proof.
+Both Wine servers drained. The passing unit preserved 19 inputs and
+removed scratch.
+
+The six retained E460 gameplay captures have no reads in the new
+intervals. An ordinary scene with a new file-backed read, ordinary use
+of the conditional selector, other producers, translated execution,
+Linux, USA and native Windows remain open. Performance measurement
+is deferred.
+
+## E484 European direct tilemap transfer controls
+
+EUR preparation advances to `e308-d307`. The new resource
+`graphics.tilemap-direct-transfers` in `tilemap-direct-transfers.bin`
+completes the direct controls for the 78 E457 streams. It follows the
+type-4 and type-5 rows of the E446/E451 lists, the declared E445 row
+at `39a704` and the E458 alternate row at `39a71c`. Each row
+points to a descriptor that must address a stream start of the
+matching kind. The links cover all 71 halfword and seven byte streams.
+
+There are 136 type-4 rows and 128 distinct eight-byte descriptors.
+The nine type-5 rows have nine descriptors, with six selected bytes
+per descriptor. Together the controls select 2,818 distinct bytes.
+E307 owns 281 of those bytes. The file stores the remaining 2,537
+bytes, preserving the compact primary alias at `3aba8b` and the
+earlier indexed controls. Shared descriptors retain a single copy.
+
+The 9,654 encoded bytes and origin fields retain their E479 and
+observed-tilemap owners. Byte-token padding and the trailing
+type-5 descriptor bytes remain in the original ROM. On the cartridge
+bus, a single read can combine lanes from the new file, earlier
+resources and the original backing. Activation authenticates the
+file and its ranges against the source ROM.
+
+Windows build `5m1ymdyq` and Wine `drb46kuz` pass. Standard
+preparation creates and reuses 155 resources. The E307 manifest
+prefix is preserved and E307 still attaches. The loader rejects a
+file edit accompanied by a matching manifest digest and preserves
+the active binding.
+
+The test alters the backing of every new control, the compact alias
+byte and all 9,654 selected stream bytes. Mirrored bus and ABI reads
+match, including the word split at `3aba88`. A skipped token byte
+and a trailing type-5 descriptor byte remain readable from the
+altered backing.
+
+The original dispatcher at `080db2a8` runs for all 145 rows.
+Its initializer arguments, output memory and final serialized
+guest state match the original ROM. The new file supplies 2,196
+type-4 control bytes and 153 type-5 control bytes, including repeated
+reads. The earlier stream file serves 278,962 bytes during these calls.
+
+The first Wine attempt `crs5ls20` passed publication and bus
+checks and stopped at the test instruction limit for row `39bd3c`.
+This mode-4 path repeats a 1-by-1 tile across a 32-by-32 map.
+The successful build raises the test limit to accommodate that
+writer. Both Wine servers drained. The passing unit preserved all
+26 inputs and removed scratch.
+
+The six E460 gameplay captures contain no reads of the newly owned
+controls. Ordinary scene use, other producers, translated guest
+execution, Linux, USA and native Windows remain open. Performance
+measurement is deferred.
+
+## E485 European tilemap origin references
+
+EUR preparation advances to `e309-d308`. It extends
+`tilemap-direct-transfers.bin` with 151 aligned origin pointers
+totaling 604 bytes. The extractor scans the authenticated image for
+aligned words that address the E457 stream bank. Each word must
+address an exact stream start. The E484 descriptor links identify
+137 words and the indexed geometry controls identify 12 more.
+The remaining 153 are the literal words classified in E458.
+
+Two literal words already belong to `engine.thumb-pc-literals`.
+The 12 indexed references retain their observed-tilemap or
+indexed-control owners. E459's six additional calls reuse words
+from the same literal set. All 302 aligned references to the bank
+now have declared owners. This covers the origin references to
+76 roots within the 78-stream bank.
+
+The direct control file contains 3,141 bytes, including the earlier
+2,537 row and descriptor bytes. The range format and resource count
+stay the same. Explicit E308 activation uses its original 2,537-byte
+file. The source ROM continues to authenticate both revisions.
+
+Windows build `kqw969ri` and Wine `yi8i51yu` pass. Standard
+preparation creates and reuses 155 resources. The independent
+E458/E459 projection matches every new interval and the earlier
+control ranges stay intact. E308 still attaches. A changed literal
+with a matching file digest is rejected without changing the active
+binding.
+
+The test alters the backing bytes of all 153 literals and checks
+byte, halfword and word reads through the bus and ABI on all three
+mirrors. The original Thumb loads return the expected pointers.
+The extended file supplies 604 bytes to those instructions and
+the previous literal resource supplies the other eight. The final
+serialized states match. All 20 protected inputs pass and Wine
+drains before scratch is removed.
+
+Ordinary use of the new literals, live indexed and indirect calls,
+other banks, translated guest execution, Linux, USA and native
+Windows remain open. Performance measurement is deferred.
+
+## E486 European transfer-list directory sources
+
+For the authenticated EUR ROM, `e310-d309` extends the existing
+`tilemap-direct-transfers.bin` with the remaining controls that
+select the E446 and E451 transfer lists.
+
+The 228 local E446 call witnesses use 230 Thumb literal loads for
+their bases. Changing each sampled literal value in the source
+model changes the original list argument. The immediate row counts
+remain in the instructions. For E451, 23 bounded pointer tables
+contain 107 distinct pointer words. The companion tables supply
+102 count bytes. Other callers supply fixed counts or form lists
+from a base and stride. Fifty original literal words supply the
+table and list bases, including the alternate paths.
+
+The 335 distinct positive-count base/count pairs select 1,261 rows.
+E309 already owns all 15,132 row bytes and 156 of the 1,650 selected
+control bytes. The extended file adds 1,494 control bytes and
+retains the earlier owners and range records. Its size is 4,635
+bytes. The three empty slots still return a zero pointer and count.
+Both auxiliary projections remain bounded to their nine verified
+physical slots. Ordinary selector reachability is a separate criterion.
+
+Windows build `yyhnavbf` and Wine `fu029eck` pass. Standard
+preparation creates and reuses 155 resources. E309 still attaches with
+its original file, and a changed count byte with a matching file
+digest is rejected while the active binding remains available.
+
+With all selected control backing bytes altered, direct and ABI
+reads match on all three cartridge mirrors. The original Thumb
+instructions return the expected values for all 280 literals and
+209 table cells, including the empty slots and both auxiliary
+tables. The new file serves 1,084 literal bytes and 410 pointer
+and count bytes in those calls. Final serialized guest state matches.
+All 24 protected inputs pass and Wine drains before scratch is removed.
+
+The proof covers the selected original memory loads. Live indices,
+indirect setup and ordinary scene routes remain under the existing
+directory and auxiliary criteria. The source ROM still supplies
+authentication and other cartridge reads. Translated execution,
+Linux, USA and native Windows are pending. Performance measurement
+is deferred.
+
+## E487 European tilemap source coverage
+
+Wine `sgmwvtno` reconciles the verified European tilemap bank plans with
+all 155 resources in `e310-d309`. The plans cover directory rows and
+controls, Mode 7 bounds, the complete selected type-2 rectangles, type-3
+rows and streams, direct type-4 and type-5 transfers and references, the
+indexed direct controls, and all 23 task-345 directory slots. The audit
+includes the documented conditional selector projections.
+
+The manifest claims all **378,999 distinct required source bytes** once
+each across 16 resources. Within the contiguous E457 stream bank, 9,654
+bytes have a resource owner. The other 210 bytes are 142 alignment bytes
+between streams and 68 alignment bytes inside byte-stream tokens, as
+identified by E450 and E457. The complete task-345 bank contains 4,358
+bytes, including 3,831 bytes for 15 LZ77 inputs. E480 published 3,742
+bytes for 13 inputs. Earlier resources supply the other 616 bytes,
+including both remaining inputs. E305 and E310 declare the same owners
+for the entire task-345 bank.
+
+The Windows `rom-data audit-ownership` command agrees with an independent
+per-byte join for all 17 views and their distinct union. The manifest
+digest is `be8999d1d1eac0b97055814d7fbebcdf62d0a635cddc8d4a5cded1ea9e848747`.
+The combined plan digest is
+`7ab2a3a72bbcfd44ba485e31402503c996a7aefd2a5eb7885905edd4f2fdd2c1`.
+The unit retains the plan, ownership report and verifier, preserves all
+69 protected inputs and drains Wine. The audit reuses the existing
+manifest and plan evidence without opening the cartridge image.
+
+This coverage applies to the verified bank boundaries. Ordinary scene
+use, additional producers, translated execution, Linux, USA and native
+Windows remain open. E470 establishes the original task-345 reads for
+slots 2 and 4. E488 verifies their managed replays with altered backing.
+Performance measurement is deferred.
+
+## E488 European task-345 slot 2 and slot 4 replays
+
+The standard preparation writer creates the 155-resource `e310-d309`
+generation with a manifest matching E486. The normal loader attaches the
+generation before the managed replay. Both machines use the retained E470
+snapshots and input sequences. Firaga selects slot 2 over 606 frames. Soil
+Evidence selects slot 4 over 600 frames.
+
+The test alters 29 metadata bytes per replay in the managed cartridge
+backing. It also alters the complete 55-byte and 34-byte LZ77 inputs. The
+original task dispatch and selector loads occur at the E470 frames. The
+managed bus traces attribute 24 distinct metadata bytes per scene to the
+extracted resources, including the pointer, count, row, descriptor and
+wrapper reads. `graphics.observed-lz-block` serves one LZ77 HLE call per
+scene at the recorded frame. The managed trace has zero cartridge bus
+reads of either compressed input.
+
+Guest clock and audio match at every frame for both input sequences.
+Serialized state, framebuffer and OAM match at both endpoints. Windows
+test build `0ey4354t` and Wine `zmbcb0wa` pass. The test retains both read
+traces and endpoint hashes, preserves all 25 protected inputs and drains
+Wine.
+
+The proof covers the original interpreter with HLE and the retained
+continuations. Earlier snapshot ancestry, other selectors, translated
+execution, real BIOS, Linux, USA and native Windows remain open.
+Performance measurement is deferred.
+
+## E489 European mode-3 dispatch and adjacent compact-cell bank
+
+The original type-4 transfer chain reaches `080da544` from
+`080db320`. That instruction belongs to the list dispatcher at
+`080db2a8`, called once from callback `080db42c`. The registration
+literal at `db5a8` identifies the callback. Its initialization copies
+the base and count, and its active row selector advances in byte
+field `+7`. The dispatcher reads the descriptor at row offset `+4`,
+then the descriptor's stream pointer. The original load at `080da560`
+selects an arm using the stream byte at `+4`.
+
+The signed Thumb branch scan and aligned pointer index identify this
+chain and its routing tables. All 254 direct setup call sites reconcile
+with E446 and E451. Their bounded projections contain 335 list/count
+pairs and 1,261 rows, including 134 type-4 rows. E484 has 136 verified
+type-4 rows in total, selecting the same 71 halfword roots as E457.
+None selects mode 3. The 99 distinct aligned pointer targets in the
+preceding interval also yield zero mode-3 extent candidates under the
+known halfword reader bounds.
+
+Wine `tkbc4ljc` verifies all 64 bytes of the two routing tables, their
+base literals and the callback literal against `e310-d309`. The bytes
+already belong to `engine.thumb-switch-tables` and
+`engine.thumb-pc-literals`. An additional mode-3 path requires a
+source-backed witness of an original routine supplying such a stream.
+Constructed pointers, live selectors outside the catalog projections
+and indirect routes remain open.
+
+The same Wine unit verifies the compact-cell constructors that serve
+the preceding region and audits the resulting source plan. Its last
+compact-cell record ends at `af1816`, followed by two alignment bytes
+before the first E457 tilemap at `af1818`. Protected inputs pass and
+Wine drains. Linux, USA and native Windows remain open. Performance
+measurement is deferred. [Compact-cell plan](rom_data_graphics.md#e489-european-adjacent-compact-cell-source-plan)

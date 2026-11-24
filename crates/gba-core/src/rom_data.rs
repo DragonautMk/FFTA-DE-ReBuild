@@ -10,7 +10,7 @@ pub use runtime::{AlternatePaletteStats, BackgroundStats, GraphicsStats, Observe
 pub use runtime::{CompactObjStats, SecondaryCompactObjStats, TertiaryCompactObjStats};
 pub use runtime::{LayeredObjStats, AudioExtendedDispatchStats, ConditionalItemParametersStats};
 pub use runtime::IndexedRecords16Stats;
-pub use runtime::{TilemapLz77Input, TilemapTransferDirectoryStats};
+pub use runtime::{TilemapLz77Input, TilemapTransferDirectoryStats, TilemapType3Stats};
 pub mod bg_descriptors;
 pub mod bg_packets;
 pub mod bg_packet_data;
@@ -99,6 +99,9 @@ pub mod white_flowers_signed_bytes;
 pub mod white_flowers_isolated_values;
 pub mod tilemap_transfer_directory;
 pub mod tilemap_stream_bank;
+mod tilemap_type3;
+mod tilemap_type2;
+pub mod compact_cell_bank;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -164,9 +167,17 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 303;
-pub const DECODER_REV: u32 = 302;
+pub const EXTRACTOR_REV: u32 = 311;
+pub const DECODER_REV: u32 = 310;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
+const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
+const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
+const PRE_TILEMAP_TYPE3_REVISION: (u32, u32) = (305, 304);
+const PRE_TILEMAP_TYPE2_REVISION: (u32, u32) = (306, 305);
+const PRE_TILEMAP_DIRECT_REVISION: (u32, u32) = (307, 306);
+const PRE_TILEMAP_ORIGIN_REVISION: (u32, u32) = (308, 307);
+const PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION: (u32, u32) = (309, 308);
+const PRE_COMPACT_CELL_BANK_REVISION: (u32, u32) = (310, 309);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -627,6 +638,31 @@ pub const INDEXED_TILEMAP_CONTROLS_ID: &str = "graphics.indexed-tilemap-controls
 pub const INDEXED_TILEMAP_CONTROLS_FILE: &str = "indexed-tilemap-controls.json";
 pub const INDEXED_TILEMAP_CONTROLS_FORMAT: &str = "indexed-tilemap-controls-v1-json";
 pub const MAX_INDEXED_TILEMAP_CONTROLS_FILE_BYTES: u64 = 16 * 1024;
+pub const TILEMAP_STREAM_BANK_ID: &str = "graphics.tilemap-stream-bank";
+pub const TILEMAP_STREAM_BANK_FILE: &str = "tilemap-stream-bank.bin";
+pub const TILEMAP_STREAM_BANK_FORMAT: &str = "tilemap-stream-bank-v1-bin";
+pub const MAX_TILEMAP_STREAM_BANK_FILE_BYTES: u64 =
+    (tilemap_stream_bank::END - tilemap_stream_bank::START) as u64;
+pub const TILEMAP_TRANSFER_LZ77_ID: &str = "graphics.tilemap-transfer-lz77";
+pub const TILEMAP_TRANSFER_LZ77_FILE: &str = "tilemap-transfer-lz77.bin";
+pub const TILEMAP_TRANSFER_LZ77_FORMAT: &str = "tilemap-transfer-lz77-v1-bin";
+pub const MAX_TILEMAP_TRANSFER_LZ77_FILE_BYTES: u64 = 64 * 1024;
+pub const TILEMAP_TYPE3_ID: &str = "graphics.tilemap-type3-transfers";
+pub const TILEMAP_TYPE3_FILE: &str = "tilemap-type3-transfers.bin";
+pub const TILEMAP_TYPE3_FORMAT: &str = "tilemap-type3-transfers-v1-bin";
+pub const MAX_TILEMAP_TYPE3_FILE_BYTES: u64 = 512 * 1024;
+pub const TILEMAP_TYPE2_ID: &str = "graphics.tilemap-type2-transfers";
+pub const TILEMAP_TYPE2_FILE: &str = "tilemap-type2-transfers.bin";
+pub const TILEMAP_TYPE2_FORMAT: &str = "tilemap-type2-transfers-v1-bin";
+pub const MAX_TILEMAP_TYPE2_FILE_BYTES: u64 = 32 * 1024;
+pub const TILEMAP_DIRECT_ID: &str = "graphics.tilemap-direct-transfers";
+pub const TILEMAP_DIRECT_FILE: &str = "tilemap-direct-transfers.bin";
+pub const TILEMAP_DIRECT_FORMAT: &str = "tilemap-direct-transfers-v1-bin";
+pub const MAX_TILEMAP_DIRECT_FILE_BYTES: u64 = 16 * 1024;
+pub const COMPACT_CELL_BANK_ID: &str = "graphics.compact-cell-bank";
+pub const COMPACT_CELL_BANK_FILE: &str = "compact-cell-bank.bin";
+pub const COMPACT_CELL_BANK_FORMAT: &str = "compact-cell-bank-v1-bin";
+pub const MAX_COMPACT_CELL_BANK_FILE_BYTES: u64 = 32 * 1024;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -842,6 +878,26 @@ pub struct SourceRange {
     pub role: String,
 }
 
+/// Store verified encoded ranges in their manifest order.
+fn pack_encoded_sources(
+    rom: &[u8],
+    ranges: impl IntoIterator<Item = (std::ops::Range<u32>, &'static str)>,
+) -> (Vec<u8>, Vec<SourceRange>) {
+    let mut encoded = Vec::new();
+    let mut sources = Vec::new();
+    for (range, role) in ranges {
+        let bytes = &rom[range.start as usize..range.end as usize];
+        sources.push(SourceRange {
+            offset: range.start,
+            length: range.end - range.start,
+            sha256: ffta_rom::digest(bytes),
+            role: role.into(),
+        });
+        encoded.extend_from_slice(bytes);
+    }
+    (encoded, sources)
+}
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Resource {
@@ -1015,6 +1071,12 @@ pub struct Extraction {
     pub white_flowers_isolated_values: Option<white_flowers_isolated_values::Catalog>,
     pub tilemap_transfer_directory: Option<tilemap_transfer_directory::Catalog>,
     pub indexed_tilemap_controls: Option<tilemap_stream_bank::IndexedTilemapControls>,
+    pub tilemap_stream_bank: Option<Vec<u8>>,
+    pub tilemap_transfer_lz77: Option<Vec<u8>>,
+    pub tilemap_type3: Option<Vec<u8>>,
+    pub tilemap_type2: Option<Vec<u8>>,
+    pub tilemap_direct: Option<Vec<u8>>,
+    pub compact_cell_bank: Option<Vec<u8>>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1171,6 +1233,12 @@ pub struct BaseFiles<'a> {
     pub white_flowers_isolated_values: Option<(&'a white_flowers_isolated_values::WhiteFlowersIsolatedValues, &'a [u8])>,
     pub tilemap_transfer_directory: Option<(&'a tilemap_transfer_directory::TilemapTransferDirectory, &'a [u8])>,
     pub indexed_tilemap_controls: Option<(&'a tilemap_stream_bank::IndexedTilemapControls, &'a [u8])>,
+    pub tilemap_stream_bank: Option<&'a [u8]>,
+    pub tilemap_transfer_lz77: Option<&'a [u8]>,
+    pub tilemap_type3: Option<&'a [u8]>,
+    pub tilemap_type2: Option<&'a [u8]>,
+    pub tilemap_direct: Option<&'a [u8]>,
+    pub compact_cell_bank: Option<&'a [u8]>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1179,21 +1247,25 @@ pub struct BaseFiles<'a> {
 
 impl Extraction {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
-        Self::from_rom_with_indexed_tilemap_controls(rom, true)
+        Self::from_rom_with_revision(rom, (EXTRACTOR_REV, DECODER_REV))
     }
 
-    /// Keep the preceding EUR revision readable for explicitly selected datasets.
+    /// Keep the recent EUR tilemap revisions readable for explicitly selected datasets.
     /// The supplied manifest selects the revision only. Its content and source
     /// identity are validated against the resulting extraction.
     pub fn from_rom_for_manifest(rom: &[u8], manifest: &Manifest) -> Result<Self, String> {
-        let revision = (manifest.extractor_revision, manifest.decoder_revision);
-        Self::from_rom_with_indexed_tilemap_controls(rom, revision != PRE_INDEXED_TILEMAP_REVISION)
+        let revision = match (manifest.extractor_revision, manifest.decoder_revision) {
+            previous @ (PRE_INDEXED_TILEMAP_REVISION
+            | PRE_TILEMAP_STREAM_FILE_REVISION | PRE_TILEMAP_LZ77_FILE_REVISION
+            | PRE_TILEMAP_TYPE3_REVISION | PRE_TILEMAP_TYPE2_REVISION
+            | PRE_TILEMAP_DIRECT_REVISION | PRE_TILEMAP_ORIGIN_REVISION
+            | PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION | PRE_COMPACT_CELL_BANK_REVISION) => previous,
+            _ => (EXTRACTOR_REV, DECODER_REV),
+        };
+        Self::from_rom_with_revision(rom, revision)
     }
 
-    fn from_rom_with_indexed_tilemap_controls(
-        rom: &[u8],
-        include_indexed_tilemap_controls: bool,
-    ) -> Result<Self, String> {
+    fn from_rom_with_revision(rom: &[u8], revision: (u32, u32)) -> Result<Self, String> {
         let hash = ffta_rom::digest(rom);
         let (profile, ranges): (&str, &[(u32, &str)]) = match hash.as_str() {
             ffta_rom::SHA256 => ("usa", &[(0x149510, "direct"), (0xa398dc, "iwram-copy")]),
@@ -2255,8 +2327,7 @@ impl Extraction {
                 ].into_iter().map(str::to_owned).collect(),
                 sources: metadata.sources.clone(),
             });
-            result.tilemap_transfer_directory = Some(metadata);
-            if include_indexed_tilemap_controls {
+            let streams = if revision != PRE_INDEXED_TILEMAP_REVISION {
                 let streams = tilemap_stream_bank::from_verified_rom(rom)?;
                 let controls = tilemap_stream_bank::IndexedTilemapControls::from_verified_rom(rom, &streams)?;
                 let prior = script39_registry_poses::PriorSources::new(&result.manifest.resources)?;
@@ -2277,10 +2348,132 @@ impl Extraction {
                     sources,
                 });
                 result.indexed_tilemap_controls = Some(controls);
+                if revision != PRE_TILEMAP_STREAM_FILE_REVISION {
+                    let ranges = tilemap_stream_bank::uncovered_ranges(&streams, &prior)?;
+                    let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                    result.manifest.coverage.push(TILEMAP_STREAM_BANK_ID.into());
+                    result.manifest.resources.push(Resource {
+                        id: TILEMAP_STREAM_BANK_ID.into(),
+                        path: TILEMAP_STREAM_BANK_FILE.into(),
+                        format: TILEMAP_STREAM_BANK_FORMAT.into(),
+                        sha256: String::new(),
+                        dependencies: vec![OBSERVED_TILEMAP_ID.into()],
+                        sources,
+                    });
+                    result.tilemap_stream_bank = Some(encoded);
+                }
+                Some(streams)
             } else {
-                (result.manifest.extractor_revision, result.manifest.decoder_revision) =
-                    PRE_INDEXED_TILEMAP_REVISION;
+                None
+            };
+            if revision >= PRE_TILEMAP_TYPE3_REVISION {
+                let prior = script39_registry_poses::PriorSources::new(&result.manifest.resources)?;
+                let ranges = metadata.decoded.uncovered_lz77_inputs(rom, &prior)?;
+                let (encoded, sources) = pack_encoded_sources(
+                    rom, ranges.into_iter().map(|range| (range, "lz77-input")),
+                );
+                result.manifest.coverage.push(TILEMAP_TRANSFER_LZ77_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: TILEMAP_TRANSFER_LZ77_ID.into(),
+                    path: TILEMAP_TRANSFER_LZ77_FILE.into(),
+                    format: TILEMAP_TRANSFER_LZ77_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![TILEMAP_TRANSFER_DIRECTORY_ID.into(), OBSERVED_LZ_ID.into()],
+                    sources,
+                });
+                result.tilemap_transfer_lz77 = Some(encoded);
             }
+            if revision >= PRE_TILEMAP_TYPE2_REVISION {
+                let ranges = tilemap_type3::uncovered_ranges(rom, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(TILEMAP_TYPE3_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: TILEMAP_TYPE3_ID.into(),
+                    path: TILEMAP_TYPE3_FILE.into(),
+                    format: TILEMAP_TYPE3_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        OBSERVED_TILEMAP_ROW_ID, OBSERVED_TILEMAP_DESCRIPTOR_ID, OBSERVED_LZ_ID,
+                        FIRAGA_TRANSFER_PROGRAM_ID, COMPACT_PRIMARY_ALIAS_ID,
+                        TILEMAP_TRANSFER_DIRECTORY_ID, TILEMAP_TRANSFER_LZ77_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.tilemap_type3 = Some(encoded);
+            }
+            if revision >= PRE_TILEMAP_DIRECT_REVISION {
+                let firaga = &result.firaga_transfer_program.as_ref().unwrap().decoded;
+                let ranges = tilemap_type2::uncovered_ranges(rom, firaga, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(TILEMAP_TYPE2_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: TILEMAP_TYPE2_ID.into(),
+                    path: TILEMAP_TYPE2_FILE.into(),
+                    format: TILEMAP_TYPE2_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        OBSERVED_TILEMAP_ID, OBSERVED_TILEMAP_ROW_ID,
+                        FIRAGA_TRANSFER_PROGRAM_ID, FIRAGA_PALETTE_ROWS_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.tilemap_type2 = Some(encoded);
+            }
+            if revision >= PRE_TILEMAP_ORIGIN_REVISION {
+                let streams = streams.as_deref().ok_or("Missing direct tilemap streams")?;
+                let mut dependencies = vec![
+                    OBSERVED_TILEMAP_ROW_ID, OBSERVED_TILEMAP_DESCRIPTOR_ID,
+                    COMPACT_PRIMARY_ALIAS_ID, INDEXED_TILEMAP_CONTROLS_ID, TILEMAP_STREAM_BANK_ID,
+                ];
+                let origin_controls = if revision > PRE_TILEMAP_ORIGIN_REVISION {
+                    dependencies.push(THUMB_PC_LITERALS_ID);
+                    Some(result.indexed_tilemap_controls.as_ref().ok_or("Missing tilemap origin controls")?)
+                } else {
+                    None
+                };
+                let mut ranges = tilemap_stream_bank::uncovered_direct_transfer_ranges(
+                    rom, streams, &result.manifest.resources, origin_controls,
+                )?;
+                if revision > PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION {
+                    ranges.extend(tilemap_transfer_directory::uncovered_projected_controls(
+                        rom, &result.manifest.resources,
+                    )?);
+                    ranges.sort_unstable_by_key(|(span, _)| span.start);
+                    if ranges.windows(2).any(|pair| pair[0].0.end > pair[1].0.start) {
+                        return Err("Projected tilemap controls overlap the direct transfer sources".into());
+                    }
+                    dependencies.extend([
+                        TILEMAP_TRANSFER_DIRECTORY_ID, SOIL_SCOPED_VALUES_ID, FIRAGA_TRANSFER_PROGRAM_ID,
+                    ]);
+                }
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(TILEMAP_DIRECT_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: TILEMAP_DIRECT_ID.into(),
+                    path: TILEMAP_DIRECT_FILE.into(),
+                    format: TILEMAP_DIRECT_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: dependencies.into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.tilemap_direct = Some(encoded);
+            }
+            if revision > PRE_COMPACT_CELL_BANK_REVISION {
+                let ranges = compact_cell_bank::uncovered_ranges(rom, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(COMPACT_CELL_BANK_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: COMPACT_CELL_BANK_ID.into(),
+                    path: COMPACT_CELL_BANK_FILE.into(),
+                    format: COMPACT_CELL_BANK_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.compact_cell_bank = Some(encoded);
+            }
+            result.tilemap_transfer_directory = Some(metadata);
+            (result.manifest.extractor_revision, result.manifest.decoder_revision) = revision;
         } else {
             result.manifest.extractor_revision = 8;
             result.manifest.decoder_revision = 7;
@@ -2465,6 +2658,12 @@ impl Extraction {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -2650,6 +2849,11 @@ impl Extraction {
             || self.white_flowers_signed_bytes.is_some() != self.white_flowers_isolated_values.is_some()
             || self.white_flowers_isolated_values.is_some() != self.tilemap_transfer_directory.is_some()
             || self.indexed_tilemap_controls.is_some() && self.tilemap_transfer_directory.is_none()
+            || self.tilemap_stream_bank.is_some() && self.indexed_tilemap_controls.is_none()
+            || self.tilemap_transfer_lz77.is_some() && self.tilemap_transfer_directory.is_none()
+            || self.tilemap_type3.is_some() && self.tilemap_transfer_lz77.is_none()
+            || self.tilemap_type2.is_some() && self.tilemap_type3.is_none()
+            || self.tilemap_direct.is_some() && self.tilemap_stream_bank.is_none()
             || self.constructor_obj_animation.is_some() && self.obj_lists.is_none()
             || self.map_raster_palettes.is_some() && self.auxiliary_scripts.is_none()
             || self.auxiliary_scripts.is_some() && self.script_coordinates.is_none()
@@ -3862,13 +4066,115 @@ impl Extraction {
                     return Err("Decoded indexed tilemap controls differ from authenticated source".into());
                 }
                 total = total.saturating_add(bytes.len());
-                expected.resources.last_mut()
-                    .filter(|resource| resource.id == INDEXED_TILEMAP_CONTROLS_ID)
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == INDEXED_TILEMAP_CONTROLS_ID)
                     .ok_or("Missing indexed tilemap controls in expected manifest")?
                     .sha256 = ffta_rom::digest(bytes);
             }
             (None, None) => {}
             _ => return Err("Missing or unexpected indexed tilemap controls".into()),
+        }
+        match (&self.tilemap_stream_bank, files.tilemap_stream_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_TILEMAP_STREAM_BANK_FILE_BYTES {
+                    return Err("Tilemap stream bank exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Tilemap stream bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_STREAM_BANK_ID)
+                    .ok_or("Missing tilemap stream bank in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected tilemap stream bank".into()),
+        }
+        match (&self.tilemap_transfer_lz77, files.tilemap_transfer_lz77) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_TILEMAP_TRANSFER_LZ77_FILE_BYTES {
+                    return Err("Tilemap transfer LZ77 file exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Tilemap transfer LZ77 file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_TRANSFER_LZ77_ID)
+                    .ok_or("Missing tilemap transfer LZ77 resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected tilemap transfer LZ77 file".into()),
+        }
+        match (&self.tilemap_type3, files.tilemap_type3) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_TILEMAP_TYPE3_FILE_BYTES {
+                    return Err("Type-3 tilemap transfer file exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Type-3 tilemap transfer file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_TYPE3_ID)
+                    .ok_or("Missing type-3 tilemap transfer resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected type-3 tilemap transfer file".into()),
+        }
+        match (&self.tilemap_type2, files.tilemap_type2) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_TILEMAP_TYPE2_FILE_BYTES {
+                    return Err("Type-2 tilemap transfer file exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Type-2 tilemap transfer file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_TYPE2_ID)
+                    .ok_or("Missing type-2 tilemap transfer resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected type-2 tilemap transfer file".into()),
+        }
+        match (&self.tilemap_direct, files.tilemap_direct) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_TILEMAP_DIRECT_FILE_BYTES {
+                    return Err("Direct tilemap transfer file exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Direct tilemap transfer file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == TILEMAP_DIRECT_ID)
+                    .ok_or("Missing direct tilemap transfer resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected direct tilemap transfer file".into()),
+        }
+        match (&self.compact_cell_bank, files.compact_cell_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes.len() as u64 > MAX_COMPACT_CELL_BANK_FILE_BYTES {
+                    return Err("Compact-cell bank file exceeds input limit".into());
+                }
+                if bytes != encoded.as_slice() {
+                    return Err("Compact-cell bank file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == COMPACT_CELL_BANK_ID)
+                    .ok_or("Missing compact-cell bank resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected compact-cell bank file".into()),
         }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
@@ -4734,6 +5040,12 @@ impl Extraction {
             + usize::from(self.white_flowers_isolated_values.is_some())
             + usize::from(self.tilemap_transfer_directory.is_some())
             + usize::from(self.indexed_tilemap_controls.is_some())
+            + usize::from(self.tilemap_stream_bank.is_some())
+            + usize::from(self.tilemap_transfer_lz77.is_some())
+            + usize::from(self.tilemap_type3.is_some())
+            + usize::from(self.tilemap_type2.is_some())
+            + usize::from(self.tilemap_direct.is_some())
+            + usize::from(self.compact_cell_bank.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -4938,6 +5250,12 @@ mod tests {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5095,6 +5413,12 @@ mod tests {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5262,6 +5586,12 @@ mod tests {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5418,6 +5748,12 @@ mod tests {
             white_flowers_isolated_values: None,
             tilemap_transfer_directory: None,
             indexed_tilemap_controls: None,
+            tilemap_stream_bank: None,
+            tilemap_transfer_lz77: None,
+            tilemap_type3: None,
+            tilemap_type2: None,
+            tilemap_direct: None,
+            compact_cell_bank: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

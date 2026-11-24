@@ -1,0 +1,1942 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Extracted resource wiki</title>
+<style>
+body { font: 16px system-ui, sans-serif; max-width: 1450px; margin: 2rem auto; padding: 0 1rem; color: #182132; background: #f6f7fa; }
+h1 { margin-bottom: .3rem; } a { color: #155d7a; }
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.sidebar { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; padding: 1rem; background: #eaf0f4; border-radius: .5rem; }
+.sidebar h2 { font-size: 1rem; margin: 0 0 .7rem; }
+.sidebar ul { list-style: none; padding: 0; margin: 0 0 1rem; }
+.sidebar li { margin: .45rem 0; }
+.sidebar button { display: block; width: 100%; margin: .35rem 0; text-align: left; }
+main { min-width: 0; }
+@media (max-width: 760px) { .layout { display: block; } .sidebar { position: static; max-height: none; } }
+input, select { font: inherit; padding: .45rem; border: 1px solid #aab4c2; border-radius: .3rem; }
+button { font: inherit; padding: .4rem .6rem; border: 1px solid #93a9b5; border-radius: .3rem; background: #f3f7f9; color: #184b60; cursor: pointer; }
+button:disabled { opacity: .55; cursor: default; }
+input { width: min(35rem, 90%); }
+input[type="checkbox"] { width: auto; }
+section { background: white; padding: 1.2rem; margin: 1rem 0; border-radius: .5rem; }
+section[hidden] { display: none; }
+summary { cursor: pointer; color: #155d7a; }
+summary h2 { display: inline; font-size: 1.25rem; }
+details[open] > summary { margin-bottom: 1rem; }
+table { border-collapse: collapse; width: 100%; }
+td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertical-align: top; overflow-wrap: anywhere; }
+#resource-index table { table-layout: fixed; }
+#resource-index th:nth-child(1) { width: 48%; }
+#resource-index th:nth-child(2) { width: 37%; }
+#resource-index th:nth-child(3) { width: 15%; }
+@media (max-width: 760px) {
+  #resource-index table, #resource-index tbody, #resource-index tr, #resource-index td { display: block; width: auto; }
+  #resource-index thead { display: none; }
+  #resource-index tr { border-bottom: 1px solid #ddd; padding: .5rem 0; }
+  #resource-index td { border: 0; padding: .2rem .5rem; }
+  #resource-index td:nth-child(2)::before { content: 'File and format: '; font-weight: bold; }
+  #resource-index td:nth-child(3)::before { content: 'Status: '; font-weight: bold; }
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: .6rem; margin-top: 1rem; }
+.swatch { border: 1px solid #ddd; border-radius: .3rem; overflow: hidden; }
+.color { height: 65px; }
+.detail { padding: .5rem; font-size: .85rem; overflow-wrap: anywhere; }
+.map { position: relative; width: min(100%, 640px); aspect-ratio: 1; background: #e5edf1; border: 1px solid #93a9b5; }
+.map svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.map button { position: absolute; transform: translate(-50%, -50%); min-width: 1.8rem; min-height: 1.8rem; border-radius: 50%; border: 1px solid #193849; background: white; cursor: pointer; }
+.text-preview { display:flex; flex-wrap:wrap; align-items:center; min-height:3rem; background:#182132; color:white; padding:.5rem; }
+.text-preview canvas { image-rendering:pixelated; height:48px; }
+.text-preview span { margin:0 .25rem; font: 13px monospace; color:#ffe09a; }
+.keyboard-grid { overflow-x:auto; }
+.keyboard-grid table { width:auto; }
+.keyboard-grid td { text-align:center; padding:.2rem; }
+.keyboard-grid button { min-width:4rem; }
+.keyboard-grid canvas { image-rendering:pixelated; height:48px; vertical-align:middle; background:#182132; }
+.keyboard-grid small { display:block; }
+</style>
+</head>
+<body>
+<h1>Extracted resource wiki</h1>
+<p id="info"></p>
+<p>Browse the local extraction by topic, or inspect an extracted file. Open a section to see its contents.</p>
+<div class="layout">
+<aside class="sidebar">
+  <nav aria-label="Contents"><h2>Contents</h2><ul id="contents"></ul></nav>
+  <button type="button" id="expand-all">Open all sections</button>
+  <button type="button" id="collapse-all">Close all sections</button>
+</aside>
+<main>
+<section id="resource-index">
+  <details open><summary><h2>Resource index</h2></summary>
+  <label>Search <input id="search" type="search" placeholder="Name, ID or filename"></label>
+  <p>Choose the extracted dataset folder to inspect its files directly from this
+  index. Files stay in the browser. Matching uses relative paths only; selected
+  files are not checked against the generated index again.</p>
+  <label>Dataset folder <input id="dataset-directory" type="file" webkitdirectory multiple disabled></label>
+  <button type="button" id="dataset-disconnect" disabled>Disconnect folder</button>
+  <p id="dataset-status" role="status">Loading viewer…</p>
+  <table><thead><tr><th>Resource</th><th>File and format</th><th>Status at generation</th></tr></thead><tbody id="rows"></tbody></table>
+</details></section>
+<section id="file-inspector">
+  <details><summary><h2>Inspect extracted file</h2></summary>
+  <p>Select an extracted file to browse it as text or hexadecimal bytes.</p>
+  <label>File <input id="inspect-file" type="file"></label>
+  <label>Display <select id="inspect-mode"><option value="text">Text</option><option value="hex">Hexadecimal</option></select></label>
+  <p id="tree-status" role="status">Select a JSON file to explore its structure.</p>
+  <button type="button" id="tree-load-large" hidden>Load large JSON structure</button>
+  <button type="button" id="tree-cancel-large" hidden>Cancel structure loading</button>
+  <div id="tree" hidden>
+    <p id="tree-path"></p>
+    <button type="button" id="tree-up">Parent</button>
+    <button type="button" id="tree-prev">Previous entries</button>
+    <button type="button" id="tree-next">Next entries</button>
+    <table><thead><tr><th>Key or index</th><th>Value</th></tr></thead><tbody id="tree-rows"></tbody></table>
+  </div>
+  <p id="inspect-status" role="status">No file selected.</p>
+  <label>Find <select id="inspect-query-mode"><option value="text">UTF-8 text</option><option value="hex">Hex bytes</option></select></label>
+  <label>Value <input id="inspect-query" type="search" maxlength="3072" placeholder="Case-sensitive text"></label>
+  <button type="button" id="inspect-find">Find next</button>
+  <button type="button" id="inspect-cancel" disabled>Cancel search</button>
+  <p id="inspect-find-status" role="status">Search starts at the beginning of the selected file.</p>
+  <button type="button" id="inspect-prev" disabled>Previous</button>
+  <button type="button" id="inspect-next" disabled>Next</button>
+  <pre id="inspect-content" style="max-height:32rem;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+</details></section>
+<section id="dimensions" hidden>
+  <details><summary><h2>Sprite dimensions</h2></summary>
+  <p id="dimensions-source"></p>
+  <table><thead><tr><th>Shape</th><th>Size</th><th>Width</th><th>Height</th></tr></thead><tbody id="dimensions-rows"></tbody></table>
+</details></section>
+<section id="palette" hidden>
+  <details><summary><h2>Background base palettes</h2></summary>
+  <label>Descriptor <select id="descriptor"></select></label>
+  <label>Bank <select id="bank"></select></label>
+  <div id="colors" class="grid"></div>
+</details></section>
+<section id="bg-tiles" hidden>
+  <details><summary><h2>Background tile sheets</h2></summary>
+  <p>Decoded words are shown as 4-bit, 8×8 tiles using a selected base palette
+  or grayscale indices. This is a tile sheet, not an assembled scene. Any
+  destination prefix and live palette or animation changes are not included.</p>
+  <label>Descriptor <select id="bg-descriptor"></select></label>
+  <label>Palette <select id="bg-palette"></select></label>
+  <label>Page <select id="bg-page"></select></label>
+  <p id="bg-detail"></p>
+  <canvas id="bg-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Background tile sheet"></canvas>
+</details></section>
+<section id="ui-tiles" hidden>
+  <details><summary><h2>Interface tile sheets</h2></summary>
+  <p>Decoded UI banks are shown as 4-bit, 8×8 tiles. Some words may represent
+  other data. Palette selection is manual and does not imply a verified pairing
+  or an assembled screen.</p>
+  <label>Selector <select id="ui-selector"></select></label>
+  <label>Language ID <select id="ui-language"></select></label>
+  <p id="ui-selector-detail"></p>
+  <label>Graphics bank <select id="ui-bank"></select></label>
+  <label>Palette source <select id="ui-palette-source"></select></label>
+  <label>Palette bank <select id="ui-palette-bank"></select></label>
+  <label>Page <select id="ui-page"></select></label>
+  <p id="ui-detail"></p>
+  <canvas id="ui-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interface tile sheet"></canvas>
+</details></section>
+<section id="obj-tiles" hidden>
+  <details><summary><h2>Object tile sheets</h2></summary>
+  <p>Decoded object banks are shown as 4-bit, 8×8 tiles. Some words can hold
+  other data. Palettes are chosen manually; neither their pairing nor a finished
+  sprite or screen is inferred.</p>
+  <label>Selector <select id="obj-selector"></select></label>
+  <label>Language ID <select id="obj-language"></select></label>
+  <p id="obj-selector-detail"></p>
+  <label>Bank catalog <select id="obj-catalog"></select></label>
+  <label>Graphics bank <select id="obj-bank"></select></label>
+  <label>Palette <select id="obj-palette"></select></label>
+  <label>Page <select id="obj-page"></select></label>
+  <p id="obj-detail"></p>
+  <canvas id="obj-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Object tile sheet"></canvas>
+</details></section>
+<section id="items" hidden>
+  <details><summary><h2>Item records</h2></summary>
+  <p>Static fields are identified by their byte offset within each record.</p>
+  <label>Item ID <select id="item-id"></select></label>
+  <p id="items-source"></p>
+  <table><thead><tr><th>Offset</th><th>Type</th><th>Value</th></tr></thead><tbody id="item-fields"></tbody></table>
+</details></section>
+<section id="world" hidden>
+  <details><summary><h2>World nodes</h2></summary>
+  <p>Positions use tile coordinates. Select a node to inspect its recorded links.</p>
+  <div class="map" id="world-plot"><svg id="world-road-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+  <p id="world-detail"></p>
+  <table><thead><tr><th>Slot</th><th>Neighbor ID</th><th>Path ID</th></tr></thead><tbody id="world-links"></tbody></table>
+  <div id="world-roads-controls" hidden>
+    <h3>Sampled roads</h3>
+    <p>Points are offsets from the lower-index node. The preview uses the stored
+    samples without extending them to the other node. Animation runs at 10 samples
+    per second, independently of game timing.</p>
+    <label>Road ID <select id="world-road-id"></select></label>
+    <label>Sample <input id="world-road-step" type="range" min="0" value="0" style="width:min(20rem,80%)"></label>
+    <button type="button" id="world-road-play">Play samples</button>
+    <button type="button" id="world-road-stop" disabled>Stop</button>
+    <p id="world-road-detail"></p>
+  </div>
+</details></section>
+<section id="audio" hidden>
+  <details><summary><h2>PCM waveforms</h2></summary>
+  <label>Wave <select id="audio-id"></select></label>
+  <label>Audition sample rate (Hz) <input id="audio-rate" type="number" min="8000" max="96000" step="1" value="22050" style="width:7rem"></label>
+  <label><input id="audio-loop" type="checkbox"> Loop at recorded start</label>
+  <button type="button" id="audio-play">Play sample</button>
+  <button type="button" id="audio-stop" disabled>Stop</button>
+  <button type="button" id="audio-download">Download WAV</button>
+  <p><label for="audio-progress">Sample position</label>
+    <progress id="audio-progress" max="1" value="0"></progress> <span id="audio-progress-label">Not playing.</span></p>
+  <p>Audition uses the chosen sample rate and optional loop point. Game pitch,
+  looping and envelope depend on the original sound driver. The WAV contains
+  one unlooped copy at the chosen rate.</p>
+  <p id="audio-status" role="status">Select a wave to audition its PCM samples.</p>
+  <p id="audio-detail"></p>
+  <canvas id="waveform" width="800" height="200" style="width:100%;max-width:800px;background:#f3f6fa" aria-label="PCM waveform"></canvas>
+  <div id="cgb-audio" hidden>
+    <h3>CGB waves</h3>
+    <p>Audition repeats the 32 stored amplitudes for one second at the chosen frequency.</p>
+    <label>Wave <select id="cgb-id"></select></label>
+    <label>Frequency (Hz) <input id="cgb-frequency" type="number" min="20" max="2000" value="440" style="width:7rem"></label>
+    <button type="button" id="cgb-play">Play wave</button>
+    <p><label for="cgb-progress">Wave position</label>
+      <progress id="cgb-progress" max="1" value="0"></progress> <span id="cgb-progress-label">Not playing.</span></p>
+    <p id="cgb-detail"></p>
+    <canvas id="cgb-waveform" width="640" height="160" style="width:100%;max-width:640px;background:#f3f6fa" aria-label="CGB waveform"></canvas>
+  </div>
+</details></section>
+<section id="sequence-audio" hidden>
+  <details><summary><h2>Song track sequences</h2></summary>
+  <p>Explore one track or play the extracted tracks together. Known PCM and
+  CGB wave instruments can use extracted samples; other voices fall back to
+  sine waves. Timing is chosen here, and pitch, envelopes, effects and other driver
+  behavior remain approximate. The trace stops at the selected duration or a safety limit.</p>
+  <label>Song ID <select id="sequence-song"></select></label>
+  <label>Track <select id="sequence-track"></select></label>
+  <label>Ticks per second <input id="sequence-rate" type="number" min="1" max="400" value="48" style="width:6rem"></label>
+  <label>Preview seconds <input id="sequence-duration" type="number" min="1" max="180" value="12" style="width:6rem"></label>
+  <label>Voices <select id="sequence-voice"><option value="pcm">Extracted PCM/CGB where available</option><option value="sine">Sine waves</option></select></label>
+  <button type="button" id="sequence-play">Play approximation</button>
+  <button type="button" id="sequence-stop" disabled>Stop</button>
+  <p><label for="sequence-progress">Playback position</label>
+    <progress id="sequence-progress" max="1" value="0"></progress> <span id="sequence-progress-label">Not playing.</span></p>
+  <p id="sequence-status" role="status"></p>
+  <div style="position:relative;width:100%;max-width:800px">
+    <canvas id="sequence-notes" width="800" height="220" style="display:block;width:100%;background:#f3f6fa" aria-label="Approximate note timeline"></canvas>
+    <div id="sequence-playhead" hidden aria-hidden="true" style="position:absolute;top:0;bottom:0;width:2px;background:#c23616;pointer-events:none"></div>
+  </div>
+  <p id="sequence-timeline-detail"></p>
+  <details><summary>Resolved notes</summary>
+    <p>Keys, velocities and program IDs are from the extracted track. Unsupported
+    or unavailable voices are labeled as a sine fallback.</p>
+    <button type="button" id="sequence-note-prev">Previous</button>
+    <button type="button" id="sequence-note-next">Next</button>
+    <span id="sequence-note-page"></span>
+    <table><thead><tr><th>Track</th><th>Start tick</th><th>End tick</th><th>Key</th><th>Velocity</th><th>Program</th><th>Wave</th></tr></thead><tbody id="sequence-note-rows"></tbody></table>
+  </details>
+  <p>Executed instruction trace:</p>
+  <button type="button" id="sequence-prev">Previous</button>
+  <button type="button" id="sequence-next">Next</button>
+  <span id="sequence-page"></span>
+  <table><thead><tr><th>Track</th><th>Tick</th><th>Source offset</th><th>Instruction and operands</th></tr></thead><tbody id="sequence-rows"></tbody></table>
+</details></section>
+<section id="texts" hidden>
+  <details><summary><h2>Short texts</h2></summary>
+  <label>Language ID <select id="text-language"></select></label>
+  <label><input type="checkbox" id="text-pin"> Pin language ID across text views</label>
+  <label><input type="checkbox" id="text-hide-commands"> Hide commands and controls</label>
+  <span id="text-pin-status" role="status"></span>
+  <label>Entry <select id="text-entry"></select></label>
+  <p id="text-source"></p>
+  <div id="text-preview" class="text-preview"></div>
+</details></section>
+<section id="pointer-texts" hidden>
+  <details><summary><h2>Pointer text catalogs</h2></summary>
+  <p>Browse extracted pointer tables by reader, language and entry. Control bytes
+  are shown as stored; substitutions and formatting are not executed.</p>
+  <label>Reader <select id="pointer-reader"></select></label>
+  <label>Language ID <select id="pointer-language"></select></label>
+  <label><input type="checkbox" id="pointer-pin"> Pin language ID across text views</label>
+  <label><input type="checkbox" id="pointer-hide-commands"> Hide commands and controls</label>
+  <span id="pointer-pin-status" role="status"></span>
+  <label>Entry <select id="pointer-entry"></select></label>
+  <p id="pointer-source"></p>
+  <div id="pointer-preview" class="text-preview"></div>
+</details></section>
+<section id="relative-texts" hidden>
+  <details><summary><h2>Relative text archives</h2></summary>
+  <p>Browse archive programs by reader and language. Commands and operands are
+  labeled as stored; dynamic substitutions and formatting are not executed.</p>
+  <label>Reader <select id="relative-reader"></select></label>
+  <label>Language ID <select id="relative-language"></select></label>
+  <label><input type="checkbox" id="relative-pin"> Pin language ID across text views</label>
+  <label><input type="checkbox" id="relative-hide-commands"> Hide commands and controls</label>
+  <span id="relative-pin-status" role="status"></span>
+  <label>Program <select id="relative-entry"></select></label>
+  <p id="relative-source"></p>
+  <div id="relative-preview" class="text-preview"></div>
+</details></section>
+<section id="script-texts" hidden>
+  <details><summary><h2>Script text archives</h2></summary>
+  <p>Select a physical bank and program. Commands and operands are shown as stored;
+  dynamic names, choices and formatting are not executed.</p>
+  <label>Language ID <select id="script-language"></select></label>
+  <label><input type="checkbox" id="script-pin"> Pin language ID across text views</label>
+  <label><input type="checkbox" id="script-hide-commands"> Hide commands and controls</label>
+  <span id="script-pin-status" role="status"></span>
+  <label>Physical bank <select id="script-bank"></select></label>
+  <label>Program <select id="script-entry"></select></label>
+  <p id="script-source"></p>
+  <div id="script-preview" class="text-preview"></div>
+</details></section>
+<section id="font-atlas" hidden>
+  <details><summary><h2>Font glyph atlas</h2></summary>
+  <p>Browse the complete extracted 16×16 glyph slots. Grayscale represents
+  stored pixel indices; the game's palette and Unicode mapping are not inferred.
+  Width is the stored variable-width metric, independent of the full slot shown.</p>
+  <p id="font-source"></p>
+  <label>Glyph ID <input id="font-id" type="number" min="0" max="65535" step="1" style="width:7rem"></label>
+  <button type="button" id="font-find">Find glyph</button>
+  <label>Page <select id="font-page"></select></label>
+  <button type="button" id="font-prev">Previous page</button>
+  <button type="button" id="font-next">Next page</button>
+  <p id="font-status" role="status"></p>
+  <div id="font-glyphs" class="grid"></div>
+</details></section>
+<section id="name-keyboard" hidden>
+  <details><summary><h2>Name-entry keyboard</h2></summary>
+  <p>Explore the extracted keyboard pages and select cells to compose a local
+  preview. Row widths and codes are stored data; this preview does not apply the
+  game's name rules or translate glyphs to Unicode.</p>
+  <label>Page <select id="keyboard-page"></select></label>
+  <p id="keyboard-source"></p>
+  <div class="keyboard-grid"><table aria-label="Extracted name-entry cells"><tbody id="keyboard-cells"></tbody></table></div>
+  <h3>Preview</h3>
+  <div id="keyboard-preview" class="text-preview"></div>
+  <p id="keyboard-codes" role="status"></p>
+  <button type="button" id="keyboard-backspace">Remove last</button>
+  <button type="button" id="keyboard-clear">Clear preview</button>
+</details></section>
+<section id="sprites" hidden>
+  <details><summary><h2>Sprite tiles</h2></summary>
+  <p>Grayscale represents palette indices. Tile sheets show source order.</p>
+  <label>Sprite ID <select id="sprite-id"></select></label>
+  <label>Frame <select id="sprite-frame"></select></label>
+  <label>Preview ticks per second <input id="sprite-rate" type="number" min="1" max="120" value="60" style="width:6rem"></label>
+  <button type="button" id="sprite-play">Play from selected frame</button>
+  <button type="button" id="sprite-stop" disabled>Stop</button>
+  <label><input type="checkbox" id="sprite-loop"> Loop animation</label>
+  <p id="sprite-animation-status" role="status">Select a sprite to preview its frames.</p>
+  <p>Frames use their stored durations at the chosen preview rate;
+  a zero duration is shown for one preview tick. This is not game timing.</p>
+  <p id="sprite-frame-detail"></p>
+  <label>Unit-base palette <select id="sprite-palette"></select></label>
+  <p id="sprite-pose-detail"></p>
+  <canvas id="sprite-pose" width="256" height="256" style="max-width:100%;image-rendering:pixelated;background:#e4ebf0" aria-label="Assembled sprite pose"></canvas>
+  <label>Pixel block <select id="sprite-block"></select></label>
+  <label>Page <select id="sprite-page"></select></label>
+  <p id="sprite-detail"></p>
+  <canvas id="sprite-tiles" width="512" height="256" style="max-width:100%;image-rendering:pixelated;background:#eee" aria-label="Indexed sprite tiles"></canvas>
+</details></section>
+</main>
+</div>
+<script>
+const data = /* DATA */;
+document.getElementById('info').textContent = data.profile + ' · extractor ' + data.extractor + ' · decoder ' + data.decoder;
+const rows = document.getElementById('rows');
+let directoryFiles = new Map(), openIndexedFile = null, releaseIndexedFile = null;
+const resourceViews = {
+  'graphics.obj-dimensions': 'dimensions', 'graphics.bg-base-palettes': ['palette', 'bg-tiles'],
+  'graphics.bg-main-graphics': 'bg-tiles',
+  'graphics.ui-custom-banks': 'ui-tiles', 'graphics.ui-raw-palettes': 'ui-tiles',
+  'graphics.obj-custom-banks': 'obj-tiles',
+  'gameplay.item-records': 'items', 'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': 'audio',
+  'audio.m4a-directory': 'sequence-audio', 'audio.m4a-sequences': 'sequence-audio',
+  'text.short-strings': 'texts', 'text.catalogs': ['pointer-texts', 'relative-texts'], 'text.script-archives': 'script-texts',
+  'font.complete-bank': ['font-atlas', 'script-texts'], 'text.name-keyboard': 'name-keyboard',
+  'graphics.unit-obj-initial-pose': 'sprites',
+  'graphics.color-mode-palettes': 'sprites'
+};
+function renderRows() {
+  rows.replaceChildren();
+  const query = document.getElementById('search').value.toLowerCase();
+  for (const item of data.resources) {
+    if (![item.id, item.path, item.description].some(value => value.toLowerCase().includes(query))) continue;
+    const row = rows.insertRow();
+    const name = row.insertCell(); name.textContent = item.description + ' (' + item.id + ')';
+    const views = resourceViews[item.id] ? [resourceViews[item.id]].flat() : [];
+    for (const target of views) {
+      if (!item.status.startsWith('Available') || (target === 'script-texts' && !data.script_texts)
+          || (target === 'font-atlas' && !data.font)
+          || (target === 'name-keyboard' && !data.name_keyboard)
+          || (target === 'relative-texts' && !data.relative_texts) || (target === 'sprites' && !data.sprite_pixels)
+          || (target === 'world' && !data.world_nodes)
+          || (target === 'bg-tiles' && !data.bg_graphics)
+          || (target === 'ui-tiles' && !data.ui_graphics)
+          || (target === 'obj-tiles' && !data.obj_graphics)
+          || (target === 'sequence-audio' && (!data.sequences || !data.sequence_directory))) continue;
+      const link = document.createElement('a'); link.href = '#' + target; link.textContent = 'Open view';
+      if (views.length > 1) link.textContent = 'Open ' + ({'pointer-texts': 'pointer texts', 'relative-texts': 'relative archives',
+                                                           'palette': 'palettes', 'bg-tiles': 'background tiles',
+                                                           'font-atlas': 'glyph atlas', 'script-texts': 'script texts'}[target] || 'view');
+      name.append(document.createElement('br'), link);
+    }
+    if (directoryFiles.has(item.path)) {
+      const file = directoryFiles.get(item.path), link = document.createElement('a');
+      link.href = '#file-inspector'; link.textContent = 'Inspect selected file';
+      link.addEventListener('click', () => { if (openIndexedFile) openIndexedFile(file, item.path); });
+      name.append(document.createElement('br'), link);
+    }
+    row.insertCell().textContent = item.path + ' · ' + item.format;
+    row.insertCell().textContent = item.status;
+  }
+}
+document.getElementById('search').addEventListener('input', renderRows);
+const directoryInput = document.getElementById('dataset-directory'), disconnectDirectory = document.getElementById('dataset-disconnect');
+const directoryStatus = document.getElementById('dataset-status');
+directoryInput.addEventListener('change', () => {
+  if (releaseIndexedFile) releaseIndexedFile();
+  directoryFiles = new Map();
+  const ambiguous = new Set(), selected = [...directoryInput.files];
+  for (const file of selected) {
+    const parts = file.webkitRelativePath.split('/');
+    if (parts.length < 2 || parts.some(part => !part || part === '.' || part === '..')) continue;
+    const path = parts.slice(1).join('/');
+    if (ambiguous.has(path)) continue;
+    if (directoryFiles.has(path)) { directoryFiles.delete(path); ambiguous.add(path); }
+    else directoryFiles.set(path, file);
+  }
+  const matches = data.resources.filter(item => directoryFiles.has(item.path)).length;
+  disconnectDirectory.disabled = selected.length === 0;
+  directoryStatus.textContent = selected.length
+    ? selected.length + ' files selected · ' + matches + ' of ' + data.resources.length
+      + ' indexed resources match by path. Contents have not been rechecked.'
+      + (ambiguous.size ? ' ' + ambiguous.size + ' ambiguous paths were omitted.' : '')
+    : 'No dataset folder selected.';
+  renderRows();
+});
+disconnectDirectory.addEventListener('click', () => {
+  if (releaseIndexedFile) releaseIndexedFile();
+  directoryInput.value = ''; directoryFiles = new Map(); disconnectDirectory.disabled = true;
+  directoryStatus.textContent = 'No dataset folder selected.'; renderRows();
+});
+renderRows();
+{
+  const fileInput = document.getElementById('inspect-file');
+  const previous = document.getElementById('inspect-prev'), next = document.getElementById('inspect-next');
+  const status = document.getElementById('inspect-status'), content = document.getElementById('inspect-content');
+  const display = document.getElementById('inspect-mode'), queryMode = document.getElementById('inspect-query-mode');
+  const query = document.getElementById('inspect-query'), find = document.getElementById('inspect-find');
+  const cancel = document.getElementById('inspect-cancel'), findStatus = document.getElementById('inspect-find-status');
+  const tree = document.getElementById('tree'), treeStatus = document.getElementById('tree-status');
+  const treeLoadLarge = document.getElementById('tree-load-large'), treeCancelLarge = document.getElementById('tree-cancel-large');
+  const treePath = document.getElementById('tree-path'), treeRows = document.getElementById('tree-rows');
+  const up = document.getElementById('tree-up'), treePrev = document.getElementById('tree-prev'), treeNext = document.getElementById('tree-next');
+  const chunkSize = 16384;
+  const treeLimit = 8 * 1024 * 1024, pageSize = 100;
+  const largeTreePrototypeEnabled = false;
+  let file = null, fileLabel = '', fromDirectory = false, offset = 0, request = 0, fileGeneration = 0, root, path = [], page = 0;
+  let treeWorker = null;
+  let searchGeneration = 0, lastMatch = -1, lastQuery = '';
+  function cancelSearch() { searchGeneration++; cancel.disabled = true; }
+  async function findNext() {
+    if (!file || !query.value) { findStatus.textContent = 'Select a file and enter text to search.'; return; }
+    const selected = file, text = query.value, searchKey = queryMode.value + '\0' + text;
+    let pattern;
+    if (queryMode.value === 'hex') {
+      const digits = text.replace(/\s/g, '');
+      if (!digits || digits.length % 2 || digits.length > 2048 || !/^[0-9a-f]+$/i.test(digits)) {
+        findStatus.textContent = 'Enter up to 1024 complete hexadecimal bytes.'; return;
+      }
+      pattern = Uint8Array.from(digits.match(/../g), pair => parseInt(pair, 16));
+    } else {
+      if (text.length > 1024) { findStatus.textContent = 'Enter up to 1024 text characters.'; return; }
+      pattern = new TextEncoder().encode(text);
+    }
+    if (searchKey !== lastQuery) lastMatch = -1;
+    lastQuery = searchKey;
+    const generation = ++searchGeneration, prefix = new Uint32Array(pattern.length);
+    for (let i = 1, matched = 0; i < pattern.length; i++) {
+      while (matched && pattern[i] !== pattern[matched]) matched = prefix[matched - 1];
+      if (pattern[i] === pattern[matched]) matched++;
+      prefix[i] = matched;
+    }
+    let position = lastMatch + 1, matched = 0;
+    cancel.disabled = false; findStatus.textContent = 'Searching…';
+    try {
+      while (position < selected.size) {
+        const bytes = new Uint8Array(await selected.slice(position, Math.min(selected.size, position + 262144)).arrayBuffer());
+        if (generation !== searchGeneration) return;
+        if (!bytes.length) throw Error('Unexpected empty file block.');
+        for (let i = 0; i < bytes.length; i++) {
+          while (matched && bytes[i] !== pattern[matched]) matched = prefix[matched - 1];
+          if (bytes[i] === pattern[matched]) matched++;
+          if (matched === pattern.length) {
+            const found = position + i + 1 - pattern.length;
+            offset = Math.max(0, found - 1024);
+            if (display.value === 'hex') offset = Math.floor(offset / 16) * 16;
+            await showChunk({start: found, end: found + pattern.length}, () => generation === searchGeneration);
+            if (generation !== searchGeneration) return;
+            lastMatch = found;
+            cancel.disabled = true;
+            findStatus.textContent = 'Match at byte ' + lastMatch + '. Find next continues after this match.';
+            return;
+          }
+        }
+        position += bytes.length;
+        findStatus.textContent = 'Searching: ' + position + ' of ' + selected.size + ' bytes.';
+      }
+      lastMatch = -1; cancel.disabled = true;
+      findStatus.textContent = 'No further matches. Find next will restart at the beginning.';
+    } catch (error) {
+      if (generation === searchGeneration) { cancel.disabled = true; findStatus.textContent = 'Cannot search file: ' + error.message; }
+    }
+  }
+  function drawTree() {
+    let value = root;
+    for (const key of path) value = value[key];
+    const container = value !== null && typeof value === 'object';
+    const keys = container && !Array.isArray(value) ? Object.keys(value) : null;
+    const count = !container ? 1 : Array.isArray(value) ? value.length : keys.length;
+    const start = page * pageSize, end = Math.min(count, start + pageSize);
+    treePath.textContent = '$' + path.map(key => '[' + JSON.stringify(key) + ']').join('') + ' · ' + count + ' entries';
+    up.disabled = path.length === 0; treePrev.disabled = page === 0; treeNext.disabled = end >= count;
+    treeRows.replaceChildren();
+    for (let i = start; i < end; i++) {
+      const key = !container ? null : keys ? keys[i] : i;
+      const child = container ? value[key] : value;
+      const row = treeRows.insertRow();
+      row.insertCell().textContent = key === null ? '(value)' : String(key);
+      const cell = row.insertCell();
+      if (child !== null && typeof child === 'object') {
+        const button = document.createElement('button'); button.type = 'button';
+        button.textContent = Array.isArray(child) ? 'Array (' + child.length + ')' : 'Object';
+        button.addEventListener('click', () => { path.push(key); page = 0; drawTree(); });
+        cell.append(button);
+      } else {
+        const display = JSON.stringify(child);
+        cell.textContent = display.length > 1024 ? display.slice(0, 1024) + '… (see raw file)' : display;
+      }
+    }
+  }
+  const largeTreeWorkerSource = `
+    let root, path = [], page = 0;
+    const pageSize = 100;
+    function sendPage() {
+      let value = root;
+      for (const key of path) value = value[key];
+      const container = value !== null && typeof value === 'object';
+      const keys = container && !Array.isArray(value) ? Object.keys(value) : null;
+      const count = !container ? 1 : Array.isArray(value) ? value.length : keys.length;
+      const start = page * pageSize, end = Math.min(count, start + pageSize), entries = [];
+      for (let index = start; index < end; index++) {
+        const key = !container ? null : keys ? keys[index] : index;
+        const child = container ? value[key] : value;
+        if (child !== null && typeof child === 'object') {
+          entries.push({key, expandable: true, label: Array.isArray(child) ? 'Array (' + child.length + ')' : 'Object'});
+        } else {
+          const truncated = typeof child === 'string' && child.length > 1024;
+          let label = JSON.stringify(truncated ? child.slice(0, 1024) : child);
+          if (label.length > 1024) label = label.slice(0, 1024) + '… (see raw file)';
+          else if (truncated) label += '… (see raw file)';
+          entries.push({key, expandable: false, label});
+        }
+      }
+      postMessage({type: 'page', path, page, count, end, entries});
+    }
+    self.onmessage = async event => {
+      try {
+        const request = event.data;
+        if (request.type === 'open') { root = JSON.parse(await request.file.text()); path = []; page = 0; }
+        else if (request.type === 'enter') { path.push(request.key); page = 0; }
+        else if (request.type === 'up') { path.pop(); page = 0; }
+        else if (request.type === 'previous') page--;
+        else if (request.type === 'next') page++;
+        else throw Error('Unknown JSON navigation request.');
+        sendPage();
+      } catch (error) { postMessage({type: 'error', message: error.message}); }
+    };
+  `;
+  function stopTreeWorker() {
+    if (treeWorker) treeWorker.terminate();
+    treeWorker = null; treeCancelLarge.hidden = true;
+  }
+  function workerRequest(message) {
+    if (!treeWorker) return;
+    up.disabled = treePrev.disabled = treeNext.disabled = true;
+    treeRows.querySelectorAll('button').forEach(button => { button.disabled = true; });
+    treeCancelLarge.hidden = false; treeStatus.textContent = 'Loading JSON structure…';
+    treeWorker.postMessage(message);
+  }
+  function showWorkerPage(result) {
+    treePath.textContent = '$' + result.path.map(key => '[' + JSON.stringify(key) + ']').join('') + ' · ' + result.count + ' entries';
+    up.disabled = result.path.length === 0; treePrev.disabled = result.page === 0; treeNext.disabled = result.end >= result.count;
+    treeRows.replaceChildren();
+    for (const entry of result.entries) {
+      const row = treeRows.insertRow(); row.insertCell().textContent = entry.key === null ? '(value)' : String(entry.key);
+      const cell = row.insertCell();
+      if (entry.expandable) {
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = entry.label;
+        button.addEventListener('click', () => workerRequest({type: 'enter', key: entry.key})); cell.append(button);
+      } else cell.textContent = entry.label;
+    }
+    tree.hidden = false; treeCancelLarge.hidden = true;
+    treeStatus.textContent = 'JSON structure · select an object or array to explore.';
+  }
+  function startLargeTree() {
+    if (!file || !file.name.toLowerCase().endsWith('.json') || file.size <= treeLimit) return;
+    stopTreeWorker(); tree.hidden = true; treeLoadLarge.hidden = true;
+    const selected = file, generation = fileGeneration;
+    function fail(message) {
+      if (generation !== fileGeneration) return;
+      stopTreeWorker(); tree.hidden = true; treeLoadLarge.hidden = false;
+      treeStatus.textContent = 'Cannot load JSON structure: ' + message + '. Raw paging is still available.';
+    }
+    try {
+      const url = URL.createObjectURL(new Blob([largeTreeWorkerSource], {type: 'text/javascript'}));
+      let worker;
+      try { worker = new Worker(url); } finally { URL.revokeObjectURL(url); }
+      treeWorker = worker;
+      worker.onmessage = event => {
+        if (treeWorker !== worker || generation !== fileGeneration) return;
+        if (event.data.type === 'page') showWorkerPage(event.data);
+        else if (event.data.type === 'error') fail(event.data.message);
+      };
+      worker.onerror = event => { event.preventDefault(); if (treeWorker === worker) fail(event.message || 'Worker failed'); };
+      workerRequest({type: 'open', file: selected});
+    } catch (error) { fail(error.message); }
+  }
+  treeLoadLarge.addEventListener('click', startLargeTree);
+  treeCancelLarge.addEventListener('click', () => {
+    stopTreeWorker(); tree.hidden = true; treeLoadLarge.hidden = false;
+    treeStatus.textContent = 'Structured browsing cancelled. Raw paging is still available.';
+  });
+  async function loadTree(selected, generation) {
+    tree.hidden = true;
+    if (!selected.name.toLowerCase().endsWith('.json')) { treeStatus.textContent = 'Structured browsing is available for JSON; use raw paging for this file.'; return; }
+    if (selected.size > treeLimit) {
+      treeStatus.textContent = largeTreePrototypeEnabled
+        ? 'File exceeds the 8 MiB automatic limit. Loading its structure may require much more memory; raw paging is available.'
+        : 'File exceeds the 8 MiB structured browsing limit; use raw paging.';
+      treeLoadLarge.hidden = !largeTreePrototypeEnabled; return;
+    }
+    treeStatus.textContent = 'Reading JSON structure…';
+    try {
+      const parsed = JSON.parse(await selected.text());
+      if (generation !== fileGeneration) return;
+      root = parsed; path = []; page = 0; drawTree(); tree.hidden = false;
+      treeStatus.textContent = 'JSON structure · select an object or array to explore.';
+    } catch (error) {
+      if (generation === fileGeneration) treeStatus.textContent = 'Cannot parse JSON: ' + error.message + '. Raw paging is still available.';
+    }
+  }
+  async function showChunk(highlight = null, valid = () => true) {
+    const generation = ++request;
+    if (!file) return;
+    const selected = file, label = fileLabel, start = offset, end = Math.min(selected.size, start + chunkSize), mode = display.value;
+    let readStart = mode === 'hex' ? start : Math.max(0, start - 3);
+    let bytes = new Uint8Array(await selected.slice(readStart, end).arrayBuffer());
+    if (mode === 'text') while (bytes.length && (bytes[0] & 0xc0) === 0x80) { bytes = bytes.subarray(1); readStart++; }
+    if (generation !== request || !valid()) return;
+    const begin = highlight ? highlight.start - readStart : -1, finish = highlight ? highlight.end - readStart : -1;
+    if (mode === 'hex') {
+      content.replaceChildren();
+      let plain = '', firstMark = null;
+      for (let i = 0; i < bytes.length; i += 16) {
+        const row = bytes.subarray(i, i + 16), address = (readStart + i).toString(16).padStart(8, '0').toUpperCase();
+        const hex = Array.from(row, value => value.toString(16).padStart(2, '0').toUpperCase()).join(' ').padEnd(47, ' ');
+        const ascii = Array.from(row, value => value >= 32 && value <= 126 ? String.fromCharCode(value) : '.').join('');
+        const line = address + '  ' + hex + '  |' + ascii + '|\n';
+        if (highlight && highlight.start < readStart + i + row.length && highlight.end > readStart + i) {
+          if (plain) { content.append(document.createTextNode(plain)); plain = ''; }
+          const mark = document.createElement('mark'); mark.textContent = line; content.append(mark);
+          if (!firstMark) firstMark = mark;
+        } else plain += line;
+      }
+      if (plain) content.append(document.createTextNode(plain));
+      if (firstMark) firstMark.scrollIntoView({block: 'nearest'});
+    } else if (begin >= 0 && finish <= bytes.length) {
+      const mark = document.createElement('mark');
+      mark.textContent = new TextDecoder('utf-8').decode(bytes.subarray(begin, finish));
+      content.replaceChildren(document.createTextNode(new TextDecoder('utf-8').decode(bytes.subarray(0, begin))), mark,
+        document.createTextNode(new TextDecoder('utf-8').decode(bytes.subarray(finish), {stream: end < selected.size})));
+      mark.scrollIntoView({block: 'nearest'});
+    } else {
+      content.textContent = new TextDecoder('utf-8').decode(bytes, {stream: end < selected.size});
+    }
+    status.textContent = label + ' · bytes ' + start + '–' + end + ' of ' + selected.size;
+    previous.disabled = start === 0;
+    next.disabled = end >= selected.size;
+  }
+  function selectFile(selected, directory = false, label = '') {
+    stopTreeWorker(); treeLoadLarge.hidden = true;
+    file = selected || null; fileLabel = label || (file ? file.name : ''); fromDirectory = directory && !!file;
+    offset = 0; request++; fileGeneration++; root = undefined;
+    cancelSearch(); lastMatch = -1; lastQuery = ''; findStatus.textContent = 'Search starts at the beginning of the selected file.';
+    display.value = file && !/\.(json|toml|txt)$/i.test(file.name) ? 'hex' : 'text';
+    if (file) { showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; }); loadTree(file, fileGeneration); }
+    else { content.textContent = ''; status.textContent = 'No file selected.'; previous.disabled = next.disabled = true; tree.hidden = true; treeStatus.textContent = 'Select a JSON file to explore its structure.'; }
+  }
+  fileInput.addEventListener('change', () => selectFile(fileInput.files[0] || null));
+  openIndexedFile = (selected, label) => {
+    fileInput.value = ''; selectFile(selected, true, label);
+    document.querySelector('#file-inspector > details').open = true;
+  };
+  releaseIndexedFile = () => { if (fromDirectory) selectFile(null); };
+  directoryInput.disabled = false;
+  if (directoryInput.files.length) directoryInput.dispatchEvent(new Event('change'));
+  else directoryStatus.textContent = 'No dataset folder selected.';
+  function cancelPendingSearch() { if (!cancel.disabled) { cancelSearch(); findStatus.textContent = 'Search cancelled.'; } }
+  previous.addEventListener('click', () => { cancelPendingSearch(); offset = Math.max(0, offset - chunkSize); showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; }); });
+  next.addEventListener('click', () => { cancelPendingSearch(); offset += chunkSize; showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; }); });
+  up.addEventListener('click', () => { if (treeWorker) workerRequest({type: 'up'}); else { path.pop(); page = 0; drawTree(); } });
+  treePrev.addEventListener('click', () => { if (treeWorker) workerRequest({type: 'previous'}); else { page--; drawTree(); } });
+  treeNext.addEventListener('click', () => { if (treeWorker) workerRequest({type: 'next'}); else { page++; drawTree(); } });
+  find.addEventListener('click', findNext);
+  query.addEventListener('input', () => { cancelSearch(); lastMatch = -1; lastQuery = ''; findStatus.textContent = 'Search starts at the beginning of the selected file.'; });
+  display.addEventListener('change', () => {
+    cancelPendingSearch();
+    if (display.value === 'hex') offset = Math.floor(offset / 16) * 16;
+    if (file) showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; });
+  });
+  queryMode.addEventListener('change', () => {
+    cancelSearch(); lastMatch = -1; lastQuery = '';
+    query.placeholder = queryMode.value === 'hex' ? 'Example: 00 A1 FF' : 'Case-sensitive text';
+    findStatus.textContent = 'Search starts at the beginning of the selected file.';
+    if (queryMode.value === 'hex' && display.value !== 'hex') {
+      display.value = 'hex'; offset = Math.floor(offset / 16) * 16;
+      if (file) showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; });
+    }
+  });
+  cancel.addEventListener('click', () => { cancelSearch(); findStatus.textContent = 'Search cancelled.'; });
+}
+if (data.dimensions) {
+  document.getElementById('dimensions').hidden = false;
+  document.getElementById('dimensions-source').textContent = data.dimensions.path;
+  const table = document.getElementById('dimensions-rows');
+  data.dimensions.entries.forEach((entry, index) => {
+    const row = table.insertRow();
+    for (const value of [Math.floor(index / 4), index % 4, entry.width + ' px', entry.height + ' px']) {
+      row.insertCell().textContent = value;
+    }
+  });
+}
+if (data.items) {
+  document.getElementById('items').hidden = false;
+  document.getElementById('items-source').textContent = data.items.path;
+  const selector = document.getElementById('item-id');
+  const fields = document.getElementById('item-fields');
+  data.items.records.forEach((record, index) => selector.add(new Option(index, index)));
+  function drawItem() {
+    fields.replaceChildren();
+    const record = data.items.records[Number(selector.value)];
+    for (const [name, start, step, type] of [
+      ['halfwords_00_06', 0, 2, 'unsigned 16-bit'],
+      ['bytes_08_0f', 8, 1, 'unsigned 8-bit'],
+      ['signed_10_17', 16, 1, 'signed 8-bit'],
+      ['bytes_18_1f', 24, 1, 'unsigned 8-bit']
+    ]) {
+      record[name].forEach((value, index) => {
+        const row = fields.insertRow();
+        for (const cell of ['0x' + (start + index * step).toString(16).padStart(2, '0').toUpperCase(), type, value]) {
+          row.insertCell().textContent = cell;
+        }
+      });
+    }
+  }
+  selector.addEventListener('change', drawItem);
+  drawItem();
+}
+if (data.world_nodes) {
+  document.getElementById('world').hidden = false;
+  const plot = document.getElementById('world-plot');
+  const links = document.getElementById('world-links');
+  const extent = Math.max(1, ...data.world_nodes.nodes.flatMap(node => [node.x_tile, node.y_tile]));
+  const roads = new Map(), roadLines = new Map();
+  const roadSelect = document.getElementById('world-road-id'), roadStep = document.getElementById('world-road-step');
+  const roadPlay = document.getElementById('world-road-play'), roadStop = document.getElementById('world-road-stop');
+  const roadDetail = document.getElementById('world-road-detail'), overlay = document.getElementById('world-road-overlay');
+  const ns = 'http://www.w3.org/2000/svg', coordinate = value => 4 + 92 * value / extent;
+  let roadTimer = null, selectedRoad = null, marker = null;
+  function stopRoad() {
+    if (roadTimer !== null) clearInterval(roadTimer);
+    roadTimer = null; roadStop.disabled = true;
+  }
+  if (data.world_roads) {
+    data.world_nodes.nodes.forEach(node => node.links.forEach(link => {
+      if (!link.path_id || link.neighbor >= data.world_nodes.nodes.length) return;
+      const path = data.world_roads.paths[link.path_id - 1];
+      if (!path || !path.points.length) return;
+      const low = Math.min(node.index, link.neighbor), high = Math.max(node.index, link.neighbor);
+      const existing = roads.get(link.path_id);
+      if (!existing) roads.set(link.path_id, {id: link.path_id, low, high, path, ambiguous: false});
+      else if (existing.low !== low || existing.high !== high) existing.ambiguous = true;
+    }));
+    [...roads.values()].filter(road => road.ambiguous).forEach(road => roads.delete(road.id));
+    [...roads.values()].sort((a, b) => a.id - b.id).forEach(road => {
+      const origin = data.world_nodes.nodes[road.low], line = document.createElementNS(ns, 'polyline');
+      const points = [[origin.x_tile, origin.y_tile], ...road.path.points.map(point => [origin.x_tile + point.x / 8, origin.y_tile + point.y / 8])];
+      line.setAttribute('points', points.map(([x, y]) => coordinate(x) + ',' + coordinate(y)).join(' '));
+      line.setAttribute('fill', 'none'); line.setAttribute('stroke', '#8098a6'); line.setAttribute('stroke-width', '1.5');
+      line.setAttribute('vector-effect', 'non-scaling-stroke'); line.setAttribute('data-road-id', road.id);
+      overlay.append(line); roadLines.set(road.id, line); roadSelect.add(new Option(road.id, road.id));
+    });
+    if (roads.size) {
+      document.getElementById('world-roads-controls').hidden = false;
+      marker = document.createElementNS(ns, 'circle'); marker.setAttribute('r', '0.85');
+      marker.setAttribute('fill', '#bd561e'); overlay.append(marker);
+    }
+  }
+  function drawRoadStep() {
+    if (!selectedRoad) return;
+    const index = Number(roadStep.value), point = selectedRoad.path.points[index];
+    const origin = data.world_nodes.nodes[selectedRoad.low];
+    marker.setAttribute('cx', coordinate(origin.x_tile + point.x / 8));
+    marker.setAttribute('cy', coordinate(origin.y_tile + point.y / 8));
+    roadDetail.textContent = data.world_roads.path + ' · road ' + selectedRoad.id + ' · nodes ' + selectedRoad.low + '–' + selectedRoad.high
+      + ' · sample ' + index + ' of ' + selectedRoad.path.points.length + ' · offset (' + point.x + ', ' + point.y + ') px';
+  }
+  function chooseRoad() {
+    stopRoad(); selectedRoad = roads.get(Number(roadSelect.value));
+    roadLines.forEach((line, id) => line.setAttribute('stroke', selectedRoad && id === selectedRoad.id ? '#bd561e' : '#8098a6'));
+    if (!selectedRoad) return;
+    roadStep.max = selectedRoad.path.points.length - 1; roadStep.value = 0;
+    roadPlay.disabled = selectedRoad.path.points.length < 2; drawRoadStep();
+  }
+  roadSelect.addEventListener('change', chooseRoad);
+  roadStep.addEventListener('input', () => { stopRoad(); drawRoadStep(); });
+  roadPlay.addEventListener('click', () => {
+    if (!selectedRoad || selectedRoad.path.points.length < 2) return;
+    stopRoad();
+    if (Number(roadStep.value) >= Number(roadStep.max)) { roadStep.value = 0; drawRoadStep(); }
+    roadStop.disabled = false;
+    roadTimer = setInterval(() => {
+      if (Number(roadStep.value) >= Number(roadStep.max)) { stopRoad(); return; }
+      roadStep.value = Number(roadStep.value) + 1; drawRoadStep();
+    }, 100);
+  });
+  roadStop.addEventListener('click', stopRoad);
+  document.querySelector('#world > details').addEventListener('toggle', event => { if (!event.target.open) stopRoad(); });
+  if (roads.size) chooseRoad();
+  function selectNode(node) {
+    document.getElementById('world-detail').textContent = data.world_nodes.path + ' · node ' + node.index + ' · tile (' + node.x_tile + ', ' + node.y_tile + ')';
+    links.replaceChildren();
+    node.links.forEach((link, slot) => {
+      const row = links.insertRow();
+      row.insertCell().textContent = slot; row.insertCell().textContent = link.neighbor;
+      const cell = row.insertCell();
+      if (roads.has(link.path_id)) {
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = link.path_id;
+        button.setAttribute('aria-label', 'Show road ' + link.path_id);
+        button.addEventListener('click', () => { roadSelect.value = String(link.path_id); chooseRoad(); });
+        cell.append(button);
+      } else cell.textContent = link.path_id;
+    });
+  }
+  data.world_nodes.nodes.forEach(node => {
+    const button = document.createElement('button');
+    button.type = 'button'; button.textContent = node.index;
+    button.style.left = (4 + 92 * node.x_tile / extent) + '%';
+    button.style.top = (4 + 92 * node.y_tile / extent) + '%';
+    button.setAttribute('aria-label', 'Node ' + node.index);
+    button.addEventListener('click', () => selectNode(node));
+    plot.append(button);
+  });
+  selectNode(data.world_nodes.nodes[0]);
+}
+if (data.sprite_pixels) {
+  document.getElementById('sprites').hidden = false;
+  const block = document.getElementById('sprite-block'), page = document.getElementById('sprite-page');
+  const sprite = document.getElementById('sprite-id'), frame = document.getElementById('sprite-frame');
+  const palette = document.getElementById('sprite-palette'), pose = document.getElementById('sprite-pose');
+  const canvas = document.getElementById('sprite-tiles'), context = canvas.getContext('2d');
+  const rate = document.getElementById('sprite-rate'), play = document.getElementById('sprite-play');
+  const loop = document.getElementById('sprite-loop');
+  const stop = document.getElementById('sprite-stop'), animationStatus = document.getElementById('sprite-animation-status');
+  const sizes = [[[8,8],[16,16],[32,32],[64,64]], [[16,8],[32,8],[32,16],[64,32]], [[8,16],[8,32],[16,32],[32,64]]];
+  let timer = null, playing = false, bounds = null;
+  function stopSprite() {
+    playing = false;
+    if (timer !== null) clearTimeout(timer);
+    timer = null; stop.disabled = true;
+  }
+  function sequenceBounds(frames) {
+    const objects = frames.flatMap(item => item.objects).filter(object =>
+      Number.isInteger(object.shape) && object.shape >= 0 && object.shape < 3 &&
+      Number.isInteger(object.size) && object.size >= 0 && object.size < 4 &&
+      Number.isInteger(object.x) && Number.isInteger(object.y));
+    if (!objects.length) return null;
+    const minX = Math.min(...objects.map(object => object.x)), minY = Math.min(...objects.map(object => object.y));
+    const maxX = Math.max(...objects.map(object => object.x + sizes[object.shape][object.size][0]));
+    const maxY = Math.max(...objects.map(object => object.y + sizes[object.shape][object.size][1]));
+    return maxX - minX <= 512 && maxY - minY <= 512 ? {minX, minY, maxX, maxY} : null;
+  }
+  data.sprite_pixels.blocks.forEach((item, index) => block.add(new Option('0x' + item.source_offset.toString(16).toUpperCase(), index)));
+  data.sprite_pixels.sprites.forEach((item, index) => sprite.add(new Option(item.id, index)));
+  (data.unit_palettes || []).forEach((item, index) => palette.add(new Option('Mode ' + item.variant + ', bank ' + item.bank, index)));
+  function drawSprites() {
+    const selected = data.sprite_pixels.blocks[Number(block.value)];
+    const start = Number(page.value) * 128;
+    document.getElementById('sprite-detail').textContent = data.sprite_pixels.path + ' · source 0x' + selected.source_offset.toString(16).toUpperCase() + ' · tiles ' + start + '–' + (Math.min(start + 128, selected.tiles.length) - 1);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    selected.tiles.slice(start, start + 128).forEach((tile, index) => {
+      const left = (index % 16) * 32, top = Math.floor(index / 16) * 32;
+      tile.indices.forEach((line, y) => line.forEach((value, x) => {
+        const shade = value * 17;
+        context.fillStyle = 'rgb(' + shade + ',' + shade + ',' + shade + ')';
+        context.fillRect(left + x * 4, top + y * 4, 4, 4);
+      }));
+    });
+  }
+  function spritePages() {
+    page.replaceChildren();
+    const count = Math.ceil(data.sprite_pixels.blocks[Number(block.value)].tiles.length / 128);
+    for (let index = 0; index < count; index++) page.add(new Option(index + 1, index));
+    drawSprites();
+  }
+  function selectFrame() {
+    const selected = data.sprite_pixels.sprites[Number(sprite.value)].frames[Number(frame.value)];
+    document.getElementById('sprite-frame-detail').textContent = 'Object list 0x' + selected.object_source.toString(16).toUpperCase() + ' · ' + selected.object_count + ' objects · duration ' + selected.duration;
+    block.value = selected.block;
+    spritePages();
+    drawPose(selected);
+  }
+  function drawPose(selected) {
+    const ctx = pose.getContext('2d');
+    ctx.clearRect(0, 0, pose.width, pose.height);
+    const description = document.getElementById('sprite-pose-detail');
+    if (!data.unit_palettes || !data.unit_palettes.length) {
+      description.textContent = 'Unit-base palettes are unavailable in this dataset.';
+      return;
+    }
+    const tiles = data.sprite_pixels.blocks[selected.block].tiles;
+    const colors = data.unit_palettes[Number(palette.value)].colors;
+    const objects = selected.objects;
+    if (!bounds || !objects.length || objects.some(object => !Number.isInteger(object.shape) || object.shape < 0 || object.shape > 2 ||
+      !Number.isInteger(object.size) || object.size < 0 || object.size > 3 || !Number.isInteger(object.x) || !Number.isInteger(object.y) ||
+      !Number.isInteger(object.tile) || object.tile < 0 || object.affine_mode || object.color_256 || object.object_mode || object.mosaic ||
+      object.tile + sizes[object.shape][object.size][0] * sizes[object.shape][object.size][1] / 64 > tiles.length)) {
+      description.textContent = 'This frame uses object attributes or tile ranges that this preview does not support.';
+      return;
+    }
+    description.textContent = 'Preview with the selected unit-base palette and a shared frame origin. Live palette overrides are not applied.';
+    const {minX, minY, maxX, maxY} = bounds;
+    pose.width = Math.max(1, maxX - minX) * 3;
+    pose.height = Math.max(1, maxY - minY) * 3;
+    for (const object of [...objects].reverse()) {
+      const [width, height] = sizes[object.shape][object.size];
+      for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        const sx = object.transform & 8 ? width - 1 - x : x;
+        const sy = object.transform & 16 ? height - 1 - y : y;
+        const tile = tiles[object.tile + Math.floor(sy / 8) * (width / 8) + Math.floor(sx / 8)];
+        const index = tile.indices[sy % 8][sx % 8];
+        if (!index) continue;
+        const color = colors[index];
+        const rgb = [0,5,10].map(shift => Math.floor(((color >> shift) & 31) * 255 / 31));
+        ctx.fillStyle = 'rgb(' + rgb.join(',') + ')';
+        ctx.fillRect((object.x + x - minX) * 3, (object.y + y - minY) * 3, 3, 3);
+      }
+    }
+  }
+  function selectSprite(preferredFrame = 0) {
+    frame.replaceChildren();
+    const frames = data.sprite_pixels.sprites[Number(sprite.value)].frames;
+    frames.forEach((item, index) => frame.add(new Option(index, index)));
+    bounds = sequenceBounds(frames); play.disabled = frames.length === 0;
+    if (frames.length) { frame.value = String(Math.min(preferredFrame, frames.length - 1)); selectFrame(); }
+  }
+  function scheduleSprite() {
+    if (!playing) return;
+    const selected = data.sprite_pixels.sprites[Number(sprite.value)].frames[Number(frame.value)];
+    const ticks = Number(rate.value);
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 120) {
+      stopSprite(); animationStatus.textContent = 'Choose a preview rate from 1 to 120 ticks per second.'; return;
+    }
+    timer = setTimeout(() => {
+      if (!playing) return;
+      const next = Number(frame.value) + 1;
+      if (next >= frame.options.length && !loop.checked) {
+        stopSprite(); animationStatus.textContent = 'Frame preview finished.'; return;
+      }
+      frame.value = String(next % frame.options.length);
+      selectFrame(); scheduleSprite();
+    }, Math.max(1, selected.duration) * 1000 / ticks);
+  }
+  play.addEventListener('click', () => {
+    stopSprite();
+    if (!frame.options.length) return;
+    playing = true; stop.disabled = false; animationStatus.textContent = 'Playing the selected frame sequence.';
+    scheduleSprite();
+  });
+  stop.addEventListener('click', () => { stopSprite(); animationStatus.textContent = 'Frame preview stopped.'; });
+  rate.addEventListener('input', () => { if (playing) { if (timer !== null) clearTimeout(timer); timer = null; scheduleSprite(); } });
+  document.querySelector('#sprites > details').addEventListener('toggle', event => {
+    if (!event.target.open && playing) { stopSprite(); animationStatus.textContent = 'Frame preview stopped.'; }
+  });
+  block.addEventListener('change', () => { stopSprite(); spritePages(); }); page.addEventListener('change', drawSprites);
+  sprite.addEventListener('change', () => {
+    const wasPlaying = playing, selectedFrame = Number(frame.value) || 0;
+    stopSprite(); selectSprite(selectedFrame);
+    if (wasPlaying && frame.options.length) {
+      playing = true; stop.disabled = false; animationStatus.textContent = 'Playing the selected frame sequence.'; scheduleSprite();
+    } else animationStatus.textContent = 'Select Play to preview the frames.';
+  });
+  frame.addEventListener('change', () => {
+    selectFrame();
+    if (playing) { if (timer !== null) clearTimeout(timer); timer = null; scheduleSprite(); }
+    else animationStatus.textContent = 'Select Play to preview the frames.';
+  });
+  palette.addEventListener('change', selectFrame);
+  if (data.sprite_pixels.sprites.length) selectSprite(); else spritePages();
+}
+function appendTextGlyph(preview, glyph, index) {
+  if (!glyph || !glyph.width) {
+    const label = document.createElement('span');
+    label.textContent = '[glyph ' + index + (glyph ? ', width 0' : ', unavailable') + ']';
+    preview.append(label); return;
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = glyph.width; canvas.height = 16;
+  canvas.style.width = (glyph.width * 3) + 'px';
+  canvas.title = 'Glyph ' + glyph.index + ', width ' + glyph.width;
+  canvas.setAttribute('aria-label', canvas.title);
+  const context = canvas.getContext('2d');
+  const shades = ['transparent', '#ffffff', '#707070', '#b8b8b8'];
+  for (let y = 0; y < 16; y++) for (let x = 0; x < glyph.width; x++) {
+    const tile = Math.floor(x / 8) * 2 + Math.floor(y / 8);
+    const word = glyph.tile_words[tile * 8 + y % 8];
+    const color = (word >>> ((x % 8) * 4)) & 15;
+    if (color) { context.fillStyle = shades[color] || '#ffffff'; context.fillRect(x, y, 1, 1); }
+  }
+  preview.append(canvas);
+}
+if (data.font) {
+  document.getElementById('font-atlas').hidden = false;
+  const glyphs = data.font.glyphs, pageSize = 64;
+  const page = document.getElementById('font-page'), input = document.getElementById('font-id');
+  const status = document.getElementById('font-status'), grid = document.getElementById('font-glyphs');
+  const previous = document.getElementById('font-prev'), next = document.getElementById('font-next');
+  const positions = new Map(glyphs.map((glyph, index) => [glyph.index, index]));
+  let selected = null;
+  document.getElementById('font-source').textContent = data.font.path + ' · ' + glyphs.length + ' extracted glyph slots';
+  for (let start = 0; start < glyphs.length; start += pageSize) {
+    const end = Math.min(start + pageSize, glyphs.length) - 1;
+    page.add(new Option('Page ' + (Math.floor(start / pageSize) + 1) + ' · IDs ' + glyphs[start].index + '–' + glyphs[end].index,
+                        Math.floor(start / pageSize)));
+  }
+  function drawFont() {
+    const current = Number(page.value), start = current * pageSize, end = Math.min(start + pageSize, glyphs.length);
+    grid.replaceChildren();
+    for (const glyph of glyphs.slice(start, end)) {
+      const card = document.createElement('div'), label = document.createElement('div'), canvas = document.createElement('canvas');
+      card.className = 'swatch'; label.className = 'detail';
+      if (glyph.index === selected) card.style.outline = '3px solid #155d7a';
+      label.textContent = 'Glyph ' + glyph.index + ' · width ' + glyph.width;
+      canvas.width = 16; canvas.height = 16;
+      canvas.style.cssText = 'width:64px;height:64px;image-rendering:pixelated;background:#182132;margin:.5rem';
+      canvas.setAttribute('aria-label', 'Full 16 by 16 slot for glyph ' + glyph.index);
+      const context = canvas.getContext('2d'), shades = ['', '#ffffff', '#707070', '#b8b8b8'];
+      for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) {
+        const tile = Math.floor(x / 8) * 2 + Math.floor(y / 8);
+        const color = (glyph.tile_words[tile * 8 + y % 8] >>> ((x % 8) * 4)) & 15;
+        if (color) {
+          const shade = color < shades.length ? shades[color] : 'rgb(' + (255 - color * 12) + ',' + (255 - color * 12) + ',' + (255 - color * 12) + ')';
+          context.fillStyle = shade; context.fillRect(x, y, 1, 1);
+        }
+      }
+      card.append(canvas, label); grid.append(card);
+    }
+    previous.disabled = current === 0; next.disabled = end === glyphs.length;
+    status.textContent = 'Showing ' + (start + 1) + '–' + end + ' of ' + glyphs.length + ' slots.'
+      + (selected === null ? '' : ' Selected glyph ' + selected + '.');
+  }
+  function findGlyph() {
+    const id = Number(input.value), position = input.value === '' ? undefined : positions.get(id);
+    if (!Number.isInteger(id) || position === undefined) {
+      status.textContent = 'Glyph ID not found in this font bank.'; return;
+    }
+    selected = id; page.value = String(Math.floor(position / pageSize)); drawFont();
+  }
+  document.getElementById('font-find').addEventListener('click', findGlyph);
+  input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); findGlyph(); } });
+  page.addEventListener('change', () => { selected = null; drawFont(); });
+  previous.addEventListener('click', () => { selected = null; page.value = String(Number(page.value) - 1); drawFont(); });
+  next.addEventListener('click', () => { selected = null; page.value = String(Number(page.value) + 1); drawFont(); });
+  drawFont();
+}
+if (data.name_keyboard) {
+  document.getElementById('name-keyboard').hidden = false;
+  const page = document.getElementById('keyboard-page'), cells = document.getElementById('keyboard-cells');
+  const preview = document.getElementById('keyboard-preview'), codes = document.getElementById('keyboard-codes');
+  const backspace = document.getElementById('keyboard-backspace'), clear = document.getElementById('keyboard-clear');
+  const glyphs = new Map((data.font ? data.font.glyphs : []).map(glyph => [glyph.index, glyph]));
+  const selected = [], hex = value => '0x' + value.toString(16).toUpperCase().padStart(4, '0');
+  function appendCode(container, code) {
+    if (code >= 0x8000) {
+      const id = code & 0x7fff; appendTextGlyph(container, glyphs.get(id), id);
+    } else {
+      const label = document.createElement('span');
+      label.textContent = code === 0x4073 ? '[space]' : '[code ' + hex(code) + ']';
+      container.append(label);
+    }
+  }
+  function drawKeyboardPreview(message) {
+    preview.replaceChildren(); selected.forEach(code => appendCode(preview, code));
+    codes.textContent = (selected.length ? 'Codes: ' + selected.map(hex).join(' ') : 'Select cells to compose a preview.')
+      + (message ? ' ' + message : '');
+    backspace.disabled = selected.length === 0; clear.disabled = selected.length === 0;
+  }
+  function drawKeyboard() {
+    const selectedPage = data.name_keyboard.pages[Number(page.value)];
+    document.getElementById('keyboard-source').textContent = data.name_keyboard.path + ' · program ' + hex(selectedPage.source_offset);
+    cells.replaceChildren();
+    for (let row = 0; row < 6; row++) {
+      const tr = cells.insertRow();
+      for (let column = 0; column < 10; column++) {
+        const td = tr.insertCell();
+        if (column >= selectedPage.row_widths[row]) { td.textContent = '—'; continue; }
+        const code = selectedPage.cells[row * 10 + column], button = document.createElement('button');
+        const description = code >= 0x8000 ? 'Glyph ' + (code & 0x7fff) : code === 0x4073 ? 'Space' : 'Code ' + hex(code);
+        button.type = 'button'; button.setAttribute('aria-label', description + ', ' + hex(code));
+        button.title = description + ' · ' + hex(code);
+        appendCode(button, code);
+        const label = document.createElement('small'); label.textContent = hex(code); button.append(label);
+        button.addEventListener('click', () => {
+          if (selected.length >= 64) { drawKeyboardPreview('Preview is limited to 64 cells.'); return; }
+          selected.push(code); drawKeyboardPreview();
+        });
+        td.append(button);
+      }
+    }
+  }
+  data.name_keyboard.pages.forEach((_, index) => page.add(new Option('Page ' + (index + 1), index)));
+  page.addEventListener('change', drawKeyboard);
+  backspace.addEventListener('click', () => { selected.pop(); drawKeyboardPreview(); });
+  clear.addEventListener('click', () => { selected.length = 0; drawKeyboardPreview(); });
+  drawKeyboard(); drawKeyboardPreview();
+}
+const textSettings = {pinned: false, languageId: null, hideCommands: false}, textViews = [];
+let syncingTextLanguages = false;
+function applyPinnedTextLanguage(select) {
+  const view = textViews.find(item => item.select === select);
+  if (!view) return false;
+  if (!textSettings.pinned) { view.status.textContent = ''; return false; }
+  const option = [...select.options].find(item => item.textContent === textSettings.languageId);
+  if (!option) {
+    view.status.textContent = 'Pinned language ID ' + textSettings.languageId + ' is unavailable here.';
+    return false;
+  }
+  view.status.textContent = '';
+  if (select.value === option.value) return false;
+  select.value = option.value; return true;
+}
+function syncPinnedTextLanguages() {
+  syncingTextLanguages = true;
+  try {
+    textViews.forEach(view => {
+      view.pin.checked = textSettings.pinned;
+      if (applyPinnedTextLanguage(view.select)) view.select.dispatchEvent(new Event('change'));
+    });
+  } finally { syncingTextLanguages = false; }
+}
+function registerTextSettings(prefix, select, redraw) {
+  const view = {select, redraw, pin: document.getElementById(prefix + '-pin'),
+                hide: document.getElementById(prefix + '-hide-commands'), status: document.getElementById(prefix + '-pin-status')};
+  textViews.push(view);
+  view.pin.addEventListener('change', () => {
+    textSettings.pinned = view.pin.checked;
+    textSettings.languageId = textSettings.pinned && select.selectedOptions.length ? select.selectedOptions[0].textContent : null;
+    syncPinnedTextLanguages();
+  });
+  view.hide.addEventListener('change', () => {
+    textSettings.hideCommands = view.hide.checked;
+    textViews.forEach(item => { item.hide.checked = textSettings.hideCommands; item.redraw(); });
+  });
+  select.addEventListener('change', () => {
+    if (!textSettings.pinned || syncingTextLanguages || !select.selectedOptions.length) return;
+    textSettings.languageId = select.selectedOptions[0].textContent; syncPinnedTextLanguages();
+  });
+}
+function appendTextProgram(preview, program, glyphs) {
+  program.units.forEach(unit => {
+    if (typeof unit === 'number') {
+      appendTextGlyph(preview, glyphs.get(unit), unit);
+    } else if (!textSettings.hideCommands) {
+      const label = document.createElement('span');
+      label.textContent = '[command ' + unit.map(value => '0x' + value.toString(16).padStart(2, '0').toUpperCase()).join(' ') + ']';
+      preview.append(label);
+    }
+  });
+}
+if (data.short_texts) {
+  document.getElementById('texts').hidden = false;
+  const language = document.getElementById('text-language'), entry = document.getElementById('text-entry');
+  const preview = document.getElementById('text-preview');
+  const glyphs = new Map(data.short_texts.glyphs.map(glyph => [glyph.index, glyph]));
+  data.short_texts.languages.forEach((item, index) => language.add(new Option(item.language_id, index)));
+  function drawText() {
+    preview.replaceChildren();
+    const textIndex = data.short_texts.languages[Number(language.value)].entries[Number(entry.value)];
+    const text = data.short_texts.strings[textIndex];
+    document.getElementById('text-source').textContent = data.short_texts.path + ' · string ' + textIndex + ' · ' + text.encoding;
+    text.units.forEach(unit => {
+      if (unit.kind === 'glyph') {
+        appendTextGlyph(preview, glyphs.get(unit.index), unit.index);
+      } else if (!textSettings.hideCommands) {
+        const label = document.createElement('span');
+        label.textContent = '[control 0x' + unit.value.toString(16).padStart(2, '0').toUpperCase() + ']';
+        preview.append(label);
+      }
+    });
+  }
+  function textEntries() {
+    entry.replaceChildren();
+    data.short_texts.languages[Number(language.value)].entries.forEach((item, index) => entry.add(new Option(index, index)));
+    drawText();
+  }
+  language.addEventListener('change', textEntries); entry.addEventListener('change', drawText);
+  registerTextSettings('text', language, drawText); textEntries();
+}
+if (data.pointer_texts) {
+  document.getElementById('pointer-texts').hidden = false;
+  const reader = document.getElementById('pointer-reader'), language = document.getElementById('pointer-language');
+  const entry = document.getElementById('pointer-entry'), preview = document.getElementById('pointer-preview');
+  const glyphs = new Map(data.pointer_texts.glyphs.map(glyph => [glyph.index, glyph]));
+  const hex = value => '0x' + value.toString(16).toUpperCase();
+  data.pointer_texts.catalogs.forEach((catalog, index) => reader.add(new Option(hex(catalog.reader), index)));
+  function drawPointerText() {
+    const catalog = data.pointer_texts.catalogs[Number(reader.value)];
+    const table = catalog.languages[Number(language.value)];
+    const textIndex = table.entries[Number(entry.value)], text = data.pointer_texts.strings[textIndex];
+    document.getElementById('pointer-source').textContent = data.pointer_texts.path + ' · table ' + hex(table.source_offset)
+      + ' · string ' + textIndex + ' at ' + hex(text.source_offset) + ' · ' + text.encoding;
+    preview.replaceChildren();
+    text.units.forEach(unit => {
+      if (typeof unit === 'number') {
+        appendTextGlyph(preview, glyphs.get(unit), unit);
+      } else if (!textSettings.hideCommands) {
+        const label = document.createElement('span');
+        label.textContent = '[control 0x' + unit[0].toString(16).padStart(2, '0').toUpperCase() + ']';
+        preview.append(label);
+      }
+    });
+  }
+  function pointerEntries() {
+    entry.replaceChildren();
+    data.pointer_texts.catalogs[Number(reader.value)].languages[Number(language.value)].entries
+      .forEach((_, index) => entry.add(new Option(index, index)));
+    drawPointerText();
+  }
+  function pointerLanguages() {
+    language.replaceChildren();
+    data.pointer_texts.catalogs[Number(reader.value)].languages.forEach((_, index) => language.add(new Option(index, index)));
+    applyPinnedTextLanguage(language);
+    pointerEntries();
+  }
+  reader.addEventListener('change', pointerLanguages); language.addEventListener('change', pointerEntries);
+  entry.addEventListener('change', drawPointerText); registerTextSettings('pointer', language, drawPointerText); pointerLanguages();
+}
+if (data.relative_texts) {
+  document.getElementById('relative-texts').hidden = false;
+  const reader = document.getElementById('relative-reader'), language = document.getElementById('relative-language');
+  const entry = document.getElementById('relative-entry'), preview = document.getElementById('relative-preview');
+  const glyphs = new Map(data.relative_texts.glyphs.map(glyph => [glyph.index, glyph]));
+  const hex = value => '0x' + value.toString(16).toUpperCase();
+  data.relative_texts.catalogs.forEach((catalog, index) => reader.add(new Option(hex(catalog.reader), index)));
+  function drawRelativeText() {
+    const archive = data.relative_texts.catalogs[Number(reader.value)].languages[Number(language.value)];
+    const program = archive.programs[Number(entry.value)];
+    document.getElementById('relative-source').textContent = data.relative_texts.path + ' · archive ' + hex(archive.source_offset)
+      + ' · program ' + hex(program.source_offset) + ' · header ' + hex(program.header);
+    preview.replaceChildren(); appendTextProgram(preview, program, glyphs);
+  }
+  function relativeEntries() {
+    entry.replaceChildren();
+    data.relative_texts.catalogs[Number(reader.value)].languages[Number(language.value)].programs
+      .forEach((_, index) => entry.add(new Option(index, index)));
+    drawRelativeText();
+  }
+  function relativeLanguages() {
+    language.replaceChildren();
+    data.relative_texts.catalogs[Number(reader.value)].languages.forEach((_, index) => language.add(new Option(index, index)));
+    applyPinnedTextLanguage(language);
+    relativeEntries();
+  }
+  reader.addEventListener('change', relativeLanguages); language.addEventListener('change', relativeEntries);
+  entry.addEventListener('change', drawRelativeText); registerTextSettings('relative', language, drawRelativeText); relativeLanguages();
+}
+if (data.script_texts) {
+  document.getElementById('script-texts').hidden = false;
+  const language = document.getElementById('script-language'), bank = document.getElementById('script-bank');
+  const entry = document.getElementById('script-entry'), preview = document.getElementById('script-preview');
+  const glyphs = new Map(data.script_texts.glyphs.map(glyph => [glyph.index, glyph]));
+  const hex = value => '0x' + value.toString(16).toUpperCase();
+  data.script_texts.languages.forEach((item, index) => language.add(new Option(item.id, index)));
+  function drawScriptText() {
+    const selectedBank = data.script_texts.languages[Number(language.value)].banks[Number(bank.value)];
+    const program = selectedBank.programs[Number(entry.value)];
+    document.getElementById('script-source').textContent = data.script_texts.path + ' · bank ' + hex(selectedBank.source_offset)
+      + ' · program ' + hex(program.source_offset) + ' · header ' + hex(program.header);
+    preview.replaceChildren();
+    appendTextProgram(preview, program, glyphs);
+  }
+  function scriptEntries() {
+    entry.replaceChildren();
+    data.script_texts.languages[Number(language.value)].banks[Number(bank.value)].programs.forEach((_, index) => entry.add(new Option(index, index)));
+    drawScriptText();
+  }
+  function scriptBanks() {
+    bank.replaceChildren();
+    data.script_texts.languages[Number(language.value)].banks.forEach((_, index) => bank.add(new Option(index, index)));
+    scriptEntries();
+  }
+  language.addEventListener('change', scriptBanks); bank.addEventListener('change', scriptEntries);
+  entry.addEventListener('change', drawScriptText); registerTextSettings('script', language, drawScriptText); scriptBanks();
+}
+function pcmWaveBytes(samples, rate) {
+  const padding = samples.length % 2;
+  if (samples.length > 0xffffffff - 36 - padding) throw Error('Sample is too large for a WAV file.');
+  const bytes = new Uint8Array(44 + samples.length + padding), header = new DataView(bytes.buffer);
+  function ascii(offset, text) { for (let i = 0; i < text.length; i++) bytes[offset + i] = text.charCodeAt(i); }
+  ascii(0, 'RIFF'); header.setUint32(4, 36 + samples.length + padding, true); ascii(8, 'WAVE');
+  ascii(12, 'fmt '); header.setUint32(16, 16, true); header.setUint16(20, 1, true);
+  header.setUint16(22, 1, true); header.setUint32(24, rate, true); header.setUint32(28, rate, true);
+  header.setUint16(32, 1, true); header.setUint16(34, 8, true);
+  ascii(36, 'data'); header.setUint32(40, samples.length, true);
+  samples.forEach((sample, index) => { bytes[44 + index] = sample + 128; });
+  return bytes;
+}
+if (data.audio) {
+  document.getElementById('audio').hidden = false;
+  const selector = document.getElementById('audio-id');
+  const canvas = document.getElementById('waveform');
+  const context = canvas.getContext('2d');
+  const play = document.getElementById('audio-play'), stop = document.getElementById('audio-stop');
+  const loop = document.getElementById('audio-loop');
+  const audioStatus = document.getElementById('audio-status');
+  let audioContext = null, source = null, playbackRequest = 0;
+  function sampleRate() {
+    const rate = Number(document.getElementById('audio-rate').value);
+    if (!Number.isInteger(rate) || rate < 8000 || rate > 96000) throw Error('Choose a sample rate from 8000 to 96000 Hz.');
+    return rate;
+  }
+  function stopPlayback() {
+    playbackRequest++;
+    if (source) { source.onended = null; source.stop(); source.disconnect(); source = null; }
+    stop.disabled = true;
+  }
+  play.addEventListener('click', async () => {
+    try {
+      const rate = sampleRate(), wave = data.audio.waves[Number(selector.value)], samples = wave.samples;
+      if (!samples.length) throw Error('This wave has no samples.');
+      stopPlayback();
+      const request = playbackRequest;
+      audioContext = audioContext || new AudioContext();
+      await audioContext.resume();
+      if (request !== playbackRequest) return;
+      const buffer = audioContext.createBuffer(1, samples.length, rate);
+      const channel = buffer.getChannelData(0);
+      for (let i = 0; i < samples.length; i++) channel[i] = samples[i] / 128;
+      const playing = audioContext.createBufferSource();
+      playing.buffer = buffer;
+      if (loop.checked && !loop.disabled) {
+        playing.loop = true; playing.loopStart = wave.loop_start / rate; playing.loopEnd = samples.length / rate;
+      }
+      playing.connect(audioContext.destination);
+      playing.onended = () => { if (source === playing) { source = null; stop.disabled = true; audioStatus.textContent = 'Playback finished.'; } };
+      source = playing;
+      playing.start();
+      stop.disabled = false;
+      audioStatus.textContent = 'Playing PCM samples at ' + rate + ' Hz' + (playing.loop ? ' · looping from sample ' + wave.loop_start : '') + '.';
+    } catch (error) { audioStatus.textContent = 'Cannot play sample: ' + error.message; }
+  });
+  document.getElementById('audio-download').addEventListener('click', () => {
+    try {
+      const rate = sampleRate(), wave = data.audio.waves[Number(selector.value)];
+      const url = URL.createObjectURL(new Blob([pcmWaveBytes(wave.samples, rate)], {type: 'audio/wav'}));
+      const link = document.createElement('a');
+      link.href = url; link.download = 'wave-' + wave.id + '-' + rate + 'Hz.wav';
+      document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      audioStatus.textContent = 'WAV download prepared at ' + rate + ' Hz.';
+    } catch (error) { audioStatus.textContent = 'Cannot prepare WAV: ' + error.message; }
+  });
+  stop.addEventListener('click', () => { stopPlayback(); audioStatus.textContent = 'Playback stopped.'; });
+  if (data.audio.cgb_waves && data.audio.cgb_waves.length) {
+    document.getElementById('cgb-audio').hidden = false;
+    const cgb = document.getElementById('cgb-id');
+    const cgbCanvas = document.getElementById('cgb-waveform');
+    const cgbContext = cgbCanvas.getContext('2d');
+    data.audio.cgb_waves.forEach((wave, index) => cgb.add(new Option(wave.id, index)));
+    function drawCgb() {
+      const wave = data.audio.cgb_waves[Number(cgb.value)];
+      document.getElementById('cgb-detail').textContent = data.audio.path + ' · CGB wave ' + wave.id + ' · 32 amplitude values';
+      cgbContext.clearRect(0, 0, cgbCanvas.width, cgbCanvas.height);
+      cgbContext.fillStyle = '#17617d';
+      wave.amplitudes.forEach((value, index) => cgbContext.fillRect(index * 20, 160 - value * 10, 18, value * 10));
+    }
+    cgb.addEventListener('change', () => { stopPlayback(); audioStatus.textContent = 'Select Play wave to listen.'; drawCgb(); });
+    document.getElementById('cgb-play').addEventListener('click', async () => {
+      try {
+        const frequency = Number(document.getElementById('cgb-frequency').value);
+        if (!Number.isFinite(frequency) || frequency < 20 || frequency > 2000) throw Error('Choose a frequency from 20 to 2000 Hz.');
+        const wave = data.audio.cgb_waves[Number(cgb.value)];
+        stopPlayback();
+        const request = playbackRequest;
+        audioContext = audioContext || new AudioContext();
+        await audioContext.resume();
+        if (request !== playbackRequest) return;
+        const buffer = audioContext.createBuffer(1, 32, 32000);
+        const channel = buffer.getChannelData(0);
+        for (let i = 0; i < 32; i++) channel[i] = wave.amplitudes[i] / 7.5 - 1;
+        const playing = audioContext.createBufferSource();
+        playing.buffer = buffer;
+        playing.loop = true;
+        playing.playbackRate.value = frequency * 32 / 32000;
+        playing.connect(audioContext.destination);
+        playing.onended = () => { if (source === playing) { source = null; stop.disabled = true; audioStatus.textContent = 'Playback finished.'; } };
+        source = playing;
+        playing.start();
+        playing.stop(audioContext.currentTime + 1);
+        stop.disabled = false;
+        audioStatus.textContent = 'Playing CGB wave at ' + frequency + ' Hz.';
+      } catch (error) { audioStatus.textContent = 'Cannot play wave: ' + error.message; }
+    });
+    drawCgb();
+  }
+  data.audio.waves.forEach((wave, index) => selector.add(new Option(wave.id, index)));
+  function drawAudio() {
+    const wave = data.audio.waves[Number(selector.value)];
+    document.getElementById('audio-detail').textContent = data.audio.path + ' · wave ' + wave.id + ' · ' + wave.samples.length + ' samples · loop start ' + wave.loop_start;
+    loop.disabled = wave.loop_start < 0 || wave.loop_start >= wave.samples.length;
+    if (loop.disabled) loop.checked = false;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = '#17617d';
+    context.beginPath();
+    const samples = wave.samples;
+    for (let x = 0; x < canvas.width && samples.length; x++) {
+      const start = Math.floor(x * samples.length / canvas.width);
+      const end = Math.max(start + 1, Math.floor((x + 1) * samples.length / canvas.width));
+      let minimum = 127, maximum = -128;
+      for (let i = start; i < end && i < samples.length; i++) {
+        minimum = Math.min(minimum, samples[i]); maximum = Math.max(maximum, samples[i]);
+      }
+      context.moveTo(x + 0.5, (127 - maximum) * canvas.height / 255);
+      context.lineTo(x + 0.5, (127 - minimum) * canvas.height / 255);
+    }
+    context.stroke();
+  }
+  selector.addEventListener('change', () => { stopPlayback(); audioStatus.textContent = 'Select Play sample to listen.'; drawAudio(); });
+  drawAudio();
+}
+if (data.sequences && data.sequence_directory) {
+  document.getElementById('sequence-audio').hidden = false;
+  const song = document.getElementById('sequence-song'), track = document.getElementById('sequence-track');
+  const rate = document.getElementById('sequence-rate'), play = document.getElementById('sequence-play');
+  const duration = document.getElementById('sequence-duration');
+  const voice = document.getElementById('sequence-voice');
+  const stop = document.getElementById('sequence-stop'), status = document.getElementById('sequence-status');
+  const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
+  const noteRows = document.getElementById('sequence-note-rows'), noteDetail = document.getElementById('sequence-timeline-detail');
+  const notePrevious = document.getElementById('sequence-note-prev'), noteNext = document.getElementById('sequence-note-next');
+  const notePageLabel = document.getElementById('sequence-note-page');
+  const previous = document.getElementById('sequence-prev'), next = document.getElementById('sequence-next');
+  const pageLabel = document.getElementById('sequence-page'), rows = document.getElementById('sequence-rows');
+  const tracksByHeader = new Map();
+  data.sequences.tracks.forEach(item => {
+    if (!tracksByHeader.has(item.directory_header)) tracksByHeader.set(item.directory_header, []);
+    tracksByHeader.get(item.directory_header).push(item);
+  });
+  data.sequence_directory.songs.forEach((item, index) => song.add(new Option(item.id, index)));
+  const instrumentData = data.audio && data.audio.instruments;
+  const headers = new Map((data.sequence_directory.headers || []).map(header => [header.id, header]));
+  const banks = new Map((instrumentData ? instrumentData.banks : []).map(bank => [bank.source_address,
+    new Map(bank.programs.map(program => [program.selector, program.tone]))]));
+  const tones = new Map((instrumentData ? instrumentData.tones : []).map(tone => [tone.id, tone]));
+  const splitTones = new Map((instrumentData ? instrumentData.map_links : []).map(link => [link.parent_tone + ':' + link.key, link.tone]));
+  const toneWaves = new Map(), cgbToneWaves = new Map();
+  (data.audio ? data.audio.waves : []).forEach(wave => {
+    if (!Array.isArray(wave.tone_ids) || !Number.isInteger(wave.source_offset)) return;
+    wave.tone_ids.forEach(id => {
+      const tone = tones.get(id);
+      if (tone && tone.word04 === 0x08000000 + wave.source_offset) toneWaves.set(id, wave);
+    });
+  });
+  (data.audio && data.audio.cgb_waves ? data.audio.cgb_waves : []).forEach(wave => {
+    if (!Array.isArray(wave.tone_ids) || !Number.isInteger(wave.source_offset)) return;
+    wave.tone_ids.forEach(id => {
+      const tone = tones.get(id);
+      if (tone && tone.ctype === 3 && tone.word04 === 0x08000000 + wave.source_offset) cgbToneWaves.set(id, wave);
+    });
+  });
+  if (!instrumentData) { voice.value = 'sine'; voice.querySelector('option[value="pcm"]').disabled = true; }
+  let selectedTracks = [], trace = [], notes = [], page = 0, notePage = 0, audioContext = null, playing = [], generation = 0, schedulerTimer = null;
+  const sampleBuffers = new Map();
+  let selectedBank = null;
+  function resolveSample(program, key) {
+    if (!selectedBank || program === null || !selectedBank.has(program)) return null;
+    let tone = tones.get(selectedBank.get(program));
+    if (tone && tone.ctype === 0x40) tone = tones.get(splitTones.get(tone.id + ':' + key));
+    if (!tone) return null;
+    if (tone.ctype === 3) {
+      const wave = cgbToneWaves.get(tone.id);
+      return wave ? {kind: 'cgb', wave, frequency: 440 * Math.pow(2, (key - 69) / 12)} : null;
+    }
+    if (tone.ctype !== 0) return null;
+    const wave = toneWaves.get(tone.id);
+    if (!wave || !Number.isInteger(wave.frequency_word) || wave.frequency_word <= 0 || !wave.samples.length) return null;
+    // This uses the existing BIOS HLE approximation, not the original driver LUT.
+    const frequency = wave.frequency_word / Math.pow(2, (180 - key) / 12);
+    if (!Number.isFinite(frequency) || frequency <= 0 || frequency > 384000) return null;
+    return {kind: 'pcm', wave, frequency};
+  }
+  function sampleBuffer(sample) {
+    const wave = sample.wave, cacheKey = sample.kind + ':' + wave.id;
+    if (!sampleBuffers.has(cacheKey)) {
+      const values = sample.kind === 'cgb' ? wave.amplitudes : wave.samples;
+      const buffer = audioContext.createBuffer(1, values.length, sample.kind === 'cgb' ? 32000 : 22050), channel = buffer.getChannelData(0);
+      for (let i = 0; i < values.length; i++) channel[i] = sample.kind === 'cgb' ? values[i] / 7.5 - 1 : values[i] / 128;
+      sampleBuffers.set(cacheKey, buffer);
+    }
+    return sampleBuffers.get(cacheKey);
+  }
+  function stopSequence() {
+    generation++;
+    if (schedulerTimer !== null) clearTimeout(schedulerTimer);
+    schedulerTimer = null;
+    playing.forEach(node => { try { node.stop(); } catch (_) {} });
+    playing = []; stop.disabled = true;
+  }
+  function buildTrace(root, limit, maxSteps, maxNotes) {
+    const executed = [], events = [], stack = [], activeTies = new Map();
+    let id = root, tick = 0, key = null, velocity = 96, program = null, skipped = 0, reason = 'time limit';
+    while (tick < limit && executed.length < maxSteps && events.length < maxNotes) {
+      const instruction = data.sequences.instructions[id];
+      if (!instruction) { reason = 'missing successor'; break; }
+      const code = instruction.code, kind = code[0];
+      executed.push({tick, source: instruction.source_offset, code});
+      let following = instruction.next;
+      if (kind === 'wait') {
+        tick += data.sequences.clocks[code[1]];
+      } else if (kind === 'note') {
+        if (code[2] !== null) key = code[2];
+        if (code[3] !== null) velocity = code[3];
+        if (key !== null) {
+          const duration = data.sequences.clocks[code[1]];
+          const event = {key, velocity, program, start: tick, end: duration ? tick + duration : null};
+          events.push(event);
+          if (!duration) {
+            if (!activeTies.has(key)) activeTies.set(key, []);
+            activeTies.get(key).push(event);
+          }
+        } else skipped++;
+      } else if (kind === 'end_tie') {
+        if (code[1] !== null) key = code[1];
+        (activeTies.get(key) || []).forEach(event => { event.end = tick; });
+        activeTies.delete(key);
+      } else if (kind === 'jump') {
+        following = code[1];
+      } else if (kind === 'pattern') {
+        if (stack.length >= 3 || following === null) { reason = 'pattern stack limit'; break; }
+        stack.push(following); following = code[1];
+      } else if (kind === 'return') {
+        following = stack.length ? stack.pop() : following;
+      } else if (kind === 'end') {
+        reason = 'track end'; break;
+      } else if (kind === 'parameter' && code[1] === 0xbd) {
+        program = code[2];
+      } else {
+        skipped++;
+      }
+      if (following === null) { reason = 'no successor'; break; }
+      id = following;
+    }
+    if (executed.length >= maxSteps || events.length >= maxNotes) reason = 'instruction or note limit';
+    const tieEnd = reason === 'time limit' ? limit : Math.min(limit, tick);
+    events.forEach(event => { event.end = Math.min(limit, event.end === null ? tieEnd : event.end); });
+    return {executed, events, skipped, reason};
+  }
+  function drawTracePage() {
+    rows.replaceChildren();
+    const size = 50, start = page * size, end = Math.min(trace.length, start + size);
+    trace.slice(start, end).forEach(item => {
+      const row = rows.insertRow();
+      for (const value of [item.track, item.tick, '0x' + item.source.toString(16).toUpperCase(), JSON.stringify(item.code)]) row.insertCell().textContent = value;
+    });
+    previous.disabled = page === 0; next.disabled = end >= trace.length;
+    pageLabel.textContent = trace.length ? 'Instructions ' + (start + 1) + '–' + end + ' of ' + trace.length : 'No instructions';
+  }
+  function drawNotePage() {
+    noteRows.replaceChildren();
+    const size = 50, start = notePage * size, end = Math.min(notes.length, start + size);
+    notes.slice(start, end).forEach(note => {
+      const row = noteRows.insertRow();
+      for (const value of [note.track, note.start, note.end, note.key, note.velocity,
+                           note.program === null ? '—' : note.program,
+                           note.sample ? note.sample.kind.toUpperCase() + ' ' + note.sample.wave.id : 'Sine fallback']) {
+        row.insertCell().textContent = value;
+      }
+    });
+    notePrevious.disabled = notePage === 0; noteNext.disabled = end >= notes.length;
+    notePageLabel.textContent = notes.length ? 'Notes ' + (start + 1) + '–' + end + ' of ' + notes.length : 'No notes';
+  }
+  function drawNotes(limit) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawNotePage();
+    if (!notes.length) { noteDetail.textContent = ''; context.fillStyle = '#40515d'; context.fillText('No resolved notes in this preview.', 12, 24); return; }
+    const lowest = Math.min(...notes.map(note => note.key)), highest = Math.max(...notes.map(note => note.key));
+    noteDetail.textContent = 'Timeline: 0–' + limit + ' ticks · extracted keys ' + lowest + '–' + highest + '.';
+    const rowHeight = (canvas.height - 20) / Math.max(1, highest - lowest + 1);
+    const colors = ['#17617d', '#9b411f', '#477326', '#774e96', '#a95e00', '#146e62'];
+    notes.forEach(note => {
+      const x = note.start / limit * canvas.width;
+      const width = Math.max(2, (note.end - note.start) / limit * canvas.width);
+      context.fillStyle = colors[note.track % colors.length];
+      context.fillRect(x, canvas.height - 10 - (note.key - lowest + 1) * rowHeight, width, Math.max(1, rowHeight - .3));
+    });
+  }
+  function prepareSequence() {
+    stopSequence(); page = 0; notePage = 0; trace = []; notes = [];
+    const ticks = Number(rate.value), seconds = Number(duration.value);
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) {
+      status.textContent = 'Choose a tick rate from 1 to 400 per second.'; play.disabled = true;
+      drawTracePage(); drawNotes(1); return;
+    }
+    if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180) {
+      status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; play.disabled = true;
+      drawTracePage(); drawNotes(1); return;
+    }
+    const selected = track.value === 'all' ? selectedTracks : [selectedTracks[Number(track.value)]].filter(Boolean);
+    if (!selected.length) {
+      status.textContent = 'This song has no extracted tracks.'; play.disabled = true;
+      drawTracePage(); drawNotes(ticks * seconds); return;
+    }
+    const maxSteps = Math.min(32000, Math.max(1, Math.floor(128000 / selected.length)));
+    const maxNotes = Math.max(1, Math.floor(8000 / selected.length));
+    let skipped = 0, limited = 0, singleReason = '';
+    selected.forEach(item => {
+      const result = buildTrace(item.entry, ticks * seconds, maxSteps, maxNotes);
+      trace.push(...result.executed.map(entry => ({...entry, track: item.track_index})));
+      notes.push(...result.events.map(note => ({...note, track: item.track_index})));
+      skipped += result.skipped; singleReason = result.reason;
+      if (result.reason === 'instruction or note limit' || result.reason === 'pattern stack limit' || result.reason === 'missing successor' || result.reason === 'no successor') limited++;
+    });
+    trace.sort((a, b) => a.tick - b.tick || a.track - b.track);
+    notes.sort((a, b) => a.start - b.start || a.track - b.track);
+    notes.forEach(note => { note.sample = resolveSample(note.program, note.key); });
+    const pcmMapped = notes.filter(note => note.sample && note.sample.kind === 'pcm').length;
+    const cgbMapped = notes.filter(note => note.sample && note.sample.kind === 'cgb').length;
+    status.textContent = data.sequences.path + ' · ' + (selected.length === 1 ? 'track ' + selected[0].track_index : selected.length + ' tracks')
+      + ' · ' + notes.length + ' notes · ' + (selected.length === 1 ? 'stopped at ' + singleReason : limited + ' tracks stopped at a limit or unresolved link')
+      + ' · ' + pcmMapped + ' PCM, ' + cgbMapped + ' CGB' + (voice.value === 'pcm' ? ', ' + (notes.length - pcmMapped - cgbMapped) + ' sine fallback' : ' · sine mode')
+      + ' · ' + skipped + ' commands or unresolved notes not played.';
+    play.disabled = !notes.length;
+    drawTracePage(); drawNotes(ticks * seconds);
+  }
+  function chooseSong() {
+    const headerId = data.sequence_directory.songs[Number(song.value)].header_id, header = headers.get(headerId);
+    selectedBank = header ? banks.get(header.tone_bank_address) || null : null;
+    selectedTracks = tracksByHeader.get(headerId) || [];
+    track.replaceChildren();
+    if (selectedTracks.length) track.add(new Option('All tracks (' + selectedTracks.length + ')', 'all'));
+    selectedTracks.forEach((item, index) => track.add(new Option(item.track_index, index)));
+    prepareSequence();
+  }
+  previous.addEventListener('click', () => { page--; drawTracePage(); });
+  next.addEventListener('click', () => { page++; drawTracePage(); });
+  notePrevious.addEventListener('click', () => { notePage--; drawNotePage(); });
+  noteNext.addEventListener('click', () => { notePage++; drawNotePage(); });
+  song.addEventListener('change', chooseSong); track.addEventListener('change', prepareSequence);
+  rate.addEventListener('input', prepareSequence); duration.addEventListener('input', prepareSequence); voice.addEventListener('change', prepareSequence);
+  stop.addEventListener('click', () => { stopSequence(); status.textContent = 'Approximate audition stopped.'; });
+  play.addEventListener('click', async () => {
+    stopSequence();
+    const request = generation, ticks = Number(rate.value), seconds = Number(duration.value);
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) { status.textContent = 'Choose a tick rate from 1 to 400 per second.'; return; }
+    if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180) { status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; return; }
+    try {
+      audioContext = audioContext || new AudioContext();
+      await audioContext.resume();
+      if (request !== generation) return;
+      const start = audioContext.currentTime + .05, events = notes.slice(), selectedVoice = voice.value;
+      const boundaries = events.flatMap(note => note.end > note.start ? [[note.start, 1], [note.end, -1]] : []);
+      boundaries.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+      let active = 0, maximum = 0;
+      boundaries.forEach(([, change]) => { active += change; maximum = Math.max(maximum, active); });
+      const mixScale = maximum ? Math.min(1, .7 / (maximum * .08)) : 1;
+      let cursor = 0, late = 0;
+      function scheduleWindow() {
+        if (request !== generation) return;
+        schedulerTimer = null;
+        try {
+          const now = audioContext.currentTime, horizon = now + .25;
+          while (cursor < events.length && start + events[cursor].start / ticks <= horizon) {
+            const note = events[cursor++], intended = start + note.start / ticks, end = start + note.end / ticks;
+            const begin = Math.max(intended, now + .002);
+            if (end <= begin) { late++; continue; }
+            if (begin > intended + .01) late++;
+            const useSample = selectedVoice === 'pcm' && note.sample;
+            const oscillator = useSample ? audioContext.createBufferSource() : audioContext.createOscillator(), gain = audioContext.createGain();
+            if (useSample) {
+              const wave = note.sample.wave;
+              oscillator.buffer = sampleBuffer(note.sample);
+              oscillator.playbackRate.value = note.sample.kind === 'cgb' ? note.sample.frequency * 32 / 32000 : note.sample.frequency / 22050;
+              if (note.sample.kind === 'cgb') {
+                oscillator.loop = true;
+              } else if ((wave.flags & 0xc000) && wave.loop_start >= 0 && wave.loop_start < wave.samples.length) {
+                oscillator.loop = true; oscillator.loopStart = wave.loop_start / 22050; oscillator.loopEnd = wave.samples.length / 22050;
+              }
+            } else {
+              oscillator.type = 'sine'; oscillator.frequency.value = 440 * Math.pow(2, (note.key - 69) / 12);
+            }
+            const amplitude = Math.min(.08, note.velocity / 127 * .08) * mixScale;
+            gain.gain.setValueAtTime(0, begin);
+            gain.gain.linearRampToValueAtTime(amplitude, Math.min(end, begin + .008));
+            gain.gain.setValueAtTime(amplitude, Math.max(begin, end - .02));
+            gain.gain.linearRampToValueAtTime(0, end);
+            oscillator.connect(gain); gain.connect(audioContext.destination);
+            oscillator.onended = () => {
+              playing = playing.filter(node => node !== oscillator);
+              if (request === generation && cursor >= events.length && !playing.length && schedulerTimer === null) {
+                stop.disabled = true; status.textContent = 'Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes.' : '.');
+              }
+            };
+            playing.push(oscillator); oscillator.start(begin); oscillator.stop(end);
+          }
+          if (late) status.textContent = 'Playing an approximate track mix · ' + late + ' delayed or skipped notes.';
+          if (cursor < events.length) schedulerTimer = setTimeout(scheduleWindow, 50);
+          else if (!playing.length) { stop.disabled = true; status.textContent = 'No audible note durations in this preview.'; }
+        } catch (error) {
+          if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; }
+        }
+      }
+      stop.disabled = false; status.textContent = 'Playing an approximate track mix.'; scheduleWindow();
+    } catch (error) { if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; } }
+  });
+  chooseSong();
+}
+if (data.palettes) {
+  document.getElementById('palette').hidden = false;
+  const descriptor = document.getElementById('descriptor');
+  const bank = document.getElementById('bank');
+  const colors = document.getElementById('colors');
+  data.palettes.entries.forEach((entry, index) => descriptor.add(new Option(index, index)));
+  function draw() {
+    colors.replaceChildren();
+    const d = Number(descriptor.value), b = Number(bank.value);
+    data.palettes.entries[d].banks[b].forEach((word, slot) => {
+      const rgb = [0, 5, 10].map(shift => Math.floor(((word >> shift) & 31) * 255 / 31).toString(16).padStart(2, '0')).join('').toUpperCase();
+      const cell = document.createElement('div'), color = document.createElement('div'), detail = document.createElement('div');
+      cell.className = 'swatch'; color.className = 'color'; detail.className = 'detail';
+      color.style.backgroundColor = '#' + rgb;
+      detail.textContent = 'Slot ' + slot + ' · 0x' + word.toString(16).padStart(4, '0').toUpperCase() + ' · #' + rgb + ' · ' + data.palettes.path + ' entries[' + d + '].banks[' + b + '][' + slot + ']';
+      cell.append(color, detail); colors.append(cell);
+    });
+  }
+  function banks() {
+    bank.replaceChildren();
+    data.palettes.entries[Number(descriptor.value)].banks.forEach((entry, index) => bank.add(new Option(index, index)));
+    draw();
+  }
+  descriptor.addEventListener('change', banks);
+  bank.addEventListener('change', draw);
+  banks();
+}
+function draw4bppTileSheet(canvas, words, start, colors) {
+  const context = canvas.getContext('2d'), image = context.createImageData(canvas.width, canvas.height);
+  const end = Math.min(Math.floor(words.length / 8), start + 128);
+  for (let tile = start; tile < end; tile++) {
+    const local = tile - start, left = (local % 16) * 8, top = Math.floor(local / 16) * 8;
+    for (let y = 0; y < 8; y++) {
+      const word = words[tile * 8 + y];
+      for (let x = 0; x < 8; x++) {
+        const index = (word >>> (x * 4)) & 15, color = colors ? colors[index] : null;
+        const pixel = ((top + y) * canvas.width + left + x) * 4;
+        for (let channel = 0; channel < 3; channel++) {
+          image.data[pixel + channel] = color === null ? Math.round(index * 255 / 15) : Math.floor(((color >> (channel * 5)) & 31) * 255 / 31);
+        }
+        image.data[pixel + 3] = 255;
+      }
+    }
+  }
+  context.putImageData(image, 0, 0);
+  return end;
+}
+if (data.bg_graphics) {
+  document.getElementById('bg-tiles').hidden = false;
+  const descriptor = document.getElementById('bg-descriptor'), palette = document.getElementById('bg-palette');
+  const page = document.getElementById('bg-page'), canvas = document.getElementById('bg-sheet');
+  const detail = document.getElementById('bg-detail');
+  data.bg_graphics.descriptor_graphics.forEach((_, index) => descriptor.add(new Option(index, index)));
+  function drawBackgroundTiles() {
+    const descriptorId = Number(descriptor.value), graphicId = data.bg_graphics.descriptor_graphics[descriptorId];
+    const graphic = data.bg_graphics.graphics[graphicId], start = Number(page.value) * 128;
+    const total = graphic.words.length / 8;
+    const banks = data.palettes && data.palettes.entries[descriptorId] ? data.palettes.entries[descriptorId].banks : null;
+    const colors = banks && palette.value !== 'gray' ? banks[Number(palette.value)] : null;
+    const end = draw4bppTileSheet(canvas, graphic.words, start, colors);
+    const baseTile = graphic.destination_offset / 32;
+    detail.textContent = data.bg_graphics.path + ' · graphic ' + graphicId + ' · relative source 0x'
+      + graphic.relative_source.toString(16).toUpperCase() + ' · destination offset 0x'
+      + graphic.destination_offset.toString(16).toUpperCase() + ' · destination tiles '
+      + (baseTile + start) + '–' + (baseTile + end - 1) + ' of ' + total + ' decoded tiles';
+  }
+  function chooseBackgroundDescriptor() {
+    const index = Number(descriptor.value), graphic = data.bg_graphics.graphics[data.bg_graphics.descriptor_graphics[index]];
+    const banks = data.palettes && data.palettes.entries[index] ? data.palettes.entries[index].banks : [];
+    palette.replaceChildren(); palette.add(new Option('Grayscale indices', 'gray'));
+    banks.forEach((_, bank) => palette.add(new Option('Base bank ' + bank, bank)));
+    palette.value = banks.length ? '0' : 'gray';
+    page.replaceChildren();
+    for (let i = 0; i < Math.ceil(graphic.words.length / 8 / 128); i++) page.add(new Option(i + 1, i));
+    drawBackgroundTiles();
+  }
+  descriptor.addEventListener('change', chooseBackgroundDescriptor);
+  palette.addEventListener('change', drawBackgroundTiles); page.addEventListener('change', drawBackgroundTiles);
+  chooseBackgroundDescriptor();
+}
+if (data.ui_graphics) {
+  document.getElementById('ui-tiles').hidden = false;
+  const bank = document.getElementById('ui-bank'), page = document.getElementById('ui-page');
+  const paletteSource = document.getElementById('ui-palette-source'), paletteBank = document.getElementById('ui-palette-bank');
+  const selector = document.getElementById('ui-selector'), language = document.getElementById('ui-language');
+  const selectorDetail = document.getElementById('ui-selector-detail'), detail = document.getElementById('ui-detail');
+  const canvas = document.getElementById('ui-sheet'), hex = value => '0x' + value.toString(16).toUpperCase();
+  data.ui_graphics.banks.forEach((item, index) => bank.add(new Option(hex(item.source_offset), index)));
+  paletteSource.add(new Option('Grayscale indices', 'gray'));
+  (data.ui_palettes ? data.ui_palettes.banks : []).forEach((item, index) => paletteSource.add(new Option(hex(item.source_offset), index)));
+  selector.add(new Option('Manual bank selection', 'manual'));
+  data.ui_graphics.selectors.forEach((item, index) => selector.add(new Option(item.id, index)));
+  function drawUiTiles() {
+    const selected = data.ui_graphics.banks[Number(bank.value)], start = Number(page.value) * 128;
+    const total = Math.floor(selected.words.length / 8), trailing = selected.words.length % 8;
+    const chosenPalette = paletteSource.value === 'gray' ? null : data.ui_palettes.banks[Number(paletteSource.value)];
+    const colors = chosenPalette ? chosenPalette.colors.slice(Number(paletteBank.value) * 16, Number(paletteBank.value) * 16 + 16) : null;
+    const end = draw4bppTileSheet(canvas, selected.words, start, colors);
+    detail.textContent = data.ui_graphics.path + ' · source ' + hex(selected.source_offset) + ' · '
+      + (total ? 'tiles ' + start + '–' + (end - 1) + ' of ' + total : 'no complete tiles')
+      + (trailing ? ' · ' + trailing + ' trailing words not displayed' : '');
+  }
+  function chooseUiBank() {
+    const selected = data.ui_graphics.banks[Number(bank.value)], total = Math.floor(selected.words.length / 8);
+    page.replaceChildren();
+    for (let i = 0; i < Math.max(1, Math.ceil(total / 128)); i++) page.add(new Option(i + 1, i));
+    drawUiTiles();
+  }
+  function chooseUiPalette() {
+    paletteBank.replaceChildren();
+    const selected = paletteSource.value === 'gray' ? null : data.ui_palettes.banks[Number(paletteSource.value)];
+    if (selected) for (let i = 0; i < selected.colors.length / 16; i++) paletteBank.add(new Option(i, i));
+    paletteBank.disabled = !selected; drawUiTiles();
+  }
+  function chooseUiLanguage() {
+    if (selector.value === 'manual') return;
+    const selected = data.ui_graphics.selectors[Number(selector.value)], offset = selected.bank_offsets[Number(language.value)];
+    const index = data.ui_graphics.banks.findIndex(item => item.source_offset === offset);
+    if (index < 0) { selectorDetail.textContent = 'Selector points to ' + hex(offset) + ', which is not in this UI bank catalog.'; return; }
+    bank.value = String(index); selectorDetail.textContent = 'Selector points to UI bank ' + hex(offset) + '.'; chooseUiBank();
+  }
+  function chooseUiSelector() {
+    language.replaceChildren();
+    if (selector.value === 'manual') { language.disabled = true; selectorDetail.textContent = 'Manual bank selection.'; return; }
+    language.disabled = false;
+    data.ui_graphics.selectors[Number(selector.value)].bank_offsets.forEach((_, index) => language.add(new Option(index, index)));
+    chooseUiLanguage();
+  }
+  bank.addEventListener('change', () => { selector.value = 'manual'; chooseUiSelector(); chooseUiBank(); });
+  page.addEventListener('change', drawUiTiles); paletteSource.addEventListener('change', chooseUiPalette);
+  paletteBank.addEventListener('change', drawUiTiles); selector.addEventListener('change', chooseUiSelector);
+  language.addEventListener('change', chooseUiLanguage);
+  chooseUiSelector(); chooseUiPalette(); chooseUiBank();
+}
+if (data.obj_graphics) {
+  document.getElementById('obj-tiles').hidden = false;
+  const catalog = document.getElementById('obj-catalog'), bank = document.getElementById('obj-bank');
+  const selector = document.getElementById('obj-selector'), language = document.getElementById('obj-language');
+  const palette = document.getElementById('obj-palette'), page = document.getElementById('obj-page');
+  const detail = document.getElementById('obj-detail'), selectorDetail = document.getElementById('obj-selector-detail');
+  const canvas = document.getElementById('obj-sheet'), hex = value => '0x' + value.toString(16).toUpperCase();
+  const palettes = [];
+  (data.unit_palettes || []).forEach(item => palettes.push({label: 'Unit ' + item.variant + ' · bank ' + item.bank, colors: item.colors}));
+  (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => {
+    for (let index = 0; index < item.colors.length / 16; index++) {
+      palettes.push({label: 'UI ' + hex(item.source_offset) + ' · bank ' + index, colors: item.colors.slice(index * 16, index * 16 + 16)});
+    }
+  });
+  palette.add(new Option('Grayscale indices', 'gray'));
+  palettes.forEach((item, index) => palette.add(new Option(item.label, index)));
+  if (data.obj_graphics.banks.length) catalog.add(new Option('Direct banks', 'direct'));
+  if (data.obj_graphics.archive_banks.length) catalog.add(new Option('Relative archive banks', 'archive'));
+  selector.add(new Option('Manual bank selection', 'manual'));
+  data.obj_graphics.selectors.forEach((item, index) => selector.add(new Option(hex(item.source_offset), index)));
+  function selectedBanks() { return catalog.value === 'direct' ? data.obj_graphics.banks : data.obj_graphics.archive_banks; }
+  function drawObjTiles() {
+    const selected = selectedBanks()[Number(bank.value)], start = Number(page.value) * 128;
+    const total = Math.floor(selected.words.length / 8), trailing = selected.words.length % 8;
+    const colors = palette.value === 'gray' ? null : palettes[Number(palette.value)].colors;
+    const end = draw4bppTileSheet(canvas, selected.words, start, colors);
+    detail.textContent = data.obj_graphics.path + ' · source ' + hex(selected.source_offset) + ' · '
+      + (total ? 'tiles ' + start + '–' + (end - 1) + ' of ' + total : 'no complete tiles')
+      + (trailing ? ' · ' + trailing + ' trailing words not displayed' : '');
+  }
+  function chooseObjBank() {
+    const selected = selectedBanks()[Number(bank.value)], total = Math.floor(selected.words.length / 8);
+    page.replaceChildren();
+    for (let i = 0; i < Math.max(1, Math.ceil(total / 128)); i++) page.add(new Option(i + 1, i));
+    drawObjTiles();
+  }
+  function chooseObjCatalog() {
+    bank.replaceChildren();
+    selectedBanks().forEach((item, index) => bank.add(new Option(hex(item.source_offset), index)));
+    chooseObjBank();
+  }
+  function chooseObjLanguage() {
+    if (selector.value === 'manual') return;
+    const selected = data.obj_graphics.selectors[Number(selector.value)], offset = selected.bank_offsets[Number(language.value)];
+    const index = data.obj_graphics.banks.findIndex(item => item.source_offset === offset);
+    if (index < 0) { selectorDetail.textContent = 'Selector points to ' + hex(offset) + ', which is not in the direct bank catalog.'; return; }
+    catalog.value = 'direct'; chooseObjCatalog(); bank.value = String(index); chooseObjBank();
+    selectorDetail.textContent = 'Selector points to direct bank ' + hex(offset) + '.';
+  }
+  function chooseObjSelector() {
+    language.replaceChildren();
+    if (selector.value === 'manual') { language.disabled = true; selectorDetail.textContent = 'Manual bank selection.'; return; }
+    language.disabled = false;
+    data.obj_graphics.selectors[Number(selector.value)].bank_offsets.forEach((_, index) => language.add(new Option(index, index)));
+    chooseObjLanguage();
+  }
+  catalog.addEventListener('change', () => { selector.value = 'manual'; chooseObjSelector(); chooseObjCatalog(); });
+  bank.addEventListener('change', () => { selector.value = 'manual'; chooseObjSelector(); chooseObjBank(); });
+  page.addEventListener('change', drawObjTiles); palette.addEventListener('change', drawObjTiles);
+  selector.addEventListener('change', chooseObjSelector); language.addEventListener('change', chooseObjLanguage);
+  chooseObjSelector(); chooseObjCatalog();
+}
+{
+  const sections = [...document.querySelectorAll('main > section')].filter(section => !section.hidden);
+  const contents = document.getElementById('contents');
+  sections.forEach(section => {
+    const item = document.createElement('li'), link = document.createElement('a');
+    link.href = '#' + section.id;
+    link.textContent = section.querySelector('summary h2').textContent;
+    item.append(link); contents.append(item);
+  });
+  function openTarget(id) {
+    const section = document.getElementById(id);
+    if (section && !section.hidden && sections.includes(section)) section.querySelector('details').open = true;
+  }
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (link) openTarget(link.getAttribute('href').slice(1));
+  });
+  window.addEventListener('hashchange', () => openTarget(location.hash.slice(1)));
+  openTarget(location.hash.slice(1));
+  document.getElementById('expand-all').addEventListener('click', () => sections.forEach(section => { section.querySelector('details').open = true; }));
+  document.getElementById('collapse-all').addEventListener('click', () => sections.forEach(section => { section.querySelector('details').open = false; }));
+}
+</script>
+</body>
+</html>

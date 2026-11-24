@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "bound-european-compact-cell-bank",
+  "title": "Bound the European compact-cell bank beside the tilemap streams",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows ownership CLI under Wine"
+  ],
+  "changes": [
+    "Reconciled the bounded mode-3 dispatch routes with the E457 tilemap bank and the 64 routing bytes already owned by E310.",
+    "Linked 77 original caller paths to 50 adjacent compact-cell records. The verified plan covers 24,260 record bytes and 308 constructor literal bytes still read from ROM."
+  ],
+  "validation": [
+    "E489 Wine tkbc4ljc PASS. Authenticated the constructor and count-reader instruction windows and verified E310 ownership against an independent source join. All 42 protected inputs passed and Wine drained."
+  ],
+  "limitations": [
+    "Six unclassified intervals, seven alternate frame token sequences, runtime extraction and attachment, other caller domains, ordinary scenes, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

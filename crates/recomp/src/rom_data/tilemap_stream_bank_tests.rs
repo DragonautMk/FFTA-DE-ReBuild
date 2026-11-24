@@ -1,9 +1,10 @@
 //! Verify the complete European tilemap bank against the original guest readers.
 
 use super::{
-    attach_from_directory, parse,
+    attach_from_directory, parse, preparation,
     tilemap_transfer_directory_tests::{check_stream_bus_reads, replay_pair},
-    Manifest, MANIFEST_FILE,
+    Extraction, Manifest, INDEXED_TILEMAP_CONTROLS_ID, MANIFEST_FILE, TILEMAP_STREAM_BANK_FILE,
+    TILEMAP_STREAM_BANK_ID,
 };
 use gba_core::{
     cpu::{FLAG_I, FLAG_T},
@@ -19,7 +20,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     fs,
     ops::Range,
-    path::PathBuf,
+    path::{Path, PathBuf},
 };
 
 fn input(name: &str) -> PathBuf {
@@ -92,37 +93,29 @@ fn read_cell(machine: &mut Machine, entry: u32) -> u32 {
     panic!("Tilemap reader {entry:#x} did not return");
 }
 
-#[test]
-#[ignore = "exact EUR ROM, E302 generation and retained E450/E457 indexes"]
-fn european_tilemap_stream_bank_original_readers() {
-    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
-    let streams = bank::from_rom(&rom).unwrap();
-    let selected = verify_extents(&rom, &streams);
-    let dataset = input("FFTA_TILEMAP_SLOT1_DATASET");
-    let manifest: Manifest = parse(
-        &fs::read(dataset.join(MANIFEST_FILE)).unwrap(),
-        "E302 manifest",
-    )
-    .unwrap();
-    assert_eq!(
-        (manifest.extractor_revision, manifest.decoder_revision),
-        (302, 301)
-    );
-    let prior: BTreeSet<_> = manifest
+fn prior_stream_bytes(manifest: &Manifest) -> BTreeSet<u32> {
+    manifest
         .resources
         .iter()
         .flat_map(|resource| &resource.sources)
         .flat_map(|source| {
             source.offset.max(bank::START)..(source.offset + source.length).min(bank::END)
         })
-        .collect();
+        .collect()
+}
+
+fn verify_original_readers(
+    rom: &[u8],
+    streams: &[Stream],
+    selected: &BTreeSet<u32>,
+    prior: &BTreeSet<u32>,
+    managed: &mut Machine,
+) -> Value {
     assert_eq!(prior.len(), 844);
-    assert!(prior.is_subset(&selected));
+    assert!(prior.is_subset(selected));
     let bound = selected.len() - prior.len();
 
-    let mut raw = Machine::new(rom.clone());
-    let mut managed = Machine::new(rom.clone());
-    attach_from_directory(&mut managed, &dataset).unwrap();
+    let mut raw = Machine::new(rom.to_vec());
     for offset in bank::START..bank::END {
         let at = offset as usize;
         managed.bus.rom[at] = !rom[at];
@@ -132,21 +125,21 @@ fn european_tilemap_stream_bank_original_readers() {
     }
     let owner = managed.bus.rom_resources().unwrap().clone();
     let before = owner.tilemap_stream_bank_bytes_read().unwrap();
-    check_stream_bus_reads(&mut raw, &mut managed, bank::START, bank::END);
+    check_stream_bus_reads(&mut raw, managed, bank::START, bank::END);
     let bus_bytes = owner.tilemap_stream_bank_bytes_read().unwrap() - before;
     assert_eq!(bus_bytes, bound as u64 * 24);
 
     let mut entries = [0, 0];
     let mut cells = [0, 0];
     let mut bound_reader_bytes = 0;
-    for machine in [&mut raw, &mut managed] {
+    for machine in [&mut raw, &mut *managed] {
         machine.cpu.regs[13] = 0x0300_7e00;
         machine.cpu.cpsr |= FLAG_T | FLAG_I;
     }
-    for stream in &streams {
+    for stream in streams {
         let kind = usize::from(stream.byte_values);
         let reader = [0x080d_a14c, 0x080d_a200][kind];
-        for machine in [&mut raw, &mut managed] {
+        for machine in [&mut raw, &mut *managed] {
             machine
                 .bus
                 .write32(CURSOR, ROM_BASE + stream.extent.start + 6);
@@ -157,7 +150,7 @@ fn european_tilemap_stream_bank_original_readers() {
         let count = u32::from(stream.width) * u32::from(stream.height);
         for _ in 0..count {
             let reference = read_cell(&mut raw, reader);
-            let candidate = read_cell(&mut managed, reader);
+            let candidate = read_cell(managed, reader);
             assert!(
                 candidate == reference,
                 "Tilemap cell differs in {:?}",
@@ -165,7 +158,7 @@ fn european_tilemap_stream_bank_original_readers() {
             );
             assert_eq!(managed.bus.clock, raw.bus.clock);
         }
-        for machine in [&mut raw, &mut managed] {
+        for machine in [&mut raw, &mut *managed] {
             assert_eq!(machine.bus.read32(CURSOR), ROM_BASE + stream.extent.end);
             assert_eq!(machine.bus.read16(RUN_INDEX), 0);
         }
@@ -184,7 +177,7 @@ fn european_tilemap_stream_bank_original_readers() {
     }
     assert_eq!(entries, [71, 7]);
     let span = bank::START as usize..bank::END as usize;
-    for machine in [&mut raw, &mut managed] {
+    for machine in [&mut raw, &mut *managed] {
         machine.bus.rom[span.clone()].copy_from_slice(&rom[span.clone()]);
     }
     let state = raw.save_state().unwrap();
@@ -192,7 +185,7 @@ fn european_tilemap_stream_bank_original_readers() {
         state == managed.save_state().unwrap(),
         "Different original reader endpoint"
     );
-    let result = serde_json::json!({
+    serde_json::json!({
         "status": "PASS",
         "stream_counts": entries,
         "cell_counts": cells,
@@ -205,7 +198,157 @@ fn european_tilemap_stream_bank_original_readers() {
         "bound_reader_bytes": bound_reader_bytes,
         "state_sha256": digest(&state),
         "controlled_original_readers": true,
-    });
+    })
+}
+
+#[test]
+#[ignore = "exact EUR ROM, E302 generation and retained E450/E457 indexes"]
+fn european_tilemap_stream_bank_original_readers() {
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    let streams = bank::from_rom(&rom).unwrap();
+    let selected = verify_extents(&rom, &streams);
+    let dataset = input("FFTA_TILEMAP_SLOT1_DATASET");
+    let manifest: Manifest = parse(
+        &fs::read(dataset.join(MANIFEST_FILE)).unwrap(),
+        "E302 manifest",
+    )
+    .unwrap();
+    assert_eq!(
+        (manifest.extractor_revision, manifest.decoder_revision),
+        (302, 301)
+    );
+    let mut managed = Machine::new(rom.clone());
+    attach_from_directory(&mut managed, &dataset).unwrap();
+    let result = verify_original_readers(
+        &rom,
+        &streams,
+        &selected,
+        &prior_stream_bytes(&manifest),
+        &mut managed,
+    );
+    fs::write(
+        input("FFTA_TILEMAP_STREAM_RESULT"),
+        serde_json::to_vec_pretty(&result).unwrap(),
+    )
+    .unwrap();
+}
+
+#[test]
+#[ignore = "exact EUR ROM and retained E450, E457, E475 and E478 evidence"]
+fn european_tilemap_stream_bank_publishes_and_serves_original_readers() {
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    let streams = bank::from_rom(&rom).unwrap();
+    let selected = verify_extents(&rom, &streams);
+    let work = input("FFTA_TILEMAP_STREAM_WORK");
+    let root = tempfile::tempdir_in(&work).unwrap();
+    let mut revision = Extraction::from_rom(&rom).unwrap().manifest;
+    (revision.extractor_revision, revision.decoder_revision) = (304, 303);
+    let mut source = Extraction::from_rom_for_manifest(&rom, &revision).unwrap();
+    let prepared = preparation::prepare(root.path(), &mut source, &mut |_| Ok(())).unwrap();
+    assert_eq!(prepared.action, "created");
+    let dataset = &prepared.directory;
+    let manifest_path = dataset.join(MANIFEST_FILE);
+    let manifest_bytes = fs::read(&manifest_path).unwrap();
+    let published: Manifest = parse(&manifest_bytes, "E304 manifest").unwrap();
+    assert_eq!(
+        (published.extractor_revision, published.decoder_revision),
+        (304, 303)
+    );
+    assert_eq!(published.resources.len(), 151);
+    let stream_resource = published.resources.last().unwrap();
+    assert_eq!(stream_resource.id, TILEMAP_STREAM_BANK_ID);
+    let stream_path = dataset.join(TILEMAP_STREAM_BANK_FILE);
+    let mut encoded = fs::read(&stream_path).unwrap();
+    assert_eq!(encoded.len(), 8810);
+    assert_eq!(digest(&encoded), stream_resource.sha256);
+
+    // Rebuild the exact E303 manifest from the prefix to verify earlier ownership.
+    let mut previous = published.clone();
+    previous.resources.pop();
+    assert_eq!(
+        previous.coverage.pop().as_deref(),
+        Some(TILEMAP_STREAM_BANK_ID)
+    );
+    (previous.extractor_revision, previous.decoder_revision) = (303, 302);
+    let e303 = toml::to_string_pretty(&previous).unwrap();
+    let precedent = read_index("FFTA_TILEMAP_STREAM_PREDECESSOR");
+    assert_eq!(precedent["status"], "PASS");
+    assert_eq!(
+        precedent["published_manifest_sha256"],
+        digest(e303.as_bytes())
+    );
+    let prior = prior_stream_bytes(&previous);
+    let expected: BTreeSet<_> = selected.difference(&prior).copied().collect();
+    let mut actual = BTreeSet::new();
+    let mut serialized = encoded.as_slice();
+    for span in &stream_resource.sources {
+        let end = span.offset + span.length;
+        let (slice, rest) = serialized.split_at(span.length as usize);
+        assert!(slice == &rom[span.offset as usize..end as usize]);
+        assert_eq!(digest(slice), span.sha256);
+        assert!((span.offset..end).all(|at| actual.insert(at)));
+        serialized = rest;
+    }
+    assert!(serialized.is_empty());
+    assert_eq!(actual, expected);
+
+    let reused = preparation::prepare(root.path(), &mut source, &mut |_| Ok(())).unwrap();
+    assert_eq!(reused.action, "reused");
+    assert_eq!(&reused.directory, dataset);
+    assert!(fs::read(&manifest_path).unwrap() == manifest_bytes);
+    drop(source);
+
+    let mut managed = Machine::new(rom.clone());
+    fs::write(&manifest_path, e303).unwrap();
+    attach_from_directory(&mut managed, dataset).unwrap();
+    assert_eq!(
+        previous.resources.pop().unwrap().id,
+        INDEXED_TILEMAP_CONTROLS_ID
+    );
+    assert_eq!(
+        previous.coverage.pop().as_deref(),
+        Some(INDEXED_TILEMAP_CONTROLS_ID)
+    );
+    (previous.extractor_revision, previous.decoder_revision) = (302, 301);
+    let e302 = toml::to_string_pretty(&previous).unwrap();
+    assert_eq!(
+        precedent["predecessor_manifest_sha256"],
+        digest(e302.as_bytes())
+    );
+    fs::write(&manifest_path, e302).unwrap();
+    attach_from_directory(&mut managed, dataset).unwrap();
+    fs::write(&manifest_path, &manifest_bytes).unwrap();
+    attach_from_directory(&mut managed, dataset).unwrap();
+
+    let active = managed.bus.rom_resources().unwrap().clone();
+    let mut edited = published.clone();
+    encoded[0] ^= 1;
+    edited.resources.last_mut().unwrap().sha256 = digest(&encoded);
+    fs::write(&stream_path, &encoded).unwrap();
+    fs::write(&manifest_path, toml::to_string_pretty(&edited).unwrap()).unwrap();
+    assert_eq!(
+        attach_from_directory(&mut managed, dataset).unwrap_err(),
+        "Tilemap stream bank differs from authenticated source",
+    );
+    assert!(std::sync::Arc::ptr_eq(
+        &active,
+        managed.bus.rom_resources().unwrap()
+    ));
+
+    // The live owner must keep serving verified bytes even when its input file
+    // and the machine's cartridge backing change after attachment.
+    let mut result = verify_original_readers(&rom, &streams, &selected, &prior, &mut managed);
+    result["revision"] = serde_json::json!([304, 303]);
+    result["published_stream_bytes"] = serde_json::json!(encoded.len());
+    result["source_ranges"] = serde_json::json!(stream_resource.sources.len());
+    result["source_file_sha256"] = serde_json::json!(stream_resource.sha256);
+    result["published_manifest_sha256"] = serde_json::json!(digest(&manifest_bytes));
+    result["default_writer_publication_and_reuse"] = serde_json::json!(true);
+    result["e302_and_e303_attach"] = serde_json::json!(true);
+    result["coherent_edit_rejected"] = serde_json::json!(true);
+    root.close().unwrap();
+
+    fs::write(work.join(MANIFEST_FILE), manifest_bytes).unwrap();
     fs::write(
         input("FFTA_TILEMAP_STREAM_RESULT"),
         serde_json::to_vec_pretty(&result).unwrap(),

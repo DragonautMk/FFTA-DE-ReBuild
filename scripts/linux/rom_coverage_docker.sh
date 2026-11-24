@@ -7,7 +7,7 @@ dataset_dir=''
 translation_path=''
 audit_paths=()
 comparison_path=''
-output_dir='docs/development/rom-coverage'
+output_dir='target/rom-coverage-local'
 evidence_path='docs/development/rom-coverage/evidence.json'
 usage() {
     printf 'Usage: %s [--rom FILE] [--dataset DIR] [--translation FILE] [--output DIR] [--evidence FILE] [--audit REPORT ...] [--compare COVERAGE_JSON]\n' "$0"
@@ -74,6 +74,11 @@ mkdir -p -- "$output_dir"
 rom_path=$(resolve_path "$(cd -- "$(dirname -- "$rom_path")" && pwd -P)/$(basename -- "$rom_path")")
 evidence_path=$(resolve_path "$(cd -- "$(dirname -- "$evidence_path")" && pwd -P)/$(basename -- "$evidence_path")")
 output_dir=$(resolve_path "$(cd -- "$output_dir" && pwd -P)")
+docs_root=$(cd -- "$repo_dir/docs" && pwd -P)
+if [[ "$output_dir" == "$docs_root" || "$output_dir" == "$docs_root/"* ]]; then
+    printf 'Full coverage reports must be written outside docs.\n' >&2
+    return 2
+fi
 mounts=(--mount "type=bind,source=$rom_path,target=/input/source.gba,readonly"
     --mount "type=bind,source=$evidence_path,target=/input/evidence.json,readonly"
     --mount "type=bind,source=$output_dir,target=/output")

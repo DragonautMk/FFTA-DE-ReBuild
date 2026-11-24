@@ -1508,7 +1508,7 @@ impl Bus for MemMap {
                 }
                 let idx = Self::rom_index(addr);
                 if idx < self.rom.len() {
-                    if Self::resource_page(idx) {
+                    if self.resource_page(idx) {
                         if let Some(bytes) = self.rom_resources.as_ref().and_then(|r| r.guest_read::<1>(idx, &self.rom)) {
                             #[cfg(feature = "rom-data-read-audit")]
                             crate::rom_data::read_audit::record_served(crate::rom_data::read_audit::Reader::Bus, addr, 1, true);
@@ -1645,7 +1645,7 @@ impl Bus for MemMap {
                 }
                 let idx = Self::rom_index(addr);
                 if idx + 2 <= self.rom.len() {
-                    if Self::resource_page(idx) {
+                    if self.resource_page(idx) {
                         if let Some(bytes) = self.rom_resources.as_ref().and_then(|r| r.guest_read::<2>(idx, &self.rom)) {
                             #[cfg(feature = "rom-data-read-audit")]
                             crate::rom_data::read_audit::record_served(crate::rom_data::read_audit::Reader::Bus, addr, 2, true);
@@ -1730,7 +1730,7 @@ impl Bus for MemMap {
                 }
                 let idx = Self::rom_index(addr);
                 if idx + 4 <= self.rom.len() {
-                    if Self::resource_page(idx) {
+                    if self.resource_page(idx) {
                         if let Some(bytes) = self.rom_resources.as_ref().and_then(|r| r.guest_read::<4>(idx, &self.rom)) {
                             #[cfg(feature = "rom-data-read-audit")]
                             crate::rom_data::read_audit::record_served(crate::rom_data::read_audit::Reader::Bus, addr, 4, true);

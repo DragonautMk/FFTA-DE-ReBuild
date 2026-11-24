@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "plan-extracted-resource-viewer",
+  "title": "Plan an offline viewer for extracted ROM resources",
+  "kind": "docs",
+  "platforms": [
+    "Development tools (Windows first)"
+  ],
+  "changes": [
+    "Add a checklist for turning one extracted background palette into 16 labeled swatches and tracing each color back to its JSON field.",
+    "Link the checklist from the extraction guide and outline follow-up views for tables, text, sprites, maps and audio."
+  ],
+  "validation": [
+    "Checked eight resource and manifest filenames against the extraction helper, the palette fields against the Rust model, and four synthetic color words against the RGB conversion.",
+    "Verified all eight checklist links, the return link from the extraction guide and the twelve unchecked tasks."
+  ],
+  "limitations": [
+    "The viewer implementation and offline Windows walkthrough are future checklist items."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

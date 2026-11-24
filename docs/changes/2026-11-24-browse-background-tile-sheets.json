@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-background-tile-sheets",
+  "title": "Browse decoded background tile sheets",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Render decoded background graphic words as paginated 4-bit tile sheets, linked by descriptor and displayed with an extracted base palette bank or grayscale indices.",
+    "Label relative source and destination tile offsets without inventing omitted destination prefixes or assembling a scene."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-bgtiles-r4lnzrf7 checked nibble order, RGB palette conversion, descriptor aliases, pagination, destination offsets and invalid data.",
+    "Protected EUR unit rom-data-viewer-bgtiles-eur-7pw4d56v compared all 162 descriptor links and 50 decoded word arrays, then checked an independently calculated palette pixel and final descriptor/page selection in Chrome."
+  ],
+  "limitations": [
+    "This is a 4-bit tile interpretation, not a complete background scene; missing prefixes, dynamic palettes and animation are not reconstructed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "decode-european-compact-cell-frame-encodings",
+  "title": "Decode both European compact-cell frame encodings",
+  "kind": "added",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "Decode the four value-14 records as byte runs with even payload alignment. Use the same bounded frame parser for the 87 halfword records and preserve the packed e311-d310 file.",
+    "Expose frame geometry, placement bytes, encoded extents and row-major cell values from complete compact-record spans. Validate their directory bounds during extraction."
+  ],
+  "validation": [
+    "Wine disassembly u6btxs9v authenticates the original draw dispatcher and byte reader. The Windows GNU test build t6q8o82v and the focused Wine test vgbeflbq pass.",
+    "Controlled original draws match 483 halfword and ten byte frames with transparency marker zero. The 31,634-byte extraction reproduces E491 SHA-256. All 20 protected paths pass and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary background setup, live selectors, alias attribution and translated dispatch remain open. Linux, USA, native Windows and performance work are deferred.",
+    "The client did not independently confirm the primary Terra xhigh setting."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_cell_bank.rs",
+    "crates/recomp/src/rom_data/compact_cell_bank_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-24-persist-european-compact-cell-bank.json"
+  ]
+}

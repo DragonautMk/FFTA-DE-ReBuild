@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "add-resource-file-browsing-and-pcm-audition",
+  "title": "Add extracted file browsing and PCM audition",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add an offline file picker with bounded text paging for extracted JSON and TOML, including UTF-8 boundary overlap, plus paginated structured navigation for JSON files up to 8 MiB.",
+    "Play extracted signed PCM samples once at a user-selected audition sample rate with stop and selection controls.",
+    "Display extracted CGB waveforms and audition them as one-second synthetic notes at a selectable frequency."
+  ],
+  "validation": [
+    "Linux Chrome synthetic unit rom-data-viewer-playback-k6ro9a40 checked file selection, paging, UTF-8 boundaries, playback start and rate validation.",
+    "Linux Chrome unit rom-data-viewer-playback-eur-y0nh6nbz matched all 277 PCM waves to the protected EUR dataset and checked wave selection and playback start/stop.",
+    "Linux Chrome unit rom-data-viewer-cgb-eur-qfpcr8ak compared EUR CGB data with the protected dataset and exercised selection and playback controls.",
+    "Linux Chrome unit rom-data-viewer-json-tree-dppszikd checked nested navigation, pagination, parent navigation, invalid and large file fallbacks, and recovery. Unit rom-data-viewer-json-tree-eur-hyvr8k5t checked the generated EUR page and audio controls.",
+    "Generated the updated private root page from the validated candidate and preserved its previous version locally."
+  ],
+  "limitations": [
+    "The initial 22050 Hz rate is an audition choice; game pitch, looping and envelope remain handled by the original driver. CGB audition uses a chosen frequency rather than the game mixer or envelope. Actual audible device output and native Windows remain unverified.",
+    "The first two synthetic playback checks d1kttfw_ and 0l5q_qq5 observed asynchronous reads too early. JSON tree checks 2grz3ham and 68vsszye failed due to the synthetic manifest and sandboxed Chrome, respectively; diagnostics are retained."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

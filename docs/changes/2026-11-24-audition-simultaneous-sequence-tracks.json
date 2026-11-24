@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audition-simultaneous-sequence-tracks",
+  "title": "Audition simultaneous sequence tracks",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow a song’s extracted tracks to be auditioned together or individually, with track-attributed note and instruction timelines.",
+    "Bound combined work and scale synthetic voices using the maximum number of simultaneously active notes."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome units rom-data-viewer-multitrack-q62ctukb and rom-data-viewer-multitrack-mix-e4bpfoob checked individual selection, concurrent scheduling, overlap gain bound, stop behavior, ties and trace limits.",
+    "Protected EUR unit rom-data-viewer-multitrack-eur-919lx0o8 exercised a twelve-track song, individual selection, Web Audio start/stop and an empty song."
+  ],
+  "limitations": [
+    "This remains a bounded sine-wave approximation with a user-selected tick rate; original instruments, tempo, pitch commands, effects and driver fidelity are not reproduced. Physical audio output was not checked."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

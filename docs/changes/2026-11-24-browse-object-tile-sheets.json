@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-object-tile-sheets",
+  "title": "Browse extracted object tile sheets",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a collapsible viewer for direct and relative-archive object banks as paged 4bpp tile sheets, with manual palettes and language selector links."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-obj-n60gjoi1 checked bank validation, pixels, palette selection, paging and links. Protected EUR unit rom-data-viewer-obj-eur-qbmy3m8d compared all 39 direct banks, 103 archive banks and six selectors and checked source pixels in Linux Chrome."
+  ],
+  "limitations": [
+    "Decoded banks can contain non-pixel data; palette pairings and assembled sprites are not inferred. Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

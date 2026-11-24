@@ -1,4 +1,8 @@
 //! Authenticated controls and input extents for the European task-345 transfer bank.
+mod directory_sources;
+mod row_windows;
+pub(super) use directory_sources::uncovered_ranges as uncovered_projected_controls;
+
 use super::{
     lz77,
     observed_tilemap_descriptor::{AdditionalDescriptor, LzWrapper},
@@ -92,9 +96,13 @@ pub struct Catalog {
 }
 
 pub(super) fn target(address: u32, length: u32) -> Result<u32, String> {
+    aligned_target(address, length, 4)
+}
+
+pub(super) fn aligned_target(address: u32, length: u32, alignment: u32) -> Result<u32, String> {
     address
         .checked_sub(ROM_BASE)
-        .filter(|&offset| offset % 4 == 0 && offset <= ROM_SIZE - length)
+        .filter(|&offset| offset % alignment == 0 && offset <= ROM_SIZE - length)
         .ok_or_else(|| format!("Invalid tilemap bank pointer {address:#x}"))
 }
 
@@ -117,7 +125,36 @@ pub(super) fn row_at(rom: &[u8], source_offset: u32) -> Result<AdditionalRow, St
     })
 }
 
-fn descriptor_at(rom: &[u8], source_offset: u32) -> Result<AdditionalDescriptor, String> {
+/// Directly verified E446/E451 rows, the standalone row, and the two
+/// nine-slot physical projections of the E453 auxiliary selector.
+pub(super) fn projected_row_offsets(rom: &[u8]) -> Result<BTreeSet<u32>, String> {
+    let mut offsets = BTreeSet::new();
+    for &(start, count) in row_windows::ROW_WINDOWS {
+        offsets.extend((0..u32::from(count)).map(|row| start + row * ROW_BYTES));
+    }
+    for (pointers, counts) in [(0x39b374, 0x39b3bc), (0x39b398, 0x39b3c5)] {
+        for index in 0..9 {
+            let row_pointer = u32::from_le_bytes(bytes(rom, pointers + 4 * index)?);
+            let [row_count] = bytes(rom, counts + index)?;
+            if row_count != 2 {
+                return Err("Unexpected size of an auxiliary tilemap list".into());
+            }
+            offsets.extend(
+                Slot {
+                    row_pointer,
+                    row_count,
+                }
+                .row_offsets()?,
+            );
+        }
+    }
+    Ok(offsets)
+}
+
+pub(super) fn descriptor_at(
+    rom: &[u8],
+    source_offset: u32,
+) -> Result<AdditionalDescriptor, String> {
     let [p0, p1, p2, p3, a, b, parameter8, opaque_byte] = bytes(rom, source_offset)?;
     let asset_pointer = u32::from_le_bytes([p0, p1, p2, p3]);
     let wrapper = target(asset_pointer, 4)?;
@@ -195,17 +232,29 @@ impl TilemapTransferDirectory {
             .collect::<Result<_, _>>()?;
         let mut ranges = Vec::with_capacity(starts.len());
         for start in starts {
-            let input = rom
-                .get(start as usize..)
-                .ok_or_else(|| format!("Tilemap LZ77 input outside the ROM at {start:#x}"))?;
-            let length = lz77::encoded_length(input, rom.len())
-                .map_err(|error| format!("Tilemap LZ77 input at {start:#x}: {error}"))?;
-            ranges.push(start..start + length as u32);
+            ranges.push(lz77_input_range(rom, start)?);
         }
         if ranges.windows(2).any(|pair| pair[0].end > pair[1].start) {
             return Err("Overlapping tilemap LZ77 inputs".into());
         }
         Ok(ranges)
+    }
+
+    pub(super) fn uncovered_lz77_inputs(
+        &self,
+        rom: &[u8],
+        prior: &PriorSources,
+    ) -> Result<Vec<Range<u32>>, String> {
+        let mut inputs = Vec::new();
+        for range in self.lz77_input_ranges(rom)? {
+            let owned = prior.contains(range.start, range.len()).map_err(|error| {
+                format!("Tilemap LZ77 ownership at {:#x}: {error}", range.start)
+            })?;
+            if !owned {
+                inputs.push(range);
+            }
+        }
+        Ok(inputs)
     }
 
     pub(super) fn fields(&self) -> Result<Vec<Field>, String> {
@@ -278,6 +327,15 @@ impl TilemapTransferDirectory {
         }
         Ok(fields)
     }
+}
+
+pub(super) fn lz77_input_range(rom: &[u8], start: u32) -> Result<Range<u32>, String> {
+    let input = rom
+        .get(start as usize..)
+        .ok_or_else(|| format!("Tilemap LZ77 input outside the ROM at {start:#x}"))?;
+    let length = lz77::encoded_length(input, rom.len())
+        .map_err(|error| format!("Tilemap LZ77 input at {start:#x}: {error}"))?;
+    Ok(start..start + length as u32)
 }
 
 fn row_offsets(slots: &[Slot]) -> Result<BTreeSet<u32>, String> {

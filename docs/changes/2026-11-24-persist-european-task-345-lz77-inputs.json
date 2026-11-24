@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-task-345-lz77-inputs",
+  "title": "Persist the European task-345 LZ77 inputs",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Publish tilemap-transfer-lz77.bin in e305-d304. The verified directory and bounded LZ77 parser select 3,742 bytes from 13 inputs and preserve the earlier owner of the other two.",
+    "Use the verified file bytes for cartridge and HLE reads while preserving legacy tilemap bindings and the earlier manifest entries."
+  ],
+  "validation": [
+    "Windows harness build 5o8qopxw and Wine e5w8vr8k pass. The standard writer creates and reuses all 152 resources. E304 attaches and supplies its original LZ77 view. An edited file and matching file digest are rejected without replacing the active bindings.",
+    "All 15 inputs across three mirrors, 90 controlled SWI calls, both DMA widths and the 300-frame slot-1 replay match E474. The replay uses one 57-byte file-backed input with zero raw SWI bytes for that stream. Wine drains and all 25 protected paths pass."
+  ],
+  "limitations": [
+    "ROM authentication remains required. Other ordinary selectors and transfer banks, translated guest execution, Linux, USA and native Windows remain open. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/runtime/tilemap_transfer_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_stream_bank_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_transfer_directory_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

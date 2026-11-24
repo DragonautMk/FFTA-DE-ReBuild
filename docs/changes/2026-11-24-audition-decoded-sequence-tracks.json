@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "audition-decoded-sequence-tracks",
+  "title": "Audition decoded sequence tracks",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a wiki view of song IDs and decoded tracks, with a bounded instruction trace and note timeline.",
+    "Audition one track using a sine wave and a user-selected tick rate; follow waits, jumps, patterns, returns and note ties, and limit preview duration and work."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-sequence-03jtgkmw checked audio and sprite coexistence, sequence branches, ties, cycle limits, trace pagination, invalid rates and audio controls.",
+    "Protected EUR unit rom-data-viewer-sequence-eur-mli6tkjk compared all 105253 instruction fields and successors, 1610 tracks and 640 song-directory entries and checked selection and audio controls in Chrome."
+  ],
+  "limitations": [
+    "The audition is an approximation of one track, not original song playback: instruments, tempo, pitch and note-extension commands, effects and simultaneous tracks are not reproduced. Actual physical audio output remains unverified.",
+    "EUR attempt bizuie80 failed because the sprite catalog overwrote the audio sequence variable. The variable was separated and a coexistence regression test was added."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

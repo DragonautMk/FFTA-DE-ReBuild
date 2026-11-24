@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "loop-and-export-pcm-waves",
+  "title": "Loop and export PCM waves",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow optional audition looping from each wave’s recorded loop start and download one unlooped 8-bit mono WAV at the chosen sample rate."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-wav-1zs24m0c checked signed sample conversion, RIFF fields, odd and even padding, download payload, loop boundaries and invalid inputs.",
+    "Protected EUR unit rom-data-viewer-wav-eur-zm3n1sb2 compared all 277 waves with the source and checked every WAV sample conversion and an actual loop point in Chrome."
+  ],
+  "limitations": [
+    "The sample rate is a user-selected audition setting; the WAV does not carry loop metadata, and the optional loop does not assert the game uses it. Physical audio output was not checked."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

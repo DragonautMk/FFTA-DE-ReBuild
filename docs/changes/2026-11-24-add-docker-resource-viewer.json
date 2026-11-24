@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "add-docker-resource-viewer",
+  "title": "Generate extracted resource views with Docker",
+  "kind": "added",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Add Linux and Windows Docker wrappers that mount an extracted dataset read-only and generate the offline viewer in a separate host directory."
+  ],
+  "validation": [
+    "Linux Docker synthetic generation, paths with spaces and nested output rejection passed in unit rom-data-viewer-docker-synthetic-ykimihgv.",
+    "Linux Docker generation with the protected EUR dataset passed in unit rom-data-viewer-docker-c17_wu5u.",
+    "Linux Docker unit rom-data-viewer-docker-eur-gpeufuwj generated the expanded wiki offline and matched the private Python-generated page byte for byte, with dataset and root page protected. The first attempt 8b7953ji was denied access to the Docker socket inside the sandbox.",
+    "Linux Docker unit rom-data-viewer-docker-current-k3a7sjpd matched the updated page including the glyph atlas and name-entry keyboard, with the dataset and root page protected. Unit rom-data-viewer-docker-obj-drd29d_i repeated that comparison after object tile sheets were added."
+  ],
+  "limitations": [
+    "PowerShell wrapper and Docker Desktop on Windows have not been executed. Two initial validation launches were refused by a concurrent cold-storage lease and later passed after it ended."
+  ],
+  "files": [
+    "scripts/linux/view_rom_data_docker.sh",
+    "scripts/windows/view_rom_data_docker.ps1",
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-compact-cell-bank",
+  "title": "Persist the European compact-cell bank",
+  "kind": "added",
+  "platforms": [
+    "European ROM and Windows executable under Wine"
+  ],
+  "changes": [
+    "EUR e311-d310 extracts all 91 records of the authenticated adjacent compact-cell bank and its constructor controls in a 31,634-byte file. The manifest preserves source order, relative offsets, both frame encodings and the interior alias target.",
+    "Attach the authenticated file to cartridge reads and retain explicit e310-d309 attachment support. Keep the prior directory fixture pinned to its original generation."
+  ],
+  "validation": [
+    "Windows GNU test build tt6f8y35 and one focused Wine test a1lyos30 passed. Normal creation and reuse preserve all 155 prior manifest entries, attach E310 and reject a rehashed edit without replacing the active resources.",
+    "All 31,634 file-backed bytes and mixed-width ABI reads at span edges agree in the three mirrors with altered ROM backing. Original controls and readers agree across 91 records, 493 frame slots and 563 sequence entries. Fourteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Value-14 token interpretation, alias consumer attribution, live selectors, ordinary scenes and translated dispatch remain open. Linux, USA and native Windows validation and performance measurements are deferred.",
+    "The client did not independently confirm the primary Terra xhigh setting."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/compact_cell_bank.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/compact_cell_bank_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_directory_sources_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-24-reconcile-complete-european-compact-cell-bank.json"
+  ]
+}

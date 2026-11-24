@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-complete-font-glyph-atlas",
+  "title": "Browse complete extracted font glyphs",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a collapsible glyph atlas with full 16-by-16 slot previews, stored width metrics, paged browsing and exact ID lookup."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-font-jauowovw checked slot pixels, navigation, search and the viewer Python suite. Protected EUR unit rom-data-viewer-font-eur-_yk0kauf compared all 3175 slots and widths and checked a source pixel beyond the width metric and final slot in Linux Chrome."
+  ],
+  "limitations": [
+    "Grayscale shows pixel indices; game palette colors and Unicode mappings are not inferred. Physical display and Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

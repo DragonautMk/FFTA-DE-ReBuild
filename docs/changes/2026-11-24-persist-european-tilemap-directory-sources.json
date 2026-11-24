@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "persist-european-tilemap-directory-sources",
+  "title": "Persist European transfer-list directory sources",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows executable under Wine"
+  ],
+  "changes": [
+    "Follow E446 local literal loads and all E451 bounded pointer and count tables. Publish the 1,494-byte residual in the existing direct tilemap control file in e310-d309.",
+    "Preserve the 335 verified list pairs, all owners for their 1,261 rows, previous control ranges, alias branches, three empty slots and the two nine-slot auxiliary projections."
+  ],
+  "validation": [
+    "Windows build yyhnavbf and focused Wine unit fu029eck pass. The standard writer creates and reuses 155 resources and E309 still attaches. The loader rejects a rehashed count edit while preserving the active binding.",
+    "The E446/E451 oracle matches all published intervals. Altered-backing bus and ABI reads match on all three mirrors. 280 original literal loads and 209 pointer and count loads serve 1,084 and 410 new file bytes respectively, with an identical final guest state. Wine drains and all 24 protected inputs pass."
+  ],
+  "limitations": [
+    "The original ROM is still required for authentication and other reads. Indirect setup, live indices, ordinary gameplay, translated execution, native Linux, USA and native Windows are pending. Performance measurement is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory/directory_sources.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory/directory_sources/base_readers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_directory_sources_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_origin_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

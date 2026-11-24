@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "add-extracted-palette-viewer",
+  "title": "Add an offline extracted palette viewer",
+  "kind": "added",
+  "platforms": [
+    "Development tools"
+  ],
+  "changes": [
+    "Generate a searchable standalone HTML resource index and background palette swatches from a local manifest.",
+    "Display all 12 extracted sprite dimensions by shape and size index.",
+    "Display extracted item records by ID and field offset, preserving signed field values.",
+    "Plot world node coordinates with selectable recorded neighbor and path slots.",
+    "Display a selectable PCM waveform with sample count and loop start.",
+    "Display selectable short-text glyphs at extracted widths, with explicit control and missing-glyph labels.",
+    "Display initial-pose indexed sprite tiles as paginated grayscale sheets at integer zoom.",
+    "Link initial sprite IDs and frames to their source tile blocks and object-list metadata.",
+    "Assemble supported initial sprite poses with selectable extracted unit-base palettes and 1D tile order."
+  ],
+  "validation": [
+    "Synthetic resource status and input preservation test passed. Generated a page from an existing EUR dataset in validation unit rom-data-viewer-smoke-1tprhnzd with input guard PASS.",
+    "Linux Chrome headless verified four synthetic swatch colors, labels, search and bank selection in validation unit rom-data-viewer-browser-ylgvo0rb.",
+    "Synthetic status test passed; Linux Chrome and EUR source values passed in validation unit rom-data-viewer-dimensions-nkajqoin with the dataset protected.",
+    "Compared all EUR item records and checked a synthetic negative field in Linux Chrome with protected inputs in unit rom-data-viewer-items-ycfow_31.",
+    "Compared all EUR world nodes and verified selection, coordinates and link slots in Linux Chrome unit rom-data-viewer-map-povy0tl_ with protected inputs.",
+    "Compared all EUR PCM waves and checked selection, metadata and canvas in Linux Chrome unit rom-data-viewer-audio-6k9qlyf2 with protected inputs.",
+    "Compared EUR short-text data and checked glyph canvas, language selection and synthetic control/missing labels in Linux Chrome unit rom-data-viewer-text-q0apycln.",
+    "Compared all EUR sprite pixel blocks and checked canvas index and selection in Linux Chrome unit rom-data-viewer-sprite-ii7_y869.",
+    "EUR sprite frame-to-block and object-list selection passed in Linux Chrome unit rom-data-viewer-sprite-binding-wvf5hxk_.",
+    "Compared a EUR initial-frame object list and palette with source and verified bounds, reference pixel and palette selection in Linux Chrome unit rom-data-viewer-pose-gkpm1ziw.",
+    "Linux Chrome verified search, descriptor and bank selection and matched one actual EUR palette word, RGB color and source path against the authenticated dataset in unit rom-data-viewer-eur-palette-i7frj4x5; input guards passed."
+  ],
+  "limitations": [
+    "The native Windows walkthrough remains open. The initial sandboxed Chrome check failed at a restricted socket operation and is retained as rom-data-viewer-browser-3cd7pgch.",
+    "Item validation attempts jmp8pxse and 0k90y29f are retained; the first test parser split JSON at a semicolon, and the second expected a negative value in a dataset with none.",
+    "Short-text color indices use grayscale; Windows viewer validation remains pending.",
+    "Sprite tile sheets use grayscale indices. Assembled previews use selected unit-base palettes and 1D tile order, without live palette overrides, affine, 256-color, mosaic or special object modes."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

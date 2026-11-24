@@ -190,6 +190,26 @@ impl PriorSources {
             _ => Ok(false),
         }
     }
+
+    /// Subtract earlier ownership when the caller can serve individual byte lanes.
+    pub(super) fn uncovered(&self, range: std::ops::Range<u32>) -> Vec<std::ops::Range<u32>> {
+        let mut cursor = range.start;
+        let mut uncovered = Vec::new();
+        let first = self.0.partition_point(|&(_, end)| end <= cursor);
+        for &(start, end) in self.0[first..]
+            .iter()
+            .take_while(|&&(start, _)| start < range.end)
+        {
+            if cursor < start {
+                uncovered.push(cursor..start);
+            }
+            cursor = end;
+        }
+        if cursor < range.end {
+            uncovered.push(cursor..range.end);
+        }
+        uncovered
+    }
 }
 
 impl Script39RegistryPoses {

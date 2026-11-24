@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "browse-pointer-text-catalogs",
+  "title": "Browse pointer text catalogs",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a wiki view for pointer text entries selected by reader and language, preserving aliases, original glyph IDs and control bytes.",
+    "Render referenced extracted glyphs and mark unavailable glyphs; reject invalid pointer indices without affecting other views."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-pointer-text-dl67rv3e passed generator and Linux Chrome checks for aliases, invalid indices, selection, glyph pixels, controls and wiki links.",
+    "Protected EUR unit rom-data-viewer-pointer-eur-dphvwy1l compared nine readers, 45 language tables, all 16100 strings and 118 referenced font glyphs with extracted sources, and checked the final selection in Chrome."
+  ],
+  "limitations": [
+    "Control bytes and dynamic substitutions are labeled but not executed. Relative archive programs in the same source file still lack a dedicated preview."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_view_rom_data.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

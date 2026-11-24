@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-24",
+  "slug": "reconcile-european-tilemap-source-coverage",
+  "title": "Reconcile European tilemap source coverage",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows CLI under Wine"
+  ],
+  "changes": [
+    "Reconciled all 378,999 distinct required bytes in the verified European tilemap plans with one e310-d309 resource owner each. The 210 unclaimed bytes in the contiguous stream bank are classified alignment padding.",
+    "Confirmed coverage of all 4,358 task-345 bytes and recorded the remaining managed ordinary slot 2 and slot 4 replays."
+  ],
+  "validation": [
+    "E487 Wine sgmwvtno PASS. The Windows ownership CLI agrees with an independent byte join across 17 views and their distinct union. All 69 input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Additional producers, ordinary scenes, translated execution, native Linux, USA and native Windows remain open. Performance was not measured."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}
