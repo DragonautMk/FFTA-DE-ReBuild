@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "export-resolved-instrument-waveforms",
+  "title": "Export resolved instrument waveforms",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Export selected PCM, fixed-rate PCM, CGB square and CGB wave instruments as 32 kHz mono WAVs at the chosen key and duration, repeating stored loops and ending unlooped PCM at its sample length.",
+    "Keep unsupported instruments unavailable and state that the normalized waveform export omits driver effects and the CGB mute setting."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-instrument-wav-synthetic-uno61ye_ checked resampling, loop boundaries, one-shot length, all four types and existing audio controls; unit rom-data-viewer-instrument-wav-decoder-10eyw6q9 independently decoded all four WAVs with Python.",
+    "Protected local-page Chrome unit rom-data-viewer-instrument-wav-local-3g_6k5r0 checked four actual stored instrument kinds and unchanged embedded data. Docker unit rom-data-viewer-instrument-wav-docker-h7atiora matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Pitch and interpolation are approximate; exports omit original driver effects. The local check used existing embedded data while the source dataset volume was unavailable; physical audio and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_instrument_wav_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

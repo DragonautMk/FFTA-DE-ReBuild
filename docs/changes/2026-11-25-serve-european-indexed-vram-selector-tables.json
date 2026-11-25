@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-indexed-vram-selector-tables",
+  "title": "Serve European indexed VRAM selector tables",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish both complete indexed VRAM selector tables and five caller literals in e331-d330. Serve all 90 program slots and the 42-entry localized preload order through the established indexed archive owner."
+  ],
+  "validation": [
+    "Windows build hda7p4if and Wine n0nowibq pass. The five original paths make 692 matching requests and use 264 programs in six archives with altered backing. All selected VRAM bytes, guest clock and complete state agree. The exact predecessor attaches, incomplete current data is rejected transactionally, the two-byte raw gap is preserved, and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary scene entry, live producer domains, translated and original-BIOS paths, Linux, USA and native Windows are on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/vram_selectors.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/indexed_reader_bank_tests.rs",
+    "crates/recomp/src/rom_data/indexed_vram_selector_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

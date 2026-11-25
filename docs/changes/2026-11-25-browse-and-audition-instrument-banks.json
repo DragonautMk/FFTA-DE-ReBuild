@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-and-audition-instrument-banks",
+  "title": "Browse and audition extracted instrument banks",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse stored bank, program and key-map references and audition supported PCM, fixed-rate PCM, CGB square and CGB wave tones independently of a song.",
+    "Share CGB mute with the sequence player, link to source waveforms, preserve selector focus and show progress through the actual one-shot or selected preview duration."
+  ],
+  "validation": [
+    "Synthetic units rom-data-viewer-instruments-synthetic-xc9e3zo9 and rom-data-viewer-instruments-oneshot-94ohotzu checked source resolution, playback, key maps, mute, focus and short PCM progress in Linux Chrome.",
+    "Protected local-page unit rom-data-viewer-instruments-oneshot-local-q7k0c8uu checked all four stored voice kinds and a one-shot sample using real Web Audio; Docker unit rom-data-viewer-instruments-docker-w3mo8nxs matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Audition timing, pitch, envelope and mixing are approximate; unsupported or missing tones are not played. Physical audio and Windows remain unverified, and the shared target volume was unavailable."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_instruments_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

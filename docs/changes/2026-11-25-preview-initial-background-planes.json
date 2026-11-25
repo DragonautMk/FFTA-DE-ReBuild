@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "preview-initial-background-planes",
+  "title": "Preview initial background planes",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Reconstruct two static 64×64 background planes from indexed packet writes and inheritance, with explicit fill and manual layer order.",
+    "Render linked or chosen graphics with selectable palettes and transparency; expose cell values, related views and optional missing-data markers."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-bg-planes-synthetic-oot2ek2u passed 49 viewer and generator tests.",
+    "Protected EUR unit rom-data-viewer-bg-planes-real-367dco_5 authenticated 352 packet ranges and the complete JSON, checked 1327104 cells over 162 descriptors and five rendered pixels, and matched 12 Docker/Python files. Visual unit b_z0jgel reviewed three previews.",
+    "Follow-up rom-data-viewer-bg-planes-mark-real-xg4uwxb5 checked the real missing-tile toggle and an unchanged real pixel, with 16 synthetic Docker/Python files matching. Published two ignored local pages."
+  ],
+  "limitations": [
+    "The preview uses a chosen initial fill, layer order and optional linked graphics/palettes; live animation, camera and complete scene composition are not established. Windows was deferred and the large-JSON worker remains paused.",
+    "Synthetic unit 9rljf8_r passed tests but failed its input guard when Python rewrote bytecode; the corrected unit disabled bytecode writes. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_bg_planes_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

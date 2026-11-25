@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "reconcile-european-localized-text-source-roots",
+  "title": "Reconcile the European localized text and keyboard roots",
+  "kind": "docs",
+  "platforms": [
+    "European ROM source inventory with Wine disassembly"
+  ],
+  "changes": [
+    "Trace the immediate root arguments of the 16 retained relative text reader calls. Identify the stored task root writer and its three direct callers."
+  ],
+  "validation": [
+    "Wine disassembly 1dau_2pf reused six retained windows and authenticated all 16 immediate paths. Protected ngz6rt4l checks 197 source-root cells from 39 complete localized selectors and two keyboard readers against e314-d313. Five already have owners, leaving 192 cells and 768 bytes for publication."
+  ],
+  "limitations": [
+    "Broader registry domains, other writers and the live branch use of the two RAM-fed initializer paths remain open. Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

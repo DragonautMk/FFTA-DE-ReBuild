@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "authenticate-european-state-initializer-sources",
+  "title": "Authenticate the European state initializer sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace the live constructor template, both counted lists and all eight indirect records in the selected parent and child state group. Project six data spans and six source words totaling 204 unowned bytes against e321-d320."
+  ],
+  "validation": [
+    "Wine source units tpy1pbna, zjebrwxi and w89397al passed with the isolated server drained. The follow-up guard stopped before Wine on a copied digest typo. After the correction the saved copy matches the recorded digest and the check passes."
+  ],
+  "limitations": [
+    "Catalog publication, ordinary entry, neighboring template readers, later callback tables, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

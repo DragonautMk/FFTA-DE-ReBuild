@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "prepare-localized-selected-job-names",
+  "title": "Browse localized names for selected job slots",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse the twenty stored slot-job references by joining direct metadata52 property zero to the documented European localized name reader.",
+    "Render recognized glyphs locally with bitmap fallback and link each direct name to its source string on the text page; omit names when direct metadata or text is unavailable."
+  ],
+  "validation": [
+    "Synthetic managed unit rom-data-viewer-job-names-synthetic-2_l9y4cr passed six projection, navigation, scope and text-search tests; current unit rom-data-viewer-job-names-current-7m1igk75 also checked text readability and scoped navigation.",
+    "Protected unit rom-data-viewer-job-names-recovered-b049typ1 authenticated the European ROM and retained manifest, reconstructed the slot and metadata JSON files byte for byte, and checked 20 joins, five 753-entry tables, 3765 source strings and 49 selected glyphs against source bytes and manifest hashes.",
+    "The same unit checked all language links and cross-page navigation in Linux Chrome and matched Docker and Python output for a reduced dataset reconstructed from the verified inputs. Guarded publication updated the ignored local pages without altering unrelated embedded data.",
+    "Earlier b8hp7a8l reached the checks but failed while writing the result because a count variable was reused; the corrected unit passed."
+  ],
+  "limitations": [
+    "The original extracted dataset volume was unavailable; the reduced text input was reconstructed from previously embedded pointer data and authenticated against the ROM and retained manifest, not recovered as the complete extracted text file.",
+    "Live slot selection, names outside these twenty direct references, full Unicode mapping and native Windows remain unverified. Text commands and substitutions are not executed."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_job_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_text.md"
+  ]
+}

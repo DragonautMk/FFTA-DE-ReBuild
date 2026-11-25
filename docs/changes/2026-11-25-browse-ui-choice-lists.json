@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-ui-choice-lists",
+  "title": "Browse physical UI choice lists",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse physical UI choice lists, plot stored cursor coordinates and inspect entry IDs, source offsets, opaque bytes and raw navigation bytes.",
+    "Keep equal-content source lists distinct and show the selected point on top when coordinates overlap."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-ui-choices-synthetic-overlap-5jqfovcx passed point selection, overlapping markers, raw byte values and physical-list handling in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-ui-choices-eur-overlap-ger83d3k matched all 13 lists and 42 entries with the source and checked a filtered template and a real point in Chrome.",
+    "Linux Docker unit rom-data-viewer-ui-choices-docker-overlap-rqql4vzm matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "Live labels, filtering, selection behavior and navigation targets are not reconstructed. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_ui_choices_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui.md"
+  ]
+}

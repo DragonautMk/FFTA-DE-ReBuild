@@ -4,6 +4,9 @@ use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 pub mod additional;
+pub mod reader_banks;
+pub mod vram_selectors;
+pub mod world_map_lookups;
 
 pub const GROUPS: [u32; 4] = [0x71e57c, 0x71e61c, 0x71e630, 0x71e658];
 pub const ARCHIVES: [u32; 20] = [
@@ -365,6 +368,12 @@ pub struct IndexedGraphics {
     pub white_flowers_direct: Option<WhiteFlowersDirectIndexed>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub additional: Option<additional::AdditionalIndexed>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reader_banks: Option<reader_banks::ReaderBanks>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub vram_selectors: Option<vram_selectors::VramSelectors>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub world_map_lookups: Option<world_map_lookups::WorldMapLookups>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -470,6 +479,21 @@ impl IndexedGraphics {
         if let Some(additional) = &self.additional {
             spans.extend(additional.source_spans()?);
         }
+        if let Some(banks) = &self.reader_banks {
+            spans.extend(banks.source_spans()?);
+        }
+        if let Some(selectors) = &self.vram_selectors {
+            if self.reader_banks.is_none() || self.additional.is_none() {
+                return Err(invalid());
+            }
+            spans.extend(selectors.source_spans()?);
+        }
+        if let Some(lookups) = &self.world_map_lookups {
+            if self.vram_selectors.is_none() {
+                return Err(invalid());
+            }
+            spans.extend(lookups.source_spans()?);
+        }
         spans.sort_by_key(|v| v.0);
         for pair in spans.windows(2) {
             if pair[0].0 as usize + pair[0].1.len() > pair[1].0 as usize {
@@ -489,18 +513,40 @@ impl IndexedGraphics {
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom)?.decoded {
+        let layout = if self.world_map_lookups.is_some() {
+            SourceLayout::WorldMapLookups
+        } else if self.vram_selectors.is_some() {
+            SourceLayout::VramSelectors
+        } else if self.reader_banks.is_some() {
+            SourceLayout::ReaderBanks
+        } else {
+            SourceLayout::Legacy
+        };
+        if self != &Catalog::from_rom_with_layout(rom, layout)?.decoded {
             return Err("Indexed archives differ from authenticated EUR source".into());
         }
         Ok(())
     }
 }
+
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) enum SourceLayout {
+    Legacy,
+    ReaderBanks,
+    VramSelectors,
+    WorldMapLookups,
+}
+
 pub struct Catalog {
     pub decoded: IndexedGraphics,
     pub sources: Vec<SourceRange>,
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_layout(rom, SourceLayout::WorldMapLookups)
+    }
+
+    pub(crate) fn from_rom_with_layout(rom: &[u8], layout: SourceLayout) -> Result<Self, String> {
         if rom.len() != ROM_LIMIT || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Indexed graphics require exact EUR ROM; USA pending".into());
         }
@@ -535,7 +581,11 @@ impl Catalog {
             index: i as u8, value: row[0], secondary_program: row[1],
             primary_program: row[2], opaque: row[3],
         }).collect();
-        let mut decoded = IndexedGraphics { contexts, groups, archives, color_archives: None, white_flowers: None, white_flowers_direct: None, additional: None };
+        let mut decoded = IndexedGraphics {
+            contexts, groups, archives, color_archives: None, white_flowers: None,
+            white_flowers_direct: None, additional: None, reader_banks: None, vram_selectors: None,
+            world_map_lookups: None,
+        };
         let source: Vec<u8> = decoded.source_spans()?
             .iter()
             .flat_map(|(_, b, _)| b.iter().copied())
@@ -597,6 +647,15 @@ impl Catalog {
         if archive.source_bytes()? != bytes { return Err(invalid()); }
         decoded.white_flowers_direct = Some(WhiteFlowersDirectIndexed { caller_literal, archive });
         decoded.additional = Some(additional::from_rom(rom)?);
+        if layout >= SourceLayout::ReaderBanks {
+            decoded.reader_banks = Some(reader_banks::from_rom(rom)?);
+        }
+        if layout >= SourceLayout::VramSelectors {
+            decoded.vram_selectors = Some(vram_selectors::VramSelectors::from_rom(rom)?);
+        }
+        if layout >= SourceLayout::WorldMapLookups {
+            decoded.world_map_lookups = Some(world_map_lookups::WorldMapLookups::from_rom(rom)?);
+        }
         let spans = decoded.source_spans()?;
         let sources = spans
             .into_iter()

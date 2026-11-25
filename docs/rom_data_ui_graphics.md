@@ -115,6 +115,53 @@ refreshing the canonical output. The test scope covers controlled original
 readers and decoder output. Ordinary invocation, downstream transfers,
 translated execution, Linux, USA and native Windows remain open.
 
+## E502 Computed European decoder sources
+
+Protected source inventory `e502-eur-computed-custom-source-plan-67k4v45y`
+accounts for the remaining 43 calls from the E500 census. Thirty-four
+select from 16 five-slot language tables. Four select from the two
+157-entry alternate BG palette tables. Two select the tag-20 and
+tag-22 streams linked from the 162 BG descriptors, and two use the
+103-entry relative OBJ directory at `3d63d4`. The remaining call
+decodes relative text programs through `08013f8c`.
+
+The audited physical inputs include 80 language streams, 314 alternate
+palettes, 50 main BG graphics wrappers, 103 relative OBJ streams and
+8,898 compressed programs from the 145 declared relative text archives.
+The audit reconstructs the selected boundaries and matches 9,659 occupied
+source ranges to the `e313-d312` manifest. It also resolves 40 distinct
+source-base literals. Of these, 31 words totaling 124 bytes still come
+from the ROM, including 28 language-table words and three alternate
+palette roots.
+
+The physical lengths refer to the declared source families. Wider live
+index values, arbitrary text archive arguments and callers outside the
+retained census still need independent evidence. This is a source audit.
+
+## E503 Source-base literals for the European custom decoder
+
+EUR generation `e314-d313` adds all 31 residual E502 words to
+`engine.thumb-pc-literals`. The original Thumb loads receive the same
+table base addresses from the extracted file. The 155 other resource
+entries, the existing literal records and the stream owners match
+`e313-d312`.
+
+Wine `e503-eur-custom-decoder-roots-wine-bc73k4y1` verifies 32 original
+reader paths, including two with a shared source word. For each path it
+executes the first and last declared table lookups with the selected
+index and address registers established. All 64 cases match the original
+registers, flags, table results and guest clock with the new 124 bytes
+inverted. The trace attributes all 31 words to managed reads, and the
+existing Star Cross counter stays at zero during these calls.
+
+The command handler creates, reuses and verifies the new generation.
+The earlier manifest attaches with its original literal file, and a
+rehashed pointer edit is rejected while the active dataset stays usable.
+Wine drains. Windows build `e503-eur-custom-decoder-roots-windows-build-ca54p6yc`
+retains the exact E501 executable under `work/e501-test.exe`.
+Ordinary invocation, wider index domains, translated execution, Linux,
+USA and native Windows remain open.
+
 ## Additional European table-selected source contract
 
 `ROMDATA-01-LOCALIZED-TABLE-GRAPHICS` declares eight additional, independently

@@ -7,14 +7,13 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: script sprites ykbzrpvg, Docker 5d6shlsb, memory PASS.
-- Selection: ITEM-LINKS; pair rows and item links both ways.
-- Proof: synthetic, EUR/Chrome, Docker; protect wiki/dataset.
-- Risks: inactive slots, missing items; retain raw values.
-- Missing: previews/audio/scenes; JSON kdrp6i3r paused; Windows.
-- Resume: implement; stop on PASS/blocker.
+- Selection: paused by user.
+- Verified: ROAD-DIRECTION 4fht7ab9.
+- Missing: other previews/audio; Windows deferred.
+- Risk: JSON worker paused; source disk error.
+- Resume: choose viewer work only on request.
 
 ## Running or suspended tasks
 
@@ -37,16 +36,16 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425/E444 Star Cross, E445–E489 tilemaps, E490–E498 compact cells, E499/E501 UI; E429/E433/E437/E443 Wine PASS.
+- E425–E510 scoped graphics, UI, text and indexed milestones: Wine PASS (archive and feature guides).
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
-- TARGET-REATTACH: host bind verified; check mount; bwrap available.
+- TARGET-REATTACH: prior bind proof retained. Current host target is on the internal disk. The external volume is read-only.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
 - E171/E172 `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; E170 1,068 lower bytes owned (`aqz4qh3s`); 3,600 copied-code bytes and ID362 open.
-- E170-GUI-FAILED-DATASET-CLEANUP: nested lease blocks 114 duplicates; Wine drained, three PIDs unreadable; preserve (`2myj8gap/cleanup-observation.json`).
+- E170-GUI-FAILED-DATASET-CLEANUP: lease retains 114 duplicates; Wine drained, three PIDs unreadable (`2myj8gap/cleanup-observation.json`).
 - Verified: E158 reader/CLI `b8vylqkk`/`tucnagm9`; E170 scene `9b1qo9ie`, lifecycle `i73r4f54`, unaligned `8_1wpiix`, identity `_mjaz8sl`, GUI `o9pxy5_a`/`xssda1xe` PASS.
 - Missing: EUR inventory/consumers/ordinary/ABI/extent/indirect calls, 06/07; Linux/USA/native Windows/new32:9 deferred. Protect originals/saves.
 - Failures `kitubxih`/`wamu6k3z` retained; do not repeat locator `l4i2lrcu`.
@@ -196,9 +195,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E502 ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-SOURCES.
-- Last verified result: E501 ms1i9nsv/e313; E500 retains 43 sites.
-- Remaining work: original arguments, bounded banks and owners.
-- Errors or blockers: live indices may exceed physical tables.
-- Next action: resolve 43 EUR argument paths. Stop on plan or prerequisite.
-- References: E500/E501. Ordinary/translated/platform proof deferred.
+- Task: E539 EUR timed sound tables. Suspended by user.
+- Last verified result: e333 z2k72eer. Static plan 600f84a2 covers 423 sites, 587 rows and 6,249 new bytes.
+- Remaining work: typed ownership, 552 controlled cases and e333 attachment on Wine.
+- Errors or blockers: paused. No build or Wine job launched.
+- Next action: resume only on request.
+- References: e539-sound-plan.json in E518 recovery. Ordinary, Linux, USA and native open.

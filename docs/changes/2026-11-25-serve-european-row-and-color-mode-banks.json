@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-row-and-color-mode-banks",
+  "title": "Serve the European row-copy and Color Mode banks",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish all 14 authenticated E519 spans in e321-d320 as typed transfers. Preserve the physical overlap, original pointer order, two raw gaps and adjacent e320-d319 owners."
+  ],
+  "validation": [
+    "Windows cross-build 0du8064n and focused Wine unit iiv6ks_f passed. Four original row copies, the adjacent CPUSet and 15 Color Mode reader cases match destination bytes, guest clocks and full saved states with all new backing altered.",
+    "Dataset creation, reuse and verification pass. Predecessor attachment, missing-group rejection and the adjacent mode-3 and E518 owners pass. The isolated Wine server drained."
+  ],
+  "limitations": [
+    "Ordinary entry, translated dispatch, original BIOS, mode-3 reachability, other source uses, native Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/row_pairs.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/row_pair_copy_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

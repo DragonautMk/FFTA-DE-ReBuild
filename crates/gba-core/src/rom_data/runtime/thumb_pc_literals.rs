@@ -171,6 +171,10 @@ impl ThumbPcLiteralsResources {
                 + data.white_flowers_mixed.as_ref().map_or(0, Vec::len)
                 + data.white_flowers_final.as_ref().map_or(0, Vec::len)
                 + data.star_cross_observed.as_ref().map_or(0, Vec::len)
+                + data.custom_decoder_roots.len()
+                + data.localized_text_roots.len()
+                + data.startup_task_roots.len()
+                + data.title_frontend_roots.len()
         {
             return Err("Thumb literal source count mismatch".into());
         }
@@ -205,6 +209,10 @@ impl ThumbPcLiteralsResources {
             .chain(data.white_flowers_mixed.iter().flatten())
             .chain(data.white_flowers_final.iter().flatten())
             .chain(data.star_cross_observed.iter().flatten())
+            .chain(&data.custom_decoder_roots)
+            .chain(&data.localized_text_roots)
+            .chain(&data.startup_task_roots)
+            .chain(&data.title_frontend_roots)
             .zip(sources)
         {
             if source.offset != literal.source_offset
@@ -492,7 +500,7 @@ impl ThumbPcLiteralsResources {
                     let word = word - model::WHITE_FLOWERS_FINAL_BASE;
                     white_flowers_final_count += 1;
                     white_flowers_final |= 1u64 << word;
-                } else {
+                } else if word < model::CUSTOM_DECODER_ROOTS_BASE {
                     let word = word - model::STAR_CROSS_OBSERVED_BASE;
                     star_cross_observed_count += 1;
                     star_cross_observed |= 1u64 << word;
@@ -692,5 +700,9 @@ impl ThumbPcLiteralsResources {
             + self.data.white_flowers_mixed.as_ref().map_or(0, |words| words.capacity() * std::mem::size_of::<model::LiteralWord>())
             + self.data.white_flowers_final.as_ref().map_or(0, |words| words.capacity() * std::mem::size_of::<model::LiteralWord>())
             + self.data.star_cross_observed.as_ref().map_or(0, |words| words.capacity() * std::mem::size_of::<model::LiteralWord>())
+            + self.data.custom_decoder_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.localized_text_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.startup_task_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.title_frontend_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
     }
 }

@@ -77,8 +77,8 @@ class ViewerControlsTest(unittest.TestCase):
                   q('#sequence-play').click();await wait(()=>sources.length===8);
                   const bus=buses[0],destination=bus.output;
                   if(bus.gain.value!==1)throw Error('initial gain');
-                  for(const i of [1,2,3,4,5])if(sources[i].output.output!==bus)throw Error('CGB routing '+i);
-                  for(const i of [0,6,7])if(sources[i].output.output!==destination)throw Error('non-CGB routing '+i);
+                  for(const i of [1,2,3,4,5])if(sources[i].output.output.output!==bus || sources[i].output.output.gain.value!==1)throw Error('CGB routing '+i);
+                  for(const i of [0,6,7])if(sources[i].output.output.output!==destination || sources[i].output.output.gain.value!==1)throw Error('non-CGB routing '+i);
                   mute.checked=true;change(mute);
                   if(bus.gain.value!==0 || sources.length!==8 || q('#sequence-stop').disabled)throw Error('live mute');
                   if(![...document.querySelectorAll('#sequence-note-rows tr')].some(r=>r.cells[6].textContent.includes('CGB · sine fallback · muted')))throw Error('fallback label');
@@ -87,15 +87,15 @@ class ViewerControlsTest(unittest.TestCase):
                   if(!mute.checked || !bus.disconnected)throw Error('track persistence and cleanup');
                   q('#sequence-play').click();await wait(()=>sources.length===9);
                   const nextBus=buses.findLast(n=>n.output===destination);
-                  if(nextBus.gain.value!==0 || sources[8].output.output!==nextBus)throw Error('muted track');
+                  if(nextBus.gain.value!==0 || sources[8].output.output.output!==nextBus)throw Error('muted track');
                   q('#sequence-voice').value='sine';change(q('#sequence-voice'));q('#sequence-play').click();
                   await wait(()=>sources.length===10);
                   const sineBus=buses.findLast(n=>n.output===destination);
-                  if(!mute.checked || sources[9].kind!=='sine' || sources[9].output.output!==sineBus || sineBus.gain.value!==0)throw Error('sine mode mute');
+                  if(!mute.checked || sources[9].kind!=='sine' || sources[9].output.output.output!==sineBus || sineBus.gain.value!==0)throw Error('sine mode mute');
                   song.value='1';change(song);if(!mute.checked)throw Error('song persistence');
                   q('#sequence-play').click();await wait(()=>sources.length===11);
                   const songBus=buses.findLast(n=>n.output===destination);
-                  if(songBus.gain.value!==0 || sources[10].output.output!==songBus)throw Error('muted next song');
+                  if(songBus.gain.value!==0 || sources[10].output.output.output!==songBus)throw Error('muted next song');
                   q('#sequence-stop').click();return 'PASS';
                 })()''')
                 self.assertEqual(result, 'PASS')

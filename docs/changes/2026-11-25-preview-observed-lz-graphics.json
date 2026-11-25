@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "preview-observed-lz-graphics",
+  "title": "Preview observed LZ77 graphics outputs",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Validate stored GBA LZ77 streams against their decoded bytes and browse the outputs as 4-bit or 8-bit tile sheets with manually chosen palettes.",
+    "Make the decoded streams available as manual graphics sources in object animations and tilemap previews; label documented observation contexts without claiming asset identities."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-observed-lz-synthetic-p05_jv4a passed 65 decoder, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-observed-lz-recovered-1o7oqra1 independently decoded 25 streams and 58936 bytes, matched the full catalog hash and 28 source ranges, and checked 50 tile-depth previews and linked viewers in Chrome.",
+    "The same unit matched all 12 Docker/Python output files; three validated ignored local wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "Decoded bytes can include non-graphics data; tile depth and palettes are manual, and observation labels do not prove asset identity or live game context. Other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_observed_lz_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

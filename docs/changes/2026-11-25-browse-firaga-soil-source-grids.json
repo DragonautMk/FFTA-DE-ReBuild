@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-firaga-soil-source-grids",
+  "title": "Browse Firaga and Soil Evidence source grids",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Expose two documented Firaga copied matrices and two Soil Evidence rectangles in the tilemap explorer, preserving every stored cell, source identity and associated pointer field.",
+    "Link each resource to its own grids and allow manual use of the observed LZ graphics sources; keep missing or invalid catalogs independent."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-source-grids-synthetic-q5cw3qvv passed 70 projection, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-source-grids-recovered-vthg8e9o matched both complete catalog hashes and nine source ranges; Chrome checked all four grids and 280 cells.",
+    "The same unit matched all 12 Docker/Python output files; the ignored index and world page were published with guarded preimages."
+  ],
+  "limitations": [
+    "Cell bit interpretation, graphics and palettes are manually selected; the live game scene, other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_source_grids_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

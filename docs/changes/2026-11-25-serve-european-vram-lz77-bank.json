@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-vram-lz77-bank",
+  "title": "Serve the complete European VRAM LZ77 bank",
+  "kind": "added",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish all three E509 streams and literal words in graphics.observed-lz-block at e317-d316 for 15,476 authenticated source bytes.",
+    "Serve decoded inputs through the existing LZ77 HLE and exact encoded data through the guest bus. Retain e316-d315 attachment.",
+    "Raise the observed LZ packet input ceiling from 1 MiB to 2 MiB for the validated 1,199,367-byte JSON."
+  ],
+  "validation": [
+    "E510 e510-eur-vram-lz-bank-wine-pd_87pq8 PASS. Three original VRAM calls deliver 28,672 decoded bytes with altered backing and identical full state. Creation, reuse, verify, predecessor attachment, mixed mirror reads and omitted bank rejection pass. Wine server drained.",
+    "Corrected Windows build sehvwj6y retains the exact executable from the 1 MiB rejection in jqocwdm0. Original build c8vu9zgk retains the E507 executable."
+  ],
+  "limitations": [
+    "Ordinary use, translated dispatch, real BIOS, computed or indirect LZ77 callers, the neighboring raw source, Linux, USA and native Windows remain open. Performance measurements remain deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/observed_lz.rs",
+    "crates/gba-core/src/rom_data/runtime/observed_lz.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/vram_lz_bank_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

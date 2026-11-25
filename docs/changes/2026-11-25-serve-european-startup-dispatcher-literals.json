@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-startup-dispatcher-literals",
+  "title": "Serve the European startup dispatcher literal pools",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Authenticate all 58 literal loads in the bounded startup dispatcher and its ten request helpers. Append the 39 previously unowned source words to the startup resource in e325-d324 and retain the prior revision."
+  ],
+  "validation": [
+    "Windows build bu7hs4zv and the single Wine case 9xc0yybf pass with the server drained. The actual title callback runs in slot 5 on frame 741. All 1,468 ordinary requests match at 26 reader sites with 13 new words used, and machine state, guest clock and audio agree. The controlled read check proves all 39 original load results. The e324-d323 predecessor attaches, and its packet presented as e325-d324 is rejected without replacing the active owner."
+  ],
+  "limitations": [
+    "Other selector and request branches still require complete ordinary execution. Translated dispatch, original BIOS, native Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/startup_tasks.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

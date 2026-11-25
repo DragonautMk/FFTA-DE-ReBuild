@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-linked-background-descriptors",
+  "title": "Browse linked background descriptors",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Display each background descriptor, its relative source and transfer links, selectors, optional fields and documented environment fallback.",
+    "Navigate to available tile sheets, palettes, raster colors, terrain and animated transfers at the same descriptor, with a return link from the tile sheet."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-bg-descriptors-synthetic-2gdpftqa passed 49 viewer and generator tests.",
+    "Protected EUR unit rom-data-viewer-bg-descriptors-real-7zygjuro authenticated the complete JSON and source range, checked all 162 graphics and alternate-palette links, 1782 displayed fields, 648 selector cases, six related view types and 14 Docker/Python outputs. Published two ignored local pages."
+  ],
+  "limitations": [
+    "Names and complete scenes are not inferred; links depend on available related resource data. Windows was deferred and the large-JSON worker remains paused."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_bg_descriptors_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

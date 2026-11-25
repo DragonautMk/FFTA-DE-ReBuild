@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "audition-cgb-square-voices",
+  "title": "Audition CGB square voices",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Play type 1 and 2 CGB sequence voices with their stored duty selection, using the four project APU wave patterns and retaining key maps, pitch controls and the CGB mute."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-cgb-square-synthetic-corrected-ii339smu passed 27 Python and Chrome tests, including all duty patterns, key-mapped voices, waveform caching, live pitch and mute.",
+    "Protected EUR unit rom-data-viewer-cgb-square-eur-corrected-nefqr2ow compared all four extracted square tone records and checked a real long note, waveform and live mute/unmute with Chrome Web Audio.",
+    "Offline unit rom-data-viewer-cgb-square-docker-ipvtpori produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "The M4A duty interpretation follows generic source definitions; equal-tempered pitch, browser resampling, envelopes, channel allocation and game-specific driver behavior remain approximate. Physical audio and Windows were not tested.",
+    "Initial synthetic unit nctgtt4c omitted a required PCM fixture; diagnostic pnk_eqbw intercepted startup; initial EUR unit 7a46jqcr read gain synchronously. Corrected checks passed. The paused large-JSON prototype remains excluded locally and present in template generation."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_cgb_square_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "crates/gba-core/src/apu.rs",
+    "docs/rom_data_audio.md"
+  ]
+}

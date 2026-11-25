@@ -3917,6 +3917,40 @@ are protected, successful scratch is removed and Wine drains. This completes
 the observed sequence in one EUR opening; other banks, producers, scenes and
 platforms remain open.
 
+## E533 European title Color Mode cursor
+
+The E532 title frontend literal census leads to the remaining direct cursor
+table at `3adcf0..3adcfc`. Main title row 2 selects Color Mode and initializes
+its cursor from the low two bits of `02002fc2`. The direction handlers
+cycle the three ordinary selections. The original loads at `0813a906` and
+`0813a916` read two halfwords at offsets `4 * selection` and
+`4 * selection + 2`. The guest adds three to the vertical coordinate.
+The earlier main title table ends at `3adcf0`, and the language table
+starts at `3adcfc`. The pointer word at `13a944` already has an E532 owner.
+
+EUR `e328-d327` publishes the three pairs as `title_color_mode_positions`
+in `graphics.layered-obj-animations`. The new manifest adds one 12-byte
+span with SHA-256 `201ef783ae66d34d65198297cdf4ae432df244302e5f9d59f83378196744e2dc`.
+The E532 dataset attaches, and an incomplete current manifest is rejected
+without replacing the attached resource owner.
+
+Windows build `a4hnrcv0` and Wine unit `nalxy6kd` pass. The verified E129
+title checkpoint `qyb35ep8` enters Color Mode through Down and A at frame
+1879. Two further Down presses visit the remaining pairs, and A confirms
+TV, changing the stored value from 0 to 2. The managed run alters all 12
+source bytes and serves all 46 halfword requests from the extracted table.
+The raw reference and managed run match guest clock, framebuffer, audio
+and complete saved state. Wine drained, and the managed runner removed
+successful scratch. The manifest SHA-256 is
+`d1fa2a0cb30fa369af54e96c09a90927e85869229f54d3e730e728d2f36df5f3`.
+
+The initial cold-run attempt `cn6mxjpj` reached the end of the opening
+position loop. Its Start pulse did not reach the main menu within the
+selected window, and Wine drained. The clean-start transition, translated
+dispatch, original BIOS, Linux, USA and native Windows remain on the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md#whole-bank-extraction-priority).
+No performance measurements were made.
+
 ## EUR neutral-opening OBJ pointer directory
 
 The title initializer at `0813a240..25e` copies exactly 19 absolute ROM

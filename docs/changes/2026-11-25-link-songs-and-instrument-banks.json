@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "link-songs-and-instrument-banks",
+  "title": "Link songs and instrument banks",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "List song IDs whose headers reference each instrument bank, with pagination and navigation to the corresponding sequence and back.",
+    "Preserve the selected key and CGB mute during navigation; do not infer individual program use or start playback."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-song-banks-synthetic-vb32mf9z checked pagination, duplicate IDs, absent data, navigation and existing audio and bookmark controls. Earlier zvakd4im failed because the test reused a Chrome profile; separate profiles corrected it.",
+    "Protected local-page unit rom-data-viewer-song-banks-local-ny618l30 checked all 454 bank-to-song references and both directions, preserving the existing embedded data. Docker parity unit rom-data-viewer-song-banks-docker-kry3o7x6 matched Python on synthetic input."
+  ],
+  "limitations": [
+    "The local check used the existing embedded dataset because the original volume was unavailable; a bank reference does not prove a particular program or tone was used. Native Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_instrument_song_links_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

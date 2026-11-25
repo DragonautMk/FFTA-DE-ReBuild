@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-isolated-extracted-file-pages",
+  "title": "Browse extracted files on isolated wiki pages",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Generate separately linked offline file pages for authenticated resources up to 8 MiB, reusing the structured JSON and raw text or hexadecimal inspector without loading every file in the index.",
+    "Keep generated resource copies private, preserve older pages and reject overwrites of edited or unowned pages."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-resource-pages-synthetic-45imfvy_ passed 37 viewer and generator tests.",
+    "Protected EUR unit rom-data-viewer-resource-pages-real-_ueykdkg checked four full extracted file hashes, 308 records, Linux Chrome and parity for 17 Docker/Python output files. Four pages and index links were published locally."
+  ],
+  "limitations": [
+    "Files above 8 MiB, missing files and SHA-256 mismatches receive no isolated page; the source dataset was unavailable and only four reconstructed catalogs were added to the current local wiki. Large-JSON work remains paused and Windows was deferred.",
+    "Initial real unit _u03rmwz stopped on a reporting counter TypeError; the corrected unit passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_resource.html",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_resource_pages_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": []
+}

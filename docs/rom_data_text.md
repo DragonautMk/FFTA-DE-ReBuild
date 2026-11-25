@@ -75,6 +75,59 @@ Broader ordinary scenes for this broad model,
 all font slots/Unicode and other reader catalogs remain open. New Linux/USA/
 native Windows checks remain pending, with no performance or space campaign.
 
+## E504 Original text caller sources
+
+Wine `e504-eur-relative-text-callers-disassembly-wine-1dau_2pf` reconciles
+the 16 retained direct calls to `08013f8c`. Eleven receive the result of
+an original localized selector and two load the name-keyboard archive
+directly. Two use the known callback or script dispatcher paths. The
+remaining caller at `08019836` reads the saved field at task offset
+`2d0`. Its original writer at `08019772` stores argument `r1`. Of the
+three direct initializer calls, the one at `08067ee4` obtains a declared
+localized archive from `08016940`. The two RAM-fed paths need live
+evidence to establish when they reach the archive branch.
+
+Protected inventory `e504-eur-localized-text-source-plan-ngz6rt4l`
+checks the complete declared selector family against `e314-d313`.
+The 29 relative archive and nine pointer-string selectors each have five
+physical source-root literals. The script language selector contributes
+another five and the name keyboard has two literal readers. The source
+targets already belong to `text.catalogs`, `text.script-archives` or
+`text.name-keyboard`. Of the 197 distinct literal cells, 192 words
+totaling 768 bytes still come from the ROM. The five previously
+extracted words retain their existing ownership.
+
+Wider registry indices, other writers and the live RAM-fed arguments
+remain open. The source inventory does not exercise those paths in play.
+
+## E505 Extracted European text selector roots
+
+EUR generation `e315-d314` publishes the 192 remaining E504 source-root
+words in `engine.thumb-pc-literals`. They account for 768 bytes of
+the original Thumb data loads. The manifest keeps the five earlier
+literal records and all 155 other resource entries, including the text
+tables and payloads reached through these words.
+
+Wine `e505-eur-localized-text-roots-wine-wmqakvh1` runs the original
+29 archive selectors, nine pointer-string selectors and script language
+selector for each of the five physical language values. It also runs
+both original keyboard root loads and representative fallback cases
+for values 5 and 255 in the three selector families. The trace verifies
+all 197 declared literal cells. Both machine variants return the same
+source pointers and match on registers, flags and guest clock while
+the new 768 backing bytes are inverted in the managed machine.
+
+Preparation, reuse and verification pass, as does explicit attachment
+of an `e314-d313` manifest with its original literal file. A rehashed
+source edit is rejected while the existing owner stays attached.
+Protected inputs pass and Wine drains. Windows build
+`e505-eur-localized-text-roots-windows-build-yzvvmwvk` retains the exact
+E503 executable under `work/e503-test.exe`.
+
+The result covers selector routines and keyboard loads in the
+interpreter. Ordinary startup and scene paths, translated execution,
+the live stored-root arguments, Linux, USA and native Windows remain open.
+
 ## Broad managed catalog
 
 EUR schema1/extractor12/decoder11publishes fixed tenth file `text-catalogs.json`,

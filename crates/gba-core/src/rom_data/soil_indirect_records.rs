@@ -37,6 +37,20 @@ pub struct IndirectRecord {
     pub values: [u16; 2],
 }
 impl IndirectRecord {
+    pub(super) fn from_rom(rom: &[u8], offset: u32) -> Self {
+        let at = offset as usize;
+        let bytes = &rom[at..at + RECORD_BYTES];
+        Self {
+            offset,
+            field0: u16::from_le_bytes([bytes[0], bytes[1]]),
+            fields: [bytes[2], bytes[3]],
+            values: [
+                u16::from_le_bytes([bytes[4], bytes[5]]),
+                u16::from_le_bytes([bytes[6], bytes[7]]),
+            ],
+        }
+    }
+
     pub fn source_bytes(&self) -> [u8; RECORD_BYTES] {
         let first = self.field0.to_le_bytes();
         let value0 = self.values[0].to_le_bytes();
@@ -255,18 +269,7 @@ impl Catalog {
             || literals.is_some_and(|owner| !owner.sources.iter().any(|source| source.offset == literal && source.length == 4)) {
             return Err("Star Cross indirect record root mismatch".into());
         }
-        let record_at = |offset: u32| {
-            let at = offset as usize;
-            IndirectRecord {
-                offset,
-                field0: u16::from_le_bytes(rom[at..at + 2].try_into().unwrap()),
-                fields: [rom[at + 2], rom[at + 3]],
-                values: [
-                    u16::from_le_bytes(rom[at + 4..at + 6].try_into().unwrap()),
-                    u16::from_le_bytes(rom[at + 6..at + 8].try_into().unwrap()),
-                ],
-            }
-        };
+        let record_at = |offset| IndirectRecord::from_rom(rom, offset);
         let records = std::array::from_fn(|i| record_at(OFFSETS[i]));
         let decoded = SoilIndirectRecords { records, firaga_index2: Some(record_at(FIRAGA_INDEX2_OFFSET)), firaga_ccec: Some(record_at(FIRAGA_CCEC_OFFSET)), star_cross_records: Some(STAR_CROSS_OFFSETS.map(record_at)) };
         let prior = PriorSources::new(previous)?;

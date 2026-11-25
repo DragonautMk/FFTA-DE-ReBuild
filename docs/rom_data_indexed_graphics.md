@@ -6,6 +6,94 @@ The last group's archives begin at selected structures plus `b4`. Full source
 extents, decoding and runtime integration remain open; see the
 [original-reader classification](rom_data_ui_raw_transfers.md#e435-four-original-reader-classifications).
 
+## E506 European indexed archive census
+
+E506 scans every occurrence of the opaque `4137` header in the exact EUR
+ROM. It accepts the canonical mode-0/width-5 shape only when the entire
+big-endian directory, every program and all referenced dictionary bytes
+reconstruct exactly. Of 253 occurrences, 78 meet that grammar, including
+all 44 controls already owned by `graphics.indexed-archives`. The
+`e315-d314` ownership join finds 32 unowned archive spans totaling 110,392
+bytes. The other 46 are wholly owned by the manifest.
+
+The original immediate argument paths prove three pointer tables and five
+direct roots. The five entries at `397d6c` reach `0800537c` from five
+language-dependent load sites. The five entries at `3980ac` use the language
+byte at the `08092778` call. The bank at `398e54` has sixteen slots, selected
+by an eight-bit angle rounded to its high nibble. `080a47b6` passes the
+selected address to the wrapper, and `080abbd0` reads the same table in a
+separate original pointer-return path. The direct roots are `3aed7c`,
+`3b5acc`, `3b8c50`, `3bafb4` and `3bdb24`.
+
+The 31 rooted archives contain 852 programs yielding 189,184 bytes. Their
+109,253 source bytes, three complete pointer tables and 16 PC-relative
+literal words add up to 109,421 unowned bytes in 50 spans. The adjacent archive
+at `3b8fbc` has 20 programs and 1,139 source bytes. Its original reader and
+argument path remain open. The census covers the declared grammar and
+58 aligned Thumb BL patterns to the wrapper in `400..160000`. Other header
+values, modes, indirect callers, live index domains and ordinary scenes
+require separate evidence.
+
+Protected source evidence is retained in
+`target/validation/units/e506-eur-indexed-archive-readers-wine-tm40tpfz/evidence/`.
+The plan pins the E505 manifest and independent per-archive source and
+decoded digests. The Wine disassembly verifies instruction windows against
+the ROM and retains the original table and literal-load evidence. This
+unit establishes source layout and caller paths.
+
+## E507 European indexed reader banks
+
+EUR extraction `e316-d315` includes the 31 E506 rooted archives as
+`reader_banks` in `graphics.indexed-archives`. Each archive uses the same
+typed program and dictionary representation as the existing families.
+The three tables and 16 caller words are projected at their physical
+addresses. Original guest code reads the projected bytes and performs the
+decode. The 50 source spans cover 109,421 bytes.
+
+The focused Wine check `e507-eur-indexed-reader-banks-wine-e2wb1r9a`
+passes creation, reuse and verification through the normal command handler
+and explicit attachment of `e315-d314`. It verifies all 50 source spans
+with altered ROM backing, program and archive counts across the expanded
+masks, raw fallback at `3b8fbc` and rejection of an edited packet with
+recomputed hashes.
+
+The check exercises 70 original selector cases across all 16 sites. The
+language fixtures set the stored language byte. The angle fixtures cover
+the sixteen entries in both original lookup paths. The original wrapper
+decodes all 852 programs with altered backing and produces 189,184 bytes
+matching the E506 digests and the raw run's full saved state. The Wine
+server drained at completion. The build
+`e507-eur-indexed-reader-banks-windows-build-5en0mogd` retains the exact
+E505 test executable for the predecessor's evidence.
+
+Ordinary startup and scene invocation, translated paths, other grammars,
+Linux, USA and native Windows remain in the recovery checklist.
+
+## E508 Indexed archive mode and width census
+
+E508 checks every byte offset in the EUR ROM using the original directory
+layout and both supported entry modes, with all 256 encoded widths. It
+accepts strictly increasing contiguous program extents beginning after
+the directory. The mode-0 entry size is shared and the mode-3 size is an
+entry prefix. Length and dictionary-address extraction use the ARM
+register-shift rules and halfword dictionary offsets of `08005228`.
+The opaque header is recorded as evidence.
+
+The first-directory-entry equation matches at 131 offsets. The full
+decode rejects 32 for dictionary placement, 20 for unsupported modes and
+one for the program endpoint. All 78 complete candidates match the E506
+mode-0/width-5 archives including source and decoded hashes. The
+`e316-d315` manifest covers 77. The remaining `3b8fbc..3b942f` span has
+20 programs and lacks an exact address word at every byte alignment in
+all three ROM mirrors. Scanning the entire ROM for aligned Thumb BL
+patterns retains one pattern to `08005228` and 58 to `0800537c`.
+
+Protected source census `e508-eur-indexed-mode-census-6z8swjot` uses the
+decoder window authenticated in E506 on Wine and the E507 manifest.
+Noncontiguous or aliased layouts, computed and indirect arguments, and
+ordinary invocation remain open. A new claim on `3b8fbc` needs an original
+argument path or independent source provenance.
+
 ## E436 Fifteen additional European archives source plan
 
 Protected reconstruction `e436-eur-fifteen-indexed-archive-source-plan-dojboxqe`
@@ -51,6 +139,95 @@ servers drained and their logs contain no D-Bus assertion with the local overlay
 Ordinary invocation, other readers and scenes, guest index domains, later
 dictionary tails, Linux, USA and native Windows remain open. No performance
 comparison was made.
+
+## E536 European indexed VRAM selector tables
+
+Three original readers at `0808a97c`, `0808aa14` and `0808ab44` read the
+low byte of a two-byte slot in `397e70..397f24`. The complete table has 90
+slots and addresses all 54 programs in archive `3b5acc`. The original
+decoder writes a 640-byte block for CPUSet to copy to VRAM. These paths
+establish the table layout and the selected output. The live producers of
+the slot index still need ordinary-scene evidence.
+
+The original loops containing `0808e8b4` and `08091c2c` read all 42 bytes
+of `397f24..397f4e` in their original order. Each selector is an ID in
+the range 2 through 43. The shared routine `080cf410` uses the stored
+language byte to choose from `397d94`, reaches its archive at offset
+`b4`, and decodes the selected 256-byte block before CPUSet. This
+identifies the ROM data upstream of five scratch-buffer transfers in the
+E516 census. Each of the five localized archives declares 44 programs.
+E437 and E507 verify the underlying archive sources.
+
+EUR `e331-d330` publishes both selector tables and five caller literals
+under `vram_selectors` in `graphics.indexed-archives`. The seven new spans
+contain 242 bytes with concatenated SHA-256
+`bbd939186e50fc52ac7b9f29c87c10747bc9b4ad3171dee9d6d6fe68dcdffd5d`.
+The two bytes at `397f4e..397f50` use raw fallback. The independent choice
+list starts at `397f50`.
+
+Windows build `hda7p4if` and Wine unit `n0nowibq` pass. The controlled
+interpreter check covers all 90 slots through the first reader and both
+ends through the other two readers. It runs the complete 42-block loop
+at `08091c10` for all five languages, and the second loop for language 4.
+The 692 matching selector requests use the new tables with their backing
+altered. The same run alters the six existing archive projections and
+reaches 264 distinct programs. VRAM output matches the decoded program
+bytes, and the reference and managed runs agree on guest clock and complete
+saved state. The `e330-d329` predecessor attaches and an incomplete current
+packet is rejected transactionally. The Wine server drains, and the
+managed runner removes successful scratch. The new manifest SHA-256 is
+`5265b92fdf1a90ce9081215042888b00ca6eee66295fdb74d9c2a11208873c4e`.
+
+Ordinary scene entry, live index producers, translated dispatch, original
+BIOS, Linux, USA and native Windows remain open. No performance measurements
+were made.
+
+## E537 European world map label and calendar lookups
+
+Two original halfword readers at `08033cba` and `0803eed4` use the
+31 label IDs at `3955ec..39562a`. The first passes the ID to the original
+text renderer. The second stores it at offset `0xc` in the selected record.
+The second reader's original loop can address slot 31 when its availability
+condition passes. That slot reads the first two bytes of the adjacent calendar
+table.
+
+The original calendar reader at `080371b2` uses the stored language and the
+signed remainder of `(month - 1) % 6` to select a byte in `39562a..395644`.
+The table has five five-byte rows and a final zero. In the controlled
+English month 0 case, the lookup reads the last byte of the label table.
+Month 6 reads the byte after each row, including the final zero for language
+4. The observed day and month progression writer at `08037584` cycles through
+months 1 to 5.
+
+Each byte selects the start program by shifting right once. The original
+decoder requests up to 12 programs from one of the five E437 archives in
+the existing `39554c` directory. At `080371c8`, CPUSet copies 512 bytes
+from `02003cb0` to `06010b80`. A start at program 24 decodes only 384
+bytes, so the final 128 copied bytes come from the existing scratch buffer.
+This identifies the original source of the E516 scratch-buffer call.
+
+EUR `e332-d331` publishes both complete tables and all three caller
+literals under `world_map_lookups` in `graphics.indexed-archives`. The
+five new spans add 100 bytes with concatenated SHA-256
+`2dbe771cf5bf2a2fd1f005ffdd6832f386e8c81b8cf8427029f66171383ba0a9`.
+The source plan SHA-256 is
+`1cf2f26a92ad24f46de972f1ada2dd6c7e827a5890f0f23c7c9650d797754eea`.
+
+Windows build `4bmn1pof` and Wine unit `64uc09_7` pass. One controlled
+interpreter test compares 32 label arguments, 31 record stores and
+35 calendar transfers covering month bytes 0 to 6 for all five languages.
+All 196 original lookup and literal requests match after altering the new
+source ranges. The test also alters the five E437 archive projections and
+their source directory and literal. All 150 calendar programs are reached.
+Label values, scratch and VRAM output, guest clock and complete saved state
+agree. The exact `e331-d330` dataset attaches and a current revision
+missing the new ranges is rejected transactionally. The Wine server drains.
+The new manifest SHA-256 is
+`8a58a451681c932fea452d72e2ce95941587f2ec62c86d67c937a1849c422c24`.
+
+Ordinary play from the language choice at startup, live producers,
+translated execution, original BIOS, Linux, USA and native Windows remain
+on the recovery checklist. No performance measurements were made.
 
 ## E212 European color-mode archive publication
 
@@ -134,8 +311,9 @@ EUR integration is described in [the context extension](#european-indexed-graphi
 
 ## Archive and fixed dictionary encoding
 
-Original wrapper `0800537c` reads two opaque header bytes, a big-endian u16
-program count, a big-endian u32 dictionary-relative offset and one big-endian
+The archive layout starts with two opaque bytes. Original wrapper
+`0800537c` reads a big-endian u16 program count after them, a big-endian u32
+dictionary-relative offset and one big-endian
 u32 archive-relative offset per program. All 20 declared headers happen to
 contain `4137`; the original wrapper does not check this value, so it is not
 a sufficient format discriminator. This encoding is distinct from the custom

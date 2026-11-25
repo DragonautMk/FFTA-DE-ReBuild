@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "classify-european-direct-cpuset-residuals",
+  "title": "Classify the European direct CPUSet residuals",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Reconcile the 16 resolved direct CPUSet arguments with e321-d320. Keep 5,056 unowned bytes of executable support in ROM and identify the two unowned initializer sources for further family discovery."
+  ],
+  "validation": [
+    "Wine unit w84svoqj verified the recovered E516 plan, current manifest, ownership projection, six Thumb windows and one ARM window. The isolated server drained."
+  ],
+  "limitations": [
+    "The complete initializer families, register-fed sources, indirect and ARM callers, inline SWIs, ordinary gameplay, Linux and USA remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-map-raster-colors",
+  "title": "Browse map raster color programs",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible color-band view for extracted map raster programs, including raw BGR555 words, RGB values, bit 15 and physical source headers.",
+    "Navigate between each descriptor pair of raster programs and its background tile descriptor while preserving distinct program IDs and standalone palette browsing."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-raster-synthetic-mr110a13 passed 22 Python and Chrome tests covering raw colors, source pixels, linked and standalone views, item records and tilemaps.",
+    "Protected EUR unit rom-data-viewer-raster-eur-5v3q9gwr compared 32 programs, 5120 colors and 324 links from 162 descriptors with their sources, and checked two real pixels and bidirectional navigation in Chrome.",
+    "Offline unit rom-data-viewer-raster-docker-ksrnblac produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "Static color bands do not reproduce live raster timing, camera state or a complete game scene.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_raster_palettes_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

@@ -1450,7 +1450,21 @@ and normal enablement retain their existing acceptance gates.
   e313-d312 serves six streams and 26 pointers while preserving the two
   shared OBJ property bytes. Wine verifies the original reader loads,
   63,744 decoded bytes, the shared boundary and e312-d311 attachment.
-  Computed source arguments, ordinary use and other platforms remain open.
+  Ordinary use and other platforms remain open.
+
+- EUR [E502 computed custom decoder sources](../rom_data_ui_graphics.md#e502-computed-european-decoder-sources)
+  reconciles the other 43 retained calls with the declared text and
+  graphics catalogs. [E503](../rom_data_ui_graphics.md#e503-source-base-literals-for-the-european-custom-decoder)
+  publishes the remaining 31 source-base words in `engine.thumb-pc-literals`
+  at e314-d313. Wine verifies 64 original lookup cases and e313-d312
+  attachment. Wider argument domains and ordinary and translated use
+  remain open.
+
+- EUR [E505 text source selectors](../rom_data_text.md#e505-extracted-european-text-selector-roots)
+  publishes 192 E504 root words in `engine.thumb-pc-literals` at
+  e315-d314. Wine verifies 39 selectors across five language values,
+  both keyboard root loads, fallback and attachment of e314-d313.
+  Ordinary and translated execution and the live RAM-fed roots remain open.
 
 - [Bank ownership audit](../rom_data.md#inspect-source-ownership-across-banks)
   compares bounded plans across dataset manifests without opening ROM or
@@ -1461,6 +1475,163 @@ and normal enablement retain their existing acceptance gates.
   verifies E301 ownership of all 177,593 declared bytes across the 20 E427
   tables and 100 source intervals on Wine. Additional extents and readers
   remain open.
+
+- EUR [E506 indexed archive census](../rom_data_indexed_graphics.md#e506-european-indexed-archive-census)
+  identifies 50 unowned spans in `e315-d314` through three complete pointer
+  tables and five direct roots. These include 31 canonical archives with
+  852 programs. The canonical archive at `3b8fbc` still lacks a proven
+  reader. Other grammars, ordinary gameplay and platforms remain open.
+
+- EUR [E507 indexed reader banks](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks)
+  serves the 31 rooted archives and their source tables and literals in
+  `e316-d315`. The original Wine readers decode all 852 programs, and
+  explicit `e315-d314` attachment passes. The startup and ordinary routes,
+  translated dispatch and deferred platforms remain open.
+
+- EUR [E508 indexed archive census](../rom_data_indexed_graphics.md#e508-indexed-archive-mode-and-width-census)
+  checks both original modes and all encoded widths for complete
+  contiguous archives. All 78 match E506 and 77 have complete e316-d315
+  ownership. The remaining archive requires original argument provenance.
+
+- EUR [E509 BIOS LZ77 caller census](../rom_data_graphics.md#e509-european-bios-lz77-caller-census)
+  identifies the three-stream VRAM bank at `b4fa4c`, `b52764` and
+  `b53010`. Wine confirms the original source loads and call paths.
+  All 15,464 encoded bytes lack an owner in e316-d315. Register-fed
+  variants and ordinary invocation remain open.
+
+- EUR [E510 VRAM LZ77 runtime](../rom_data_graphics.md#e510-european-vram-lz77-runtime)
+  serves the three E509 streams and their literal words in `e317-d316`.
+  Wine verifies all original transfers and attachment of `e316-d315`.
+  The observed LZ packet ceiling is 2 MiB. Ordinary and deferred checks
+  remain open.
+
+- EUR [E511 relative LZ77 variants](../rom_data_graphics.md#e511-background-descriptor-variant-lz77-paths)
+  ties the WRAM loader's state pointer to original descriptor field
+  `0x50`. All 162 declared fields are zero, and the known direct
+  initialization route sets the argument-driven flag to zero. A live
+  nonzero generic table producer remains required.
+
+- EUR [E512 halfword copy banks](../rom_data_graphics.md#e512-european-halfword-copy-source-banks)
+  identifies all 11 direct calls to the original bias-and-copy loop.
+  The six literal sources, ten two-row language banks, two selector
+  tables and literal words are unowned in e317-d316.
+
+- EUR [E513 halfword copy runtime](../rom_data_graphics.md#e513-european-halfword-copy-runtime)
+  serves all 16 E512 banks in e318-d317. Wine verifies 29 original
+  copy and selector cases, the adjacent indexed owner and predecessor
+  attachment. Ordinary, translated and deferred platform checks remain
+  open.
+
+- EUR [E514 halfword preload sources](../rom_data_graphics.md#e514-european-halfword-preload-source-range)
+  identifies three CPUSet payloads in the e318-d317 gap between E513
+  banks. The original readers authenticate 1,080 bytes and three
+  source literals.
+
+- EUR [E515 halfword preload runtime](../rom_data_graphics.md#e515-european-halfword-preload-runtime)
+  extends the raw-transfer catalog through the full contiguous preload
+  interval in `e319-d318`. Wine verified all three CPUSet copies with
+  altered backing and accepted `e318-d317` attachment. Ordinary,
+  translated and deferred platform checks remain open.
+
+- EUR [E516 CPUSet source census](../rom_data_graphics.md#e516-european-direct-cpuset-source-census)
+  reconciles the local source and count for 16 of 765 direct Thumb
+  patterns. Nine merged intervals contain 74,324 payload bytes outside
+  e319-d318 ownership. The five-call `081399fc..08139b50` group is a
+  lead for authenticating its complete source family.
+
+- EUR [E517 VRAM loader sources](../rom_data_graphics.md#e517-european-vram-loader-cpuset-sources)
+  authenticates the five absolute-source CPUSet calls in dispatcher
+  states 1 and 3. The two unowned payload ranges and 11 literal words
+  account for 66,784 new bytes. The compressed-language tail has an
+  existing owner. Neighboring transfer families remain open.
+
+- EUR [E518 VRAM loader runtime](../rom_data_graphics.md#e518-european-vram-loader-runtime)
+  implements the complete E517 CPUSet source set in `e320-d319`.
+  Wine verifies the five copies, prior UI tail, raw gap and predecessor
+  attachment. The proof ran in an internal workspace with hash-verified
+  inputs recovered from a read-only mount. Restoration of the external
+  checkout bind remains separate.
+
+- EUR [E520 row-copy and Color Mode runtime](../rom_data_graphics.md#e520-european-row-copy-and-color-mode-runtime)
+  publishes 14 spans totaling 10,452 bytes in `e321-d320`. Wine
+  verifies four original row copies, the adjoining CPUSet, five
+  paired readers for each of the three declared modes and predecessor
+  attachment. Ordinary entry and wider selector provenance remain open.
+
+- EUR `e329-d328` serves three complete paired Color Mode tables and
+  two palette banks. Wine verifies all four selector values at the five
+  original consumers, the shared palette fragment and predecessor attachment.
+  Ordinary entry and deferred platforms remain open.
+  [E534](../rom_data_graphics.md#e534-european-paired-color-mode-cpuset-banks)
+
+- EUR `e330-d329` serves the complete 480-halfword scanline blend table
+  used by primary task 272. Both transfer phases and predecessor
+  attachment pass on Wine. Ordinary task entry and the subsequent
+  hardware transfer remain open.
+  [E535](../rom_data_graphics.md#e535-european-scanline-blend-coefficient-bank)
+
+- EUR `e331-d330` serves the two complete indexed VRAM selector tables
+  used with the established E437 and E507 archives. Wine verifies five
+  original paths, all 90 slots, each localized preload order and
+  predecessor attachment. Ordinary scene entry and the live index domain
+  remain open.
+  [E536](../rom_data_indexed_graphics.md#e536-european-indexed-vram-selector-tables)
+
+- EUR `e332-d331` serves both adjoining map label and calendar lookup
+  tables. Wine verifies three original readers, all five calendar
+  archives, the boundary aliases and predecessor attachment. Ordinary
+  map entry and deferred platform checks remain open.
+  [E537](../rom_data_indexed_graphics.md#e537-european-world-map-label-and-calendar-lookups)
+
+- EUR `e333-d332` serves three complete tilemap rectangles with
+  explicit dimensions. Wine verifies the original direct draw, staged
+  RAM expansion and localized loader. Ordinary scene entry and
+  additional producers remain open.
+  [E538](../rom_data_ui_raw_transfers.md#e538-european-tilemap-rectangles)
+
+- EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
+  classifies the 16 resolved calls against `e321-d320`. Five remaining
+  calls copy executable support and two copy 52 unowned initializer
+  bytes. The initializer families and unresolved argument paths remain open.
+
+- EUR [E523 state initializer runtime](../rom_data_graphics.md#e523-european-state-initializer-runtime)
+  publishes 204 bytes in `e322-d321`. Wine verifies the original
+  constructor, state lists and three indirect groups with altered
+  backing, as well as `e321-d320` attachment. Later callback tables,
+  ordinary entry and three neighboring templates remain open.
+
+- EUR [E525 scroll register runtime](../rom_data_graphics.md#e525-european-scroll-register-runtime)
+  publishes 132 bytes in `e323-d322`. Wine verifies all nine original
+  copies, live shadow reads, the MMIO argument handoff and predecessor
+  attachment. Later stores, selector provenance and ordinary entry remain open.
+
+- EUR [E527 cold-start VRAM loader](../rom_data_graphics.md#e527-european-cold-start-vram-loader)
+  reaches state 3 during startup and verifies all three CPUSet copies
+  from `e323-d322` on Wine. [E529](../rom_data_graphics.md#e529-european-vram-loader-after-the-introduction)
+  reaches state 1 after the first-entry English choice and the unskipped
+  introduction. Its two `e324-d323` copies match with altered backing.
+  Both ordinary loader states have EUR interpreter coverage. Translated
+  dispatch and original BIOS remain open. E526 retains the bounded French
+  title continuation.
+
+- EUR [E528 startup callback table](../rom_data_ui_raw_transfers.md#e528-european-startup-callback-table)
+  serves all twelve initial slots and two boot literals in `e324-d323`.
+  Wine verifies ordinary installation, all fourteen original loads,
+  full state equality and `e323-d322` attachment.
+  [E530](../rom_data_ui_raw_transfers.md#e530-european-startup-dispatcher-literal-pools)
+  completes the dispatcher and request-helper literal pools in `e325-d324`.
+  Wine verifies all 39 new readers, ordinary slot-5 dispatch and predecessor
+  attachment. [E531](../rom_data_ui_raw_transfers.md#e531-european-title-callback-literal-pools)
+  serves both title callback pools in `e326-d325`. The 71 original readers
+  pass on Wine, and slot 5 reaches the state-3 loader with equal machine
+  state. [E532](../rom_data_ui_raw_transfers.md#e532-european-title-frontend-source-bank)
+  serves the remaining literal words and both guarded jump tables in the
+  local title call graph. Ordinary opening, all new readers and both switches
+  pass in `e327-d326` on Wine.
+  [E533](../rom_data_obj.md#e533-european-title-color-mode-cursor) completes
+  the three-pair Color Mode cursor table in `e328-d327`. Wine verifies all
+  three rows and ordinary confirmation from the retained title menu.
+  Cold entry, other dispatch paths and deferred platforms remain open.
 
 - EUR [E425 Star Cross runtime](../rom_data_runtime.md#e425-star-cross-linked-source-runtime)
   serves selected rows and linked sources; Wine readers, scene and CLI pass.

@@ -4,11 +4,13 @@ use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 
 pub mod dynamic_fragments;
+pub mod halfword_copies;
 pub mod localized_queued;
 
 pub const ROOTS: [u32; 7] = [
     0x71e5f4, 0x71e608, 0x71e66c, 0x71e694, 0x71e6a8, 0x71e6e4, 0x71e6f8,
 ];
+pub(crate) const LOCALIZED_BANK_COUNT: usize = ROOTS.len() * 5;
 pub const VIEW_BYTES: [usize; 7] = [224, 160, 768, 1600, 2048, 2432, 384];
 pub const VIEW_OFFSETS: [u32; 7] = [0, 0, 0, 0, 0, 0, 0x200];
 pub const SOURCE_SHA256: &str = "e11ef4d5f16feea8ef90e7fce58056e19d689004b7ca973270285e3cd31b8f80";
@@ -56,10 +58,12 @@ pub struct RawTransfers {
     /// Independently rooted direct transfers, without a localized selector.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub fixed_banks: Vec<BankView>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub halfword_copies: Option<halfword_copies::HalfwordCopies>,
 }
 impl RawTransfers {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
-        if self.tables.len() != ROOTS.len() || self.banks.len() != 35 {
+        if self.tables.len() != ROOTS.len() || self.banks.len() != LOCALIZED_BANK_COUNT {
             return Err(invalid());
         }
         let mut linked = std::collections::BTreeMap::new();
@@ -124,6 +128,9 @@ impl RawTransfers {
             }
             spans.push((bank.bank_offset, bank.source_bytes(), role.into()));
         }
+        if let Some(copies) = &self.halfword_copies {
+            spans.extend(copies.source_spans()?);
+        }
         spans.sort_by_key(|v| v.0);
         if spans
             .windows(2)
@@ -145,21 +152,57 @@ impl RawTransfers {
             }
         }
         self.banks.iter().chain(&self.fixed_banks).find_map(|b| b.byte_at(offset))
+            .or_else(|| self.halfword_copies.as_ref()?.byte(offset).map(|(value, _)| value))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom)?.decoded {
+        let layout = match &self.halfword_copies {
+            None => CopyLayout::Legacy,
+            Some(copies) if copies.tilemap_rectangles.is_some() => CopyLayout::TilemapRectangles,
+            Some(copies) if copies.scanline_blend.is_some() => CopyLayout::ScanlineBlend,
+            Some(copies) if copies.color_mode_pairs.is_some() => CopyLayout::ColorModePairs,
+            Some(copies) if copies.scroll_register_tables.is_some() => CopyLayout::ScrollRegisters,
+            Some(copies) if copies.state_initializers.is_some() => CopyLayout::StateInitializers,
+            Some(copies) if copies.row_pairs.is_some() => CopyLayout::RowPairs,
+            Some(copies) if copies.vram_loaders.is_some() => CopyLayout::VramLoaders,
+            Some(copies) if copies.preloads.is_none() => CopyLayout::Biased,
+            Some(_) => CopyLayout::Preloads,
+        };
+        if self != &Catalog::from_rom_with_copy_layout(rom, layout)?.decoded {
             return Err("Raw transfers differ from authenticated EUR source".into());
         }
         Ok(())
     }
 }
+
+// Each extraction layout adds a source group to its predecessor.
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) enum CopyLayout {
+    Legacy,
+    Biased,
+    Preloads,
+    VramLoaders,
+    RowPairs,
+    StateInitializers,
+    ScrollRegisters,
+    ColorModePairs,
+    ScanlineBlend,
+    TilemapRectangles,
+}
+
 pub struct Catalog {
     pub decoded: RawTransfers,
     pub sources: Vec<SourceRange>,
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_copy_layout(rom, CopyLayout::TilemapRectangles)
+    }
+
+    pub(crate) fn from_rom_with_copy_layout(
+        rom: &[u8],
+        layout: CopyLayout,
+    ) -> Result<Self, String> {
         if rom.len() != 0x1000000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Raw transfers require exact EUR ROM; USA pending".into());
         }
@@ -255,12 +298,16 @@ impl Catalog {
                     .map(|v| u32::from_le_bytes(v.try_into().unwrap()))
                     .collect(),
             }).collect(),
+            halfword_copies: match layout {
+                CopyLayout::Legacy => None,
+                layout => Some(halfword_copies::from_rom(rom, layout)?),
+            },
         };
         let spans = decoded.source_spans()?;
         if ffta_rom::digest(
             &spans
                 .iter()
-                .filter(|v| !v.2.starts_with("fixed-"))
+                .filter(|v| v.2.starts_with("raw-"))
                 .flat_map(|v| v.1.iter().copied())
                 .collect::<Vec<_>>(),
         ) != SOURCE_SHA256

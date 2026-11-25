@@ -6,10 +6,215 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from view_rom_data import generate, project_audio_instruments, project_audio_pcm_pitch, project_audio_sequences, project_equipment_sprites, project_item_links, project_observed_tilemaps, project_script_sprites
+from view_rom_data import generate, project_alternate_palettes, project_audio_instruments, project_audio_pcm_pitch, project_audio_sequences, project_encounter_catalog, project_equipment_sprites, project_item_links, project_layered_obj_animations, project_mission_event_catalog, project_obj_animation_banks, project_observed_tilemaps, project_palette_programs, project_raster_palettes, project_script_paths, project_script_sprites, project_terrain_seeds, project_ui_choice_lists
 
 
 class ViewerTest(unittest.TestCase):
+    def test_layered_obj_descriptors_and_optional_title_banks(self):
+        bank = {'object_root': 100, 'object_offsets': [4], 'lists': [{'source_offset': 104, 'objects': []}],
+                'sequence_root': 200, 'sequence_offsets': [4], 'sequences': [{'source_offset': 204, 'frames': []}]}
+        descriptor = {'object_root': 100, 'sequence_root': 200, 'opaque': list(range(20))}
+        catalog = {'banks': [bank], 'descriptors': [descriptor], 'title_language_bank': bank}
+        projected = project_layered_obj_animations(catalog)
+        self.assertEqual(projected['banks'], [bank])
+        self.assertEqual(projected['descriptors'], [descriptor])
+        self.assertEqual(projected['title_language_bank'], bank)
+        self.assertNotIn('title_main_bank', projected)
+        descriptor['sequence_root'] = 204
+        with self.assertRaisesRegex(ValueError, 'descriptor'):
+            project_layered_obj_animations(catalog)
+        descriptor['sequence_root'] = 200
+        descriptor['opaque'][0] = True
+        with self.assertRaisesRegex(ValueError, 'descriptor'):
+            project_layered_obj_animations(catalog)
+
+    def test_obj_animation_banks_keep_frames_attributes_and_zero_count_holds(self):
+        obj = {'x': -256, 'y': -128, 'affine_mode': 0, 'object_mode': 0, 'mosaic': False, 'color_256': True,
+               'shape': 3, 'transform': 31, 'size': 3, 'tile': 1023, 'priority': 3, 'palette': 15}
+        bank = {'object_root': 100, 'object_offsets': [8, 16], 'lists': [
+                    {'source_offset': 108, 'objects': [obj]}, {'source_offset': 116, 'objects': []}],
+                'sequence_root': 200, 'sequence_offsets': [8, 14], 'sequences': [
+                    {'source_offset': 208, 'frames': [{'object_list': 0, 'duration': 65535}]},
+                    {'source_offset': 214, 'frames': [], 'zero_count_hold': {'object_list': 1, 'duration_source_offset': 218}}]}
+        selector = {'selector_address': 1000, 'object_table_offset': 2000, 'sequence_table_offset': 3000,
+                    'object_roots': [100], 'sequence_roots': [200]}
+        catalog = {'banks': [bank], 'selector_tables': [selector]}
+        self.assertEqual(project_obj_animation_banks(catalog), catalog)
+        obj['x'] = True
+        with self.assertRaisesRegex(ValueError, 'attributes'):
+            project_obj_animation_banks(catalog)
+        obj['x'] = -256
+        bank['sequences'][0]['frames'][0]['object_list'] = 2
+        with self.assertRaisesRegex(ValueError, 'frames'):
+            project_obj_animation_banks(catalog)
+        bank['sequences'][0]['frames'][0]['object_list'] = 0
+        selector['object_roots'][0] = 104
+        with self.assertRaisesRegex(ValueError, 'selector'):
+            project_obj_animation_banks(catalog)
+
+    def test_palette_programs_keep_colors_parameters_and_producer_links(self):
+        header = {'first': 0, 'flags': 0, 'width': 2, 'command_count': 2, 'initial_delay': 3}
+        commands = [{'opcode': 0, 'mode': 0, 'duration': 4, 'relative_parameter': 18,
+                     'parameter': {'kind': 'color-words', 'colors': [0x001f, 0x83e0]}},
+                    {'opcode': 11, 'mode': 0, 'duration': 5, 'relative_parameter': 22,
+                     'parameter': {'kind': 'color-cycle', 'count': 0, 'direction': 255, 'colors': [0x7c00]}}]
+        catalog = {'programs': [{'source_offset': 100, 'header': header, 'commands': commands}],
+                   'producers': [{'source_offset': 200, 'data': {'kind': 'pointers', 'programs': [0, None]}},
+                                 {'source_offset': 300, 'data': {'kind': 'list', 'entries': [
+                                     {'program': 0, 'delay_override': 7, 'reserved': 9}]}}]}
+        self.assertEqual(project_palette_programs(catalog), catalog)
+        commands[1]['parameter']['colors'].append(0)
+        with self.assertRaisesRegex(ValueError, 'parameter'):
+            project_palette_programs(catalog)
+        commands[1]['parameter']['colors'].pop()
+        catalog['producers'][0]['data']['programs'][0] = 1
+        with self.assertRaisesRegex(ValueError, 'pointers'):
+            project_palette_programs(catalog)
+        catalog['producers'][0]['data']['programs'][0] = 0
+        header['width'] = 0; commands[0]['mode'] = 1; commands[0]['parameter']['colors'] = [0] * 512
+        self.assertEqual(len(project_palette_programs(catalog)['programs'][0]['commands'][0]['parameter']['colors']), 512)
+        commands[0]['parameter']['colors'][0] = True
+        with self.assertRaisesRegex(ValueError, 'parameter'):
+            project_palette_programs(catalog)
+
+    def test_choice_lists_preserve_bytes_and_validate_physical_extents(self):
+        entry = {'identifier': 255, 'cursor_x': 128, 'cursor_y': 5, 'opaque': 255,
+                 'navigation': {'left': 128, 'right': 255, 'up': 1, 'down': 0}}
+        catalog = {'lists': [{'id': 'choice-100', 'source_offset': 100, 'kind': 'direct-list', 'entries': [entry]},
+                             {'id': 'choice-108', 'source_offset': 108, 'kind': 'filtered-template', 'entries': [entry]}]}
+        self.assertEqual(project_ui_choice_lists(catalog), catalog)
+        catalog['lists'][1]['source_offset'] = 107
+        with self.assertRaisesRegex(ValueError, 'metadata'):
+            project_ui_choice_lists(catalog)
+        catalog['lists'][1]['source_offset'] = 108
+        entry['navigation']['left'] = True
+        with self.assertRaisesRegex(ValueError, 'bytes'):
+            project_ui_choice_lists(catalog)
+
+    def test_alternate_palettes_validate_links_banks_and_sentinel(self):
+        def entry(word):
+            return {'banks': [[word] * 16 for _ in range(8)], 'encoded_source': [0, 0, 1, 0]}
+        catalog = {'descriptor_keys': [0, 255, 1], 'relative_sources': [[4, 8], [4, 8]],
+                   'catalogs': [[entry(0x801f), entry(0x3e0)], [entry(0x7c00), entry(0)]]}
+        result = project_alternate_palettes(catalog)
+        self.assertEqual(result['descriptor_keys'], [0, 255, 1])
+        self.assertEqual(result['catalogs'][0][0], {'banks': catalog['catalogs'][0][0]['banks'], 'encoded_length': 4})
+        catalog['descriptor_keys'][2] = 0
+        with self.assertRaisesRegex(ValueError, 'key mapping'):
+            project_alternate_palettes(catalog)
+        catalog['descriptor_keys'][2] = 1
+        catalog['relative_sources'][0][1] = 7
+        with self.assertRaisesRegex(ValueError, 'Overlapping'):
+            project_alternate_palettes(catalog)
+        catalog['relative_sources'][0][1] = 8
+        catalog['catalogs'][0][0]['banks'][0][0] = True
+        with self.assertRaisesRegex(ValueError, 'entry'):
+            project_alternate_palettes(catalog)
+
+    def test_script_paths_keep_alignment_and_validate_references(self):
+        catalog = {'source_offset': 100, 'paths': [
+            {'id': 0, 'source_offset': 108, 'points': [{'x': 2, 'y': 3}, {'x': 200, 'y': 255}],
+             'alignment_after': [255, 255]},
+            {'id': 1, 'source_offset': 116, 'points': [{'x': 1, 'y': 2}], 'alignment_after': []}],
+            'script_links': [{'instruction_offset': 900, 'script_opcode': 0x44, 'path_id': 0},
+                             {'instruction_offset': 901, 'script_opcode': 0x45, 'path_id': 1}]}
+        self.assertEqual(project_script_paths(catalog), catalog)
+        catalog['paths'][0]['alignment_after'][0] = 0
+        with self.assertRaisesRegex(ValueError, 'alignment'):
+            project_script_paths(catalog)
+        catalog['paths'][0]['alignment_after'][0] = 255
+        catalog['script_links'][1]['path_id'] = 2
+        with self.assertRaisesRegex(ValueError, 'reference'):
+            project_script_paths(catalog)
+        catalog['script_links'][1]['path_id'] = 1
+        catalog['paths'][1]['points'][0]['x'] = True
+        with self.assertRaisesRegex(ValueError, 'path'):
+            project_script_paths(catalog)
+
+    def test_terrain_seeds_apply_parents_order_and_reject_invalid_writes(self):
+        family = {'descriptor_programs': [0, 1, 1], 'programs': [
+            {'relative_source': 100, 'parent_descriptor': None, 'writes': {'kind': 'halfwords', 'packets': [
+                {'byte_offset': 0, 'values': [0x0102, 0x0205]}, {'byte_offset': 2, 'values': [0x0308]}]}},
+            {'relative_source': 200, 'parent_descriptor': 0, 'writes': {'kind': 'halfwords', 'packets': [
+                {'byte_offset': 0, 'values': [0x0506]}, {'byte_offset': 510, 'values': [0x0a0b]}]}},
+        ]}
+        result = project_terrain_seeds({'auxiliary': family})['maps']
+        self.assertEqual(result[0]['cells'][:2], [0x0102, 0x0308])
+        self.assertEqual(result[1]['cells'][:2], [0x0506, 0x0308])
+        self.assertEqual(result[1]['cells'][-1], 0x0a0b)
+        self.assertEqual(result[2]['chain'], [0, 2])
+        self.assertEqual(result[1]['cells'], result[2]['cells'])
+        family['programs'][1]['writes']['packets'][0]['byte_offset'] = 1
+        with self.assertRaisesRegex(ValueError, 'packet'):
+            project_terrain_seeds({'auxiliary': family})
+        family['programs'][1]['writes']['packets'][0]['byte_offset'] = 0
+        family['programs'][1]['parent_descriptor'] = 1
+        with self.assertRaisesRegex(ValueError, 'Cyclic'):
+            project_terrain_seeds({'auxiliary': family})
+
+    def test_mission_event_catalog_keeps_sparse_and_signed_records(self):
+        event = {'index': 0, 'header00': 255, 'event_key01': 1, 'primary02': 65535,
+                 'alternate04': 2, 'parameter06': 115, 'byte07': 3, 'flags08_raw': 65535,
+                 'opaque0a': [4, 5]}
+        catalog = {'source_offset': 100, 'records': [event]}
+        self.assertEqual(project_mission_event_catalog(catalog, 'events'), catalog)
+        event['event_key01'] = True
+        with self.assertRaisesRegex(ValueError, 'fields'):
+            project_mission_event_catalog(catalog, 'events')
+        parameter = {'index': 115, 'header00': 0, 'packed01': 0, 'packed02': 0, 'packed03': 0,
+                     'packed04': 0, 'packed05': 0, 'packed06': 0, 'value07': 65535, 'byte09': 0,
+                     'value0a': 0, 'signed0c': -128, 'flags0d': 0, 'byte0e': 0, 'byte0f': 0,
+                     'byte10': 0, 'byte11': 0, 'value12': 0, 'opaque14': 0, 'signed15': 127,
+                     'opaque16': [1, 2, 3, 4, 5]}
+        catalog = {'source_offset': 200, 'records': [parameter]}
+        self.assertEqual(project_mission_event_catalog(catalog, 'parameters'), catalog)
+        parameter['signed0c'] = -129
+        with self.assertRaisesRegex(ValueError, 'fields'):
+            project_mission_event_catalog(catalog, 'parameters')
+        parameter['signed0c'] = -128
+        catalog['records'].append(dict(parameter))
+        with self.assertRaisesRegex(ValueError, 'identity'):
+            project_mission_event_catalog(catalog, 'parameters')
+
+    def test_encounter_catalog_preserves_raw_fields_and_checks_physical_shapes(self):
+        unit = {'index': 0, 'header_index': 1, 'unit_index': 0, 'source_offset': 100,
+                'byte00': 255, 'byte01': 0, 'byte02': 0, 'byte03': 0, 'byte04': 0,
+                'arguments05_07': [1, 2, 3], 'equipment08_10': [0, 1, 2, 3, 65535],
+                'halfword12': 65535, 'ability_bits14_27': [255] * 20, 'byte28': 0, 'byte29': 0,
+                'flags2a': 65535, 'byte2c': 0, 'byte2d': 0, 'opaque2e_2f': [1, 2]}
+        catalog = {'source_offset': 100, 'records': [unit]}
+        self.assertEqual(project_encounter_catalog(catalog, 'units'), catalog)
+        unit['source_offset'] = 101
+        with self.assertRaisesRegex(ValueError, 'template'):
+            project_encounter_catalog(catalog, 'units')
+        unit['source_offset'] = 100
+        unit['equipment08_10'][4] = -1
+        with self.assertRaisesRegex(ValueError, 'template'):
+            project_encounter_catalog(catalog, 'units')
+        coords = {'source_offset': 200, 'lists': [{'index': 0, 'header_index': 1, 'slot': 3,
+                  'source_offset': 200, 'points': [{'x': 200, 'y': 255}]}]}
+        self.assertEqual(project_encounter_catalog(coords, 'coordinates'), coords)
+        coords['lists'][0]['points'][0]['x'] = True
+        with self.assertRaisesRegex(ValueError, 'coordinate'):
+            project_encounter_catalog(coords, 'coordinates')
+
+    def test_raster_programs_keep_raw_colors_and_check_links(self):
+        catalog = {'source_offset': 100, 'programs': [
+            {'id': 0, 'source_offset': 200, 'header': {'color_count': 2, 'range_length': 2, 'range_start': 0},
+             'colors': [0x001f, 0x83e0]}], 'descriptor_programs': [[0, 0]]}
+        self.assertEqual(project_raster_palettes(catalog), catalog)
+        catalog['descriptor_programs'][0][1] = 1
+        with self.assertRaisesRegex(ValueError, 'descriptor links'):
+            project_raster_palettes(catalog)
+        catalog['descriptor_programs'][0][1] = 0
+        catalog['programs'][0]['colors'][1] = 65536
+        with self.assertRaisesRegex(ValueError, 'program'):
+            project_raster_palettes(catalog)
+        catalog['programs'][0]['colors'][1] = 0x83e0
+        catalog['programs'][0]['header']['color_count'] = 1
+        with self.assertRaisesRegex(ValueError, 'program'):
+            project_raster_palettes(catalog)
+
     def test_item_links_preserve_inactive_slots_and_reject_invalid_records(self):
         catalog = {'source_offset': 100, 'records': [{'count': 1, 'opaque': 9,
                    'slots': [{'selector': index, 'value': 255 - index} for index in range(9)]}]}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-indexed-reader-banks",
+  "title": "Serve the complete rooted European indexed archive banks",
+  "kind": "added",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Add 31 original indexed archives, three full pointer tables and 16 caller words to graphics.indexed-archives at e316-d315.",
+    "Project 109,421 authenticated ROM source bytes through the existing indexed resource and extend the archive and program masks while retaining e315-d314 attachment."
+  ],
+  "validation": [
+    "E507 e507-eur-indexed-reader-banks-wine-e2wb1r9a PASS: normal create/reuse/verify, e315-d314 attachment, 70 original selection cases, all 31 decoder inputs with altered source bytes, and full save-state parity. Wine server drained.",
+    "Cross-build e507-eur-indexed-reader-banks-windows-build-5en0mogd PASS. It retained the exact E505 test executable."
+  ],
+  "limitations": [
+    "Ordinary startup and scenes, translated execution, 3b8fbc reader provenance, other indexed grammars, Linux, USA and native Windows remain open. Performance measurements are deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/reader_banks.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/indexed_reader_bank_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

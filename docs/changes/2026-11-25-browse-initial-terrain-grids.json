@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-initial-terrain-grids",
+  "title": "Browse initial terrain grids",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Reconstruct normal zero-filled terrain seeds from ordered inherited auxiliary packet writes and display each cell as a height, flags and raw value.",
+    "Navigate between terrain descriptors, background tiles and matching default encounter records; optionally overlay recorded coordinate lists while reporting out-of-grid points and mismatched header links."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-terrain-synthetic-r488fgwc passed 29 Python and Chrome tests, including parent order, repeated writes, cycle guards, colors, partial catalogs and overlays.",
+    "Protected EUR unit rom-data-viewer-terrain-eur-2dokwg9_ matched all 162 previously retained seed hashes covering 41472 cells, including nine inherited descriptors, and checked an actual inherited grid and encounter overlay in Chrome.",
+    "Offline unit rom-data-viewer-terrain-docker-zsipb4vs produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "The grids depict static normal seeds; scripts, live map selection, placement and later terrain writes are not reproduced. Windows was not tested.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_terrain_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

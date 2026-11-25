@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-state-initializer-banks",
+  "title": "Serve the European state initializer banks",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Add the six E522 data spans and six source words to the e322-d321 raw-transfer catalog. Reuse the indirect-record representation and retain the e321-d320 packet layout for older datasets."
+  ],
+  "validation": [
+    "Windows build hq683amm and Wine unit 9p2mkou5 passed. Three direct reader paths and all eight indirect records match destination bytes, guest clocks and full saved states with altered backing. The extracted owner serves 164 payload and 24 source-word bytes.",
+    "Dataset creation, reuse and verification, e321-d320 attachment and missing-group rejection pass. The blend owner, gap and neighboring templates retain prior routing. The Wine server drained.",
+    "Initial build hw09fs1m compiled before fixture load order was corrected. Wine unit boy7u8bm, built from yiykv88v, stopped on a fixture assertion at the wrong register. The retained failure drained. The passing test checks r0 from the original LDRH."
+  ],
+  "limitations": [
+    "Ordinary entry, later callback tables, neighboring template readers, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/state_initializers.rs",
+    "crates/gba-core/src/rom_data/soil_indirect_records.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/state_initializer_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

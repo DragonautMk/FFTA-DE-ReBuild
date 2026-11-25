@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "observe-european-title-language-continuation",
+  "title": "Observe the European title-language continuation",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Recover the authenticated E154 post-publication checkpoint and follow the E162 input sequence. Record the bounded receiver states to narrow the remaining ordinary loader proof."
+  ],
+  "validation": [
+    "Windows observer build w7xonh78 passed. Wine unit pcntsfjd ran 872 ordinary frames and drained. The dispatcher reached states 9, 10 and 255 with final stored language 1. The selected window reached neither loader nor its CPUSet sites."
+  ],
+  "limitations": [
+    "An ordinary state-1 or state-3 producer remains required. Translated execution, original BIOS, other writers, native Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

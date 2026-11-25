@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-halfword-copy-banks",
+  "title": "Serve the complete European halfword copy banks",
+  "kind": "added",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish 16 E512 banks, two language tables and 11 source words in graphics.ui-raw-transfers at e318-d317.",
+    "Project authenticated halfword and selector bytes for the original copy loop and preserve e317-d316 attachment and the neighboring indexed owner."
+  ],
+  "validation": [
+    "E513 e513-eur-halfword-copy-bank-wine-wjeya5bb PASS. All 29 original paths produce 2,728 bytes and equal full saved state with altered backing. CLI create/reuse/verify, predecessor attachment, boundaries and omitted-bank rejection pass. Wine server drained.",
+    "Build 1e57rxaj retains the E510 executable. Initial 8_cr8c3g stopped on test driver argument handling. The corrected harness used the same E513 binary."
+  ],
+  "limitations": [
+    "Ordinary startup and scenes, translated dispatch, indirect callers, out-of-domain selectors, Linux, USA and native Windows remain open. Performance measurements remain deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/halfword_copy_bank_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

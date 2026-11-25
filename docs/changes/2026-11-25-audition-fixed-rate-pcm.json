@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "audition-fixed-rate-pcm",
+  "title": "Audition fixed-rate PCM instruments",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Play extracted type 0x08 fixed-rate PCM samples in sequence auditions, including stored loop points and the existing approximate PCM envelope.",
+    "Provide an adjustable assumed mixer rate, defaulting to the rate observed in one European checkpoint; fixed voices ignore note pitch automation and remain independent of the CGB mute."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-fixed-pcm-synthetic-guard-npb27tgy passed sample, loop, envelope, key independence, pitch controls, mute and scoped invalid-rate checks in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-fixed-pcm-eur-guard-treqkh4d matched the fixed tone and 13,468 source sample values, then checked a real sequence note and Web Audio playback at two rates.",
+    "Linux Docker unit rom-data-viewer-fixed-pcm-docker-guard-uby5jpm5 matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "The assumed mixer rate can differ from the live driver; original mixing, timing, effects and physical audio remain unverified. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_fixed_pcm_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "crates/gba-core/src/mp2k.rs"
+  ]
+}

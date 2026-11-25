@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "overlay-layered-object-animations",
+  "title": "Overlay layered object animations",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Optionally preview all sequences of a layered object descriptor together at a shared origin, with independent frame advancement and a table of current layer frames.",
+    "Keep the selected overlay and loop settings across banks and catalogs, including when the selected layer has no frames."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-obj-layers-synthetic-6zxvot5n passed simultaneous pixels, independent frames, looping, empty-layer handling and settings in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-obj-layers-eur-knhvoom1 checked all ten multi-layer banks, six playback checkpoints and two manually paired pixels from separate layers.",
+    "Linux Docker unit rom-data-viewer-obj-layers-docker-2suga0n4 matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "The shared origin, manually selected graphics and palettes, and chosen preview clock do not reproduce live offsets, task state, scene composition or the original clock. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_obj_animations_browser.py",
+    "scripts/tests/test_viewer_obj_layers_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

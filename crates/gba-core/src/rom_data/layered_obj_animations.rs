@@ -14,6 +14,7 @@ pub const CONTEXT_ADDITIONAL_GEOMETRY: [u32; 8] = [0x3ae154, 0x3ae15c, 0x3ae174,
 pub const CONTEXT_TIMELINE_ROOT: u32 = 0x3ae038;
 pub const CONTEXT_EVENT_ROOT: u32 = 0x3adfe8;
 pub const TITLE_MAIN_POSITION_ROOT: u32 = 0x3adca0;
+pub const TITLE_COLOR_MODE_POSITION_ROOT: u32 = 0x3adcf0;
 pub const TITLE_OPENING_POSITION_ROOT: u32 = 0x3adeb0;
 pub const TITLE_OPENING_SPARSE_ROOT: u32 = 0x3adefe;
 pub const TITLE_MAIN_OBJECT_ROOT: u32 = 0xb8ed28;
@@ -243,6 +244,9 @@ pub struct LayeredObjAnimations {
     /// Five language-specific sets of four main title cursor positions.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_main_positions: Option<[[[u16; 2]; 4]; 5]>,
+    /// Cursor positions for the three title Color Mode choices.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub title_color_mode_positions: Option<[[u16; 2]; 3]>,
     /// Conditional opening coordinates and separately read sparse values.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title_opening_coordinates: Option<TitleOpeningCoordinates>,
@@ -399,6 +403,13 @@ impl LayeredObjAnimations {
         if let Some(groups) = &self.title_main_positions {
             spans.push((TITLE_MAIN_POSITION_ROOT, groups.iter().flatten().flatten().flat_map(|value| value.to_le_bytes()).collect(), "title-main-positions".into()));
         }
+        if let Some(rows) = &self.title_color_mode_positions {
+            spans.push((
+                TITLE_COLOR_MODE_POSITION_ROOT,
+                rows.iter().flatten().flat_map(|value| value.to_le_bytes()).collect(),
+                "title-color-mode-positions".into(),
+            ));
+        }
         if let Some(opening) = &self.title_opening_coordinates {
             spans.push((TITLE_OPENING_POSITION_ROOT,
                 opening.positions.iter().flatten().flat_map(|value| value.to_le_bytes()).collect(),
@@ -473,7 +484,8 @@ impl LayeredObjAnimations {
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom)?.decoded {
+        let catalog = Catalog::from_rom_with_color_mode(rom, self.title_color_mode_positions.is_some())?;
+        if self != &catalog.decoded {
             return Err("Layered OBJ banks differ from authenticated EUR source".into());
         }
         Ok(())
@@ -487,6 +499,13 @@ pub struct Catalog {
 
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_color_mode(rom, true)
+    }
+
+    pub(super) fn from_rom_with_color_mode(
+        rom: &[u8],
+        include_title_color_mode: bool,
+    ) -> Result<Self, String> {
         if rom.len() != 0x1000000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Layered OBJ banks require exact EUR ROM; USA pending".into());
         }
@@ -690,6 +709,26 @@ impl Catalog {
         let title_main_positions = Some(std::array::from_fn(|language| std::array::from_fn(|row| std::array::from_fn(|axis| {
             let at = 16 * language + 4 * row + 2 * axis; u16::from_le_bytes([raw[at], raw[at + 1]])
         }))));
+        let title_color_mode_positions = if include_title_color_mode {
+            let start = TITLE_COLOR_MODE_POSITION_ROOT as usize;
+            let raw = &rom[start..start + 12];
+            let literal = u32::from_le_bytes(rom[0x13a944..0x13a948].try_into().unwrap());
+            if literal != 0x0800_0000 + TITLE_COLOR_MODE_POSITION_ROOT
+                || ffta_rom::digest(raw)
+                    != "201ef783ae66d34d65198297cdf4ae432df244302e5f9d59f83378196744e2dc"
+            {
+                return Err("Title Color Mode position source mismatch".into());
+            }
+            Some(std::array::from_fn(|row| {
+                let at = row * 4;
+                [
+                    u16::from_le_bytes([raw[at], raw[at + 1]]),
+                    u16::from_le_bytes([raw[at + 2], raw[at + 3]]),
+                ]
+            }))
+        } else {
+            None
+        };
         let main_bank = obj_animations::Bank::decode(rom, TITLE_MAIN_OBJECT_ROOT, TITLE_MAIN_SEQUENCE_ROOT)?;
         let mut main_spans = main_bank.spans(); main_spans.sort_by_key(|span| span.0);
         let mut main_bytes = Vec::new();
@@ -747,8 +786,23 @@ impl Catalog {
             ContextCoordinateRecord { source_offset: offset, x_base: half(0), y_base: half(2),
                 x_extent: half(4), y_extent: half(6) }
         }).collect();
-        let decoded = LayeredObjAnimations { descriptors, banks, context_coordinate_records,
-            context_timeline, context_timed_events, context_language_positions, title_language_positions, title_language_bank, title_main_positions, title_opening_coordinates, title_main_bank, context_activation, context_target_coordinate, context_additional_geometry };
+        let decoded = LayeredObjAnimations {
+            descriptors,
+            banks,
+            context_coordinate_records,
+            context_timeline,
+            context_timed_events,
+            context_language_positions,
+            title_language_positions,
+            title_language_bank,
+            title_main_positions,
+            title_color_mode_positions,
+            title_opening_coordinates,
+            title_main_bank,
+            context_activation,
+            context_target_coordinate,
+            context_additional_geometry,
+        };
         let sources = decoded
             .source_spans()?
             .into_iter()

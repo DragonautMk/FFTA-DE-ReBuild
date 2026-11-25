@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "inventory-european-direct-cpuset-sources",
+  "title": "Catalogue European direct CPUSet source candidates",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Reconcile 16 locally resolved ROM extents among 765 direct Thumb patterns with e319-d318 ownership. Record the five-call group with two major candidate intervals."
+  ],
+  "validation": [
+    "Protected Wine unit lcil6mnx verified all selected windows and drained. Nine merged intervals account for 74,324 unowned payload bytes and 76 unowned literal bytes. All E515 positive controls have declared payload owners."
+  ],
+  "limitations": [
+    "The local fallthrough analysis leaves 718 source arguments unresolved. Entry paths, resource roles, complete bank bounds, indirect and inline or ARM calls, runtime publication, Linux and USA checks remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

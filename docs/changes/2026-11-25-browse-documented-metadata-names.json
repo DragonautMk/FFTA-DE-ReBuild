@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-documented-metadata-names",
+  "title": "Browse documented metadata name references",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Show localized name strings for documented metadata rows 104–106 separately from the twenty stored job slots, retaining unresolved redirects and source links."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-job-names-current-pd57j0o5 checked the three references, language changes, unavailable data and a redirected record.",
+    "Protected unit rom-data-viewer-job-references-recovered-mx9555mc authenticated the European ROM and retained manifest, checked the documented English labels, all five language tables, 15 reference links and cross-page navigation, and matched Docker/Python output for a reduced verified dataset.",
+    "Guarded publication preserved the previously accepted twenty-slot data and unrelated embedded fields in the ignored local wiki."
+  ],
+  "limitations": [
+    "The original complete text JSON was unavailable; the pointer subset was checked against source bytes and manifest hashes. The documented text lookup does not establish live usage or identify other metadata rows; native Windows was not tested."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_job_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "identify-european-halfword-preload-sources",
+  "title": "Identify the complete European halfword preload range",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace three original CPUSet calls and account for the full 3,164-byte interval with the adjacent E513 banks."
+  ],
+  "validation": [
+    "Protected E514 Wine disassembly d6w2pc05 passed and drained. The plan authenticates 1,092 new bytes across six spans against e318-d317."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary invocation, other consumers and deferred platforms remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

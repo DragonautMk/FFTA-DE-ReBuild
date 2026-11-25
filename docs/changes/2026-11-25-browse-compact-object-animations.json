@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-compact-object-animations",
+  "title": "Browse compact object animation families",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add eight caller-witnessed compact OBJ animation catalogs to the scoped object viewer, preserving sparse list IDs, sequence selectors, source offsets and resource links.",
+    "Reuse frame playback, optional looping, manual graphics and palettes while retaining controls across compact and existing catalogs."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-compact-synthetic-sbzmnfjp passed 35 projection, browser and existing-view checks, including sparse IDs and manually paired pixels.",
+    "Protected EUR unit rom-data-viewer-compact-recovered-tca_p6t8 matched eight JSON hashes and 22 source ranges, then checked 171 lists, 33 sequences and 338 frames in Chrome.",
+    "The same unit matched all 12 Docker/Python files; three validated ignored wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "The viewer covers extracted caller-witnessed projections only. Graphics/palette pairing and timing are illustrative; affine, mosaic and special effects are not reconstructed. Native Windows, other previews and exact audio remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_compact_obj_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

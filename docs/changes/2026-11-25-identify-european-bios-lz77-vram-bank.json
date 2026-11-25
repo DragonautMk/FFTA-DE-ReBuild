@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "identify-european-bios-lz77-vram-bank",
+  "title": "Identify the European BIOS LZ77 VRAM initialization bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Enumerate the 24 direct calls to the original WRAM and VRAM BIOS LZ77 wrappers, and reconcile 12 completely bounded streams with e316-d315.",
+    "Authenticate the three unowned VRAM streams from the common original initialization routine, their source literals and exact source and decoded lengths."
+  ],
+  "validation": [
+    "E509 e509-eur-bios-lz77-roots-wine-do_1rw2s PASS with 17 authenticated instruction windows and four matching clean-boot stream controls. Wine drained."
+  ],
+  "limitations": [
+    "Complete stream extents establish three source-backed inputs. Runtime publication, register-fed and indirect source banks, ordinary use, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

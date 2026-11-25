@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "preview-firaga-compact-cell-frames",
+  "title": "Preview Firaga compact cell frames",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Decode documented compact cell streams into the tilemap explorer, preserving each frame source, opaque header, run controls and stored values.",
+    "Preview sequence entry order at a manually selected rate, with looping, current position and source fields; stop on an unavailable referenced frame instead of guessing.",
+    "Keep compact-cell and observed-tilemap resource links independent when either resource is unavailable."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-firaga-cells-synthetic-lnz9dru5 passed 59 decoder, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-firaga-cells-guard-recovered-ca3ejejo matched the complete catalog hash and nine source ranges; Chrome checked ten frames, 497 cells, ten sequence entries and playback.",
+    "The same unit matched all 12 Docker/Python output files; the ignored index and world page were published with guarded preimages."
+  ],
+  "limitations": [
+    "Graphics and palettes are manually selected, the preview rate is illustrative, and packed flags and the second sequence byte are not interpreted. Live game context, other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_firaga_cells_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

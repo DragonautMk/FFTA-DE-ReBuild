@@ -1,7 +1,11 @@
 //! Typed raw transfer words serve ROM reads; original copy queues and clocks remain active.
 use super::super::{SourceRange, ui_raw_transfers as model};
+use model::halfword_copies;
 use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
+
+const BANK_MASK_WORDS: usize =
+    (model::LOCALIZED_BANK_COUNT + halfword_copies::MAX_TRACKED_BANKS).div_ceil(64);
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct RawTransfersStats {
@@ -20,19 +24,19 @@ struct Byte {
 }
 pub(super) struct RawTransfersResources {
     data: model::RawTransfers,
-    bank_groups: [u8; 35],
+    bank_groups: [u8; model::LOCALIZED_BANK_COUNT],
     reads: AtomicU64,
     bytes: AtomicU64,
     selectors: AtomicU64,
     payload: AtomicU64,
-    banks: AtomicU64,
+    banks: [AtomicU64; BANK_MASK_WORDS],
     groups: AtomicU64,
 }
 impl RawTransfersResources {
     pub(super) fn source_page(index: usize) -> bool {
         SOURCE_BOUNDS.iter().any(|&(start, length)| {
             index >> 12 >= start >> 12 && index >> 12 <= (start + length - 1) >> 12
-        })
+        }) || halfword_copies::source_page(index)
     }
     pub(super) fn new(data: model::RawTransfers, sources: &[SourceRange]) -> Result<Self, String> {
         let spans = data.source_spans()?;
@@ -48,7 +52,7 @@ impl RawTransfersResources {
                 return Err("Raw transfer typed source binding mismatch".into());
             }
         }
-        let mut bank_groups = [0; 35];
+        let mut bank_groups = [0; model::LOCALIZED_BANK_COUNT];
         for (i, bank) in data.banks.iter().enumerate() {
             bank_groups[i] = data
                 .tables
@@ -68,7 +72,7 @@ impl RawTransfersResources {
             bytes: AtomicU64::new(0),
             selectors: AtomicU64::new(0),
             payload: AtomicU64::new(0),
-            banks: AtomicU64::new(0),
+            banks: std::array::from_fn(|_| AtomicU64::new(0)),
             groups: AtomicU64::new(0),
         })
     }
@@ -95,7 +99,17 @@ impl RawTransfersResources {
             })
         }).or_else(|| self.data.fixed_banks.iter().find_map(|view| {
             view.byte_at(offset).map(|value| Byte { value, bank: None, group: None, payload: true })
-        }))
+        })).or_else(|| {
+            use halfword_copies::ByteSource;
+            let (value, source) = self.data.halfword_copies.as_ref()?.byte(offset)?;
+            let (bank, group, payload) = match source {
+                ByteSource::Literal => (None, None, false),
+                ByteSource::Selector(i) => (None, Some((self.data.tables.len() + i) as u8), false),
+                ByteSource::Bank(i) => (Some(self.data.banks.len() + i), None, true),
+                ByteSource::Payload => (None, None, true),
+            };
+            Some(Byte { value, bank, group, payload })
+        })
     }
     pub(super) fn guest_read<const N: usize>(
         &self,
@@ -110,7 +124,8 @@ impl RawTransfersResources {
         if values.iter().all(Option::is_none) {
             return prior;
         }
-        let (mut selector, mut payload, mut banks, mut groups) = (0, 0, 0, 0);
+        let (mut selector, mut payload, mut groups) = (0, 0, 0);
+        let mut banks = [0u64; BANK_MASK_WORDS];
         let result = std::array::from_fn(|i| match &values[i] {
             Some(cell) => {
                 if cell.payload {
@@ -119,7 +134,7 @@ impl RawTransfersResources {
                     selector += 1;
                 }
                 if let Some(bank) = cell.bank {
-                    banks |= 1u64 << bank;
+                    banks[bank / 64] |= 1u64 << (bank % 64);
                 }
                 if let Some(group) = cell.group {
                     groups |= 1u64 << group;
@@ -132,7 +147,9 @@ impl RawTransfersResources {
         self.bytes.fetch_add(selector + payload, Ordering::Relaxed);
         self.selectors.fetch_add(selector, Ordering::Relaxed);
         self.payload.fetch_add(payload, Ordering::Relaxed);
-        self.banks.fetch_or(banks, Ordering::Relaxed);
+        for (counter, mask) in self.banks.iter().zip(banks) {
+            counter.fetch_or(mask, Ordering::Relaxed);
+        }
         self.groups.fetch_or(groups, Ordering::Relaxed);
         Some(result)
     }
@@ -142,7 +159,9 @@ impl RawTransfersResources {
             source_bytes: self.bytes.load(Ordering::Relaxed),
             selector_bytes: self.selectors.load(Ordering::Relaxed),
             payload_bytes: self.payload.load(Ordering::Relaxed),
-            banks_used: u64::from(self.banks.load(Ordering::Relaxed).count_ones()),
+            banks_used: self.banks.iter()
+                .map(|mask| u64::from(mask.load(Ordering::Relaxed).count_ones()))
+                .sum(),
             groups_used: u64::from(self.groups.load(Ordering::Relaxed).count_ones()),
         }
     }
@@ -155,6 +174,7 @@ impl RawTransfersResources {
             .sum::<usize>()
             + self.data.tables.len()
                 * std::mem::size_of::<super::super::ui_graphics::table_selected::Table>()
+            + self.data.halfword_copies.as_ref().map_or(0, halfword_copies::HalfwordCopies::resident_bytes)
     }
 }
 const SOURCE_BOUNDS: &[(usize, usize)] = &[

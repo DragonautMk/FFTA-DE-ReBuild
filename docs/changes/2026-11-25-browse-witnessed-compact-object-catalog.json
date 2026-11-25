@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-witnessed-compact-object-catalog",
+  "title": "Browse witnessed compact object catalog banks",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add all extracted compact catalog animation banks to the scoped object viewer, preserving bank flags, sparse list IDs, sequence selectors and source links.",
+    "Reuse frame playback and manually selected graphics and palettes while preserving controls across banks and catalogs."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-compact-catalog-synthetic-mrrrizzs passed 37 projection, browser and existing-view checks.",
+    "Protected EUR unit rom-data-viewer-compact-catalog-recovered-s0qzxiwk matched 322 source ranges and the full reconstructed JSON hash; Chrome checked 63 banks, 651 lists, 212 sequences and 1032 frames.",
+    "The same unit matched all 12 Docker/Python files; three validated ignored wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "The catalog selector tables and auxiliary records are not yet rendered. Graphics/palette pairing and timing are illustrative, unsupported OBJ effects remain outlines, and native Windows, other previews and exact audio remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_compact_catalog_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

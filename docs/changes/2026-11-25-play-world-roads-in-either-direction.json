@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "play-world-roads-in-either-direction",
+  "title": "Play sampled world roads in either direction",
+  "kind": "changed",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Play the stored world-road samples forwards or backwards with a selectable rate, optional looping and a collapsible control section; node links choose their matching direction.",
+    "Preserve playback settings across road changes, stop timers when closed, and keep the selected sample visible."
+  ],
+  "validation": [
+    "Synthetic unit _9uq_hpr passed 36 viewer and generator checks including direction, looping, rate, focus and closing.",
+    "Protected EUR unit 4fht7ab9 authenticated 47 source ranges and compared 4376 sample positions across 45 roads in both directions, with 15 Docker/Python files matching; the ignored world page was published."
+  ],
+  "limitations": [
+    "The preview follows stored samples without adding endpoints or reproducing live game timing, pathfinding or movement. Windows was deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_world_road_playback_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

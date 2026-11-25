@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-json-arrays-as-tables",
+  "title": "Browse extracted JSON arrays as tables",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible structured-file table for JSON arrays, with 25-row pages, bounded columns, nested navigation and direct zero-based entry lookup in both viewer modes.",
+    "Distinguish missing fields from null, keep omitted fields reachable through their records and flag integers that may lose JavaScript precision."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-json-table-synthetic-6psxozlb checked both viewer modes, mixed and nested arrays, 32-column bounds, unsafe integers, navigation, the paused large-JSON limit and existing controls. Earlier 2euj73r5 failed because the test iterated a single selected header; the corrected test passed.",
+    "Protected local-page unit rom-data-viewer-json-table-local-sxcx4xax checked all nine pages and a 376-record embedded catalog without changing data. Docker unit rom-data-viewer-json-table-docker-slgo431n matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Structured parsing remains limited to JSON files up to 8 MiB; raw paging remains available for larger files. Number precision can be lost when JSON is parsed by the browser, and flagged values should be checked in the raw file. The source dataset volume was unavailable and native Windows was not tested. The primary debugging model and effort were not independently confirmed."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/tests/test_viewer_json_table_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": []
+}

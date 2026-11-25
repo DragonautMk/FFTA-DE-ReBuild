@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "verify-european-vram-loader-after-introduction",
+  "title": "Verify the European VRAM loader after the introduction",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace the original title-state predicate and add one cold-start proof using the first-entry English confirmation followed by neutral input. Share the existing altered-source CPUSet comparison with the state-3 startup case."
+  ],
+  "validation": [
+    "Windows build z6zat23q and Wine unit r_nl_ca7 pass. The normal introduction reaches state 1 at the original loader on frame 2996. Both original calls match all 19,444 VRAM destination bytes with altered ROM backing. CPUSet arguments, guest clock, audio and full saved state agree. The e324-d323 manifest matches E528 and the Wine server drains."
+  ],
+  "limitations": [
+    "Translated dispatch, original BIOS, other producers, native Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/vram_loader_copy_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

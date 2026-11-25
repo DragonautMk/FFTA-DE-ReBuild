@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-mission-event-records",
+  "title": "Browse mission and event records",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add collapsible mission, event and observed sparse parameter record views that retain source offsets, raw fields, signed values and partial-catalog support.",
+    "Navigate stored mission-to-event and event-to-parameter references in both directions, and inspect matching primary encounter IDs with conditional-selection labels and paginated reverse links."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-mission-events-synthetic-6i5tbslj passed 26 Python and Chrome tests, including signed fields, sparse IDs, pagination, missing resources and previous viewer controls.",
+    "Protected EUR unit rom-data-viewer-mission-events-eur-corrected-qbbojah0 compared 512 missions, 256 events and 59 observed parameter records with their sources and checked a real reference chain and large pages in Chrome.",
+    "Offline unit rom-data-viewer-mission-events-docker-j560g7_l produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "Stored relationships do not prove live mission availability or conditional event selection; unextracted parameter indices and broader semantics remain open. Windows was not tested.",
+    "Initial EUR unit hjbckpaj incorrectly treated a single DOM element as a list; the corrected harness passed. The paused large-JSON prototype remains excluded locally and present in template generation."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_mission_events_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

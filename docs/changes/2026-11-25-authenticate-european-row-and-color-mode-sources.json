@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "authenticate-european-row-and-color-mode-sources",
+  "title": "Authenticate the European row-copy and Color Mode source families",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace all four original row-copy callers, the adjacent CPUSet copy and the complete aligned reference set for the six Color Mode banks. Merge the 44-byte source overlap and declare the independent pointer and literal spans."
+  ],
+  "validation": [
+    "Wine source units mps06f1y and 2smdx7sg passed and drained. They verify the five table readers, including the two queued transfers and both 32-byte odd-bank slices. The 14-span plan accounts for 10,452 bytes outside e320-d319 ownership."
+  ],
+  "limitations": [
+    "Runtime publication, original scene entry, other mode writers, value 3, indirect readers, both gaps and deferred platforms remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

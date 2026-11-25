@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "preview-soil-evidence-animation",
+  "title": "Preview the Soil Evidence object sequence",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Join the documented compact selector-zero metadata to its separately owned static object lists and preview the stored frames and durations.",
+    "Link between the compact source-table section and the recognized animation; omit the joined preview when an input or documented source binding is missing."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-soil-anim-synthetic-7s5snhj6 passed 48 projection, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-soil-anim-recovered-9pd0bjc5 authenticated both complete catalog hashes and 611 source ranges; Chrome checked 20 frames, 20 lists, 91 objects, playback and looping.",
+    "The same unit matched all 12 Docker/Python output files; one validated ignored local wiki page was published with guarded preimages."
+  ],
+  "limitations": [
+    "Graphics and palettes are manually selected, preview timing is illustrative, and the game conditions selecting the sequence are not simulated. Other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_soil_animation_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

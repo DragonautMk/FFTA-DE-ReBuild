@@ -1,0 +1,37 @@
+<section id="file-inspector">
+  <details><summary><h2>Inspect extracted file</h2></summary>
+  <p>Select an extracted file to browse it as text or hexadecimal bytes.</p>
+  <label>File <input id="inspect-file" type="file"></label>
+  <label>Display <select id="inspect-mode"><option value="text">Text</option><option value="hex">Hexadecimal</option></select></label>
+  <p id="tree-status" role="status">Select a JSON file to explore its structure.</p>
+  <div id="tree" hidden>
+    <p id="tree-path"></p>
+    <p>JSON numbers use browser precision; check the raw file when exact values matter.</p>
+    <button type="button" id="tree-up">Parent</button>
+    <button type="button" id="tree-prev">Previous entries</button>
+    <button type="button" id="tree-next">Next entries</button>
+    <label><span id="tree-index-label">Entry position</span> <input id="tree-index" type="number" min="0" step="1" value="0" style="width:8rem"></label>
+    <button type="button" id="tree-go">Go to entry</button>
+    <label id="tree-table-control" hidden><input type="checkbox" id="tree-table"> View array as table</label>
+    <div id="tree-filter-control" hidden>
+      <label>Filter array records <input id="tree-filter" type="search" maxlength="256"></label>
+      <button type="button" id="tree-filter-apply">Filter</button>
+      <button type="button" id="tree-filter-cancel" disabled>Cancel filter</button>
+      <button type="button" id="tree-filter-clear">Clear filter</button>
+      <p>Matches direct field names or scalar values, without searching nested objects.</p>
+      <p id="tree-filter-status" role="status"></p>
+    </div>
+    <p id="tree-navigation-status" role="status"></p>
+    <p id="tree-table-note"></p>
+    <div style="overflow-x:auto"><table><thead id="tree-head"><tr><th>Key or index</th><th>Value</th></tr></thead><tbody id="tree-rows"></tbody></table></div>
+  </div>
+  <p id="inspect-status" role="status">No file selected.</p>
+  <label>Find <select id="inspect-query-mode"><option value="text">UTF-8 text</option><option value="hex">Hex bytes</option></select></label>
+  <label>Value <input id="inspect-query" type="search" maxlength="3072" placeholder="Case-sensitive text"></label>
+  <button type="button" id="inspect-find">Find next</button>
+  <button type="button" id="inspect-cancel" disabled>Cancel search</button>
+  <p id="inspect-find-status" role="status">Search starts at the beginning of the selected file.</p>
+  <button type="button" id="inspect-prev" disabled>Previous</button>
+  <button type="button" id="inspect-next" disabled>Next</button>
+  <pre id="inspect-content" style="max-height:32rem;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere"></pre>
+</details></section>

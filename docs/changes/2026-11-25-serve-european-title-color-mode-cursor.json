@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-title-color-mode-cursor",
+  "title": "Serve the European title Color Mode cursor table",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Extract the complete three-pair Color Mode cursor table into graphics.layered-obj-animations in e328-d327. Preserve the surrounding source ranges and e327-d326 attachment."
+  ],
+  "validation": [
+    "Windows build a4hnrcv0 and Wine nalxy6kd pass. Normal input from the verified E129 title checkpoint reads all three pairs and confirms mode 2. All 46 halfword requests use extracted positions with altered backing. The framebuffer, guest clock, audio and full saved state match the raw reference. The predecessor attaches, the incomplete current dataset is rejected transactionally, and Wine drains."
+  ],
+  "limitations": [
+    "The initial cold-start attempt cn6mxjpj missed the main menu and drained. Cold entry, translated and original-BIOS paths, Linux, USA and native Windows are on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/layered_obj_animations.rs",
+    "crates/gba-core/src/rom_data/runtime/layered_obj_animations.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests/title_color_mode.rs",
+    "docs/rom_data_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

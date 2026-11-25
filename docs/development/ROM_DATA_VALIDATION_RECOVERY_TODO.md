@@ -41,6 +41,326 @@ changing another agent's selected goal.
 
 ## Whole-bank extraction priority
 
+- [x] **ROMDATA-01-EUR-BIOS-LZ77-ROOTS scoped EUR/Wine source inspection:**
+  E509 `do_1rw2s` authenticates 24 direct caller patterns and the three
+  VRAM streams left outside e316-d315 among 12 complete absolute-pointer
+  and boot-control sources. [Evidence](../rom_data_graphics.md#e509-european-bios-lz77-caller-census).
+- [x] **ROMDATA-04-EUR-BIOS-LZ77-VRAM-BANK scoped EUR/Wine:** E510
+  `pd_87pq8` publishes all three E509 streams and their source words.
+  The original sequence consumes decoded HLE inputs with altered backing.
+  Creation, reuse, verification and `e316-d315` attachment pass.
+  [Evidence](../rom_data_graphics.md#e510-european-vram-lz77-runtime).
+- [ ] **ROMDATA-04-EUR-BIOS-LZ77-VRAM-ORDINARY:** identify the ordinary scene
+  that reaches `08039d4e`. Verify its live destination structure,
+  translated dispatch, real-BIOS source reads and ordinary invocation of
+  the neighboring E513 halfword bank.
+- [ ] **ROMDATA-05-EUR-BIOS-LZ77-VRAM-BANK-LINUX:** run the E510 preparation,
+  predecessor attachment and original VRAM transfer check on native Linux.
+- [ ] **ROMDATA-05-BIOS-LZ77-VRAM-BANK-USA:** authenticate the original USA
+  bank streams and callers before validation. Native Windows remains a
+  separate check.
+- [x] **ROMDATA-01-EUR-VRAM-PRELOAD-BANKS scoped EUR/Wine source inspection:**
+  E512 `he3iuspf` and `gb6poy45` trace all 11 direct calls to the
+  original halfword copy loop. Six literal inputs and ten selected
+  two-row banks, two tables and 11 literals account for 2,316 unowned
+  bytes. [Evidence](../rom_data_graphics.md#e512-european-halfword-copy-source-banks).
+- [x] **ROMDATA-04-EUR-VRAM-HALFWORD-COPY-BANKS scoped EUR/Wine:** E513
+  `wjeya5bb` publishes all 29 E512 spans and verifies nine literal paths
+  and 20 selected rows with altered ROM backing and full state equality.
+  Preparation, reuse, verification and `e317-d316` attachment pass.
+  [Evidence](../rom_data_graphics.md#e513-european-halfword-copy-runtime).
+- [ ] **ROMDATA-04-EUR-VRAM-HALFWORD-COPY-ORDINARY:** trace ordinary scene
+  invocation, the stored language after startup, and the translated
+  copy and selector paths. Verify other producers before extending the
+  declared domain.
+- [ ] **ROMDATA-05-EUR-VRAM-HALFWORD-COPY-LINUX:** run the E513 preparation,
+  predecessor attachment and original copy check on native Linux.
+- [ ] **ROMDATA-05-VRAM-HALFWORD-COPY-USA:** authenticate the equivalent USA
+  source tables and callers before validation. Native Windows remains
+  a separate deferred check.
+- [x] **ROMDATA-01-EUR-QUEUED-PRELOAD-SOURCES scoped EUR/Wine source inspection:**
+  E514 `d6w2pc05` verifies three original halfword CPUSet copies in
+  `b4ccc0..b4d0f8`. These and the E513 banks account for the full
+  `b4c980..b4d5dc` interval. [Evidence](../rom_data_graphics.md#e514-european-halfword-preload-source-range).
+- [x] **ROMDATA-04-EUR-VRAM-PRELOAD-COPIES scoped EUR/Wine:** E515
+  `l46q9dtz` verifies the six new spans in `e319-d318`, all three
+  original CPUSet calls with altered backing, full state equality,
+  predecessor attachment and adjacent owners. Creation, reuse and
+  verification pass. [Evidence](../rom_data_graphics.md#e515-european-halfword-preload-runtime).
+- [ ] **ROMDATA-04-EUR-VRAM-PRELOAD-ORDINARY:** reach all three callers
+  through normal startup and scene input. Verify live destinations,
+  translated dispatch and original-BIOS reads.
+- [ ] **ROMDATA-05-EUR-VRAM-PRELOAD-COPIES-LINUX:** repeat the E515
+  preparation, predecessor attachment and CPUSet check on native Linux.
+- [ ] **ROMDATA-05-VRAM-PRELOAD-COPIES-USA:** authenticate the equivalent
+  USA payloads and callers before validation. Native Windows remains a
+  separate deferred check.
+- [x] **ROMDATA-01-EUR-CPUSET-DIRECT-SOURCES scoped local EUR/Wine census:**
+  E516 `lcil6mnx` attests 765 direct Thumb-call patterns. The 16 resolved
+  ROM extents yield nine merged intervals, with 74,324 payload and 76
+  literal bytes outside declared e319-d318 ownership.
+  [Evidence](../rom_data_graphics.md#e516-european-direct-cpuset-source-census).
+- [x] **ROMDATA-01-EUR-CPUSET-1399-BANKS scoped EUR/Wine:** E517
+  `8nt835h5` ties the five raw ROM calls to states 1 and 3 and
+  authenticates two payload intervals, both 52-byte overlaps and the
+  repeated 8,000-byte source. The transfer counts exclude the 232-byte
+  gap. The last 128 bytes belong to the existing UI bank.
+  [Evidence](../rom_data_graphics.md#e517-european-vram-loader-cpuset-sources).
+- [x] **ROMDATA-04-EUR-CPUSET-1399-BANKS scoped EUR/Wine:** E518
+  `2t9frxi_` verifies the 66,784-byte family in `e320-d319`,
+  five original copies with altered backing, the existing UI owner,
+  full state equality and `e319-d318` attachment. Creation, reuse and
+  verification pass. Build `0o7fr_dm` uses hash-verified inputs from
+  read-only recovery of the external volume.
+  [Evidence](../rom_data_graphics.md#e518-european-vram-loader-runtime).
+- [ ] **TARGET-REATTACH:** recover the external validation bind after the
+  volume is writable and the prior target has no active consumers. The
+  internal recovery workspace supports current Wine validation.
+- [x] **ROMDATA-01-EUR-ROW-PAIR-SOURCE-PROJECTION scoped EUR/Wine:** E519
+  `mps06f1y` and `2smdx7sg` verify all four `08139c44` callers,
+  the adjoining CPUSet copy and the five `3adc88` reader roots.
+  The plan accounts for 10,452 unowned bytes in 14 spans.
+  [Evidence](../rom_data_graphics.md#e519-european-row-copy-and-color-mode-sources).
+- [ ] **ROMDATA-01-EUR-CPUSET-1399-SURROUNDING-SOURCES:** the four
+  row callers, adjoining CPUSet and declared six Color Mode banks
+  have the E519 source proof. Investigate other selector writers,
+  reachability of mode 3, indirect consumers and other uses of the
+  76-byte and 232-byte gaps.
+- [x] **ROMDATA-04-EUR-ROW-PAIR-BANKS scoped EUR/Wine:** E520
+  `iiv6ks_f` verifies all 14 new spans in `e321-d320`, five fixed
+  copies and 15 Color Mode reader cases with altered backing.
+  Full saved state equality, both gaps, the mode-3 owner and
+  `e320-d319` attachment pass.
+  [Evidence](../rom_data_graphics.md#e520-european-row-copy-and-color-mode-runtime).
+- [ ] **ROMDATA-04-EUR-ROW-PAIR-BANKS-ORDINARY:** verify ordinary
+  entry for the row copies and all five paired-bank readers. Cover
+  translated dispatch and original BIOS reads when those paths are
+  selected.
+- [ ] **ROMDATA-05-EUR-ROW-PAIR-BANKS-LINUX:** repeat the selected
+  E520 publication and consumer checks on native Linux.
+- [ ] **ROMDATA-05-ROW-PAIR-BANKS-USA:** authenticate the equivalent
+  USA families and callers before validation. Native Windows remains
+  a separate deferred check.
+- [x] **ROMDATA-04-EUR-CPUSET-TITLE-POST-LANGUAGE-TRACE scoped EUR/Wine:**
+  E526 `pcntsfjd` follows the retained E154 French title selection and
+  known E162 input. The 872-frame window observes dispatcher states 9,
+  10 and 255. Both loaders remain unobserved. The stored language ends
+  at `1`. [Evidence](../rom_data_graphics.md#e526-european-title-language-continuation).
+- [x] **ROMDATA-04-EUR-CPUSET-COLD-STATE3 scoped EUR/Wine:** E527
+  `dwcnk1hg` reaches state 3 on clean startup. The three original
+  copies use the extracted `e323-d322` bank with altered backing and
+  match the raw-ROM result, guest clock, audio and full state.
+  [Evidence](../rom_data_graphics.md#e527-european-cold-start-vram-loader).
+- [x] **ROMDATA-04-EUR-STARTUP-CALLBACK-TABLE scoped EUR/Wine:** E528
+  `qhrwrz0g` verifies all twelve slots and two boot literals with
+  altered ROM backing, full state equality and `e323-d322` attachment.
+  [Evidence](../rom_data_ui_raw_transfers.md#e528-european-startup-callback-table).
+- [x] **ROMDATA-04-EUR-STARTUP-DISPATCHER-ROOTS scoped EUR/Wine:** E530
+  `9xc0yybf` publishes the 39 previously unowned words of the dispatcher and
+  its request helpers. All 39 original loads and the ordinary slot-5 route
+  pass with altered backing. State, clock and audio agree in the ordinary
+  pair, and `e324-d323` attachment passes.
+  [Evidence](../rom_data_ui_raw_transfers.md#e530-european-startup-dispatcher-literal-pools).
+- [x] **ROMDATA-04-EUR-TITLE-CALLBACK-ROOTS scoped EUR/Wine:** E531
+  `22985_8p` verifies the 69 words and 71 readers of the two original title
+  callbacks, ordinary child registration and state-3 loader entry, full
+  state equality and `e325-d324` attachment.
+  [Evidence](../rom_data_ui_raw_transfers.md#e531-european-title-callback-literal-pools).
+- [x] **ROMDATA-04-EUR-TITLE-FRONTEND-ROOTS scoped EUR/Wine:** E532
+  `uor3beuv` verifies all 256 new readers, eleven switch targets and four
+  fallback cases. The ordinary opening completes 19 position pairs with
+  540 matching requests, equal state and audio, and `e326-d325` attachment.
+  [Evidence](../rom_data_ui_raw_transfers.md#e532-european-title-frontend-source-bank).
+- [x] **ROMDATA-04-EUR-TITLE-COLOR-MODE-CURSOR scoped EUR/Wine:** E533
+  `nalxy6kd` verifies all three cursor positions and mode 0 to 2 confirmation
+  from the E129 title menu. The 46 reads match with altered ROM backing,
+  equal state, video and audio, and `e327-d326` attachment.
+  [Evidence](../rom_data_obj.md#e533-european-title-color-mode-cursor).
+- [ ] **ROMDATA-04-EUR-TITLE-COLOR-MODE-COLD-ENTRY:** observe the clean-start
+  transition from the E532 opening into the title input state. The fixed
+  Start pulse in `cn6mxjpj` missed the main menu. Reuse E533 for the
+  submenu proof and verify translated dispatch and original BIOS separately.
+- [ ] **ROMDATA-05-EUR-TITLE-COLOR-MODE-CURSOR-LINUX:** repeat E533
+  preparation, predecessor attachment and the ordinary cursor comparison on
+  native Linux.
+- [ ] **ROMDATA-05-TITLE-COLOR-MODE-CURSOR-USA:** authenticate the USA
+  title table and readers before validation. Native Windows remains deferred.
+- [ ] **ROMDATA-04-EUR-STARTUP-CALLBACK-DISPATCH:** extend E530 beyond
+  ordinary slot 5 to the remaining selector and request branches. Verify
+  affected translated and real-BIOS paths. Keep the cold installer evidence.
+- [ ] **ROMDATA-04-EUR-TITLE-CALLBACK-ORDINARY:** verify E531 callbacks
+  along ordinary state 1 and remaining title menu actions. Retain the
+  E529 transfer and E532 opening proofs. Translated execution and original
+  BIOS remain open.
+- [ ] **ROMDATA-05-EUR-STARTUP-CALLBACK-TABLE-LINUX:** repeat the E528
+  publication, predecessor attachment and cold installer comparison on
+  native Linux, along with the E530 dispatcher, E531 callbacks and E532
+  frontend opening and switch checks.
+- [ ] **ROMDATA-05-STARTUP-CALLBACK-TABLE-USA:** authenticate the original
+  USA installer, dispatcher and title frontend before validating their pools.
+  Native Windows is deferred.
+- [x] **ROMDATA-04-EUR-CPUSET-INTRO-STATE1 scoped EUR/Wine:** E529
+  `r_nl_ca7` confirms English at the first-entry chooser and reaches
+  state 1 after both introduction phases. The two original copies match
+  19,444 bytes with altered backing. Guest clock, audio and full state agree.
+  [Evidence](../rom_data_graphics.md#e529-european-vram-loader-after-the-introduction).
+- [ ] **ROMDATA-04-EUR-CPUSET-1399-ORDINARY:** E527 and E529 prove both
+  ordinary loader states in the EUR interpreter with BIOS HLE. Verify
+  translated execution and original BIOS for both. Retain the E154 title
+  language confirmation and the E526 post-confirmation observation. Trace
+  other stored-choice writers when required.
+- [ ] **ROMDATA-05-EUR-CPUSET-1399-BANKS-LINUX:** repeat the publication,
+  predecessor and original transfer checks on native Linux.
+- [ ] **ROMDATA-05-CPUSET-1399-BANKS-USA:** authenticate the USA loader
+  routines and full source family before validation. Native Windows
+  remains a separate deferred check.
+- [x] **ROMDATA-01-EUR-CPUSET-RESOLVED-RESIDUALS scoped EUR/Wine:** E521
+  `w84svoqj` reconciles all 16 resolved E516 calls with `e321-d320`.
+  The seven remaining calls copy 5,056 unowned bytes of executable
+  support and 52 bytes of initializer data.
+  [Evidence](../rom_data_graphics.md#e521-european-direct-cpuset-residuals).
+- [x] **ROMDATA-01-EUR-CPUSET-DECLARED-INITIALIZERS scoped EUR/Wine:**
+  E522 `tpy1pbna`, `zjebrwxi` and `w89397al` authenticate one set
+  of constructor defaults, two counted lists and eight indirect
+  records. The plan contains 204 unowned bytes in 12 spans.
+  [Evidence](../rom_data_graphics.md#e522-european-state-initializer-sources).
+- [x] **ROMDATA-04-EUR-CPUSET-INITIALIZER-FAMILIES scoped EUR/Wine:**
+  E523 `9p2mkou5` verifies publication, three direct paths, all eight
+  indirect records, complete state equality and `e321-d320` attachment.
+  The blend owner, two unclassified gap bytes and constructor peers
+  retain their prior routing.
+  [Evidence](../rom_data_graphics.md#e523-european-state-initializer-runtime).
+- [ ] **ROMDATA-04-EUR-CPUSET-INITIALIZERS-ORDINARY:** reach the
+  constructor and both state handlers through ordinary input. Confirm
+  translated dispatch and original BIOS reads on the affected paths.
+- [ ] **ROMDATA-01-EUR-CPUSET-INITIALIZER-FAMILIES:** identify readers
+  for the three 28-byte peers of `3954f0` and resolve their roles and
+  bounds before publication. Track later-state table work below.
+- [x] **ROMDATA-01-EUR-CPUSET-LATER-STATE-TABLES scoped EUR/Wine:** E524
+  `_ar1qo7z` authenticates both eight-word scroll tables and all four
+  paired readers. The E522 `tpy1pbna` window establishes the complete
+  shadow alias copy. The plan contains 132 unowned bytes in eight spans.
+  [Evidence](../rom_data_graphics.md#e524-european-scroll-register-tables).
+- [x] **ROMDATA-04-EUR-SCROLL-REGISTER-TABLES scoped EUR/Wine:** E525
+  `tasoaf_9` verifies all nine original stack copies, live shadow reads,
+  the MMIO argument handoff, neighboring bytes and `e322-d321` attachment.
+  [Evidence](../rom_data_graphics.md#e525-european-scroll-register-runtime).
+- [ ] **ROMDATA-04-EUR-SCROLL-REGISTER-ORDINARY:** reach the five original
+  paths through ordinary input. Identify live selector producers and
+  verify translated dispatch and subsequent hardware stores.
+- [ ] **ROMDATA-05-EUR-SCROLL-REGISTER-TABLES-LINUX:** repeat the source
+  and E525 runtime checks on native Linux when selected.
+- [ ] **ROMDATA-05-SCROLL-REGISTER-TABLES-USA:** authenticate equivalent
+  regional tables and readers before USA validation. Native Windows is deferred.
+- [ ] **ROMDATA-05-EUR-CPUSET-INITIALIZERS-LINUX:** repeat the source
+  checks and the E523 preparation, predecessor and original consumer
+  checks on native Linux.
+- [ ] **ROMDATA-05-CPUSET-INITIALIZERS-USA:** authenticate the analogous
+  tables and consumers before USA validation. Native Windows is deferred.
+- [ ] **ROMDATA-01-EUR-CPUSET-REMAINING-SOURCES:** trace unresolved
+  direct arguments, indirect and ARM callers and inline SWI sites for
+  additional complete families. Preserve the E521 classification and
+  the resolved E534 and E535 calls. Reuse E536 for the five original
+  scratch-buffer transfers linked to indexed VRAM selectors, E537 for
+  the map calendar transfer at `080371c8`, and E538 for the five
+  localized loader calls from `0812ee0a` to `0812ee76`.
+- [x] **ROMDATA-04-EUR-CPUSET-COLOR-MODE-PAIR-BANKS scoped EUR/Wine:**
+  E534 `p_2bg22f` verifies all three eight-word tables and both complete
+  banks. Twenty controlled cases make 6,324 matching requests with altered
+  backing. The shared palette owner, destination bytes, full state, clock
+  and `e328-d327` attachment pass.
+  [Evidence](../rom_data_graphics.md#e534-european-paired-color-mode-cpuset-banks).
+- [ ] **ROMDATA-04-EUR-CPUSET-COLOR-MODE-PAIR-ORDINARY:** find ordinary
+  calls to the five E534 consumers, using their original call leads.
+  Verify live destinations, translated dispatch and original BIOS reads.
+  Establish reachability of selector value 3 separately from its verified alias.
+- [ ] **ROMDATA-05-EUR-CPUSET-COLOR-MODE-PAIR-LINUX:** repeat the E534
+  preparation, predecessor attachment and 20-case consumer comparison
+  on native Linux.
+- [ ] **ROMDATA-05-CPUSET-COLOR-MODE-PAIR-USA:** authenticate the original
+  USA selector and palette banks before validation. Native Windows remains
+  deferred.
+- [x] **ROMDATA-04-EUR-CPUSET-SCANLINE-BLEND-BANK scoped EUR/Wine:**
+  E535 `jj5k7xz5` verifies the entire 480-halfword bank, two source
+  literals, both original setup paths and 120 original copies with altered
+  backing. All destination buffers, guest clock, complete state and
+  `e329-d328` attachment agree.
+  [Evidence](../rom_data_graphics.md#e535-european-scanline-blend-coefficient-bank).
+- [ ] **ROMDATA-04-EUR-CPUSET-SCANLINE-BLEND-ORDINARY:** reach original
+  task 272 and both copy states through gameplay. Verify the live buffer
+  and its transfer to `04000052`, translated dispatch and original BIOS.
+- [ ] **ROMDATA-05-EUR-CPUSET-SCANLINE-BLEND-LINUX:** repeat E535 preparation,
+  predecessor attachment and both original copy phases on native Linux.
+- [ ] **ROMDATA-05-CPUSET-SCANLINE-BLEND-USA:** authenticate the equivalent
+  USA table, initializers and consumers before validation. Native Windows
+  remains deferred.
+- [x] **ROMDATA-04-EUR-INDEXED-VRAM-SELECTORS scoped EUR/Wine:** E536
+  `n0nowibq` publishes both complete tables and five literals. The
+  original paths make 692 matching selector requests and reach 264
+  programs across six archives with altered backing. VRAM, full state,
+  the raw gap and `e330-d329` attachment pass.
+  [Evidence](../rom_data_indexed_graphics.md#e536-european-indexed-vram-selector-tables).
+- [ ] **ROMDATA-04-EUR-INDEXED-VRAM-SELECTORS-ORDINARY:** reach both
+  42-block preload loops and the three slot readers through gameplay.
+  Confirm the live slot producers, language selection, translated
+  dispatch and original BIOS transfers.
+- [ ] **ROMDATA-05-EUR-INDEXED-VRAM-SELECTORS-LINUX:** repeat E536
+  preparation, predecessor attachment and original VRAM comparisons
+  on native Linux.
+- [ ] **ROMDATA-05-INDEXED-VRAM-SELECTORS-USA:** authenticate the
+  regional selector tables, archives and consumers before validation.
+  Native Windows remains deferred.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS scoped EUR/Wine:** E537
+  `64uc09_7` publishes both complete tables and three literals. The
+  two label paths and all 35 calendar cases make 196 matching requests
+  with altered backing. The table aliases, scratch, VRAM, guest clock,
+  full state and `e331-d330` attachment pass.
+  [Evidence](../rom_data_indexed_graphics.md#e537-european-world-map-label-and-calendar-lookups).
+- [ ] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-ORDINARY:** choose the language
+  at ROM startup and follow the stored value into the original map
+  calls. Identify the live label and month producers and verify
+  translated dispatch and original BIOS copies.
+- [ ] **ROMDATA-05-EUR-WORLD-MAP-LOOKUPS-LINUX:** repeat E537
+  preparation, predecessor attachment and original label and calendar
+  comparisons on native Linux.
+- [ ] **ROMDATA-05-WORLD-MAP-LOOKUPS-USA:** authenticate the equivalent
+  regional tables, archives and consumers before validation. Native
+  Windows remains deferred.
+- [x] **ROMDATA-04-EUR-TILEMAP-RECTANGLES scoped EUR/Wine:** E538
+  `z2k72eer` publishes three complete rectangles and six caller words.
+  It verifies 2,116 matching reads with altered backing, both padding
+  and clipping behavior, the five localized loader cases, state and
+  `e332-d331` attachment.
+  [Evidence](../rom_data_ui_raw_transfers.md#e538-european-tilemap-rectangles).
+- [ ] **ROMDATA-04-EUR-TILEMAP-RECTANGLES-ORDINARY:** reach the direct
+  draw, template construction and localized loader through ordinary
+  play. Follow the language selected at startup. Establish other
+  live producers, indirect calls, translated dispatch and original BIOS.
+- [ ] **ROMDATA-05-EUR-TILEMAP-RECTANGLES-LINUX:** repeat E538
+  preparation, predecessor attachment, and the direct, staged and
+  localized draws on native Linux.
+- [ ] **ROMDATA-05-TILEMAP-RECTANGLES-USA:** authenticate regional
+  template boundaries, staging layouts and original loaders before
+  validation. Native Windows remains deferred.
+- [ ] **ROMDATA-05-EUR-CPUSET-CENSUS-LINUX:** repeat the E516 instruction
+  census and E521 manifest ownership checks on native Linux. Authenticate
+  the corresponding USA wrapper and callers before any USA validation.
+- [ ] **ROMDATA-01-EUR-BIOS-LZ77-COMPUTED-ROOTS:** authenticate complete
+  relative and register-fed source banks at other E509 call sites,
+  including indirect paths. Reuse prior background and tilemap proofs
+  where they cover the effective arguments.
+- [x] **ROMDATA-01-EUR-BIOS-LZ77-VARIANT-CATALOG scoped EUR/Wine source
+  inspection:** E511 `9tvij354` and `k4q47vxl` trace the five selected
+  relative loads and the writer of state field `0x0c`. The authenticated
+  162-record variant field is empty, and the known direct initializer
+  supplies flag zero. [Evidence](../rom_data_graphics.md#e511-background-descriptor-variant-lz77-paths).
+- [ ] **ROMDATA-01-EUR-BIOS-LZ77-RELATIVE-TABLES:** find a live producer for
+  a nonzero generic table argument to `08021640`, `080216a8` or
+  `08021738`, or an original route with a populated variant structure.
+  Authenticate the table boundary, selected indices and all stream
+  extents before publication. The E511 catalog and the scoped direct
+  flag path are verified.
+
 - [x] **ROMDATA-01-WHOLE-BANK-OWNERSHIP-AUDIT scoped EUR/Wine:** compare
   complete declared bank intervals against retained manifests with
   `rom-data audit-ownership`. Wine `f19ckm1j` checks synthetic alias, overlap
@@ -66,6 +386,35 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-01-EUR-INDEXED-GRAPHICS-OTHER-GROUPS** Establish source-backed
   extents beyond the E443 projections, including additional groups and view
   tails, and authenticate their original readers.
+- [x] **ROMDATA-01-EUR-INDEXED-ARCHIVE-RESIDUAL scoped EUR/Wine source inspection:**
+  E506 `tm40tpfz` reconciles all 78 canonical archives against `e315-d314`.
+  Three complete tables and five direct roots identify 31 unowned archives
+  with 852 programs and 50 absent source spans including caller words.
+  [Evidence](../rom_data_indexed_graphics.md#e506-european-indexed-archive-census).
+- [ ] **ROMDATA-01-EUR-INDEXED-ARCHIVE-3B8FBC:** identify an original reader or
+  independently establish its provenance. E506 decodes the 20 programs in
+  the 1,139-byte archive. Determine the effective source argument, including
+  computed or indirect roots. Continue the wider grammar and mode inventory
+  under ROMDATA-01-EUR-INDEXED-GRAPHICS-OTHER-GROUPS.
+- [x] **ROMDATA-04-EUR-INDEXED-ARCHIVE-BANKS scoped EUR/Wine:** E507
+  `e2wb1r9a` publishes 31 complete archives, three tables and 16 root
+  words. Checks pass for creation, reuse, verification, predecessor
+  attachment, 70 original selector cases and all 852 programs with altered
+  backing. [Evidence](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks).
+- [x] **ROMDATA-01-EUR-INDEXED-ARCHIVE-MODE-CENSUS scoped static:** E508
+  `6z8swjot` checks both modes and all widths at every byte offset
+  for complete contiguous archives. All 78 match E506 and 77 have
+  complete `e316-d315` ownership. `3b8fbc` lacks an exact address word
+  in all three ROM mirrors. [Evidence](../rom_data_indexed_graphics.md#e508-indexed-archive-mode-and-width-census).
+- [ ] **ROMDATA-04-EUR-INDEXED-ARCHIVE-ORDINARY:** follow the language
+  choice at startup into representative scenes. Observe the live language
+  and angle values, ordinary invocation and translated reads of the E507
+  banks.
+- [ ] **ROMDATA-05-EUR-INDEXED-ARCHIVE-BANKS-LINUX:** verify Linux
+  preparation, predecessor attachment and decoder and selector reads.
+- [ ] **ROMDATA-05-INDEXED-ARCHIVE-BANKS-USA:** authenticate equivalent
+  USA table and decoder sources before validation. Native Windows is a
+  separate deferred check.
 - [x] **ROMDATA-01-LOCALIZED-RAW-71E6F8-WHOLE-BANK scoped EUR/static:** E428
   bounds five 896-byte physical intervals with independent successor roots and
   finds 1,280 unowned prefix bytes. [Evidence](../rom_data_ui_raw_transfers.md#e428-european-71e6f8-bounded-bank-plan).
@@ -150,10 +499,46 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-05-CUSTOM-DECODER-LITERALS-USA:** authenticate the
   equivalent USA reader paths and source extents before validation.
   Native Windows remains a separate deferred check.
-- [ ] **ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-SOURCES:** attribute the
-  remaining 43 E500 call patterns to their original computed or
-  indirect argument producers, then reconcile the bounded source
-  families with the manifest.
+- [x] **ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-SOURCES scoped EUR/static:**
+  E502 `67k4v45y` attributes all 43 remaining E500 sites, verifies
+  the complete declared families against `e313-d312` and identifies
+  31 unowned source-base words.
+  [Evidence](../rom_data_ui_graphics.md#e502-computed-european-decoder-sources).
+- [x] **ROMDATA-04-EUR-CUSTOM-DECODER-ROOT-LITERALS scoped EUR/Wine:**
+  E503 publishes all 31 E502 residual words. Wine `bc73k4y1` passes
+  32 original reader paths, 64 table lookups with altered source bytes,
+  normal preparation and `e313-d312` attachment.
+  [Evidence](../rom_data_ui_graphics.md#e503-source-base-literals-for-the-european-custom-decoder).
+- [ ] **ROMDATA-04-EUR-CUSTOM-DECODER-ROOT-OTHER:** verify ordinary
+  invocation and translated reads of these root words.
+- [ ] **ROMDATA-05-EUR-CUSTOM-DECODER-ROOTS-LINUX:** verify Linux
+  preparation, predecessor attachment and source reads for E503.
+- [ ] **ROMDATA-05-CUSTOM-DECODER-ROOTS-USA:** authenticate the USA
+  original table readers and root words before runtime validation.
+  Native Windows remains a separate deferred check.
+- [ ] **ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-DOMAINS:** identify
+  additional roots reaching the shared text reader and decoder, and
+  verify live selectors outside the bounded E502 projections.
+- [x] **ROMDATA-01-EUR-RELATIVE-TEXT-CALLER-ROOTS scoped EUR/static:**
+  E504 `1dau_2pf` and `ngz6rt4l` trace the immediate argument
+  paths for the 16 retained callers and reconcile all 197 declared
+  localized text and keyboard source-root words with `e314-d313`.
+  [Evidence](../rom_data_text.md#e504-original-text-caller-sources).
+- [x] **ROMDATA-04-EUR-LOCALIZED-TEXT-ROOTS scoped EUR/Wine:** E505
+  publishes 192 E504 literals. Wine `wmqakvh1` verifies all 197
+  original source-root loads, six fallback cases, normal preparation
+  and explicit `e314-d313` attachment.
+  [Evidence](../rom_data_text.md#e505-extracted-european-text-selector-roots).
+- [ ] **ROMDATA-04-EUR-LOCALIZED-TEXT-ROOT-CONSUMERS:** verify ordinary
+  startup and scene reads and translated dispatch for these roots.
+- [ ] **ROMDATA-05-EUR-LOCALIZED-TEXT-ROOTS-LINUX:** validate Linux
+  preparation, predecessor attachment and original selector reads.
+- [ ] **ROMDATA-05-LOCALIZED-TEXT-ROOTS-USA:** establish the equivalent
+  USA selector source contract before runtime validation.
+  Native Windows remains a separate deferred check.
+- [ ] **ROMDATA-01-EUR-RELATIVE-TEXT-STORED-ROOT-USE:** identify a
+  live `08019836` branch for the RAM-fed `080249d6` or `0805079e`
+  initializer and trace the effective argument and source extent.
 - [ ] **ROMDATA-VALIDATION-E493-PINNED-WINE-HARNESS:** if an earlier
   replay needs repeating, locate its exact binary or adapt the
   revision-pinned harness to use the E491 manifest and retain it at a

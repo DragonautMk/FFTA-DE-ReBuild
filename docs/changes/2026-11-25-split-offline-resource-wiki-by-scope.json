@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "split-offline-resource-wiki-by-scope",
+  "title": "Split the offline resource wiki into topic pages",
+  "kind": "performance",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Generate a lightweight resource index and eight linked offline topic pages, each embedding only the projected data and shared dependencies needed for that scope.",
+    "Keep complete resource metadata on its scope page, protect generated page directories from unrelated overwrites, and preserve the accepted file inspector while its large-JSON prototype is paused."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-scopes-synthetic-5ely1ibk passed scope navigation, payload isolation, ownership and legacy API checks; generator regression 47_vtmyr passed 26 tests.",
+    "Protected EUR unit rom-data-viewer-scopes-eur-browser-mb9vtp3r checked all eight pages, 150 resource rows and 39 projected fields; its index was 327744 bytes versus 77415026 bytes previously.",
+    "Linux Docker unit rom-data-viewer-scopes-docker-393oeeim matched all generated files; the ignored root wiki was published after guarded input and output checks."
+  ],
+  "limitations": [
+    "Folder selection and page-session controls do not carry between pages; native Windows remains unverified and official resource-name mappings require independent evidence."
+  ],
+  "files": [
+    ".gitignore",
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data.md"
+  ]
+}

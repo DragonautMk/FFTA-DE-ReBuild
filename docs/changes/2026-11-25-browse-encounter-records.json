@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-encounter-records",
+  "title": "Browse encounter records and placement lists",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add collapsible encounter header, unit template and coordinate-list views with raw fields, physical source offsets, signed and unsigned coordinate plots and partial-catalog support.",
+    "Link stored equipment IDs to item records and provide paginated item-to-template references; flag header pointer or count mismatches without inferring live placement."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-encounters-synthetic-xr3_x1jv passed 27 Python and Chrome tests, covering coordinate signedness, raw fields, mismatches, missing catalogs, pagination and existing controls.",
+    "Protected EUR unit rom-data-viewer-encounters-eur-dtibuac9 compared 442 headers, 2850 unit templates, 691 lists, 2342 points and 14250 equipment references against their sources; Chrome checked a real plot and bidirectional navigation.",
+    "Offline unit rom-data-viewer-encounters-docker-5cf1c9ua produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "Coordinate lists do not assign positions to units or reproduce live placement, random selection, unit initialization or map appearance.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_encounters_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

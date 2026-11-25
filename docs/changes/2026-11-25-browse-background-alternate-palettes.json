@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-background-alternate-palettes",
+  "title": "Browse background alternate palettes",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse both alternate background palette catalogs by descriptor, environment low bits and bank, with stored color words and source references.",
+    "Apply the selected alternate bank to background tile sheets and navigate between views; show 0xFF keys as unavailable."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-alternate-palettes-synthetic-pl5eja0m passed catalog validation, colors, sentinel handling, links and standalone resource checks in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-alternate-palettes-eur-y5byo3lu matched 314 palettes, 40,192 color words and descriptor links, then checked a real swatch, tile pixel and unavailable key in Chrome.",
+    "Linux Docker unit rom-data-viewer-alternate-palettes-docker-0kqk3x86 matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "Catalog selections do not reproduce live palette effects or a complete scene. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_alternate_palettes_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

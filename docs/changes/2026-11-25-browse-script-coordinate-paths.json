@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-script-coordinate-paths",
+  "title": "Browse and animate script coordinate paths",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse stored script XY paths, source alignment and direct instruction references; preview from a selected point with speed, loop and persistent settings.",
+    "Optionally overlay paths on a manually selected terrain seed and navigate between both views."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-script-paths-synthetic-ctd_lkz_ passed playback, focus, settings, references and standalone paths in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-script-paths-eur-ihwu8qrl matched 210 paths, 856 points and 68 links with the source and checked real playback, pixels and terrain navigation.",
+    "Linux Docker unit rom-data-viewer-script-paths-docker-izr26ayk matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "Terrain is selected manually; live map association, actor selection, height, script execution and original movement timing are not reconstructed. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_script_paths_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md"
+  ]
+}

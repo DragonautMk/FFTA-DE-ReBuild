@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-blend-and-brightness-programs",
+  "title": "Browse blend and brightness programs",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse stored blend controls, initial coefficients, commands and producer references with bidirectional navigation.",
+    "Preview the stored steps with user-chosen sample colors and rate, optional looping, visible position and preserved controls."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-blend-synthetic-a8pa0_t7 passed 32 projection, browser, scope and existing-view checks.",
+    "Protected EUR unit rom-data-viewer-blend-recovered-lv80oy7_ matched 160 programs, 345 commands, six producer tables and 158 source ranges; reconstructed JSON matched its authenticated hash.",
+    "The same unit checked local Chrome and byte-identical Python and Docker output for 11 files; two validated ignored pages were published under preimage guards."
+  ],
+  "limitations": [
+    "Preview colors are illustrative; scene layers, live messages, interpolation and original timing are not reproduced. Native Windows, other previews and exact audio remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_blend_programs_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "animate-background-planes",
+  "title": "Animate linked background plane transfers",
+  "kind": "added",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Apply linked transfer frames to background plane tiles in slot order, with selectable slots and frames, adjustable playback rate, looping and persistent controls across descriptors.",
+    "Show transfers alone or over linked graphics, expose missing tiles and clip out-of-range destinations without changing source data."
+  ],
+  "validation": [
+    "Synthetic viewer unit tiaqrdg1 passed 51 tests; focused unit sahvk9vy passed three independent-timer, composition and controls tests.",
+    "Protected EUR unit _7jf5jyj checked 283 independently composed frames, two real frame pixels, unchanged authenticated transfer data and 17 Docker/Python files; the validated ignored world page was published."
+  ],
+  "limitations": [
+    "The preview assumes the 0x06000000 tile base and applies complete writes immediately; original live flags, partial DMA, game timing, complete scene composition and Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_bg_plane_animation_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/rom_data_maps.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "preview-firaga-object-sequences",
+  "title": "Preview documented Firaga object sequences",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Join four documented indexed and compact Firaga sequences to the static object lists referenced by their stored frames, preserving list IDs, source offsets and durations.",
+    "Move their resource links to the object page, expose descriptor and directory fields, and keep each preview unavailable when its required lists or validated bindings are missing."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-firaga-obj-synthetic-y5_aesx4 passed 52 projection, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-firaga-obj-recovered-z7zebfoo authenticated five complete catalog hashes and 310 source ranges; Chrome checked 59 frames and 419 frame-object instances, playback and looping.",
+    "The same unit matched all 12 Docker/Python output files; three validated ignored local wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "Graphics and palettes are manually selected, preview timing is illustrative, and live game context, other sequences, previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_firaga_obj_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

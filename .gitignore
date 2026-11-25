@@ -1,5 +1,7 @@
 /target/
 /rom_data_viewer_generated.html
+/rom_data_viewer_generated.html.parts/
+/index.html.parts/
 /Data/
 /Installer/*.exe
 /Installer/payload/

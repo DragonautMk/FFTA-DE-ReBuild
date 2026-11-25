@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "align-observed-lz-previews",
+  "title": "Choose byte alignment for observed LZ previews",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Allow a preserved byte offset into decoded LZ outputs for tile sheets, object animations and tilemap previews, with clear feedback for invalid offsets.",
+    "Retain trailing decoded bytes so unaligned word reads and incomplete tiles are represented without losing source data."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-lz-alignment-synthetic-455fmpyn passed 75 decoder, browser and regression checks, including unaligned tails and incomplete 8-bit tiles.",
+    "Protected EUR unit rom-data-viewer-lz-alignment-recovered-ih3l6kex matched the complete catalog hash and 28 source ranges; Chrome checked 73595 shifted words and 150 tile-depth previews across 25 streams.",
+    "The same unit matched all 12 Docker/Python output files; two validated ignored local wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "Tile depth, offset, graphics meaning and palettes remain manually interpreted; live scene composition, other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_observed_lz_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

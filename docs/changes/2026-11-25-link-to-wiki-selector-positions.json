@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "link-to-wiki-selector-positions",
+  "title": "Link directly to selected wiki entries",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add links that restore the dropdown positions of a wiki section in the same generated dataset, including dependent text, sprite and audio selectors.",
+    "Encode only control IDs and numeric positions in the query and ignore invalid, disabled or unavailable positions."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-bookmarks-synthetic-pm8g31r3 passed ten Chrome tests covering cascading selection, invalid links and existing controls.",
+    "Protected local-page unit rom-data-viewer-bookmarks-local-f58jm7ej checked nine sections across seven scopes without changing embedded data.",
+    "Docker unit rom-data-viewer-bookmarks-docker-16eits0l matched Python on synthetic input; ignored local pages were published with hash guards."
+  ],
+  "limitations": [
+    "Links depend on the same generated dataset and do not preserve checkboxes, entered text, canvas choices or playback state. The target volume was unavailable and Windows remains unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_bookmarks_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data.md"
+  ]
+}

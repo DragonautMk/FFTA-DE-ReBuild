@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Extracted file · Resource wiki</title>
+  <style>
+    body { font-family: Verdana, Arial, sans-serif; max-width: 90rem; margin: 2rem auto; padding: 0 1rem; }
+    summary { cursor: pointer; }
+    summary h2 { display: inline; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #aaa; padding: .3rem; text-align: left; vertical-align: top; }
+    button, input, select { margin: .2rem; }
+    p, td { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+<h1 id="resource-title">Extracted file</h1>
+<nav><a id="resource-index">All resources</a> · <a id="resource-scope">Topic page</a></nav>
+<p id="resource-identity"></p>
+<p>This page contains a copy of the extracted file. The hash was checked during generation.</p>
+<!-- FILE INSPECTOR -->
+<script>
+const resource = /* RESOURCE */;
+document.title = resource.id + ' · Extracted resource wiki';
+document.getElementById('resource-title').textContent = resource.id;
+document.getElementById('resource-identity').textContent = resource.path + ' · SHA-256 ' + resource.sha256;
+document.getElementById('resource-index').href = resource.index;
+document.getElementById('resource-scope').href = resource.scope;
+const directoryInput = document.createElement('input');
+directoryInput.type = 'file';
+const directoryStatus = document.createElement('span');
+let openIndexedFile = null, releaseIndexedFile = null;
+/* FILE INSPECTOR */
+const decoded = atob(resource.content), bytes = new Uint8Array(decoded.length);
+for (let index = 0; index < decoded.length; index++) bytes[index] = decoded.charCodeAt(index);
+openIndexedFile(new File([bytes], resource.name), resource.path);
+</script>
+</body>
+</html>

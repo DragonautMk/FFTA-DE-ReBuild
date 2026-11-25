@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "label-json-number-overflow",
+  "title": "Label JSON number overflow in the viewer",
+  "kind": "fixed",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Show browser numeric overflow as a labeled out-of-range value instead of misleadingly displaying JSON null, and explain that parsed numbers can lose precision."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-json-table-synthetic-zqkmnmv6 checked positive and negative overflow, safe and unsafe integers and existing navigation in both viewer modes.",
+    "Protected local-page unit rom-data-viewer-json-table-local-fkxzxk_r checked all nine pages with unchanged embedded data. Docker unit rom-data-viewer-json-table-docker-_wvjna3r matched Python on synthetic input."
+  ],
+  "limitations": [
+    "JavaScript can also round finite decimal numbers or underflow them; the raw file remains authoritative. The original dataset volume was unavailable and native Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/tests/test_viewer_json_table_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": []
+}

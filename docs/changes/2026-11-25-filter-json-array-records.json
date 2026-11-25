@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "filter-json-array-records",
+  "title": "Filter extracted JSON array records",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add cancellable case-insensitive filtering of direct field names and scalar values in JSON arrays, preserving source indices and returning to filtered results after opening a record.",
+    "Limit each scan to 10000 matches with an explicit notice, retain up to 20 array filters per selected file and keep list and table navigation available."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-json-filter-synthetic-9c6m4e88 checked both viewer modes, source indices, nested scope, cancellation, result bounds, file replacement and existing audio and navigation controls.",
+    "Protected local-page unit rom-data-viewer-json-filter-local-96wneefn checked all nine pages and a 376-record embedded catalog without changing embedded data. Docker unit rom-data-viewer-json-filter-docker-ft6e9rx4 matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Filtering covers direct fields and scalar values only; numbers are searched after browser parsing and may lose precision. Structured JSON remains limited to 8 MiB and the paused large-file worker was not resumed. The source dataset volume was unavailable and native Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/tests/test_viewer_json_filter_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": []
+}

@@ -110,6 +110,628 @@ equipment-negative locators have no fullpairs. Authorized copiedEURPolly→Hilde
 confirmedFight500singlefullpair passes allstate-clock-image-OAM-dispatch-audio,
 4477equipmentB/1408pixelB/two sequences; other256ordinary sequences targeted-only.
 
+## E509 European BIOS LZ77 caller census
+
+The exact EUR ROM contains two aligned Thumb `SWI; BX LR` wrappers.
+`08145254` selects WRAM LZ77 and has 19 direct Thumb BL patterns.
+`08145250` selects VRAM LZ77 and has five. Protected Wine disassembly
+`e509-eur-bios-lz77-roots-wine-do_1rw2s` verifies 17 instruction windows
+covering the 24 patterns and both wrappers. Four previously recorded
+clean-boot streams reproduce their exact bounds.
+
+The source census checks 287 roots, including targets of aligned
+ROM-mirror words with word-aligned type-10 headers and the boot controls.
+Twelve roots decode to complete streams and nine are already owned in
+`e316-d315`. Three have no owner and form the LZ77 bank called by one
+VRAM initialization routine. In execution order:
+
+- `08039d54` reads `08039dcc` and decodes `b4fa4c..b52764` to
+  20,480 bytes at `06000000`.
+- `08039d78` reads `08039dd8` and decodes `b52764..b5300e` to
+  4,096 bytes at the destination in structure field `8c`.
+- `08039d96` reads `08039ddc` and decodes `b53010..b536b6` to
+  4,096 bytes at the destination in field `88`.
+
+The three streams consume 15,464 bytes and yield 28,672 bytes. Stream
+ends exclude padding. The literal for the neighboring source at
+`b53740` is passed to a separate routine. The remaining register-fed
+call sites, inherited and relative tables, ordinary use and deferred
+platforms require separate evidence.
+
+## E510 European VRAM LZ77 runtime
+
+EUR extraction `e317-d316` adds the three E509 streams and their original
+source literals to `graphics.observed-lz-block`. The `vram_bank` field
+projects all 15,476 source bytes, including the words read by the three
+Thumb loads. The existing LZ77 HLE serves the authenticated decoded
+streams when the original VRAM SWI reads these roots. Guest bus reads
+can also recover the original encoded bytes.
+
+Wine `e510-eur-vram-lz-bank-wine-pd_87pq8` executes the original sequence
+from `08039d4e` to `08039d9a` with controlled destination fields and
+altered ROM backing. It verifies three decoded HLE inputs, all three
+source-word loads, 28,672 destination bytes and full saved-state parity.
+It also verifies the mixed raw/typed word at the inter-stream padding
+in all three mirrors, normal preparation, reuse and verification,
+attachment of `e316-d315` and rejection of a current dataset with the
+bank omitted. The Wine server drained.
+
+The first Wine unit `jqocwdm0` rejected the 1,199,367-byte JSON at the
+previous 1 MiB resource ceiling. Build `sehvwj6y` raises this particular
+ceiling to 2 MiB and retains the first executable. Build `c8vu9zgk`
+retains the exact E507 executable. E513 covers the neighboring halfword
+sources. Ordinary scene invocation, translated dispatch, real BIOS,
+Linux, USA and native Windows remain open.
+
+## E511 Background descriptor variant LZ77 paths
+
+Five additional E509 WRAM calls form an address from a table base and
+an indexed relative word. E511 follows their immediate producers into
+the background variant routines. `080213e4` resolves the optional
+descriptor field `0x50` and derives three table bases from the variant's
+first three words. The separately traced writer at `08021386` stores the
+third table base in `020080c4+0x0c`, the state field read before
+`08020fc4`.
+
+All 162 authenticated descriptors at `7662a8` have zero at field
+`0x50`. Their full record range is owned by `graphics.bg-descriptors`
+in `e317-d316`. This catalog declares no variant payload. The original
+known direct initialization call at `080254a8` supplies argument zero,
+which `0801b2b6` writes to flag `02007f39`. The reader at `0801bca2`
+then branches over the call to `080213e4`. The flag follows the argument.
+A forced call could interpret the descriptor bytes as a variant program.
+
+Protected Wine units `e511-eur-relative-lz77-producers-wine-9tvij354` and
+`e511-eur-relative-lz77-variant-proof-wine-k4q47vxl` retain the original
+instruction windows and catalog join. The latter scans the ROM for
+direct Thumb BL patterns and exact even and odd address words for the
+generic entries in all three ROM mirrors. A viable nonzero producer
+for the generic RAM-fed arguments and its complete source extents are
+still required. Indirect and computed dispatch and ordinary runtime
+reachability remain open.
+
+## E512 European halfword copy source banks
+
+The original loop at `080369e8` reads and writes one halfword per
+iteration. It adds the low 16 bits of the fourth argument to each
+source word and the store preserves the low 16 bits of the sum.
+The third argument supplies the halfword count. E512 authenticates
+all 11 direct Thumb calls in the EUR ROM. The call immediately before
+the E510 VRAM sequence uses this loop.
+
+Nine calls load literal sources. They select six distinct spans of
+22, 26, 30, 192 or 224 halfwords, with aliases at three roots. The
+original language comparison at `08039cf6` selects `b53740` when the
+stored language is 3 and `b53714` otherwise. Both spans contain 22
+halfwords. The final plan derives bias `0x16a` for `0808edbe` from
+its two setup instructions.
+
+The other two calls load five-entry tables at `397d44` and `397d58`.
+Both select a pointer using the stored language byte at `02001f6e`,
+then add `60 * row` and read 30 halfwords. The two direct callers
+of this selector supply row 0 or 1 by isolating bit six of an original
+byte. All five language slots in each table therefore declare two
+rows, or 120 source bytes per bank. Wider language values and
+computed or indirect callers remain outside the verified domain.
+
+Protected Wine disassembly
+`e512-eur-halfword-copy-callers-wine-he3iuspf` and the bank plan
+`e512-eur-halfword-copy-bank-plan-gb6poy45` identify 16 complete source
+banks, two selector tables and 11 literal words. All 29 spans, totaling
+2,316 bytes, are unowned in `e317-d316`. The source proof records the
+inputs for runtime publication. Ordinary scene use and later translated
+checks remain open.
+
+## E513 European halfword copy runtime
+
+EUR extraction `e318-d317` publishes the 16 E512 banks, two selector
+tables and 11 literal words in `graphics.ui-raw-transfers`. The
+`halfword_copies` fields project 2,316 bytes at the original addresses.
+The guest reads the source words, selects the stored language and row,
+and executes the original copy and bias instructions.
+
+The single Wine test `e513-eur-halfword-copy-bank-wine-wjeya5bb` verifies
+all nine literal cases and both rows in all five slots of each selector.
+It compares 2,728 VRAM output bytes with altered ROM backing and
+checks full saved-state equality for all 29 cases. It verifies
+`e317-d316` attachment, normal preparation, reuse and verification,
+rejection of a dataset with this bank omitted, the existing indexed
+owner at `397d6c` and raw fallback beyond the selected span. The Wine
+server drained.
+
+The first unit `8_cr8c3g` stopped before the executable because the
+test driver compared the complete argument list with the single
+`--run` flag. The corrected driver used the same Windows build
+`1e57rxaj`, which retains the exact E510 executable. The language
+fixtures set the stored byte. Ordinary startup and scene invocation,
+translated dispatch, indirect callers and deferred platforms remain
+open.
+
+## E514 European halfword preload source range
+
+Protected Wine disassembly `e514-eur-preload-sources-wine-d6w2pc05`
+authenticates the three original halfword copies in the remaining gap
+between the E513 source banks. Each calls the original CPUSet wrapper
+at `08145230` with the fill and word flags clear. The call at
+`08075b92` reads 126 halfwords from `b4ccc0`. The call at `08075ba0`
+reads 126 from `b4cdbc`. The call at `08077b00` reads 288 from
+`b4ceb8`.
+
+The new payloads cover `b4ccc0..b4d0f8` exactly, with exclusive ends.
+They contribute 1,080 source bytes and three 4-byte source literals
+outside the `e318-d317` manifest. The surrounding authenticated E513
+banks and these three sources form the complete contiguous interval
+`b4c980..b4d5dc`, totaling 3,164 payload bytes. The plan retains an
+additional aligned word pointing inside the first source as a reference
+lead.
+
+## E515 European halfword preload runtime
+
+EUR extraction `e319-d318` adds the three E514 source literals and
+540 halfwords under `halfword_copies.preloads` in
+`graphics.ui-raw-transfers`. Together with E513, the packet covers
+the contiguous 3,164-byte payload range `b4c980..b4d5dc`.
+The original Thumb callers read those addresses and invoke the CPUSet
+wrapper with live destination fields.
+
+Wine unit `e515-eur-halfword-preloads-wine-recovery-l46q9dtz` passes
+one focused test. It executes all three original Thumb CPUSet callers in
+BIOS HLE with the six new ROM spans altered in memory. The callers read
+all 12 literal bytes and copy 1,080 bytes. Their CPUSet arguments, VRAM
+output, guest clock and complete saved state match the raw-ROM run.
+The test verifies preparation, reuse, verification, attachment of
+`e318-d317`, rejection of omitted preloads in `e319-d318`, the adjacent
+E513 owners and raw fallback past the literals. The server drained.
+
+The first unit `6sfzw938` was interrupted after creation, reuse and
+verification. The host check and Wine server drain allowed recovery of
+its exact prefix lease. Its work and logs are retained. The passing unit
+reused build `j3bpdin5`, which also preserves the E513 executable.
+
+Ordinary startup and scene invocation, translated dispatch, a real BIOS,
+native Linux, USA and native Windows remain open.
+
+## E516 European direct CPUSet source census
+
+Protected Wine unit `e516-eur-cpuset-direct-sources-wine-lcil6mnx`
+attests the Thumb instruction windows for all 765 aligned BL patterns
+to the CPUSet wrapper at `08145230`. A bounded straight-line analysis
+recovers a ROM source and CPUSet control for 16 sites, a RAM or I/O
+source for 31, and leaves 718 source arguments unresolved. The plan
+retains the local instruction windows and the source and control
+literal locations for each resolved operand.
+
+The 16 local ROM extents merge into nine physical intervals comprising
+75,580 source bytes. Against `e319-d318`, 74,324 payload bytes and 76
+literal bytes lack a declared owner. The three E515 calls serve as
+positive controls and have owners for their full payloads. Five local
+setups in the `081399fc..08139b50` call group describe transfers in
+`b57334..b5f334` and `b5f41c..b67950`, which contribute 66,740 of the
+unowned payload bytes. The latter interval includes two 52-byte
+overlaps and a repeated source range.
+
+The results describe the local fallthrough instruction sequences.
+The call group's original entry paths, bank boundaries between the
+transfers, source roles and runtime consumption require separate proof.
+Register-fed, indirect, ARM and inline SWI calls remain open.
+
+## E517 European VRAM loader CPUSet sources
+
+The original dispatcher at `08139d28` reads its state byte from the
+second argument. State 1 reaches the loader at `08139b30` through
+`08139dec`. State 3 reaches `081399e4` through `08139e7c`.
+Wine disassembly `e517-eur-cpuset-1399-bank-wine-8nt835h5` verifies
+the two loader bodies, these direct paths and the original CPUSet
+wrapper. The five absolute ROM calls copy to VRAM. The sixth CPUSet
+call copies 7,488 decoded bytes from WRAM after the original custom
+decoder selected one of the five existing `71e680` language banks.
+
+The raw source extents are `b57334..b5f334` and
+`b5f41c..b67950`, with exclusive ends. The second interval combines
+two 52-byte source overlaps and the 8,000-byte source used by both
+loaders. Its final 128 bytes already belong to the encoded UI bank
+starting at `b678d0`. The 232 bytes between the two raw intervals
+fall outside the original transfer counts. The aligned pointer scan
+finds no reference inside that gap. Its role elsewhere remains open.
+
+The two unowned payload spans and the 11 source, destination and count
+literals add 66,784 bytes across 13 disjoint spans in `e319-d318`.
+Their aggregate fingerprint, in manifest order, is
+`c22a547906433a51de41457ff0cff2fb712fb931fb19c4bdcadfc4f47f3cda6c`.
+Publication and controlled runtime validation remain open.
+
+The same loaders have two additional raw paths that use distinct
+transfer helpers. Three calls to `08139c44` read consecutive halfwords
+from `b558d4..b56734`. The paired copies through `08145c14` select
+from `3adc88` and reference six contiguous 512-byte sources at
+`b56734..b57334`. Their live destination and selector domains remain
+open. The guest derives the pair index from the low two bits of
+`02002fc2`. The two words at indices 6 and 7 fall outside the six
+observed ROM pointer slots. Ordinary startup, scenes and other
+platforms require separate evidence.
+
+## E518 European VRAM loader runtime
+
+EUR extraction `e320-d319` adds `halfword_copies.vram_loaders` to
+`graphics.ui-raw-transfers`. The two typed halfword ranges and 11
+caller literals cover the complete unowned E517 CPUSet source set.
+Both routines share the same physical source bytes for the two overlaps
+and the repeated transfer. The last 128 bytes of the repeated source
+belong to the encoded UI bank at `b678d0`. The 232-byte gap stays
+available through the original ROM read path.
+
+Wine unit `e518-wine-internal-recovery-2t9frxi_` executes all five
+original Thumb calls in BIOS HLE with the 13 new spans and the
+existing UI tail altered in memory. It compares 74,972 copied VRAM
+bytes, the guest clock and the complete saved state with the raw-ROM
+run. The existing UI catalog serves 256 bytes across the two reads
+of the 128-byte tail. The test verifies raw fallback at both ends of
+the gap, dataset creation, reuse, verification, attachment of
+`e319-d318` and rejection of omitted loader banks. The server drained.
+The `e320-d319` manifest SHA-256 is
+`877f7975f74ed2c91e08512278e49b5e5f71008362eeda2dd93df3b771563c4b`.
+
+The Windows build unit `64wom3c6` stopped when the external target
+lost its mount after I/O errors and an aborted ext4 journal. The build
+process returned a read-only filesystem error while the runner tried
+to write its receipt. Read-only recovery of the volume provided the
+last Cargo log. It ends before an E518 executable or terminal build
+result. The recovered E515 manifest, E517 plan and Wine overlay match
+their recorded hashes. The six recovered MinGW packages match the
+local Ubuntu package indexes. The managed retry uses an isolated
+internal workspace while the external checkout bind is unavailable.
+Build `0o7fr_dm` passed and retains the E518 executable. Wine unit
+`fxl7z0vm` stopped before launching the test because the wrapper derived
+its expected prefix from the original checkout. The passing unit used
+byte-identical wrapper files in the isolated checkout and the same
+executable. Ordinary entry, translated dispatch, original BIOS, Linux,
+USA and native Windows remain open.
+
+## E519 European row-copy and Color Mode sources
+
+Wine source unit `mps06f1y` reconciles all four direct calls to
+`08139c44`. The row copy reads 640, 600, 600 and 600 halfwords. Its
+first three sources cover `b558d4..b56734`. The fourth call uses
+`b54a58..b54f08` after a separate CPUSet call reads
+`b54f54..b55900` in the same routine. The CPUSet source overlaps
+the first row source by 44 bytes.
+
+The complete five-reference aligned literal census for `3adc88`
+ties the six declared 512-byte banks to three original reader forms.
+The loaders at `081399e4` and `08139b30` copy both banks in the
+selected pair through the byte-copy callback. The routine at
+`08139be4` queues two 256-halfword transfers through `08000f80`.
+The remaining references at `0813b27a` and `0813b894` select the
+odd bank. They pass its offsets `40` and `1e0` to `0813b6f0`, which
+copies 16 halfwords from each. Wine helper unit `2smdx7sg` verifies
+the DMA control and both CPUSet counts. These slices fit within the
+same 512-byte banks.
+
+The existing Color Mode evidence establishes the three options that
+set the low bits of `02002fc2`.
+The declared table contains six pointers for those modes. The guest
+still computes both indices for value 3, whose adjacent words fall
+outside the six physical ROM pointers. Whether other writers can
+produce value 3 and whether indirect consumers use the table remain
+open. [Options evidence](#alternate-palette-callers-and-color-mode).
+
+The publication plan merges the payloads into `b54a58..b54f08` and
+`b54f54..b57334`. Both gaps between the surrounding transfer families
+remain outside these counts. With the six-pointer table and 11 source
+or control literals, the plan covers 10,452 unowned bytes in 14
+disjoint spans against `e320-d319`. Its SHA-256 is
+`af0f78857ae1021bf3b77eefbee199c9b671d9c0923fec8a8d41dad2a92cb47d`.
+E520 publishes this plan. Ordinary entry remains open.
+
+## E520 European row-copy and Color Mode runtime
+
+EUR extraction `e321-d320` adds `halfword_copies.row_pairs` to
+`graphics.ui-raw-transfers`. Two halfword ranges, six Color Mode
+pointers and 11 caller literals cover the 14 authenticated spans.
+The row-copy and CPUSet overlap shares one physical source. The
+pairs keep their original pointer order. The adjacent mode-3 words
+remain owned by `graphics.layered-obj-animations`.
+
+Build `e520-build-internal-recovery-0du8064n` passed. Wine unit
+`e520-wine-internal-recovery-iiv6ks_f` passed and the server drained.
+With all new backing bytes altered, the original code executes four
+row copies, the adjoining CPUSet and five paired-bank readers for
+each mode from 0 through 2. The reads account for 16,956 payload
+bytes and 204 selector and literal bytes. Destination bytes, guest
+clocks and complete saved states match the raw-ROM comparison.
+Checks also cover both raw gaps, the adjacent E518 bank, attachment
+of `e320-d319` and rejection of an `e321-d320` packet missing the
+new group. Dataset creation, reuse and verification pass. The new
+manifest SHA-256 is
+`1b3b8dd1a0278a863db97a026462425b9fcbe63adde9dd67363e05824eb1ed06`.
+
+The original readers ran in controlled Thumb execution with BIOS
+HLE. Ordinary entry, translated dispatch, original BIOS, the
+reachability of mode 3 and other consumers require separate proof.
+Linux, USA and native Windows remain on the recovery checklist.
+
+## E521 European direct CPUSet residuals
+
+Wine unit `e521-eur-cpuset-residual-windows-wine-w84svoqj` projects all
+16 resolved E516 calls against the verified `e321-d320` manifest. The
+E516 plan was recovered read-only and matches its recorded SHA-256.
+Seven calls still have bytes outside declared sources. Their five
+physical ranges total 5,108 unowned source bytes, with 40 more bytes
+in source and control literals. The unit passed and the server drained.
+
+Five of those calls install executable support in IWRAM. The two ARM
+entries in `0050ec..00526c` are copied to `03002b70` and `03002a00`.
+The Thumb entry in `147f58..1482d8` is copied to `030034dc` and the
+original code branches to `030034dd`. The two known blocks in
+`d96838..d97728` contain the relocated copy and sprite routines. The
+48-byte OBJ dimensions alias is already owned. All 5,056 unowned
+copied-code bytes stay in ROM.
+
+The two remaining calls each have a unique aligned source word in the
+EUR ROM. The constructor at `0803eb5c` copies 28 bytes of defaults
+from `3954f0` before setting a pointer at destination offset `18`.
+State 0 of `080ee204` copies three eight-byte records from `39db64`
+to its state structure at offset `8`. These calls account for 52
+unowned data bytes and two source words. E522 follows the related
+initializers. Unresolved argument paths, indirect and ARM callers and
+inline SWIs remain open.
+
+## E522 European state initializer sources
+
+Wine source units `tpy1pbna`, `zjebrwxi` and `w89397al` passed and
+drained. The only aligned direct call to the constructor at `0803eb5c`
+comes from `0803ca28`. The constructor copies the 28-byte defaults at
+`3954f0` and then patches the RAM structure. Its text pointer targets
+the existing `text.catalogs` owner at `720d40`. Three adjacent records
+share the same 28-byte layout. The aligned reference census found an
+original source reader for `3954f0`. The three peer offsets need a
+reader or selector proof before publication.
+
+The original parent at `080ee448` schedules `080ee204` and configures
+related state data. Its counted list at `39db24` has eight eight-byte
+records. The callback at `080dcc80` consumes bytes 0 and 1 and both
+halfwords at 2 and 4 with an eight-byte stride. The next three records
+at `39db64` are copied in full by state 0 of `080ee204`. Of the five
+direct callers of their constructor `080dd534`, only this path passes a
+nonempty list. The original code reads its first six bytes per record
+from RAM.
+
+The same state group passes eight indirect records at `39db88..39dbc8`
+to the existing `080e389c` reader in groups of one, four and three.
+Five preceding tilemap rows and the ten-byte blend program at `39db7c`
+have current owners. Two bytes between the blend program and the first
+indirect record remain unclassified. The two tables at `14d4cc` and
+`14d4ec` serve a later callback state. E524 authenticates both tables
+and a second physical copy of the shadow table.
+
+The publication plan contains six source spans and six source words,
+204 unowned bytes against `e321-d320`. Its SHA-256 is
+`7d0b29333db56b7f56a98ef67347618aa6bd6ac47abd46e4e771c532abaf4dec`.
+E523 implements this plan.
+
+## E523 European state initializer runtime
+
+EUR `e322-d321` adds `halfword_copies.state_initializers` to
+`graphics.ui-raw-transfers`. The catalog stores the constructor defaults,
+both counted lists, eight indirect records and their six source words.
+The indirect records use the existing eight-byte field representation.
+
+Build `hq683amm` and Wine unit `9p2mkou5` passed. With all new backing
+bytes altered, the original constructor, state-0 copy and list callback
+produce matching RAM. The three indirect caller setups select groups of
+one, four and three records. Controlled execution checks their original
+halfword and byte readers for every record. The two runs match guest
+clocks and complete saved states. The extracted owner serves 164 payload
+bytes and 24 source-word bytes. The two trailing bytes of each record in
+the eight-record list are preserved in the catalog.
+
+Dataset creation, reuse and verification, `e321-d320` attachment and
+missing-group rejection pass. The preceding tilemaps retain their source
+ownership. The blend program, two-byte gap and three adjacent constructor
+records keep their prior read behavior. The Wine server drained. The
+manifest SHA-256 is
+`edccdc969ac15b44cbcdb1a9cbd72e98e9d43c2b0891540916cd850dad7a02d7`.
+
+The first test unit `boy7u8bm` stopped on a fixture assertion for the
+initial halfword. The original `LDRH` writes `r0`, which the passing test
+checks. The failed unit is retained and its server drained. Ordinary
+entry, translated dispatch, later callback tables, original BIOS, Linux,
+USA and native Windows remain open.
+
+## E524 European scroll register tables
+
+Four original readers each copy both eight-word tables at `14d4cc` and
+`14d4ec` to the stack. Their Thumb load pairs start at `080dc9b2`,
+`080dcd1e`, `080dcfc2` and `080dd068`. The first table lists the eight
+scroll registers at `04000010..0400001e`, inclusive. The second lists
+the corresponding shadow fields at `0300094a..03000958`.
+
+Wine unit `_ar1qo7z` authenticates the 16 entries, all eight aligned
+root words and the stack-copy instruction windows. The server drained. An exact
+search identifies a second physical copy of the shadow table at
+`14d6e0`. Its sole aligned root is at `0f115c`. The retained E522 Wine
+window `tpy1pbna` verifies its eight-word copy at `080f1056`.
+
+The resulting plan declares 132 unowned bytes in eight spans against
+`e322-d321`. Its SHA-256 is
+`95a89b0dfabf66edfbaf2c9ac215e5ba7cc3876ed17eb3bcf90a1fd2ec84edd8`.
+The tables store addresses of live registers and shadow RAM. E525
+publishes the plan and verifies the selected reader paths.
+
+## E525 European scroll register runtime
+
+EUR `e323-d322` adds `halfword_copies.scroll_register_tables` to
+`graphics.ui-raw-transfers`. The two physical shadow tables share the
+same typed addresses. Each original source range and root word retains
+its own address and manifest entry.
+
+Build `7ov7umih` and Wine unit `tasoaf_9` passed. With all new backing
+bytes altered, four paired readers and the alias reader execute all
+nine original stack copies. All destination words match the original
+ROM. Each paired reader performs a signed live shadow load and reaches
+`0800cf02` after the scroll constructor saves the selected MMIO address.
+The alias reader performs its original unsigned shadow load. The
+extracted owner serves 288 table bytes and 36 root bytes. Guest clocks
+and full saved states match the raw-ROM comparison.
+
+Dataset creation, reuse and verification, `e322-d321` attachment and
+missing-group rejection pass. The adjacent copied halfword owner and
+three raw boundary bytes retain their prior routing. The server drained.
+The manifest SHA-256 is
+`ad69ca0e1372f04113008e6b338f3054ace0a8d57543b1ab216429f96803bfbf`.
+The selected proof reaches the constructor argument handoff. Later
+hardware stores, live selector producers, ordinary invocation,
+translated execution, Linux, USA and native Windows remain open.
+
+## E526 European title-language continuation
+
+The retained E154 ordinary proof selects Language from the EUR title
+menu and observes `0813aafe` storing French (`1`) at `02001f6e`.
+The post-publication state recovered from the read-only volume matches
+the SHA-256 of the original E162 continuation input. The E526 observer
+loads that state and follows the documented E162 controller sequence.
+
+Wine unit `pcntsfjd` passes the bounded observation and the server
+drains. Across 872 frames, instruction events at `08139d28` report
+state 9 twenty-one times, state 10 once and state 255 once. The stored
+language ends at `1`. Both loader branches, their entries and all
+five original CPUSet sites remain unobserved in this window. The
+observer uses the interpreter with BIOS HLE and ordinary input.
+
+E527 uses the title registration to reach state 3 during clean startup.
+E529 reaches state 1 by letting the introduction finish. Later language
+writers, translated execution, original BIOS and other platforms remain open.
+
+## E527 European cold-start VRAM loader
+
+The title parent registers `08139d29` at `08139546`. On initialization
+the dispatcher reads the state from its message and stores state 1 or
+3 at `08139dce`. The original clean startup with standard demo input
+registers the handler at frame 741, writes state 3 at frame 742 and
+enters `081399e4` at frame 743. The stored language is `0` at entry.
+
+Wine `dwcnk1hg` uses an in-memory checkpoint from that ordinary
+entry to compare the three original CPUSet calls. The `e323-d322`
+resources serve 55,400 loader payload bytes and 24 literal bytes.
+The existing encoded UI owner serves the remaining 128 bytes. With
+all these original sources altered in the managed run, the three
+destinations match all 55,528 expected bytes. CPUSet arguments, guest
+clock, audio buffer and full saved state agree at the endpoint. The
+Windows build `cqkfw_x8` passes, and the Wine server drains.
+
+This scope uses the EUR interpreter with BIOS HLE. E518 covers controlled
+state-1 reads and E529 verifies that state's ordinary entry. Translated and
+original-BIOS execution remain open for both states. Linux, USA and native
+Windows remain deferred.
+
+## E529 European VRAM loader after the introduction
+
+On initial title dispatch, `0813bb08` reads the mode byte at `0300284c`.
+The original store at `08139dce` selects state 3 if the mode is 2 or the
+flag at `0300280c` is 1. It selects state 1 otherwise. The introduction
+initializes the flag to zero at `08140504`. The path through `08144846`
+passes the pressed keys from `03000002` to `08144e3c`. Its Start check
+can set the flag at `08144e5a`. The earlier exit at `08141884` also sets it.
+
+The ordinary Wine route starts clean, presses A on the initial English
+choice at frames 180–181 and releases all keys. The original chooser
+publishes language 0 at frame 181. Both introduction phases finish at
+frames 2840 and 2991. The parent requests startup slot 5 at frame 2992.
+The title registers its handler at frame 2994, stores state 1 with flag
+and mode both zero at frame 2995, and enters `08139b30` at frame 2996.
+
+Wine `r_nl_ca7` compares the two original calls at `08139b42` and
+`08139b4c` from the ordinary entry checkpoint. With the selected backing
+altered, `e324-d323` serves 19,316 payload bytes and 20 literal bytes.
+The earlier UI owner supplies 128 payload bytes. Both destinations match
+all 19,444 expected bytes. CPUSet arguments, guest clock, audio and full
+saved state agree. Build `z6zat23q` passes and the Wine server drains.
+The manifest matches E528, SHA-256
+`f40de38596eb6231777cd920dc32d5eb39181dad01e4549f2cd0ed0cd3360a2e`.
+
+E527 and E529 cover all five original CPUSet calls through ordinary EUR
+startup in the interpreter with BIOS HLE. Translated dispatch, original
+BIOS, other producers, Linux, USA and native Windows remain open. No
+performance measurements were taken.
+
+## E534 European paired Color Mode CPUSet banks
+
+Eight previously unresolved direct CPUSet calls select palette data through
+the tables at `395644`, `397dd0` and `3adf48`. Each table has eight 32-bit
+words. The two low bits of `02002fc2` select a pair. The fourth pair repeats
+the first pair, so all four values have bounded sources. The aligned
+reference scan across the three ROM mirrors identifies the five first-mirror
+literal words used by the selected readers.
+
+The table at `395644` selects six consecutive 512-byte blocks in
+`b537a8..b543a8`. The tables at `397dd0` and `3adf48` share the six
+blocks in `b4bd80..b4c980`. Three consumers copy both complete blocks for
+the selected mode. The callers at `08059d3e` and `08070f9c` copy 32
+bytes at offsets `0x60` and `0x120` into the first block, respectively.
+For modes 0 and 3, `08070f9c` reads exactly `b4bea0..b4bec0`. That
+fragment belongs to `graphics.ui-raw-palettes` and is shared with the two
+full-copy routines for the same bank.
+
+EUR `e329-d328` publishes five literals, three tables and the three
+unowned payload spans in `graphics.ui-raw-transfers` under
+`halfword_copies.color_mode_pairs`. The 11 spans contain 6,228 bytes
+with concatenated SHA-256
+`e79764dc5b172312a9ee08b0955f33b81665cc18d64b45cecce7b1865b3ea9fc`.
+The existing owner completes the shared bank. The verified source plan
+includes the original selector loads, transfer sizes and stop points.
+
+Windows build `9uf8gqxx` and Wine unit `p_2bg22f` pass. The original
+interpreter paths exercise four modes across five consumers. With all
+selected ROM backing bytes altered, 6,324 requests match the raw reference
+at the original read sites. The extracted transfer owner serves 12,352
+payload and 208 table and literal bytes. The existing palette owner serves
+192 bytes. Destination bytes, guest clock and complete saved state agree.
+The `e328-d327` predecessor attaches. An incomplete current dataset is
+rejected without replacing the attached owner. The Wine server drains
+and successful scratch is removed. The new manifest SHA-256 is
+`6942cbe4d829dad3e71335ef6dcff25f60d8dce4e1a03d7f14d5a73ede67e9a1`.
+
+The three full-copy routine entries are `08032938`, `0808c460` and
+`0813bc3c`. Their original direct call leads include `080328d0`,
+`08033ed2`, `08089f6e` and `0813bfd2`. Ordinary scene entry,
+translated dispatch and original BIOS remain open, along with Linux, USA
+and native Windows. No performance measurements were made.
+
+## E535 European scanline blend coefficient bank
+
+Among the 765 E516 direct CPUSet call patterns, `0810d032` and
+`0810d118` share the signed halfword offset sequence for the table at
+`3a62ec`. Both belong to the original callback at `0810ce10`, bound
+by the existing primary task descriptor 272. The initializers set the
+intervals from 0 to 160 and from 160 to 320. Each phase advances its
+index over 60 updates and copies 160 halfwords per update into the live
+blend buffer. The original buffer setup at `0800d708` supplies
+`04000052` as the hardware destination.
+
+The maximum index and the copy width bound the 480-halfword table at
+`3a62ec..3a66ac`. The preceding tilemap descriptor ends at the table
+root. The pointer at `0810cddc` identifies the next independent source
+at the exclusive end. The two reader literals and the full table add
+968 bytes to `graphics.ui-raw-transfers` in EUR `e330-d329`. Their
+concatenated SHA-256 is
+`650becdfa472db1e500dc2301f1d3eee985a9189e385cdb35e4282b9a6394d6e`.
+
+Windows build `y_04qyz3` and Wine unit `jj5k7xz5` pass. The controlled
+interpreter runs both original setup paths and task states `0103` and
+`0107` for 120 total copies. With all new backing bytes altered, both
+runs issue 19,320 matching read requests. The first updated index is
+3, so the copies cover 477 coefficients. Three direct reads verify
+the leading coefficients against the original ROM. All 120 destination
+buffers, the final guest clock and the complete saved state match.
+The `e329-d328` dataset attaches. An incomplete current dataset is
+rejected without replacing the attached owner. Wine drains and the
+managed runner removes successful scratch. The manifest SHA-256 is
+`ac2ca223d4ced8d367c6f9f60074adf170a36fb0b2284c27c550484bb2d2214d`.
+
+Ordinary task registration, the subsequent hardware transfer, translated
+dispatch, original BIOS, Linux, USA and native Windows remain open. No
+performance measurements were made.
+
 ## Observed producers
 
 An optional test follows 1200 clean-boot frames with standard demo input, without

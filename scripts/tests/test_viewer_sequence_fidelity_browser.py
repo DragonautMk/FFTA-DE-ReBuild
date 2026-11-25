@@ -59,8 +59,8 @@ class ViewerSequenceFidelityTest(unittest.TestCase):
                     resume(){return Promise.resolve()}
                     createBuffer(c,n,r){return {getChannelData(){return new Float32Array(n)}}}
                     createGain(){const events=[];const node={events,gain:{setValueAtTime(v,t){events.push(['set',v,t])},
-                      linearRampToValueAtTime(v,t){events.push(['ramp',v,t])}},connect(){},disconnect(){}};gains.push(node);return node}
-                    createBufferSource(){const node={playbackRate:{value:1},connect(){},start(t){this.started=t},stop(t){this.stopped=t}};sources.push(node);return node}
+                      linearRampToValueAtTime(v,t){events.push(['ramp',v,t])}},connect(target){this.output=target},disconnect(){}};gains.push(node);return node}
+                    createBufferSource(){const node={playbackRate:{value:1},connect(target){this.output=target},start(t){this.started=t},stop(t){this.stopped=t}};sources.push(node);return node}
                     createOscillator(){throw Error('expected PCM')}
                   }
                   window.AudioContext=FakeContext;q('#sequence-audio>details').open=true;
@@ -71,11 +71,11 @@ class ViewerSequenceFidelityTest(unittest.TestCase):
                   if(q('#sequence-envelope').disabled || !q('#sequence-envelope').checked)throw Error('envelope control');
                   q('#sequence-play').click();await wait(()=>sources.length===2);
                   if(Math.abs(sources[0].playbackRate.value-.5)>1e-12 || Math.abs((sources[0].stopped-sources[0].started)-plan.duration)>1e-8)throw Error('pitch or release');
-                  const first=gains[1].events.find(e=>e[0]==='ramp');
+                  const first=sources[0].output.events.find(e=>e[0]==='ramp');
                   const expected=.08*100/127*(128/255+(127/255)*(.003/step));
-                  if(!first || Math.abs(first[1]-expected)>1e-7 || gains[1].events.length<=5)throw Error('envelope automation');
+                  if(!first || Math.abs(first[1]-expected)>1e-7 || sources[0].output.events.length<=5)throw Error('envelope automation');
                   q('#sequence-envelope').checked=false;change(q('#sequence-envelope'));q('#sequence-play').click();await wait(()=>sources.length===4);
-                  if(Math.abs(sources[2].stopped-sources[2].started-.5)>1e-8 || gains[4].events.length!==4)throw Error('simple envelope fallback');
+                  if(Math.abs(sources[2].stopped-sources[2].started-.5)>1e-8 || sources[2].output.events.length!==4)throw Error('simple envelope fallback');
                   q('#sequence-stop').click();return 'PASS';
                 })()''')
                 self.assertEqual(result, 'PASS')

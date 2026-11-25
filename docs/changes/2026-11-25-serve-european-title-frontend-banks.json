@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-title-frontend-banks",
+  "title": "Serve the European title frontend source bank",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Census the 33-routine EUR title call graph, including both guarded switches. Serve 225 new physical literals and 11 jump destinations in e327-d326 while retaining e326-d325 attachment."
+  ],
+  "validation": [
+    "Windows build 422clx82 and Wine uor3beuv pass with server drain. The ordinary opening runs through all 19 position pairs with 540 matching requests, equal guest clock, audio and complete state under altered backing. All 256 new literal readers, 11 switch destinations and four original fallback cases pass. The e326-d325 dataset attaches and the incomplete current dataset is rejected transactionally."
+  ],
+  "limitations": [
+    "Other ordinary menu paths, translated execution, original BIOS, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/startup_tasks.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/title_frontend.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests/title_frontend.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "show-recognized-text-in-entry-selectors",
+  "title": "Show recognized text in archive entry selectors",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Show a bounded recognized-text preview alongside entry IDs in all four text browsers while retaining their original selector values.",
+    "Represent unknown glyphs explicitly, separate command runs with spaces and retain numeric-only labels when no glyph is recognized or the profile is not European."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-text-labels-synthetic-xdsx_e9s passed label, fallback, truncation and existing text-control tests in Linux Chrome.",
+    "Protected local-page unit rom-data-viewer-text-labels-local-bogtcyng checked all four selectors and a narrow viewport without changing embedded data.",
+    "Docker unit rom-data-viewer-text-labels-docker-eacja4wc matched Python output for synthetic input; the ignored text page was published with hash guards."
+  ],
+  "limitations": [
+    "Labels use only the visually matched European glyph subset and do not execute commands or infer names for unrelated IDs. Target was unavailable, so Docker used a synthetic dataset; Windows remains unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_text_labels_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

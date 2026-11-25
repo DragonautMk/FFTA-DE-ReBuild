@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-event-script-archives",
+  "title": "Browse event scripts and localized text references",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a scoped event-script page with key, bank, slot and physical program navigation, paged opcode filtering, raw parameters and command-directory details.",
+    "Link source text-bank references to physical localized text banks, with explicit manual variant selection; preserve shared headers, fill and bookmarks."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-scripts-synthetic-1uou13yo passed 37 projection, scope, browser and existing-view checks.",
+    "Protected EUR unit rom-data-viewer-scripts-recovered-hg6j1egc authenticated 234 keys, 62 banks, 207 programs, 35048 instructions, 115 commands and five language mappings against eight source ranges; both reconstructed JSON hashes matched.",
+    "Unit rom-data-viewer-scripts-bookmark-lyza0soc checked a real shared-header bookmark and text link, with 12-file Docker/Python parity. Ten ignored wiki pages were published with guarded inputs."
+  ],
+  "limitations": [
+    "Programs are stored segments, not executed control flow; parameter meanings, live text variants and exact selected text programs are not inferred. Native Windows, other previews and exact audio remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_event_scripts_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md",
+    "docs/rom_data_text.md"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-paired-color-mode-cpuset-banks",
+  "title": "Serve European paired Color Mode CPUSet banks",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Resolve eight E516 CPUSet calls and publish three complete four-pair selector tables and two complete logical palette banks in e329-d328. Add 6,228 bytes across 11 disjoint spans and retain the existing b4bea0 palette owner."
+  ],
+  "validation": [
+    "Windows build 9uf8gqxx and Wine p_2bg22f pass. Twenty controlled cases cover five original consumers and all four selector values. All 6,324 read requests match with altered ROM backing. The prior palette owner serves 192 bytes. Destination bytes, guest clock and complete state agree. The predecessor attaches, incomplete current data is rejected transactionally, and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary entry, translated and original-BIOS paths, other CPUSet families, Linux, USA and native Windows are on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/color_mode_pairs.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/color_mode_pair_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

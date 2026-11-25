@@ -73,15 +73,15 @@ class ViewerSequenceTrackControlsTest(unittest.TestCase):
                      !volume.gain.events.some(([v,t])=>Math.abs(v-32/127)<1e-9 && Math.abs(t-.45)<1e-9) ||
                      !pan.pan.events.some(([v,t])=>v===-.5 && Math.abs(t-.05)<1e-9) ||
                      !pan.pan.events.some(([v,t])=>v===.5 && Math.abs(t-.45)<1e-9))throw Error('volume or pan');
-                  if(plain.output.output!==contexts[0].destination)throw Error('separate track routing');
+                  if(plain.output.output.output!==contexts[0].destination || plain.output.output.gain.value!==1)throw Error('separate track routing');
                   q('#sequence-track-controls').checked=false;change(q('#sequence-track-controls'));
                   const oldSources=sources.length;q('#sequence-play').click();await wait(()=>sources.length>=oldSources+2);
-                  if(Math.abs(sources[oldSources].playbackRate.value-.5)>1e-9 || sources[oldSources].output.output!==contexts[0].destination)throw Error('manual control bypass');
+                  if(Math.abs(sources[oldSources].playbackRate.value-.5)>1e-9 || sources[oldSources].output.output.output!==contexts[0].destination)throw Error('manual control bypass');
                   q('#sequence-track-controls').checked=true;change(q('#sequence-track-controls'));
                   q('#sequence-mute-cgb').checked=true;change(q('#sequence-mute-cgb'));q('#sequence-song').value='1';change(q('#sequence-song'));
                   if(!q('#sequence-mute-cgb').checked || !q('#sequence-track-controls').checked)throw Error('settings persisted');
                   const before=sources.length;q('#sequence-play').click();await wait(()=>sources.length>=before+2);
-                  const cgb=sources[before],bus=cgb.output.output.output.output;
+                  const cgb=sources[before],bus=cgb.output.output.output.output.output;
                   if(bus.output!==contexts[0].destination || bus.gain.value!==0)throw Error('muted CGB route');
                   q('#sequence-mute-cgb').checked=false;change(q('#sequence-mute-cgb'));if(bus.gain.value!==1)throw Error('live CGB unmute');
                   contexts[0].createStereoPanner=undefined;q('#sequence-play').click();await wait(()=>q('#sequence-status').textContent.includes('pan unavailable'));

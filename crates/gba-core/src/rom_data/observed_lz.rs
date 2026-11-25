@@ -85,12 +85,46 @@ pub const ADDITIONAL_SPECS: &[StreamSpec] = &[
         decoded_sha256: "438fdf18899a99207371c3a129d4e5d538a5745a08701c5392a01760bfad99b3" },
 ];
 
+/// All three LZ77 sources used by the original EUR VRAM initialization routine.
+pub const VRAM_SPECS: [StreamSpec; 3] = [
+    StreamSpec {
+        offset: 0xb4fa4c,
+        encoded_length: 11544,
+        decoded_length: 20480,
+        source_sha256: "bd713eae52ee7c606a1beeced0adbede64c342804fdc0fb040789c5ba19580d5",
+        decoded_sha256: "43a6c65f0343a5add980320718d9c0e6641bb8468c470c322333868f553660b9",
+    },
+    StreamSpec {
+        offset: 0xb52764,
+        encoded_length: 2218,
+        decoded_length: 4096,
+        source_sha256: "d1c1d6d410ab14048b9f17364db5f8e745168b844841045fd40dc09e8430a6dd",
+        decoded_sha256: "8433e16e9432cfcd12cf4a8cfec53d120d5788765d1a79fbdc7f922a42a1059c",
+    },
+    StreamSpec {
+        offset: 0xb53010,
+        encoded_length: 1702,
+        decoded_length: 4096,
+        source_sha256: "c91c1724c87e659a642cdd4921a634ce44c52f29ded5067c47c02b647d8b543e",
+        decoded_sha256: "e33d591244607ec012270c17bb84ea3a8607de6f880ab77cafb992aef1101fa4",
+    },
+];
+pub const VRAM_LITERALS: [u32; 3] = [0x039dcc, 0x039dd8, 0x039ddc];
+
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ObservedLzStream {
     pub source_offset: u32,
     pub encoded_source: Vec<u8>,
     pub decoded: Vec<u8>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct VramLzBank {
+    /// Little-endian source addresses in original call order.
+    pub source_literals: [[u8; 4]; 3],
+    pub blocks: [ObservedLzStream; 3],
 }
 
 /// Decoded output is consumed by the LZ77 HLE; the exact source encoding
@@ -104,6 +138,8 @@ pub struct ObservedLzBlock {
     /// Kept separate to preserve the original E174 block's representation.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub additional_blocks: Vec<ObservedLzStream>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub vram_bank: Option<VramLzBank>,
 }
 
 impl ObservedLzBlock {
@@ -113,18 +149,57 @@ impl ObservedLzBlock {
         { return Err("Invalid observed LZ block geometry".into()); }
         validate_stream(&self.encoded_source, &self.decoded)?;
         for (block, spec) in self.additional_blocks.iter().zip(ADDITIONAL_SPECS) {
-            if block.source_offset != spec.offset || block.encoded_source.len() != spec.encoded_length
-                || block.decoded.len() != spec.decoded_length
-            { return Err("Invalid observed LZ stream geometry".into()); }
-            validate_stream(&block.encoded_source, &block.decoded)?;
+            validate_block(block, spec)?;
+        }
+        if let Some(bank) = &self.vram_bank {
+            for ((block, literal), spec) in bank.blocks.iter().zip(bank.source_literals).zip(&VRAM_SPECS) {
+                if u32::from_le_bytes(literal) != 0x0800_0000 + spec.offset {
+                    return Err("Invalid VRAM LZ77 source literal".into());
+                }
+                validate_block(block, spec)?;
+            }
         }
         Ok(())
     }
 
     pub fn streams(&self) -> impl Iterator<Item = (u32, &[u8], &[u8])> {
         std::iter::once((self.source_offset, self.encoded_source.as_slice(), self.decoded.as_slice()))
-            .chain(self.additional_blocks.iter().map(|s| (s.source_offset, s.encoded_source.as_slice(), s.decoded.as_slice())))
+            .chain(
+                self.additional_blocks
+                    .iter()
+                    .chain(self.vram_bank.iter().flat_map(|bank| &bank.blocks))
+                    .map(|s| (s.source_offset, s.encoded_source.as_slice(), s.decoded.as_slice())),
+            )
     }
+
+    pub(crate) fn source_spans(&self) -> impl Iterator<Item = (u32, &[u8], &'static str)> {
+        self.streams()
+            .enumerate()
+            .map(|(index, (offset, bytes, _))| {
+                let role = if index <= ADDITIONAL_SPECS.len() {
+                    "observed-red-spring-lz77"
+                } else {
+                    "bios-lz77-vram-bank-stream"
+                };
+                (offset, bytes, role)
+            })
+            .chain(self.vram_bank.iter().flat_map(|bank| {
+                VRAM_LITERALS
+                    .into_iter()
+                    .zip(&bank.source_literals)
+                    .map(|(offset, word)| (offset, word.as_slice(), "bios-lz77-vram-bank-literal"))
+            }))
+    }
+}
+
+fn validate_block(block: &ObservedLzStream, spec: &StreamSpec) -> Result<(), String> {
+    if block.source_offset != spec.offset
+        || block.encoded_source.len() != spec.encoded_length
+        || block.decoded.len() != spec.decoded_length
+    {
+        return Err("Invalid observed LZ stream geometry".into());
+    }
+    validate_stream(&block.encoded_source, &block.decoded)
 }
 
 fn validate_stream(encoded: &[u8], decoded: &[u8]) -> Result<(), String> {
@@ -141,6 +216,14 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
+        Self::from_rom_with_vram_bank(rom, previous, true)
+    }
+
+    pub(crate) fn from_rom_with_vram_bank(
+        rom: &[u8],
+        previous: &[Resource],
+        include_vram_bank: bool,
+    ) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Observed LZ block requires the exact EUR ROM".into());
         }
@@ -152,33 +235,67 @@ impl Catalog {
         if block.consumed != ENCODED_LENGTH || ffta_rom::digest(&block.bytes) != DECODED_SHA256 {
             return Err("Observed LZ decoded source mismatch".into());
         }
-        let prior = PriorSources::new(previous)?;
-        if prior.contains(OFFSET, ENCODED_LENGTH)? {
-            return Err("Observed LZ source already has an owner".into());
-        }
-        let mut additional_blocks = Vec::new();
-        let mut sources = vec![SourceRange { offset: OFFSET, length: ENCODED_LENGTH as u32,
-            sha256: SOURCE_SHA256.into(), role: "observed-red-spring-lz77".into() }];
-        for spec in ADDITIONAL_SPECS {
-            if prior.contains(spec.offset, spec.encoded_length)? {
-                return Err("Observed LZ stream already has an owner".into());
-            }
-            let encoded = rom.get(spec.offset as usize..spec.offset as usize + spec.encoded_length)
-                .ok_or("Missing observed LZ stream")?;
-            if ffta_rom::digest(encoded) != spec.source_sha256 {
-                return Err("Observed LZ stream source hash mismatch".into());
-            }
-            let block = lz77::decode(encoded, spec.decoded_length)?;
-            if block.consumed != spec.encoded_length || ffta_rom::digest(&block.bytes) != spec.decoded_sha256 {
-                return Err("Observed LZ stream decoded source mismatch".into());
-            }
-            additional_blocks.push(ObservedLzStream { source_offset: spec.offset,
-                encoded_source: encoded.to_vec(), decoded: block.bytes });
-            sources.push(SourceRange { offset: spec.offset, length: spec.encoded_length as u32,
-                sha256: spec.source_sha256.into(), role: "observed-red-spring-lz77".into() });
-        }
-        let decoded = ObservedLzBlock { source_offset: OFFSET, encoded_source: source.to_vec(), decoded: block.bytes, additional_blocks };
+        let additional_blocks = ADDITIONAL_SPECS
+            .iter()
+            .map(|spec| extract_stream(rom, spec))
+            .collect::<Result<_, _>>()?;
+        let vram_bank = include_vram_bank.then(|| extract_vram_bank(rom)).transpose()?;
+        let decoded = ObservedLzBlock {
+            source_offset: OFFSET,
+            encoded_source: source.to_vec(),
+            decoded: block.bytes,
+            additional_blocks,
+            vram_bank,
+        };
         decoded.validate()?;
+        let prior = PriorSources::new(previous)?;
+        let sources = decoded.source_spans().map(|(offset, bytes, role)| {
+            if prior.contains(offset, bytes.len())? {
+                return Err("Observed LZ source already has an owner".into());
+            }
+            Ok(SourceRange {
+                offset,
+                length: bytes.len() as u32,
+                sha256: ffta_rom::digest(bytes),
+                role: role.into(),
+            })
+        }).collect::<Result<_, String>>()?;
         Ok(Self { decoded, sources })
     }
+}
+
+fn extract_stream(rom: &[u8], spec: &StreamSpec) -> Result<ObservedLzStream, String> {
+    let start = spec.offset as usize;
+    let encoded = rom.get(start..start + spec.encoded_length).ok_or("Missing observed LZ stream")?;
+    if ffta_rom::digest(encoded) != spec.source_sha256 {
+        return Err("Observed LZ stream source hash mismatch".into());
+    }
+    let block = lz77::decode(encoded, spec.decoded_length)?;
+    if block.consumed != encoded.len() || ffta_rom::digest(&block.bytes) != spec.decoded_sha256 {
+        return Err("Observed LZ stream decoded source mismatch".into());
+    }
+    Ok(ObservedLzStream {
+        source_offset: spec.offset,
+        encoded_source: encoded.to_vec(),
+        decoded: block.bytes,
+    })
+}
+
+fn extract_vram_bank(rom: &[u8]) -> Result<VramLzBank, String> {
+    if ffta_rom::digest(&rom[0x039d4e..0x039d9a]) != "9336a2ee0f8a89167f414ae848022a15d4749f9acbf0df4c2aee757b03b0767a"
+        || ffta_rom::digest(&rom[0x145250..0x145254]) != "4f32a5a0727704ed8cc1e46af9875d484bb379b73cdd4ae15086deeb7426b8a0"
+    {
+        return Err("VRAM LZ77 caller fingerprint mismatch".into());
+    }
+    let source_literals = VRAM_LITERALS.map(|offset| {
+        let start = offset as usize;
+        rom[start..start + 4].try_into().unwrap()
+    });
+    let [first, second, third] = VRAM_SPECS;
+    let blocks = [
+        extract_stream(rom, &first)?,
+        extract_stream(rom, &second)?,
+        extract_stream(rom, &third)?,
+    ];
+    Ok(VramLzBank { source_literals, blocks })
 }

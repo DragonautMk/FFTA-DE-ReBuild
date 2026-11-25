@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "audition-cgb-driver-table-pitch",
+  "title": "Use driver tables for CGB audition pitch",
+  "kind": "changed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Project CGB key and signed base tables and use the driver register and APU period for initial square and wave pitch in instrument, sequence and WAV auditions.",
+    "Label the base register and standalone frequency, retain CGB mute, and fall back to the previous equal-tempered approximation for older datasets without the tables."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-cgb-pitch-synthetic-i2lvr97q passed 43 audio, controls and generator tests.",
+    "Protected EUR unit rom-data-viewer-cgb-pitch-real-p3iqfzif verified seven source ranges, the complete driver JSON, 1024 independent register calculations, three CGB types, live mute and a real sequence in Chrome; all 14 Docker/Python files matched. Two ignored local pages were published."
+  ],
+  "limitations": [
+    "Pitch automation, note selection, timing, envelopes, effects and original driver/channel behavior remain approximations; physical audio and Windows were not verified. The large-JSON worker remains paused."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_cgb_pitch_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

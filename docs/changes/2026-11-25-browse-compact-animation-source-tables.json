@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-compact-animation-source-tables",
+  "title": "Browse compact animation source tables and records",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Expose the fourteen extracted compact animation selector and position tables, two auxiliary record groups, and three soil metadata groups as filterable, paginated source views.",
+    "Link documented table selectors and record pointers to available animation sequences, with reverse links back to the precise source row; retain unrecognized values without inventing links.",
+    "Keep source-table rendering optional for older or malformed auxiliary catalogs so valid animation banks remain available."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-compact-tables-synthetic-nrfs51kb passed 40 projection, browser and existing-view checks.",
+    "Protected EUR unit rom-data-viewer-compact-tables-recovered-2l7_woa1 matched all 322 source ranges and the full extracted catalog JSON hash; Chrome checked 300 rows, 278 links and four two-way paths.",
+    "The same unit matched all 12 Docker/Python output files; two validated ignored local wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "The source tables do not simulate game conditions; unverified bank or selector references remain unlinked. Original animation timing, graphics/palette pairing, unsupported object modes, other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_compact_tables_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

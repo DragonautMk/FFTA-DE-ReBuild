@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "reconcile-european-indexed-archive-banks",
+  "title": "Reconcile the remaining canonical European indexed archives",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Census all canonical 4137 mode-0/width-5 archives and join exact dictionary and program extents to e315-d314 owners.",
+    "Trace three pointer tables and five direct roots to original reader instructions covering 31 archives and 50 unowned source spans."
+  ],
+  "validation": [
+    "Protected E506 e506-eur-indexed-archive-readers-wine-tm40tpfz PASS with pinned input, 16 original instruction windows and drained Wine server."
+  ],
+  "limitations": [
+    "The archive at 3b8fbc lacks original reader evidence. Other grammars, runtime publication, ordinary paths, Linux, USA and native Windows are tracked separately."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

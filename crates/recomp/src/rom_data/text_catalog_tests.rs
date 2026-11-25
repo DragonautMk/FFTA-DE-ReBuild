@@ -5,7 +5,7 @@ use gba_core::{
     Bus, Machine,
 };
 use std::collections::BTreeSet;
-fn invoke(machine: &mut Machine, entry: u32, args: [u32; 4]) -> usize {
+pub(super) fn invoke(machine: &mut Machine, entry: u32, args: [u32; 4]) -> usize {
     machine.cpu.regs[..4].copy_from_slice(&args);
     machine.cpu.regs[13] = 0x03007c00;
     machine.cpu.regs[14] = 0x08000301;

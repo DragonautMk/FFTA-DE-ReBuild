@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "inventory-european-indexed-archive-modes",
+  "title": "Inventory both European indexed archive modes",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Derive directory, mode and width rules from the authenticated original indexed decoder. Scan all ROM byte offsets for complete contiguous archives.",
+    "Reconcile 78 matching E506 source and decoded hashes against e316-d315. Seventy-seven archives have complete ownership and 3b8fbc requires original-reader provenance."
+  ],
+  "validation": [
+    "Protected source census e508-eur-indexed-mode-census-6z8swjot PASS. It reuses the E506 Wine decoder window and E507 manifest. The whole-ROM scan retains 58 aligned wrapper BL patterns and one entry decoder pattern."
+  ],
+  "limitations": [
+    "Structural matches prove complete contiguous extents. Aliased and noncontiguous formats, computed and indirect roots, ordinary use and deferred platforms require separate evidence."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

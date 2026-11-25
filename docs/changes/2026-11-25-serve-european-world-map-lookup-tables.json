@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-world-map-lookup-tables",
+  "title": "Serve European world map lookup tables",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish the two complete adjacent map label and calendar tables and three caller literals in e332-d331. Preserve both shared boundary reads and the five existing calendar archives."
+  ],
+  "validation": [
+    "Windows build 4bmn1pof and Wine 64uc09_7 pass. The three original readers make 196 matching requests with altered backing and use all 150 programs in five archives. Label values, scratch, VRAM, guest clock and complete state agree. The exact predecessor attaches, the incomplete revision is rejected transactionally, and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary use from the startup language choice, live producer domains, translated and original-BIOS paths, Linux, USA and native Windows remain on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/world_map_lookups.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_map_lookup_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-firaga-transfer-sources",
+  "title": "Browse Firaga transfer sources and palette prefixes",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Expose four Firaga transfer records, their source wrappers and format fields, and two partial three-color palette rows with exact stored values.",
+    "Link the three documented LZ outputs and two palette sources in both directions when the corresponding resources are present; leave unavailable links unguessed."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-firaga-transfer-synthetic-nasbqw44 passed 75 projection, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-firaga-transfer-recovered-8iu3yb8y matched three complete catalog hashes and 42 source ranges; Chrome checked four records, three LZ links, two palette links and six colors.",
+    "The same unit matched all 12 Docker/Python output files; the ignored index and world page were published with guarded preimages."
+  ],
+  "limitations": [
+    "Only selected palette row prefixes are represented; later declared rows, final palette placement, live scene composition, other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_firaga_transfer_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

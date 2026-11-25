@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-scroll-register-tables",
+  "title": "Serve the European scroll register tables",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish the E524 register and shadow tables and their roots in e323-d322. The shadow payload is shared by both physical table locations."
+  ],
+  "validation": [
+    "Windows build 7ov7umih and Wine unit tasoaf_9 passed. The nine original stack copies, live shadow reads and MMIO argument handoff match the raw-ROM result with altered backing. The extracted owner serves 288 table bytes and 36 root bytes. Guest clocks and complete saved states match.",
+    "Dataset creation, reuse and verification, e322-d321 attachment, missing-group rejection and neighboring source routing pass. The Wine server drained."
+  ],
+  "limitations": [
+    "Hardware stores, live selector producers, ordinary invocation, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/scroll_register_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/scroll_register_table_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

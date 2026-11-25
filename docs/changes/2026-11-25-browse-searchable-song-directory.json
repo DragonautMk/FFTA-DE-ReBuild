@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-searchable-song-directory",
+  "title": "Browse the extracted song directory",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible, paginated song directory with filtering by song or header ID, extracted track counts, bank addresses and direct selection.",
+    "Keep duplicate IDs as separate source entries and preserve the existing CGB mute and bank navigation without starting playback."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-song-catalog-synthetic-gcgft5ld checked paging, filters, duplicate IDs, missing headers, selection and existing audio controls.",
+    "Protected local-page unit rom-data-viewer-song-catalog-local-nleo7_qy checked all 640 embedded entries across 26 pages and preserved the data; Docker unit rom-data-viewer-song-catalog-docker-holhf0mc matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Track counts cover extracted tracks only. The local check used existing embedded data while the source dataset volume was unavailable; native Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_song_catalog_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

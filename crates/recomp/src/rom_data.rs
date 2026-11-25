@@ -333,6 +333,12 @@ mod white_flowers_indexed_archive_tests;
 #[cfg(test)]
 mod additional_indexed_graphics_tests;
 #[cfg(test)]
+mod indexed_reader_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod indexed_vram_selector_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod world_map_lookup_tests;
+#[cfg(test)]
 mod white_flowers_queued_rows_tests;
 #[cfg(test)]
 mod white_flowers_direct_indexed_tests;
@@ -599,6 +605,24 @@ mod indexed_graphics_runtime_tests;
 #[cfg(test)]
 mod ui_raw_transfers_runtime_tests;
 #[cfg(test)]
+mod halfword_copy_bank_tests;
+#[cfg(test)]
+mod halfword_preload_tests;
+#[cfg(test)]
+mod vram_loader_copy_tests;
+#[cfg(test)]
+mod row_pair_copy_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod color_mode_pair_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod scanline_blend_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod tilemap_rectangle_tests;
+#[cfg(test)]
+mod state_initializer_tests;
+#[cfg(test)]
+mod scroll_register_table_tests;
+#[cfg(test)]
 mod dynamic_raw_fragments_runtime_tests;
 #[cfg(test)]
 mod localized_whole_bank_tests;
@@ -670,6 +694,8 @@ mod star_cross_transfer_tests;
 mod redspring_lz_source_tests;
 #[cfg(test)]
 mod observed_lz_tests;
+#[cfg(test)]
+mod vram_lz_bank_tests;
 #[cfg(test)]
 mod soil_evidence_lz_tests;
 #[cfg(test)]
@@ -950,6 +976,12 @@ mod table_graphics_runtime_tests;
 mod additional_ui_table_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod literal_ui_graphics_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod custom_decoder_root_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod localized_text_root_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod startup_task_root_tests;
 #[cfg(test)]
 mod ui_graphics_runtime_tests;
 #[cfg(test)]
@@ -3736,7 +3768,7 @@ pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Re
     if let Some(data)=&dataset.conditional_substitution_words {eprintln!("ROM_DATA runtime=decoded resource={CONDITIONAL_SUBSTITUTION_WORDS_ID} file={} words={}",dataset.manifest.resources[112].sha256,data.words.len());}
     if dataset.display_control_tables.is_some() {eprintln!("ROM_DATA runtime=decoded resource={DISPLAY_CONTROL_TABLES_ID} file={} halfwords=8 pointers=4",dataset.manifest.resources[113].sha256);}
     if dataset.compact_primary_alias.is_some() {eprintln!("ROM_DATA runtime=decoded resource={COMPACT_PRIMARY_ALIAS_ID} file={} selectors=1 positions=1",dataset.manifest.resources[114].sha256);}
-    if let Some(data)=&dataset.observed_lz {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_LZ_ID} file={} blocks={}",dataset.manifest.resources[115].sha256,1+data.additional_blocks.len());}
+    if let Some(data)=&dataset.observed_lz {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_LZ_ID} file={} blocks={}",dataset.manifest.resources[115].sha256,data.streams().count());}
     if dataset.constructor_template64.is_some() {eprintln!("ROM_DATA runtime=decoded resource={CONSTRUCTOR_TEMPLATE64_ID} file={} words=16",dataset.manifest.resources[116].sha256);}
     if dataset.observed_tilemap.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ID} file={} runs=24 cells=256 rectangles=2 roots=2",dataset.manifest.resources[117].sha256);}
     if dataset.observed_tilemap_descriptor.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_DESCRIPTOR_ID} file={} descriptors=8 lz_wrappers=7",dataset.manifest.resources[118].sha256);}
@@ -4036,8 +4068,33 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.audio_extended_dispatch_stats() {
             eprintln!("ROM_DATA_USE resource={AUDIO_EXTENDED_DISPATCH_ID} dataset={} bus_reads={} source_bytes={} selector_mask={} host_reads={} host_source_bytes={}", resources.dataset_sha256(), i.bus_reads, i.source_bytes, i.selector_mask, i.host_reads, i.host_source_bytes);
         }
-        if let Some(i)=resources.layered_obj_animations_stats() {
-            eprintln!("ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={} source_bytes={} descriptor_bytes={} coordinate_bytes={} timeline_table_bytes={} timeline_source_bytes={} event_bytes={} host_reads={} language_position_a_bytes={} language_position_b_bytes={} activation_tick_bytes={} activation_gate_bytes={} target_coordinate_bytes={} additional_geometry_bytes={} title_position_bytes={} title_main_position_bytes={} title_opening_coordinate_bytes={}",resources.dataset_sha256(),i.fields.bus_reads + i.descriptor_reads + i.coordinate_reads + i.timeline_reads + i.event_reads + i.language_position_reads + i.title_position_reads + i.title_main_position_reads + i.title_opening_coordinate_reads + i.activation_reads + i.target_coordinate_reads + i.additional_geometry_reads,i.fields.source_bytes + i.descriptor_bytes + i.coordinate_bytes + i.timeline_table_bytes + i.timeline_source_bytes + i.event_bytes + i.language_position_a_bytes + i.language_position_b_bytes + i.title_position_bytes + i.title_main_position_bytes + i.title_opening_coordinate_bytes + i.activation_tick_bytes + i.activation_gate_bytes + i.target_coordinate_bytes + i.additional_geometry_bytes,i.descriptor_bytes,i.coordinate_bytes,i.timeline_table_bytes,i.timeline_source_bytes,i.event_bytes,i.fields.host_reads,i.language_position_a_bytes,i.language_position_b_bytes,i.activation_tick_bytes,i.activation_gate_bytes,i.target_coordinate_bytes,i.additional_geometry_bytes,i.title_position_bytes,i.title_main_position_bytes,i.title_opening_coordinate_bytes);
+        if let Some(i) = resources.layered_obj_animations_stats() {
+            let reads = i.fields.bus_reads + i.descriptor_reads + i.coordinate_reads
+                + i.timeline_reads + i.event_reads + i.language_position_reads
+                + i.title_position_reads + i.title_main_position_reads
+                + i.title_opening_coordinate_reads + i.title_color_mode_position_reads
+                + i.activation_reads + i.target_coordinate_reads + i.additional_geometry_reads;
+            let bytes = i.fields.source_bytes + i.descriptor_bytes + i.coordinate_bytes
+                + i.timeline_table_bytes + i.timeline_source_bytes + i.event_bytes
+                + i.language_position_a_bytes + i.language_position_b_bytes
+                + i.title_position_bytes + i.title_main_position_bytes
+                + i.title_opening_coordinate_bytes + i.title_color_mode_position_bytes
+                + i.activation_tick_bytes + i.activation_gate_bytes + i.target_coordinate_bytes
+                + i.additional_geometry_bytes;
+            eprintln!(
+                "ROM_DATA_USE resource={LAYERED_OBJ_ANIMATIONS_ID} dataset={} bus_reads={reads} source_bytes={bytes} \
+                 descriptor_bytes={} coordinate_bytes={} timeline_table_bytes={} timeline_source_bytes={} \
+                 event_bytes={} host_reads={} language_position_a_bytes={} language_position_b_bytes={} \
+                 activation_tick_bytes={} activation_gate_bytes={} target_coordinate_bytes={} \
+                 additional_geometry_bytes={} title_position_bytes={} title_main_position_bytes={} \
+                 title_opening_coordinate_bytes={} title_color_mode_position_bytes={}",
+                resources.dataset_sha256(), i.descriptor_bytes, i.coordinate_bytes,
+                i.timeline_table_bytes, i.timeline_source_bytes, i.event_bytes, i.fields.host_reads,
+                i.language_position_a_bytes, i.language_position_b_bytes, i.activation_tick_bytes,
+                i.activation_gate_bytes, i.target_coordinate_bytes, i.additional_geometry_bytes,
+                i.title_position_bytes, i.title_main_position_bytes, i.title_opening_coordinate_bytes,
+                i.title_color_mode_position_bytes,
+            );
         }
         if let Some(i)=resources.conditional_descriptor_banks_stats() {
             eprintln!("ROM_DATA_USE resource={CONDITIONAL_DESCRIPTOR_BANKS_ID} dataset={} bus_reads={} source_bytes={} pointer_bytes={} field0_bytes={} field2_bytes={} field4_bytes={} kind_bytes={} byte7_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.pointer_bytes,i.field0_bytes,i.field2_bytes,i.field4_bytes,i.kind_bytes,i.byte7_bytes);

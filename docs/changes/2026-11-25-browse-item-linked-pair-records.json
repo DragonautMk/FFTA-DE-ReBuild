@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-item-linked-pair-records",
+  "title": "Browse item-linked pair records",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible item-linked pair browser with source offsets, raw counts, opaque bytes and all nine slots, with an option to hide slots beyond the count.",
+    "Navigate from each item to its referenced pair record and back to all referencing items, retaining unreferenced pair records and supporting datasets without item records."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-item-links-synthetic-zv3p1x1l passed 22 Python and Chrome tests for navigation, inactive slots, unavailable and unreferenced records and existing controls.",
+    "Protected EUR unit rom-data-viewer-item-links-eur-corrected-41ll2bfw compared 225 records, 2025 slots and 376 item references with their sources, and checked bidirectional navigation in Chrome; five pair records are unreferenced.",
+    "Offline unit rom-data-viewer-item-links-docker-v6wfinxm produced byte-identical Docker and Python pages. The validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "The initial EUR harness rom-data-viewer-item-links-eur-9piev0p6 failed by iterating a single DOM element; the corrected harness passed.",
+    "Pair values and selectors retain structural names; live conditions are not inferred. The paused large-JSON prototype remains excluded from the local page and present in template-based generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_item_links_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

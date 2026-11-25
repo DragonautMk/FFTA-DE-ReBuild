@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-static-object-layouts",
+  "title": "Browse static object layouts",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Expose extracted static OBJ lists in the scoped object viewer, retaining source offsets and object attributes and reusing manual graphics and palette selection.",
+    "Label layouts as static, disable their playback controls and preserve ordinary animation controls when changing catalogs."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-static-obj-synthetic-trxww2fv passed 44 projection, browser and regression checks.",
+    "Protected EUR unit rom-data-viewer-static-obj-recovered-fxvkosah matched all 289 source ranges and the full catalog JSON hash; Chrome checked 274 lists, 1229 objects and six empty layouts.",
+    "The same unit matched all 12 Docker/Python output files; two validated ignored wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "Graphics and palettes are paired manually; live object effects and the original compositing context are not reconstructed. The other catalog metadata remains inspectable through the file inspector; other previews/audio and native Windows remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_static_obj_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

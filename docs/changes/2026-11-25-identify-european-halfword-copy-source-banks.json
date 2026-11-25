@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "identify-european-halfword-copy-source-banks",
+  "title": "Identify the complete European halfword copy source banks",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace all 11 direct callers of the original biased halfword copy and authenticate the row index producers and both five-language selectors.",
+    "Identify 16 complete source banks and 29 unowned spans against e317-d316, including the original source words."
+  ],
+  "validation": [
+    "Protected Wine disassembly e512-eur-halfword-copy-callers-wine-he3iuspf and source plan e512-eur-halfword-copy-bank-plan-gb6poy45 PASS. The final plan verifies bias 0x16a at 0808edbe."
+  ],
+  "limitations": [
+    "Runtime integration, ordinary invocation, computed and indirect callers, other language values and deferred platforms remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

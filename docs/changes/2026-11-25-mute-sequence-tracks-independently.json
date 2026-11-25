@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "mute-sequence-tracks-independently",
+  "title": "Mute sequence tracks independently",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible track mixer with live individual and mute-all controls, independently of CGB mute and decoded track volume and pan.",
+    "Retain mute settings by track number while changing songs in the current page session, and identify muted tracks in the note list without changing tempo or instruction traces."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-track-mute-synthetic-1e1n1szc passed 21 tests including PCM and CGB routing, live mute, song and track changes, envelope, pitch, pan and existing controls.",
+    "Protected local-page unit rom-data-viewer-track-mute-local-9ci_ok9o verified two independently muted tracks and the CGB bus with live Web Audio and unchanged embedded data. Docker unit rom-data-viewer-track-mute-docker-m5o99h11 matched Python on synthetic input."
+  ],
+  "limitations": [
+    "Track numbers are local to each song and settings persist for the current page session. The preview remains an approximation; physical audio, the original mixer and native Windows were not tested. The source dataset volume was unavailable."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_track_mute_browser.py",
+    "scripts/tests/test_viewer_controls_browser.py",
+    "scripts/tests/test_viewer_cgb_square_browser.py",
+    "scripts/tests/test_viewer_sequence_track_controls_browser.py",
+    "scripts/tests/test_viewer_sequence_fidelity_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

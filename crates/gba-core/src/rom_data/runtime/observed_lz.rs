@@ -20,13 +20,15 @@ pub struct ObservedLzStats {
     /// Two streams observed during the Star Cross continuation.
     pub star_cross_source_bytes_by_block: [u64; 2],
     pub star_cross_hle_calls_by_block: [u64; 2],
+    /// Original VRAM initialization streams, in call order.
+    pub vram_hle_calls_by_block: [u64; 3],
 }
 
 pub struct ObservedLzRead { owner: Arc<RuntimeResources>, index: usize }
 impl ObservedLzRead {
     pub fn bytes(&self) -> &[u8] {
         let data = &self.owner.observed_lz.as_ref().unwrap().data;
-        if self.index == 0 { &data.decoded } else { &data.additional_blocks[self.index - 1].decoded }
+        data.streams().nth(self.index).unwrap().2
     }
 }
 
@@ -41,14 +43,15 @@ pub(super) struct ObservedLzResources {
     firaga_hle_calls: [AtomicU64; 3],
     star_cross_source_bytes: [AtomicU64; 2],
     star_cross_hle_calls: [AtomicU64; 2],
+    vram_hle_calls: [AtomicU64; 3],
 }
 impl ObservedLzResources {
     pub(super) fn new(data: ObservedLzBlock, sources: &[SourceRange]) -> Result<Self, String> {
         data.validate()?;
-        if sources.len() != 1 + observed_lz::ADDITIONAL_SPECS.len()
-            || data.streams().zip(sources).any(|((offset, encoded, _), source)|
+        if sources.len() != data.source_spans().count()
+            || data.source_spans().zip(sources).any(|((offset, encoded, role), source)|
                 source.offset != offset || source.length as usize != encoded.len()
-                    || source.role != "observed-red-spring-lz77" || source.sha256 != ffta_rom::digest(encoded))
+                    || source.role != role || source.sha256 != ffta_rom::digest(encoded))
         { return Err("Observed LZ source binding mismatch".into()); }
         Ok(Self { data, counters: std::array::from_fn(|_| AtomicU64::new(0)),
             hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
@@ -58,16 +61,19 @@ impl ObservedLzResources {
             firaga_source_bytes: std::array::from_fn(|_| AtomicU64::new(0)),
             firaga_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
             star_cross_source_bytes: std::array::from_fn(|_| AtomicU64::new(0)),
-            star_cross_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
+            star_cross_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)),
+            vram_hle_calls: std::array::from_fn(|_| AtomicU64::new(0)) })
     }
     pub(super) fn source_page(index: usize) -> bool {
         let in_page = |start: usize, len: usize|
             (start >> 12..=(start + len - 1) >> 12).contains(&(index >> 12));
         in_page(observed_lz::OFFSET as usize, observed_lz::ENCODED_LENGTH)
             || observed_lz::ADDITIONAL_SPECS.iter().any(|s| in_page(s.offset as usize, s.encoded_length))
+            || observed_lz::VRAM_SPECS.iter().any(|s| in_page(s.offset as usize, s.encoded_length))
+            || observed_lz::VRAM_LITERALS.iter().any(|&at| in_page(at as usize, 4))
     }
     pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
-        if !self.data.streams().any(|(offset, encoded, _)| {
+        if !self.data.source_spans().any(|(offset, encoded, _)| {
             let start = offset as usize;
             index < start + encoded.len() && index.saturating_add(N) > start
         }) { return prior; }
@@ -77,7 +83,7 @@ impl ObservedLzResources {
         let mut star_cross_bytes = [0u64; 2];
         let result = std::array::from_fn(|i| {
             let at = index + i;
-            if let Some(byte) = self.data.streams().find_map(|(offset, encoded, _)|
+            if let Some(byte) = self.data.source_spans().find_map(|(offset, encoded, _)|
                 at.checked_sub(offset as usize).and_then(|n| encoded.get(n)).copied()) {
                 served += 1;
                 for (group, spec) in observed_lz::ADDITIONAL_SPECS[13..16].iter().enumerate() {
@@ -117,16 +123,20 @@ impl ObservedLzResources {
         let firaga_hle_calls_by_block = self.firaga_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
         let star_cross_source_bytes_by_block = self.star_cross_source_bytes.each_ref().map(|c| c.load(Ordering::Relaxed));
         let star_cross_hle_calls_by_block = self.star_cross_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
+        let vram_hle_calls_by_block = self.vram_hle_calls.each_ref().map(|c| c.load(Ordering::Relaxed));
         ObservedLzStats { bus_reads: self.counters[0].load(Ordering::Relaxed),
             source_bytes: self.counters[1].load(Ordering::Relaxed),
-            hle_calls: hle_calls_by_block.iter().chain(&interleaved_hle_calls_by_block).chain(&soil_hle_calls_by_block).chain(&firaga_hle_calls_by_block).chain(&star_cross_hle_calls_by_block).sum(),
+            hle_calls: hle_calls_by_block.iter().chain(&interleaved_hle_calls_by_block).chain(&soil_hle_calls_by_block).chain(&firaga_hle_calls_by_block).chain(&star_cross_hle_calls_by_block).chain(&vram_hle_calls_by_block).sum(),
             hle_calls_by_block, interleaved_hle_calls_by_block, soil_source_bytes_by_block, soil_hle_calls_by_block,
-            firaga_source_bytes_by_block, firaga_hle_calls_by_block, star_cross_source_bytes_by_block, star_cross_hle_calls_by_block }
+            firaga_source_bytes_by_block, firaga_hle_calls_by_block, star_cross_source_bytes_by_block, star_cross_hle_calls_by_block,
+            vram_hle_calls_by_block }
     }
     pub(super) fn resident_bytes(&self) -> usize {
         std::mem::size_of::<Self>() + self.data.encoded_source.capacity() + self.data.decoded.capacity()
             + self.data.additional_blocks.capacity() * std::mem::size_of::<observed_lz::ObservedLzStream>()
             + self.data.additional_blocks.iter().map(|s| s.encoded_source.capacity() + s.decoded.capacity()).sum::<usize>()
+            + self.data.vram_bank.iter().flat_map(|bank| &bank.blocks)
+                .map(|s| s.encoded_source.capacity() + s.decoded.capacity()).sum::<usize>()
     }
 }
 impl RuntimeResources {
@@ -134,16 +144,14 @@ impl RuntimeResources {
         if !matches!(source >> 24, 0x08..=0x0d) { return None; }
         let block = self.observed_lz.as_ref()?;
         let index = block.data.streams().position(|(offset, _, _)| offset == (source & 0x01ff_ffff))?;
-        if index < block.hle_calls.len() { block.hle_calls[index].fetch_add(1, Ordering::Relaxed); }
-        else if index < block.hle_calls.len() + block.interleaved_hle_calls.len() {
-            block.interleaved_hle_calls[index - block.hle_calls.len()].fetch_add(1, Ordering::Relaxed);
-        } else if index < block.hle_calls.len() + block.interleaved_hle_calls.len() + block.soil_hle_calls.len() {
-            block.soil_hle_calls[index - block.hle_calls.len() - block.interleaved_hle_calls.len()].fetch_add(1, Ordering::Relaxed);
-        } else if index < block.hle_calls.len() + block.interleaved_hle_calls.len() + block.soil_hle_calls.len() + block.firaga_hle_calls.len() {
-            block.firaga_hle_calls[index - block.hle_calls.len() - block.interleaved_hle_calls.len() - block.soil_hle_calls.len()].fetch_add(1, Ordering::Relaxed);
-        } else if let Some(counter) = block.star_cross_hle_calls.get(index - block.hle_calls.len() - block.interleaved_hle_calls.len() - block.soil_hle_calls.len() - block.firaga_hle_calls.len()) {
-            counter.fetch_add(1, Ordering::Relaxed);
-        }
+        let counter = block.hle_calls.iter()
+            .chain(&block.interleaved_hle_calls)
+            .chain(&block.soil_hle_calls)
+            .chain(&block.firaga_hle_calls)
+            .chain(&block.star_cross_hle_calls)
+            .chain(&block.vram_hle_calls)
+            .nth(index)?;
+        counter.fetch_add(1, Ordering::Relaxed);
         Some(ObservedLzRead { owner: self.clone(), index })
     }
 }

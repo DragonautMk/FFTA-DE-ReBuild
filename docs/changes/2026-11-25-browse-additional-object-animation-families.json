@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-additional-object-animation-families",
+  "title": "Browse additional object animation families",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Extend the indexed object animation view to word-task, layered and separately rooted title banks, with catalog-aware resource links and visible layered descriptor bytes.",
+    "Retain playback, loop, rate and manual graphics and palette selections when changing catalogs; support datasets with only the added families."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-obj-families-synthetic-vr3kmnd_ passed catalog navigation, title banks, settings and standalone-resource handling in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-obj-families-eur-8sz6o368 matched 22 additional banks, 637 lists, 2,539 objects, 44 sequences and 631 frames, then checked real manually paired pixels and title selections.",
+    "Linux Docker unit rom-data-viewer-obj-families-docker-tyqp9wuf matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "Layered animations are shown one layer at a time; graphics and palette pairing and timing are approximate. Other layered fields, native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_obj_animations_browser.py",
+    "scripts/tests/test_viewer_obj_families_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

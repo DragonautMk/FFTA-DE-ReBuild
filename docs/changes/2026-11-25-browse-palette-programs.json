@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-palette-programs",
+  "title": "Browse palette programs and color cycles",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse palette program headers, typed command parameters and producer tables, retaining null pointers, delay overrides and reserved values.",
+    "Display stored colors and preview color-cycle sequences from a selected color with configurable speed, looping and preserved controls."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-palette-programs-synthetic-8henqh4g passed parameter guards, swatches, playback, focus, settings, producer navigation and empty-program handling in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-palette-programs-eur-kh44a5o1 matched 230 programs, 1,135 commands and 25 producer tables, then checked a real color cycle and producer link in Chrome.",
+    "Linux Docker unit rom-data-viewer-palette-programs-docker-bjxmey4e matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "The preview uses stored color order and a user-chosen rate; original direction, task state, timing and live palette effects are not reconstructed. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_palette_programs_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

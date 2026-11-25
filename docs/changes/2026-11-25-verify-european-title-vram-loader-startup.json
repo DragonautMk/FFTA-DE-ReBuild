@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "verify-european-title-vram-loader-startup",
+  "title": "Verify the European title VRAM loader during startup",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Add a targeted cold-start observation and raw/managed CPUSet comparison using the authenticated E517 source plan and the current Europe catalog."
+  ],
+  "validation": [
+    "Wine unit dwcnk1hg reaches state 3 at the original loader and drains. Three copies match all 55,528 destination bytes with the selected ROM backing altered. CPUSet arguments, guest clock, audio and full state match. Windows build cqkfw_x8 passes."
+  ],
+  "limitations": [
+    "State 1 has controlled-reader coverage and still needs a verified ordinary trigger. Translated execution, original BIOS, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/vram_loader_copy_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

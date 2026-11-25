@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-startup-task-table",
+  "title": "Serve the European startup callback table from extracted data",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Authenticate and extract the complete 12-slot startup callback table and both boot literals into engine.thumb-pc-literals. Select the new layout in e324-d323 and preserve e323-d322 attachment."
+  ],
+  "validation": [
+    "Windows build b_vm92ph and the single Wine installer case qhrwrz0g pass. The server drains. All 14 original 32-bit loads are typed with altered ROM backing, all 12 IWRAM slots agree, and guest clock, audio and full state match. The previous lookup and e323-d322 attachment pass. A current manifest and packet with the new group removed are rejected without replacing the active owner."
+  ],
+  "limitations": [
+    "Subsequent callback dispatch, translated execution, original BIOS, native Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/startup_tasks.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/startup_task_root_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

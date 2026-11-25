@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-tilemap-rectangles",
+  "title": "Serve European tilemap rectangles",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish the three complete rectangular tilemaps and six caller words in e333-d332. Preserve the original RAM padding, clipping, localized graphics and palette selection. Extend raw-transfer bank tracking to cover all declared banks."
+  ],
+  "validation": [
+    "Windows build 3ckb9xrl and Wine z2k72eer pass. The direct draw, staged templates and localized loader make 2,116 matching reads with altered backing. All maps, VRAM, palette destinations, raw gaps, guest clock and complete state agree. The exact predecessor attaches and the incomplete current revision is rejected transactionally. Wine drains."
+  ],
+  "limitations": [
+    "Ordinary scene entry, other producers and indirect calls, translated and original-BIOS execution, Linux, USA and native Windows remain on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/tilemap_rectangles.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/tilemap_rectangle_tests.rs",
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

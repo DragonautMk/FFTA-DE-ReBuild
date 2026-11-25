@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "reconcile-european-relative-lz77-variants",
+  "title": "Trace European relative LZ77 loaders to background variants",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace five relative WRAM LZ77 source loads and identify the original writer of state field 0x0c.",
+    "Reconcile all 162 optional variant words with the authenticated descriptor ownership in e317-d316 and verify the zero argument in the known direct flag initializer."
+  ],
+  "validation": [
+    "Protected E511 e511-eur-relative-lz77-producers-wine-9tvij354 and e511-eur-relative-lz77-variant-proof-wine-k4q47vxl PASS. Original instructions, field bounds and even/odd ROM-mirror reference evidence retained. Both Wine servers drained."
+  ],
+  "limitations": [
+    "Generic nonzero RAM-fed sources, computed and indirect callers and ordinary reachability remain open. The known descriptor catalog has no variant payload to publish."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

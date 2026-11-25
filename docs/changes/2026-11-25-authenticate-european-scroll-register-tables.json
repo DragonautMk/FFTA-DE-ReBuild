@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "authenticate-european-scroll-register-tables",
+  "title": "Authenticate the European scroll register tables",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Bound the paired MMIO and shadow scroll tables and the exact shadow alias. The source plan accounts for 24 entries and nine root words across eight spans outside e322-d321 ownership."
+  ],
+  "validation": [
+    "Wine source unit _ar1qo7z passed for all four paired Thumb copies. The earlier tpy1pbna window proves the full copy of the sole additional shadow alias. Both servers drained."
+  ],
+  "limitations": [
+    "Runtime publication, live selector and register access paths, ordinary invocation, Linux, USA and native Windows remain open. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

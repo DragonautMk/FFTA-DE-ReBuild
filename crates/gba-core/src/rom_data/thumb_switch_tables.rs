@@ -57,8 +57,9 @@ pub const FIRAGA_ADDITIONAL_TABLE_COUNT: usize = 34;
 pub const WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT: usize = 35;
 pub const WHITE_FLOWERS_RESIDUAL_TABLE_COUNT: usize = 42;
 pub const WHITE_FLOWERS_MIXED_TABLE_COUNT: usize = 47;
-pub const ADDITIONAL_TABLE_COUNT: usize = 50;
-pub const ADDITIONAL_DESTINATION_COUNT: usize = 1716;
+const PRE_TITLE_ADDITIONAL_TABLE_COUNT: usize = 50;
+pub const ADDITIONAL_TABLE_COUNT: usize = 52;
+pub const ADDITIONAL_DESTINATION_COUNT: usize = 1727;
 pub const ADDITIONAL_SOURCE_ROLE: &str = "thumb-switch-destinations";
 
 #[derive(Clone, Copy, Debug)]
@@ -132,6 +133,18 @@ pub const ADDITIONAL_TABLES: [AdditionalTableSpec; ADDITIONAL_TABLE_COUNT] = [
     AdditionalTableSpec { root: 0x2a7b0, count: 11, code_start: 0x2a79a, guard: 0x2a79c, reader: 0x2a7a0, mov: 0x2a7a8, code_sha256: "969664e21ea18268c37749c2fdbb2344a871a197dfc9af9988243a059885e396", source_sha256: "053cee09d503cbbdbd14008f795e340443f838d51b1cfb05aa0104eabc1cfb70" },
     AdditionalTableSpec { root: 0x125fe4, count: 12, code_start: 0x125fd0, guard: 0x125fd4, reader: 0x125fd8, mov: 0x125fe0, code_sha256: "aab18da1d78a8af88cdd98f662d4182fa36a0a7bef9c9b1fbfa5d86a9007fdb0", source_sha256: "926f076935f206b158f82b216ec66ca605afdf6e5cb87a44d69829804302909c" },
     AdditionalTableSpec { root: 0x1279b8, count: 7, code_start: 0x12798a, guard: 0x12798a, reader: 0x127990, mov: 0x127998, code_sha256: "d4ed6bdee7c2abeeb8a5ae5424bd9fadd009a5d0608cc42e079557a387e18adf", source_sha256: "fc3a42742eebc2534bc0732a900a841e4ca09cfc9bf03e62cf58a97993d94f16" },
+    AdditionalTableSpec {
+        root: 0x13ad28, count: 6, code_start: 0x13ad10, guard: 0x13ad10,
+        reader: 0x13ad1c, mov: 0x13ad1e,
+        code_sha256: "4df3020d75ca7e6ffa3f611afb237e27b15956c1423e002b6abaec8a98c73202",
+        source_sha256: "e68b3e2802ce95f9b26a30fe4e8276f4ff7249ee8fffd1c86c153c89f0263017",
+    },
+    AdditionalTableSpec {
+        root: 0x13ba38, count: 5, code_start: 0x13ba22, guard: 0x13ba22,
+        reader: 0x13ba2c, mov: 0x13ba2e,
+        code_sha256: "d1a39392250cf0f59b6031d9b6476fbaa35b00684cab76a0c9be1b1565be1a93",
+        source_sha256: "e761bed0b7f27d0f831c3ce3ccc585751a804c87830f5fa12d307e555958bc71",
+    },
 ];
 
 /// Even target address used by the original Thumb `MOV pc` instruction.
@@ -178,7 +191,15 @@ impl ThumbSwitchTables {
                 return Err("Invalid EUR Thumb switch-table source, target or order".into());
             }
         }
-        if ![PREVIOUS_ADDITIONAL_TABLE_COUNT, FIRAGA_ADDITIONAL_TABLE_COUNT, WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT, WHITE_FLOWERS_RESIDUAL_TABLE_COUNT, WHITE_FLOWERS_MIXED_TABLE_COUNT, ADDITIONAL_TABLE_COUNT].contains(&self.additional_tables.len()) {
+        if ![
+            PREVIOUS_ADDITIONAL_TABLE_COUNT,
+            FIRAGA_ADDITIONAL_TABLE_COUNT,
+            WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT,
+            WHITE_FLOWERS_RESIDUAL_TABLE_COUNT,
+            WHITE_FLOWERS_MIXED_TABLE_COUNT,
+            PRE_TITLE_ADDITIONAL_TABLE_COUNT,
+            ADDITIONAL_TABLE_COUNT,
+        ].contains(&self.additional_tables.len()) {
             return Err("Invalid additional EUR Thumb switch-table count".into());
         }
         for (table, spec) in self.additional_tables.iter().zip(ADDITIONAL_TABLES) {
@@ -217,7 +238,8 @@ impl ThumbSwitchTables {
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom, &[])?.decoded {
+        let include_title = self.additional_tables.len() > PRE_TITLE_ADDITIONAL_TABLE_COUNT;
+        if self != &Catalog::from_rom_with_title(rom, &[], include_title)?.decoded {
             return Err("Thumb switch tables differ from authenticated EUR source".into());
         }
         Ok(())
@@ -230,6 +252,12 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
+        Self::from_rom_with_title(rom, previous, true)
+    }
+
+    pub(super) fn from_rom_with_title(
+        rom: &[u8], previous: &[Resource], include_title: bool,
+    ) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Thumb switch tables require exact EUR ROM; USA pending".into());
         }
@@ -237,7 +265,12 @@ impl Catalog {
         let word = |at: u32| u32::from_le_bytes(rom[at as usize..at as usize + 4].try_into().unwrap());
         let prior = PriorSources::new(previous)?;
         let mut tables = Vec::with_capacity(TABLE_COUNT);
-        let mut sources = Vec::with_capacity(TABLE_COUNT + ADDITIONAL_TABLE_COUNT);
+        let additional_count = if include_title {
+            ADDITIONAL_TABLE_COUNT
+        } else {
+            PRE_TITLE_ADDITIONAL_TABLE_COUNT
+        };
+        let mut sources = Vec::with_capacity(TABLE_COUNT + additional_count);
         for spec in TABLES {
             let code_start = spec.guard.min(spec.reader) as usize;
             if ffta_rom::digest(&rom[code_start..spec.mov as usize + 2]) != spec.code_sha256
@@ -279,8 +312,8 @@ impl Catalog {
                 sha256: spec.source_sha256.into(), role: SOURCE_ROLE.into() });
             tables.push(table);
         }
-        let mut additional_tables = Vec::with_capacity(ADDITIONAL_TABLE_COUNT);
-        for spec in ADDITIONAL_TABLES {
+        let mut additional_tables = Vec::with_capacity(additional_count);
+        for spec in ADDITIONAL_TABLES.into_iter().take(additional_count) {
             if ffta_rom::digest(&rom[spec.code_start as usize..spec.mov as usize + 2]) != spec.code_sha256
                 || half(spec.mov) != 0x4687 || word(spec.root) != 0x0800_0000 + spec.start() {
                 return Err("Additional Thumb switch reader or root fingerprint mismatch".into());

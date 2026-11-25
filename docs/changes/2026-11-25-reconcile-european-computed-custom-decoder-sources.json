@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "reconcile-european-computed-custom-decoder-sources",
+  "title": "Reconcile the computed European custom decoder sources",
+  "kind": "docs",
+  "platforms": [
+    "European ROM source audit"
+  ],
+  "changes": [
+    "Trace all 43 previously uncovered argument paths to their physical language tables, alternate palettes, background descriptors, relative OBJ directory and text archives."
+  ],
+  "validation": [
+    "Protected E502 67k4v45y checks the original call instructions and 9,659 source ranges against e313-d312. The 80 language streams, 314 alternate palettes, 50 main BG graphics wrappers, 103 relative OBJ streams and 8,898 compressed text programs in declared catalogs have owners. Thirty-one of the 40 distinct source-base words still come from the ROM."
+  ],
+  "limitations": [
+    "Physical source evidence. Live index and other roots, ordinary and translated use, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

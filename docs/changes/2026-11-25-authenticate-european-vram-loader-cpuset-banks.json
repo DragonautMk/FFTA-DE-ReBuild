@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "authenticate-european-vram-loader-cpuset-banks",
+  "title": "Authenticate the European state-dispatched VRAM loader sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Trace dispatcher states 1 and 3 into the five original CPUSet ROM calls. Reconcile the two payload intervals, both overlaps, repeated source and existing compressed UI tail."
+  ],
+  "validation": [
+    "Protected Wine disassembly 8nt835h5 passed and drained. The exact e319-d318 comparison identifies 13 disjoint unowned spans and 66,784 bytes. All five language banks already supply the separate WRAM decode path."
+  ],
+  "limitations": [
+    "Publication, ordinary entry routes, translated or real-BIOS execution and deferred platforms remain open. The 232-byte gap is outside these transfer counts. Adjacent tilemap and paired table sources require separate proof. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

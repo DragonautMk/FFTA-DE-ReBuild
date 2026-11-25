@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "animate-background-transfer-tiles",
+  "title": "Preview animated background transfer tiles",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse descriptor-linked transfer controls, shared tile banks, raw frame durations and destinations; connect transfers with background tile views.",
+    "Display paged 4-bit transfer frames with base or alternate palettes, optional looping and playback from a chosen frame at a configurable tick rate."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-bgtrans-synthetic-71aiupi2 passed 34 projection, browser, scope and existing-view checks.",
+    "Protected EUR unit rom-data-viewer-bgtrans-recovered-7t3o9ck4 matched reconstructed JSON, 97 links, 42 controls, 34 tile banks and 76 source ranges; first and last frame pixels for every link passed in Chrome.",
+    "The same unit matched all 11 Python and Docker files; two validated ignored wiki pages were published under preimage guards."
+  ],
+  "limitations": [
+    "The preview interprets transfer tiles in 4-bit form and does not assemble scenes or reproduce live flags, reverse playback or partial DMA. Native Windows, other previews and exact audio remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_bg_transfers_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

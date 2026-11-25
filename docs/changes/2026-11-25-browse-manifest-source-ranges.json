@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-manifest-source-ranges",
+  "title": "Browse manifest source ranges in the local wiki",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Add collapsible manifest details with file hashes, dependencies, extra fields and source ranges to topic-page resource rows.",
+    "Page source ranges in groups of 25 and filter by role, offset, length, hash or extra fields without rendering the entire source list."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-manifest-synthetic-reik4nzj passed eight Chrome tests covering pagination, filters, escaping and existing wiki interactions.",
+    "Protected local-page unit rom-data-viewer-manifest-local-6z5wltxb checked all eight scopes and the large text catalog while preserving embedded dataset bytes.",
+    "Docker unit rom-data-viewer-manifest-docker-6o05hy2l matched Python output for a synthetic dataset; the verified ignored local wiki was published with hash guards."
+  ],
+  "limitations": [
+    "The external target volume was unavailable, so validation used the previously verified local pages and a synthetic Docker dataset. Windows and pending job-name publication remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_manifest_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data.md"
+  ]
+}

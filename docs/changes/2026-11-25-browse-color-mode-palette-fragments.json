@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-color-mode-palette-fragments",
+  "title": "Browse Color-Mode palette fragments",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse stored Color-Mode unit, companion, supplemental, shared and special-unit color fragments as paginated swatches, preserving source positions, variants, gaps and slice selectors.",
+    "Isolate invalid fragment catalogs from previously available unit sprite palettes and load the full fragments only on the actor wiki page."
+  ],
+  "validation": [
+    "Synthetic unit cw368u1m passed 37 projection, browser, scoped-page and existing viewer checks.",
+    "Protected EUR unit i9kyxyne authenticated the complete catalog and 30 source ranges, checked 2873 colors and four selectors, matched the existing 48 unit banks and 14 Docker/Python files; the ignored index and actors page were published."
+  ],
+  "limitations": [
+    "Fragments do not establish the live palette copies, fades or final scene colors. Windows was deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_color_books_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_color_palettes.md"
+  ]
+}

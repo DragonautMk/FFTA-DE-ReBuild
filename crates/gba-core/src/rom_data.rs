@@ -167,8 +167,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 313;
-pub const DECODER_REV: u32 = 312;
+pub const EXTRACTOR_REV: u32 = 333;
+pub const DECODER_REV: u32 = 332;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -180,6 +180,26 @@ const PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION: (u32, u32) = (309, 308);
 const PRE_COMPACT_CELL_BANK_REVISION: (u32, u32) = (310, 309);
 const PRE_ADDITIONAL_UI_TABLE_REVISION: (u32, u32) = (311, 310);
 const PRE_DIRECT_UI_LITERALS_REVISION: (u32, u32) = (312, 311);
+const PRE_CUSTOM_DECODER_ROOTS_REVISION: (u32, u32) = (313, 312);
+const PRE_LOCALIZED_TEXT_ROOTS_REVISION: (u32, u32) = (314, 313);
+const PRE_INDEXED_READER_BANKS_REVISION: (u32, u32) = (315, 314);
+const PRE_VRAM_LZ_BANK_REVISION: (u32, u32) = (316, 315);
+const PRE_HALFWORD_COPY_REVISION: (u32, u32) = (317, 316);
+const PRE_HALFWORD_PRELOAD_REVISION: (u32, u32) = (318, 317);
+const PRE_VRAM_LOADER_REVISION: (u32, u32) = (319, 318);
+const PRE_ROW_PAIR_REVISION: (u32, u32) = (320, 319);
+const PRE_STATE_INITIALIZER_REVISION: (u32, u32) = (321, 320);
+const PRE_SCROLL_REGISTER_REVISION: (u32, u32) = (322, 321);
+const PRE_STARTUP_TASK_ROOTS_REVISION: (u32, u32) = (323, 322);
+const PRE_STARTUP_DISPATCHER_REVISION: (u32, u32) = (324, 323);
+const PRE_TITLE_CALLBACKS_REVISION: (u32, u32) = (325, 324);
+const PRE_TITLE_FRONTEND_REVISION: (u32, u32) = (326, 325);
+const PRE_TITLE_COLOR_MODE_REVISION: (u32, u32) = (327, 326);
+const PRE_COLOR_MODE_PAIRS_REVISION: (u32, u32) = (328, 327);
+const PRE_SCANLINE_BLEND_REVISION: (u32, u32) = (329, 328);
+const PRE_INDEXED_VRAM_SELECTORS_REVISION: (u32, u32) = (330, 329);
+const PRE_WORLD_MAP_LOOKUPS_REVISION: (u32, u32) = (331, 330);
+const PRE_TILEMAP_RECTANGLES_REVISION: (u32, u32) = (332, 331);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -503,7 +523,8 @@ pub const MAX_COMPACT_PRIMARY_ALIAS_FILE_BYTES: u64 = 1024 * 1024;
 pub const OBSERVED_LZ_ID: &str = "graphics.observed-lz-block";
 pub const OBSERVED_LZ_FILE: &str = "observed-lz-block.json";
 pub const OBSERVED_LZ_FORMAT: &str = "observed-lz-block-v2-json";
-pub const MAX_OBSERVED_LZ_FILE_BYTES: u64 = 1024 * 1024;
+// The 25-stream packet includes both encoded and decoded byte arrays.
+pub const MAX_OBSERVED_LZ_FILE_BYTES: u64 = 2 * 1024 * 1024;
 pub const CONSTRUCTOR_TEMPLATE64_ID: &str = "engine.constructor-template64";
 pub const CONSTRUCTOR_TEMPLATE64_FILE: &str = "constructor-template64.json";
 pub const CONSTRUCTOR_TEMPLATE64_FORMAT: &str = "constructor-template64-v1-json";
@@ -1262,7 +1283,17 @@ impl Extraction {
             | PRE_TILEMAP_TYPE3_REVISION | PRE_TILEMAP_TYPE2_REVISION
             | PRE_TILEMAP_DIRECT_REVISION | PRE_TILEMAP_ORIGIN_REVISION
             | PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION | PRE_COMPACT_CELL_BANK_REVISION
-            | PRE_ADDITIONAL_UI_TABLE_REVISION | PRE_DIRECT_UI_LITERALS_REVISION) => previous,
+            | PRE_ADDITIONAL_UI_TABLE_REVISION | PRE_DIRECT_UI_LITERALS_REVISION
+            | PRE_CUSTOM_DECODER_ROOTS_REVISION | PRE_LOCALIZED_TEXT_ROOTS_REVISION
+            | PRE_INDEXED_READER_BANKS_REVISION | PRE_VRAM_LZ_BANK_REVISION
+            | PRE_HALFWORD_COPY_REVISION | PRE_HALFWORD_PRELOAD_REVISION
+            | PRE_VRAM_LOADER_REVISION | PRE_ROW_PAIR_REVISION
+            | PRE_STATE_INITIALIZER_REVISION | PRE_SCROLL_REGISTER_REVISION
+            | PRE_STARTUP_TASK_ROOTS_REVISION | PRE_STARTUP_DISPATCHER_REVISION
+            | PRE_TITLE_CALLBACKS_REVISION | PRE_TITLE_FRONTEND_REVISION
+            | PRE_TITLE_COLOR_MODE_REVISION | PRE_COLOR_MODE_PAIRS_REVISION
+            | PRE_SCANLINE_BLEND_REVISION | PRE_INDEXED_VRAM_SELECTORS_REVISION
+            | PRE_WORLD_MAP_LOOKUPS_REVISION | PRE_TILEMAP_RECTANGLES_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -1871,11 +1902,41 @@ impl Extraction {
             result.manifest.coverage.push(WORLD_RECORDS38_ID.into());
             result.manifest.resources.push(Resource {id:WORLD_RECORDS38_ID.into(),path:WORLD_RECORDS38_FILE.into(),format:WORLD_RECORDS38_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
             result.world_records38 = Some(metadata);
-            let metadata = indexed_graphics::Catalog::from_rom(rom)?;
+            let indexed_layout = if revision > PRE_WORLD_MAP_LOOKUPS_REVISION {
+                indexed_graphics::SourceLayout::WorldMapLookups
+            } else if revision > PRE_INDEXED_VRAM_SELECTORS_REVISION {
+                indexed_graphics::SourceLayout::VramSelectors
+            } else if revision > PRE_INDEXED_READER_BANKS_REVISION {
+                indexed_graphics::SourceLayout::ReaderBanks
+            } else {
+                indexed_graphics::SourceLayout::Legacy
+            };
+            let metadata = indexed_graphics::Catalog::from_rom_with_layout(rom, indexed_layout)?;
             result.manifest.coverage.push(INDEXED_GRAPHICS_ID.into());
             result.manifest.resources.push(Resource {id:INDEXED_GRAPHICS_ID.into(),path:INDEXED_GRAPHICS_FILE.into(),format:INDEXED_GRAPHICS_FORMAT.into(),sha256:String::new(),dependencies:vec![UNIT_OBJ_FFFF_READER_FIELDS_ID.into()],sources:metadata.sources.clone()});
             result.indexed_graphics = Some(metadata);
-            let metadata = ui_raw_transfers::Catalog::from_rom(rom)?;
+            let copy_layout = if revision > PRE_TILEMAP_RECTANGLES_REVISION {
+                ui_raw_transfers::CopyLayout::TilemapRectangles
+            } else if revision > PRE_SCANLINE_BLEND_REVISION {
+                ui_raw_transfers::CopyLayout::ScanlineBlend
+            } else if revision > PRE_COLOR_MODE_PAIRS_REVISION {
+                ui_raw_transfers::CopyLayout::ColorModePairs
+            } else if revision > PRE_SCROLL_REGISTER_REVISION {
+                ui_raw_transfers::CopyLayout::ScrollRegisters
+            } else if revision > PRE_STATE_INITIALIZER_REVISION {
+                ui_raw_transfers::CopyLayout::StateInitializers
+            } else if revision > PRE_ROW_PAIR_REVISION {
+                ui_raw_transfers::CopyLayout::RowPairs
+            } else if revision > PRE_VRAM_LOADER_REVISION {
+                ui_raw_transfers::CopyLayout::VramLoaders
+            } else if revision > PRE_HALFWORD_PRELOAD_REVISION {
+                ui_raw_transfers::CopyLayout::Preloads
+            } else if revision > PRE_HALFWORD_COPY_REVISION {
+                ui_raw_transfers::CopyLayout::Biased
+            } else {
+                ui_raw_transfers::CopyLayout::Legacy
+            };
+            let metadata = ui_raw_transfers::Catalog::from_rom_with_copy_layout(rom, copy_layout)?;
             result.manifest.coverage.push(UI_RAW_TRANSFERS_ID.into());
             result.manifest.resources.push(Resource {id:UI_RAW_TRANSFERS_ID.into(),path:UI_RAW_TRANSFERS_FILE.into(),format:UI_RAW_TRANSFERS_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
             result.ui_raw_transfers = Some(metadata);
@@ -1943,7 +2004,10 @@ impl Extraction {
             result.manifest.coverage.push(COMPACT_OBJ_CATALOG_ID.into());
             result.manifest.resources.push(Resource {id:COMPACT_OBJ_CATALOG_ID.into(),path:COMPACT_OBJ_CATALOG_FILE.into(),format:COMPACT_OBJ_CATALOG_FORMAT.into(),sha256:String::new(),dependencies:vec![OBJ_STATIC_LISTS_ID.into()],sources:metadata.sources.clone()});
             result.compact_obj_catalog = Some(metadata);
-            let metadata = layered_obj_animations::Catalog::from_rom(rom)?;
+            let metadata = layered_obj_animations::Catalog::from_rom_with_color_mode(
+                rom,
+                revision > PRE_TITLE_COLOR_MODE_REVISION,
+            )?;
             result.manifest.coverage.push(LAYERED_OBJ_ANIMATIONS_ID.into());
             result.manifest.resources.push(Resource { id: LAYERED_OBJ_ANIMATIONS_ID.into(), path: LAYERED_OBJ_ANIMATIONS_FILE.into(), format: LAYERED_OBJ_ANIMATIONS_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
             result.layered_obj_animations = Some(metadata);
@@ -2059,7 +2123,11 @@ impl Extraction {
                 dependencies: vec![TASK_DESCRIPTORS_ID.into(), COMPACT_OBJ_CATALOG_ID.into()], sources: metadata.sources.clone(),
             });
             result.compact_primary_alias = Some(metadata);
-            let metadata = observed_lz::Catalog::from_rom(rom, &result.manifest.resources)?;
+            let metadata = observed_lz::Catalog::from_rom_with_vram_bank(
+                rom,
+                &result.manifest.resources,
+                revision > PRE_VRAM_LZ_BANK_REVISION,
+            )?;
             result.manifest.coverage.push(OBSERVED_LZ_ID.into());
             result.manifest.resources.push(Resource {
                 id: OBSERVED_LZ_ID.into(), path: OBSERVED_LZ_FILE.into(),
@@ -2139,7 +2207,10 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.indexed_words_3959 = Some(metadata);
-            let metadata = thumb_switch_tables::Catalog::from_rom(rom, &result.manifest.resources)?;
+            let title_frontend = revision > PRE_TITLE_FRONTEND_REVISION;
+            let metadata = thumb_switch_tables::Catalog::from_rom_with_title(
+                rom, &result.manifest.resources, title_frontend,
+            )?;
             result.manifest.coverage.push(THUMB_SWITCH_TABLES_ID.into());
             result.manifest.resources.push(Resource {
                 id: THUMB_SWITCH_TABLES_ID.into(), path: THUMB_SWITCH_TABLES_FILE.into(),
@@ -2147,7 +2218,22 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_switch_tables = Some(metadata);
-            let metadata = thumb_pc_literals::Catalog::from_rom(rom, &result.manifest.resources)?;
+            let layout = if title_frontend {
+                thumb_pc_literals::SourceLayout::TitleFrontend
+            } else if revision > PRE_TITLE_CALLBACKS_REVISION {
+                thumb_pc_literals::SourceLayout::TitleTaskCallbacks
+            } else if revision > PRE_STARTUP_DISPATCHER_REVISION {
+                thumb_pc_literals::SourceLayout::StartupTaskDispatcher
+            } else if revision > PRE_STARTUP_TASK_ROOTS_REVISION {
+                thumb_pc_literals::SourceLayout::StartupTaskRoots
+            } else if revision > PRE_LOCALIZED_TEXT_ROOTS_REVISION {
+                thumb_pc_literals::SourceLayout::LocalizedTextRoots
+            } else if revision > PRE_CUSTOM_DECODER_ROOTS_REVISION {
+                thumb_pc_literals::SourceLayout::CustomDecoderRoots
+            } else {
+                thumb_pc_literals::SourceLayout::Legacy
+            };
+            let metadata = thumb_pc_literals::Catalog::from_rom_with_layout(rom, &result.manifest.resources, layout)?;
             result.manifest.coverage.push(THUMB_PC_LITERALS_ID.into());
             result.manifest.resources.push(Resource {
                 id: THUMB_PC_LITERALS_ID.into(), path: THUMB_PC_LITERALS_FILE.into(),

@@ -1193,3 +1193,185 @@ aligned literal loads.
 No selected evidence identifies an original reader for either cell. A live
 or source-anchored indirect reader is still required for attribution. Computed
 references, other encodings, runtime use, Linux and USA remain open.
+
+## E528 European startup callback table
+
+The original boot code loads the Thumb installer pointer at `0800058e`
+and registers it through `08006b40`. The installer at `080036c4` reads
+the IWRAM table base at `080036e0`. It loads all twelve consecutive
+callback words from `00373c..00376c` and stores them at `03000830..03000860`.
+The last store runs at `08003710`. The code addresses authenticate the
+table extent and the order of its slots.
+
+Revision `e324-d323` serves the twelve slots and the two boot literals at
+`0005c0` and `003738` through `engine.thumb-pc-literals`. The 56 bytes in
+source order have SHA-256
+`f9250dbfbd1c4994c192a32d7451c6e0aa37b44053f3f0808ceb1a1b3e205a1a`.
+The later lookup at `080037b2` already uses the same resource at `0037f0`.
+Its source record and the rest of the predecessor manifest are preserved.
+
+The single Wine test `qhrwrz0g` finishes the original installer on frame
+8 with BIOS HLE and neutral input. It traces 14 raw reads in the reference
+and 14 typed reads at the same instructions with the selected ROM backing
+altered in the candidate. All 48 IWRAM table bytes, guest clock, audio buffer
+and full saved state agree. The test also attaches the exact `e323-d322`
+predecessor, verifies the prior lookup and rejects `e324-d323` with the new
+group removed. The failed attachment preserves the active owner.
+
+Build `b_vm92ph` passes and the Wine server drains. The verified manifest
+SHA-256 is `f40de38596eb6231777cd920dc32d5eb39181dad01e4549f2cd0ed0cd3360a2e`.
+E530 verifies dispatch to slot 5. Other selector values, translated execution,
+original BIOS, Linux, USA and native Windows remain open. No performance
+measurements were taken.
+
+## E530 European startup dispatcher literal pools
+
+The original dispatcher at `080036c4` loads its 12 callback slots before
+running the selection and transition logic. The census covers the remaining
+dispatcher instructions and the ten adjacent routines that reset, query or
+submit requests, ending before `08003a6c`. Their 58 PC-relative word loads
+address the queue fields, task context, initializer pointer and request
+sentinels. Nineteen words already belong to `engine.thumb-pc-literals`.
+The word at `370eb0` used to call the initializer has its existing owner in
+`engine.iwram-memory-helpers`.
+
+Revision `e325-d324` appends the remaining 39 physical words, totaling 156
+bytes, to the startup literal group. Extraction authenticates the exact EUR
+ROM, the dispatcher and helper window, the original load instructions and
+the values. The 156 bytes in source order have SHA-256
+`9ce5b5878698a02d487e06cfe9fae1f011d70d2315c6eda897ff46a85d383950`.
+All earlier source records and unrelated resources match `e324-d323`.
+
+Wine `9xc0yybf` reaches the original title callback `08139508` at frame 741
+with slot 5 selected. In the ordinary comparison, 1,468 typed requests at
+26 original sites match the raw reference, including 13 newly owned words.
+Both runs agree on the guest clock, audio and full saved state with the new
+ROM spans altered in the managed run. A controlled pass executes every one
+of the 39 original loads and verifies its value and typed service. The exact
+`e324-d323` predecessor attaches. Presenting its literal packet as `e325-d324`
+is rejected without replacing the active owner.
+
+Build `bu7hs4zv` passes and the Wine server drains. The verified manifest
+SHA-256 is `1e10285efbf1fa439714cc7d4cfe7cdb1527cdac8f2072532241a77da3600920`.
+Full execution of the other selector and request branches, translated
+execution, original BIOS, Linux, USA and native Windows remain open. No
+performance measurements were taken.
+
+## E531 European title callback literal pools
+
+The slot-5 callback at `08139508` registers `08139d29` through the original
+task writer. Following both sides of the direct branches within the parent
+and child finds 14 parent words and 55 child words. The 71 original load
+instructions include two readers each of the shared words at `139efc` and
+`13a1cc`. All 69 physical words lie outside the `e325-d324` ownership map.
+
+Revision `e326-d325` appends both pools to `engine.thumb-pc-literals` and
+adds page `13a` to the literal lookup. Extraction authenticates the exact
+EUR ROM, both callback bodies, the physical source words and the primary
+reader of each word. The 276 bytes in source order have SHA-256
+`74ec44a8dda83c62dcb4d1ad14e8340a9cb2467f56135d8cd36b22217001c3f9`.
+
+Wine `22985_8p` reaches the actual slot-5 parent at frame 741 and compares
+both configurations from that in-memory checkpoint. The original writer
+installs `08139d29` at `0200f3bc`, and the child reaches the state-3 loader
+at `081399e4` on frame 743. With the 69 source words altered in the managed
+ROM, its 16 typed requests match the raw reference at 15 original sites.
+The guest clock, audio buffer and full saved state agree. A controlled pass
+executes all 71 original loads with the altered backing, including both
+readers of each shared word. The exact `e325-d324` predecessor attaches.
+The incomplete current packet is rejected without replacing the active
+owner.
+
+Build `12nl9ie3` passes and the Wine server drains. The verified manifest
+SHA-256 is `a50a73f81fc4fee5761e18d03864256d77ee27cfc19a40b89bf3d47a4fd3e886`.
+Ordinary use of the remaining callback branches, translated execution,
+original BIOS, Linux, USA and native Windows remain open. No performance
+measurements were taken.
+
+## E532 European title frontend source bank
+
+Starting at the two E531 callbacks, the source census follows the original
+direct branches and calls within `139508..13ba90`. It also follows every
+destination of the two guarded switches. This identifies 33 routines and
+347 original literal loads of 314 physical words. Eighty-nine words have
+earlier literal or UI transfer owners. The switch at `0813ad1e` selects six
+title state destinations from `13ad2c..13ad44`. The switch at `0813ba2e`
+selects five stored-language destinations from `13ba3c..13ba50`.
+
+Revision `e327-d326` adds 225 words to `engine.thumb-pc-literals` and all
+eleven destinations to `engine.thumb-switch-tables`. The new source spans
+total 944 bytes. Extraction authenticates the original EUR code and source
+bytes, including each switch's original guard. It preserves the two table
+base words at `13ad28` and `13ba38` as literals. It authenticates the literal
+bank's 900 bytes in source order with SHA-256
+`232b936886973cae169db965b7dea2755385188bec3432951efec63a8b680f53`.
+
+Wine `uor3beuv` follows the E529 English confirmation route and reaches the
+original opening routine at `0813a1dc` on frame 3047. Both configurations
+start from that ordinary checkpoint and reach the end of the 19-position
+loop on frame 3104. With the 944 bytes altered in the managed ROM, all 540
+typed requests at 18 original sites match the raw reference. Guest clock,
+audio and full saved state agree. Controlled execution verifies all 256 new
+literal readers, all eleven switch destinations and four out-of-range cases.
+The original fallback branches issue no requests for either switch's sources.
+
+The exact `e326-d325` predecessor attaches. The incomplete `e327-d326`
+dataset is rejected without replacing the active owner. Build `422clx82`
+passes and the Wine server drains. The verified manifest SHA-256 is
+`5d08a717d367b11917de1dcf3dc6606a03a3f2813958f273b3efbc9216cc613a`.
+Ordinary use of the remaining menu paths, translated and original-BIOS
+execution, Linux, USA and native Windows remain open. No performance
+measurements were taken.
+
+## E538 European tilemap rectangles
+
+The original drawing routine at `0802c6e0` reads a row-major rectangle of
+little-endian halfwords. Its callers supply the dimensions. It clips the
+signed horizontal position to columns 0 through 30. The seven aligned
+direct calls include four from live world-map buffers, two from staged RAM
+templates and one with a ROM source at `0812ee54`.
+
+The two staged templates occupy a contiguous bank at `3b0e5c..3b0f44`.
+The 10-by-8 template starts at `3b0e5c` and the 12-by-3 template starts
+at `3b0efc`. The original initializers at `08071510` and `080717c8`
+add `0xc0` to each tilemap entry and write the templates to the two
+RAM records selected at `0806b210`. The second initializer appends two
+zero columns to each row in RAM. A separate draw path at `0806a5c0`
+uses both ROM templates directly with a tile base of `0x300`.
+
+The 22-by-17 rectangle at `3ba95c..3bac48` is the ROM source of the
+draw at `0812ee54`. Its loader starts at `0812edf4`. The five E516
+CPUSet call sites in that loader use decoded graphics from `3bac48`
+and `3bade0`, a 768-byte view selected through the `71e66c` language
+directory, and two existing color-mode palette blocks. The original code
+temporarily sets the tilemap stride to 32 before drawing and restores it
+afterward.
+
+EUR `e333-d332` adds `halfword_copies.tilemap_rectangles` to
+`graphics.ui-raw-transfers`. The new spans contain 490 halfwords and
+six caller words, including the word selecting `71e66c`. The source
+hash of the nine spans in order is
+`94f4feacf27ec17822a2aa56fb0f195e36532326221e0ce797dd75300eefcfce`.
+The source plan with the reader windows and previous owners has SHA-256
+`0670cf0c5007482e34c1752a951162eb05e4277e7ec50cfa053e8738411f95aa`.
+
+Windows build `3ckb9xrl` and Wine unit `z2k72eer` pass. The controlled
+interpreter runs the original direct draw, both staged initializers and
+draws, and five cases of the localized loader. The cases cover all five
+stored languages and all four color-mode selector values. The new source
+ranges and selected earlier graphics, raw and palette ranges are altered
+in the managed ROM. All 2,116 rectangle and pointer reads match the raw
+reference. The exact layer buffers, padded RAM rows, horizontal clipping,
+three VRAM transfers and two palette copies agree. The raw-transfer
+counter records the three rectangles and five localized banks.
+
+The unowned bytes at `3b0e5b` and `3ba95b` continue to use raw fallback
+on all three ROM mirrors. Guest clock and complete saved state agree.
+The exact `e332-d331` predecessor attaches and the incomplete current
+generation is rejected transactionally. The Wine server drains. The
+manifest SHA-256 is
+`d5aef3344336933e58aa1a7691a35f51a23017962f44e22fad29dd659159e997`.
+
+Ordinary scene entry, additional producers and indirect calls, translated
+execution, original BIOS, Linux, USA and native Windows remain open.
+No performance measurements were made.

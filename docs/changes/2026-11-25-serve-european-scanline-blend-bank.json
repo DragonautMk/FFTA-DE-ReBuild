@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "serve-european-scanline-blend-bank",
+  "title": "Serve the European scanline blend coefficient bank",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Resolve both interpolated E516 CPUSet calls and extract the complete 480-halfword scanline blend table and both source literals in e330-d329. Add 968 bytes across three source spans."
+  ],
+  "validation": [
+    "Windows build y_04qyz3 and Wine jj5k7xz5 pass. Both original setup paths and 120 task-272 copies match 19,320 reads with altered ROM backing. Three direct reads verify the leading coefficients. All destination buffers, guest clock and complete state agree. The predecessor attaches, incomplete current data is rejected transactionally, and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary task registration, the subsequent hardware transfer, translated and original-BIOS paths, Linux, USA and native Windows are on the recovery checklist. No performance measurements. Primary Terra/xhigh settings unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/halfword_copies/scanline_blend.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/row_pair_copy_tests.rs",
+    "crates/recomp/src/rom_data/scanline_blend_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

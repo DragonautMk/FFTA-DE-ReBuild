@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-indexed-object-animations",
+  "title": "Browse indexed object animations",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Browse physical object animation banks, sequences, frame durations, object attributes and language selector links; play from a chosen frame with adjustable rate and loop.",
+    "Render supported 4-bit and 8-bit objects with manually selected graphics and palettes, retaining empty sequences and zero-count hold metadata."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-obj-animations-synthetic-2vqot9k2 passed 4-bit and 8-bit pixels, flips, palette IDs, missing data, frame timing, controls, focus and standalone layouts in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-obj-animations-eur-o6npg9q5 matched 18 banks, 355 lists, 1,161 objects, 109 sequences and 382 frames, then checked a real manually paired pixel, playback, selector and hold.",
+    "Linux Docker unit rom-data-viewer-obj-animations-docker-4b6h0gza matched Python output byte-for-byte; the validated ignored local page retained its previous data and inspector."
+  ],
+  "limitations": [
+    "Graphics and palette pairing is manual; live task timing, affine, mosaic and special object effects are not reconstructed. Native Windows and other preview families remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_obj_animations_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

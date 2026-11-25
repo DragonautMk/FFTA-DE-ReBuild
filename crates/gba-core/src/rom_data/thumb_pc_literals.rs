@@ -2,6 +2,9 @@
 use super::{script39_registry_poses::PriorSources, Resource, SourceRange};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
+mod localized_text;
+mod startup_tasks;
+mod title_frontend;
 
 pub const LITERAL_COUNT: usize = 326;
 pub const SOURCE_ROLE: &str = "thumb-pc-literal";
@@ -3137,21 +3140,61 @@ pub const WHITE_FLOWERS_REMAINING_BASE: usize = WHITE_FLOWERS_BULK_BASE + WHITE_
 pub const WHITE_FLOWERS_MIXED_BASE: usize = WHITE_FLOWERS_REMAINING_BASE + WHITE_FLOWERS_REMAINING_COUNT;
 pub const WHITE_FLOWERS_FINAL_BASE: usize = WHITE_FLOWERS_MIXED_BASE + WHITE_FLOWERS_MIXED_COUNT;
 pub const STAR_CROSS_OBSERVED_BASE: usize = WHITE_FLOWERS_FINAL_BASE + WHITE_FLOWERS_FINAL_COUNT;
+pub(super) const CUSTOM_DECODER_ROOTS_BASE: usize = STAR_CROSS_OBSERVED_BASE + STAR_CROSS_OBSERVED_COUNT;
 
-pub const SOURCE_PAGES: [usize; 156] = [
+// The previously unowned source-base literals for the E502 language and
+// alternate palette paths. Table and stream bytes keep their current owners.
+const CUSTOM_DECODER_ROOTS: [(u32, u32, u16); 31] = [
+    (0x01b574, 0x01b55e, 0x4805),
+    (0x01b594, 0x01b578, 0x4806),
+    (0x01b668, 0x01b650, 0x4805),
+    (0x023c70, 0x023bde, 0x4924),
+    (0x0306d4, 0x030658, 0x491e),
+    (0x03274c, 0x032720, 0x490a),
+    (0x03278c, 0x032760, 0x490a),
+    (0x032908, 0x032840, 0x4931),
+    (0x032918, 0x032862, 0x492d),
+    (0x0380c8, 0x03808c, 0x490e),
+    (0x04fd3c, 0x04fbf8, 0x4950),
+    (0x04fd5c, 0x04fce0, 0x491e),
+    (0x0556e0, 0x0556b4, 0x490a),
+    (0x059d7c, 0x059d02, 0x491e),
+    (0x05e770, 0x05e72c, 0x4910),
+    (0x063a18, 0x0639da, 0x490f),
+    (0x067888, 0x067836, 0x4914),
+    (0x067a38, 0x0679a4, 0x4924),
+    (0x0690cc, 0x069014, 0x492d),
+    (0x070eb8, 0x070e0c, 0x492a),
+    (0x070fcc, 0x070f1e, 0x4e2b),
+    (0x075f90, 0x075f26, 0x491a),
+    (0x089fcc, 0x089eda, 0x493c),
+    (0x089fd4, 0x089ef6, 0x4937),
+    (0x089fec, 0x089f3c, 0x492b),
+    (0x08eae8, 0x08eaa8, 0x490f),
+    (0x095248, 0x095174, 0x4934),
+    (0x12c50c, 0x12c478, 0x4924),
+    (0x139af4, 0x139a16, 0x4937),
+    (0x13c00c, 0x13bf54, 0x492d),
+    (0x13c02c, 0x13bfb6, 0x491d),
+];
+
+const LOCALIZED_TEXT_ROOTS_BASE: usize = CUSTOM_DECODER_ROOTS_BASE + CUSTOM_DECODER_ROOTS.len();
+
+pub const SOURCE_PAGES: [usize; 169] = [
     0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0xd,
     0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b,
     0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
     0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x30, 0x31, 0x32, 0x33, 0x35,
     0x36, 0x37, 0x38, 0x39, 0x3a, 0x3c, 0x3d, 0x43, 0x44, 0x46, 0x4d, 0x4e,
-    0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x63, 0x74, 0x83, 0x8d, 0x8e, 0x91, 0x92,
+    0x4f, 0x55, 0x59, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x63, 0x67, 0x69, 0x70, 0x74,
+    0x75, 0x83, 0x89, 0x8d, 0x8e, 0x91, 0x92,
     0x95, 0x96, 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0,
     0xa1, 0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7,
     0xb8, 0xb9, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xca, 0xcb, 0xcc, 0xcd,
     0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd6, 0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0,
     0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xeb, 0xee, 0xf0, 0x109, 0x125, 0x126, 0x127,
-    0x128, 0x129, 0x12a, 0x12b, 0x12c, 0x130, 0x132, 0x133, 0x134, 0x135, 0x137, 0x138,
-    0x139, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149, 0x14a, 0x14b, 0x14c,
+    0x128, 0x129, 0x12a, 0x12b, 0x12c, 0x12e, 0x12f, 0x130, 0x132, 0x133, 0x134, 0x135, 0x137, 0x138,
+    0x139, 0x13a, 0x13b, 0x13c, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149, 0x14a, 0x14b, 0x14c,
 ];
 
 /// A literal operand and the original PC-relative LDR that can read it.
@@ -3162,6 +3205,24 @@ pub struct LiteralWord {
     pub source_offset: u32,
     pub reader_offset: u32,
     pub value: u32,
+}
+
+impl LiteralWord {
+    fn from_thumb_load(rom: &[u8], source: u32, reader: u32, opcode: u16) -> Result<Self, String> {
+        let at = reader as usize;
+        if opcode & 0xf800 != 0x4800
+            || rom[at..at + 2] != opcode.to_le_bytes()
+            || ((reader + 4) & !3) + 4 * u32::from(opcode & 255) != source
+        {
+            return Err(format!("Invalid Thumb literal load at {reader:06x}"));
+        }
+        let at = source as usize;
+        Ok(Self {
+            source_offset: source,
+            reader_offset: reader,
+            value: u32::from_le_bytes(rom[at..at + 4].try_into().unwrap()),
+        })
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -3206,6 +3267,14 @@ pub struct ThumbPcLiterals {
     pub white_flowers_final: Option<Vec<LiteralWord>>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub star_cross_observed: Option<Vec<LiteralWord>>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub custom_decoder_roots: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub localized_text_roots: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub startup_task_roots: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub title_frontend_roots: Vec<LiteralWord>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -3424,7 +3493,19 @@ impl ThumbPcLiterals {
                 return Err("Invalid Star Cross Thumb literal source, reader or order".into());
             }
         }
-        Ok(())
+        if !self.custom_decoder_roots.is_empty()
+            && (self.custom_decoder_roots.len() != CUSTOM_DECODER_ROOTS.len()
+                || self.custom_decoder_roots.iter().zip(CUSTOM_DECODER_ROOTS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid custom decoder root source, reader or order".into());
+        }
+        localized_text::validate(&self.localized_text_roots)?;
+        startup_tasks::validate(&self.startup_task_roots)?;
+        title_frontend::validate(&self.title_frontend_roots)
     }
 
     /// Returns a byte of one observed literal without affecting other guest reads.
@@ -3544,14 +3625,47 @@ impl ThumbPcLiterals {
                 return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], WHITE_FLOWERS_FINAL_BASE + index));
             }
         }
-        let words = self.star_cross_observed.as_ref()?;
-        let index = words.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        Some((words[index].value.to_le_bytes()[(offset & 3) as usize], STAR_CROSS_OBSERVED_BASE + index))
+        if let Some(words) = &self.star_cross_observed {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                return Some((words[index].value.to_le_bytes()[(offset & 3) as usize], STAR_CROSS_OBSERVED_BASE + index));
+            }
+        }
+        if let Ok(index) = self.custom_decoder_roots.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.custom_decoder_roots[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], CUSTOM_DECODER_ROOTS_BASE + index));
+        }
+        if let Ok(index) = self.localized_text_roots.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.localized_text_roots[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], LOCALIZED_TEXT_ROOTS_BASE + index));
+        }
+        let startup_base = LOCALIZED_TEXT_ROOTS_BASE + self.localized_text_roots.len();
+        if let Ok(index) = self.startup_task_roots.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.startup_task_roots[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], startup_base + index));
+        }
+        let index = self.title_frontend_roots.binary_search_by_key(&base, |v| v.source_offset).ok()?;
+        let bytes = self.title_frontend_roots[index].value.to_le_bytes();
+        Some((bytes[(offset & 3) as usize], startup_base + self.startup_task_roots.len() + index))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom, &[])?.decoded {
+        let layout = if !self.title_frontend_roots.is_empty() {
+            SourceLayout::TitleFrontend
+        } else if self.startup_task_roots.len() > startup_tasks::DISPATCHER_ROOT_COUNT {
+            SourceLayout::TitleTaskCallbacks
+        } else if self.startup_task_roots.len() > startup_tasks::INSTALLATION_ROOT_COUNT {
+            SourceLayout::StartupTaskDispatcher
+        } else if !self.startup_task_roots.is_empty() {
+            SourceLayout::StartupTaskRoots
+        } else if !self.localized_text_roots.is_empty() {
+            SourceLayout::LocalizedTextRoots
+        } else if !self.custom_decoder_roots.is_empty() {
+            SourceLayout::CustomDecoderRoots
+        } else {
+            SourceLayout::Legacy
+        };
+        if self != &Catalog::from_rom_with_layout(rom, &[], layout)?.decoded {
             return Err("Thumb literals differ from authenticated EUR source".into());
         }
         Ok(())
@@ -3562,8 +3676,28 @@ pub struct Catalog {
     pub decoded: ThumbPcLiterals,
     pub sources: Vec<SourceRange>,
 }
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(super) enum SourceLayout {
+    Legacy,
+    CustomDecoderRoots,
+    LocalizedTextRoots,
+    StartupTaskRoots,
+    StartupTaskDispatcher,
+    TitleTaskCallbacks,
+    TitleFrontend,
+}
+
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
+        Self::from_rom_with_layout(rom, previous, SourceLayout::Legacy)
+    }
+
+    pub(super) fn from_rom_with_layout(
+        rom: &[u8],
+        previous: &[Resource],
+        layout: SourceLayout,
+    ) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Thumb literals require exact EUR ROM; USA pending".into());
         }
@@ -4587,6 +4721,77 @@ impl Catalog {
                 value: u32::from_le_bytes(bytes.try_into().unwrap()) });
             sources.push(SourceRange { offset, length: 4, sha256: ffta_rom::digest(bytes), role: SOURCE_ROLE.into() });
         }
+        let mut custom_decoder_roots = Vec::new();
+        if layout != SourceLayout::Legacy {
+            for (offset, reader, expected_opcode) in CUSTOM_DECODER_ROOTS {
+                let at = reader as usize;
+                let opcode = u16::from_le_bytes(rom[at..at + 2].try_into().unwrap());
+                if opcode != expected_opcode
+                    || opcode & 0xf800 != 0x4800
+                    || ((reader + 4) & !3) + u32::from(opcode & 255) * 4 != offset
+                    || prior.contains(offset, 4)?
+                    || sources.iter().any(|s| s.offset < offset + 4 && offset < s.offset + s.length)
+                {
+                    return Err("Custom decoder root reader or source mismatch".into());
+                }
+                let bytes = &rom[offset as usize..offset as usize + 4];
+                custom_decoder_roots.push(LiteralWord {
+                    source_offset: offset,
+                    reader_offset: reader,
+                    value: u32::from_le_bytes(bytes.try_into().unwrap()),
+                });
+                sources.push(SourceRange {
+                    offset,
+                    length: 4,
+                    sha256: ffta_rom::digest(bytes),
+                    role: SOURCE_ROLE.into(),
+                });
+            }
+        }
+        let localized_text_roots = if matches!(
+            layout,
+            SourceLayout::LocalizedTextRoots
+                | SourceLayout::StartupTaskRoots
+                | SourceLayout::StartupTaskDispatcher
+                | SourceLayout::TitleTaskCallbacks
+                | SourceLayout::TitleFrontend
+        ) {
+            localized_text::extract(rom)?
+        } else {
+            Vec::new()
+        };
+        let startup_task_roots = match layout {
+            SourceLayout::StartupTaskRoots
+            | SourceLayout::StartupTaskDispatcher
+            | SourceLayout::TitleTaskCallbacks
+            | SourceLayout::TitleFrontend => startup_tasks::extract(rom, layout)?,
+            _ => Vec::new(),
+        };
+        let title_frontend_roots = if layout == SourceLayout::TitleFrontend {
+            title_frontend::extract(rom)?
+        } else {
+            Vec::new()
+        };
+        for (label, words) in [
+            ("Localized text", &localized_text_roots),
+            ("Startup task", &startup_task_roots),
+            ("Title frontend", &title_frontend_roots),
+        ] {
+            for word in words {
+                let offset = word.source_offset;
+                if prior.contains(offset, 4)?
+                    || sources.iter().any(|s| s.offset < offset + 4 && offset < s.offset + s.length)
+                {
+                    return Err(format!("{label} root overlaps an existing source"));
+                }
+                sources.push(SourceRange {
+                    offset,
+                    length: 4,
+                    sha256: ffta_rom::digest(&word.value.to_le_bytes()),
+                    role: SOURCE_ROLE.into(),
+                });
+            }
+        }
         let decoded = ThumbPcLiterals {
             literals,
             additional,
@@ -4617,6 +4822,10 @@ impl Catalog {
             white_flowers_mixed: Some(white_flowers_mixed),
             white_flowers_final: Some(white_flowers_final),
             star_cross_observed: Some(star_cross_observed),
+            custom_decoder_roots,
+            localized_text_roots,
+            startup_task_roots,
+            title_frontend_roots,
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

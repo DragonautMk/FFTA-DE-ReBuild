@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "search-recognized-text-archives",
+  "title": "Search recognized text across archives",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Search the four text collections by recognized text, archive and language, with links to the stored entries and shared language settings.",
+    "Process searches in bounded cancellable steps, limit results to 1,000 and paginate them."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-text-search-synthetic-wtgeh9_2 passed navigation, settings, gaps, fallback, paging, cancellation and profile checks in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-text-search-eur-w25qy1t1 searched and navigated all four archives; Docker unit rom-data-viewer-text-search-docker-3uu3oerp matched the Python page."
+  ],
+  "limitations": [
+    "Only the visually matched European glyph subset is searchable; unknown glyphs are placeholders and commands or substitutions are not executed. Native Windows remains unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_text_search_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}
