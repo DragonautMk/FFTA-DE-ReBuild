@@ -27570,3 +27570,17 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Outcome: completed
 - Verified criteria: choose a local dataset folder and open matched paths directly in the inspector; warn that contents are not rechecked. Synthetic id2lnqf6 and early-selection 2ynmp1y9 PASS; protected EUR 1p18b2r4 matched 150 resources, hex regression n61r4p2c PASS. Private root wiki updated.
 - Limits: large JSON is raw-only, Windows deferred. Initial is0fbozr timed out because selection preceded the listener; diagnostic 8o8n0vt6 and fix reconciled it. Terra/xhigh setting unconfirmed.
+
+
+### ROMDATA-VIEWER-PLAYBACK-TEXT-SPRITE-CONTROLS
+
+- Outcome: completed
+- Verified criteria: audio progress and sequence playhead, selector focus, shared language pin/command visibility, selected-frame sprite playback and persistent loop/rate across sprite changes. Synthetic browser a75dspzj and protected EUR yl_quy7d PASS. Private root page updated with the previously validated inspector; the JSON prototype remains suspended.
+- Limits: physical audio and Windows unverified. ek5ebqhq tested a blank Chrome page; wq4wiu4z failed on a long temporary socket, diagnosed in hcb_7yrw and fixed. Terra/xhigh unconfirmed.
+
+
+### ROMDATA-VIEWER-CONTROLS-TEST-CLEANUP
+
+- Outcome: completed
+- Verified criteria: browser test releases Chrome and the temporary link on setup failure; synthetic unit s43t_yno PASS, including the controls regression. The previously verified EUR page remains unchanged.
+- Limits: Windows remains deferred; suspended JSON work was not resumed.

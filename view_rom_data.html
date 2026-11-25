@@ -331,8 +331,9 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <button type="button" id="sprite-stop" disabled>Stop</button>
   <label><input type="checkbox" id="sprite-loop"> Loop animation</label>
   <p id="sprite-animation-status" role="status">Select a sprite to preview its frames.</p>
-  <p>Frames use their stored durations at the chosen preview rate;
-  a zero duration is shown for one preview tick. This is not game timing.</p>
+  <p>Playback starts at the selected frame and continues to the end, or repeats
+  when looping is enabled. Stored durations use the chosen preview rate; a zero
+  duration is shown for one preview tick. This is not game timing.</p>
   <p id="sprite-frame-detail"></p>
   <label>Unit-base palette <select id="sprite-palette"></select></label>
   <p id="sprite-pose-detail"></p>
@@ -1310,6 +1311,61 @@ function pcmWaveBytes(samples, rate) {
   samples.forEach((sample, index) => { bytes[44 + index] = sample + 128; });
   return bytes;
 }
+function keepSelectFocus(button, section) {
+  button.addEventListener('pointerdown', event => {
+    const focused = document.activeElement;
+    if (event.isPrimary && event.button === 0 && focused && focused.tagName === 'SELECT' && section.contains(focused)) {
+      event.preventDefault();
+    }
+  });
+}
+function playbackProgress(prefix, marker = null) {
+  const bar = document.getElementById(prefix + '-progress'), label = document.getElementById(prefix + '-progress-label');
+  let timer = null, playback = null, position = 0;
+  function format(value, total) { return value.toFixed(total < 10 ? 3 : 1) + ' s'; }
+  function render() {
+    if (!playback) return;
+    const elapsed = Math.max(0, playback.context.currentTime - playback.start);
+    position = playback.position ? playback.position(elapsed) : Math.min(playback.duration, elapsed);
+    position = Math.max(0, Math.min(playback.duration, position));
+    bar.max = playback.duration; bar.value = position;
+    label.textContent = format(position, playback.duration) + ' / ' + format(playback.duration, playback.duration)
+      + (playback.loop ? ' · looping' : '');
+    if (marker) {
+      marker.hidden = false;
+      marker.style.left = (100 * Math.min(1, elapsed / playback.timeline)) + '%';
+    }
+  }
+  function tick() {
+    if (!playback) return;
+    render(); timer = setTimeout(tick, 100);
+  }
+  return {
+    start(context, start, duration, options = {}) {
+      if (timer !== null) clearTimeout(timer);
+      playback = {context, start, duration: Math.max(duration, 0.001),
+                  timeline: Math.max(options.timeline || duration, 0.001), position: options.position, loop: !!options.loop};
+      position = 0; tick();
+    },
+    stop(reason, finished = false) {
+      if (!playback) return;
+      render();
+      if (finished && !playback.loop) {
+        position = playback.duration; bar.value = position;
+        if (marker) marker.style.left = (100 * Math.min(1, playback.duration / playback.timeline)) + '%';
+      }
+      label.textContent = reason + ' · ' + format(position, playback.duration) + ' / ' + format(playback.duration, playback.duration);
+      if (timer !== null) clearTimeout(timer);
+      timer = null; playback = null;
+    },
+    reset() {
+      if (timer !== null) clearTimeout(timer);
+      timer = null; playback = null; position = 0; bar.max = 1; bar.value = 0;
+      label.textContent = 'Not playing.';
+      if (marker) marker.hidden = true;
+    }
+  };
+}
 if (data.audio) {
   document.getElementById('audio').hidden = false;
   const selector = document.getElementById('audio-id');
@@ -1318,7 +1374,9 @@ if (data.audio) {
   const play = document.getElementById('audio-play'), stop = document.getElementById('audio-stop');
   const loop = document.getElementById('audio-loop');
   const audioStatus = document.getElementById('audio-status');
-  let audioContext = null, source = null, playbackRequest = 0;
+  const sampleProgress = playbackProgress('audio'), cgbProgress = playbackProgress('cgb');
+  let audioContext = null, source = null, playbackRequest = 0, activeProgress = null;
+  keepSelectFocus(play, document.getElementById('audio'));
   function sampleRate() {
     const rate = Number(document.getElementById('audio-rate').value);
     if (!Number.isInteger(rate) || rate < 8000 || rate > 96000) throw Error('Choose a sample rate from 8000 to 96000 Hz.');
@@ -1327,6 +1385,8 @@ if (data.audio) {
   function stopPlayback() {
     playbackRequest++;
     if (source) { source.onended = null; source.stop(); source.disconnect(); source = null; }
+    if (activeProgress) activeProgress.stop('Stopped');
+    activeProgress = null;
     stop.disabled = true;
   }
   play.addEventListener('click', async () => {
@@ -1347,9 +1407,17 @@ if (data.audio) {
         playing.loop = true; playing.loopStart = wave.loop_start / rate; playing.loopEnd = samples.length / rate;
       }
       playing.connect(audioContext.destination);
-      playing.onended = () => { if (source === playing) { source = null; stop.disabled = true; audioStatus.textContent = 'Playback finished.'; } };
+      playing.onended = () => { if (source === playing) {
+        source = null; stop.disabled = true; sampleProgress.stop('Finished', true); activeProgress = null;
+        audioStatus.textContent = 'Playback finished.';
+      } };
       source = playing;
+      const started = audioContext.currentTime, length = samples.length / rate, loopStart = wave.loop_start / rate;
       playing.start();
+      activeProgress = sampleProgress;
+      sampleProgress.start(audioContext, started, length, playing.loop ? {
+        loop: true, position: elapsed => elapsed < length ? elapsed : loopStart + (elapsed - length) % (length - loopStart)
+      } : {});
       stop.disabled = false;
       audioStatus.textContent = 'Playing PCM samples at ' + rate + ' Hz' + (playing.loop ? ' · looping from sample ' + wave.loop_start : '') + '.';
     } catch (error) { audioStatus.textContent = 'Cannot play sample: ' + error.message; }
@@ -1369,6 +1437,7 @@ if (data.audio) {
   if (data.audio.cgb_waves && data.audio.cgb_waves.length) {
     document.getElementById('cgb-audio').hidden = false;
     const cgb = document.getElementById('cgb-id');
+    keepSelectFocus(document.getElementById('cgb-play'), document.getElementById('audio'));
     const cgbCanvas = document.getElementById('cgb-waveform');
     const cgbContext = cgbCanvas.getContext('2d');
     data.audio.cgb_waves.forEach((wave, index) => cgb.add(new Option(wave.id, index)));
@@ -1398,10 +1467,15 @@ if (data.audio) {
         playing.loop = true;
         playing.playbackRate.value = frequency * 32 / 32000;
         playing.connect(audioContext.destination);
-        playing.onended = () => { if (source === playing) { source = null; stop.disabled = true; audioStatus.textContent = 'Playback finished.'; } };
+        playing.onended = () => { if (source === playing) {
+          source = null; stop.disabled = true; cgbProgress.stop('Finished', true); activeProgress = null;
+          audioStatus.textContent = 'Playback finished.';
+        } };
         source = playing;
+        const started = audioContext.currentTime;
         playing.start();
-        playing.stop(audioContext.currentTime + 1);
+        playing.stop(started + 1);
+        activeProgress = cgbProgress; cgbProgress.start(audioContext, started, 1);
         stop.disabled = false;
         audioStatus.textContent = 'Playing CGB wave at ' + frequency + ' Hz.';
       } catch (error) { audioStatus.textContent = 'Cannot play wave: ' + error.message; }
@@ -1441,6 +1515,8 @@ if (data.sequences && data.sequence_directory) {
   const voice = document.getElementById('sequence-voice');
   const stop = document.getElementById('sequence-stop'), status = document.getElementById('sequence-status');
   const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
+  const sequenceProgress = playbackProgress('sequence', document.getElementById('sequence-playhead'));
+  keepSelectFocus(play, document.getElementById('sequence-audio'));
   const noteRows = document.getElementById('sequence-note-rows'), noteDetail = document.getElementById('sequence-timeline-detail');
   const notePrevious = document.getElementById('sequence-note-prev'), noteNext = document.getElementById('sequence-note-next');
   const notePageLabel = document.getElementById('sequence-note-page');
@@ -1509,7 +1585,7 @@ if (data.sequences && data.sequence_directory) {
     if (schedulerTimer !== null) clearTimeout(schedulerTimer);
     schedulerTimer = null;
     playing.forEach(node => { try { node.stop(); } catch (_) {} });
-    playing = []; stop.disabled = true;
+    playing = []; stop.disabled = true; sequenceProgress.stop('Stopped');
   }
   function buildTrace(root, limit, maxSteps, maxNotes) {
     const executed = [], events = [], stack = [], activeTies = new Map();
@@ -1600,7 +1676,7 @@ if (data.sequences && data.sequence_directory) {
     });
   }
   function prepareSequence() {
-    stopSequence(); page = 0; notePage = 0; trace = []; notes = [];
+    stopSequence(); sequenceProgress.reset(); page = 0; notePage = 0; trace = []; notes = [];
     const ticks = Number(rate.value), seconds = Number(duration.value);
     if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) {
       status.textContent = 'Choose a tick rate from 1 to 400 per second.'; play.disabled = true;
@@ -1702,18 +1778,24 @@ if (data.sequences && data.sequence_directory) {
             oscillator.onended = () => {
               playing = playing.filter(node => node !== oscillator);
               if (request === generation && cursor >= events.length && !playing.length && schedulerTimer === null) {
-                stop.disabled = true; status.textContent = 'Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes.' : '.');
+                stop.disabled = true; sequenceProgress.stop('Finished', true);
+                status.textContent = 'Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes.' : '.');
               }
             };
             playing.push(oscillator); oscillator.start(begin); oscillator.stop(end);
           }
           if (late) status.textContent = 'Playing an approximate track mix · ' + late + ' delayed or skipped notes.';
           if (cursor < events.length) schedulerTimer = setTimeout(scheduleWindow, 50);
-          else if (!playing.length) { stop.disabled = true; status.textContent = 'No audible note durations in this preview.'; }
+          else if (!playing.length) {
+            stop.disabled = true; sequenceProgress.stop('Finished');
+            status.textContent = 'No audible note durations in this preview.';
+          }
         } catch (error) {
           if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; }
         }
       }
+      const playbackEnd = Math.max(...events.map(note => note.end / ticks));
+      sequenceProgress.start(audioContext, start, playbackEnd, {timeline: seconds});
       stop.disabled = false; status.textContent = 'Playing an approximate track mix.'; scheduleWindow();
     } catch (error) { if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; } }
   });

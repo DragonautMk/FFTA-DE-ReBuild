@@ -7,13 +7,12 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Verified: folder 1p18b2r4 PASS.
-- Selection: CONTROLS audio progress/focus, text pin/commands, sprite frame/loop; browser EUR+synth.
-- Suspended: JSON prototype, kdrp6i3r harness FAIL; EUR unrun; resume only on request.
-- Missing: other previews/audio/scenes; Windows deferred.
-- Resume: implement controls; preserve JSON; stop on PASS.
+- Verified: controls s43t_yno/yl_quy7d PASS; local wiki updated.
+- Selection: JSON prototype kdrp6i3r FAIL, EUR unrun; user paused.
+- Missing: JSON validation, other previews/audio/scenes; Windows deferred.
+- Resume: only on request; inspect failed JSON harness.
 
 ## Running or suspended tasks
 

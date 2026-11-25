@@ -3,6 +3,29 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-25 — Improve resource viewer playback and text controls
+
+Type: changed. Platforms: Local browser.
+
+**Changes**
+
+- Show PCM, CGB and sequence playback positions and a sequence playhead, preserving the active selector focus when the reader clicks Play.
+- Provide shared language pin and command visibility across text views, plus sprite playback from the selected frame with optional looping and settings preserved when the sprite changes.
+
+**Validation**
+
+- Synthetic Linux Chrome unit rom-data-viewer-controls-repo-final-a75dspzj checked playback progress, loops, physical pointer focus, text settings and sprite changes using the permanent interaction test. Protected EUR unit rom-data-viewer-controls-eur-yl_quy7d exercised the same controls with real Web Audio; dataset and prior local page were protected.
+- Initial controls test ek5ebqhq reached a blank browser page before navigation; repo test wq4wiu4z could not create a long Unix socket, diagnosed by hcb_7yrw. Both test setup issues were corrected before the passing units.
+- Unit rom-data-viewer-controls-cleanup-s43t_yno reran the interaction test and checked that a failed browser setup terminates its process and removes the temporary link.
+
+**Limitations**
+
+- Physical audio output and Windows were not tested. The generated local page preserves the previously verified file inspector while the large-JSON worker prototype remains suspended and unverified in the template.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
+
+[Change record](docs/changes/2026-11-25-improve-viewer-playback-and-text-controls.json)
+
 ## 2026-11-24 — Visualize sampled world roads
 
 Type: added. Platforms: Local browser.

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "improve-viewer-playback-and-text-controls",
+  "title": "Improve resource viewer playback and text controls",
+  "kind": "changed",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Show PCM, CGB and sequence playback positions and a sequence playhead, preserving the active selector focus when the reader clicks Play.",
+    "Provide shared language pin and command visibility across text views, plus sprite playback from the selected frame with optional looping and settings preserved when the sprite changes."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome unit rom-data-viewer-controls-repo-final-a75dspzj checked playback progress, loops, physical pointer focus, text settings and sprite changes using the permanent interaction test. Protected EUR unit rom-data-viewer-controls-eur-yl_quy7d exercised the same controls with real Web Audio; dataset and prior local page were protected.",
+    "Initial controls test ek5ebqhq reached a blank browser page before navigation; repo test wq4wiu4z could not create a long Unix socket, diagnosed by hcb_7yrw. Both test setup issues were corrected before the passing units.",
+    "Unit rom-data-viewer-controls-cleanup-s43t_yno reran the interaction test and checked that a failed browser setup terminates its process and removes the temporary link."
+  ],
+  "limitations": [
+    "Physical audio output and Windows were not tested. The generated local page preserves the previously verified file inspector while the large-JSON worker prototype remains suspended and unverified in the template."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_controls_browser.py",
+    "scripts/tests/viewer_browser_harness.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

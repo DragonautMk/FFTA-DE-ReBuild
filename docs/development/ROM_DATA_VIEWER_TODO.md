@@ -82,6 +82,24 @@ Linux Chrome units `rom-data-viewer-wiki-legs66p4` and
 `rom-data-viewer-wiki-eur-s3qt2yel` checked navigation and section controls,
 including the compact layout, EUR text selection, palette and audio controls.
 
+Playback controls show the current position for PCM samples, CGB waves and
+approximate song tracks; the sequence timeline also displays a playhead. For a
+looping PCM sample, the position follows the stored loop range. Clicking Play
+preserves focus on the active audio selector. In text views, the language pin
+and command-visibility checkbox are shared across the views; an unavailable
+pinned language is reported. Sprite animation starts at the selected frame,
+stops at the end unless looping is enabled, and keeps its rate, frame choice
+where available, loop setting and playback state when the sprite changes.
+These settings last for the current page session. Synthetic browser unit
+`rom-data-viewer-controls-repo-final-a75dspzj` checked these interactions,
+including real pointer focus; protected EUR unit
+`rom-data-viewer-controls-eur-yl_quy7d` checked the controls with Web Audio and
+the extracted dataset in Linux Chrome. Unit
+`rom-data-viewer-controls-cleanup-s43t_yno` reran the permanent test and checked
+that a browser setup failure releases its process and temporary link. Physical audio and Windows remain
+unverified. The root page uses the previously validated file inspector; the
+suspended large-JSON prototype remains in the template.
+
 Linux Chrome headless checked color labels, search and bank selection with
 synthetic data. It also matched a selected swatch from the generated EUR page
 to the authenticated dataset in unit `rom-data-viewer-eur-palette-i7frj4x5`.
