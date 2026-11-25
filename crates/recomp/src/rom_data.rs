@@ -946,6 +946,10 @@ mod ui_localized_graphics_tests;
 mod ui_localized_graphics_runtime_tests;
 #[cfg(test)]
 mod table_graphics_runtime_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod additional_ui_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod literal_ui_graphics_tests;
 #[cfg(test)]
 mod ui_graphics_runtime_tests;
 #[cfg(test)]

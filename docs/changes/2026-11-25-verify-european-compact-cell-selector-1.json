@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "verify-european-compact-cell-selector-1",
+  "title": "Verify European compact-cell selector 1 in an ordinary replay",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "Recover both indexed roster turns from retained deployment inputs. Verify Sidewinder action 187 and the separate forecast and final confirmations through the original task 184 callback."
+  ],
+  "validation": [
+    "Wine adwf4_b_ matches 43 record trace events across 448 frames, including original byte-run reads against the attached extracted bank. The 1,280 managed byte accesses reconcile with 1,266 record bytes and 14 indexed control bytes. Guest clock and nonempty audio agree each frame. Final state, video and OAM agree. All 56 protected paths pass and Wine drains."
+  ],
+  "limitations": [
+    "The additional trace harness rebuild failed offline at the missing itoa version; the successful pair reused the existing pinned interpreter harness. Indexed slot 0, alternate and secondary callers, translated dispatch, Linux and USA remain open.",
+    "The primary Terra xhigh setting was not independently confirmed. GPT-6.1 Sol was requested at xhigh for the read-only target and confirmation diagnosis; effective settings were unconfirmed."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-25-map-european-compact-cell-byte-mode-routes.json"
+  ]
+}

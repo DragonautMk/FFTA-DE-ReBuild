@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "follow-viewer-sequence-tempo",
+  "title": "Follow song tempo in sequence auditions",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Estimate song timing from decoded tempo commands across all tracks, including when one track is selected, with manual-rate fallback and explicit zero-tempo and bounded-scan behavior.",
+    "Schedule note starts, ends and PCM envelopes on the resulting time map and align the note canvas and playhead on elapsed seconds."
+  ],
+  "validation": [
+    "Synthetic units rom-data-viewer-sequence-tempo-synthetic-0bksevth and rom-data-viewer-sequence-tempo-timeline-lfnlvmos passed cross-track tempo changes, simultaneous ordering, zero tempo, manual fallback, audio controls and timeline alignment.",
+    "Protected EUR unit rom-data-viewer-sequence-tempo-eur-5k5nafnt counted 1150 tempo instructions and checked one cross-track note in automatic and manual modes using live Chrome Web Audio.",
+    "Offline Docker/Python output parity passed in rom-data-viewer-sequence-tempo-docker-cxqeosrd; the validated ignored local viewer was published with the paused JSON inspector excluded."
+  ],
+  "limitations": [
+    "The tempo calculation is a continuous estimate from a generic M4A reference; exact FFTA timing, live tempo multipliers and frame quantization are unverified, and bounded scans can be incomplete.",
+    "Other audio effects, full mixer fidelity and physical audio remain unverified; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_tempo_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

@@ -27584,3 +27584,148 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Outcome: completed
 - Verified criteria: browser test releases Chrome and the temporary link on setup failure; synthetic unit s43t_yno PASS, including the controls regression. The previously verified EUR page remains unchanged.
 - Limits: Windows remains deferred; suspended JSON work was not resumed.
+
+
+### ROMDATA-VIEWER-SEQUENCE-CGB-MUTE
+
+- Outcome: completed
+- Verified criteria: CGB mute works live, persists across tracks/songs and reload when storage is available, and includes mapped CGB sine fallbacks while leaving unknown voices audible. Synthetic Chrome xm0rn7ys and protected EUR Web Audio 898xw9ja PASS; private root page updated.
+- Limits: physical audio and original-game CGB behavior unverified; Windows deferred. sol1b5s3 failed on a test selector TypeError; ugz8wd_8 and sspgch_4 observed gain before audio rendering. Sol 6.1/xhigh /root/sol_cgb_mute_diagnosis identified the observation issue; effective settings and primary Terra/xhigh unconfirmed.
+
+
+### ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY
+
+- Outcome: completed
+- Verified criteria: an ordinary IN-08 action-12 continuation reaches task 13 and two authenticated bank records. The 497-frame pair serves 9,650 bytes from the extracted bank while all 31,634 backing bytes are altered. Both constructors and record readers are attributed. Per-frame clock and audio and endpoint state/video/OAM match.
+- Evidence: rejected short window `vxoi35oy`; Sol `/root/sol_compact_ordinary_route` requested xhigh; raw trace `pmry89cu`, Windows build `u9p3s6q9`, managed Wine `00378brf` PASS with 22 protected inputs and server drain. `docs/rom_data_graphics.md` E493.
+- Limits: the retained replay's earlier ancestry, interior reference, other scenes, byte-mode ordinary use, indexed selectors, translated dispatch, Linux, USA and native Windows remain open. Performance deferred. Effective primary Terra and consultant Sol xhigh settings unconfirmed.
+
+
+### ROMDATA-VIEWER-SEQUENCE-TRACE-FOLD
+
+- Outcome: completed
+- Verified criteria: executed instruction trace and pagination are in a section collapsed by default; protected local-page Chrome unit tupw3uy9 checked visibility, pagination and song selection. Private root page updated.
+- Limits: Windows deferred; paused JSON prototype remains excluded. Initial 9na8l38z used rectangles to infer visibility; oqp7cwbq confirmed closed content remains hidden. fiw2spca selected a song without a trace; corrected check passed. Terra/xhigh unconfirmed.
+
+
+### ROMDATA-01-EUR-COMPACT-CELL-INTERIOR-REFERENCE
+
+- Outcome: completed
+- Verified criteria: all 129 aligned address-shaped values across three cartridge mirrors reconcile as 119 original root references to 91 records and ten payload words with existing owners. Original color-mode program 36 reads 3cf5d8 as four literal bytes and copies them to decoded offsets 24..28 without reading the compact-cell bank in that call.
+- Evidence: EUR/Wine `e494-eur-compact-bank-reference-audit-wine-qpfvixus` PASS, reference index and original decoder output comparison, 19 protected paths, server drained. `docs/rom_data_graphics.md` E494.
+- Limits: dynamic or unaligned pointer formation, ordinary byte-mode scenes, translated execution, Linux, USA and native Windows remain open. No performance measurement. Primary Terra xhigh unconfirmed.
+
+
+### ROMDATA-VIEWER-OBSERVED-TILEMAPS
+
+- Outcome: completed
+- Verified criteria: 4-bit manual tilemap/rectangle explorer and raw cell grid. Synthetic uyjmm_og PASS; protected EUR gmofczjl independently compared 2,224 cells in 19 resources and a source pixel in Chrome. Local wiki updated with suspended JSON prototype excluded.
+- Limits: graphics and palette pairing manual, stored palette IDs not applied automatically, Windows deferred. Initial tuysj7hm comparison rejected the expected resource-status change; corrected check passed. Terra/xhigh unconfirmed.
+
+### ROMDATA-01-EUR-COMPACT-CELL-BYTE-MODE-ROUTES
+
+- Outcome: completed
+- Verified criteria: E495 attributes all five original byte-mode constructor calls for four EUR records and ten frames. The action index joins eight routes to 345 authenticated checkpoints. Wine preserves 372 guarded paths and drains.
+- Evidence: `e495-eur-compact-byte-routes-wine-ysi2u14e` and `docs/rom_data_graphics.md#e495-european-compact-cell-byte-mode-routes`.
+- Limits: IN-08 has observed deployment selectors for actions 187 and 338. Live confirmation, managed byte-mode reads, translated dispatch and deferred platforms remain open under the existing parent. No benchmarks.
+
+
+### ROMDATA-VIEWER-TILEMAP-CELL-PALETTES
+
+- Outcome: completed
+- Verified criteria: optional per-cell palette IDs and manual single-bank mode; missing banks marked cyan. Synthetic hh4zsvun and protected local EUR _o8ajeki PASS, including independent source-color comparison. Private root wiki updated.
+- Limits: original graphics/palette source pairing remains manual; Windows deferred; suspended JSON prototype remains excluded.
+
+
+### ROMDATA-VIEWER-TILEMAP-DOCKER
+
+- Outcome: completed
+- Verified criteria: protected EUR Docker and Python generators produce identical output including tilemap explorer; unit 25_e_ybg PASS.
+- Limits: both generated outputs use the suspended unverified JSON prototype in the template; local root page excludes it. Windows deferred.
+
+### ROMDATA-04-EUR-COMPACT-CELL-BYTE-MODE-ORDINARY
+
+- Outcome: completed
+- Verified criteria: E496 confirms ordinary Abate through the verified IN-08 deployment and controller menus. Task 345 child 6 and primary task 333 read byte-run data from aee1f0 and af0930. Original and extracted Wine variants agree on all 621 record-bank events, guest clock and audio over 407 frames, and final state, video and OAM with 31,634 cartridge backing bytes inverted. All 39 guarded paths pass and Wine drains.
+- Evidence: Navigation `u845vun0`, `334ql883`, `oxzcps4j`; paired test `e496-eur-compact-byte-replay-wine-073j23ye`; `docs/rom_data_graphics.md#e496-ordinary-european-compact-cell-byte-mode-reads`.
+- Limits: This retained interpreter continuation covers these two constructors. Indexed slots, alternate child and secondary callers, translated dispatch, earlier save ancestry and deferred platforms remain open under the existing parent. No benchmarks.
+
+### ROMDATA-VIEWER-EQUIPMENT-TEXT
+
+- Outcome: completed
+- Verified criteria: equipment bindings, null cells, commands, pose preview and animation; hidden command spacing and optional partial normal font across text views; local viewer updated while preserving its existing inspector.
+- Evidence: synthetic `rom-data-viewer-equipment-text-synthetic-agj8p4xw`; protected EUR `rom-data-viewer-equipment-text-eur-final-787ku_bs` compared 748 bindings, 258 sequences, 3439 frames and 280 blocks, plus a real pixel and script. Earlier `2x2_nqve` and `f2rcnchf` failed in harness candidate/selector checks; corrected validation passed. Primary Terra/xhigh was not confirmed.
+- Limits: Unicode matching is partial and visual; unknown glyphs retain their bitmap; text commands are not executed. Palette, timing and actor composition remain approximate. Other formats/audio/scenes and Windows remain open; paused JSON work was not resumed.
+
+### ROMDATA-VIEWER-BATTLE-SPRITES
+
+- Outcome: completed
+- Verified criteria: normal/alternate battle sprite selection, frames and approximate playback, raw commands, null and shared index-root distinction, resource navigation and retained settings; local wiki updated without the paused JSON prototype.
+- Evidence: synthetic `rom-data-viewer-battle-synthetic-sz5wql3k`; protected EUR `rom-data-viewer-battle-eur-dj9tn7wi` compared 16830 bindings, 3287 sequences, 20665 frames and 4419 blocks and checked two real pixels and shared root in Chrome; offline Docker/Python parity `rom-data-viewer-battle-docker-eqvfwhko` PASS.
+- Limits: manual palette, preview timing, unsupported object modes and no live actor-part composition or task-command execution. Other formats, audio, scenes and Windows remain open; paused JSON was not resumed.
+
+### ROMDATA-04-EUR-COMPACT-CELL-INDEXED-SLOT1
+
+- Outcome: completed
+- Verified criteria: E497 observes ordinary Sidewinder action 187 and task 184. The original callback reads slot 1's pointer and parameter and 26 distinct byte-run payload bytes. The 448-frame Wine replay matches all 43 record-bank trace events and the 14 control bytes reconcile with the managed counter. Clock, audio, final state, video and OAM agree with altered backing; 56 guards pass and Wine drains.
+- Evidence: `8xy5_xkm`, `adwf4_b_`, `docs/rom_data_graphics.md#e497-ordinary-european-compact-cell-selector-1`. Sol consultant `/root/sol_indexed_target` requested as GPT-6.1 Sol with xhigh, effective settings unconfirmed.
+- Limits: Indexed slot 0 has a recovered roster turn only (`kued531o`). Alternate and secondary callers, translated dispatch and deferred platforms stay open. Optional rebuild `memnxwvv` lacked the offline itoa version; pinned harness passed. No benchmarks.
+
+### ROMDATA-04-EUR-COMPACT-CELL-INDEXED-SLOT0
+
+- Outcome: completed
+- Verified criteria: E498 recovers IN-08 roster slot 7 and uses ordinary movement and Wyrmkiller confirmation to reach action 130 and task 127. The indexed reads use slot 0 and the original byte decoder reads record aed7a4. All 35 record-bank trace events match over 425 frames with altered backing. The managed counter reconciles with 1,269 record bytes and 14 controls. Guest clock, nonempty audio, endpoint state, video and OAM match. The 51 protected paths pass and Wine drains.
+- Evidence: `kued531o`, `i51ief8_`, `e498-eur-compact-indexed-slot-zero-wine-_ser15qi`; `docs/rom_data_graphics.md#e498-ordinary-european-compact-cell-selector-0`.
+- Limits: Both indexed slots and all four byte-mode records have ordinary EUR interpreter evidence. The alternate action-73 child, secondary task 384, earlier save ancestry, translated dispatch and deferred platforms remain open. No benchmarks.
+
+### ROMDATA-VIEWER-PCM-FIDELITY
+
+- Outcome: completed
+- Verified criteria: note-extension wrapping, extracted PCM pitch, optional attack/decay/sustain/release preview, bounded release and preserved controls; validated local wiki published without paused JSON prototype.
+- Evidence: synthetic `rom-data-viewer-audio-fidelity-synthetic-kleo1rm5`; protected EUR `rom-data-viewer-audio-fidelity-eur-cv4woo4e` checked 180 pitch keys, 12 bases, 429 tone words, 1006 source extensions and one extended PCM note with live Chrome Web Audio; Docker/Python parity `rom-data-viewer-audio-fidelity-docker-j4h2znpv` PASS.
+- Limits: timing, pitch changes, effects, exact mixer, CGB envelopes and physical audio remain unverified/incomplete; other formats/scenes and Windows remain open. The JSON prototype remains paused.
+
+### ROMDATA-VIEWER-SEQUENCE-TEMPO
+
+- Outcome: completed
+- Verified criteria: estimated tempo across song tracks with manual fallback, same-tick changes and zero tempo; seconds-aligned note timeline/playhead and existing audio controls; protected local wiki updated without paused JSON prototype.
+- Evidence: synthetic `rom-data-viewer-sequence-tempo-synthetic-0bksevth` and `rom-data-viewer-sequence-tempo-timeline-lfnlvmos`; protected EUR `rom-data-viewer-sequence-tempo-eur-5k5nafnt` counted 1150 commands and checked a real cross-track note in automatic/manual modes with live Chrome Web Audio; Docker/Python parity `rom-data-viewer-sequence-tempo-docker-cxqeosrd` PASS.
+- Limits: generic M4A continuous timing estimate, not independently authenticated exact FFTA frame scheduling; live multipliers and physical audio unverified. Scan limits reported. Other audio, formats, scenes and Windows remain open; JSON remains paused.
+
+
+### ROMDATA-04-EUR-ADDITIONAL-CUSTOM-FAMILY
+
+- Outcome: completed
+- Verified criteria: e312-d311 extracts all five European UI streams and owns 3,061 source bytes, including the reader literal and pointer table. The original controlled decoder and transfer matched 8,320 RAM and VRAM bytes with backing ROM altered. The ROM command handler prepared, reused and verified the manifest. e311-d310 still attaches.
+- Evidence: E499 managed Wine PASS in `target/validation/units/e499-eur-additional-ui-table-wine-afav76ye/`. See [runtime evidence](../rom_data_ui_graphics.md#e499-additional-european-custom-stream-runtime) and [change record](../changes/2026-11-25-publish-european-custom-ui-stream-family.json).
+- Limits: Controlled European interpreter proof. Ordinary invocation, translated execution, Linux, American and native Windows validation remain open. No performance measurements. The canonical rebuild replaced the earlier pinned E493 executable. Prior receipts remain valid, and the exact replay binary needs recovery or a separate rebuilt variant.
+
+
+### ROMDATA-01-EUR-CUSTOM-DECODER-ROOTS
+
+- Outcome: completed
+- Verified criteria: Verified 73 retained Thumb call patterns, 30 literal arguments and 24 independent stream projections. The e312-d311 manifest has 33 residual source spans totaling 47,843 bytes: 26 literals and six streams with the existing two-byte OBJ alias preserved.
+- Evidence: E500 `e500-eur-literal-custom-source-plan-ao1dmjoc` PASS, [source plan](../rom_data_ui_graphics.md#e500-literal-selected-european-custom-streams), [change record](../changes/2026-11-25-inventory-european-literal-custom-decoder-sources.json).
+- Limits: Authenticated static source proof. The other 43 patterns, ordinary execution, runtime publication, Linux, USA and native Windows are tracked separately. Initial `1w1twg6u` resolved the ROM relative to scratch and failed; the corrected retry uses the explicit repository root.
+
+### ROMDATA-VIEWER-TRACK-AUDIO-CONTROLS
+
+- Outcome: completed
+- Verified criteria: optional track volume, pan, key shift, bend, bend range and tuning, including changes during notes; separate paginated command table, preserved tempo and CGB mute, and protected local wiki without paused JSON prototype.
+- Evidence: synthetic `rom-data-viewer-track-controls-synthetic-2pni2qje`; protected EUR `rom-data-viewer-track-controls-eur-co_43x87` counted 8419 instructions and checked live volume, pan and a bent PCM note with Chrome Web Audio; Docker/Python parity `rom-data-viewer-track-controls-docker-kk259nh0` PASS. The previous global memory-check dependency was resolved; check PASS.
+- Limits: browser gain/stereo and equal-tempered pitch ratios approximate generic M4A controls; pitch automation is bounded, exact mixer/modulation and physical audio unverified. Other audio, formats, scenes and Windows remain open; JSON remains paused.
+
+### ROMDATA-VIEWER-SCRIPT-SPRITES
+
+- Outcome: completed
+- Verified criteria: five script sprite catalogs, resource links, conditional producer fields and paginated disclosure, null/shared-root distinction, playback settings and protected local wiki without paused JSON prototype.
+- Evidence: synthetic `rom-data-viewer-script-sprites-synthetic-1w6hgbmp`; protected EUR `rom-data-viewer-script-sprites-eur-ykbzrpvg` compared 4308 producers, 5778 bindings, 1204 sequences, 7619 frames, 2899 blocks and checked a real pixel, witnesses and shared root in Chrome; Docker/Python parity `rom-data-viewer-script-sprites-docker-5d6shlsb` PASS. Metadata memory check PASS; full check awaits concurrent E501.
+- Limits: witnesses are conditional; manual palette and preview timing, no live actor composition or task-command execution. Other formats, audio, scenes and Windows remain open; JSON remains paused.
+
+
+### ROMDATA-04-EUR-CUSTOM-DECODER-LITERALS
+
+- Outcome: completed
+- Verified criteria: e313-d312 publishes all 33 E500 residual spans, serving 26 original literal loads and six complete original decodes with 63,744 matching output bytes. The two shared bytes remain served by the OBJ property owner. Creation, reuse, verification, rehashed-edit rejection and explicit e312-d311 attachment pass.
+- Evidence: E501 `e501-eur-literal-ui-wine-ms1i9nsv` PASS with Wine drained. Build `e501-eur-literal-ui-windows-build-lqcru_bi` PASS and exact E499 executable retained. See [runtime evidence](../rom_data_ui_graphics.md#e501-literal-selected-european-graphics-runtime) and [change record](../changes/2026-11-25-publish-european-literal-custom-graphics.json).
+- Limits: Controlled European interpreter reader and decoder proof. Ordinary calls, downstream transfers, translated paths, remaining 43 patterns, Linux, USA and native Windows remain open. No performance measurements.

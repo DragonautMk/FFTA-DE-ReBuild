@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "apply-viewer-track-audio-controls",
+  "title": "Apply volume, pan and pitch controls in sequence auditions",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Apply decoded track volume, stereo pan, key shift, bend, bend range and tuning to note playback, including changes during active notes; keep CGB mute routing independent.",
+    "Provide a checkbox and a collapsible, paginated table for the decoded track controls, and bound per-note pitch automation."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-track-controls-synthetic-2pni2qje passed dynamic controls, track separation, manual bypass, prior tempo and CGB mute checks in Chrome.",
+    "Protected EUR unit rom-data-viewer-track-controls-eur-co_43x87 counted 8419 source controls and checked real volume and pan changes during notes plus a bent PCM note with live Chrome Web Audio.",
+    "Offline Docker/Python output parity passed in rom-data-viewer-track-controls-docker-kk259nh0; the guarded local wiki was updated while preserving its paused JSON inspector."
+  ],
+  "limitations": [
+    "Volume and stereo use browser approximations; pitch uses equal-tempered ratios, automation is bounded and reports truncation, and exact mixer, modulation and physical audio remain unverified.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_track_controls_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

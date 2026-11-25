@@ -24,6 +24,77 @@ def indexed_glyphs(glyphs):
     return indexed
 
 
+def project_observed_tilemaps(catalog):
+    """Project documented mode-4 streams and row-major rectangles into cells."""
+    def word(value):
+        return type(value) is int and 0 <= value <= 0xffff
+
+    def geometry(item):
+        source, width, height = (item[key] for key in ('source_offset', 'width', 'height'))
+        if (type(source) is not int or source < 0 or type(width) is not int or not 1 <= width <= 64
+                or type(height) is not int or not 1 <= height <= 64):
+            raise ValueError('Invalid tilemap geometry')
+        return source, width, height
+
+    def decode(tokens, expected, base_runs=False):
+        if not isinstance(tokens, list) or not tokens:
+            raise ValueError('Empty tilemap stream')
+        cells = []
+        for token in tokens:
+            control = token['control']
+            if not word(control):
+                raise ValueError('Invalid tilemap control')
+            count, mode = control & 0x3fff, control & 0xc000
+            values = [token['value']] if base_runs else token['values']
+            if (not count or len(cells) + count > expected or base_runs and not mode
+                    or not isinstance(values, list) or len(values) != (1 if mode else count)
+                    or any(not word(value) for value in values)):
+                raise ValueError('Invalid tilemap token')
+            if mode & 0x8000:
+                cells.extend((values[0] + index) & 0xffff for index in range(count))
+            elif mode & 0x4000:
+                cells.extend([values[0]] * count)
+            else:
+                cells.extend(values)
+        if len(cells) != expected:
+            raise ValueError('Incomplete tilemap stream')
+        return cells
+
+    maps = []
+    source, width, height = geometry(catalog)
+    if catalog['mode'] != 4:
+        raise ValueError('Unsupported tilemap mode')
+    maps.append({'kind': 'Tilemap', 'source_offset': source, 'width': width, 'height': height,
+                 'cells': decode(catalog['runs'], width * height, True)})
+    streams = catalog.get('additional_streams') or []
+    if not isinstance(streams, list):
+        raise ValueError('Invalid additional tilemaps')
+    for stream in streams:
+        source, width, height = geometry(stream)
+        if stream['mode'] != 4:
+            raise ValueError('Unsupported tilemap mode')
+        maps.append({'kind': 'Tilemap', 'source_offset': source, 'width': width, 'height': height,
+                     'cells': decode(stream['tokens'], width * height)})
+    groups = [('rectangles', 'Rectangle'), ('alternate_rectangles', 'Alternate rectangle'),
+              ('additional_rectangles', 'Additional rectangle')]
+    soil = catalog.get('soil_transfer_sources') or {}
+    if not isinstance(soil, dict):
+        raise ValueError('Invalid transfer rectangles')
+    for key, kind in groups + [('soil_rectangles', 'Transfer rectangle')]:
+        rectangles = soil.get('rectangles') if key == 'soil_rectangles' else catalog.get(key)
+        if rectangles is None:
+            continue
+        if not isinstance(rectangles, list):
+            raise ValueError('Invalid tilemap rectangles')
+        for rectangle in rectangles:
+            source, width, height = geometry(rectangle)
+            cells = rectangle['cells']
+            if not isinstance(cells, list) or len(cells) != width * height or any(not word(value) for value in cells):
+                raise ValueError('Invalid rectangle cells')
+            maps.append({'kind': kind, 'source_offset': source, 'width': width, 'height': height, 'cells': cells})
+    return maps
+
+
 def project_text_program(program):
     source, header, units = (program[key] for key in ('source_offset', 'header', 'units'))
     if (type(source) is not int or type(header) is not int or not 0 <= header <= 65535
@@ -121,7 +192,12 @@ def project_audio_instruments(catalog):
                 or not word(tone['word04'])):
             raise ValueError('Invalid instrument tone')
         tone_ids.add(tone['id'])
-        projected_tones.append({key: tone[key] for key in ('id', 'ctype', 'word04')})
+        if 'word08' in tone and not word(tone['word08']):
+            raise ValueError('Invalid instrument envelope word')
+        projected_tone = {key: tone[key] for key in ('id', 'ctype', 'word04')}
+        if 'word08' in tone:
+            projected_tone['word08'] = tone['word08']
+        projected_tones.append(projected_tone)
     projected_banks, addresses = [], set()
     for bank in banks:
         if not word(bank['source_address']) or bank['source_address'] in addresses or not isinstance(bank['programs'], list):
@@ -145,6 +221,156 @@ def project_audio_instruments(catalog):
     return {'banks': projected_banks, 'tones': projected_tones, 'map_links': projected_links}
 
 
+def project_audio_pcm_pitch(catalog):
+    keys, bases = catalog['pcm_keys']['entries'], catalog['pcm_bases']['entries']
+    if (not isinstance(keys, list) or len(keys) != 180 or not isinstance(bases, list) or len(bases) != 12
+            or any(type(value) is not int or not 0 <= value <= 0xffffffff for value in bases)):
+        raise ValueError('Invalid PCM pitch tables')
+    for key in keys:
+        if (type(key['base']) is not int or not 0 <= key['base'] < len(bases)
+                or type(key['shift']) is not int or not 0 <= key['shift'] < 16):
+            raise ValueError('Invalid PCM pitch key')
+    return {'keys': [{'base': key['base'], 'shift': key['shift']} for key in keys], 'bases': bases}
+
+
+def project_equipment_sprites(catalog, *, alternate=False):
+    """Retain sprite bindings, commands and links to their indexed graphics."""
+    def source_map(items, name):
+        if not isinstance(items, list):
+            raise ValueError('Invalid equipment ' + name)
+        result = {}
+        for index, item in enumerate(items):
+            source = item['source_offset']
+            if type(source) is not int or source < 0 or source in result:
+                raise ValueError('Invalid equipment ' + name + ' source')
+            result[source] = index
+        return result
+
+    blocks, objects, sequences = (catalog[key] for key in ('pixels', 'objects', 'sequences'))
+    block_sources = source_map(blocks, 'pixel')
+    object_sources = source_map(objects, 'object')
+    sequence_sources = source_map(sequences, 'sequence')
+    for block in blocks:
+        tiles = block['tiles']
+        if not isinstance(tiles, list) or not tiles:
+            raise ValueError('Empty equipment pixel block')
+        for tile in tiles:
+            indices = tile['indices']
+            if (not isinstance(indices, list) or len(indices) != 8 or any(
+                not isinstance(line, list) or len(line) != 8 or any(
+                    type(index) is not int or not 0 <= index <= 15 for index in line
+                ) for line in indices
+            )):
+                raise ValueError('Invalid equipment indexed tile')
+    for item in objects:
+        if not isinstance(item['objects'], list):
+            raise ValueError('Invalid equipment object list')
+    projected_sequences = []
+    for sequence in sequences:
+        frames = sequence['frames']
+        if not isinstance(frames, list) or not frames:
+            raise ValueError('Empty equipment sequence')
+        projected_frames = []
+        for frame in frames:
+            word00, word04, duration, operation, tail = (frame[key] for key in
+                ('word00', 'word04', 'duration', 'operation', 'bytes_0a_13'))
+            if (any(type(word) is not int or not 0 <= word <= 0xffffffff for word in (word00, word04))
+                    or type(duration) is not int or not 0 <= duration <= 255
+                    or type(operation) is not int or not 0 <= operation <= 255
+                    or not isinstance(tail, list) or len(tail) != 10
+                    or any(type(byte) is not int or not 0 <= byte <= 255 for byte in tail)):
+                raise ValueError('Invalid equipment frame')
+            result = {'word00': word00, 'word04': word04, 'duration': duration,
+                      'operation': operation, 'bytes_0a_13': tail}
+            if operation == 1:
+                pixel_source, object_source = 0x898a40 + word00, 0xa50020 + word04
+                if pixel_source not in block_sources or object_source not in object_sources:
+                    raise ValueError('Missing equipment graphics link')
+                result['block'], result['objects'] = block_sources[pixel_source], object_sources[object_source]
+            projected_frames.append(result)
+        projected_sequences.append({'source_offset': sequence['source_offset'],
+                                    'opaque_header': sequence['opaque_header'], 'frames': projected_frames})
+    bindings, keys = [], set()
+    if not isinstance(catalog['bindings'], list) or not catalog['bindings']:
+        raise ValueError('Empty equipment bindings')
+    for binding in catalog['bindings']:
+        sprite, animation, part, source = (binding[key] for key in
+            ('sprite_id', 'animation', 'part', 'index_source'))
+        target = binding['target'] if alternate else None
+        if alternate:
+            if not isinstance(target, dict) or target.get('kind') not in ('null', 'sequence', 'shared-index-root'):
+                raise ValueError('Invalid sprite target')
+            if target['kind'] == 'sequence':
+                sequence = target['source_offset']
+                if type(sequence) is not int or sequence < 0:
+                    raise ValueError('Invalid sprite sequence target')
+            elif target['kind'] == 'shared-index-root':
+                if (type(target.get('source_offset')) is not int or target['source_offset'] < 0
+                        or type(target.get('sprite_id')) is not int or target['sprite_id'] < 0):
+                    raise ValueError('Invalid shared sprite index root')
+                sequence = None
+            else:
+                sequence = None
+        else:
+            sequence = binding['sequence_source']
+        key = (sprite, animation, part)
+        if (any(type(value) is not int or value < 0 for value in (sprite, animation, part, source))
+                or key in keys or sequence is not None and sequence not in sequence_sources):
+            raise ValueError('Invalid equipment binding')
+        keys.add(key)
+        projected = {'sprite_id': sprite, 'animation': animation, 'part': part, 'index_source': source,
+                     'sequence': None if sequence is None else sequence_sources[sequence]}
+        if alternate:
+            projected['target'] = target
+        bindings.append(projected)
+    return {'blocks': blocks, 'objects': objects, 'sequences': projected_sequences, 'bindings': bindings}
+
+
+def project_script_sprites(catalog, *, alternate=False):
+    """Retain conditional producer witnesses alongside the extracted sprite graph."""
+    projected = project_equipment_sprites(catalog, alternate=alternate)
+    producers = catalog['producers']
+    if not isinstance(producers, list) or not producers:
+        raise ValueError('Empty script sprite producers')
+    integer_fields = ('selector', 'unit_kind', 'unit_logical_id', 'job_id',
+                      'metadata_source', 'assignment_source')
+    retained = []
+    for producer in producers:
+        if not isinstance(producer, dict):
+            raise ValueError('Invalid script sprite producer')
+        sprite, base, sources = (producer[key] for key in ('sprite_id', 'base', 'script_sources'))
+        if (any(type(value) is not int or not 0 <= value <= 0xffff for value in (sprite, base))
+                or not isinstance(sources, list) or not sources
+                or any(type(value) is not int or not 0 <= value <= 0xffffffff for value in sources)
+                or any(type(producer[key]) is not int or not 0 <= producer[key] <= 0xffffffff
+                       for key in integer_fields if key in producer)
+                or 'mode' in producer and producer['mode'] not in ('normal', 'alternate')):
+            raise ValueError('Invalid script sprite producer')
+        fields = ('sprite_id', 'base', 'script_sources', 'mode') + integer_fields
+        retained.append({key: producer[key] for key in fields if key in producer})
+    projected['producers'] = retained
+    return projected
+
+
+def project_item_links(catalog):
+    """Retain all item-linked pair slots, including storage beyond each count."""
+    source, records = catalog['source_offset'], catalog['records']
+    if (type(source) is not int or not 0 <= source <= 0xffffffff
+            or not isinstance(records, list) or not records or len(records) > 65536
+            or source + len(records) * 20 > 0x100000000):
+        raise ValueError('Invalid item link source or records')
+    for record in records:
+        count, opaque, slots = (record[key] for key in ('count', 'opaque', 'slots'))
+        if (type(count) is not int or not 0 <= count <= 9
+                or type(opaque) is not int or not 0 <= opaque <= 255
+                or not isinstance(slots, list) or len(slots) != 9):
+            raise ValueError('Invalid item link record')
+        for slot in slots:
+            if any(type(slot[key]) is not int or not 0 <= slot[key] <= 255 for key in ('selector', 'value')):
+                raise ValueError('Invalid item link slot')
+    return {'source_offset': source, 'records': records}
+
+
 def generate(dataset, output, filename='index.html'):
     dataset = dataset.resolve()
     output = output.resolve()
@@ -155,10 +381,14 @@ def generate(dataset, output, filename='index.html'):
     palettes = None
     dimensions = None
     items = None
+    item_links = None
     world_nodes = None
     audio = None
     short_texts = None
     sprite_pixels = None
+    equipment_sprites = None
+    battle_sprites = {}
+    script_sprites = {}
     unit_palettes = None
     script_texts = None
     pointer_texts = None
@@ -168,11 +398,13 @@ def generate(dataset, output, filename='index.html'):
     name_keyboard = None
     sequence_directory = None
     sequences = None
+    pcm_pitch = None
     bg_graphics = None
     ui_graphics = None
     ui_palettes = None
     obj_graphics = None
     world_roads = None
+    observed_tilemaps = None
     for resource in manifest['resources']:
         row = dict(resource)
         row['description'] = DESCRIPTIONS.get(row['path'], 'Decoded resource')
@@ -198,6 +430,14 @@ def generate(dataset, output, filename='index.html'):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid dimensions data: {error}'
+            elif (row['id'] == 'graphics.observed-tilemap'
+                  and row['format'] in {f'observed-tilemap-v{revision}-json' for revision in range(1, 5)}):
+                try:
+                    observed_tilemaps = {'maps': project_observed_tilemaps(json.loads(content)), 'path': row['path']}
+                    row['status'] = 'Available for tilemap preview'
+                except (ValueError, KeyError, TypeError) as error:
+                    observed_tilemaps = None
+                    row['status'] = f'Invalid tilemap data: {error}'
             elif row['id'] == 'graphics.bg-main-graphics' and row['format'] == 'bg-main-graphics-v1-json':
                 try:
                     catalog = json.loads(content)
@@ -320,6 +560,34 @@ def generate(dataset, output, filename='index.html'):
                 except (ValueError, KeyError, TypeError) as error:
                     unit_palettes = None
                     row['status'] = f'Invalid color mode data: {error}'
+            elif (row['id'] in {f'graphics.unit-obj-script-{mode}' for mode in
+                                ('special-normal', 'special-alternate', 'override',
+                                 'registry-special', 'registry-generic')}
+                  and row['format'] == row['id'].removeprefix('graphics.') + '-v1-json'):
+                mode = row['id'].removeprefix('graphics.unit-obj-script-')
+                try:
+                    script_sprites[mode] = project_script_sprites(json.loads(content), alternate=mode == 'registry-generic')
+                    script_sprites[mode]['path'] = row['path']
+                    row['status'] = 'Available'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid script sprite data: {error}'
+            elif (row['id'] in ('graphics.unit-obj-normal-battle', 'graphics.unit-obj-alternate-battle')
+                  and row['format'] == row['id'].removeprefix('graphics.') + '-v1-json'):
+                mode = 'normal' if row['id'] == 'graphics.unit-obj-normal-battle' else 'alternate'
+                try:
+                    battle_sprites[mode] = project_equipment_sprites(json.loads(content), alternate=mode == 'alternate')
+                    battle_sprites[mode]['path'] = row['path']
+                    row['status'] = 'Available'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid battle sprite data: {error}'
+            elif row['id'] == 'graphics.unit-obj-equipment' and row['format'] == 'unit-obj-equipment-v1-json':
+                try:
+                    equipment_sprites = project_equipment_sprites(json.loads(content))
+                    equipment_sprites['path'] = row['path']
+                    row['status'] = 'Available'
+                except (ValueError, KeyError, TypeError) as error:
+                    equipment_sprites = None
+                    row['status'] = f'Invalid equipment sprite data: {error}'
             elif row['id'] == 'graphics.unit-obj-initial-pose' and row['format'] == 'unit-obj-initial-pose-v1-json':
                 try:
                     catalog = json.loads(content)
@@ -559,6 +827,14 @@ def generate(dataset, output, filename='index.html'):
                 except (ValueError, KeyError, TypeError) as error:
                     sequences = None
                     row['status'] = f'Invalid sequence data: {error}'
+            elif row['id'] == 'audio.m4a-driver-tables' and row['format'] == 'audio-driver-tables-v1-json':
+                try:
+                    pcm_pitch = project_audio_pcm_pitch(json.loads(content))
+                    pcm_pitch['path'] = row['path']
+                    row['status'] = 'Available: PCM pitch tables'
+                except (ValueError, KeyError, TypeError) as error:
+                    pcm_pitch = None
+                    row['status'] = f'Invalid PCM pitch tables: {error}'
             elif row['id'] == 'audio.m4a-tones' and row['format'] == 'audio-tones-v1-json':
                 try:
                     audio_catalog = json.loads(content)
@@ -628,6 +904,13 @@ def generate(dataset, output, filename='index.html'):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid world node data: {error}'
+            elif row['id'] == 'gameplay.item-links' and row['format'] == 'item-links-v1-json':
+                try:
+                    item_links = project_item_links(json.loads(content))
+                    item_links['path'] = row['path']
+                    row['status'] = 'Available'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid item link data: {error}'
             elif row['id'] == 'gameplay.item-records' and row['format'] == 'item-records-v1-json':
                 try:
                     records = json.loads(content)['records']
@@ -670,11 +953,14 @@ def generate(dataset, output, filename='index.html'):
         script_texts['glyphs'] = [font[index] for index in sorted(used_glyphs) if font and index in font]
     data = {'profile': manifest['profile'], 'extractor': manifest['extractor_revision'],
             'decoder': manifest['decoder_revision'], 'resources': rows, 'palettes': palettes,
-            'dimensions': dimensions, 'items': items, 'world_nodes': world_nodes, 'world_roads': world_roads,
+            'dimensions': dimensions, 'items': items, 'item_links': item_links, 'world_nodes': world_nodes, 'world_roads': world_roads,
             'audio': audio, 'short_texts': short_texts, 'sprite_pixels': sprite_pixels,
+            'equipment_sprites': equipment_sprites, 'battle_sprites': battle_sprites, 'script_sprites': script_sprites,
             'unit_palettes': unit_palettes, 'script_texts': script_texts, 'pointer_texts': pointer_texts,
             'relative_texts': relative_texts, 'sequence_directory': sequence_directory, 'sequences': sequences,
+            'pcm_pitch': pcm_pitch,
             'bg_graphics': bg_graphics, 'ui_graphics': ui_graphics, 'ui_palettes': ui_palettes, 'obj_graphics': obj_graphics,
+            'observed_tilemaps': observed_tilemaps,
             'font': {'glyphs': [font[index] for index in sorted(font)], 'path': font_path} if font else None,
             'name_keyboard': name_keyboard}
     encoded = json.dumps(data, ensure_ascii=True).replace('<', '\\u003c')

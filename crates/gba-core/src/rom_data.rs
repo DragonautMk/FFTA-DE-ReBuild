@@ -167,8 +167,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 311;
-pub const DECODER_REV: u32 = 310;
+pub const EXTRACTOR_REV: u32 = 313;
+pub const DECODER_REV: u32 = 312;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -178,6 +178,8 @@ const PRE_TILEMAP_DIRECT_REVISION: (u32, u32) = (307, 306);
 const PRE_TILEMAP_ORIGIN_REVISION: (u32, u32) = (308, 307);
 const PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION: (u32, u32) = (309, 308);
 const PRE_COMPACT_CELL_BANK_REVISION: (u32, u32) = (310, 309);
+const PRE_ADDITIONAL_UI_TABLE_REVISION: (u32, u32) = (311, 310);
+const PRE_DIRECT_UI_LITERALS_REVISION: (u32, u32) = (312, 311);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -1250,7 +1252,7 @@ impl Extraction {
         Self::from_rom_with_revision(rom, (EXTRACTOR_REV, DECODER_REV))
     }
 
-    /// Keep the recent EUR tilemap revisions readable for explicitly selected datasets.
+    /// Keep the recent EUR revisions readable for explicitly selected datasets.
     /// The supplied manifest selects the revision only. Its content and source
     /// identity are validated against the resulting extraction.
     pub fn from_rom_for_manifest(rom: &[u8], manifest: &Manifest) -> Result<Self, String> {
@@ -1259,7 +1261,8 @@ impl Extraction {
             | PRE_TILEMAP_STREAM_FILE_REVISION | PRE_TILEMAP_LZ77_FILE_REVISION
             | PRE_TILEMAP_TYPE3_REVISION | PRE_TILEMAP_TYPE2_REVISION
             | PRE_TILEMAP_DIRECT_REVISION | PRE_TILEMAP_ORIGIN_REVISION
-            | PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION | PRE_COMPACT_CELL_BANK_REVISION) => previous,
+            | PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION | PRE_COMPACT_CELL_BANK_REVISION
+            | PRE_ADDITIONAL_UI_TABLE_REVISION | PRE_DIRECT_UI_LITERALS_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -1407,11 +1410,22 @@ impl Extraction {
                 sha256: String::new(), dependencies: vec![OBJ_DIMENSIONS_ID.into()], sources: palettes.sources.clone(),
             });
             result.ui_palettes = Some(palettes);
-            let graphics = ui_graphics::Catalog::from_rom(rom)?;
+            let layout = if revision > PRE_DIRECT_UI_LITERALS_REVISION {
+                ui_graphics::SourceLayout::DirectLiterals
+            } else if revision > PRE_ADDITIONAL_UI_TABLE_REVISION {
+                ui_graphics::SourceLayout::AdditionalTable
+            } else {
+                ui_graphics::SourceLayout::Legacy
+            };
+            let graphics = ui_graphics::Catalog::from_rom_with_layout(rom, layout)?;
+            let mut dependencies = vec![OBJ_DIMENSIONS_ID.into(), OBJ_CUSTOM_GRAPHICS_ID.into()];
+            if layout == ui_graphics::SourceLayout::DirectLiterals {
+                dependencies.push(UNIT_OBJ_FFFF_READER_FIELDS_ID.into());
+            }
             result.manifest.coverage.push(UI_CUSTOM_GRAPHICS_ID.into());
             result.manifest.resources.push(Resource {
                 id: UI_CUSTOM_GRAPHICS_ID.into(), path: UI_CUSTOM_GRAPHICS_FILE.into(), format: UI_CUSTOM_GRAPHICS_FORMAT.into(),
-                sha256: String::new(), dependencies: vec![OBJ_DIMENSIONS_ID.into(), OBJ_CUSTOM_GRAPHICS_ID.into()], sources: graphics.sources.clone(),
+                sha256: String::new(), dependencies, sources: graphics.sources.clone(),
             });
             result.ui_graphics = Some(graphics);
             let items = items::Catalog::from_rom(rom)?;

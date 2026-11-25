@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-script-sprite-catalogs",
+  "title": "Browse conditional script sprite catalogs",
+  "kind": "added",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Extend the sprite browser to five extracted script catalogs with indexed navigation, animation previews and preserved playback settings.",
+    "Show matching conditional producer fields and script offsets in a collapsible paginated table; distinguish null and shared index-root targets."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-script-sprites-synthetic-1w6hgbmp passed 21 Python and Chrome tests including five script-only catalogs, witness pages, nulls, shared roots, pixels and prior controls.",
+    "Protected EUR unit rom-data-viewer-script-sprites-eur-ykbzrpvg compared 4308 producers, 5778 bindings, 1204 sequences, 7619 frames and 2899 pixel blocks with their sources; Chrome checked a real pixel, conditional witnesses, pagination and a shared root.",
+    "Offline unit rom-data-viewer-script-sprites-docker-5d6shlsb produced byte-identical Docker and Python pages; the validated ignored local page was published after checking protected preimages."
+  ],
+  "limitations": [
+    "Producer witnesses are conditional and do not prove live actor or scene use; live palette, actor composition, task commands and original timing are not reproduced.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_script_sprites_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

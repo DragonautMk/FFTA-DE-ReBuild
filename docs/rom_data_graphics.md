@@ -3124,8 +3124,8 @@ other 20 bytes in those gaps are zero-filled alignment. The complete
 interval `ae9ebc..af1818` contains 91 records with 31,004 record bytes
 and 64 bytes of inter-record alignment. Every record endpoint rounds
 up to the next verified root on a four-byte boundary. The word at
-`3cf5d8` points inside record `af0484`, at `af048c`. Its consumer needs
-separate attribution, and its target offset must be preserved.
+`3cf5d8` has the same numeric value as a cartridge address inside
+record `af0484`, at `af048c`. E494 identifies the word as archive payload.
 
 The source index records 493 frame slots and 563 sequence entries. The
 483 value-12 frames have a verified halfword-run extent, with 118 bytes
@@ -3154,7 +3154,7 @@ then bounds each of the 91 records by its sequence count and the next
 root. The file stores 31,004 record bytes and 630 control bytes across
 205 ordered source spans. The manifest maps the packed bytes back to
 their original offsets. The records retain both frame encodings, all
-relative offsets and the interior target at `af048c`. The declared spans
+relative offsets and the bytes at `af048c`. The declared spans
 exclude the 64 inter-record alignment bytes.
 
 Windows build `tt6f8y35` and Wine `a1lyos30` pass. Normal preparation
@@ -3173,9 +3173,9 @@ Register values, guest clocks and serialized state match the original.
 The evidence contains `manifest.toml`, `result.json` and the Wine log.
 All 14 protected inputs pass and the Wine server drains.
 
-Attribution of the interior alias reader, live selector domains, ordinary
-scene replay and translated dispatch remain open. Linux, USA and native
-Windows validation and performance measurement are deferred.
+E493 verifies two ordinary record reads. Live selector domains and translated
+dispatch remain open. Linux, USA and native Windows validation and performance
+measurement are deferred.
 
 ## E492 European compact-cell frame decoder
 
@@ -3211,9 +3211,9 @@ branches, both original decoders and transparency with marker zero. The
 35,124 cell positions include 32,771 halfword and 303 byte writes. All 20
 protected inputs pass and the Wine server drains.
 
-Ordinary background setup, live selectors, interior alias reads and
-translated dispatch remain open. Linux, USA and native Windows checks
-and performance measurement are deferred.
+E493 covers one ordinary halfword scene. Ordinary byte-mode use, live
+selectors and translated dispatch remain open.
+Linux, USA and native Windows checks and performance measurement are deferred.
 
 ## E493 Ordinary European compact-cell bank reads
 
@@ -3231,3 +3231,193 @@ reach record `aeba54` at frame 8097. Reads cover 146 distinct record bytes
 through frame 8217. The same continuation then reads 18 distinct bytes
 of record `aea760` from frames 8218 through 8265. All 26 protected
 inputs pass and Wine drains.
+
+Windows build `u9p3s6q9` and managed Wine replay `00378brf` pass. The
+497-frame pair starts from the same checkpoint and runs through the last
+record read. The managed machine attaches the normal `e311-d310` dataset
+and inverts all 31,634 bank bytes in its cartridge backing. The audit
+matches 199 original read events and attributes the second constructor
+literal at `0e93fc` to the original load at `080e936a` on frame 8218.
+The extracted file serves 9,650 byte accesses, including both constructor
+literals and both records. Clock and nonempty audio match at every frame.
+Serialized state, framebuffer and OAM match at the endpoint. All 22
+protected inputs pass and the Wine server drains.
+
+This proof covers the retained interpreter continuation. Earlier save
+ancestry, indexed selectors, ordinary byte-mode scenes and translated
+dispatch remain open. Linux, USA and native Windows checks and performance
+measurement are deferred.
+
+## E494 European compact-cell bank reference audit
+
+The audit scans the exact EUR image for aligned words in the 91-record
+bank's address range across the three Game Pak mirrors. It finds 129
+words. Of those, 78 constructor literals and 41 indexed pointer words
+match the E490 callers and reach all 91 roots. The ten other words have
+owners in the E491 manifest. They include one word of PCM samples, one
+word of indexed archive literals, two raw tile words and six words inside
+LZ77 streams. The six consist of literal, flag or match bytes in one
+paired background packet and five type-3 inputs.
+
+At `3cf5d8`, the value resembling address `08af048c` belongs to the
+first literal packet of [color-mode archive](rom_data_indexed_graphics.md#e211-european-color-mode-archive-source-contract)
+`3ce9d4`, program 36. The controlled call starts at `080cf304` in color
+mode 1 and reaches the original wrapper at `0800537c`. The original
+literal load at `080052c6` reads all four bytes. Inverting those four
+source bytes changes only decoded offsets 24 through 27 of the 96-byte
+output. Neither invocation reads the compact-cell bank. The manifest
+assigns the four bytes to `graphics.indexed-archives`.
+
+Wine `qpfvixus` passes the address census and decoder comparison. The
+unit retains the reference index and probe, preserves all 19 protected
+inputs and drains Wine. The census covers aligned stored values. Dynamic
+or unaligned pointer formation, ordinary byte-mode use and translated
+dispatch remain open. Linux, USA and native Windows checks and performance
+measurement are deferred.
+
+## E495 European compact-cell byte-mode routes
+
+The E490 index and E492 decoder identify four byte-mode records and ten
+frames. The Wine source audit verifies the five original call sites and
+the selectors that reach them.
+
+- `080fe49e` reads indexed records `aed7a4` and `aed7c8` from slots 0 and
+  1. Primary tasks 127 and 184 share callback `080fe27c`. Message zero
+  sets the index to one only for task 184. Message `0x103` uses the index
+  for the root and halfword parameter after both handle polls clear.
+- `080e5b3e` reads `aee1f0` from task 345's nested callback in slot 6.
+  Resolved tilemap selector 21 sets the child slot. After registration,
+  the child reaches the constructor on message `0x102` with its countdown
+  at zero. Primary tasks 333 through 337 resolve to selector 21.
+- `080f54c0` reads `aee1f0` on message `0x100` in the child at
+  `080f5458`. The shared parent saves the primary task ID minus 66, so
+  task 71 selects this child in slot 5 after the parent's handle clears.
+- `0811ddc2` reads `af0930` in the task 333 callback `0811dcbc`. Message
+  `0x101` reaches setup when the status check at `080dc65c` returns zero.
+  Action 338 therefore has both the task 345 and primary task 333 routes.
+- `0812068c` reads `aee1f0` from secondary task 384 on message `0x101`
+  when the countdown reaches zero. Byte argument 22 selects kind 1 at
+  physical row 21 of `3ad174`. The selector path supplies ID 384 to the
+  secondary constructor. No opcode-zero entry in the declared 75-row event
+  directory names ID 384.
+
+Wine `ysi2u14e` verifies these instructions against the fingerprinted EUR
+image and matches eight actions to the E470 index. Across 345 authenticated
+checkpoints, 59 each match the learned ability and current job for actions
+130 and 187. The same 63 checkpoints match each action from 338 through
+342. Four have a learned bit for action 73 and none has a matching current
+direct job. These counts describe the saved roster predicates. The examined
+IN-08 deployment states have selected-unit pointers for the slot 18
+candidate for action 187 and the slot 23 candidate for action 338.
+
+The unit retains the route and checkpoint indexes, preserves all 372
+guarded paths and drains Wine. E496 verifies the ordinary use and managed
+reads of two records. The other byte-mode call paths and translated
+dispatch remain open. Linux, USA, native Windows and performance
+measurement are deferred.
+
+## E496 Ordinary European compact-cell byte-mode reads
+
+The retained IN-08 deployment checkpoint selects roster slot 23. Reusing
+the recorded deployment and dialogue inputs under Wine reaches Cid's first
+controllable turn at frame 7337. The ordinary menu inputs open Abate, with
+32 MP required and 77 available, and reach the game confirmation at frame
+7513. Navigation units `u845vun0`, `334ql883` and `oxzcps4j` retain the
+input chain, screenshots and checkpoint hashes. The continuation uses
+controller inputs and leaves the original ROM and saves intact.
+
+Confirming Abate reads action 338's task field at frame 7687. Task 345
+registers the child in slot 6 at frame 7707. The child reads the
+constructor literal and header of `aee1f0` at frame 7755. Primary task 333
+loads its callback at frame 7787 and reads the constructor literal and
+header of `af0930` at frame 7829. Original decoder instructions at
+`0800ac70`, `0800ac72`, `0800ac94` and `0800acd2` read byte-run payloads
+from both records. The first record contributes 324 distinct payload bytes
+through frame 7763. The second contributes 218 through frame 7917.
+
+Wine `073j23ye` compares the 407 frames through the last bank read. The
+managed machine prepares and attaches the E491 `e311-d310` resource set
+and inverts all 31,634 represented bytes in its cartridge backing. All
+621 original record-bank trace events match extracted reads with the same
+addresses, widths, instructions, frame bounds and request counts. The
+bank serves 4,178 byte accesses. The record trace covers 4,170, and the
+original trace identifies both constructor literals outside that range.
+Guest clock and nonempty audio match at each frame. The final serialized
+state, video and OAM match. The unit preserves all 39 guarded paths and
+drains Wine.
+
+This proves the two constructor paths in one ordinary EUR interpreter
+continuation. E497 and E498 verify both indexed slots. The alternate
+child and secondary callers, translated dispatch and earlier save
+ancestry remain open.
+Linux, USA, native Windows and performance measurement are deferred.
+
+## E497 Ordinary European compact-cell selector 1
+
+The retained IN-08 deployment cursor identifies roster slot 18. Wine replay
+`eqyr2_ur` reaches Travis's turn at frame 7417. The selected Sidewinder
+ability supplies action 187. From its aiming screen the normal pad moves
+from `(11,3)` to the occupied, in-range cell `(7,4)` and opens the forecast.
+The first confirmation advances to the `Do it` prompt. Survey `8xy5_xkm`
+records nine action-187 property requests during that transition, with no
+activity at the battle action dispatcher or compact-cell bank. Its retained
+checkpoint contains the final prompt at frame 8483.
+
+Confirming `Do it` reads action 187's task field at frame 8658 and the
+task 184 descriptor at frame 8660. At frame 8783 the original callback
+reads both table base literals, pointer cell `3a19bc` and parameter cell
+`3a19c2`. It reads the `aed7c8` header and 26 distinct byte-run payload
+bytes in the same frame. The replay continues with neutral input through
+the last record read.
+
+Wine `adwf4_b_` compares 448 frames with the `e311-d310` dataset attached
+and all 31,634 compact-cell source bytes inverted in the managed cartridge
+copy. All 43 original bank trace events match extracted reads. They account
+for 1,266 byte accesses. The four indexed control reads observed on the
+original side account for the other 14 of the 1,280 managed byte accesses.
+Guest clock and nonempty audio match at every frame. Serialized state,
+video and OAM match at the endpoint. The unit preserves all 56 guarded
+paths and drains Wine.
+
+The saved command distinguishes Sidewinder from the adjacent Ultima Shot,
+action 186. The two earlier negative traces ended before `Do it`. The
+optional harness rebuild stopped at the offline `itoa` dependency. The
+successful replay reused the pinned E493 interpreter harness and E491
+manifest. E498 verifies index 0. The alternate child and secondary routes,
+translated dispatch, earlier save ancestry and deferred platforms remain
+open.
+
+## E498 Ordinary European compact-cell selector 0
+
+The ordinary IN-08 deployment cursor moves from roster slot 13 to slot 7.
+The navigation command finishes with Wine drained. Its validation receipt
+records a retention failure for a private intermediate checkpoint. Recovery
+`kued531o` verifies the original input guards and preserves the reproduced
+turn at frame 7577 without rerunning deployment.
+
+Mondo's secondary job exposes Wyrmkiller as action 130. Normal movement to
+`(8,4)` puts the occupied `(7,4)` cell inside the attack range. Reopening
+Wyrmkiller there preserves action 130. The forecast and final `Do it` prompt
+follow from ordinary controller input. Checkpoint `i51ief8_` retains the
+final prompt at frame 8465.
+
+The original dispatcher reads action 130's task field at frame 8640 and
+registers task 127 at frame 8642. At frame 8742 the shared callback reads
+both table base literals and slot 0's pointer and parameter at `3a19b8`
+and `3a19c0`. The original byte decoder reads nine distinct payload bytes
+from `aed7a4` through frame 8792.
+
+Wine `_ser15qi` compares 425 frames with the normal `e311-d310` dataset
+attached and all 31,634 represented bytes inverted in the managed
+cartridge copy. The 35 original record-bank trace events match extracted
+reads. The 1,283 managed byte accesses reconcile with 1,269 record bytes
+and 14 indexed control bytes from the original trace. Guest clock and
+nonempty audio match at every frame. Final serialized state, video and
+OAM match. The unit preserves all 51 guarded paths and drains Wine.
+
+E496 through E498 demonstrate ordinary reads from each of the four
+byte-mode records in the EUR bank. E492 covers the complete ten-frame
+byte-mode domain using controlled inputs. The alternate child for action
+73, secondary task 384, translated dispatch and earlier save ancestry
+remain open. Linux, USA, native Windows and performance measurement are
+deferred.

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "reconcile-european-compact-cell-bank-references",
+  "title": "Reconcile European compact-cell bank references",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "Classify all 129 aligned words in the European compact-cell address range across the three cartridge mirrors. The 119 constructor references match all 91 record roots. The ten other words are PCM, indexed literals, raw tile words or compressed inputs with established owners."
+  ],
+  "validation": [
+    "Wine qpfvixus authenticates the E490 index and E491 manifest. The original program-36 indexed decoder reads the four bytes at 3cf5d8 from PC 080052c6. Inverting those bytes changes only decoded offsets 24 through 27. Both decoder invocations have zero compact-cell reads. All 19 protected paths pass and Wine drains."
+  ],
+  "limitations": [
+    "Dynamic or unaligned pointer formation, byte-mode ordinary scenes and translated dispatch remain open. Linux, USA, native Windows and performance measurements are deferred.",
+    "The client did not independently confirm the primary Terra xhigh setting."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-24-reconcile-complete-european-compact-cell-bank.json",
+    "docs/changes/2026-11-25-verify-european-compact-cell-ordinary-replay.json"
+  ]
+}

@@ -49,12 +49,18 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 .text-preview { display:flex; flex-wrap:wrap; align-items:center; min-height:3rem; background:#182132; color:white; padding:.5rem; }
 .text-preview canvas { image-rendering:pixelated; height:48px; }
 .text-preview span { margin:0 .25rem; font: 13px monospace; color:#ffe09a; }
+.text-preview .text-normal { margin:0; font:20px Verdana, Arial, sans-serif; color:white; white-space:pre; }
+.text-preview .text-gap { margin:0; width:.45em; flex:none; white-space:pre; }
 .keyboard-grid { overflow-x:auto; }
 .keyboard-grid table { width:auto; }
 .keyboard-grid td { text-align:center; padding:.2rem; }
 .keyboard-grid button { min-width:4rem; }
 .keyboard-grid canvas { image-rendering:pixelated; height:48px; vertical-align:middle; background:#182132; }
 .keyboard-grid small { display:block; }
+.tilemap-grid { overflow-x:auto; }
+.tilemap-grid table { width:auto; }
+.tilemap-grid td, .tilemap-grid th { padding:.1rem; }
+.tilemap-grid button { font:12px monospace; padding:.25rem; }
 </style>
 </head>
 <body>
@@ -156,12 +162,48 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="obj-detail"></p>
   <canvas id="obj-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Object tile sheet"></canvas>
 </details></section>
+<section id="tilemaps" hidden>
+  <details><summary><h2>Tilemap and rectangle explorer</h2></summary>
+  <p>Choose extracted cells and optionally interpret them as 4-bit background
+  tile entries. Graphics, tile placement and colors are selected manually;
+  the preview does not establish the game's actual scene or palette pairing.
+  You can apply one selected color bank to every cell, or use the stored
+  palette IDs within the selected palette source.</p>
+  <label>Map or rectangle <select id="tilemap-id"></select></label>
+  <label>Tile graphics <select id="tilemap-graphics"></select></label>
+  <label>First tile ID <input id="tilemap-base" type="number" min="0" max="1023" value="0" style="width:6rem"></label>
+  <label>Palette source <select id="tilemap-palette-source"></select></label>
+  <label>Palette bank <select id="tilemap-palette-bank"></select></label>
+  <label><input id="tilemap-cell-palettes" type="checkbox"> Use each cell's palette ID</label>
+  <p id="tilemap-description"></p>
+  <canvas id="tilemap-canvas" style="max-width:100%;height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interpreted tilemap preview"></canvas>
+  <p id="tilemap-cell-detail" role="status"></p>
+  <details><summary>Cell values</summary>
+    <p>Select a cell to inspect its stored value and interpreted fields.</p>
+    <div class="tilemap-grid"><table id="tilemap-cells" aria-label="Tilemap cell values"></table></div>
+  </details>
+</details></section>
 <section id="items" hidden>
   <details><summary><h2>Item records</h2></summary>
   <p>Static fields are identified by their byte offset within each record.</p>
   <label>Item ID <select id="item-id"></select></label>
   <p id="items-source"></p>
+  <p id="item-link-navigation" hidden><a id="item-link-open" href="#item-links">Open linked pair record</a></p>
   <table><thead><tr><th>Offset</th><th>Type</th><th>Value</th></tr></thead><tbody id="item-fields"></tbody></table>
+</details></section>
+<section id="item-links" hidden>
+  <details><summary><h2>Item-linked pair records</h2></summary>
+  <p>Each item selects a record using its byte at offset 0x1D. The selector and
+  value bytes are shown as stored; their broader meanings and live conditions
+  are not inferred. Slots beyond the count are preserved storage.</p>
+  <label>Pair record <select id="item-link-record"></select></label>
+  <p id="item-link-source"></p>
+  <label><input type="checkbox" id="item-link-show-inactive" checked> Show slots beyond the count</label>
+  <table><thead><tr><th>Slot</th><th>State</th><th>Selector</th><th>Value</th></tr></thead>
+    <tbody id="item-link-slots"></tbody></table>
+  <details><summary>Items referencing this record</summary>
+    <p id="item-link-owners"></p>
+  </details>
 </details></section>
 <section id="world" hidden>
   <details><summary><h2>World nodes</h2></summary>
@@ -213,13 +255,22 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <details><summary><h2>Song track sequences</h2></summary>
   <p>Explore one track or play the extracted tracks together. Known PCM and
   CGB wave instruments can use extracted samples; other voices fall back to
-  sine waves. Timing is chosen here, and pitch, envelopes, effects and other driver
-  behavior remain approximate. The trace stops at the selected duration or a safety limit.</p>
+  sine waves. Tempo commands from all tracks can guide an estimated playback
+  rate, even when listening to one track. The manual rate applies before the
+  first tempo command or when the option is disabled. Driver timing, bends,
+  envelopes and effects remain approximate. The trace has safety limits.</p>
   <label>Song ID <select id="sequence-song"></select></label>
   <label>Track <select id="sequence-track"></select></label>
-  <label>Ticks per second <input id="sequence-rate" type="number" min="1" max="400" value="48" style="width:6rem"></label>
+  <label><input id="sequence-use-tempo" type="checkbox" checked> Follow song tempo (estimated)</label>
+  <label>Manual/fallback ticks per second <input id="sequence-rate" type="number" min="1" max="400" value="48" style="width:6rem"></label>
   <label>Preview seconds <input id="sequence-duration" type="number" min="1" max="180" value="12" style="width:6rem"></label>
   <label>Voices <select id="sequence-voice"><option value="pcm">Extracted PCM/CGB where available</option><option value="sine">Sine waves</option></select></label>
+  <label><input id="sequence-envelope" type="checkbox" checked> Apply extracted PCM envelope</label>
+  <label><input id="sequence-track-controls" type="checkbox" checked> Apply track volume, pan and pitch</label>
+  <label><input id="sequence-mute-cgb" type="checkbox"> Mute CGB voices</label>
+  <p>Mute applies to CGB instruments identified from the extracted tone data,
+  including sine fallbacks. Unidentified voices remain audible. The setting is
+  retained between tracks and, when browser storage is available, on reload.</p>
   <button type="button" id="sequence-play">Play approximation</button>
   <button type="button" id="sequence-stop" disabled>Stop</button>
   <p><label for="sequence-progress">Playback position</label>
@@ -238,17 +289,28 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <span id="sequence-note-page"></span>
     <table><thead><tr><th>Track</th><th>Start tick</th><th>End tick</th><th>Key</th><th>Velocity</th><th>Program</th><th>Wave</th></tr></thead><tbody id="sequence-note-rows"></tbody></table>
   </details>
-  <p>Executed instruction trace:</p>
-  <button type="button" id="sequence-prev">Previous</button>
-  <button type="button" id="sequence-next">Next</button>
-  <span id="sequence-page"></span>
-  <table><thead><tr><th>Track</th><th>Tick</th><th>Source offset</th><th>Instruction and operands</th></tr></thead><tbody id="sequence-rows"></tbody></table>
+  <details id="sequence-control-list"><summary>Track parameter changes</summary>
+    <p>Decoded volume, pan, key shift, bend, bend range and tuning commands in the selected tracks.</p>
+    <button type="button" id="sequence-control-prev">Previous</button>
+    <button type="button" id="sequence-control-next">Next</button>
+    <span id="sequence-control-page"></span>
+    <table><thead><tr><th>Track</th><th>Tick</th><th>Parameter</th><th>Value</th></tr></thead><tbody id="sequence-control-rows"></tbody></table>
+  </details>
+  <details id="sequence-trace"><summary>Executed instruction trace</summary>
+    <button type="button" id="sequence-prev">Previous</button>
+    <button type="button" id="sequence-next">Next</button>
+    <span id="sequence-page"></span>
+    <table><thead><tr><th>Track</th><th>Tick</th><th>Source offset</th><th>Instruction and operands</th></tr></thead><tbody id="sequence-rows"></tbody></table>
+  </details>
 </details></section>
 <section id="texts" hidden>
   <details><summary><h2>Short texts</h2></summary>
+  <p>Hidden controls leave a space between text. Normal font uses a visually
+  matched European Latin subset; other glyphs retain their original image.</p>
   <label>Language ID <select id="text-language"></select></label>
   <label><input type="checkbox" id="text-pin"> Pin language ID across text views</label>
   <label><input type="checkbox" id="text-hide-commands"> Hide commands and controls</label>
+  <label><input type="checkbox" id="text-normal-font"> Use normal font where recognized</label>
   <span id="text-pin-status" role="status"></span>
   <label>Entry <select id="text-entry"></select></label>
   <p id="text-source"></p>
@@ -257,11 +319,14 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 <section id="pointer-texts" hidden>
   <details><summary><h2>Pointer text catalogs</h2></summary>
   <p>Browse extracted pointer tables by reader, language and entry. Control bytes
-  are shown as stored; substitutions and formatting are not executed.</p>
+  are shown as stored; substitutions and formatting are not executed. Hidden
+  controls leave a space. Normal font uses a visually matched European Latin
+  subset; other glyphs retain their original image.</p>
   <label>Reader <select id="pointer-reader"></select></label>
   <label>Language ID <select id="pointer-language"></select></label>
   <label><input type="checkbox" id="pointer-pin"> Pin language ID across text views</label>
   <label><input type="checkbox" id="pointer-hide-commands"> Hide commands and controls</label>
+  <label><input type="checkbox" id="pointer-normal-font"> Use normal font where recognized</label>
   <span id="pointer-pin-status" role="status"></span>
   <label>Entry <select id="pointer-entry"></select></label>
   <p id="pointer-source"></p>
@@ -270,11 +335,14 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 <section id="relative-texts" hidden>
   <details><summary><h2>Relative text archives</h2></summary>
   <p>Browse archive programs by reader and language. Commands and operands are
-  labeled as stored; dynamic substitutions and formatting are not executed.</p>
+  labeled as stored; dynamic substitutions and formatting are not executed.
+  Hidden commands leave a space. Normal font uses a visually matched European
+  Latin subset; other glyphs retain their original image.</p>
   <label>Reader <select id="relative-reader"></select></label>
   <label>Language ID <select id="relative-language"></select></label>
   <label><input type="checkbox" id="relative-pin"> Pin language ID across text views</label>
   <label><input type="checkbox" id="relative-hide-commands"> Hide commands and controls</label>
+  <label><input type="checkbox" id="relative-normal-font"> Use normal font where recognized</label>
   <span id="relative-pin-status" role="status"></span>
   <label>Program <select id="relative-entry"></select></label>
   <p id="relative-source"></p>
@@ -283,10 +351,13 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 <section id="script-texts" hidden>
   <details><summary><h2>Script text archives</h2></summary>
   <p>Select a physical bank and program. Commands and operands are shown as stored;
-  dynamic names, choices and formatting are not executed.</p>
+  dynamic names, choices and formatting are not executed. Hidden commands leave
+  a space. Normal font uses a visually matched European Latin subset; other
+  glyphs retain their original image.</p>
   <label>Language ID <select id="script-language"></select></label>
   <label><input type="checkbox" id="script-pin"> Pin language ID across text views</label>
   <label><input type="checkbox" id="script-hide-commands"> Hide commands and controls</label>
+  <label><input type="checkbox" id="script-normal-font"> Use normal font where recognized</label>
   <span id="script-pin-status" role="status"></span>
   <label>Physical bank <select id="script-bank"></select></label>
   <label>Program <select id="script-entry"></select></label>
@@ -343,6 +414,38 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="sprite-detail"></p>
   <canvas id="sprite-tiles" width="512" height="256" style="max-width:100%;image-rendering:pixelated;background:#eee" aria-label="Indexed sprite tiles"></canvas>
 </details></section>
+<section id="equipment-sprites" hidden>
+  <details><summary><h2>Actor, equipment and script sprite sequences</h2></summary>
+  <p>Browse extracted battle, equipment and script sprite bindings and preview
+  their stored frames. Script witnesses describe conditional source relationships,
+  not guaranteed live actor behavior. Palette selection is manual. The preview uses a chosen
+  tick rate; task commands, game timing, live palettes and composition of actor
+  parts are not reproduced. Shared index roots are not sequence headers.</p>
+  <label>Sprite catalog <select id="equipment-catalog"></select></label>
+  <label>Sprite ID <select id="equipment-sprite"></select></label>
+  <label>Animation and part <select id="equipment-binding"></select></label>
+  <p id="equipment-binding-detail"></p>
+  <details id="equipment-witnesses" hidden><summary>Conditional script source witnesses</summary>
+    <p>These source records match this sprite and animation; their conditions do not
+    establish which actor uses the animation during a particular scene.</p>
+    <button type="button" id="equipment-witness-prev">Previous</button>
+    <button type="button" id="equipment-witness-next">Next</button>
+    <span id="equipment-witness-page"></span>
+    <table><thead><tr><th>Mode</th><th>Selector</th><th>Unit kind</th><th>Unit ID</th>
+      <th>Job ID</th><th>Base</th><th>Metadata or assignment source</th><th>Script offsets</th></tr></thead>
+      <tbody id="equipment-witness-rows"></tbody></table>
+  </details>
+  <label>Frame <select id="equipment-frame"></select></label>
+  <label>Preview ticks per second <input id="equipment-rate" type="number" min="1" max="120" value="60" style="width:6rem"></label>
+  <button type="button" id="equipment-play">Play from selected frame</button>
+  <button type="button" id="equipment-stop" disabled>Stop</button>
+  <label><input type="checkbox" id="equipment-loop"> Loop animation</label>
+  <p id="equipment-status" role="status"></p>
+  <label>Preview palette <select id="equipment-palette"></select></label>
+  <p id="equipment-frame-detail"></p>
+  <p id="equipment-pose-detail"></p>
+  <canvas id="equipment-pose" width="256" height="256" style="max-width:100%;image-rendering:pixelated;background:#e4ebf0" aria-label="Actor or equipment sprite pose"></canvas>
+</details></section>
 </main>
 </div>
 <script>
@@ -355,13 +458,30 @@ const resourceViews = {
   'graphics.bg-main-graphics': 'bg-tiles',
   'graphics.ui-custom-banks': 'ui-tiles', 'graphics.ui-raw-palettes': 'ui-tiles',
   'graphics.obj-custom-banks': 'obj-tiles',
-  'gameplay.item-records': 'items', 'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': 'audio',
-  'audio.m4a-directory': 'sequence-audio', 'audio.m4a-sequences': 'sequence-audio',
+  'graphics.observed-tilemap': 'tilemaps',
+  'gameplay.item-records': 'items', 'gameplay.item-links': 'item-links',
+  'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': 'audio',
+  'audio.m4a-directory': 'sequence-audio', 'audio.m4a-sequences': 'sequence-audio', 'audio.m4a-driver-tables': 'sequence-audio',
   'text.short-strings': 'texts', 'text.catalogs': ['pointer-texts', 'relative-texts'], 'text.script-archives': 'script-texts',
   'font.complete-bank': ['font-atlas', 'script-texts'], 'text.name-keyboard': 'name-keyboard',
   'graphics.unit-obj-initial-pose': 'sprites',
+  'graphics.unit-obj-equipment': 'equipment-sprites',
+  'graphics.unit-obj-normal-battle': 'equipment-sprites',
+  'graphics.unit-obj-alternate-battle': 'equipment-sprites',
+  'graphics.unit-obj-script-special-normal': 'equipment-sprites',
+  'graphics.unit-obj-script-special-alternate': 'equipment-sprites',
+  'graphics.unit-obj-script-override': 'equipment-sprites',
+  'graphics.unit-obj-script-registry-special': 'equipment-sprites',
+  'graphics.unit-obj-script-registry-generic': 'equipment-sprites',
   'graphics.color-mode-palettes': 'sprites'
 };
+const spriteCatalogModes = {'graphics.unit-obj-equipment': 'equipment',
+  'graphics.unit-obj-normal-battle': 'normal', 'graphics.unit-obj-alternate-battle': 'alternate',
+  'graphics.unit-obj-script-special-normal': 'special-normal',
+  'graphics.unit-obj-script-special-alternate': 'special-alternate',
+  'graphics.unit-obj-script-override': 'override',
+  'graphics.unit-obj-script-registry-special': 'registry-special',
+  'graphics.unit-obj-script-registry-generic': 'registry-generic'};
 function renderRows() {
   rows.replaceChildren();
   const query = document.getElementById('search').value.toLowerCase();
@@ -375,12 +495,20 @@ function renderRows() {
           || (target === 'font-atlas' && !data.font)
           || (target === 'name-keyboard' && !data.name_keyboard)
           || (target === 'relative-texts' && !data.relative_texts) || (target === 'sprites' && !data.sprite_pixels)
+          || (target === 'equipment-sprites' && !data.equipment_sprites && !Object.keys(data.battle_sprites || {}).length
+              && !Object.keys(data.script_sprites || {}).length)
+          || (target === 'item-links' && !data.item_links)
           || (target === 'world' && !data.world_nodes)
           || (target === 'bg-tiles' && !data.bg_graphics)
           || (target === 'ui-tiles' && !data.ui_graphics)
           || (target === 'obj-tiles' && !data.obj_graphics)
+          || (target === 'tilemaps' && !data.observed_tilemaps)
           || (target === 'sequence-audio' && (!data.sequences || !data.sequence_directory))) continue;
       const link = document.createElement('a'); link.href = '#' + target; link.textContent = 'Open view';
+      if (spriteCatalogModes[item.id]) link.addEventListener('click', () => {
+        const catalog = document.getElementById('equipment-catalog');
+        catalog.value = spriteCatalogModes[item.id]; catalog.dispatchEvent(new Event('change'));
+      });
       if (views.length > 1) link.textContent = 'Open ' + ({'pointer-texts': 'pointer texts', 'relative-texts': 'relative archives',
                                                            'palette': 'palettes', 'bg-tiles': 'background tiles',
                                                            'font-atlas': 'glyph atlas', 'script-texts': 'script texts'}[target] || 'view');
@@ -731,10 +859,14 @@ if (data.items) {
   document.getElementById('items-source').textContent = data.items.path;
   const selector = document.getElementById('item-id');
   const fields = document.getElementById('item-fields');
+  const linked = document.getElementById('item-link-navigation'), openLink = document.getElementById('item-link-open');
   data.items.records.forEach((record, index) => selector.add(new Option(index, index)));
   function drawItem() {
     fields.replaceChildren();
     const record = data.items.records[Number(selector.value)];
+    const linkId = record.bytes_18_1f[5];
+    linked.hidden = !data.item_links || !data.item_links.records[linkId];
+    openLink.textContent = 'Open linked pair record ' + linkId;
     for (const [name, start, step, type] of [
       ['halfwords_00_06', 0, 2, 'unsigned 16-bit'],
       ['bytes_08_0f', 8, 1, 'unsigned 8-bit'],
@@ -750,7 +882,57 @@ if (data.items) {
     }
   }
   selector.addEventListener('change', drawItem);
+  openLink.addEventListener('click', () => {
+    const linkId = data.items.records[Number(selector.value)].bytes_18_1f[5];
+    const linkSelector = document.getElementById('item-link-record');
+    linkSelector.value = String(linkId); linkSelector.dispatchEvent(new Event('change'));
+  });
   drawItem();
+}
+if (data.item_links) {
+  document.getElementById('item-links').hidden = false;
+  const selector = document.getElementById('item-link-record'), showInactive = document.getElementById('item-link-show-inactive');
+  const slots = document.getElementById('item-link-slots'), owners = document.getElementById('item-link-owners');
+  const byLink = new Map();
+  (data.items ? data.items.records : []).forEach((item, id) => {
+    const link = item.bytes_18_1f[5];
+    if (!byLink.has(link)) byLink.set(link, []);
+    byLink.get(link).push(id);
+  });
+  data.item_links.records.forEach((record, index) => selector.add(new Option(index, index)));
+  function drawItemLink() {
+    const index = Number(selector.value), record = data.item_links.records[index];
+    const source = '0x' + (data.item_links.source_offset + index * 20).toString(16).toUpperCase();
+    document.getElementById('item-link-source').textContent = data.item_links.path + ' · source ' + source +
+      ' · count ' + record.count + ' · opaque byte ' + record.opaque;
+    slots.replaceChildren();
+    record.slots.forEach((slot, index) => {
+      const active = index < record.count;
+      if (!active && !showInactive.checked) return;
+      const row = slots.insertRow();
+      [index, active ? 'Within count' : 'Beyond count', slot.selector, slot.value].forEach(value => {
+        row.insertCell().textContent = String(value);
+      });
+    });
+    owners.replaceChildren();
+    const ids = byLink.get(index) || [];
+    if (!data.items) owners.textContent = 'Item records are unavailable in this dataset.';
+    else if (!ids.length) owners.textContent = 'No extracted item records reference this pair record.';
+    else {
+      owners.append(document.createTextNode(ids.length + ' item records: '));
+      ids.forEach((id, position) => {
+        if (position) owners.append(document.createTextNode(', '));
+        const link = document.createElement('a'); link.href = '#items'; link.textContent = String(id);
+        link.addEventListener('click', () => {
+          const itemSelector = document.getElementById('item-id');
+          itemSelector.value = String(id); itemSelector.dispatchEvent(new Event('change'));
+        });
+        owners.append(link);
+      });
+    }
+  }
+  selector.addEventListener('change', drawItemLink); showInactive.addEventListener('change', drawItemLink);
+  drawItemLink();
 }
 if (data.world_nodes) {
   document.getElementById('world').hidden = false;
@@ -994,6 +1176,205 @@ if (data.sprite_pixels) {
   palette.addEventListener('change', selectFrame);
   if (data.sprite_pixels.sprites.length) selectSprite(); else spritePages();
 }
+if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || Object.keys(data.script_sprites || {}).length) {
+  const catalogs = [
+    {id: 'equipment', label: 'Equipment', data: data.equipment_sprites},
+    {id: 'normal', label: 'Normal battle actors', data: (data.battle_sprites || {}).normal},
+    {id: 'alternate', label: 'Alternate battle actors', data: (data.battle_sprites || {}).alternate},
+    {id: 'special-normal', label: 'Script special actors: normal', data: (data.script_sprites || {})['special-normal']},
+    {id: 'special-alternate', label: 'Script special actors: alternate', data: (data.script_sprites || {})['special-alternate']},
+    {id: 'override', label: 'Script actor overrides', data: (data.script_sprites || {}).override},
+    {id: 'registry-special', label: 'Script registry: special actors', data: (data.script_sprites || {})['registry-special']},
+    {id: 'registry-generic', label: 'Script registry: generic actors', data: (data.script_sprites || {})['registry-generic']}
+  ].filter(item => item.data);
+  let catalog = catalogs[0].data;
+  const section = document.getElementById('equipment-sprites'), catalogSelect = document.getElementById('equipment-catalog');
+  section.hidden = false;
+  const sprite = document.getElementById('equipment-sprite'), binding = document.getElementById('equipment-binding');
+  const frame = document.getElementById('equipment-frame'), rate = document.getElementById('equipment-rate');
+  const play = document.getElementById('equipment-play'), stop = document.getElementById('equipment-stop');
+  const loop = document.getElementById('equipment-loop'), palette = document.getElementById('equipment-palette');
+  const pose = document.getElementById('equipment-pose'), status = document.getElementById('equipment-status');
+  const witnesses = document.getElementById('equipment-witnesses'), witnessRows = document.getElementById('equipment-witness-rows');
+  const witnessPrev = document.getElementById('equipment-witness-prev'), witnessNext = document.getElementById('equipment-witness-next');
+  const witnessPageLabel = document.getElementById('equipment-witness-page');
+  let witnessMatches = [], witnessPage = 0;
+  const sizes = [[[8,8],[16,16],[32,32],[64,64]], [[16,8],[32,8],[32,16],[64,32]], [[8,16],[8,32],[16,32],[32,64]]];
+  let playing = false, timer = null, bounds = null;
+  keepSelectFocus(play, section);
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  function drawWitnesses() {
+    const pageSize = 20, pages = Math.max(1, Math.ceil(witnessMatches.length / pageSize));
+    witnessRows.replaceChildren();
+    for (const item of witnessMatches.slice(witnessPage * pageSize, (witnessPage + 1) * pageSize)) {
+      const row = witnessRows.insertRow();
+      const source = item.metadata_source !== undefined ? 'metadata ' + hex(item.metadata_source)
+        : item.assignment_source !== undefined ? 'assignment ' + hex(item.assignment_source) : '—';
+      const values = [item.mode ?? '—', item.selector ?? '—', item.unit_kind ?? '—',
+        item.unit_logical_id ?? '—', item.job_id ?? '—', item.base, source,
+        item.script_sources.map(value => hex(value)).join(', ')];
+      values.forEach(value => { row.insertCell().textContent = String(value); });
+    }
+    witnessPrev.disabled = witnessPage === 0; witnessNext.disabled = witnessPage + 1 >= pages;
+    witnessPageLabel.textContent = witnessMatches.length + ' witnesses · page ' + (witnessPage + 1) + ' of ' + pages;
+  }
+  witnessPrev.addEventListener('click', () => { if (witnessPage > 0) { witnessPage--; drawWitnesses(); } });
+  witnessNext.addEventListener('click', () => { if (!witnessNext.disabled) { witnessPage++; drawWitnesses(); } });
+  const selectedBinding = () => catalog.bindings[Number(binding.value)];
+  const selectedSequence = () => {
+    const selected = selectedBinding();
+    return selected && selected.sequence !== null ? catalog.sequences[selected.sequence] : null;
+  };
+  function stopAnimation() {
+    playing = false; if (timer !== null) clearTimeout(timer);
+    timer = null; stop.disabled = true;
+  }
+  function sequenceBounds(sequence) {
+    const objects = sequence.frames.filter(item => item.operation === 1)
+      .flatMap(item => catalog.objects[item.objects].objects)
+      .filter(object => object && Number.isInteger(object.shape) && object.shape >= 0 && object.shape < 3 &&
+        Number.isInteger(object.size) && object.size >= 0 && object.size < 4 &&
+        Number.isInteger(object.x) && Number.isInteger(object.y));
+    if (!objects.length) return null;
+    const minX = Math.min(...objects.map(object => object.x)), minY = Math.min(...objects.map(object => object.y));
+    const maxX = Math.max(...objects.map(object => object.x + sizes[object.shape][object.size][0]));
+    const maxY = Math.max(...objects.map(object => object.y + sizes[object.shape][object.size][1]));
+    return maxX - minX <= 512 && maxY - minY <= 512 ? {minX, minY, maxX, maxY} : null;
+  }
+  function drawPose(item) {
+    const ctx = pose.getContext('2d'), description = document.getElementById('equipment-pose-detail');
+    ctx.clearRect(0, 0, pose.width, pose.height);
+    if (!item) { description.textContent = 'No graphics are active at this frame.'; return; }
+    const tiles = catalog.blocks[item.block].tiles, objects = catalog.objects[item.objects].objects;
+    const colors = palette.value === 'gray' ? null : data.unit_palettes[Number(palette.value)].colors;
+    if (!bounds || !objects.length || objects.some(object => !object || !Number.isInteger(object.shape) || object.shape < 0 || object.shape > 2 ||
+      !Number.isInteger(object.size) || object.size < 0 || object.size > 3 || !Number.isInteger(object.x) || !Number.isInteger(object.y) ||
+      !Number.isInteger(object.tile) || object.tile < 0 || !Number.isInteger(object.transform) || object.affine_mode || object.color_256 ||
+      object.object_mode || object.mosaic || object.tile + sizes[object.shape][object.size][0] * sizes[object.shape][object.size][1] / 64 > tiles.length)) {
+      description.textContent = 'This frame uses object attributes or tile ranges that this preview does not support.'; return;
+    }
+    description.textContent = 'Manual palette and shared frame origin; live palette and actor composition are not applied.';
+    const {minX, minY, maxX, maxY} = bounds;
+    pose.width = Math.max(1, maxX - minX) * 3; pose.height = Math.max(1, maxY - minY) * 3;
+    for (const object of [...objects].reverse()) {
+      const [width, height] = sizes[object.shape][object.size];
+      for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        const sx = object.transform & 8 ? width - 1 - x : x, sy = object.transform & 16 ? height - 1 - y : y;
+        const tile = tiles[object.tile + Math.floor(sy / 8) * (width / 8) + Math.floor(sx / 8)];
+        const index = tile.indices[sy % 8][sx % 8];
+        if (!index) continue;
+        const rgb = colors ? [0,5,10].map(shift => Math.floor(((colors[index] >> shift) & 31) * 255 / 31)) : [index * 17, index * 17, index * 17];
+        ctx.fillStyle = 'rgb(' + rgb.join(',') + ')';
+        ctx.fillRect((object.x + x - minX) * 3, (object.y + y - minY) * 3, 3, 3);
+      }
+    }
+  }
+  function selectFrame() {
+    const sequence = selectedSequence();
+    if (!sequence || !frame.options.length) {
+      document.getElementById('equipment-frame-detail').textContent = '';
+      drawPose(null); return;
+    }
+    const index = Number(frame.value), selected = sequence.frames[index], op = selected.operation;
+    const tail = selected.bytes_0a_13;
+    const meanings = {0: 'default command', 1: 'graphics',
+      2: 'task halfwords ' + hex(tail[2] | tail[3] << 8, 4) + ', ' + hex(tail[4] | tail[5] << 8, 4),
+      3: 'toggle task flag 0x08', 6: 'clear graphics', 7: 'default command', 8: 'event byte ' + hex(tail[0], 2)};
+    document.getElementById('equipment-frame-detail').textContent = 'Frame ' + index + ' · operation ' + op + ' (' +
+      (meanings[op] || 'uninterpreted command') + ') · duration ' + selected.duration + ' · words ' +
+      hex(selected.word00, 8) + ', ' + hex(selected.word04, 8) + ' · bytes 0A–13 ' +
+      selected.bytes_0a_13.map(value => hex(value, 2)).join(' ');
+    let visible = null;
+    for (let i = index; i >= 0; i--) {
+      if (sequence.frames[i].operation === 1) { visible = sequence.frames[i]; break; }
+      if (sequence.frames[i].operation === 6) break;
+    }
+    drawPose(visible);
+  }
+  function selectBinding(preferredFrame = 0) {
+    const selected = selectedBinding(), sequence = selectedSequence();
+    witnesses.hidden = !catalog.producers;
+    witnessMatches = (catalog.producers || []).filter(item => item.sprite_id === selected.sprite_id &&
+      (selected.animation === item.base || selected.animation === ((item.base + 1) & 0xffff)));
+    witnessPage = 0; drawWitnesses();
+    frame.replaceChildren(); bounds = sequence ? sequenceBounds(sequence) : null;
+    const shared = selected.target && selected.target.kind === 'shared-index-root' ? selected.target : null;
+    document.getElementById('equipment-binding-detail').textContent = catalog.path + ' · index ' + hex(selected.index_source) +
+      (sequence ? ' · sequence ' + hex(sequence.source_offset) + ' · header ' + hex(sequence.opaque_header, 4)
+        : shared ? ' · shared index root ' + hex(shared.source_offset) + ' · sprite ' + shared.sprite_id + ' (not a sequence)'
+        : ' · no sequence (null binding)');
+    if (sequence) sequence.frames.forEach((item, index) => frame.add(new Option(index + ' · operation ' + item.operation, index)));
+    frame.disabled = !sequence; play.disabled = !sequence;
+    if (sequence) frame.value = String(Math.min(preferredFrame, sequence.frames.length - 1));
+    selectFrame();
+  }
+  function selectSprite(previous, preferredFrame = 0) {
+    binding.replaceChildren();
+    catalog.bindings.forEach((item, index) => {
+      if (String(item.sprite_id) === sprite.value) {
+        const suffix = item.sequence !== null ? '' : item.target && item.target.kind === 'shared-index-root' ? ' · shared index' : ' · empty';
+        binding.add(new Option('Animation ' + item.animation + ' · part ' + item.part + suffix, index));
+        if (previous && item.animation === previous.animation && item.part === previous.part) binding.value = String(index);
+      }
+    });
+    selectBinding(preferredFrame);
+  }
+  function schedule() {
+    if (!playing) return;
+    const ticks = Number(rate.value), sequence = selectedSequence();
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 120) {
+      stopAnimation(); status.textContent = 'Choose a preview rate from 1 to 120 ticks per second.'; return;
+    }
+    timer = setTimeout(() => {
+      if (!playing) return;
+      const next = Number(frame.value) + 1;
+      if (next >= sequence.frames.length && !loop.checked) {
+        stopAnimation(); status.textContent = 'Frame preview finished.'; return;
+      }
+      frame.value = String(next % sequence.frames.length); selectFrame(); schedule();
+    }, Math.max(1, sequence.frames[Number(frame.value)].duration) * 1000 / ticks);
+  }
+  function resumeAfterChange(wasPlaying) {
+    if (wasPlaying && selectedSequence()) {
+      playing = true; stop.disabled = false; status.textContent = 'Playing the selected frame sequence.'; schedule();
+    } else status.textContent = selectedSequence() ? 'Select Play to preview the frames.'
+      : selectedBinding().target && selectedBinding().target.kind === 'shared-index-root'
+        ? 'This binding points to a shared index root, not a sequence.' : 'This binding has no sequence.';
+  }
+  catalogs.forEach(item => catalogSelect.add(new Option(item.label, item.id)));
+  palette.add(new Option('Grayscale indices', 'gray'));
+  (data.unit_palettes || []).forEach((item, index) => palette.add(new Option('Mode ' + item.variant + ', bank ' + item.bank, index)));
+  catalogSelect.addEventListener('change', () => {
+    const previous = selectedBinding(), previousSprite = sprite.value, wasPlaying = playing, preferredFrame = Number(frame.value) || 0;
+    stopAnimation();
+    const chosen = catalogs.find(item => item.id === catalogSelect.value);
+    if (!chosen) { status.textContent = 'This sprite catalog is unavailable.'; return; }
+    catalog = chosen.data; sprite.replaceChildren();
+    [...new Set(catalog.bindings.map(item => item.sprite_id))].forEach(id => sprite.add(new Option(id, id)));
+    if ([...sprite.options].some(item => item.value === previousSprite)) sprite.value = previousSprite;
+    selectSprite(previous, preferredFrame); resumeAfterChange(wasPlaying);
+  });
+  sprite.addEventListener('change', () => {
+    const previous = selectedBinding(), wasPlaying = playing, preferredFrame = Number(frame.value) || 0;
+    stopAnimation(); selectSprite(previous, preferredFrame); resumeAfterChange(wasPlaying);
+  });
+  binding.addEventListener('change', () => {
+    const wasPlaying = playing, preferredFrame = Number(frame.value) || 0;
+    stopAnimation(); selectBinding(preferredFrame); resumeAfterChange(wasPlaying);
+  });
+  frame.addEventListener('change', () => { selectFrame(); if (playing) { clearTimeout(timer); timer = null; schedule(); } });
+  palette.addEventListener('change', selectFrame);
+  rate.addEventListener('input', () => { if (playing) { clearTimeout(timer); timer = null; schedule(); } });
+  play.addEventListener('click', () => {
+    stopAnimation(); if (!selectedSequence()) return;
+    playing = true; stop.disabled = false; status.textContent = 'Playing the selected frame sequence.'; schedule();
+  });
+  stop.addEventListener('click', () => { stopAnimation(); status.textContent = 'Frame preview stopped.'; });
+  section.querySelector('details').addEventListener('toggle', event => {
+    if (!event.target.open && playing) { stopAnimation(); status.textContent = 'Frame preview stopped.'; }
+  });
+  catalogSelect.dispatchEvent(new Event('change'));
+}
 function appendTextGlyph(preview, glyph, index) {
   if (!glyph || !glyph.width) {
     const label = document.createElement('span');
@@ -1120,7 +1501,7 @@ if (data.name_keyboard) {
   clear.addEventListener('click', () => { selected.length = 0; drawKeyboardPreview(); });
   drawKeyboard(); drawKeyboardPreview();
 }
-const textSettings = {pinned: false, languageId: null, hideCommands: false}, textViews = [];
+const textSettings = {pinned: false, languageId: null, hideCommands: false, normalFont: false}, textViews = [];
 let syncingTextLanguages = false;
 function applyPinnedTextLanguage(select) {
   const view = textViews.find(item => item.select === select);
@@ -1146,7 +1527,8 @@ function syncPinnedTextLanguages() {
 }
 function registerTextSettings(prefix, select, redraw) {
   const view = {select, redraw, pin: document.getElementById(prefix + '-pin'),
-                hide: document.getElementById(prefix + '-hide-commands'), status: document.getElementById(prefix + '-pin-status')};
+                hide: document.getElementById(prefix + '-hide-commands'), normal: document.getElementById(prefix + '-normal-font'),
+                status: document.getElementById(prefix + '-pin-status')};
   textViews.push(view);
   view.pin.addEventListener('change', () => {
     textSettings.pinned = view.pin.checked;
@@ -1157,21 +1539,55 @@ function registerTextSettings(prefix, select, redraw) {
     textSettings.hideCommands = view.hide.checked;
     textViews.forEach(item => { item.hide.checked = textSettings.hideCommands; item.redraw(); });
   });
+  view.normal.addEventListener('change', () => {
+    textSettings.normalFont = view.normal.checked;
+    textViews.forEach(item => { item.normal.checked = textSettings.normalFont; item.redraw(); });
+  });
   select.addEventListener('change', () => {
     if (!textSettings.pinned || syncingTextLanguages || !select.selectedOptions.length) return;
     textSettings.languageId = select.selectedOptions[0].textContent; syncPinnedTextLanguages();
   });
 }
-function appendTextProgram(preview, program, glyphs) {
-  program.units.forEach(unit => {
-    if (typeof unit === 'number') {
-      appendTextGlyph(preview, glyphs.get(unit), unit);
-    } else if (!textSettings.hideCommands) {
-      const label = document.createElement('span');
-      label.textContent = '[command ' + unit.map(value => '0x' + value.toString(16).padStart(2, '0').toUpperCase()).join(' ') + ']';
-      preview.append(label);
+// These EUR glyphs were matched visually; other glyphs keep their original bitmap.
+function normalTextCharacter(index) {
+  if (data.profile !== 'europe') return null;
+  if (index >= 166 && index <= 175) return '0123456789'[index - 166];
+  if (index >= 176 && index <= 201) return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[index - 176];
+  if (index >= 202 && index <= 227) return 'abcdefghijklmnopqrstuvwxyz'[index - 202];
+  if (index >= 2 && index <= 22) return 'ÀÁÂÄÈÉÊËÌÍÎÏÑÒÓÔÖÙÚÛÜ'[index - 2];
+  if (index >= 24 && index <= 44) return 'àáâäèéêëìíîïñòóôöùúûü'[index - 24];
+  return ({0:'Ç', 1:'¿', 23:'ß', 228:'.', 234:'?', 235:'!', 236:',', 238:':', 239:'_',
+           241:'/', 242:'~', 243:"'", 244:"'", 245:'"', 246:'"', 247:'(', 248:')',
+           249:'{', 250:'}', 251:'[', 252:']', 253:'+', 254:'-', 257:'=', 258:'<', 259:'>'})[index] || null;
+}
+function appendReadableTextGlyph(preview, glyph, index) {
+  const character = textSettings.normalFont && glyph ? normalTextCharacter(index) : null;
+  if (character === null || character === false) { appendTextGlyph(preview, glyph, index); return; }
+  let label = preview.lastElementChild;
+  if (!label || !label.classList.contains('text-normal')) {
+    label = document.createElement('span'); label.className = 'text-normal'; preview.append(label);
+  }
+  label.append(document.createTextNode(character));
+}
+function appendTextUnits(preview, units, glyphs, glyphId, controlLabel) {
+  let pendingSpace = false, hasGlyph = false;
+  units.forEach(unit => {
+    const index = glyphId(unit);
+    if (index !== null) {
+      if (pendingSpace && hasGlyph) {
+        const space = document.createElement('span'); space.className = 'text-gap'; space.textContent = ' '; preview.append(space);
+      }
+      appendReadableTextGlyph(preview, glyphs.get(index), index); pendingSpace = false; hasGlyph = true;
+    } else if (textSettings.hideCommands) {
+      pendingSpace = hasGlyph;
+    } else {
+      const label = document.createElement('span'); label.textContent = controlLabel(unit); preview.append(label);
     }
   });
+}
+function appendTextProgram(preview, program, glyphs) {
+  appendTextUnits(preview, program.units, glyphs, unit => typeof unit === 'number' ? unit : null,
+    unit => '[command ' + unit.map(value => '0x' + value.toString(16).padStart(2, '0').toUpperCase()).join(' ') + ']');
 }
 if (data.short_texts) {
   document.getElementById('texts').hidden = false;
@@ -1184,15 +1600,8 @@ if (data.short_texts) {
     const textIndex = data.short_texts.languages[Number(language.value)].entries[Number(entry.value)];
     const text = data.short_texts.strings[textIndex];
     document.getElementById('text-source').textContent = data.short_texts.path + ' · string ' + textIndex + ' · ' + text.encoding;
-    text.units.forEach(unit => {
-      if (unit.kind === 'glyph') {
-        appendTextGlyph(preview, glyphs.get(unit.index), unit.index);
-      } else if (!textSettings.hideCommands) {
-        const label = document.createElement('span');
-        label.textContent = '[control 0x' + unit.value.toString(16).padStart(2, '0').toUpperCase() + ']';
-        preview.append(label);
-      }
-    });
+    appendTextUnits(preview, text.units, glyphs, unit => unit.kind === 'glyph' ? unit.index : null,
+      unit => '[control 0x' + unit.value.toString(16).padStart(2, '0').toUpperCase() + ']');
   }
   function textEntries() {
     entry.replaceChildren();
@@ -1216,15 +1625,8 @@ if (data.pointer_texts) {
     document.getElementById('pointer-source').textContent = data.pointer_texts.path + ' · table ' + hex(table.source_offset)
       + ' · string ' + textIndex + ' at ' + hex(text.source_offset) + ' · ' + text.encoding;
     preview.replaceChildren();
-    text.units.forEach(unit => {
-      if (typeof unit === 'number') {
-        appendTextGlyph(preview, glyphs.get(unit), unit);
-      } else if (!textSettings.hideCommands) {
-        const label = document.createElement('span');
-        label.textContent = '[control 0x' + unit[0].toString(16).padStart(2, '0').toUpperCase() + ']';
-        preview.append(label);
-      }
-    });
+    appendTextUnits(preview, text.units, glyphs, unit => typeof unit === 'number' ? unit : null,
+      unit => '[control 0x' + unit[0].toString(16).padStart(2, '0').toUpperCase() + ']');
   }
   function pointerEntries() {
     entry.replaceChildren();
@@ -1507,12 +1909,118 @@ if (data.audio) {
   selector.addEventListener('change', () => { stopPlayback(); audioStatus.textContent = 'Select Play sample to listen.'; drawAudio(); });
   drawAudio();
 }
+function unsignedMultiplyHigh(a, b) {
+  a >>>= 0; b >>>= 0;
+  const low = (a & 0xffff) * (b & 0xffff);
+  const middle = (a >>> 16) * (b & 0xffff) + (a & 0xffff) * (b >>> 16) + Math.floor(low / 65536);
+  return ((a >>> 16) * (b >>> 16) + Math.floor(middle / 65536)) >>> 0;
+}
+function sourcePcmFrequency(pitch, waveWord, key, fraction = 0) {
+  if (!pitch || !Array.isArray(pitch.keys) || !Array.isArray(pitch.bases)) return null;
+  key &= 255; fraction &= 255;
+  if (key > 178) { key = 178; fraction = 255; }
+  const left = pitch.keys[key], right = pitch.keys[key + 1];
+  if (!left || !right || pitch.bases[left.base] === undefined || pitch.bases[right.base] === undefined) return null;
+  const a = pitch.bases[left.base] >>> left.shift, b = pitch.bases[right.base] >>> right.shift;
+  const interpolation = unsignedMultiplyHigh((b - a) >>> 0, (fraction << 24) >>> 0);
+  return unsignedMultiplyHigh(waveWord, (a + interpolation) >>> 0);
+}
+function approximatePcmEnvelope(word, gateSeconds, limitSeconds) {
+  const step = 280896 / 16777216, attack = word & 255, decay = (word >>> 8) & 255;
+  const sustain = (word >>> 16) & 255, release = (word >>> 24) & 255;
+  const gate = Math.max(0, Math.min(gateSeconds, limitSeconds));
+  let value = attack, phase = value === 255 ? 2 : 3, time = 0;
+  const points = [[0, value / 255]];
+  if (!gate || (!value && !attack)) return {points, duration: 0};
+  for (let tick = 1; tick * step < gate; tick++) {
+    if (phase === 3) { value = Math.min(255, value + attack); if (value === 255) phase = 2; }
+    else if (phase === 2) { value = Math.floor(value * decay / 256); if (value <= sustain) { value = sustain; phase = 1; } }
+    else break;
+    time = tick * step; points.push([time, value / 255]);
+    if (phase === 1 && !value) return {points, duration: time};
+  }
+  if (gate > time) { points.push([gate, value / 255]); time = gate; }
+  if (gate >= limitSeconds || !value) return {points, duration: time};
+  while (value && time < limitSeconds) {
+    const next = Math.min(limitSeconds, time + step);
+    value = Math.floor(value * release / 256); time = next; points.push([time, value / 255]);
+  }
+  return {points, duration: time};
+}
+function envelopeValueAt(points, at) {
+  if (at <= points[0][0]) return points[0][1];
+  for (let index = 1; index < points.length; index++) {
+    const [end, right] = points[index], [start, left] = points[index - 1];
+    if (at <= end) return end === start ? right : left + (right - left) * (at - start) / (end - start);
+  }
+  return points[points.length - 1][1];
+}
+// Approximate the M4A command's doubled tempo and 150-unit frame accumulator.
+// Live tempo multipliers and frame-by-frame quantization are not reproduced.
+function estimatedTempoRate(value) { return value * 2 * 16777216 / (150 * 280896); }
+function estimatedTempoTimeline(changes, fallbackRate, seconds) {
+  const ordered = [...changes].sort((a, b) => a.tick - b.tick || a.track - b.track || a.order - b.order);
+  const segments = [{tick: 0, time: 0, rate: fallbackRate}], applied = [];
+  for (let index = 0; index < ordered.length;) {
+    let change = ordered[index++];
+    while (index < ordered.length && ordered[index].tick === change.tick) change = ordered[index++];
+    const last = segments[segments.length - 1];
+    if (!last.rate) break;
+    const time = last.time + (change.tick - last.tick) / last.rate;
+    if (time > seconds) break;
+    const segment = {tick: change.tick, time, rate: estimatedTempoRate(change.value)};
+    if (segment.tick === last.tick) segments[segments.length - 1] = segment;
+    else segments.push(segment);
+    applied.push(change);
+  }
+  function timeAt(tick) {
+    let low = 0, high = segments.length;
+    while (low < high) {
+      const middle = (low + high) >>> 1;
+      if (segments[middle].tick <= tick) low = middle + 1; else high = middle;
+    }
+    const segment = segments[Math.max(0, low - 1)];
+    if (!segment.rate) return tick === segment.tick ? segment.time : Infinity;
+    return segment.time + (tick - segment.tick) / segment.rate;
+  }
+  const last = segments[segments.length - 1];
+  const endTick = last.rate ? last.tick + (seconds - last.time) * last.rate : last.tick + 1;
+  return {timeAt, endTick, applied, paused: last.rate === 0};
+}
+function decodeSequenceControl(command, raw) {
+  const signed = value => (value << 24) >> 24;
+  if (command === 0xbc) return {name: 'Key shift', value: signed(raw)};
+  if (command === 0xbe) return {name: 'Volume', value: raw};
+  if (command === 0xbf) return {name: 'Pan', value: signed(raw - 64)};
+  if (command === 0xc0) return {name: 'Pitch bend', value: signed(raw - 64)};
+  if (command === 0xc1) return {name: 'Bend range', value: raw};
+  if (command === 0xc8) return {name: 'Tuning', value: signed(raw - 64)};
+  return null;
+}
+function sequencePitchSteps(controls) {
+  let shift = 0, bend = 0, range = 2, tune = 0;
+  const result = [];
+  for (const control of controls) {
+    if (control.command === 0xbc) shift = control.value;
+    else if (control.command === 0xc0) bend = control.value;
+    else if (control.command === 0xc1) range = control.value;
+    else if (control.command === 0xc8) tune = control.value;
+    else continue;
+    result.push({time: control.time, semitones: shift + (tune + bend * range) / 64});
+  }
+  return result;
+}
 if (data.sequences && data.sequence_directory) {
   document.getElementById('sequence-audio').hidden = false;
   const song = document.getElementById('sequence-song'), track = document.getElementById('sequence-track');
   const rate = document.getElementById('sequence-rate'), play = document.getElementById('sequence-play');
   const duration = document.getElementById('sequence-duration');
+  const useTempo = document.getElementById('sequence-use-tempo');
+  const useTrackControls = document.getElementById('sequence-track-controls');
   const voice = document.getElementById('sequence-voice');
+  const useEnvelope = document.getElementById('sequence-envelope');
+  const muteCgb = document.getElementById('sequence-mute-cgb'), muteStorageKey = 'ffta.viewer.sequence.muteCgb';
+  try { muteCgb.checked = localStorage.getItem(muteStorageKey) === '1'; } catch (_) {}
   const stop = document.getElementById('sequence-stop'), status = document.getElementById('sequence-status');
   const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
   const sequenceProgress = playbackProgress('sequence', document.getElementById('sequence-playhead'));
@@ -1522,6 +2030,8 @@ if (data.sequences && data.sequence_directory) {
   const notePageLabel = document.getElementById('sequence-note-page');
   const previous = document.getElementById('sequence-prev'), next = document.getElementById('sequence-next');
   const pageLabel = document.getElementById('sequence-page'), rows = document.getElementById('sequence-rows');
+  const controlRows = document.getElementById('sequence-control-rows'), controlPageLabel = document.getElementById('sequence-control-page');
+  const controlPrevious = document.getElementById('sequence-control-prev'), controlNext = document.getElementById('sequence-control-next');
   const tracksByHeader = new Map();
   data.sequences.tracks.forEach(item => {
     if (!tracksByHeader.has(item.directory_header)) tracksByHeader.set(item.directory_header, []);
@@ -1550,13 +2060,20 @@ if (data.sequences && data.sequence_directory) {
     });
   });
   if (!instrumentData) { voice.value = 'sine'; voice.querySelector('option[value="pcm"]').disabled = true; }
-  let selectedTracks = [], trace = [], notes = [], page = 0, notePage = 0, audioContext = null, playing = [], generation = 0, schedulerTimer = null;
+  if (!instrumentData || !instrumentData.tones.some(tone => tone.ctype === 0 && Number.isInteger(tone.word08))) {
+    useEnvelope.checked = false; useEnvelope.disabled = true;
+  }
+  let selectedTracks = [], trace = [], notes = [], controls = [], page = 0, notePage = 0, controlPage = 0;
+  let audioContext = null, playing = [], generation = 0, schedulerTimer = null, cgbBus = null, routeNodes = [];
   const sampleBuffers = new Map();
   let selectedBank = null;
-  function resolveSample(program, key) {
+  function resolveTone(program, key) {
     if (!selectedBank || program === null || !selectedBank.has(program)) return null;
     let tone = tones.get(selectedBank.get(program));
     if (tone && tone.ctype === 0x40) tone = tones.get(splitTones.get(tone.id + ':' + key));
+    return tone || null;
+  }
+  function resolveSample(tone, key) {
     if (!tone) return null;
     if (tone.ctype === 3) {
       const wave = cgbToneWaves.get(tone.id);
@@ -1565,9 +2082,10 @@ if (data.sequences && data.sequence_directory) {
     if (tone.ctype !== 0) return null;
     const wave = toneWaves.get(tone.id);
     if (!wave || !Number.isInteger(wave.frequency_word) || wave.frequency_word <= 0 || !wave.samples.length) return null;
-    // This uses the existing BIOS HLE approximation, not the original driver LUT.
-    const frequency = wave.frequency_word / Math.pow(2, (180 - key) / 12);
-    if (!Number.isFinite(frequency) || frequency <= 0 || frequency > 384000) return null;
+    const sourceFrequency = sourcePcmFrequency(data.pcm_pitch, wave.frequency_word, key);
+    // Older extractions without the driver tables retain the earlier audition approximation.
+    const frequency = sourceFrequency === null ? wave.frequency_word / Math.pow(2, (180 - key) / 12) : sourceFrequency;
+    if (!Number.isFinite(frequency) || frequency < 0 || frequency > 384000) return null;
     return {kind: 'pcm', wave, frequency};
   }
   function sampleBuffer(sample) {
@@ -1585,7 +2103,32 @@ if (data.sequences && data.sequence_directory) {
     if (schedulerTimer !== null) clearTimeout(schedulerTimer);
     schedulerTimer = null;
     playing.forEach(node => { try { node.stop(); } catch (_) {} });
-    playing = []; stop.disabled = true; sequenceProgress.stop('Stopped');
+    playing = [];
+    routeNodes.forEach(node => { try { node.disconnect(); } catch (_) {} }); routeNodes = [];
+    if (cgbBus) { cgbBus.disconnect(); cgbBus = null; }
+    stop.disabled = true; sequenceProgress.stop('Stopped');
+  }
+  function collectTempo(root, trackIndex, limit, maxSteps) {
+    const changes = [], stack = [];
+    let id = root, tick = 0, steps = 0, limited = false;
+    while (tick < limit && steps < maxSteps) {
+      const instruction = data.sequences.instructions[id];
+      if (!instruction) { limited = true; break; }
+      const code = instruction.code, kind = code[0];
+      let following = instruction.next; steps++;
+      if (kind === 'wait') tick += data.sequences.clocks[code[1]];
+      else if (kind === 'parameter' && code[1] === 0xbb) changes.push({tick, value: code[2], track: trackIndex, order: changes.length});
+      else if (kind === 'jump') following = code[1];
+      else if (kind === 'pattern') {
+        if (stack.length >= 3 || following === null) { limited = true; break; }
+        stack.push(following); following = code[1];
+      } else if (kind === 'return') following = stack.length ? stack.pop() : following;
+      else if (kind === 'end') return {changes, limited};
+      if (following === null) { limited = true; break; }
+      id = following;
+    }
+    if (steps >= maxSteps && tick < limit) limited = true;
+    return {changes, limited};
   }
   function buildTrace(root, limit, maxSteps, maxNotes) {
     const executed = [], events = [], stack = [], activeTies = new Map();
@@ -1602,7 +2145,7 @@ if (data.sequences && data.sequence_directory) {
         if (code[2] !== null) key = code[2];
         if (code[3] !== null) velocity = code[3];
         if (key !== null) {
-          const duration = data.sequences.clocks[code[1]];
+          const duration = (data.sequences.clocks[code[1]] + (code[4] || 0)) & 255;
           const event = {key, velocity, program, start: tick, end: duration ? tick + duration : null};
           events.push(event);
           if (!duration) {
@@ -1625,6 +2168,10 @@ if (data.sequences && data.sequence_directory) {
         reason = 'track end'; break;
       } else if (kind === 'parameter' && code[1] === 0xbd) {
         program = code[2];
+      } else if (kind === 'parameter' && code[1] === 0xbb && useTempo.checked) {
+        // The shared tempo pass already accounts for this command.
+      } else if (kind === 'parameter' && useTrackControls.checked && decodeSequenceControl(code[1], code[2])) {
+        // Track controls are scheduled separately for all affected notes.
       } else {
         skipped++;
       }
@@ -1651,67 +2198,111 @@ if (data.sequences && data.sequence_directory) {
     const size = 50, start = notePage * size, end = Math.min(notes.length, start + size);
     notes.slice(start, end).forEach(note => {
       const row = noteRows.insertRow();
+      const label = note.sample ? note.sample.kind.toUpperCase() + ' ' + note.sample.wave.id
+        : note.isCgb ? 'CGB · sine fallback' : 'Sine fallback';
       for (const value of [note.track, note.start, note.end, note.key, note.velocity,
                            note.program === null ? '—' : note.program,
-                           note.sample ? note.sample.kind.toUpperCase() + ' ' + note.sample.wave.id : 'Sine fallback']) {
+                           label + (note.isCgb && muteCgb.checked ? ' · muted' : '')]) {
         row.insertCell().textContent = value;
       }
     });
     notePrevious.disabled = notePage === 0; noteNext.disabled = end >= notes.length;
     notePageLabel.textContent = notes.length ? 'Notes ' + (start + 1) + '–' + end + ' of ' + notes.length : 'No notes';
   }
-  function drawNotes(limit) {
+  function drawControlPage() {
+    controlRows.replaceChildren();
+    const size = 50, start = controlPage * size, end = Math.min(controls.length, start + size);
+    controls.slice(start, end).forEach(item => {
+      const row = controlRows.insertRow();
+      for (const value of [item.track, item.tick, item.name, item.value]) row.insertCell().textContent = value;
+    });
+    controlPrevious.disabled = controlPage === 0; controlNext.disabled = end >= controls.length;
+    controlPageLabel.textContent = controls.length ? 'Controls ' + (start + 1) + '–' + end + ' of ' + controls.length : 'No track controls';
+  }
+  function drawNotes(seconds) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     drawNotePage();
     if (!notes.length) { noteDetail.textContent = ''; context.fillStyle = '#40515d'; context.fillText('No resolved notes in this preview.', 12, 24); return; }
     const lowest = Math.min(...notes.map(note => note.key)), highest = Math.max(...notes.map(note => note.key));
-    noteDetail.textContent = 'Timeline: 0–' + limit + ' ticks · extracted keys ' + lowest + '–' + highest + '.';
+    noteDetail.textContent = 'Timeline: 0–' + seconds + ' seconds · extracted keys ' + lowest + '–' + highest + '.';
     const rowHeight = (canvas.height - 20) / Math.max(1, highest - lowest + 1);
     const colors = ['#17617d', '#9b411f', '#477326', '#774e96', '#a95e00', '#146e62'];
     notes.forEach(note => {
-      const x = note.start / limit * canvas.width;
-      const width = Math.max(2, (note.end - note.start) / limit * canvas.width);
+      const x = note.startSeconds / seconds * canvas.width;
+      const width = Math.max(2, (note.endSeconds - note.startSeconds) / seconds * canvas.width);
       context.fillStyle = colors[note.track % colors.length];
       context.fillRect(x, canvas.height - 10 - (note.key - lowest + 1) * rowHeight, width, Math.max(1, rowHeight - .3));
     });
   }
   function prepareSequence() {
-    stopSequence(); sequenceProgress.reset(); page = 0; notePage = 0; trace = []; notes = [];
+    stopSequence(); sequenceProgress.reset(); page = 0; notePage = 0; controlPage = 0; trace = []; notes = []; controls = [];
     const ticks = Number(rate.value), seconds = Number(duration.value);
     if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) {
       status.textContent = 'Choose a tick rate from 1 to 400 per second.'; play.disabled = true;
-      drawTracePage(); drawNotes(1); return;
+      drawTracePage(); drawControlPage(); drawNotes(1); return;
     }
     if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180) {
       status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; play.disabled = true;
-      drawTracePage(); drawNotes(1); return;
+      drawTracePage(); drawControlPage(); drawNotes(1); return;
     }
     const selected = track.value === 'all' ? selectedTracks : [selectedTracks[Number(track.value)]].filter(Boolean);
     if (!selected.length) {
       status.textContent = 'This song has no extracted tracks.'; play.disabled = true;
-      drawTracePage(); drawNotes(ticks * seconds); return;
+      drawTracePage(); drawControlPage(); drawNotes(seconds); return;
     }
+    const tempoChanges = [];
+    let tempoLimited = 0;
+    if (useTempo.checked) {
+      const scanLimit = Math.ceil(seconds * Math.max(ticks, estimatedTempoRate(255))) + 1;
+      const scanSteps = Math.min(32000, Math.max(1, Math.floor(128000 / selectedTracks.length)));
+      selectedTracks.forEach(item => {
+        const result = collectTempo(item.entry, item.track_index, scanLimit, scanSteps);
+        tempoChanges.push(...result.changes); if (result.limited) tempoLimited++;
+      });
+    }
+    const timing = estimatedTempoTimeline(tempoChanges, ticks, seconds);
+    const tickLimit = useTempo.checked ? Math.max(1e-9, timing.endTick) : ticks * seconds;
     const maxSteps = Math.min(32000, Math.max(1, Math.floor(128000 / selected.length)));
     const maxNotes = Math.max(1, Math.floor(8000 / selected.length));
     let skipped = 0, limited = 0, singleReason = '';
     selected.forEach(item => {
-      const result = buildTrace(item.entry, ticks * seconds, maxSteps, maxNotes);
+      const result = buildTrace(item.entry, tickLimit, maxSteps, maxNotes);
       trace.push(...result.executed.map(entry => ({...entry, track: item.track_index})));
       notes.push(...result.events.map(note => ({...note, track: item.track_index})));
       skipped += result.skipped; singleReason = result.reason;
       if (result.reason === 'instruction or note limit' || result.reason === 'pattern stack limit' || result.reason === 'missing successor' || result.reason === 'no successor') limited++;
     });
+    trace = trace.filter(item => Number.isFinite(timing.timeAt(item.tick)) && timing.timeAt(item.tick) <= seconds);
     trace.sort((a, b) => a.tick - b.tick || a.track - b.track);
+    controls = trace.flatMap(item => {
+      const decoded = item.code[0] === 'parameter' ? decodeSequenceControl(item.code[1], item.code[2]) : null;
+      return decoded ? [{track: item.track, tick: item.tick, time: timing.timeAt(item.tick),
+                         command: item.code[1], ...decoded}] : [];
+    });
+    notes = notes.filter(note => {
+      note.startSeconds = timing.timeAt(note.start);
+      const end = timing.timeAt(note.end);
+      note.endSeconds = Number.isFinite(end) ? Math.min(seconds, end) : seconds;
+      return Number.isFinite(note.startSeconds) && note.startSeconds < seconds;
+    });
     notes.sort((a, b) => a.start - b.start || a.track - b.track);
-    notes.forEach(note => { note.sample = resolveSample(note.program, note.key); });
+    notes.forEach(note => {
+      const tone = resolveTone(note.program, note.key);
+      note.isCgb = !!tone && [1, 2, 3, 4].includes(tone.ctype);
+      note.sample = resolveSample(tone, note.key);
+      note.envelope = tone && tone.ctype === 0 && Number.isInteger(tone.word08) ? tone.word08 : null;
+    });
     const pcmMapped = notes.filter(note => note.sample && note.sample.kind === 'pcm').length;
     const cgbMapped = notes.filter(note => note.sample && note.sample.kind === 'cgb').length;
     status.textContent = data.sequences.path + ' · ' + (selected.length === 1 ? 'track ' + selected[0].track_index : selected.length + ' tracks')
       + ' · ' + notes.length + ' notes · ' + (selected.length === 1 ? 'stopped at ' + singleReason : limited + ' tracks stopped at a limit or unresolved link')
       + ' · ' + pcmMapped + ' PCM, ' + cgbMapped + ' CGB' + (voice.value === 'pcm' ? ', ' + (notes.length - pcmMapped - cgbMapped) + ' sine fallback' : ' · sine mode')
+      + (useTempo.checked ? ' · estimated tempo: ' + timing.applied.length + ' changes'
+        + (timing.paused ? ', stopped by zero tempo' : '') + (tempoLimited ? ', ' + tempoLimited + ' track scans incomplete' : '') : ' · manual timing')
+      + ' · ' + controls.length + (useTrackControls.checked ? ' track controls selected' : ' track controls listed')
       + ' · ' + skipped + ' commands or unresolved notes not played.';
     play.disabled = !notes.length;
-    drawTracePage(); drawNotes(ticks * seconds);
+    drawTracePage(); drawControlPage(); drawNotes(seconds);
   }
   function chooseSong() {
     const headerId = data.sequence_directory.songs[Number(song.value)].header_id, header = headers.get(headerId);
@@ -1726,8 +2317,18 @@ if (data.sequences && data.sequence_directory) {
   next.addEventListener('click', () => { page++; drawTracePage(); });
   notePrevious.addEventListener('click', () => { notePage--; drawNotePage(); });
   noteNext.addEventListener('click', () => { notePage++; drawNotePage(); });
+  controlPrevious.addEventListener('click', () => { controlPage--; drawControlPage(); });
+  controlNext.addEventListener('click', () => { controlPage++; drawControlPage(); });
   song.addEventListener('change', chooseSong); track.addEventListener('change', prepareSequence);
   rate.addEventListener('input', prepareSequence); duration.addEventListener('input', prepareSequence); voice.addEventListener('change', prepareSequence);
+  useTempo.addEventListener('change', prepareSequence);
+  useEnvelope.addEventListener('change', prepareSequence);
+  useTrackControls.addEventListener('change', prepareSequence);
+  muteCgb.addEventListener('change', () => {
+    try { localStorage.setItem(muteStorageKey, muteCgb.checked ? '1' : '0'); } catch (_) {}
+    if (cgbBus) cgbBus.gain.setValueAtTime(muteCgb.checked ? 0 : 1, audioContext.currentTime);
+    drawNotePage();
+  });
   stop.addEventListener('click', () => { stopSequence(); status.textContent = 'Approximate audition stopped.'; });
   play.addEventListener('click', async () => {
     stopSequence();
@@ -1738,8 +2339,69 @@ if (data.sequences && data.sequence_directory) {
       audioContext = audioContext || new AudioContext();
       await audioContext.resume();
       if (request !== generation) return;
-      const start = audioContext.currentTime + .05, events = notes.slice(), selectedVoice = voice.value;
-      const boundaries = events.flatMap(note => note.end > note.start ? [[note.start, 1], [note.end, -1]] : []);
+      const mixer = audioContext.createGain();
+      mixer.gain.setValueAtTime(muteCgb.checked ? 0 : 1, audioContext.currentTime);
+      mixer.connect(audioContext.destination); cgbBus = mixer;
+      const start = audioContext.currentTime + .05, selectedVoice = voice.value;
+      const controlsByTrack = new Map(), pitchesByTrack = new Map(), routes = new Map();
+      if (useTrackControls.checked) controls.forEach(control => {
+        if (!controlsByTrack.has(control.track)) controlsByTrack.set(control.track, []);
+        controlsByTrack.get(control.track).push(control);
+      });
+      controlsByTrack.forEach((items, trackIndex) => pitchesByTrack.set(trackIndex, sequencePitchSteps(items)));
+      let pitchBudget = 100000, pitchLimited = false, pitchUnavailable = false, panUnavailable = false;
+      function trackRoute(trackIndex, isCgb) {
+        const destination = isCgb ? mixer : audioContext.destination, key = trackIndex + ':' + isCgb;
+        if (routes.has(key)) return routes.get(key);
+        const items = controlsByTrack.get(trackIndex) || [], volumes = items.filter(item => item.command === 0xbe);
+        const pans = items.filter(item => item.command === 0xbf);
+        let first = destination, last = null;
+        if (volumes.length) {
+          const volume = audioContext.createGain(); routeNodes.push(volume); first = volume; last = volume;
+          volume.gain.setValueAtTime(1, Math.max(audioContext.currentTime, start));
+          volumes.forEach(item => volume.gain.setValueAtTime(Math.min(127, Math.max(0, item.value)) / 127,
+                                                             Math.max(audioContext.currentTime, start + item.time)));
+        }
+        if (pans.length && typeof audioContext.createStereoPanner === 'function') {
+          const pan = audioContext.createStereoPanner(); routeNodes.push(pan);
+          if (last) last.connect(pan); else first = pan;
+          last = pan; pan.pan.setValueAtTime(0, Math.max(audioContext.currentTime, start));
+          pans.forEach(item => pan.pan.setValueAtTime(Math.max(-1, Math.min(1, item.value / 64)),
+                                                       Math.max(audioContext.currentTime, start + item.time)));
+        } else if (pans.length) panUnavailable = true;
+        if (last) last.connect(destination);
+        routes.set(key, first); return first;
+      }
+      function applyPitch(oscillator, note, useSample, begin, end) {
+        const steps = pitchesByTrack.get(note.track) || [];
+        if (!steps.length) return;
+        const parameter = useSample ? oscillator.playbackRate : oscillator.frequency, base = parameter.value;
+        const maximum = useSample ? (note.sample.kind === 'cgb' ? 384 : 384000 / 22050) : 384000;
+        const value = semitones => Math.min(maximum, Math.max(0, base * Math.pow(2, semitones / 12)));
+        let low = 0, high = steps.length;
+        while (low < high) {
+          const middle = (low + high) >>> 1;
+          if (steps[middle].time <= begin - start) low = middle + 1; else high = middle;
+        }
+        const current = low ? steps[low - 1].semitones : 0;
+        parameter.value = value(current);
+        if (typeof parameter.setValueAtTime !== 'function') {
+          if (low < steps.length && start + steps[low].time < end) pitchUnavailable = true;
+          return;
+        }
+        parameter.setValueAtTime(value(current), begin);
+        for (let index = low; index < steps.length && start + steps[index].time < end; index++) {
+          if (!pitchBudget) { pitchLimited = true; break; }
+          pitchBudget--; parameter.setValueAtTime(value(steps[index].semitones), start + steps[index].time);
+        }
+      }
+      const events = notes.map(note => {
+        const begin = note.startSeconds, gate = note.endSeconds - note.startSeconds;
+        const envelope = selectedVoice === 'pcm' && useEnvelope.checked && note.sample && note.sample.kind === 'pcm' && note.envelope !== null
+          ? approximatePcmEnvelope(note.envelope, gate, Math.max(0, seconds - begin)) : null;
+        return {...note, envelope, audioEnd: envelope ? begin + envelope.duration : note.endSeconds};
+      });
+      const boundaries = events.flatMap(note => note.audioEnd > note.startSeconds ? [[note.startSeconds, 1], [note.audioEnd, -1]] : []);
       boundaries.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
       let active = 0, maximum = 0;
       boundaries.forEach(([, change]) => { active += change; maximum = Math.max(maximum, active); });
@@ -1750,8 +2412,8 @@ if (data.sequences && data.sequence_directory) {
         schedulerTimer = null;
         try {
           const now = audioContext.currentTime, horizon = now + .25;
-          while (cursor < events.length && start + events[cursor].start / ticks <= horizon) {
-            const note = events[cursor++], intended = start + note.start / ticks, end = start + note.end / ticks;
+          while (cursor < events.length && start + events[cursor].startSeconds <= horizon) {
+            const note = events[cursor++], intended = start + note.startSeconds, end = start + note.audioEnd;
             const begin = Math.max(intended, now + .002);
             if (end <= begin) { late++; continue; }
             if (begin > intended + .01) late++;
@@ -1769,24 +2431,46 @@ if (data.sequences && data.sequence_directory) {
             } else {
               oscillator.type = 'sine'; oscillator.frequency.value = 440 * Math.pow(2, (note.key - 69) / 12);
             }
+            applyPitch(oscillator, note, useSample, begin, end);
             const amplitude = Math.min(.08, note.velocity / 127 * .08) * mixScale;
             gain.gain.setValueAtTime(0, begin);
-            gain.gain.linearRampToValueAtTime(amplitude, Math.min(end, begin + .008));
-            gain.gain.setValueAtTime(amplitude, Math.max(begin, end - .02));
-            gain.gain.linearRampToValueAtTime(0, end);
-            oscillator.connect(gain); gain.connect(audioContext.destination);
+            if (note.envelope) {
+              const first = Math.min(end, begin + .003), cutoff = Math.max(first, end - .003);
+              gain.gain.linearRampToValueAtTime(amplitude * envelopeValueAt(note.envelope.points, first - intended), first);
+              note.envelope.points.forEach(([offset, value]) => {
+                const when = intended + offset;
+                if (when > first && when < cutoff) gain.gain.linearRampToValueAtTime(amplitude * value, when);
+              });
+              if (cutoff > first) gain.gain.linearRampToValueAtTime(amplitude * envelopeValueAt(note.envelope.points, cutoff - intended), cutoff);
+              gain.gain.linearRampToValueAtTime(0, end);
+            } else {
+              gain.gain.linearRampToValueAtTime(amplitude, Math.min(end, begin + .008));
+              gain.gain.setValueAtTime(amplitude, Math.max(begin, end - .02));
+              gain.gain.linearRampToValueAtTime(0, end);
+            }
+            oscillator.connect(gain); gain.connect(trackRoute(note.track, note.isCgb));
             oscillator.onended = () => {
               playing = playing.filter(node => node !== oscillator);
               if (request === generation && cursor >= events.length && !playing.length && schedulerTimer === null) {
+                routeNodes.forEach(node => { try { node.disconnect(); } catch (_) {} }); routeNodes = [];
+                if (cgbBus === mixer) { mixer.disconnect(); cgbBus = null; }
                 stop.disabled = true; sequenceProgress.stop('Finished', true);
                 status.textContent = 'Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes.' : '.');
               }
             };
             playing.push(oscillator); oscillator.start(begin); oscillator.stop(end);
           }
-          if (late) status.textContent = 'Playing an approximate track mix · ' + late + ' delayed or skipped notes.';
+          if (late || pitchLimited || pitchUnavailable || panUnavailable) {
+            const messages = [];
+            if (late) messages.push(late + ' delayed or skipped notes');
+            if (pitchLimited) messages.push('pitch automation limit reached');
+            if (pitchUnavailable) messages.push('live pitch changes unavailable');
+            if (panUnavailable) messages.push('stereo pan unavailable');
+            status.textContent = 'Playing an approximate track mix · ' + messages.join(' · ') + '.';
+          }
           if (cursor < events.length) schedulerTimer = setTimeout(scheduleWindow, 50);
           else if (!playing.length) {
+            if (cgbBus === mixer) { mixer.disconnect(); cgbBus = null; }
             stop.disabled = true; sequenceProgress.stop('Finished');
             status.textContent = 'No audible note durations in this preview.';
           }
@@ -1794,7 +2478,7 @@ if (data.sequences && data.sequence_directory) {
           if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; }
         }
       }
-      const playbackEnd = Math.max(...events.map(note => note.end / ticks));
+      const playbackEnd = Math.max(...events.map(note => note.audioEnd));
       sequenceProgress.start(audioContext, start, playbackEnd, {timeline: seconds});
       stop.disabled = false; status.textContent = 'Playing an approximate track mix.'; scheduleWindow();
     } catch (error) { if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; } }
@@ -1996,6 +2680,144 @@ if (data.obj_graphics) {
   page.addEventListener('change', drawObjTiles); palette.addEventListener('change', drawObjTiles);
   selector.addEventListener('change', chooseObjSelector); language.addEventListener('change', chooseObjLanguage);
   chooseObjSelector(); chooseObjCatalog();
+}
+if (data.observed_tilemaps) {
+  document.getElementById('tilemaps').hidden = false;
+  const map = document.getElementById('tilemap-id'), graphics = document.getElementById('tilemap-graphics');
+  const base = document.getElementById('tilemap-base'), paletteSource = document.getElementById('tilemap-palette-source');
+  const paletteBank = document.getElementById('tilemap-palette-bank'), canvas = document.getElementById('tilemap-canvas');
+  const cellPalettes = document.getElementById('tilemap-cell-palettes');
+  const description = document.getElementById('tilemap-description'), detail = document.getElementById('tilemap-cell-detail');
+  const table = document.getElementById('tilemap-cells'), sources = [], palettes = [];
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let selectedCell = 0;
+  data.observed_tilemaps.maps.forEach((item, index) => {
+    map.add(new Option(item.kind + ' · ' + hex(item.source_offset) + ' · ' + item.width + '×' + item.height, index));
+  });
+  graphics.add(new Option('Cell indices only', 'none'));
+  (data.bg_graphics ? data.bg_graphics.graphics : []).forEach((item, index) => {
+    sources.push({label: 'Background graphic ' + index + ' · source ' + hex(item.relative_source),
+                  words: item.words, base: item.destination_offset / 32});
+  });
+  (data.ui_graphics ? data.ui_graphics.banks : []).forEach(item => {
+    sources.push({label: 'Interface bank ' + hex(item.source_offset), words: item.words, base: 0});
+  });
+  (data.obj_graphics ? data.obj_graphics.banks : []).forEach(item => {
+    sources.push({label: 'Object bank ' + hex(item.source_offset), words: item.words, base: 0});
+  });
+  (data.obj_graphics ? data.obj_graphics.archive_banks : []).forEach(item => {
+    sources.push({label: 'Object archive ' + hex(item.source_offset), words: item.words, base: 0});
+  });
+  sources.forEach((item, index) => graphics.add(new Option(item.label, index)));
+  paletteSource.add(new Option('Grayscale indices', 'gray'));
+  (data.palettes ? data.palettes.entries : []).forEach((item, index) => {
+    palettes.push({label: 'Background descriptor ' + index, banks: item.banks});
+  });
+  (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => {
+    const banks = [];
+    for (let offset = 0; offset < item.colors.length; offset += 16) banks.push(item.colors.slice(offset, offset + 16));
+    palettes.push({label: 'Interface ' + hex(item.source_offset), banks});
+  });
+  (data.unit_palettes || []).forEach(item => {
+    palettes.push({label: 'Unit mode ' + item.variant + ' · bank ' + item.bank, banks: [item.colors]});
+  });
+  palettes.forEach((item, index) => paletteSource.add(new Option(item.label, index)));
+  function showCell(index) {
+    const selected = data.observed_tilemaps.maps[Number(map.value)], value = selected.cells[index];
+    selectedCell = index;
+    detail.textContent = 'Cell (' + (index % selected.width) + ', ' + Math.floor(index / selected.width) + ') · raw '
+      + hex(value, 4) + ' · interpreted tile ' + (value & 0x3ff) + ' · horizontal flip '
+      + ((value & 0x400) ? 'yes' : 'no') + ' · vertical flip ' + ((value & 0x800) ? 'yes' : 'no')
+      + ' · palette ID ' + (value >>> 12) + '.';
+    table.querySelectorAll('button').forEach((button, position) => button.setAttribute('aria-pressed', String(position === index)));
+  }
+  function drawTilemap() {
+    const selected = data.observed_tilemaps.maps[Number(map.value)];
+    const source = graphics.value === 'none' ? null : sources[Number(graphics.value)];
+    const first = Number(base.value);
+    const palette = paletteSource.value === 'gray' ? null : palettes[Number(paletteSource.value)];
+    const perCell = palette && cellPalettes.checked;
+    const colors = palette && !perCell ? palette.banks[Number(paletteBank.value)] : null;
+    canvas.width = selected.width * 8; canvas.height = selected.height * 8;
+    canvas.style.width = Math.min(canvas.width * 3, 768) + 'px';
+    const context = canvas.getContext('2d'), image = context.createImageData(canvas.width, canvas.height);
+    let missing = 0, missingPalettes = 0;
+    if (source && (base.value === '' || !Number.isInteger(first) || first < 0 || first > 1023)) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      description.textContent = 'Choose a first tile ID from 0 to 1023.'; return;
+    }
+    selected.cells.forEach((value, index) => {
+      const tileId = value & 0x3ff, tile = tileId - first;
+      const available = source && tile >= 0 && (tile + 1) * 8 <= source.words.length;
+      const cellColors = perCell ? palette.banks[value >>> 12] : colors;
+      if (source && !available) missing++;
+      if (source && available && perCell && !cellColors) missingPalettes++;
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        let rgb;
+        if (!source) {
+          const shade = (tileId & 15) * 17; rgb = [shade, shade, shade];
+        } else if (!available) rgb = [255, 0, 255];
+        else if (perCell && !cellColors) rgb = [0, 192, 255];
+        else {
+          const sx = value & 0x400 ? 7 - x : x, sy = value & 0x800 ? 7 - y : y;
+          const colorId = (source.words[tile * 8 + sy] >>> (sx * 4)) & 15;
+          if (cellColors) {
+            const word = cellColors[colorId];
+            rgb = [0, 5, 10].map(shift => Math.floor(((word >> shift) & 31) * 255 / 31));
+          } else rgb = [colorId * 17, colorId * 17, colorId * 17];
+        }
+        const px = (index % selected.width) * 8 + x, py = Math.floor(index / selected.width) * 8 + y;
+        const at = (py * canvas.width + px) * 4;
+        image.data[at] = rgb[0]; image.data[at + 1] = rgb[1]; image.data[at + 2] = rgb[2]; image.data[at + 3] = 255;
+      }
+    });
+    context.putImageData(image, 0, 0);
+    description.textContent = data.observed_tilemaps.path + ' · ' + selected.kind + ' at ' + hex(selected.source_offset)
+      + ' · ' + selected.width + '×' + selected.height + ' cells · '
+      + (source ? missing + ' cells outside the selected graphics (magenta).'
+        + (perCell ? ' ' + missingPalettes + ' cells have no selected palette bank (cyan).' : '')
+        : 'shades show the low four bits of each tile index.');
+  }
+  function chooseTilemap() {
+    const selected = data.observed_tilemaps.maps[Number(map.value)];
+    selectedCell = 0; table.replaceChildren();
+    for (let y = 0; y < selected.height; y++) {
+      const row = table.insertRow(), header = document.createElement('th');
+      header.scope = 'row'; header.textContent = y; row.append(header);
+      for (let x = 0; x < selected.width; x++) {
+        const index = y * selected.width + x, button = document.createElement('button');
+        button.type = 'button'; button.textContent = hex(selected.cells[index], 4);
+        button.setAttribute('aria-label', 'Cell ' + x + ', ' + y + ': ' + button.textContent);
+        button.addEventListener('click', () => showCell(index)); row.insertCell().append(button);
+      }
+    }
+    showCell(selectedCell); drawTilemap();
+  }
+  function chooseGraphics() {
+    const selected = graphics.value === 'none' ? null : sources[Number(graphics.value)];
+    base.disabled = !selected;
+    if (selected) base.value = String(selected.base);
+    drawTilemap();
+  }
+  function choosePalette() {
+    paletteBank.replaceChildren();
+    const selected = paletteSource.value === 'gray' ? null : palettes[Number(paletteSource.value)];
+    if (selected) selected.banks.forEach((_, index) => paletteBank.add(new Option(index, index)));
+    cellPalettes.disabled = !selected;
+    paletteBank.disabled = !selected || cellPalettes.checked; drawTilemap();
+  }
+  map.addEventListener('change', chooseTilemap); graphics.addEventListener('change', chooseGraphics);
+  base.addEventListener('input', drawTilemap); paletteSource.addEventListener('change', choosePalette);
+  cellPalettes.addEventListener('change', () => { paletteBank.disabled = cellPalettes.checked || paletteSource.value === 'gray'; drawTilemap(); });
+  paletteBank.addEventListener('change', drawTilemap);
+  canvas.addEventListener('click', event => {
+    const rect = canvas.getBoundingClientRect(), selected = data.observed_tilemaps.maps[Number(map.value)];
+    if (!rect.width || !rect.height) return;
+    const x = Math.floor((event.clientX - rect.left) / rect.width * selected.width);
+    const y = Math.floor((event.clientY - rect.top) / rect.height * selected.height);
+    if (x >= 0 && x < selected.width && y >= 0 && y < selected.height) showCell(y * selected.width + x);
+  });
+  base.disabled = true; paletteBank.disabled = true; cellPalettes.disabled = true; chooseTilemap();
 }
 {
   const sections = [...document.querySelectorAll('main > section')].filter(section => !section.hidden);

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "improve-viewer-pcm-sequence-fidelity",
+  "title": "Improve PCM sequence note and instrument previews",
+  "kind": "changed",
+  "platforms": [
+    "Linux browser and offline Docker"
+  ],
+  "changes": [
+    "Apply extracted note-length extensions using the original unsigned-byte wrapping, and use the source PCM pitch table and unsigned multiply-high arithmetic for unbent notes when available.",
+    "Expose a PCM envelope checkbox and preview the extracted attack, decay, sustain and release with bounded release tails and concurrency-aware mix scaling; keep the previous fallback for missing metadata."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-audio-fidelity-synthetic-kleo1rm5 passed note-extension and wrapping, 600 PCM pitch arithmetic comparisons, envelope scheduling and existing audio control checks.",
+    "Protected EUR unit rom-data-viewer-audio-fidelity-eur-cv4woo4e compared 180 PCM keys, 12 bases and 429 instrument words, counted 1006 note extensions and checked an extended PCM note with live Web Audio in Chrome.",
+    "Offline Docker/Python output parity passed in rom-data-viewer-audio-fidelity-docker-j4h2znpv; the validated ignored local wiki was published after guarding its preimage and preserving the prior inspector."
+  ],
+  "limitations": [
+    "Game tempo, pitch changes, effects, exact mixer behavior and CGB envelopes remain incomplete; the PCM envelope and browser playback are approximations and physical audio was not checked.",
+    "The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_sequence_fidelity_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

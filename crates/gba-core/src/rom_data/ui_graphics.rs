@@ -3,14 +3,21 @@
 use super::{obj_graphics, SourceRange};
 use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
+mod literal_sources;
 mod roots;
 pub mod table_selected;
+pub(super) use literal_sources::bank_parts;
 pub use obj_graphics::{DirectReference, Graphic};
 pub use roots::{SelectorRoot, BANK_ROOTS, LOCALIZED_BANK_ROOTS, REFERENCES, SELECTOR_ROOTS};
 /// Raw language-indexed alias of the banks used by the inline clan selector.
 pub const CLAN_TABLE_ALIAS: u32 = 0x71e5e0;
 const CLAN_TABLE_ALIAS_SHA256: &str =
     "1e9b0d6368856eecea893011919583717b2699959a2cee45f93c8b23f23c60c9";
+const ADDITIONAL_TABLE: u32 = 0x3adfb0;
+const ADDITIONAL_TABLE_LITERAL: u32 = 0x13c014;
+const ADDITIONAL_READER: std::ops::Range<usize> = 0x13bf70..0x13bf8c;
+const ADDITIONAL_READER_SHA256: &str =
+    "93cd48df5ac308965d8504c3c6a5db2d79727bf4081ea7c799916021c77c6aed";
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Graphics {
@@ -19,6 +26,8 @@ pub struct Graphics {
     pub selectors: Vec<Selector>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub shared_obj_banks: Vec<u32>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub direct_pointers: Vec<BankPointer>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -46,6 +55,8 @@ pub struct Selector {
     pub id: String,
     pub pointers: [BankPointer; 5],
     pub fallback_variant: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub table_literal: Option<u32>,
 }
 impl Selector {
     pub fn select(&self, language: u8) -> Option<&BankPointer> {
@@ -55,6 +66,10 @@ impl Selector {
             self.fallback_variant? as usize
         })
     }
+
+    pub(super) fn table_literal_bytes(&self) -> [u8; 4] {
+        (0x08000000 + self.pointers[0].source_offset).to_le_bytes()
+    }
 }
 impl Graphics {
     pub fn validate(&self) -> Result<(), String> {
@@ -62,6 +77,7 @@ impl Graphics {
             || self.banks.len() > 256
             || self.selectors.len() > 16
             || self.shared_obj_banks.len() > 256
+            || self.direct_pointers.len() > 256
         {
             return Err("Invalid custom UI bank count".into());
         }
@@ -115,12 +131,46 @@ impl Graphics {
                 }
                 spans.push((pointer.source_offset, 4));
             }
+            if let Some(literal) = selector.table_literal {
+                if literal & 3 != 0
+                    || literal.checked_add(4).is_none_or(|end| end > 0x02000000)
+                    || selector.fallback_variant.is_some()
+                    || selector
+                        .pointers
+                        .windows(2)
+                        .any(|pair| pair[1].source_offset != pair[0].source_offset + 4)
+                {
+                    return Err("Invalid custom UI table literal".into());
+                }
+                spans.push((literal, 4));
+            }
+        }
+        if self
+            .direct_pointers
+            .windows(2)
+            .any(|pair| pair[0].source_offset >= pair[1].source_offset)
+        {
+            return Err("Unordered custom graphics source literals".into());
+        }
+        for pointer in &self.direct_pointers {
+            pointer.source_bytes()?;
+            if !self
+                .banks
+                .iter()
+                .any(|b| b.source_offset == pointer.bank_offset)
+                && !self.shared_obj_banks.contains(&pointer.bank_offset)
+            {
+                return Err("Custom graphics source literal is missing its bank".into());
+            }
+            spans.push((pointer.source_offset, 4));
         }
         if self.shared_obj_banks.iter().any(|at| {
             !self
                 .selectors
                 .iter()
-                .any(|s| s.pointers.iter().any(|p| p.bank_offset == *at))
+                .flat_map(|selector| &selector.pointers)
+                .chain(&self.direct_pointers)
+                .any(|p| p.bank_offset == *at)
         }) {
             return Err("Unused shared OBJ bank link".into());
         }
@@ -145,7 +195,18 @@ impl Graphics {
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom)?.decoded {
+        let has_table = self
+            .selectors
+            .iter()
+            .any(|selector| selector.table_literal.is_some());
+        let layout = if !self.direct_pointers.is_empty() {
+            SourceLayout::DirectLiterals
+        } else if has_table {
+            SourceLayout::AdditionalTable
+        } else {
+            SourceLayout::Legacy
+        };
+        if self != &Catalog::from_rom_with_layout(rom, layout)?.decoded {
             return Err("Custom UI banks differ from authenticated EUR source".into());
         }
         Ok(())
@@ -174,8 +235,19 @@ pub struct Catalog {
     pub decoded: Graphics,
     pub sources: Vec<SourceRange>,
 }
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(super) enum SourceLayout {
+    Legacy,
+    AdditionalTable,
+    DirectLiterals,
+}
+
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_layout(rom, SourceLayout::Legacy)
+    }
+
+    pub(super) fn from_rom_with_layout(rom: &[u8], layout: SourceLayout) -> Result<Self, String> {
         if ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Custom UI graphics require exact EUR ROM; USA pending".into());
         }
@@ -216,6 +288,7 @@ impl Catalog {
                     id: root.id.into(),
                     pointers,
                     fallback_variant: root.fallback,
+                    table_literal: None,
                 };
                 for i in 0..5 {
                     let h = half(rom, root.readers[i])?;
@@ -241,11 +314,11 @@ impl Catalog {
             .collect::<Result<Vec<_>, String>>()?;
         let tables = table_selected::Catalog::from_rom(rom)?.decoded;
         banks.extend(tables.banks);
-        banks.sort_by_key(|bank| bank.source_offset);
         selectors.extend(tables.tables.into_iter().map(|table| Selector {
             id: format!("table-{:06x}", table.source_offset),
             pointers: table.pointers,
             fallback_variant: None,
+            table_literal: None,
         }));
         let alias_bytes = rom
             .get(CLAN_TABLE_ALIAS as usize..CLAN_TABLE_ALIAS as usize + 20)
@@ -264,6 +337,7 @@ impl Catalog {
                 bank_offset: 0,
             }),
             fallback_variant: None,
+            table_literal: None,
         };
         for (language, pointer) in alias.pointers.iter_mut().enumerate() {
             pointer.bank_offset = u32::from_le_bytes(
@@ -278,23 +352,78 @@ impl Catalog {
             }
         }
         selectors.push(alias);
-        let shared_obj_banks = vec![0xb7f874, 0xb80140];
+        if layout != SourceLayout::Legacy {
+            if ffta_rom::digest(&rom[ADDITIONAL_READER]) != ADDITIONAL_READER_SHA256 {
+                return Err("Additional custom UI table reader fingerprint mismatch".into());
+            }
+            let selector = Selector {
+                id: format!("table-{ADDITIONAL_TABLE:06x}"),
+                pointers: std::array::from_fn(|language| {
+                    let source_offset = ADDITIONAL_TABLE + 4 * language as u32;
+                    let at = source_offset as usize;
+                    let field = u32::from_le_bytes(rom[at..at + 4].try_into().unwrap());
+                    BankPointer {
+                        source_offset,
+                        bank_offset: field.wrapping_sub(0x08000000),
+                    }
+                }),
+                fallback_variant: None,
+                table_literal: Some(ADDITIONAL_TABLE_LITERAL),
+            };
+            let at = ADDITIONAL_TABLE_LITERAL as usize;
+            if rom[at..at + 4] != selector.table_literal_bytes() {
+                return Err("Additional custom UI table root mismatch".into());
+            }
+            for pointer in &selector.pointers {
+                let at = pointer.bank_offset as usize;
+                let bank = Graphic::decode(
+                    rom.get(at..)
+                        .ok_or("Additional custom UI bank outside the ROM")?,
+                    pointer.bank_offset,
+                )?;
+                if bank.words.len() * 4 != 1664 {
+                    return Err("Additional custom UI bank output size mismatch".into());
+                }
+                banks.push(bank);
+            }
+            selectors.push(selector);
+        }
+        let mut shared_obj_banks = vec![0xb7f874, 0xb80140];
+        let mut direct_pointers = Vec::new();
+        if layout == SourceLayout::DirectLiterals {
+            direct_pointers = literal_sources::pointers(rom)?;
+            direct_pointers.sort_by_key(|pointer| pointer.source_offset);
+            for pointer in &direct_pointers {
+                let at = pointer.bank_offset;
+                if obj_graphics::BANK_ROOTS.contains(&at) {
+                    shared_obj_banks.push(at);
+                } else if !banks.iter().any(|bank| bank.source_offset == at) {
+                    banks.push(Graphic::decode(
+                        rom.get(at as usize..).ok_or("Truncated custom UI bank")?,
+                        at,
+                    )?);
+                }
+            }
+            shared_obj_banks.sort_unstable();
+            shared_obj_banks.dedup();
+        }
+        banks.sort_by_key(|bank| bank.source_offset);
         let decoded = Graphics {
             banks,
             selectors,
             shared_obj_banks,
+            direct_pointers,
         };
         decoded.validate()?;
-        let mut sources: Vec<SourceRange> = decoded
-            .banks
-            .iter()
-            .map(|b| SourceRange {
-                offset: b.source_offset,
-                length: b.encoded_source.len() as u32,
-                sha256: ffta_rom::digest(&b.encoded_source),
-                role: format!("ui-custom-bank/{:08x}", b.source_offset),
-            })
-            .collect();
+        let mut sources = Vec::new();
+        for bank in &decoded.banks {
+            sources.extend(bank_parts(bank)?.map(|(offset, bytes)| SourceRange {
+                offset,
+                length: bytes.len() as u32,
+                sha256: ffta_rom::digest(bytes),
+                role: format!("ui-custom-bank/{offset:08x}"),
+            }));
+        }
         for selector in &decoded.selectors {
             for (language, pointer) in selector.pointers.iter().enumerate() {
                 sources.push(SourceRange {
@@ -304,6 +433,22 @@ impl Catalog {
                     role: format!("ui-custom-selector/{}/{language}", selector.id),
                 });
             }
+        }
+        sources.extend(decoded.selectors.iter().filter_map(|selector| {
+            selector.table_literal.map(|offset| SourceRange {
+                offset,
+                length: 4,
+                sha256: ffta_rom::digest(&selector.table_literal_bytes()),
+                role: format!("ui-custom-selector/{}/table-literal", selector.id),
+            })
+        }));
+        for pointer in &decoded.direct_pointers {
+            sources.push(SourceRange {
+                offset: pointer.source_offset,
+                length: 4,
+                sha256: ffta_rom::digest(&pointer.source_bytes()?),
+                role: format!("ui-custom-literal/{:08x}", pointer.source_offset),
+            });
         }
         Ok(Self { decoded, sources })
     }

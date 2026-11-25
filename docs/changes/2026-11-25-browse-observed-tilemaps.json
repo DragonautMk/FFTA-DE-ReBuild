@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "browse-observed-tilemaps",
+  "title": "Explore extracted tilemaps and rectangles",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Decode documented tilemap runs, streams and rectangles into an interactive cell explorer with optional manually selected graphics and palette.",
+    "Show raw cell values and interpreted tile, flip and palette fields, label unavailable tiles and avoid claiming an original scene or palette pairing."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-tilemaps-uyjmm_og checked decoding, wrapping, invalid tokens, color and flip pixels, cell inspection and the viewer generator suite in Linux Chrome.",
+    "Protected EUR unit rom-data-viewer-tilemaps-eur-corrected-gmofczjl compared all 2224 cells across eight maps and eleven rectangles against an independent source reconstruction and checked a graphics/palette pixel and navigation. Initial tuysj7hm stopped because its comparison did not allow the expected resource-status change."
+  ],
+  "limitations": [
+    "Graphics and palettes are manually paired, palette IDs are not automatically applied and missing tiles are shown in magenta. The paused large-JSON prototype remains excluded from the local page; Windows is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_tilemaps_browser.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

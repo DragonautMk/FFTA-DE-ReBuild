@@ -7,12 +7,14 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: controls s43t_yno/yl_quy7d PASS; local wiki updated.
-- Selection: JSON prototype kdrp6i3r FAIL, EUR unrun; user paused.
-- Missing: JSON validation, other previews/audio/scenes; Windows deferred.
-- Resume: only on request; inspect failed JSON harness.
+- Verified: script sprites ykbzrpvg, Docker 5d6shlsb, memory PASS.
+- Selection: ITEM-LINKS; pair rows and item links both ways.
+- Proof: synthetic, EUR/Chrome, Docker; protect wiki/dataset.
+- Risks: inactive slots, missing items; retain raw values.
+- Missing: previews/audio/scenes; JSON kdrp6i3r paused; Windows.
+- Resume: implement; stop on PASS/blocker.
 
 ## Running or suspended tasks
 
@@ -39,7 +41,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 - Outcome: partial
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425/E444 Star Cross, E445–E489 tilemaps, E490–E492 compact cells; E429/E433/E437/E443 Wine PASS.
+- E425/E444 Star Cross, E445–E489 tilemaps, E490–E498 compact cells, E499/E501 UI; E429/E433/E437/E443 Wine PASS.
 - E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
 - TARGET-REATTACH: host bind verified; check mount; bwrap available.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
@@ -194,9 +196,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY suspended by user.
-- Last verified result: raw trace pmry89cu observes two records; build u9p3s6q9 PASS.
-- Remaining work: 497-frame Wine proof, checklist and project memory.
-- Errors or blockers: Wine 50415 (00378brf) last observed running.
-- Next action: on explicit resume, read the pair receipt or poll 50415.
-- References: E493 notes, Sol /root/sol_compact_ordinary_route xhigh unconfirmed.
+- Task: E502 ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-SOURCES.
+- Last verified result: E501 ms1i9nsv/e313; E500 retains 43 sites.
+- Remaining work: original arguments, bounded banks and owners.
+- Errors or blockers: live indices may exceed physical tables.
+- Next action: resolve 43 EUR argument paths. Stop on plan or prerequisite.
+- References: E500/E501. Ordinary/translated/platform proof deferred.

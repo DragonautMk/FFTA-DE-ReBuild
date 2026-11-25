@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "publish-european-custom-ui-stream-family",
+  "title": "Publish the additional European custom UI stream family",
+  "kind": "added",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "Extract all five streams from the 0x003adfb0 European UI table into the existing graphics.ui-custom-banks resource. Version e312-d311 owns 3,061 source bytes across the streams, pointer table and reader literal.",
+    "Serve the same original guest addresses from extracted resources and retain e311-d310 manifest verification and attachment."
+  ],
+  "validation": [
+    "E499 afav76ye passed one focused Wine test. The ROM command handler prepared, reused and verified the dataset. The original decoder and transfer produced 8,320 matching bytes in RAM and VRAM with all added backing ROM bytes inverted and typed reads accounted for. The managed unit protected 31 paths and drained Wine."
+  ],
+  "limitations": [
+    "The proof uses a controlled original European caller. Ordinary invocation, translated execution, Linux, the American build and native Windows remain unverified. No performance measurements were collected.",
+    "The canonical build replaced the previous pinned E493 Wine executable. No byte-identical local copy was found. Existing receipts retain their acceptance, and exact replay needs a recovered executable or a separate rebuilt variant.",
+    "The effective GPT-6.1 Terra xhigh setting could not be independently confirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_custom_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/additional_ui_table_tests.rs",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/changes/2026-11-25-verify-european-compact-cell-selector-0.json"
+  ]
+}

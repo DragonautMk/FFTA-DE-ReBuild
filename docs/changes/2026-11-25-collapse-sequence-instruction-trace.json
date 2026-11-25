@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "collapse-sequence-instruction-trace",
+  "title": "Collapse sequence instruction trace",
+  "kind": "changed",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Place the sequence player instruction trace and pagination inside a collapsible section that starts closed."
+  ],
+  "validation": [
+    "Protected local-page unit rom-data-viewer-trace-fold-ready-tupw3uy9 checked opening, closing, pagination, song changes and the existing mute control in Linux Chrome. The page differs from its validated preimage only in the trace markup.",
+    "Initial test 9na8l38z used element rectangles as a visibility check; diagnostic oqp7cwbq showed that closed details still expose rectangles while their content is hidden. Test fiw2spca selected a song without a trace; the corrected check selects a populated song."
+  ],
+  "limitations": [
+    "The separate large-JSON prototype remains suspended and was not included in the local page update. Windows was not checked."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

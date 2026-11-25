@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "verify-european-compact-cell-selector-0",
+  "title": "Verify European compact-cell selector 0 in an ordinary replay",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "Recover the verified IN-08 turn after a retention-only rejection and use ordinary movement and Wyrmkiller confirmation to reach action 130, task 127 and indexed slot 0."
+  ],
+  "validation": [
+    "Wine _ser15qi matches 35 record-bank trace events across 425 frames with the extracted bank attached and cartridge backing inverted. The 1,283 managed byte accesses reconcile with 1,269 record bytes and 14 indexed control bytes. Guest clock and nonempty audio match each frame. Endpoint state, video and OAM match. All 51 guarded paths pass and Wine drains."
+  ],
+  "limitations": [
+    "Ordinary evidence covers all four byte-mode records in the scoped EUR bank. Alternate child and secondary callers, translated dispatch and earlier save ancestry remain open. Linux, USA, native Windows and performance measurement are deferred.",
+    "The active client did not independently confirm the primary Terra xhigh setting."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-25-verify-european-compact-cell-selector-1.json"
+  ]
+}

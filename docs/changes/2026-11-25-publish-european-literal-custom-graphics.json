@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "publish-european-literal-custom-graphics",
+  "title": "Serve European literal-selected custom graphics from extracted files",
+  "kind": "added",
+  "platforms": [
+    "European ROM and Windows interpreter under Wine"
+  ],
+  "changes": [
+    "e313-d312 publishes all 33 E500 residual source spans: six custom graphics streams and 26 literal words. The existing OBJ property resource remains responsible for the two shared bytes at 0x003b4c12.",
+    "Original guest address loads and decompression use the extracted catalog. Explicit e312-d311 attachment retains the earlier file and all other resource entries stay identical."
+  ],
+  "validation": [
+    "Windows build lqcru_bi passed and retained the exact E499 executable separately. One focused Wine test ms1i9nsv passed creation, reuse, verification, previous attachment, coherent pointer tamper rejection, 26 original literal loads and six original decodes. All selected source backing was altered. The decoded output matched 63,744 bytes, and paired registers, guest clock, RAM and mixed reads on all three ROM mirrors matched. The OBJ owner served both alias bytes and Wine drained."
+  ],
+  "limitations": [
+    "Controlled interpreter readers and decoder output. For the r7 caller the test preallocates scratch and executes the original load and final move. Ordinary invocations, downstream transfers, translated execution, Linux, USA, native Windows and the other 43 call patterns remain open. No performance measurements.",
+    "The effective GPT-6.1 Terra xhigh setting could not be independently confirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_custom_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics.rs",
+    "crates/gba-core/src/rom_data/ui_graphics/literal_sources.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/literal_ui_graphics_tests.rs",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/changes/2026-11-25-inventory-european-literal-custom-decoder-sources.json"
+  ]
+}

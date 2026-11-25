@@ -1,9 +1,9 @@
 # Custom UI graphics resources
 
-E435 identifies a further five-language custom stream group at `3adfb0`.
-The original decoder and output length are identified, while exact consumed
-source extents and runtime integration remain open; see the
-[original-reader classification](rom_data_ui_raw_transfers.md#e435-four-original-reader-classifications).
+The original custom UI decoder at `080054a0` reads the stream selected by
+the guest. The extracted catalog supplies the encoded stream and selection
+data through normal cartridge reads. Original decompression, VRAM transfers
+and display setup continue to run in the guest.
 
 ## E438 Additional European custom stream source plan
 
@@ -18,6 +18,102 @@ The original selector and `080054a0` decoder are identified by E435, but this
 plan does not execute those streams or establish ordinary use. Trailing bytes,
 other readers, unrestricted guest language values, Linux, USA and native
 Windows remain open. No performance comparison was made.
+
+## E499 Additional European custom stream runtime
+
+EUR generation `e312-d311` extends `graphics.ui-custom-banks` with the
+five streams selected by the table at `3adfb0`. The catalog stores each
+block's encoded bytes and decoded words. The manifest adds five encoded
+stream ranges, five selector words and the four-byte table literal at
+`13c014`. Those eleven spans account for the seven E438 ranges and their
+3,061 bytes. The selector has five physical entries. The original guest
+address calculation also applies to language values beyond those entries.
+
+Each original call at `0813bf7c` decodes 1,664 bytes into the guest's
+scratch buffer. The next original call at `0813bf88` transfers them to
+`0600b180`. The catalog excludes bytes after each consumed stream.
+An explicit `e311-d310` dataset selection uses the earlier catalog.
+
+Wine `afav76ye` runs one focused test against the E438 plan and the
+E491 manifest. The production command handler creates, reuses and verifies
+the dataset. The 155 other resource entries match the predecessor exactly.
+The predecessor attaches with its original UI file. A rehashed edit of
+the table literal is rejected while the existing runtime owner stays active.
+
+The original selector, decoder and VRAM transfer run for each language
+with the new 3,061 bytes inverted in the managed ROM copy. All planned
+bytes are read from the extracted catalog. The original decoder consumes
+the expected span for each stream and produces the recorded 1,664-byte
+output. Raw and managed registers, guest clock, RAM, video memory, OAM and
+palette agree. The two selector prefixes for values 5 and 255 preserve
+their original address and value. All 31 protected paths pass and Wine
+drains. Ordinary invocation, translated dispatch and deferred platforms
+remain open.
+
+Cargo succeeded in `ux5zla0w` and reused the canonical test output path
+that held the E493 harness. The validation guard retained the replacement
+diagnostic. The Wine unit independently verifies the new executable,
+checks all 14 immutable build inputs and records both binary hashes.
+The previous exact executable has no located local copy. The earlier
+E493 through E498 results retain their recorded evidence.
+
+## E500 Literal-selected European custom streams
+
+Protected census `e500-eur-literal-custom-source-plan-ao1dmjoc`
+authenticates all 73 retained Thumb BL patterns targeting `080054a0`.
+Thirty calls load a fixed source address from a PC-relative word,
+including one that preserves it in `r7` across three calls. Those
+30 words select 24 distinct custom streams. Independent decoding
+determines each consumed extent and output hash.
+
+In `e312-d311`, 18 complete streams and four pointer words have
+owners. The unowned projection consists of 26 pointer words and six
+streams at `3b1108`, `3ba838`, `3bb394`, `40e28c`, `476214` and
+`b75abc`. The six streams decode to 63,744 bytes. The property word
+at `3b4c12` remains with `graphics.unit-obj-ffff-reader-fields` and
+splits the `3b1108` source projection. The other 47,843 bytes form
+33 disjoint spans. The plan retains the reader fingerprints and
+source and output hashes with the previous owners.
+
+This evidence bounds the literal arguments in the retained census.
+The other 43 call patterns, computed operands and indirect callers
+remain outside this projection. Ordinary execution and additional
+platforms stay open.
+
+## E501 Literal-selected European graphics runtime
+
+EUR generation `e313-d312` adds six complete decoded streams and 26
+original source pointers to `graphics.ui-custom-banks`. Its 33 new
+source ranges claim all 47,843 bytes from the E500 plan. The original
+property word at `3b4c12` remains owned by
+`graphics.unit-obj-ffff-reader-fields`, which the manifest declares
+as a dependency. The original decoder receives the complete source
+across the two owners. Existing OBJ streams referenced by the new
+literal cells retain their original owners.
+
+Wine `e501-eur-literal-ui-wine-ms1i9nsv` passes the production command
+handler for preparation, reuse and verification. All 155 other resource
+entries and the earlier UI source records match `e312-d311`. The earlier
+manifest attaches with its original UI file. Rehashing an edited source
+pointer does not allow it to replace the attached resources.
+
+The single targeted test runs the original reader loads for all 26
+new pointer cells and the original decoder for each of the six new
+streams. One caller loads into `r7` and moves the value to `r1` after
+heap setup. The test runs those original instructions with scratch
+preallocated. All selected backing bytes, including the two shared
+bytes, are inverted in the comparison machine. Each selected read is
+served by managed resources. The original outputs match 63,744 bytes
+of independently decoded data, and paired registers, guest clock and
+RAM match. The OBJ owner serves the two shared bytes during decoding.
+Word reads crossing that owner boundary match on all three ROM mirrors.
+Protected inputs pass and Wine drains.
+
+Windows cross-build `e501-eur-literal-ui-windows-build-lqcru_bi`
+keeps the exact E499 test executable under `work/e499-test.exe` before
+refreshing the canonical output. The test scope covers controlled original
+readers and decoder output. Ordinary invocation, downstream transfers,
+translated execution, Linux, USA and native Windows remain open.
 
 ## Additional European table-selected source contract
 

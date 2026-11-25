@@ -3,6 +3,246 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-25 — Verify ordinary European compact-cell byte reads
+
+Type: docs. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Continue the retained IN-08 deployment through Cid’s turn and Abate confirmation with ordinary controller input. Attribute the task 345 child and primary task 333 byte-run reads to the two compact-cell records.
+
+**Validation**
+
+- Wine 073j23ye matches 621 record-bank trace events across 407 frames with all 31,634 represented cartridge bytes inverted on the managed side. Guest clock and nonempty audio match per frame. Final serialized state, video and OAM match. All 39 protected paths pass and Wine drains.
+
+**Limitations**
+
+- The two indexed slots, alternate child and secondary paths, translated dispatch and earlier save ancestry remain open. Linux, USA, native Windows and performance measurement are deferred.
+- The client did not independently confirm the primary Terra xhigh setting.
+
+Documentation: [2026-11-25-map-european-compact-cell-byte-mode-routes.json](docs/changes/2026-11-25-map-european-compact-cell-byte-mode-routes.json).
+
+[Change record](docs/changes/2026-11-25-verify-ordinary-european-compact-cell-byte-reads.json)
+
+## 2026-11-25 — Verify European compact-cell selector 1 in an ordinary replay
+
+Type: docs. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Recover both indexed roster turns from retained deployment inputs. Verify Sidewinder action 187 and the separate forecast and final confirmations through the original task 184 callback.
+
+**Validation**
+
+- Wine adwf4_b_ matches 43 record trace events across 448 frames, including original byte-run reads against the attached extracted bank. The 1,280 managed byte accesses reconcile with 1,266 record bytes and 14 indexed control bytes. Guest clock and nonempty audio agree each frame. Final state, video and OAM agree. All 56 protected paths pass and Wine drains.
+
+**Limitations**
+
+- The additional trace harness rebuild failed offline at the missing itoa version; the successful pair reused the existing pinned interpreter harness. Indexed slot 0, alternate and secondary callers, translated dispatch, Linux and USA remain open.
+- The primary Terra xhigh setting was not independently confirmed. GPT-6.1 Sol was requested at xhigh for the read-only target and confirmation diagnosis; effective settings were unconfirmed.
+
+Documentation: [2026-11-25-map-european-compact-cell-byte-mode-routes.json](docs/changes/2026-11-25-map-european-compact-cell-byte-mode-routes.json).
+
+[Change record](docs/changes/2026-11-25-verify-european-compact-cell-selector-1.json)
+
+## 2026-11-25 — Verify European compact-cell selector 0 in an ordinary replay
+
+Type: docs. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Recover the verified IN-08 turn after a retention-only rejection and use ordinary movement and Wyrmkiller confirmation to reach action 130, task 127 and indexed slot 0.
+
+**Validation**
+
+- Wine _ser15qi matches 35 record-bank trace events across 425 frames with the extracted bank attached and cartridge backing inverted. The 1,283 managed byte accesses reconcile with 1,269 record bytes and 14 indexed control bytes. Guest clock and nonempty audio match each frame. Endpoint state, video and OAM match. All 51 guarded paths pass and Wine drains.
+
+**Limitations**
+
+- Ordinary evidence covers all four byte-mode records in the scoped EUR bank. Alternate child and secondary callers, translated dispatch and earlier save ancestry remain open. Linux, USA, native Windows and performance measurement are deferred.
+- The active client did not independently confirm the primary Terra xhigh setting.
+
+Documentation: [2026-11-25-verify-european-compact-cell-selector-1.json](docs/changes/2026-11-25-verify-european-compact-cell-selector-1.json).
+
+[Change record](docs/changes/2026-11-25-verify-european-compact-cell-selector-0.json)
+
+## 2026-11-25 — Verify ordinary European compact-cell bank reads
+
+Type: changed. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Verify managed reads of two compact-cell records during the ordinary IN-08 action-12 continuation. The focused replay uses the normal e311-d310 dataset and alters every bank byte in the managed cartridge backing.
+
+**Validation**
+
+- The initial 300-frame Wine probe vxoi35oy ended before the direct task. The extended trace pmry89cu observes the task-13 descriptor at frame 8081 and the two record readers from frames 8097 through 8265.
+- Windows build u9p3s6q9 and Wine replay 00378brf pass. Across 497 frames, the file serves 9650 byte accesses and matches 199 original trace events. Clock and audio match per frame and endpoint state, video and OAM match. All 22 protected inputs pass and Wine drains.
+
+**Limitations**
+
+- The retained snapshot ancestry, interior reference, indexed selectors, ordinary byte-mode scenes and translated guest dispatch remain open. Linux, USA, native Windows and performance work are deferred.
+- The client did not independently confirm Terra xhigh or the xhigh setting requested for Sol.
+
+Documentation: [2026-11-24-decode-european-compact-cell-frame-encodings.json](docs/changes/2026-11-24-decode-european-compact-cell-frame-encodings.json).
+
+[Change record](docs/changes/2026-11-25-verify-european-compact-cell-ordinary-replay.json)
+
+## 2026-11-25 — Reconcile European compact-cell bank references
+
+Type: docs. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Classify all 129 aligned words in the European compact-cell address range across the three cartridge mirrors. The 119 constructor references match all 91 record roots. The ten other words are PCM, indexed literals, raw tile words or compressed inputs with established owners.
+
+**Validation**
+
+- Wine qpfvixus authenticates the E490 index and E491 manifest. The original program-36 indexed decoder reads the four bytes at 3cf5d8 from PC 080052c6. Inverting those bytes changes only decoded offsets 24 through 27. Both decoder invocations have zero compact-cell reads. All 19 protected paths pass and Wine drains.
+
+**Limitations**
+
+- Dynamic or unaligned pointer formation, byte-mode ordinary scenes and translated dispatch remain open. Linux, USA, native Windows and performance measurements are deferred.
+- The client did not independently confirm the primary Terra xhigh setting.
+
+Documentation: [2026-11-24-reconcile-complete-european-compact-cell-bank.json](docs/changes/2026-11-24-reconcile-complete-european-compact-cell-bank.json), [2026-11-25-verify-european-compact-cell-ordinary-replay.json](docs/changes/2026-11-25-verify-european-compact-cell-ordinary-replay.json).
+
+[Change record](docs/changes/2026-11-25-reconcile-european-compact-cell-bank-references.json)
+
+## 2026-11-25 — Serve European literal-selected custom graphics from extracted files
+
+Type: added. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- e313-d312 publishes all 33 E500 residual source spans: six custom graphics streams and 26 literal words. The existing OBJ property resource remains responsible for the two shared bytes at 0x003b4c12.
+- Original guest address loads and decompression use the extracted catalog. Explicit e312-d311 attachment retains the earlier file and all other resource entries stay identical.
+
+**Validation**
+
+- Windows build lqcru_bi passed and retained the exact E499 executable separately. One focused Wine test ms1i9nsv passed creation, reuse, verification, previous attachment, coherent pointer tamper rejection, 26 original literal loads and six original decodes. All selected source backing was altered. The decoded output matched 63,744 bytes, and paired registers, guest clock, RAM and mixed reads on all three ROM mirrors matched. The OBJ owner served both alias bytes and Wine drained.
+
+**Limitations**
+
+- Controlled interpreter readers and decoder output. For the r7 caller the test preallocates scratch and executes the original load and final move. Ordinary invocations, downstream transfers, translated execution, Linux, USA, native Windows and the other 43 call patterns remain open. No performance measurements.
+- The effective GPT-6.1 Terra xhigh setting could not be independently confirmed.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [2026-11-25-inventory-european-literal-custom-decoder-sources.json](docs/changes/2026-11-25-inventory-european-literal-custom-decoder-sources.json).
+
+[Change record](docs/changes/2026-11-25-publish-european-literal-custom-graphics.json)
+
+## 2026-11-25 — Publish the additional European custom UI stream family
+
+Type: added. Platforms: European ROM and Windows interpreter under Wine.
+
+**Changes**
+
+- Extract all five streams from the 0x003adfb0 European UI table into the existing graphics.ui-custom-banks resource. Version e312-d311 owns 3,061 source bytes across the streams, pointer table and reader literal.
+- Serve the same original guest addresses from extracted resources and retain e311-d310 manifest verification and attachment.
+
+**Validation**
+
+- E499 afav76ye passed one focused Wine test. The ROM command handler prepared, reused and verified the dataset. The original decoder and transfer produced 8,320 matching bytes in RAM and VRAM with all added backing ROM bytes inverted and typed reads accounted for. The managed unit protected 31 paths and drained Wine.
+
+**Limitations**
+
+- The proof uses a controlled original European caller. Ordinary invocation, translated execution, Linux, the American build and native Windows remain unverified. No performance measurements were collected.
+- The canonical build replaced the previous pinned E493 Wine executable. No byte-identical local copy was found. Existing receipts retain their acceptance, and exact replay needs a recovered executable or a separate rebuilt variant.
+- The effective GPT-6.1 Terra xhigh setting could not be independently confirmed.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [2026-11-25-verify-european-compact-cell-selector-0.json](docs/changes/2026-11-25-verify-european-compact-cell-selector-0.json).
+
+[Change record](docs/changes/2026-11-25-publish-european-custom-ui-stream-family.json)
+
+## 2026-11-25 — Mute CGB voices in sequence previews
+
+Type: added. Platforms: Local browser.
+
+**Changes**
+
+- Add a sequence player checkbox that mutes identified CGB voices during playback, including resolved key-map tones and sine fallbacks, while leaving unidentified voices audible.
+- Retain the checkbox across track and song changes and restore it after reload when browser storage is available.
+
+**Validation**
+
+- Synthetic Chrome unit rom-data-viewer-cgb-mute-corrected-xm0rn7ys checked CGB and non-CGB routing, live toggles, key maps, sine mode, track and song changes, reload persistence and existing controls.
+- Protected EUR unit rom-data-viewer-cgb-mute-eur-audible-898xw9ja checked an extracted CGB note, live Web Audio mute and unmute after rendering began and selection persistence. Earlier EUR units ugz8wd_8 and sspgch_4 observed gain before rendering; a focused Sol 6.1/xhigh consultation identified the timing issue, with effective settings unconfirmed.
+
+**Limitations**
+
+- Unidentified instruments cannot be classified and remain audible. Physical audio, original-game CGB behavior and Windows were not verified. The large-JSON prototype remains suspended.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-25-mute-cgb-sequence-voices.json)
+
+## 2026-11-25 — Map European compact-cell byte-mode routes
+
+Type: docs. Platforms: European ROM and original code disassembly under Wine.
+
+**Changes**
+
+- Attribute all five original constructor calls for the four byte-mode records and link their indexed, direct, child and secondary selectors to the parent callback tables.
+- Join all eight source-projected actions to the retained roster cohort and identify the observed deployment selections for actions 187 and 338.
+
+**Validation**
+
+- Wine ysi2u14e verifies the five source sites and all 345 checkpoint hashes. The unit preserves 372 inputs and drains Wine.
+
+**Limitations**
+
+- Playable turns, ordinary byte-mode reads and translated dispatch remain open. Linux, USA, native Windows and performance measurement are deferred.
+- The client did not independently confirm the primary Terra xhigh setting.
+
+Documentation: [2026-11-24-reconcile-complete-european-compact-cell-bank.json](docs/changes/2026-11-24-reconcile-complete-european-compact-cell-bank.json).
+
+[Change record](docs/changes/2026-11-25-map-european-compact-cell-byte-mode-routes.json)
+
+## 2026-11-25 — Browse equipment animations and read extracted text
+
+Type: added. Platforms: Linux browser; offline viewer.
+
+**Changes**
+
+- Add a collapsible equipment sprite browser with sprite, animation, part and frame selection, null bindings, command details, manual palette, playback and looping.
+- Separate text around hidden commands and provide an optional Verdana/Arial presentation for a visually matched European Latin glyph subset, retaining original glyph images for unmapped cases.
+
+**Validation**
+
+- Synthetic Linux Chrome and Python unit rom-data-viewer-equipment-text-synthetic-agj8p4xw passed text controls, sprite playback and projection checks.
+- Protected European dataset unit rom-data-viewer-equipment-text-eur-final-787ku_bs compared 748 bindings, 258 sequences, 3439 frames and 280 pixel blocks, and checked a real pixel plus a script with 19 command gaps in Linux Chrome.
+- Published the validated ignored local viewer after guarding its preimage and retaining the prior file; unrelated payloads and the paused JSON inspector were preserved.
+
+**Limitations**
+
+- The European Unicode mapping is visually matched and partial; original glyphs remain for unknown characters and other profiles. Text commands and substitutions are not executed.
+- Equipment preview uses manually selected palettes and preview timing, without live palette changes or actor composition; unsupported object modes are reported. Native Windows was not tested.
+- The first two European checks failed in test harness candidate selection and selector code; the corrected unit passed. Their diagnostics remain retained.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-25-make-viewer-text-and-equipment-readable.json)
+
+## 2026-11-25 — Inventory the European literal-selected custom streams
+
+Type: docs. Platforms: European ROM source audit.
+
+**Changes**
+
+- Authenticate the retained custom decoder call sites. Thirty literal arguments select 24 streams. The source plan identifies six streams and 26 literals with unowned bytes.
+
+**Validation**
+
+- Protected E500 ao1dmjoc independently decodes the 24 streams and reconciles 33 residual spans totaling 47,843 bytes against e312-d311. Two bytes of one stream have a prior OBJ property owner.
+
+**Limitations**
+
+- Source evidence only. The other 43 patterns, ordinary execution, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-25-inventory-european-literal-custom-decoder-sources.json)
+
 ## 2026-11-25 — Improve resource viewer playback and text controls
 
 Type: changed. Platforms: Local browser.
@@ -25,6 +265,191 @@ Type: changed. Platforms: Local browser.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
 
 [Change record](docs/changes/2026-11-25-improve-viewer-playback-and-text-controls.json)
+
+## 2026-11-25 — Improve PCM sequence note and instrument previews
+
+Type: changed. Platforms: Linux browser and offline Docker.
+
+**Changes**
+
+- Apply extracted note-length extensions using the original unsigned-byte wrapping, and use the source PCM pitch table and unsigned multiply-high arithmetic for unbent notes when available.
+- Expose a PCM envelope checkbox and preview the extracted attack, decay, sustain and release with bounded release tails and concurrency-aware mix scaling; keep the previous fallback for missing metadata.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-audio-fidelity-synthetic-kleo1rm5 passed note-extension and wrapping, 600 PCM pitch arithmetic comparisons, envelope scheduling and existing audio control checks.
+- Protected EUR unit rom-data-viewer-audio-fidelity-eur-cv4woo4e compared 180 PCM keys, 12 bases and 429 instrument words, counted 1006 note extensions and checked an extended PCM note with live Web Audio in Chrome.
+- Offline Docker/Python output parity passed in rom-data-viewer-audio-fidelity-docker-j4h2znpv; the validated ignored local wiki was published after guarding its preimage and preserving the prior inspector.
+
+**Limitations**
+
+- Game tempo, pitch changes, effects, exact mixer behavior and CGB envelopes remain incomplete; the PCM envelope and browser playback are approximations and physical audio was not checked.
+- The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-25-improve-viewer-pcm-sequence-fidelity.json)
+
+## 2026-11-25 — Follow song tempo in sequence auditions
+
+Type: added. Platforms: Linux browser and offline Docker.
+
+**Changes**
+
+- Estimate song timing from decoded tempo commands across all tracks, including when one track is selected, with manual-rate fallback and explicit zero-tempo and bounded-scan behavior.
+- Schedule note starts, ends and PCM envelopes on the resulting time map and align the note canvas and playhead on elapsed seconds.
+
+**Validation**
+
+- Synthetic units rom-data-viewer-sequence-tempo-synthetic-0bksevth and rom-data-viewer-sequence-tempo-timeline-lfnlvmos passed cross-track tempo changes, simultaneous ordering, zero tempo, manual fallback, audio controls and timeline alignment.
+- Protected EUR unit rom-data-viewer-sequence-tempo-eur-5k5nafnt counted 1150 tempo instructions and checked one cross-track note in automatic and manual modes using live Chrome Web Audio.
+- Offline Docker/Python output parity passed in rom-data-viewer-sequence-tempo-docker-cxqeosrd; the validated ignored local viewer was published with the paused JSON inspector excluded.
+
+**Limitations**
+
+- The tempo calculation is a continuous estimate from a generic M4A reference; exact FFTA timing, live tempo multipliers and frame quantization are unverified, and bounded scans can be incomplete.
+- Other audio effects, full mixer fidelity and physical audio remain unverified; Windows was not tested.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-25-follow-viewer-sequence-tempo.json)
+
+## 2026-11-25 — Collapse sequence instruction trace
+
+Type: changed. Platforms: Local browser.
+
+**Changes**
+
+- Place the sequence player instruction trace and pagination inside a collapsible section that starts closed.
+
+**Validation**
+
+- Protected local-page unit rom-data-viewer-trace-fold-ready-tupw3uy9 checked opening, closing, pagination, song changes and the existing mute control in Linux Chrome. The page differs from its validated preimage only in the trace markup.
+- Initial test 9na8l38z used element rectangles as a visibility check; diagnostic oqp7cwbq showed that closed details still expose rectangles while their content is hidden. Test fiw2spca selected a song without a trace; the corrected check selects a populated song.
+
+**Limitations**
+
+- The separate large-JSON prototype remains suspended and was not included in the local page update. Windows was not checked.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
+
+[Change record](docs/changes/2026-11-25-collapse-sequence-instruction-trace.json)
+
+## 2026-11-25 — Browse conditional script sprite catalogs
+
+Type: added. Platforms: Linux browser and offline Docker.
+
+**Changes**
+
+- Extend the sprite browser to five extracted script catalogs with indexed navigation, animation previews and preserved playback settings.
+- Show matching conditional producer fields and script offsets in a collapsible paginated table; distinguish null and shared index-root targets.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-script-sprites-synthetic-1w6hgbmp passed 21 Python and Chrome tests including five script-only catalogs, witness pages, nulls, shared roots, pixels and prior controls.
+- Protected EUR unit rom-data-viewer-script-sprites-eur-ykbzrpvg compared 4308 producers, 5778 bindings, 1204 sequences, 7619 frames and 2899 pixel blocks with their sources; Chrome checked a real pixel, conditional witnesses, pagination and a shared root.
+- Offline unit rom-data-viewer-script-sprites-docker-5d6shlsb produced byte-identical Docker and Python pages; the validated ignored local page was published after checking protected preimages.
+
+**Limitations**
+
+- Producer witnesses are conditional and do not prove live actor or scene use; live palette, actor composition, task commands and original timing are not reproduced.
+- The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-25-browse-script-sprite-catalogs.json)
+
+## 2026-11-25 — Explore extracted tilemaps and rectangles
+
+Type: added. Platforms: Local browser.
+
+**Changes**
+
+- Decode documented tilemap runs, streams and rectangles into an interactive cell explorer with optional manually selected graphics and palette.
+- Show raw cell values and interpreted tile, flip and palette fields, label unavailable tiles and avoid claiming an original scene or palette pairing.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-tilemaps-uyjmm_og checked decoding, wrapping, invalid tokens, color and flip pixels, cell inspection and the viewer generator suite in Linux Chrome.
+- Protected EUR unit rom-data-viewer-tilemaps-eur-corrected-gmofczjl compared all 2224 cells across eight maps and eleven rectangles against an independent source reconstruction and checked a graphics/palette pixel and navigation. Initial tuysj7hm stopped because its comparison did not allow the expected resource-status change.
+
+**Limitations**
+
+- Graphics and palettes are manually paired, palette IDs are not automatically applied and missing tiles are shown in magenta. The paused large-JSON prototype remains excluded from the local page; Windows is deferred.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-25-browse-observed-tilemaps.json)
+
+## 2026-11-25 — Browse normal and alternate battle sprite sequences
+
+Type: added. Platforms: Linux browser and offline Docker.
+
+**Changes**
+
+- Extend the collapsible sprite browser to select equipment, normal battle and alternate battle catalogs with animated frames, manual palette, raw commands and indexed resource links.
+- Preserve null bindings and explicitly identify shared index roots without interpreting them as sequence headers; retain playback settings when switching catalogs or sprite IDs.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-battle-synthetic-sz5wql3k passed projection, Chrome controls, command, pixel, null and shared-root checks and prior control regression tests.
+- Protected EUR unit rom-data-viewer-battle-eur-dj9tn7wi compared all 16830 bindings, 3287 sequences, 20665 frames and 4419 pixel blocks with their extracted sources; Chrome checked real pixels from both catalogs and a shared root.
+- Offline unit rom-data-viewer-battle-docker-eqvfwhko produced byte-identical Python and Docker pages with the battle catalogs.
+- Published the validated ignored local viewer after guarding its preimage, preserving its other generated data and the previously validated file inspector.
+
+**Limitations**
+
+- Palette, actor-part composition, live task commands and original frame timing are not reproduced; unsupported object modes remain explicitly reported.
+- The paused large-JSON prototype remains excluded from the local viewer and present in template-based generation; Windows was not tested.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-25-browse-battle-sprite-sequences.json)
+
+## 2026-11-25 — Apply volume, pan and pitch controls in sequence auditions
+
+Type: added. Platforms: Linux browser and offline Docker.
+
+**Changes**
+
+- Apply decoded track volume, stereo pan, key shift, bend, bend range and tuning to note playback, including changes during active notes; keep CGB mute routing independent.
+- Provide a checkbox and a collapsible, paginated table for the decoded track controls, and bound per-note pitch automation.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-track-controls-synthetic-2pni2qje passed dynamic controls, track separation, manual bypass, prior tempo and CGB mute checks in Chrome.
+- Protected EUR unit rom-data-viewer-track-controls-eur-co_43x87 counted 8419 source controls and checked real volume and pan changes during notes plus a bent PCM note with live Chrome Web Audio.
+- Offline Docker/Python output parity passed in rom-data-viewer-track-controls-docker-kk259nh0; the guarded local wiki was updated while preserving its paused JSON inspector.
+
+**Limitations**
+
+- Volume and stereo use browser approximations; pitch uses equal-tempered ratios, automation is bounded and reports truncation, and exact mixer, modulation and physical audio remain unverified.
+- The paused large-JSON prototype remains excluded from the local viewer and present in template generation; Windows was not tested.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-25-apply-viewer-track-audio-controls.json)
+
+## 2026-11-25 — Apply tilemap cell palette IDs
+
+Type: added. Platforms: Local browser.
+
+**Changes**
+
+- Allow a manually selected palette source to use each tilemap cell palette ID or one chosen bank, and show unavailable banks in cyan.
+
+**Validation**
+
+- Synthetic unit rom-data-viewer-tilemap-palettes-hh4zsvun checked per-cell colors, flips, unavailable banks and single-bank mode. Protected local-page unit rom-data-viewer-tilemap-palettes-eur-_o8ajeki compared a nonzero EUR palette ID against both source colors in Linux Chrome.
+- Protected Linux unit rom-data-viewer-tilemaps-docker-25_e_ybg verified byte equality between the current Docker and Python generated pages, including the tilemap view.
+
+**Limitations**
+
+- Graphics and palette source selection remain manual; no original game scene pairing is inferred. Windows remains deferred and the large-JSON prototype remains suspended.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-25-apply-tilemap-cell-palettes.json)
 
 ## 2026-11-24 — Visualize sampled world roads
 

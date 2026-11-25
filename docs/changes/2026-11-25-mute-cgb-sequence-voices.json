@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "mute-cgb-sequence-voices",
+  "title": "Mute CGB voices in sequence previews",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Add a sequence player checkbox that mutes identified CGB voices during playback, including resolved key-map tones and sine fallbacks, while leaving unidentified voices audible.",
+    "Retain the checkbox across track and song changes and restore it after reload when browser storage is available."
+  ],
+  "validation": [
+    "Synthetic Chrome unit rom-data-viewer-cgb-mute-corrected-xm0rn7ys checked CGB and non-CGB routing, live toggles, key maps, sine mode, track and song changes, reload persistence and existing controls.",
+    "Protected EUR unit rom-data-viewer-cgb-mute-eur-audible-898xw9ja checked an extracted CGB note, live Web Audio mute and unmute after rendering began and selection persistence. Earlier EUR units ugz8wd_8 and sspgch_4 observed gain before rendering; a focused Sol 6.1/xhigh consultation identified the timing issue, with effective settings unconfirmed."
+  ],
+  "limitations": [
+    "Unidentified instruments cannot be classified and remain audible. Physical audio, original-game CGB behavior and Windows were not verified. The large-JSON prototype remains suspended."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_controls_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

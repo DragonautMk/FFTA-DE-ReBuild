@@ -3,6 +3,7 @@ import json
 import shutil
 import subprocess
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -12,6 +13,106 @@ from viewer_browser_harness import Chrome
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')
 class ViewerControlsTest(unittest.TestCase):
+    def test_mute_cgb_routing_and_persistence(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-cgb-') as directory:
+            work = Path(directory)
+            repo = Path(__file__).resolve().parents[2]
+            bank_address = 0x08001000
+            tones = [{'id': index, 'ctype': kind, 'word04': word}
+                     for index, (kind, word) in enumerate([
+                         (0, 0x08002000), (3, 0x08003000), (1, 0), (2, 0),
+                         (4, 0), (0x40, 0), (3, 0x08003000), (8, 0),
+                     ])]
+            bank = {'source_address': bank_address,
+                    'programs': [{'selector': i, 'tone': i} for i in (0, 1, 2, 3, 4, 5, 7)]}
+            instructions, tracks = [], []
+            # The unmapped program deliberately remains audible when CGB is muted.
+            for index, program in enumerate([0, 1, 2, 3, 4, 5, 99, 7]):
+                entry = len(instructions)
+                instructions.extend([
+                    {'source_offset': entry, 'next': entry + 1, 'code': ['parameter', 0xbd, program]},
+                    {'source_offset': entry + 1, 'next': entry + 2, 'code': ['note', 3, 60, 100, None]},
+                    {'source_offset': entry + 2, 'next': None, 'code': ['end']},
+                ])
+                tracks.append({'directory_header': 0, 'track_index': index, 'entry': entry})
+            tracks.append({'directory_header': 1, 'track_index': 0, 'entry': 3})
+            data = {
+                'profile': 'synthetic', 'extractor': 1, 'decoder': 1, 'resources': [],
+                'audio': {'path': 'audio.json', 'waves': [{
+                    'id': 0, 'source_offset': 0x2000, 'tone_ids': [0], 'samples': [0, 64, 0, -64],
+                    'frequency_word': 14069760, 'loop_start': 0, 'flags': 0,
+                }], 'cgb_waves': [{
+                    'id': 0, 'source_offset': 0x3000, 'tone_ids': [1, 6], 'amplitudes': list(range(16)) * 2,
+                }], 'instruments': {'banks': [bank], 'tones': tones,
+                                   'map_links': [{'parent_tone': 5, 'key': 60, 'tone': 6}]}},
+                'sequence_directory': {'songs': [{'id': i, 'header_id': i} for i in range(2)],
+                                       'headers': [{'id': i, 'tone_bank_address': bank_address} for i in range(2)]},
+                'sequences': {'path': 'sequences.json', 'clocks': [0, 1, 2, 30] + [1] * 45,
+                              'tracks': tracks, 'instructions': instructions},
+            }
+            template = (repo / 'view_rom_data.html').read_text()
+            self.assertEqual(template.count('/* DATA */'), 1)
+            page = work / 'synthetic.html'
+            page.write_text(template.replace('/* DATA */', json.dumps(data)))
+            browser = Chrome(work, page)
+            try:
+                result = browser.evaluate('''(async()=>{
+                  const q=s=>document.querySelector(s), change=e=>e.dispatchEvent(new Event('change'));
+                  const wait=async fn=>{const end=Date.now()+4000;while(!fn()){if(Date.now()>end)throw Error('timeout');await new Promise(r=>setTimeout(r,10))}};
+                  window.sources=[];window.buses=[];
+                  class FakeContext {
+                    constructor(){this.currentTime=0;this.destination={kind:'destination'}}
+                    resume(){return Promise.resolve()}
+                    createBuffer(channels,length,rate){return {getChannelData(){return new Float32Array(length)}}}
+                    createGain(){const node={gain:{value:1,setValueAtTime(v){this.value=v},linearRampToValueAtTime(){}},
+                      connect(target){this.output=target},disconnect(){this.disconnected=true}};buses.push(node);return node}
+                    createBufferSource(){return this.makeSource('sample')}
+                    createOscillator(){return this.makeSource('sine')}
+                    makeSource(kind){const node={kind,playbackRate:{value:1},frequency:{value:0},
+                      connect(target){this.output=target},start(){},stop(){}};sources.push(node);return node}
+                  }
+                  window.AudioContext=FakeContext;
+                  const mute=q('#sequence-mute-cgb'),track=q('#sequence-track'),song=q('#sequence-song');
+                  if(mute.checked)throw Error('default mute');
+                  q('#sequence-play').click();await wait(()=>sources.length===8);
+                  const bus=buses[0],destination=bus.output;
+                  if(bus.gain.value!==1)throw Error('initial gain');
+                  for(const i of [1,2,3,4,5])if(sources[i].output.output!==bus)throw Error('CGB routing '+i);
+                  for(const i of [0,6,7])if(sources[i].output.output!==destination)throw Error('non-CGB routing '+i);
+                  mute.checked=true;change(mute);
+                  if(bus.gain.value!==0 || sources.length!==8 || q('#sequence-stop').disabled)throw Error('live mute');
+                  if(![...document.querySelectorAll('#sequence-note-rows tr')].some(r=>r.cells[6].textContent.includes('CGB · sine fallback · muted')))throw Error('fallback label');
+                  mute.checked=false;change(mute);if(bus.gain.value!==1)throw Error('live unmute');
+                  mute.checked=true;change(mute);track.value='1';change(track);
+                  if(!mute.checked || !bus.disconnected)throw Error('track persistence and cleanup');
+                  q('#sequence-play').click();await wait(()=>sources.length===9);
+                  const nextBus=buses.findLast(n=>n.output===destination);
+                  if(nextBus.gain.value!==0 || sources[8].output.output!==nextBus)throw Error('muted track');
+                  q('#sequence-voice').value='sine';change(q('#sequence-voice'));q('#sequence-play').click();
+                  await wait(()=>sources.length===10);
+                  const sineBus=buses.findLast(n=>n.output===destination);
+                  if(!mute.checked || sources[9].kind!=='sine' || sources[9].output.output!==sineBus || sineBus.gain.value!==0)throw Error('sine mode mute');
+                  song.value='1';change(song);if(!mute.checked)throw Error('song persistence');
+                  q('#sequence-play').click();await wait(()=>sources.length===11);
+                  const songBus=buses.findLast(n=>n.output===destination);
+                  if(songBus.gain.value!==0 || sources[10].output.output!==songBus)throw Error('muted next song');
+                  q('#sequence-stop').click();return 'PASS';
+                })()''')
+                self.assertEqual(result, 'PASS')
+                browser.command('Page.reload')
+                deadline = time.monotonic() + 15
+                while time.monotonic() < deadline:
+                    try:
+                        if browser.evaluate('document.readyState === "complete" && document.querySelector("#sequence-mute-cgb")?.checked'):
+                            break
+                    except RuntimeError:
+                        pass
+                    time.sleep(.05)
+                else:
+                    self.fail('Mute setting did not survive page reload')
+            finally:
+                browser.close()
+
     def test_failed_browser_setup_releases_the_process(self):
         with tempfile.TemporaryDirectory(prefix='viewer-failure-') as directory:
             work = Path(directory)
@@ -98,7 +199,7 @@ class ViewerControlsTest(unittest.TestCase):
             browser = Chrome(work, page)
             try:
              setup='''(()=>{window.instances=[];window.sources=[];
-             class FakeAudioContext {constructor(){this.currentTime=0;this.destination={};instances.push(this)} resume(){return Promise.resolve()} createBuffer(channels,length,rate){return {sampleRate:rate,getChannelData(){return new Float32Array(length)}}} createBufferSource(){const n={buffer:null,playbackRate:{value:1},connect(){},disconnect(){},start(){},stop(){}};sources.push(n);return n} createOscillator(){const n={frequency:{value:0},connect(){},start(){},stop(){}};sources.push(n);return n} createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(){}}}}
+             class FakeAudioContext {constructor(){this.currentTime=0;this.destination={};instances.push(this)} resume(){return Promise.resolve()} createBuffer(channels,length,rate){return {sampleRate:rate,getChannelData(){return new Float32Array(length)}}} createBufferSource(){const n={buffer:null,playbackRate:{value:1},connect(){},disconnect(){},start(){},stop(){}};sources.push(n);return n} createOscillator(){const n={frequency:{value:0},connect(){},start(){},stop(){}};sources.push(n);return n} createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(){},disconnect(){}}}}
              window.AudioContext=FakeAudioContext;for(const id of ['audio','sequence-audio','texts','pointer-texts','relative-texts','script-texts','sprites'])document.querySelector('#'+id+' > details').open=true;return 'PASS';})()'''
              assert browser.evaluate(setup)=='PASS'
              checks='''(async()=>{

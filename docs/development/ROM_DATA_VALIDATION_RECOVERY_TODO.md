@@ -116,10 +116,49 @@ changing another agent's selected goal.
 - [x] **ROMDATA-01-EUR-ADDITIONAL-CUSTOM-FAMILY scoped EUR/static:** E438
   `av4gexqa` reconstructs all five streams and identifies 3,061 currently
   unowned bytes in seven spans, including table and caller literal.
-- [ ] **ROMDATA-04-EUR-ADDITIONAL-CUSTOM-FAMILY:** integrate the identified
-  custom family and validate its original decoder and CLI on Wine. E438
-  bounds all five streams. The E301 ownership audit still finds all 3,061
-  planned bytes undeclared. Publication, runtime use and Linux/USA remain open.
+- [x] **ROMDATA-04-EUR-ADDITIONAL-CUSTOM-FAMILY scoped EUR/Wine:** E499
+  publishes all five E438 streams and selection data in
+  `graphics.ui-custom-banks`. Wine `afav76ye` passes the five original
+  decodes and transfers with altered backing and the CLI command handler.
+  The `e311-d310` manifest attaches with its original UI resource.
+  [Evidence](../rom_data_ui_graphics.md#e499-additional-european-custom-stream-runtime).
+- [ ] **ROMDATA-04-EUR-ADDITIONAL-CUSTOM-FAMILY-OTHER:** identify an ordinary
+  invocation of the E499 caller and validate the affected translated reads.
+- [ ] **ROMDATA-05-EUR-ADDITIONAL-CUSTOM-FAMILY-LINUX:** repeat E499
+  preparation, predecessor attachment and original selector, decoder and
+  transfer comparisons on native Linux.
+- [ ] **ROMDATA-05-ADDITIONAL-CUSTOM-FAMILY-USA:** authenticate the
+  corresponding USA group ahead of runtime validation. Native Windows
+  remains a separate check.
+- [x] **ROMDATA-01-EUR-CUSTOM-DECODER-ROOTS scoped EUR/static:** E500
+  `ao1dmjoc` authenticates 30 literal arguments selecting 24 streams.
+  It bounds the six partly or wholly unowned streams and 26 pointer
+  words, including the existing OBJ property-word alias.
+  [Evidence](../rom_data_ui_graphics.md#e500-literal-selected-european-custom-streams).
+- [x] **ROMDATA-04-EUR-CUSTOM-DECODER-LITERALS scoped EUR/Wine:** E501
+  publishes all 33 E500 residual spans and preserves the existing
+  property word and prior owners. Wine `ms1i9nsv` proves the 26
+  original literal loads, six original decodes, mixed mirror reads
+  and `e312-d311` attachment with the exact earlier UI file.
+  [Evidence](../rom_data_ui_graphics.md#e501-literal-selected-european-graphics-runtime).
+- [ ] **ROMDATA-04-EUR-CUSTOM-DECODER-LITERAL-CONSUMERS:** follow
+  ordinary invocations, downstream transfers and translated reads
+  for the E501 streams. Reuse the controlled original reader proof.
+- [ ] **ROMDATA-05-EUR-CUSTOM-DECODER-LITERALS-LINUX:** validate native
+  Linux preparation, predecessor attachment and original reader parity
+  for the literal-selected source projection and the property alias.
+- [ ] **ROMDATA-05-CUSTOM-DECODER-LITERALS-USA:** authenticate the
+  equivalent USA reader paths and source extents before validation.
+  Native Windows remains a separate deferred check.
+- [ ] **ROMDATA-01-EUR-CUSTOM-DECODER-COMPUTED-SOURCES:** attribute the
+  remaining 43 E500 call patterns to their original computed or
+  indirect argument producers, then reconcile the bounded source
+  families with the manifest.
+- [ ] **ROMDATA-VALIDATION-E493-PINNED-WINE-HARNESS:** if an earlier
+  replay needs repeating, locate its exact binary or adapt the
+  revision-pinned harness to use the E491 manifest and retain it at a
+  dedicated path. E499's canonical build replaced the prior binary at
+  the shared output path. E493 through E498 retain their original results.
 - [x] **ROMDATA-01-LOCALIZED-RAW-GAPS-ALIGNED-CENSUS scoped EUR/static:** E431
   `z5tr1bdh` finds 30 consecutive candidate values targeting the `71e694`
   gaps, six per language at 192-byte steps; their original use is unproved.
@@ -1151,14 +1190,45 @@ current evidence before running another check.
 - [x] **ROMDATA-04-EUR-COMPACT-CELL-BANK-PERSISTENT scoped EUR/Wine**
   E491 `a1lyos30` prepares, reuses and serves the E490 bank's 31,004
   record bytes and 630 control bytes. Both header variants, relative
-  offsets and the interior target at `af048c` are preserved. Original
+  offsets and the record bytes at `af048c` are preserved. Original
   reads and outputs match with altered backing. The previous EUR
   `e310-d309` dataset attaches.
   [Evidence](../rom_data_graphics.md#e491-european-compact-cell-bank-resource).
-- [ ] **ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY** Find a retained EUR
-  capture with an attributable constructor or indexed selector. Verify
-  managed reads and state, video and audio equivalence in ordinary Wine
-  replay. Attribute reads through the interior alias separately.
+- [x] **ROMDATA-04-EUR-COMPACT-CELL-BANK-ORDINARY scoped EUR/Wine** E493
+  uses the retained IN-08 action-12 replay. Wine `pmry89cu` identifies two
+  record reads and `00378brf` matches 497 frames with the bank's backing
+  bytes altered. Original reads, clock and audio and endpoint state, video
+  and OAM agree.
+  [Evidence](../rom_data_graphics.md#e493-ordinary-european-compact-cell-bank-reads).
+- [x] **ROMDATA-01-EUR-COMPACT-CELL-INTERIOR-REFERENCE scoped EUR/Wine**
+  E494 `qpfvixus` matches all 119 aligned constructor references and
+  accounts for ten payload words. The original indexed decoder copies
+  `3cf5d8..3cf5dc` into program 36's output as literal bytes. All ten
+  payload words already have resource owners.
+  [Evidence](../rom_data_graphics.md#e494-european-compact-cell-bank-reference-audit).
+- [x] **ROMDATA-01-EUR-COMPACT-CELL-BYTE-MODE-ROUTES scoped EUR/Wine**
+  E495 `ysi2u14e` attributes all five byte-mode constructor sites and
+  joins eight actions against 345 authenticated checkpoints.
+  [Evidence](../rom_data_graphics.md#e495-european-compact-cell-byte-mode-routes).
+- [x] **ROMDATA-04-EUR-COMPACT-CELL-BYTE-MODE-ORDINARY scoped EUR/Wine**
+  E496 `073j23ye` verifies Abate, action 338, through task 345 child
+  slot 6 and primary task 333. Both byte-mode records match across 407
+  frames with altered cartridge backing and the extracted bank attached.
+  [Evidence](../rom_data_graphics.md#e496-ordinary-european-compact-cell-byte-mode-reads).
+- [x] **ROMDATA-04-EUR-COMPACT-CELL-INDEXED-SLOT1 scoped EUR/Wine**
+  E497 `adwf4_b_` confirms Sidewinder, task 184 and indexed slot 1.
+  The 448-frame altered-backing replay matches 43 record trace events.
+  [Evidence](../rom_data_graphics.md#e497-ordinary-european-compact-cell-selector-1).
+- [x] **ROMDATA-04-EUR-COMPACT-CELL-INDEXED-SLOT0 scoped EUR/Wine**
+  E498 `_ser15qi` confirms Wyrmkiller, task 127 and indexed slot 0.
+  The 425-frame altered-backing replay matches 35 record trace events.
+  [Evidence](../rom_data_graphics.md#e498-ordinary-european-compact-cell-selector-0).
+- [ ] **ROMDATA-04-EUR-COMPACT-CELL-BANK-ADDITIONAL-SCENES** Verify live
+  byte-mode routes outside the E496 through E498 continuations.
+  - [ ] The alternate child for action 73 and secondary task 384. Find
+    a learned action with a matching current job for the first and an
+    ordinary input with byte argument 22 at the secondary frontdoor.
+  - [ ] Verify attributable translated guest reads for the selected paths.
 - [x] **ROMDATA-01-EUR-COMPACT-CELL-ALTERNATE-DECODER scoped EUR/Wine**
   E492 `vgbeflbq` proves byte runs for all ten value-14 frames and checks
   the halfword decoder across the other 483 frames. The controlled
@@ -1166,13 +1236,19 @@ current evidence before running another check.
   reproduced by normal extraction.
   [Evidence](../rom_data_graphics.md#e492-european-compact-cell-frame-decoder).
 - [ ] **ROMDATA-05-EUR-COMPACT-CELL-ADJACENT-BANK-LINUX** Repeat the
-  E489 and E490 original source and ownership audit on native Linux.
+  E489/E490 source and ownership audit and E494 aligned reference and
+  original literal-reader check on native Linux.
 - [ ] **ROMDATA-05-EUR-COMPACT-CELL-BANK-PERSISTENT-LINUX** Verify E491
   preparation, E310 attachment, mixed-width ABI reads and original
   guest readers on native Linux.
 - [ ] **ROMDATA-05-EUR-COMPACT-CELL-DECODER-LINUX** Verify E492 frame
   extents, packed file identity and original byte and halfword draw
   output on native Linux.
+- [ ] **ROMDATA-05-EUR-COMPACT-CELL-ORDINARY-LINUX** Verify the E493
+  IN-08 continuation and extracted source attribution on native Linux.
+- [ ] **ROMDATA-05-EUR-COMPACT-CELL-BYTE-ROUTES-LINUX** Confirm the E495
+  source routes and E496 Abate, E497 Sidewinder and E498 Wyrmkiller replays
+  on native Linux.
 - [ ] **ROMDATA-04-COMPACT-CELL-BANK-USA** Authenticate the corresponding
   USA constructors, selector tables and record bounds independently
   before testing regional attachment.

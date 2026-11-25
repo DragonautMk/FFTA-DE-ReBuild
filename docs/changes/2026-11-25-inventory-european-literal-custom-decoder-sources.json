@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "inventory-european-literal-custom-decoder-sources",
+  "title": "Inventory the European literal-selected custom streams",
+  "kind": "docs",
+  "platforms": [
+    "European ROM source audit"
+  ],
+  "changes": [
+    "Authenticate the retained custom decoder call sites. Thirty literal arguments select 24 streams. The source plan identifies six streams and 26 literals with unowned bytes."
+  ],
+  "validation": [
+    "Protected E500 ao1dmjoc independently decodes the 24 streams and reconciles 33 residual spans totaling 47,843 bytes against e312-d311. Two bytes of one stream have a prior OBJ property owner."
+  ],
+  "limitations": [
+    "Source evidence only. The other 43 patterns, ordinary execution, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

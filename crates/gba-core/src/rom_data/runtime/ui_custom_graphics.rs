@@ -27,6 +27,8 @@ pub struct TableGraphicsStats {
 enum Kind {
     Bank(usize),
     Pointer(usize, usize),
+    TableLiteral(usize),
+    SourceLiteral(usize),
 }
 struct Binding {
     offset: usize,
@@ -60,8 +62,12 @@ pub(super) struct UiGraphicsResources {
 
 impl UiGraphicsResources {
     pub(super) fn source_page(index: usize) -> bool {
-        matches!(index >> 12, 0x8e | 0x143 | 0x3ba | 0x43b..=0x43c | 0x44d | 0x45e..=0x45f | 0x46f..=0x470 | 0x481 | 0xb6b..=0xb75 | 0xb7a..=0xb7f)
-            || TABLE_SOURCE_PAGES.contains(&(index >> 12))
+        let page = index >> 12;
+        matches!(page, 0x23 | 0x2a | 0x30 | 0x32 | 0x34 | 0x3e | 0x4f | 0x5e | 0x89 | 0x8e
+            | 0x95 | 0x12e..=0x12f | 0x13c | 0x13f | 0x143..=0x144 | 0x3ad | 0x3b1..=0x3b5
+            | 0x3ba..=0x3bd | 0x40e | 0x43b..=0x43c | 0x44d | 0x45e..=0x45f | 0x46f..=0x470
+            | 0x476 | 0x481 | 0xb6b..=0xb7f)
+            || TABLE_SOURCE_PAGES.contains(&page)
     }
 
     pub(super) fn new(
@@ -72,9 +78,17 @@ impl UiGraphicsResources {
     ) -> Result<Self, String> {
         graphics.validate()?;
         graphics.validate_shared_obj(shared_obj)?;
-        if sources.len() != graphics.banks.len() + graphics.selectors.len() * 5 {
-            return Err("Custom UI graphics source count mismatch".into());
-        }
+        let mut sources = sources.iter();
+        let table_literals =
+            graphics
+                .selectors
+                .iter()
+                .enumerate()
+                .filter_map(|(group, selector)| {
+                    selector
+                        .table_literal
+                        .map(|offset| (group, selector, offset))
+                });
         let table_selectors = ui_graphics::table_selected::ROOTS
             .iter()
             .map(|root| {
@@ -98,13 +112,26 @@ impl UiGraphicsResources {
         table_banks.sort_unstable();
         let mut literals = Vec::new();
         let mut bindings = Vec::new();
-        for (row, (graphic, source)) in graphics.banks.iter().zip(sources).enumerate() {
-            if source.offset != graphic.source_offset
-                || source.length as usize != graphic.encoded_source.len()
-                || ffta_rom::digest(&graphic.encoded_source) != source.sha256
-                || source.role != format!("ui-custom-bank/{:08x}", graphic.source_offset)
-            {
-                return Err("Custom UI graphics source/file binding mismatch".into());
+        for (row, graphic) in graphics.banks.iter().enumerate() {
+            let table_bank = table_banks
+                .binary_search_by_key(&graphic.source_offset, |p| p.0)
+                .ok();
+            for (offset, bytes) in ui_graphics::bank_parts(graphic)? {
+                let source = sources.next().ok_or("Missing custom UI bank source")?;
+                if source.offset != offset
+                    || source.length as usize != bytes.len()
+                    || ffta_rom::digest(bytes) != source.sha256
+                    || source.role != format!("ui-custom-bank/{offset:08x}")
+                {
+                    return Err("Custom UI graphics source/file binding mismatch".into());
+                }
+                bindings.push(Binding {
+                    offset: source.offset as usize,
+                    length: bytes.len(),
+                    kind: Kind::Bank(row),
+                    table_bank,
+                    table_group: table_bank.map(|i| table_banks[i].1),
+                });
             }
             let block = custom_lz::decode(
                 &graphic.encoded_source,
@@ -118,22 +145,10 @@ impl UiGraphicsResources {
                 }
             }
             literals.push(positions);
-            bindings.push(Binding {
-                offset: source.offset as usize,
-                length: source.length as usize,
-                kind: Kind::Bank(row),
-                table_bank: table_banks
-                    .binary_search_by_key(&source.offset, |p| p.0)
-                    .ok(),
-                table_group: table_banks
-                    .binary_search_by_key(&source.offset, |p| p.0)
-                    .ok()
-                    .map(|i| table_banks[i].1),
-            });
         }
         for (group, selector) in graphics.selectors.iter().enumerate() {
             for (language, pointer) in selector.pointers.iter().enumerate() {
-                let source = &sources[graphics.banks.len() + group * 5 + language];
+                let source = sources.next().ok_or("Missing custom UI selector source")?;
                 if source.offset != pointer.source_offset
                     || source.length != 4
                     || source.sha256 != ffta_rom::digest(&pointer.source_bytes()?)
@@ -149,6 +164,47 @@ impl UiGraphicsResources {
                     table_group: table_selectors.iter().position(|&i| i == group),
                 });
             }
+        }
+        for (group, selector, offset) in table_literals {
+            let source = sources
+                .next()
+                .ok_or("Missing custom UI table literal source")?;
+            if source.offset != offset
+                || source.length != 4
+                || source.sha256 != ffta_rom::digest(&selector.table_literal_bytes())
+                || source.role != format!("ui-custom-selector/{}/table-literal", selector.id)
+            {
+                return Err("Custom UI table literal source/file binding mismatch".into());
+            }
+            bindings.push(Binding {
+                offset: offset as usize,
+                length: 4,
+                kind: Kind::TableLiteral(group),
+                table_bank: None,
+                table_group: None,
+            });
+        }
+        for (row, pointer) in graphics.direct_pointers.iter().enumerate() {
+            let source = sources
+                .next()
+                .ok_or("Missing custom graphics source literal")?;
+            if source.offset != pointer.source_offset
+                || source.length != 4
+                || source.sha256 != ffta_rom::digest(&pointer.source_bytes()?)
+                || source.role != format!("ui-custom-literal/{:08x}", pointer.source_offset)
+            {
+                return Err("Custom graphics literal source/file binding mismatch".into());
+            }
+            bindings.push(Binding {
+                offset: source.offset as usize,
+                length: 4,
+                kind: Kind::SourceLiteral(row),
+                table_bank: None,
+                table_group: None,
+            });
+        }
+        if sources.next().is_some() {
+            return Err("Custom UI graphics source count mismatch".into());
         }
         bindings.sort_by_key(|binding| binding.offset);
         for (index, binding) in bindings.iter().enumerate() {
@@ -212,9 +268,22 @@ impl UiGraphicsResources {
                 true,
                 false,
             ),
+            Kind::TableLiteral(group) => (
+                self.graphics.selectors[group].table_literal_bytes()[at],
+                false,
+                true,
+                false,
+            ),
+            Kind::SourceLiteral(row) => (
+                (0x08000000 + self.graphics.direct_pointers[row].bank_offset).to_le_bytes()[at],
+                false,
+                true,
+                false,
+            ),
             Kind::Bank(row) => {
                 self.reads[row].fetch_add(1, Ordering::Relaxed);
                 let graphic = &self.graphics.banks[row];
+                let at = index - graphic.source_offset as usize;
                 let output = self.literals[row][at];
                 let localized = ui_graphics::LOCALIZED_BANK_ROOTS
                     .binary_search(&graphic.source_offset)
@@ -362,6 +431,8 @@ impl UiGraphicsResources {
                 .map(|s| s.id.capacity())
                 .sum::<usize>()
             + self.graphics.shared_obj_banks.capacity() * 4
+            + self.graphics.direct_pointers.capacity()
+                * std::mem::size_of::<ui_graphics::BankPointer>()
             + self.reads.capacity() * std::mem::size_of::<AtomicU64>()
             + self.bindings.capacity() * std::mem::size_of::<Binding>()
             + self.literals.capacity() * std::mem::size_of::<Vec<u16>>()
@@ -375,7 +446,7 @@ impl UiGraphicsResources {
 
 // Page filter only; immutable bindings determine exact byte ownership.
 const TABLE_SOURCE_PAGES: &[usize] = &[
-    0x431, 0x436, 0x437, 0x43c, 0x440, 0x442, 0x447, 0x448, 0x44e, 0x451, 0x453, 0x454, 0x459,
-    0x45f, 0x463, 0x465, 0x46a, 0x46b, 0x470, 0x474, 0x476, 0x47b, 0x47c, 0x482, 0x485, 0x486,
-    0x71e, 0xb67, 0xb68, 0xb69, 0xb6a, 0xb6b,
+    0x431, 0x436, 0x437, 0x43c, 0x43d, 0x440, 0x442, 0x447, 0x448, 0x44e, 0x451, 0x453, 0x454,
+    0x459, 0x45f, 0x460, 0x463, 0x465, 0x46a, 0x46b, 0x470, 0x471, 0x474, 0x476, 0x47b, 0x47c,
+    0x482, 0x483, 0x485, 0x486, 0x71e, 0xb67, 0xb68, 0xb69, 0xb6a, 0xb6b,
 ];

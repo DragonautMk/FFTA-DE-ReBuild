@@ -72,6 +72,15 @@ EUR wiki byte-for-byte identically to the local Python output while protecting
 the dataset and existing root page. Unit `rom-data-viewer-docker-current-k3a7sjpd`
 repeated that comparison after adding the font atlas and name-entry keyboard;
 `rom-data-viewer-docker-obj-drd29d_i` repeated it after adding object tile sheets.
+Unit `rom-data-viewer-tilemaps-docker-25_e_ybg` compared current Docker and
+Python outputs after the tilemap additions. Unit
+`rom-data-viewer-battle-docker-eqvfwhko` repeated output parity after adding the
+battle catalogs; `rom-data-viewer-audio-fidelity-docker-j4h2znpv` checked the
+updated PCM preview; `rom-data-viewer-sequence-tempo-docker-cxqeosrd` checked
+the tempo control; `rom-data-viewer-track-controls-docker-kk259nh0` checked
+track controls; `rom-data-viewer-script-sprites-docker-5d6shlsb` compared the
+output after adding the script sprite catalogs. Both generators use the template, including the suspended
+large-JSON prototype; the local root page excludes that prototype.
 
 Open the resulting HTML file locally. The output contains private extracted
 data. The contents sidebar links to the views available for that dataset;
@@ -85,7 +94,11 @@ including the compact layout, EUR text selection, palette and audio controls.
 Playback controls show the current position for PCM samples, CGB waves and
 approximate song tracks; the sequence timeline also displays a playhead. For a
 looping PCM sample, the position follows the stored loop range. Clicking Play
-preserves focus on the active audio selector. In text views, the language pin
+preserves focus on the active audio selector. The executed instruction trace is
+collapsed initially and can be expanded to inspect and page through instructions.
+Protected local-page unit `rom-data-viewer-trace-fold-ready-tupw3uy9` checked
+visibility, pagination, song changes and the existing mute control in Linux
+Chrome. In text views, the language pin
 and command-visibility checkbox are shared across the views; an unavailable
 pinned language is reported. Sprite animation starts at the selected frame,
 stops at the end unless looping is enabled, and keeps its rate, frame choice
@@ -151,6 +164,27 @@ prototype only when the paused viewer task is requested again.
 
 ## Add other views after the palette milestone
 
+- [x] **Tilemap and rectangle explorer.** Decode the documented mode-4 runs,
+  additional streams and row-major rectangles in `observed-tilemap.json`.
+  Browse their raw cell values, inspect interpreted tile/flip/palette fields,
+  and choose a graphics bank, first tile ID and palette for a 4-bit preview.
+  The pairing is manual; choose either one color bank or the bank identified
+  by each cell. Missing tiles are magenta and missing palette banks are cyan.
+  Synthetic unit
+  `rom-data-viewer-tilemaps-uyjmm_og` checked decoding, invalid inputs, colors,
+  flips and missing tiles. Protected EUR unit
+  `rom-data-viewer-tilemaps-eur-corrected-gmofczjl` independently compared all
+  2,224 cells in eight maps and eleven rectangles, and checked a source pixel
+  and navigation in Linux Chrome. No complete scene or original palette pairing
+  is inferred. Initial unit `rom-data-viewer-tilemaps-eur-tuysj7hm` stopped
+  because its comparison did not allow the expected resource-status change.
+- [x] **Per-cell tilemap palettes.** Optionally use each interpreted cell's
+  palette ID within the manually selected palette source. Unit
+  `rom-data-viewer-tilemap-palettes-hh4zsvun` checked per-cell colors, flips,
+  missing banks and single-bank mode using synthetic data. Protected local-page
+  unit `rom-data-viewer-tilemap-palettes-eur-_o8ajeki` checked a nonzero palette
+  ID against two source colors, switching modes and missing-bank feedback in
+  Linux Chrome. Actual in-game source pairing remains unverified.
 - [x] **Sprite dimensions.** Show the 12 entries in `obj-dimensions.toml` by
   sprite shape and size index, with width and height in pixels. The EUR dataset
   and Linux Chrome check passed in validation unit `rom-data-viewer-dimensions-nkajqoin`.
@@ -231,6 +265,16 @@ prototype only when the paused viewer task is requested again.
   Protected EUR unit `rom-data-viewer-relative-eur-zveyyx3w` compared all
   17,035 programs in 145 archives, their 123 referenced glyphs and earlier
   text projections, and checked the final program in Linux Chrome.
+- [x] **Readable text presentation.** Hiding commands and controls leaves one
+  visible space between adjacent text runs, including consecutive commands.
+  Each text view offers a shared normal-font setting using Verdana/Arial for a
+  visually matched European Latin subset; unrecognized glyphs retain their game
+  bitmap, and other profiles are not mapped. This is a partial visual mapping,
+  not an executed script or complete Unicode translation. Synthetic Linux
+  Chrome unit `rom-data-viewer-equipment-text-synthetic-agj8p4xw` checked all
+  four text views, spacing, settings, font and bitmap fallback. Protected EUR
+  unit `rom-data-viewer-equipment-text-eur-final-787ku_bs` checked an actual
+  script with 19 hidden command gaps and the shared settings in Chrome.
 - [x] **Sprite tile sheets.** Display the 8×8 indexed tiles from
   `unit-obj-initial-pose.json` at integer zoom using grayscale palette indices.
   EUR catalog and Linux Chrome checks passed in `rom-data-viewer-sprite-ii7_y869`.
@@ -250,6 +294,49 @@ prototype only when the paused viewer task is requested again.
   stop and invalid rates. Protected EUR unit
   `rom-data-viewer-spriteanim-eur-4ekn367f` compared all 121 bindings and 477
   frame durations and checked a reference pixel and animation in Chrome.
+- [x] **Equipment sprite sequences.** Browse sprite IDs, animation/part bindings,
+  null entries, frame durations, raw command fields and graphics in a separate
+  collapsible section. Preview supported 4bpp poses with grayscale or a manually
+  selected unit palette and animate from the selected frame, with optional
+  looping. Graphics remain visible through non-graphics commands and clear on
+  operation 6; live palettes, actor composition and original timing are not
+  reproduced. Synthetic unit `rom-data-viewer-equipment-text-synthetic-agj8p4xw`
+  checked links, command frames, nulls, pixels, timing and settings. Protected
+  EUR unit `rom-data-viewer-equipment-text-eur-final-787ku_bs` compared all 748
+  bindings, 258 sequences, 3,439 frames and 280 pixel blocks with the source and
+  checked a reference pixel and controls in Chrome. Earlier units `2x2_nqve` and
+  `f2rcnchf` failed in the validation harness: the pixel candidate was too
+  restricted, then a query returned one element instead of a list. The corrected
+  unit passed; the prior local payload and paused JSON prototype were preserved.
+- [x] **Normal and alternate battle sprites.** The sprite sequence section also
+  browses the two battle catalogs and links each indexed resource to the matching
+  catalog. It retains animation, part, null and shared index-root targets, shows
+  command details and plays supported 4bpp frames with manual palette and
+  preview timing. A shared index root is labeled as an index, never as a sequence.
+  Task commands are reported but are not executed; live palettes and actor-part
+  composition remain outside the preview. Synthetic Chrome/Python unit
+  `rom-data-viewer-battle-synthetic-sz5wql3k` checked catalog navigation,
+  commands, pixels, null/shared targets and settings. Protected EUR unit
+  `rom-data-viewer-battle-eur-dj9tn7wi` compared all 16,830 bindings, 3,287
+  sequences, 20,665 frames and 4,419 pixel blocks to their sources, then checked
+  a pixel from each catalog and a shared root in Chrome. The local page retained
+  the previously validated inspector and unrelated payloads.
+- [x] **Script sprite catalogs.** Browse the five extracted special-normal,
+  special-alternate, override, registry-special and registry-generic catalogs
+  in the same sprite sequence section. Each resource links to its own catalog.
+  A separate collapsible, paginated table shows the matching producer conditions,
+  metadata or assignment source and script offsets. These witnesses are
+  conditional source relationships, not evidence that a particular actor uses
+  a sequence during a particular scene. Nulls and shared index roots remain
+  distinct, and animation settings persist across catalog and sprite changes.
+  `rom-data-viewer-script-sprites-synthetic-1w6hgbmp` checked five script-only
+  catalogs, pagination, source fields, alias/null handling, pixels and controls.
+  Protected EUR unit `rom-data-viewer-script-sprites-eur-ykbzrpvg` compared
+  all 4,308 producers, 5,778 bindings, 1,204 sequences, 7,619 frames and 2,899
+  pixel blocks with their sources and checked a real pixel, pagination and a
+  shared root in Linux Chrome. The local page retained the prior inspector and
+  unrelated payloads. Live composition, palette, task commands and original
+  timing remain outside the preview. [Script sprite formats](../rom_data_unit_obj.md)
 - [x] **Maps.** Plot the tile coordinates from `world-nodes.json`. Let the
   reader select a node to see its ID, coordinates and recorded neighbors.
   EUR data and Linux Chrome selection passed in unit `rom-data-viewer-map-povy0tl_`.
@@ -287,15 +374,15 @@ prototype only when the paused viewer task is requested again.
   passed in Linux Chrome unit `rom-data-viewer-cgb-eur-qfpcr8ak`; physical audio
   output was not checked.
 - [x] **Sequence track audition.** Select a song and audition one decoded
-  track or all its tracks together at a chosen tick rate. The
+  track or all its tracks together with manual or estimated tempo. The
   bounded instruction trace and note table identify the track; the mix level
   is limited based on its maximum concurrent notes. Waits, jumps, patterns,
   returns and note ties are followed. The preview can span 1–180 seconds and
   stops at a per-track work limit; a combined preview allows at most 128,000
   instructions and 8,000 notes across tracks. Notes are paginated and audio
   is scheduled progressively; delayed or skipped notes are reported if browser
-  scheduling falls behind. Game tempo, note extensions, pitch commands,
-  envelopes and effects are not reproduced. Synthetic unit
+  scheduling falls behind. Exact game timing, modulation, CGB envelopes and
+  effects are not reproduced. Synthetic unit
   `rom-data-viewer-sequence-03jtgkmw` checked branch/return behavior, ties,
   loop limits, pagination, empty songs and Web Audio controls. Protected EUR
   unit `rom-data-viewer-sequence-eur-mli6tkjk` compared all 105,253 decoded
@@ -318,9 +405,8 @@ prototype only when the paused viewer task is requested again.
 - [x] **PCM instruments in sequence audition.** Resolve program changes through
   the extracted tone banks and key maps, play supported PCM samples with their
   stored loop flags, and label unmapped or unsupported voices as sine fallbacks.
-  The user can still choose sine waves for every note. Sample pitch uses the
-  existing BIOS HLE approximation; the audition does not reproduce driver
-  timing, envelopes, pitch changes or effects. Synthetic unit
+  The user can still choose sine waves for every note. The audition does not
+  reproduce exact driver timing, modulation or effects. Synthetic unit
   `rom-data-viewer-pcmvoice-51yozacf` checked direct and split mappings, sample
   data, rate, loops and fallbacks; `rom-data-viewer-pcmvoice-legacy-emswkwfc`
   checked datasets without instrument metadata. Protected EUR unit
@@ -328,6 +414,50 @@ prototype only when the paused viewer task is requested again.
   348 key links and 455 headers, then checked mapped notes and PCM Web Audio
   start/stop in Chrome. Physical audio and original-driver fidelity remain
   unverified.
+- [x] **PCM note lengths, pitch and envelope preview.** Add the stored note
+  extension to the clock length using the original byte wrapping, and use the
+  extracted PCM pitch tables for the unbent key when available. Older datasets
+  without those tables keep the previous pitch approximation. A checkbox enables
+  an approximate PCM attack/decay/sustain/release envelope from the extracted
+  tone word, with a bounded release and mix scaling; CGB and sine fallbacks keep
+  their existing envelope. This does not reproduce exact tempo, pitch modulation,
+  effects, mixer behavior or live CGB envelopes. Synthetic unit
+  `rom-data-viewer-audio-fidelity-synthetic-kleo1rm5` checked extension wrapping,
+  600 integer pitch calculations, envelope scheduling and prior controls.
+  Protected EUR unit `rom-data-viewer-audio-fidelity-eur-cv4woo4e` checked all
+  180 PCM keys, 12 bases and 429 tone words, observed 1,006 stored extensions,
+  and verified an extended PCM note's pitch and envelope with live Web Audio in
+  Linux Chrome. Physical audio output remains unverified.
+- [x] **Estimated song tempo.** A checkbox follows decoded tempo commands from
+  all song tracks, including when auditioning just one track; disabling it uses
+  the manual tick rate throughout. Before the first tempo command or when none
+  is found, the same manual rate is the fallback. Tempo changes affect note
+  starts and ends, PCM envelope timing and the seconds-based note timeline;
+  a zero tempo stops sequence advancement and leaves active note gates open
+  until the preview ends. The tempo pass is
+  bounded and reports incomplete track scans. The rate follows the continuous
+  average implied by a [generic M4A command and accumulator reference](https://github.com/pret/pokeemerald/blob/master/src/m4a_1.s#L901-L910);
+  per-frame quantization, live tempo controls and exact FFTA-driver behavior are
+  not verified. Synthetic Chrome units `rom-data-viewer-sequence-tempo-synthetic-0bksevth`
+  and `rom-data-viewer-sequence-tempo-timeline-lfnlvmos` checked cross-track
+  changes, same-tick ordering, zero tempo, fallback and playhead alignment.
+  Protected EUR unit `rom-data-viewer-sequence-tempo-eur-5k5nafnt` counted 1,150
+  source commands and checked a real cross-track note in automatic and manual
+  modes with live Web Audio in Chrome. Physical audio remains unverified.
+- [x] **Track volume, stereo and pitch controls.** A checkbox applies decoded
+  volume, pan, key shift, pitch bend, bend range and tuning commands, including
+  changes while notes are active. A separate collapsible, paginated table lists
+  the decoded controls. Browser gain, stereo panning and equal-tempered pitch
+  ratios are approximations of the [generic M4A track controls](https://github.com/pret/pokeemerald/blob/master/src/m4a_1.s#L913-L991);
+  before the first volume command the preview uses full gain. Pitch automation
+  has a 100,000-event playback bound and reports when it is reached; unavailable
+  browser panning or live pitch changes are reported. The CGB mute remains
+  independent. Synthetic Chrome unit `rom-data-viewer-track-controls-synthetic-2pni2qje`
+  checked live changes, per-track routing, manual bypass, tempo and CGB mute.
+  Protected EUR unit `rom-data-viewer-track-controls-eur-co_43x87` counted 8,419
+  source controls and checked real volume and pan changes during notes plus a
+  PCM note with pitch bend using live Chrome Web Audio. Exact mixer, modulation and
+  physical audio remain unverified.
 - [x] **CGB wave instruments in sequence audition.** Resolve supported CGB
   wave tones through the same program and key maps, and play their extracted
   32-step waveforms in a loop. Pitch is an equal-tempered approximation; CGB
@@ -338,6 +468,17 @@ prototype only when the paused viewer task is requested again.
   a mapped sequence note, Web Audio start and stop in Linux Chrome. Physical
   audio and original-driver timing, tuning, envelopes and effects remain
   unverified.
+- [x] **Mute CGB voices in sequences.** The sequence player can mute and
+  unmute identified CGB tones during playback, including key-mapped tones and
+  sine fallbacks. Unidentified voices remain audible. The checkbox stays set
+  when changing track or song and is restored after reload when browser storage
+  is available. Synthetic browser unit
+  `rom-data-viewer-cgb-mute-corrected-xm0rn7ys` checked the CGB and non-CGB
+  routes, live toggles, fallbacks, selection changes and reload. Protected EUR
+  unit `rom-data-viewer-cgb-mute-eur-audible-898xw9ja` checked a mapped CGB
+  note and the live Web Audio gain after rendering began, plus track and song
+  changes in Linux Chrome. Physical audio and the original game's CGB output
+  remain unverified.
 - [ ] **Complete song playback.** Reproduce original instruments, driver timing,
   mixing and effects before describing a synthesized audition as playback of
   the original song.

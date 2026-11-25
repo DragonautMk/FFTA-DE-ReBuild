@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "make-viewer-text-and-equipment-readable",
+  "title": "Browse equipment animations and read extracted text",
+  "kind": "added",
+  "platforms": [
+    "Linux browser; offline viewer"
+  ],
+  "changes": [
+    "Add a collapsible equipment sprite browser with sprite, animation, part and frame selection, null bindings, command details, manual palette, playback and looping.",
+    "Separate text around hidden commands and provide an optional Verdana/Arial presentation for a visually matched European Latin glyph subset, retaining original glyph images for unmapped cases."
+  ],
+  "validation": [
+    "Synthetic Linux Chrome and Python unit rom-data-viewer-equipment-text-synthetic-agj8p4xw passed text controls, sprite playback and projection checks.",
+    "Protected European dataset unit rom-data-viewer-equipment-text-eur-final-787ku_bs compared 748 bindings, 258 sequences, 3439 frames and 280 pixel blocks, and checked a real pixel plus a script with 19 command gaps in Linux Chrome.",
+    "Published the validated ignored local viewer after guarding its preimage and retaining the prior file; unrelated payloads and the paused JSON inspector were preserved."
+  ],
+  "limitations": [
+    "The European Unicode mapping is visually matched and partial; original glyphs remain for unknown characters and other profiles. Text commands and substitutions are not executed.",
+    "Equipment preview uses manually selected palettes and preview timing, without live palette changes or actor composition; unsupported object modes are reported. Native Windows was not tested.",
+    "The first two European checks failed in test harness candidate selection and selector code; the corrected unit passed. Their diagnostics remain retained."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_view_rom_data.py",
+    "scripts/tests/test_viewer_equipment_browser.py",
+    "scripts/tests/test_viewer_text_readability_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

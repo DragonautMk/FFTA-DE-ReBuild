@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-25",
+  "slug": "apply-tilemap-cell-palettes",
+  "title": "Apply tilemap cell palette IDs",
+  "kind": "added",
+  "platforms": [
+    "Local browser"
+  ],
+  "changes": [
+    "Allow a manually selected palette source to use each tilemap cell palette ID or one chosen bank, and show unavailable banks in cyan."
+  ],
+  "validation": [
+    "Synthetic unit rom-data-viewer-tilemap-palettes-hh4zsvun checked per-cell colors, flips, unavailable banks and single-bank mode. Protected local-page unit rom-data-viewer-tilemap-palettes-eur-_o8ajeki compared a nonzero EUR palette ID against both source colors in Linux Chrome.",
+    "Protected Linux unit rom-data-viewer-tilemaps-docker-25_e_ybg verified byte equality between the current Docker and Python generated pages, including the tilemap view."
+  ],
+  "limitations": [
+    "Graphics and palette source selection remain manual; no original game scene pairing is inferred. Windows remains deferred and the large-JSON prototype remains suspended."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_tilemaps_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

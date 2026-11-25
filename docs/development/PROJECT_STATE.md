@@ -1438,8 +1438,19 @@ and normal enablement retain their existing acceptance gates.
   remain open.
 
 - EUR [E438 five custom streams plan](../rom_data_ui_graphics.md#e438-additional-european-custom-stream-source-plan)
-  reconstructs 8,320 decoded bytes and 3,061 unowned source bytes. Original
-  execution and managed publication remain open.
+  reconstructs 8,320 decoded bytes and 3,061 source bytes.
+  [E499](../rom_data_ui_graphics.md#e499-additional-european-custom-stream-runtime)
+  adds the five streams and controls to `graphics.ui-custom-banks` in
+  e312-d311. The five original selector, decoder and VRAM transfer paths
+  and command handler pass under Wine. Explicit e311-d310 attachment
+  remains supported. Ordinary invocation and translated readers remain open.
+
+- EUR [E501 literal-selected custom streams](../rom_data_ui_graphics.md#e501-literal-selected-european-graphics-runtime)
+  publishes all 33 residual spans in the E500 literal-argument audit.
+  e313-d312 serves six streams and 26 pointers while preserving the two
+  shared OBJ property bytes. Wine verifies the original reader loads,
+  63,744 decoded bytes, the shared boundary and e312-d311 attachment.
+  Computed source arguments, ordinary use and other platforms remain open.
 
 - [Bank ownership audit](../rom_data.md#inspect-source-ownership-across-banks)
   compares bounded plans across dataset manifests without opening ROM or
@@ -1533,12 +1544,25 @@ and normal enablement retain their existing acceptance gates.
   630 control bytes. E491 publishes and serves its 31,634 source bytes
   in `e311-d310`, with original reader equivalence under Wine. E492
   decodes both cell widths and matches the original draw output for all
-  493 frames under controlled Wine inputs. Live selectors and ordinary
-  scenes remain open.
+  493 frames under controlled Wine inputs. E493 verifies two managed
+  halfword records in the retained ordinary IN-08 continuation. E494
+  classifies all 129 aligned address-shaped words. Only the 119 original
+  root references belong to the compact-cell bank. E495 attributes all
+  five byte-mode constructor sites. E496 verifies two byte-mode record
+  reads in the ordinary Abate continuation. E497 Sidewinder and E498
+  Wyrmkiller verify indexed slots 1 and 0 and complete the ordinary
+  evidence across the four byte-mode records. The alternate child,
+  secondary caller and translated dispatch remain open.
   [E489 routing](../rom_data_runtime.md#e489-european-mode-3-dispatch-and-adjacent-compact-cell-bank)
   [Compact-cell bank plan](../rom_data_graphics.md#e490-complete-european-adjacent-compact-cell-bank)
   [Compact-cell bank resource](../rom_data_graphics.md#e491-european-compact-cell-bank-resource)
   [Compact-cell frame decoder](../rom_data_graphics.md#e492-european-compact-cell-frame-decoder)
+  [Ordinary compact-cell replay](../rom_data_graphics.md#e493-ordinary-european-compact-cell-bank-reads)
+  [Aligned reference audit](../rom_data_graphics.md#e494-european-compact-cell-bank-reference-audit)
+  [Byte-mode routes](../rom_data_graphics.md#e495-european-compact-cell-byte-mode-routes)
+  [Ordinary byte-mode replay](../rom_data_graphics.md#e496-ordinary-european-compact-cell-byte-mode-reads)
+  [Indexed slot 1 replay](../rom_data_graphics.md#e497-ordinary-european-compact-cell-selector-1)
+  [Indexed slot 0 replay](../rom_data_graphics.md#e498-ordinary-european-compact-cell-selector-0)
   E458 classifies the reference words and traces origin
   reads for 76 streams. E459 accounts for 162 direct origin-reader calls
   within that projection. E485 extends the direct control file in
