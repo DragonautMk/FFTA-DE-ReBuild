@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-indexed-graphics-programs",
+  "title": "Browse indexed graphics programs",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Add a separate scoped wiki page for decoded indexed graphics families, archives and programs, with paged 4-bit/8-bit tile previews and selectable palettes.",
+    "Play stored program order at a chosen rate with optional looping, preserving controls across selections and labeling source offsets, packet counts and preview limitations."
+  ],
+  "validation": [
+    "Synthetic unit vrjlte3s passed 54 viewer and generator tests; focused unit a7de4j7_ checked both catalog format versions.",
+    "Protected EUR unit thlfcw8m independently decoded and browser-hashed 3811 programs across 75 archives, checked 24 pixels, preserved other scoped data and 145 file pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "The tile depth, palette and playback rate are manual interpretations; program order does not establish the game animation or timing. Windows was deferred.",
+    "Initial real unit zhbkd6xw exposed unsupported catalog format v2; the corrected run passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_indexed_graphics_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

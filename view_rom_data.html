@@ -131,6 +131,30 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="dimensions-source"></p>
   <table><thead><tr><th>Shape</th><th>Size</th><th>Width</th><th>Height</th></tr></thead><tbody id="dimensions-rows"></tbody></table>
 </details></section>
+<section id="indexed-graphics" hidden>
+  <details><summary><h2>Indexed graphics programs</h2></summary>
+  <p>Browse decoded program bytes as manually interpreted 4-bit or 8-bit tiles.
+  Choose a palette or grayscale. Playing follows stored program order at the
+  chosen rate; it does not establish an animation or the game's timing.</p>
+  <label>Family <select id="indexed-family"></select></label>
+  <label>Archive <select id="indexed-archive"></select></label>
+  <label>Program <select id="indexed-program"></select></label>
+  <label>Tile depth <select id="indexed-depth"><option value="4">4-bit</option><option value="8">8-bit</option></select></label>
+  <label>Palette source <select id="indexed-palette"></select></label>
+  <label>Palette bank <select id="indexed-palette-bank"></select></label>
+  <label>Tile page <select id="indexed-page"></select></label>
+  <label>Programs per second <input id="indexed-rate" type="number" min="1" max="60" value="6" style="width:6rem"></label>
+  <button type="button" id="indexed-play">Play from selected program</button>
+  <button type="button" id="indexed-stop" disabled>Stop</button>
+  <label><input type="checkbox" id="indexed-loop"> Loop programs</label>
+  <p><label for="indexed-progress">Program position</label> <progress id="indexed-progress" max="1" value="0"></progress>
+    <span id="indexed-position"></span></p>
+  <p id="indexed-status" role="status"></p><p id="indexed-detail"></p>
+  <canvas id="indexed-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Indexed program tile sheet"></canvas>
+  <p id="indexed-tile-detail" role="status">Select a tile to inspect its decoded offset.</p>
+  <details><summary>Stored archive fields</summary><p id="indexed-source-fields"></p></details>
+  </details>
+</section>
 <section id="color-books" hidden>
   <details><summary><h2>Color-Mode palette fragments</h2></summary>
   <p>Browse stored BGR555 colors by source book, physical variant and fragment.
@@ -502,6 +526,15 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   You can apply one selected color bank to every cell, or use the stored
   palette IDs within the selected palette source.</p>
   <label>Map or rectangle <select id="tilemap-id"></select></label>
+  <div id="tilemap-template-controls" hidden>
+    <label>Template view <select id="tilemap-template-view">
+      <option value="stored">Stored cells</option>
+      <option value="staged">Staged RAM: add 0x00C0</option>
+      <option value="direct">Direct draw: add 0x0300</option>
+    </select></label>
+    <p>The staged view adds two zero columns to the second template. These
+    transformations use 16-bit wrapping; graphics and palette selection remain manual.</p>
+  </div>
   <div id="firaga-cell-controls" hidden>
     <p>Firaga sequence timing is not established; the chosen rate is only for preview.
     The packed flags and second byte are displayed as stored.</p>
@@ -1043,6 +1076,8 @@ const rows = document.getElementById('rows');
 let directoryFiles = new Map(), openIndexedFile = null, releaseIndexedFile = null;
 const resourceViews = {
   'graphics.obj-dimensions': 'dimensions', 'graphics.bg-descriptors': 'bg-descriptors',
+  'graphics.indexed-archives': 'indexed-graphics',
+  'graphics.direct-indexed-archive': 'indexed-graphics', 'graphics.direct-indexed-dictionary-archive': 'indexed-graphics',
   'graphics.bg-base-palettes': ['palette', 'bg-tiles'],
   'graphics.bg-alternate-palettes': ['alternate-palettes', 'bg-tiles'],
   'graphics.bg-main-graphics': 'bg-tiles',
@@ -1057,6 +1092,7 @@ const resourceViews = {
   'graphics.obj-animation-banks': 'obj-animations',
   'graphics.word-task-obj-animations': 'obj-animations', 'graphics.layered-obj-animations': 'obj-animations',
   'graphics.ui-custom-banks': 'ui-tiles', 'graphics.ui-raw-palettes': 'ui-tiles',
+  'graphics.ui-raw-transfers': 'tilemaps',
   'graphics.obj-custom-banks': 'obj-tiles', 'graphics.observed-lz-block': 'obj-tiles',
   'graphics.firaga-transfer-program': 'firaga-transfers', 'graphics.firaga-palette-rows': 'firaga-palette-rows',
   'graphics.observed-tilemap': 'tilemaps', 'graphics.firaga-compact-cells': 'tilemaps',
@@ -1226,6 +1262,8 @@ function renderRows() {
           || (target === 'mission-records' && !Object.keys(data.mission_events || {}).length)
           || (target === 'encounters' && !Object.keys(data.encounters || {}).length)
           || (target === 'world' && !data.world_nodes)
+          || (target === 'indexed-graphics' && (!data.indexed_archives ||
+              !data.indexed_archives.families.some(family => family.resource_id === item.id)))
           || (target === 'bg-descriptors' && !data.bg_descriptors)
           || (target === 'bg-tiles' && !data.bg_graphics)
           || (target === 'bg-transfers' && !data.bg_transfers)
@@ -1246,10 +1284,17 @@ function renderRows() {
           || (target === 'tilemaps' && (item.id === 'graphics.firaga-compact-cells'
               ? !data.firaga_compact_cells : item.id === 'graphics.firaga-copied-matrices'
                 ? !(data.extra_tilemaps || {}).firaga_matrices : item.id === 'graphics.soil-remaining-rectangles'
-                  ? !(data.extra_tilemaps || {}).soil_rectangles : !data.observed_tilemaps))
+                  ? !(data.extra_tilemaps || {}).soil_rectangles : item.id === 'graphics.ui-raw-transfers'
+                    ? !(data.extra_tilemaps || {}).ui_rectangles : !data.observed_tilemaps))
           || (target === 'instruments' && !(data.audio && data.audio.instruments && data.audio.instruments.banks.length))
           || (target === 'sequence-audio' && (!data.sequences || !data.sequence_directory))) continue;
       const link = document.createElement('a'); link.href = '#' + target; link.textContent = 'Open view';
+      if (target === 'indexed-graphics') link.addEventListener('click', () => {
+        const selected = data.indexed_archives.families.findIndex(family => family.resource_id === item.id);
+        if (selected >= 0) {
+          const target = document.getElementById('indexed-family'); target.value = String(selected); target.dispatchEvent(new Event('change'));
+        }
+      });
       if (target === 'obj-tiles' && item.id === 'graphics.observed-lz-block') link.addEventListener('click', () => {
         const catalog = document.getElementById('obj-catalog');
         catalog.value = 'lz'; catalog.dispatchEvent(new Event('change'));
@@ -1261,7 +1306,7 @@ function renderRows() {
         sequence.value = '0'; sequence.dispatchEvent(new Event('change'));
       });
       const extraTilemap = {'graphics.firaga-copied-matrices': 'firaga_matrices',
-        'graphics.soil-remaining-rectangles': 'soil_rectangles'}[item.id];
+        'graphics.soil-remaining-rectangles': 'soil_rectangles', 'graphics.ui-raw-transfers': 'ui_rectangles'}[item.id];
       if (target === 'tilemaps' && extraTilemap) link.addEventListener('click', () => {
         document.getElementById('tilemaps').dispatchEvent(new CustomEvent('open-source-grid', {detail: extraTilemap}));
       });
@@ -1779,6 +1824,135 @@ if (data.dimensions) {
       row.insertCell().textContent = value;
     }
   });
+}
+if (data.indexed_archives) {
+  const catalog = data.indexed_archives, section = document.getElementById('indexed-graphics');
+  const details = section.querySelector(':scope > details'), family = document.getElementById('indexed-family');
+  const archive = document.getElementById('indexed-archive'), program = document.getElementById('indexed-program');
+  const depth = document.getElementById('indexed-depth'), palette = document.getElementById('indexed-palette');
+  const bank = document.getElementById('indexed-palette-bank'), page = document.getElementById('indexed-page');
+  const rate = document.getElementById('indexed-rate'), play = document.getElementById('indexed-play');
+  const stop = document.getElementById('indexed-stop'), loop = document.getElementById('indexed-loop');
+  const progress = document.getElementById('indexed-progress'), position = document.getElementById('indexed-position');
+  const status = document.getElementById('indexed-status'), detail = document.getElementById('indexed-detail');
+  const sourceFields = document.getElementById('indexed-source-fields'), tileDetail = document.getElementById('indexed-tile-detail');
+  const canvas = document.getElementById('indexed-sheet'), palettes = [];
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let playing = false, timer = null, dirty = true;
+  section.hidden = false; keepSelectFocus(play, section);
+  catalog.families.forEach((item, index) => family.add(new Option(item.label, index)));
+  palette.add(new Option('Grayscale indices', 'gray'));
+  (data.palettes ? data.palettes.entries : []).forEach((item, index) => {
+    palettes.push({label: 'Background descriptor ' + index, banks: item.banks});
+  });
+  (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => {
+    const banks = []; for (let offset = 0; offset < item.colors.length; offset += 16) banks.push(item.colors.slice(offset, offset + 16));
+    palettes.push({label: 'Interface ' + hex(item.source_offset), banks});
+  });
+  (data.unit_palettes || []).forEach(item => palettes.push({label: 'Unit mode ' + item.variant + ' · bank ' + item.bank, banks: [item.colors]}));
+  palettes.forEach((item, index) => palette.add(new Option(item.label, index)));
+  const selectedArchive = () => catalog.families[Number(family.value)].archives[Number(archive.value)];
+  const selectedProgram = () => selectedArchive().programs[Number(program.value)];
+  function stopAnimation(message) {
+    playing = false; if (timer !== null) clearTimeout(timer); timer = null; stop.disabled = true;
+    if (message) status.textContent = message;
+  }
+  function drawSheet() {
+    dirty = false;
+    const item = selectedProgram(), bits = Number(depth.value), wordsPerTile = bits === 4 ? 8 : 16;
+    const total = Math.floor(item.words.length / wordsPerTile), first = Number(page.value) * 128;
+    const source = palette.value === 'gray' ? null : palettes[Number(palette.value)];
+    const colors = source ? bits === 4 ? source.banks[Number(bank.value)] : source.banks.flat() : null;
+    const context = canvas.getContext('2d'), image = context.createImageData(128, 64); let missing = 0;
+    for (let visible = 0; visible < 128 && first + visible < total; visible++) {
+      const tile = first + visible, left = (visible % 16) * 8, top = Math.floor(visible / 16) * 8;
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        const word = item.words[tile * wordsPerTile + y * (bits === 4 ? 1 : 2) + (bits === 8 ? Math.floor(x / 4) : 0)];
+        const color = (word >>> (bits === 4 ? x * 4 : (x % 4) * 8)) & (bits === 4 ? 15 : 255);
+        let rgb;
+        if (!colors) { const shade = bits === 4 ? color * 17 : color; rgb = [shade, shade, shade]; }
+        else if (color >= colors.length) { rgb = [0, 192, 255]; missing++; }
+        else rgb = [0, 5, 10].map(shift => Math.floor(((colors[color] >> shift) & 31) * 255 / 31));
+        const offset = ((top + y) * 128 + left + x) * 4;
+        image.data[offset] = rgb[0]; image.data[offset + 1] = rgb[1]; image.data[offset + 2] = rgb[2]; image.data[offset + 3] = 255;
+      }
+    }
+    context.putImageData(image, 0, 0);
+    detail.textContent = catalog.families[Number(family.value)].path + ' · archive ' + hex(selectedArchive().source_offset) + ' · program ' + item.index +
+      ' · relative offset ' + hex(item.relative_offset) + ' · ' + item.words.length * 4 + ' decoded bytes · ' + total +
+      ' complete tiles · ' + item.words.length * 4 % (wordsPerTile * 4) + ' trailing bytes' +
+      (missing ? ' · ' + missing + ' pixels lack palette colors (cyan)' : '');
+  }
+  function requestDraw() { dirty = true; if (details.open) drawSheet(); }
+  function choosePage() {
+    const previous = Number(page.value) || 0, words = selectedProgram().words, perTile = depth.value === '4' ? 8 : 16;
+    const total = Math.floor(words.length / perTile); page.replaceChildren();
+    for (let index = 0; index < Math.max(1, Math.ceil(total / 128)); index++) page.add(new Option(index + 1, index));
+    page.value = String(Math.min(previous, page.options.length - 1)); tileDetail.textContent = 'Select a tile to inspect its decoded offset.';
+    requestDraw();
+  }
+  function schedule() {
+    if (timer !== null) clearTimeout(timer); timer = null;
+    if (!playing) return;
+    const speed = Number(rate.value);
+    if (!Number.isFinite(speed) || speed < 1 || speed > 60) { stopAnimation('Choose a rate from 1 to 60 programs per second.'); return; }
+    status.textContent = 'Playing stored program order at ' + speed + ' per second.';
+    timer = setTimeout(() => {
+      timer = null; let next = Number(program.value) + 1;
+      if (next >= selectedArchive().programs.length) {
+        if (!loop.checked) { stopAnimation('Program preview finished.'); return; }
+        next = 0;
+      }
+      program.value = String(next); chooseProgram();
+    }, 1000 / speed);
+  }
+  function chooseProgram() {
+    const item = selectedProgram(), selected = selectedArchive();
+    progress.max = selected.programs.length; progress.value = item.index + 1;
+    position.textContent = 'Program ' + (item.index + 1) + ' of ' + selected.programs.length;
+    sourceFields.textContent = 'Header bytes ' + selected.opaque_header.map(value => hex(value, 2)).join(' ') +
+      ' · dictionary relative offset ' + hex(selected.dictionary_relative_offset) + ' · ' + selected.dictionary_bytes +
+      ' dictionary bytes · ' + item.packet_count + ' packets (' + item.dictionary_packets + ' dictionary references).' +
+      (Number.isInteger(catalog.families[Number(family.value)].caller_literal_offset)
+        ? ' · caller literal ' + hex(catalog.families[Number(family.value)].caller_literal_offset) : '');
+    choosePage(); if (playing) schedule();
+  }
+  function chooseArchive() {
+    const previous = Number(program.value) || 0, selected = selectedArchive(); program.replaceChildren();
+    selected.programs.forEach(item => program.add(new Option(item.index + ' · ' + hex(item.relative_offset), item.index)));
+    program.value = String(Math.min(previous, selected.programs.length - 1));
+    play.disabled = selected.programs.length < 2;
+    if (playing && play.disabled) stopAnimation('This archive has only one program.');
+    chooseProgram();
+    if (!playing) status.textContent = play.disabled ? 'This archive has only one program.' : 'Choose Play to preview stored program order.';
+  }
+  function chooseFamily() {
+    const previous = Number(archive.value) || 0, selected = catalog.families[Number(family.value)]; archive.replaceChildren();
+    selected.archives.forEach((item, index) => archive.add(new Option(index + ' · ' + hex(item.source_offset), index)));
+    archive.value = String(Math.min(previous, selected.archives.length - 1)); chooseArchive();
+  }
+  function choosePalette() {
+    const previous = Number(bank.value) || 0, selected = palette.value === 'gray' ? null : palettes[Number(palette.value)];
+    bank.replaceChildren();
+    if (selected) selected.banks.forEach((_, index) => bank.add(new Option(index, index)));
+    if (selected) bank.value = String(Math.min(previous, selected.banks.length - 1));
+    bank.disabled = !selected || depth.value === '8'; requestDraw();
+  }
+  family.addEventListener('change', chooseFamily); archive.addEventListener('change', chooseArchive);
+  program.addEventListener('change', chooseProgram); depth.addEventListener('change', () => { choosePage(); choosePalette(); });
+  palette.addEventListener('change', choosePalette); bank.addEventListener('change', requestDraw); page.addEventListener('change', requestDraw);
+  rate.addEventListener('input', () => { if (playing) schedule(); });
+  play.addEventListener('click', () => { if (!play.disabled) { playing = true; stop.disabled = false; schedule(); } });
+  stop.addEventListener('click', () => stopAnimation('Program preview stopped.'));
+  details.addEventListener('toggle', () => { if (details.open && dirty) drawSheet(); else if (!details.open && playing) stopAnimation('Program preview stopped because the view was closed.'); });
+  canvas.addEventListener('click', event => {
+    const rect = canvas.getBoundingClientRect(); if (!rect.width || !rect.height) return;
+    const x = Math.floor((event.clientX - rect.left) / rect.width * 16), y = Math.floor((event.clientY - rect.top) / rect.height * 8);
+    const perTile = depth.value === '4' ? 8 : 16, tile = Number(page.value) * 128 + y * 16 + x;
+    if (x < 0 || x >= 16 || y < 0 || y >= 8 || tile >= Math.floor(selectedProgram().words.length / perTile)) return;
+    tileDetail.textContent = 'Tile ' + tile + ' · decoded byte offset ' + hex(tile * perTile * 4) + ' · ' + (perTile * 4) + ' bytes.';
+  });
+  choosePalette(); chooseFamily();
 }
 if (data.color_mode_palettes) {
   const catalog = data.color_mode_palettes, section = document.getElementById('color-books');
@@ -6489,7 +6663,7 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
   const firagaStart = maps.length;
   if (firaga) firaga.maps.forEach(item => maps.push({...item, path: firaga.path}));
   const extraStarts = {}, extra = data.extra_tilemaps || {};
-  ['firaga_matrices', 'soil_rectangles'].forEach(key => {
+  ['firaga_matrices', 'soil_rectangles', 'ui_rectangles'].forEach(key => {
     if (!extra[key]) return;
     extraStarts[key] = maps.length;
     extra[key].maps.forEach(item => maps.push({...item, path: extra[key].path, metadata: extra[key].metadata}));
@@ -6501,6 +6675,7 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
   const status = document.getElementById('firaga-cell-status'), sequenceDetail = document.getElementById('firaga-cell-sequence-detail');
   const encoding = document.getElementById('firaga-cell-encoding'), metadata = document.getElementById('firaga-cell-metadata');
   const sourceMetadata = document.getElementById('tilemap-source-metadata'), sourceFields = document.getElementById('tilemap-source-fields');
+  const templateControls = document.getElementById('tilemap-template-controls'), templateView = document.getElementById('tilemap-template-view');
   const runs = document.getElementById('firaga-cell-runs');
   let playing = false, timer = null, syncingSequence = false;
   let selectedCell = 0;
@@ -6540,17 +6715,33 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     palettes.push({label: 'Unit mode ' + item.variant + ' · bank ' + item.bank, banks: [item.colors]});
   });
   palettes.forEach((item, index) => paletteSource.add(new Option(item.label, index)));
+  function selectedTilemap() {
+    const stored = maps[Number(map.value)], mode = templateView.value;
+    if (!stored.ui_template || mode === 'stored') return stored;
+    const addition = mode === 'staged' ? 0x00c0 : 0x0300;
+    const pad = mode === 'staged' && stored.width === 12 ? 2 : 0;
+    const cells = [], original = [];
+    for (let y = 0; y < stored.height; y++) {
+      for (let x = 0; x < stored.width; x++) {
+        const value = stored.cells[y * stored.width + x];
+        cells.push((value + addition) & 0xffff); original.push(value);
+      }
+      for (let x = 0; x < pad; x++) { cells.push(0); original.push(null); }
+    }
+    return {...stored, width: stored.width + pad, cells, original, transformation: mode};
+  }
   function showCell(index) {
-    const selected = maps[Number(map.value)], value = selected.cells[index];
+    const selected = selectedTilemap(), value = selected.cells[index];
     selectedCell = index;
-    detail.textContent = 'Cell (' + (index % selected.width) + ', ' + Math.floor(index / selected.width) + ') · raw '
-      + hex(value, 4) + ' · interpreted tile ' + (value & 0x3ff) + ' · horizontal flip '
+    detail.textContent = 'Cell (' + (index % selected.width) + ', ' + Math.floor(index / selected.width) + ') · '
+      + (selected.original ? 'shown ' + hex(value, 4) + ' · ' + (selected.original[index] === null ? 'added zero column' : 'stored ' + hex(selected.original[index], 4)) : 'raw ' + hex(value, 4))
+      + ' · interpreted tile ' + (value & 0x3ff) + ' · horizontal flip '
       + ((value & 0x400) ? 'yes' : 'no') + ' · vertical flip ' + ((value & 0x800) ? 'yes' : 'no')
       + ' · palette ID ' + (value >>> 12) + '.';
     table.querySelectorAll('button').forEach((button, position) => button.setAttribute('aria-pressed', String(position === index)));
   }
   function drawTilemap() {
-    const selected = maps[Number(map.value)];
+    const selected = selectedTilemap();
     const source = graphics.value === 'none' ? null : sources[Number(graphics.value)];
     const words = source && source.lz ? (lzOffset.value === '' ? null : lzWordsAt(source.lz, Number(lzOffset.value))) : source && source.words;
     const first = Number(base.value);
@@ -6597,6 +6788,7 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     context.putImageData(image, 0, 0);
     description.textContent = selected.path + ' · ' + selected.kind + ' at ' + hex(selected.source_offset)
       + ' · ' + selected.width + '×' + selected.height + ' cells · '
+      + (selected.transformation ? selected.transformation + ' interpretation · ' : '')
       + (source ? missing + ' cells outside the selected graphics (magenta).'
         + (perCell ? ' ' + missingPalettes + ' cells have no selected palette bank (cyan).' : '')
         : 'shades show the low four bits of each tile index.');
@@ -6615,7 +6807,8 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     return available;
   }
   function chooseTilemap() {
-    const selected = maps[Number(map.value)], firagaIndex = Number(map.value) - firagaStart;
+    const selected = selectedTilemap(), firagaIndex = Number(map.value) - firagaStart;
+    templateControls.hidden = !selected.ui_template;
     const isFiraga = !!firaga && firagaIndex >= 0 && firagaIndex < firaga.maps.length;
     controls.hidden = !isFiraga; encoding.hidden = !isFiraga;
     sourceMetadata.hidden = !selected.metadata;
@@ -6703,12 +6896,13 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     paletteBank.disabled = !selected || cellPalettes.checked; drawTilemap();
   }
   map.addEventListener('change', chooseTilemap); graphics.addEventListener('change', chooseGraphics);
+  templateView.addEventListener('change', chooseTilemap);
   lzOffset.addEventListener('input', drawTilemap);
   base.addEventListener('input', drawTilemap); paletteSource.addEventListener('change', choosePalette);
   cellPalettes.addEventListener('change', () => { paletteBank.disabled = cellPalettes.checked || paletteSource.value === 'gray'; drawTilemap(); });
   paletteBank.addEventListener('change', drawTilemap);
   canvas.addEventListener('click', event => {
-    const rect = canvas.getBoundingClientRect(), selected = maps[Number(map.value)];
+    const rect = canvas.getBoundingClientRect(), selected = selectedTilemap();
     if (!rect.width || !rect.height) return;
     const x = Math.floor((event.clientX - rect.left) / rect.width * selected.width);
     const y = Math.floor((event.clientY - rect.top) / rect.height * selected.height);

@@ -4,16 +4,17 @@
 
 English-first. [Resume](MEMORY_WORKFLOW.md).
 
-
 ### ROMDATA-VIEWER-PALETTE
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Selection: paused by user.
-- Verified: ROAD-DIRECTION 4fht7ab9.
+- Selection: DIRECT-INDEXED; playable wiki.
+- Verified: thlfcw8m; two more archives, 45 programs.
+- Deliverable: browse both as independent families.
+- Proof: synthetic/EUR browser and source hashes.
 - Missing: other previews/audio; Windows deferred.
-- Risk: JSON worker paused; source disk error.
-- Resume: choose viewer work only on request.
+- Risk: manual interpretation; JSON worker paused.
+- Resume: project direct archives with isolated failures.
 
 ## Running or suspended tasks
 
@@ -38,6 +39,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 - State: suspended
 - Outcome: partial
+- E539 timed sound paused by user. e333 z2k72eer; plan 600f84a2: 423 sites/587 rows/6,249 bytes. Typed ownership, 552 cases, e333 Wine join open. No build/Wine launch. E518 recovery/e539-sound-plan.json; ordinary/Linux/USA/native open. Resume on request.
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
 - E425–E510 scoped graphics, UI, text and indexed milestones: Wine PASS (archive and feature guides).
@@ -185,19 +187,19 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 - DEPS APK unverified after NDK r30 timeouts.
 
-- DBG2 IME tests touched personal `~/.local/share/ibus-table/tables/cangjie3-user.db`; user informed, do not alter it. Unit de2hg3tl lost an Xvfb handle: host status unknown; do not signal by guess.
+- DBG2 IME touched `~/.local/share/ibus-table/tables/cangjie3-user.db`; user informed, preserve it. de2hg3tl lost Xvfb handle; host status unknown, do not signal.
 
-- A read-only coverage HTML character diff yielded with no retained handle on 2026-11-03; outcome/host status unknown. Do not restart or infer termination.
+- Nov 3 read-only coverage HTML diff: handle lost, outcome/host status unknown. Do not restart.
 
-- Check owners; preserve units and locks. See MEMORY_WORKFLOW.
-- History: [TASK_COMPLETED_ARCHIVE](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot); migration: TASK_HANDOFF_MIGRATION.json.
-- Godot assessment complete, implementation deferred. AndroidPort is separate; exclude ROM/BIOS, private catalogs, saves and recordings from commits/packages.
+- Preserve unit owners and locks.
+- [History](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot), TASK_HANDOFF_MIGRATION.json.
+- Godot assessment closed, implementation deferred. AndroidPort is separate. Keep ROM/BIOS, catalogs, saves and recordings private.
 
 ## Final handover
 
-- Task: E539 EUR timed sound tables. Suspended by user.
-- Last verified result: e333 z2k72eer. Static plan 600f84a2 covers 423 sites, 587 rows and 6,249 new bytes.
-- Remaining work: typed ownership, 552 controlled cases and e333 attachment on Wine.
-- Errors or blockers: paused. No build or Wine job launched.
-- Next action: resume only on request.
-- References: e539-sound-plan.json in E518 recovery. Ordinary, Linux, USA and native open.
+- Task: COVERAGE-HOMEPAGE-LINK completed.
+- Last verified result: Shortcut opens detailed e333; six tests PASS.
+- Remaining work: Reload root homepage in browser.
+- Errors or blockers: Browser file URL automation blocked.
+- Next action: Follow ROM coverage shortcut or direct map.
+- References: index.html; docs/report_home.md.

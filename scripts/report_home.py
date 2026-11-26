@@ -35,10 +35,13 @@ class Title(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.active = False
         self.parts = []
+        self.coverage_map = False
 
     def handle_starttag(self, tag, attrs):
         if tag == 'title':
             self.active = True
+        if tag == 'script' and dict(attrs).get('id') == 'report-data':
+            self.coverage_map = True
 
     def handle_endtag(self, tag):
         if tag == 'title':
@@ -84,7 +87,12 @@ def discover(root):
                         group = kind
                         break
                 if relative == 'docs/development/rom-coverage/index.html':
-                    name = 'Primary ROM coverage map'
+                    name = 'ROM coverage map' if parser.coverage_map else 'ROM coverage overview'
+                elif group == 'coverage' and relative in (
+                    'target/rom-coverage-local/index.html',
+                    'out/rom-coverage/report/index.html',
+                ):
+                    name = 'ROM coverage map'
                 elif group in ('graphics', 'ui', 'audio', 'code', 'gameplay', 'recent', 'issues') and 'Data' in parts and parts.index('Data') > 0:
                     name = parts[parts.index('Data') - 1]
                 elif group == 'comparisons' and path.parent.parent.name == 'comparisons':
@@ -92,7 +100,8 @@ def discover(root):
                 else:
                     name = path.parent.name
                 reports.append(dict(path=relative, href=quote(relative, safe='/'), title=title,
-                                    name=name, group=group, mtime=entry.stat(follow_symlinks=False).st_mtime))
+                                    name=name, group=group, mtime=entry.stat(follow_symlinks=False).st_mtime,
+                                    coverage_map=group == 'coverage' and parser.coverage_map))
                 if len(reports) > MAX_REPORTS:
                     raise ValueError('More than 5,000 index pages; previous homepage preserved.')
     return sorted(reports, key=lambda item: (-item['mtime'], item['path']))
@@ -119,8 +128,22 @@ def render(reports, template, root=None):
         choices = [item for item in reports if item['group'] == group]
         if not choices:
             continue
-        selected = next((item for item in choices if item['path'] == 'docs/development/rom-coverage/index.html'), choices[0])
-        qualifier = 'Primary coverage map' if selected['path'] == 'docs/development/rom-coverage/index.html' else 'Newest file'
+        selected = choices[0]
+        qualifier = 'Newest file'
+        if group == 'coverage':
+            detailed = [item for item in choices if item.get('coverage_map')]
+            standard = [item for item in detailed if item['path'] in (
+                'target/rom-coverage-local/index.html',
+                'out/rom-coverage/report/index.html',
+            )]
+            if standard or detailed:
+                selected = (standard or detailed)[0]
+                qualifier = 'Detailed coverage map'
+            else:
+                selected = next((item for item in choices if item['path'] ==
+                                 'docs/development/rom-coverage/index.html'), selected)
+                if selected['path'] == 'docs/development/rom-coverage/index.html':
+                    qualifier = 'Coverage overview'
         shortcuts.append(f'<a class="shortcut" href="{esc(selected["href"])}"><span>{GROUPS[group]}</span>'
                          f'<strong>{esc(selected["name"])}</strong><small>{qualifier} <span aria-hidden="true">↗</span></small></a>')
     sections = []

@@ -3,7 +3,7 @@
 # ROM coverage map
 
 The [public overview](rom-coverage/index.html) presents aggregate EUR coverage
-figures. The full navigable map and JSON report are generated locally under
+figures. The full navigable map and JSON report normally appear under
 `target/rom-coverage-local/`. That map includes address intervals, resource
 references and optional audit details, and opens offline.
 
@@ -88,6 +88,14 @@ On Linux, with Docker and Buildx:
 bash scripts/linux/rom_coverage_docker.sh
 ```
 
+If the Linux launcher's `target/` or its log directory is unavailable for
+writing, the same command uses `out/rom-coverage/` inside the checkout. Open
+`out/rom-coverage/report/index.html` for the map or `report/coverage.json`
+under that same directory for the data. The log, temporary build context and
+dataset cache also use the selected directory. The launcher prints the path
+before starting Docker. Explicit `--output` and `--dataset` paths take
+precedence. Once `target/` is writable, subsequent runs use it again.
+
 Both use **`Dockerfile.coverage`**, with Git and Docker on the host. They prepare a temporary context with runtime sources from a **HEAD commit fixed at startup**, archived by Git, and current public tools/evidence. Uncommitted extraction changes are excluded from the build. The normal executable, host Cargo cache and extraction jobs are not modified. Archived sources receive new extraction timestamps to prevent a warm Cargo cache from reusing binaries built from different sources.
 
 The archive also includes `scripts/` from the same commit: `recomp` embeds public tools and HTML templates using `include_bytes!`, so these files must be present **before** compilation. Current coverage tools are copied afterward, keeping runtime-embedded assets distinct from map generators. A runtime fix that is only local does not enter the build until committed.
@@ -98,11 +106,15 @@ The default path needs only the **EUR ROM**: the container builds the CLI and an
 
 The 28,455 entry points are versioned metadata, hash-bound to the ROM, retained list and cache from which they were extracted. **The old local `.dll` is no longer needed**. ROM and evidence are mounted read-only; only local cache and output folder are writable. Extracted assets stay outside the image and Git. Generation uses disabled networking; the first build may download dependencies. On Linux files belong to the calling user.
 
-Local output is **`target/rom-coverage-local/index.html`** and **`coverage.json`**. The report and terminal show the regeneration time, commit, dataset generation and evidence date. The log compares counts with the previous local report, including small byte increments that percentage rounding can hide.
+The normal output files are **`target/rom-coverage-local/index.html`** and **`coverage.json`**. The report and terminal show the regeneration time, commit, dataset generation and evidence date. The log compares counts with the previous report in the selected output directory, including small byte increments that percentage rounding can hide.
 
 The checked-in snapshot was subsequently presented in English by translating only saved resource notes and limits. Its original `generated_at` and `evidence_sha256` continue to identify the source analysis; `presentation_translation` separately records the translation and translated evidence hash. Fifteen coverage-layer comparisons showed no changes. This presentation update did not read a ROM or dataset, execute the guest, or generate new analysis or acceptance. Since the translated evidence file has a different byte hash, a future regenerated report may report a metadata difference even with zero coverage-layer deltas.
 
-Every launch also retains a log in **`target/build-logs/rom-coverage-*.log`**, including errors. A validation error does not replace the existing report. On PowerShell, `-OpenReport` opens the result in a browser with a versioned URL to request the new copy:
+Each launch normally retains its log in `build-logs/` under the selected
+workspace. If log creation fails, the Bash launcher attempts a temporary log.
+A validation error does not replace the existing report. On PowerShell,
+`-OpenReport` opens the result in a browser with a versioned URL to request the
+new copy:
 
 ```powershell
 .\scripts\windows\rom_coverage_docker.ps1 -OpenReport
@@ -135,6 +147,13 @@ python3 -m unittest discover -s scripts -p test_rom_coverage.py -v
 A newly committed generation updates data automatically. Promoting ordinary-use evidence instead requires reviewing individual acceptances and explicitly updating `evidence.json`. The generator rejects ROMs, source hashes, decoded files or caches with a revision different from the extractor that must produce them. Retain the previous snapshot when comparing progress. Intervals use file offsets and exclusive ends `[start, end)`; add `0x08000000` for the first CPU mirror. Mirrors do not multiply ROM bytes.
 
 Output contains metadata only. ROMs, saves, inputs, game images, decoded assets and generated code remain outside versioned files. No new benchmark, recording or accepted runtime test was repeated for the map. Report validation includes counts against an independent byte-set model, authenticated real generation and browser checks.
+
+On 25 November 2026 the Linux fallback generated the EUR e333-d332 report in
+`out/rom-coverage/report/` from commit `d5d54955`. It verified 156 resource
+families. The HTML payload, JSON and manifest hash agree. The report uses the
+e61-d60 review baseline, with 108 families awaiting review and no scene audits.
+Ten mocked Docker launcher tests passed, followed by two focused checks after
+the final path change.
 
 The Docker path was verified with real e65 EUR extraction, comparison with the 61 already accepted files, reuse without writes and HTML/JSON regeneration. Tests cover new/historical generations, resources awaiting review, source-only migration, Git isolation, timestamps, preserving reports on error and independent counts. The PowerShell launcher was verified with mocked Docker on Linux; native Windows/PowerShell 5.1/Docker Desktop remain untested directly.
 

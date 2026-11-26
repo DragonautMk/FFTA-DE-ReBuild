@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "fallback-rom-coverage-workspace",
+  "title": "Keep Linux ROM coverage available when the target mount is unwritable",
+  "kind": "fixed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Route the Linux coverage launcher logs, build context, dataset cache and default report to the ignored out/rom-coverage workspace when the target or its log directory is unwritable. Continue honoring explicit output and dataset arguments.",
+    "Document the output locations and reuse target when it becomes writable. Retain the existing terminal error and fallback-log behavior if the selected workspace cannot be created."
+  ],
+  "validation": [
+    "On 25 November, a real Linux Docker run generated the EUR e333-d332 report from commit d5d54955 with 156 verified resource families. HTML embedded data and JSON agree, and the dataset manifest hash matches the report.",
+    "Ten mocked Docker launcher tests passed. After the final default-path change, normal and fallback routing tests, Bash syntax and help checks passed; validation receipts retained under out/rom-coverage/target/validation/units."
+  ],
+  "limitations": [
+    "The external image returned an input/output error and its target bind was inactive on 25 November. This fix supplies a writable coverage workspace and does not repair the external disk.",
+    "The generated report has 108 resource families awaiting evidence review and no imported scene audits. PowerShell and native Windows behavior were outside this Linux change."
+  ],
+  "files": [
+    "scripts/linux/rom_coverage_docker.sh",
+    "scripts/tests/test_rom_coverage_docker.py",
+    "README.md",
+    "docs/docker.md",
+    "docs/development/ROM_COVERAGE.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/development/ROM_COVERAGE.md",
+    "scripts/linux/rom_coverage_docker.sh"
+  ]
+}

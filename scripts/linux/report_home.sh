@@ -2,8 +2,13 @@
 # Host Python or existing Docker image; preserve the previous page on errors.
 set -euo pipefail
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
-mkdir -p -- "$repo_dir/target/build-logs"
-home_log=$(mktemp -- "$repo_dir/target/build-logs/report-home-$(date +%Y%m%d-%H%M%S)-XXXXXX.log")
+log_dir="$repo_dir/target/build-logs"
+if ! mkdir -p -- "$log_dir" 2>/dev/null || [[ ! -w "$log_dir" || ! -x "$log_dir" ]]; then
+    log_dir="$repo_dir/out/report-home/build-logs"
+    mkdir -p -- "$log_dir"
+    printf 'Cannot write homepage logs under target. Using %s.\n' "$log_dir" >&2
+fi
+home_log=$(mktemp -- "$log_dir/report-home-$(date +%Y%m%d-%H%M%S)-XXXXXX.log")
 printf 'Homepage log: %s\n' "$home_log"
 cd -- "$repo_dir"
 set +e

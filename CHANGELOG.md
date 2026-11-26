@@ -3,6 +3,97 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-26 — Open the detailed ROM coverage map from the local homepage
+
+Type: fixed. Platforms: Linux, Windows.
+
+**Changes**
+
+- Choose the newest detailed coverage map among the standard target and fallback output paths for the homepage shortcut. When those are absent, select another detailed report or the public summary. Keep the public summary available in the coverage list.
+- Make Linux homepage generation use an out/report-home log directory when target logs are unavailable. Regenerate the root homepage and retain a private preimage.
+
+**Validation**
+
+- Six targeted tests passed in managed unit coverage-home-link-y8uoj2ez, covering standard, fallback, custom and legacy reports, summary-only behavior, Linux log fallback and portable homepage behavior.
+- The regenerated homepage has 347 indexed reports. Its coverage shortcut resolves to the local e333-d332 detailed map with 156 resource families. The public summary is also linked.
+
+**Limitations**
+
+- The browser automation URL policy blocked opening the local file. Navigation was verified by parsing the actual generated homepage and checking its destination and coverage data.
+- The first test unit coverage-home-link-hn8w50l9 passed the tests but was retained after the result writer emitted an invalid literal newline. The corrected unit passed.
+
+Documentation: [report_home.md](docs/report_home.md), [report_home.py](scripts/report_home.py).
+
+[Change record](docs/changes/2026-11-26-link-detailed-coverage-from-home.json)
+
+## 2026-11-26 — Keep Linux ROM coverage available when the target mount is unwritable
+
+Type: fixed. Platforms: Linux.
+
+**Changes**
+
+- Route the Linux coverage launcher logs, build context, dataset cache and default report to the ignored out/rom-coverage workspace when the target or its log directory is unwritable. Continue honoring explicit output and dataset arguments.
+- Document the output locations and reuse target when it becomes writable. Retain the existing terminal error and fallback-log behavior if the selected workspace cannot be created.
+
+**Validation**
+
+- On 25 November, a real Linux Docker run generated the EUR e333-d332 report from commit d5d54955 with 156 verified resource families. HTML embedded data and JSON agree, and the dataset manifest hash matches the report.
+- Ten mocked Docker launcher tests passed. After the final default-path change, normal and fallback routing tests, Bash syntax and help checks passed; validation receipts retained under out/rom-coverage/target/validation/units.
+
+**Limitations**
+
+- The external image returned an input/output error and its target bind was inactive on 25 November. This fix supplies a writable coverage workspace and does not repair the external disk.
+- The generated report has 108 resource families awaiting evidence review and no imported scene audits. PowerShell and native Windows behavior were outside this Linux change.
+
+Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md), [rom_coverage_docker.sh](scripts/linux/rom_coverage_docker.sh).
+
+[Change record](docs/changes/2026-11-26-fallback-rom-coverage-workspace.json)
+
+## 2026-11-26 — Browse UI tilemap source rectangles
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose the three extracted UI tilemap rectangles in the existing tilemap explorer, with source links and preserved raw cell values.
+- Show the documented staged and direct template transformations with 16-bit wrapping, labeled original values and staged zero-column padding.
+
+**Validation**
+
+- Synthetic unit iy01h8l1 passed 50 projection, browser, scoped-generation and regression tests.
+- Protected EUR unit ptfkl8c_ checked nine source hashes, 490 original cells, 728 cells across seven views, one rendered pixel and 15 Docker/Python files; the ignored local index and world page were published.
+
+**Limitations**
+
+- Graphics, tile base and palette remain manually chosen; the preview does not reproduce complete live interface composition. Windows was deferred.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
+
+[Change record](docs/changes/2026-11-26-browse-ui-tilemap-rectangles.json)
+
+## 2026-11-26 — Browse indexed graphics programs
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Add a separate scoped wiki page for decoded indexed graphics families, archives and programs, with paged 4-bit/8-bit tile previews and selectable palettes.
+- Play stored program order at a chosen rate with optional looping, preserving controls across selections and labeling source offsets, packet counts and preview limitations.
+
+**Validation**
+
+- Synthetic unit vrjlte3s passed 54 viewer and generator tests; focused unit a7de4j7_ checked both catalog format versions.
+- Protected EUR unit thlfcw8m independently decoded and browser-hashed 3811 programs across 75 archives, checked 24 pixels, preserved other scoped data and 145 file pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- The tile depth, palette and playback rate are manual interpretations; program order does not establish the game animation or timing. Windows was deferred.
+- Initial real unit zhbkd6xw exposed unsupported catalog format v2; the corrected run passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-26-browse-indexed-graphics-programs.json)
+
 ## 2026-11-25 — Verify ordinary European compact-cell byte reads
 
 Type: docs. Platforms: European ROM and Windows interpreter under Wine.

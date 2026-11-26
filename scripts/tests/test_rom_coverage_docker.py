@@ -128,6 +128,39 @@ exit "${DOCKER_TEST_RUN_STATUS:-0}"
         self.assertIn('outside docs', result.stderr)
         self.assertIsNone(self.call('run'))
 
+    def test_unavailable_target_routes_all_coverage_writes_to_the_checkout(self):
+        target = self.repo / 'target'
+        # Obstruct the same mkdir even when the tests run as root.
+        (target / 'build-logs').write_text('existing file')
+        fallback = self.repo / 'out/rom-coverage'
+        self.assertEqual(self.run_script('--help').returncode, 0)
+        self.assertFalse(fallback.exists())
+
+        result = self.run_script()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(str(fallback), result.stderr)
+        context = Path(self.call('buildx')[-1])
+        self.assertEqual(context.parent, fallback)
+        self.assertFalse(context.exists())
+        run = self.call('run')
+        self.assertIn(f'type=bind,source={fallback / "rom-data/coverage"},target=/cache', run)
+        self.assertIn(f'type=bind,source={fallback / "report"},target=/output', run)
+        self.assertTrue((fallback / 'report/index.html').is_file())
+        self.assertIn(str(fallback / 'report/index.html'),
+                      (fallback / 'build-logs/rom-coverage-latest.log').read_text())
+        self.assertEqual((target / 'build-logs').read_text(), 'existing file')
+        self.assertFalse((target / 'rom-data/coverage').exists())
+        self.assertFalse((target / 'rom-coverage-local').exists())
+
+        output = self.directory / 'chosen report'
+        dataset = self.repo / self.defaults['dataset']
+        result = self.run_script('--output', output, '--dataset', dataset)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        run = self.call('run')
+        self.assertIn(f'type=bind,source={output},target=/output', run)
+        self.assertIn(f'type=bind,source={dataset},target=/input/dataset,readonly', run)
+        self.assertNotIn('--dataset-cache', run)
+
     def test_relative_overrides_and_absolute_output_preserve_spaces(self):
         args = []
         for key, old in self.defaults.items():

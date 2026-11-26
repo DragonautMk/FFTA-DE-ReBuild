@@ -267,6 +267,34 @@ def project_source_grids(catalog, kind):
     return {'maps': maps, 'metadata': metadata}
 
 
+def project_ui_tilemap_rectangles(catalog):
+    """Project the three bounded source grids without interpreting their cells."""
+    copies = catalog['halfword_copies']['tilemap_rectangles']
+    literals = copies['caller_literals']
+    expected = [0x083b0e5c, 0x083b0efc, 0x083b0e5c, 0x083b0efc, 0x0871e66c, 0x083ba95c]
+    if literals != expected or any(type(value) is not int for value in literals):
+        raise ValueError('Invalid UI rectangle source pointers')
+    records = copies['rectangles']
+    shapes = [(0x3b0e5c, 10, 8), (0x3b0efc, 12, 3), (0x3ba95c, 22, 17)]
+    if not isinstance(records, list) or len(records) != len(shapes):
+        raise ValueError('Invalid UI rectangle count')
+    maps = []
+    for index, (record, (offset, width, height)) in enumerate(zip(records, shapes)):
+        bank = record['bank']
+        cells = bank['halfwords']
+        if (type(record['width']) is not int or record['width'] != width
+                or type(record['height']) is not int or record['height'] != height
+                or type(bank['source_offset']) is not int or bank['source_offset'] != offset
+                or not isinstance(cells, list) or len(cells) != width * height
+                or any(type(value) is not int or not 0 <= value <= 65535 for value in cells)):
+            raise ValueError('Invalid UI rectangle geometry or cells')
+        label = 'UI staged template' if index < 2 else 'UI localized-loader rectangle'
+        maps.append({'kind': label + ' ' + str(index), 'source_offset': offset,
+                     'width': width, 'height': height, 'cells': list(cells),
+                     'ui_template': index < 2})
+    return {'maps': maps, 'metadata': {'caller_literals': list(literals)}}
+
+
 def project_firaga_transfer(catalog):
     """Preserve the source-authenticated transfer records and their pointer relationships."""
     expected = {
@@ -1697,6 +1725,96 @@ def project_bg_descriptors(catalog):
     return {'entries': result}
 
 
+def project_indexed_graphics(catalog):
+    """Expose decoded programs without embedding their packet streams on every page."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+
+    if not isinstance(catalog, dict):
+        raise ValueError('Invalid indexed graphics catalog')
+    groups = [('base', 'Localized groups', catalog['archives']),
+              ('color', 'Color-mode groups', catalog.get('color_archives'))]
+    for key, label in (('white_flowers', 'White Flowers language group'),
+                       ('additional', 'Additional language groups'),
+                       ('reader_banks', 'Indexed reader banks')):
+        value = catalog.get(key)
+        if value is not None and not isinstance(value, dict):
+            raise ValueError('Invalid indexed graphics family')
+        groups.append((key, label, value.get('archives') if value is not None else None))
+    direct = catalog.get('white_flowers_direct')
+    if direct is not None and not isinstance(direct, dict):
+        raise ValueError('Invalid direct indexed graphics family')
+    if direct is not None:
+        groups.append(('white_flowers_direct', 'White Flowers direct archive', [direct['archive']]))
+    families, total_words, total_programs = [], 0, 0
+    for key, label, archives in groups:
+        if archives is None:
+            if key == 'base':
+                raise ValueError('Missing indexed graphics archives')
+            continue
+        if not isinstance(archives, list) or len(archives) > 256:
+            raise ValueError('Invalid indexed graphics archives')
+        projected = []
+        for archive in archives:
+            source, header = archive['source_offset'], archive['opaque_header']
+            fixed, offsets, programs = archive['fixed_decoded_bytes'], archive['entry_offsets'], archive['programs']
+            dictionary = archive['dictionary_bytes']
+            if (not uint(source, 0xffffff) or not isinstance(header, list) or len(header) != 2
+                    or any(not uint(value, 255) for value in header)
+                    or not uint(archive['dictionary_relative_offset'], 0xffffffff)
+                    or archive['dictionary_mode'] != 0 or type(archive['dictionary_mode']) is not int
+                    or archive['dictionary_length_bits'] != 5 or type(archive['dictionary_length_bits']) is not int
+                    or not uint(fixed, 65535) or fixed == 0 or fixed % 4
+                    or not isinstance(dictionary, list) or len(dictionary) > 2048
+                    or any(not uint(value, 255) for value in dictionary)
+                    or not isinstance(programs, list) or not 1 <= len(programs) <= 65535
+                    or not isinstance(offsets, list) or len(offsets) != len(programs)):
+                raise ValueError('Invalid indexed graphics archive')
+            rows = []
+            for index, program in enumerate(programs):
+                relative, words, packets = program['relative_offset'], program['decoded_words'], program['packets']
+                if (type(program['index']) is not int or program['index'] != index
+                        or not uint(relative, 0xffffffff) or type(offsets[index]) is not int or offsets[index] != relative
+                        or not isinstance(words, list) or len(words) * 4 != fixed
+                        or any(not uint(word, 0xffffffff) for word in words)
+                        or not isinstance(packets, list) or len(packets) > 65535
+                        or any(not isinstance(packet, dict) or packet.get('kind') not in ('literal', 'dictionary') for packet in packets)):
+                    raise ValueError('Invalid indexed graphics program')
+                rows.append({'index': index, 'relative_offset': relative, 'words': list(words),
+                             'packet_count': len(packets),
+                             'dictionary_packets': sum(packet['kind'] == 'dictionary' for packet in packets)})
+                total_words += len(words); total_programs += 1
+                if total_words > 4000000 or total_programs > 100000:
+                    raise ValueError('Indexed graphics catalog is too large')
+            projected.append({'source_offset': source, 'opaque_header': list(header),
+                              'dictionary_relative_offset': archive['dictionary_relative_offset'],
+                              'dictionary_bytes': len(dictionary), 'fixed_decoded_bytes': fixed, 'programs': rows})
+        if projected:
+            families.append({'id': key, 'label': label, 'archives': projected})
+    if not families:
+        raise ValueError('No indexed graphics programs')
+    return {'families': families}
+
+
+def project_direct_indexed_graphics(catalog, resource_id):
+    """Project each documented direct root as its own independently validated family."""
+    specs = {
+        'graphics.direct-indexed-archive': (0x023d08, 0x3ae484, 4, 0, 'direct_literal', 'Direct archive · 0x3AE484'),
+        'graphics.direct-indexed-dictionary-archive': (0x023d10, 0x3ae5a4, 41, 96, 'direct_dictionary', 'Direct archive · 0x3AE5A4'),
+    }
+    literal, offset, count, dictionary_length, family_id, label = specs[resource_id]
+    archive = catalog['archive']
+    if (type(catalog['caller_literal_offset']) is not int or catalog['caller_literal_offset'] != literal
+            or type(archive['source_offset']) is not int or archive['source_offset'] != offset
+            or type(archive['fixed_decoded_bytes']) is not int or archive['fixed_decoded_bytes'] != 64
+            or not isinstance(archive['programs'], list) or len(archive['programs']) != count
+            or not isinstance(archive['dictionary_bytes'], list) or len(archive['dictionary_bytes']) != dictionary_length):
+        raise ValueError('Invalid direct indexed graphics source')
+    family = project_indexed_graphics({'archives': [archive]})['families'][0]
+    family.update(id=family_id, label=label, caller_literal_offset=literal, resource_id=resource_id)
+    return family
+
+
 def project_color_mode_palettes(catalog):
     """Keep owned fragments separate; gaps are not full palette rows."""
     if not isinstance(catalog, dict):
@@ -1742,10 +1860,14 @@ WIKI_SCOPES = (
     ('text', 'Text and fonts', ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts', 'font', 'name_keyboard')),
     ('scripts', 'Event scripts', ('script_archive', 'script_commands', 'script_text_refs')),
     ('other', 'Other resources', ()),
+    ('indexed-graphics', 'Indexed graphics', ('indexed_archives', 'palettes', 'ui_palettes', 'unit_palettes')),
 )
 
 
 def viewer_resource_scope(resource_id):
+    if resource_id in ('graphics.indexed-archives', 'graphics.direct-indexed-archive',
+                       'graphics.direct-indexed-dictionary-archive'):
+        return 'indexed-graphics'
     if resource_id in ('engine.script-archive', 'engine.script-command-directory'):
         return 'scripts'
     if resource_id.startswith('audio.'):
@@ -1948,6 +2070,8 @@ def generate(dataset, output, filename='index.html', *, split=False):
     bg_descriptors = None
     bg_graphics = None
     bg_transfers = None
+    indexed_archives = None
+    indexed_direct = []
     alternate_palettes = None
     palette_programs = None
     blend_programs = None
@@ -2024,6 +2148,26 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available: decoded LZ77 outputs'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid observed LZ77 data: {error}'
+            elif row['id'] == 'graphics.indexed-archives' and row['format'] in ('indexed-graphics-v1-json', 'indexed-graphics-v2-json'):
+                try:
+                    indexed_archives = project_indexed_graphics(json.loads(content))
+                    indexed_archives['path'] = row['path']
+                    for family in indexed_archives['families']:
+                        family.update(path=row['path'], resource_id=row['id'])
+                    row['status'] = 'Available: indexed graphics programs'
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
+                    indexed_archives = None
+                    row['status'] = f'Invalid indexed graphics data: {error}'
+            elif (row['id'], row['format']) in (
+                    ('graphics.direct-indexed-archive', 'direct-indexed-archive-v1-json'),
+                    ('graphics.direct-indexed-dictionary-archive', 'direct-indexed-dictionary-archive-v1-json')):
+                try:
+                    family = project_direct_indexed_graphics(json.loads(content), row['id'])
+                    family['path'] = row['path']
+                    indexed_direct.append(family)
+                    row['status'] = 'Available: indexed graphics programs'
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
+                    row['status'] = f'Invalid direct indexed graphics data: {error}'
             elif (row['id'], row['format']) in (('graphics.firaga-copied-matrices', 'firaga-copied-matrices-v1-json'),
                                                  ('graphics.soil-remaining-rectangles', 'soil-remaining-rectangles-v1-json')):
                 key = 'firaga_matrices' if row['id'] == 'graphics.firaga-copied-matrices' else 'soil_rectangles'
@@ -2034,6 +2178,21 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available: source grids'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid source grid data: {error}'
+            elif row['id'] == 'graphics.ui-raw-transfers' and row['format'] == 'ui-raw-transfers-v1-json':
+                try:
+                    raw = json.loads(content)
+                    copies = raw.get('halfword_copies')
+                    if copies is not None and not isinstance(copies, dict):
+                        raise ValueError('Invalid UI halfword copies')
+                    if copies is not None and copies.get('tilemap_rectangles') is not None:
+                        projected = project_ui_tilemap_rectangles(raw)
+                        projected['path'] = row['path']
+                        extra_tilemaps['ui_rectangles'] = projected
+                        row['status'] = 'Available: UI tilemap rectangles'
+                    else:
+                        row['status'] = 'Preview unavailable'
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
+                    row['status'] = f'Invalid UI tilemap rectangle data: {error}'
             elif row['id'] == 'graphics.firaga-compact-cells' and row['format'] == 'firaga-compact-cells-v1-json':
                 try:
                     firaga_compact_cells = project_firaga_compact_cells(json.loads(content))
@@ -2775,6 +2934,10 @@ def generate(dataset, output, filename='index.html', *, split=False):
             else:
                 row['status'] = 'Preview unavailable'
         rows.append(row)
+    if indexed_direct:
+        if indexed_archives is None:
+            indexed_archives = {'families': []}
+        indexed_archives['families'].extend(indexed_direct)
     for resource_id, (source, row) in firaga_obj_pending.items():
         try:
             projected = project_firaga_obj_animation(source, obj_animation_extra.get('static_lists'), resource_id)
@@ -2809,6 +2972,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
             'relative_texts': relative_texts, 'sequence_directory': sequence_directory, 'sequences': sequences,
             'pcm_pitch': pcm_pitch,
             'bg_descriptors': bg_descriptors, 'bg_graphics': bg_graphics, 'bg_transfers': bg_transfers, 'alternate_palettes': alternate_palettes, 'palette_programs': palette_programs,
+            'indexed_archives': indexed_archives,
             'blend_programs': blend_programs, 'raster_palettes': raster_palettes,
             'ui_graphics': ui_graphics, 'ui_palettes': ui_palettes, 'obj_graphics': obj_graphics, 'lz_graphics': lz_graphics,
             'firaga_transfer': firaga_transfer, 'firaga_palette_rows': firaga_palette_rows,

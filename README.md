@@ -377,8 +377,9 @@ bash scripts/linux/rom_coverage_docker.sh --rom "path/to/your-eur.gba"
 .\scripts\windows\rom_coverage_docker.ps1 -RomPath "path\to\your-eur.gba" -OpenReport
 ```
 
-The full local report is under `target/rom-coverage-local/`. The public aggregate
-snapshot is under `docs/development/rom-coverage/`. The snapshot
+The full local report is under `target/rom-coverage-local/`. If `target/` or
+its log directory is unwritable, the Linux launcher uses `out/rom-coverage/report/`.
+The public aggregate snapshot is under `docs/development/rom-coverage/`. The snapshot
 committed to `decomp` is also available as the
 [interactive public map](https://dragonautmk.github.io/FFTA-DE-ReBuild/development/rom-coverage/).
 Its evidence, limitations and update process are described in the

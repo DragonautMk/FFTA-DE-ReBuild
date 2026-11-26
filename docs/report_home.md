@@ -12,12 +12,16 @@ search and filters require it. The maintained template and generated labels use
 English, including search feedback and date formatting. Discovered report titles
 and paths retain their original text.
 
-The three quick links open coverage at its main path and the most recently
-modified graphics/comparison files. The displayed date is the **file mtime**,
-not a new validation date. Groups are recognized by adjacent JSON filenames;
-the catalog neither verifies nor changes report results. Documentation links
-open local Markdown in the browser or configured editor without converting it
-into a website.
+The coverage quick link opens the most recently modified detailed report among
+`target/rom-coverage-local/` and `out/rom-coverage/report/`. If neither is
+available, it selects the newest detailed report found elsewhere. The public
+aggregate overview remains in the coverage list and serves as the quick link
+when no detailed report exists. Graphics and comparison quick links open their
+most recently modified files. The displayed date is the **file mtime**, not a
+new validation date. Groups are recognized by adjacent JSON filenames; the
+catalog neither verifies nor changes report results. Documentation links open
+local Markdown in the browser or configured editor without converting it into
+a website.
 
 <a id="aggiornare-lelenco"></a>
 
@@ -47,6 +51,9 @@ The image must already exist: it is not downloaded or built automatically.
 PowerShell accepts `-Image NAME` for another local image compatible with
 Python 3.9+. Paths start at the project root even when the launcher is run
 from another directory.
+
+On Linux, when `target/build-logs/` is unavailable for writing, the homepage
+launcher writes its log under `out/report-home/build-logs/`.
 
 With Python 3.9+ already available, without Docker:
 
@@ -80,6 +87,13 @@ fonts, scripts or services are used.
 Template, generator and launchers remain versioned. In a new checkout, run one
 of the commands to create the page. Each refresh replaces one file; it creates
 no copies of ROMs, snapshots, images or reports.
+
+On 26 November 2026, six focused tests covered standard and alternate detailed
+coverage locations, historical/custom reports, the public overview, the Linux
+log fallback and portable-page behavior. The regenerated homepage linked to
+`target/rom-coverage-local/index.html`, and the destination's e333-d332
+coverage data was verified. Browser navigation of the local file was blocked by
+the browser tool's URL policy.
 
 <a id="verifica-del-28-ottobre-2026"></a>
 

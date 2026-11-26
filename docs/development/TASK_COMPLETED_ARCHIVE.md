@@ -28367,3 +28367,38 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: stored road samples play in both directions with rate and loop controls; node links select direction, settings persist across roads and closing stops playback.
 - Evidence: synthetic _9uq_hpr (36 tests); protected EUR 4fht7ab9 (45 roads, 4,376 positions, 47 source hashes, 15 Docker/Python files); docs/changes/2026-11-25-play-world-roads-in-either-direction.json. Validated local world page published.
 - Limits: sample preview does not reproduce live timing, movement or pathfinding; other viewer resources and Windows remain open.
+
+### COVERAGE-WRITABLE-WORKSPACE
+
+- Outcome: completed
+- Verified criteria: The Linux launcher selects the private coverage workspace when target or its log directory is unavailable, including log, build context, cache and report; explicit dataset and output remain supported. The requested full EUR report was generated.
+- Evidence: [Change record](../changes/2026-11-26-fallback-rom-coverage-workspace.json) and [coverage guide](ROM_COVERAGE.md). Real Docker e333-d332 PASS; HTML/JSON and manifest agree. Ten launcher tests and two final-path checks PASS.
+- Limits: The external image returned EIO on 25 November; disk repair was not part of the launcher fix. Report has 108 families awaiting evidence review and no scene-audit imports. Windows was not assessed.
+
+### ROMDATA-VIEWER-REFRESH-E333
+
+- Outcome: completed
+- Verified criteria: the local European dataset and scoped wiki are updated from e303/d302 to e333/d332; all 156 resource hashes and the complete manifest match the accepted source evidence. The prior index and changed pages were backed up, and the current dataset has an ignored versioned link.
+- Evidence: unit rom-data-viewer-refresh-e333-verified-stkwxjij PASS; four Chrome page checks, 145 embedded resource pages, 157 published files plus the merged ownership marker. Manifest SHA-256 d5aef3344336933e58aa1a7691a35f51a23017962f44e22fad29dd659159e997. Dataset: out/rom-data-europe-e333-d332.
+- Limits: 84 valid resources lack a dedicated preview; larger viewer expansion and Windows remain paused. Temporary launcher attempts 9ju__jis and zakdpids had resolved build setup errors; ved3o80d rejected valid no-preview statuses before the corrected validation. Primary Terra/xhigh settings were not independently confirmed.
+
+### ROMDATA-VIEWER-E538-GRIDS
+
+- Outcome: completed
+- Verified criteria: browse all three UI rectangles; inspect stored cells and the documented staged/direct template forms, including wrapping and padded columns; resource navigation and local publication work.
+- Evidence: synthetic iy01h8l1 (50 tests); protected EUR ptfkl8c_ (nine source hashes, 490 original and 728 displayed cells across seven forms, one pixel, 15 Docker/Python files); docs/changes/2026-11-26-browse-ui-tilemap-rectangles.json.
+- Limits: graphics and palettes are manually selected; live scenes, further previews, complete audio and native Windows remain open.
+
+### ROMDATA-VIEWER-INDEXED-ARCHIVES
+
+- Outcome: completed
+- Verified criteria: a separately scoped wiki page shows decoded indexed programs with selectable 4/8-bit tiles, palettes, pages, source positions and playback controls; v1 and v2 catalogs are supported and local pages were published.
+- Evidence: synthetic vrjlte3s (54 tests), v2 focused a7de4j7_, protected EUR thlfcw8m (3,811 programs in 75 archives, 677,408 independently decoded bytes, 24 pixels, 16 Docker/Python files); docs/changes/2026-11-26-browse-indexed-graphics-programs.json.
+- Limits: manual graphics interpretation, palettes and preview timing do not establish live scene animation; other viewer previews/audio and Windows remain open. Prior zhbkd6xw exposed an unsupported v2 format, corrected in the passing run; primary Terra/xhigh was not independently confirmed.
+
+### COVERAGE-HOMEPAGE-LINK
+
+- Outcome: completed
+- Verified criteria: The root homepage coverage shortcut selects the newest detailed standard report, supports alternate detailed locations and retains the public overview in the list. Its Linux launcher also writes logs to an available fallback directory.
+- Evidence: [Change record](../changes/2026-11-26-link-detailed-coverage-from-home.json) and [homepage guide](../report_home.md). Six focused tests PASS in coverage-home-link-y8uoj2ez. The regenerated root shortcut resolves to target/rom-coverage-local/index.html; embedded HTML data equals e333-d332 JSON.
+- Limits: Local-file browser automation was blocked by the browser URL policy; navigation was verified from the generated page and destination. The first test unit hn8w50l9 is retained with a malformed result receipt despite passing tests.

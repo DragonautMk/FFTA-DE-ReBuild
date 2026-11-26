@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "link-detailed-coverage-from-home",
+  "title": "Open the detailed ROM coverage map from the local homepage",
+  "kind": "fixed",
+  "platforms": [
+    "Linux",
+    "Windows"
+  ],
+  "changes": [
+    "Choose the newest detailed coverage map among the standard target and fallback output paths for the homepage shortcut. When those are absent, select another detailed report or the public summary. Keep the public summary available in the coverage list.",
+    "Make Linux homepage generation use an out/report-home log directory when target logs are unavailable. Regenerate the root homepage and retain a private preimage."
+  ],
+  "validation": [
+    "Six targeted tests passed in managed unit coverage-home-link-y8uoj2ez, covering standard, fallback, custom and legacy reports, summary-only behavior, Linux log fallback and portable homepage behavior.",
+    "The regenerated homepage has 347 indexed reports. Its coverage shortcut resolves to the local e333-d332 detailed map with 156 resource families. The public summary is also linked."
+  ],
+  "limitations": [
+    "The browser automation URL policy blocked opening the local file. Navigation was verified by parsing the actual generated homepage and checking its destination and coverage data.",
+    "The first test unit coverage-home-link-hn8w50l9 passed the tests but was retained after the result writer emitted an invalid literal newline. The corrected unit passed."
+  ],
+  "files": [
+    "scripts/report_home.py",
+    "scripts/linux/report_home.sh",
+    "scripts/tests/test_report_home_coverage.py",
+    "docs/report_home.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/report_home.md",
+    "scripts/report_home.py"
+  ]
+}

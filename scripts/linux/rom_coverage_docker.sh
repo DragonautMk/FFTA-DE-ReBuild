@@ -2,17 +2,18 @@
 # Generate the atlas with Python, Cargo and nm inside Docker.
 set -euo pipefail
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
+work_dir="$repo_dir/target"
 rom_path='rom/1194 - Final Fantasy Tactics Advance (E)(Surplus).gba'
 dataset_dir=''
 translation_path=''
 audit_paths=()
 comparison_path=''
-output_dir='target/rom-coverage-local'
+output_dir="$work_dir/rom-coverage-local"
 evidence_path='docs/development/rom-coverage/evidence.json'
 usage() {
     printf 'Usage: %s [--rom FILE] [--dataset DIR] [--translation FILE] [--output DIR] [--evidence FILE] [--audit REPORT ...] [--compare COVERAGE_JSON]\n' "$0"
     printf 'Default: prepare the latest committed extractor dataset and use versioned code-entry metadata.\n'
-    printf 'All relative paths start at the project root. Logs: target/build-logs/rom-coverage-*.log\n'
+    printf 'Relative paths start at the project root. Logs are in build-logs/ under target/ or, if unavailable, out/rom-coverage/.\n'
 }
 main() {
 while (( $# )); do
@@ -94,7 +95,7 @@ if [[ -n "$dataset_dir" ]]; then
         args+=(--cache-lease /cache-lease)
     fi
 else
-    cache_dir=$(resolve_path "$repo_dir/target/rom-data/coverage")
+    cache_dir=$(resolve_path "$work_dir/rom-data/coverage")
     mkdir -p -- "$cache_dir"
     cache_dir=$(resolve_path "$(cd -- "$cache_dir" && pwd -P)")
     mounts+=(--mount "type=bind,source=$cache_dir,target=/cache")
@@ -118,7 +119,7 @@ if [[ -n "$comparison_path" ]]; then
 fi
 image=ffta-rom-coverage:local
 source_revision=$(git -C "$repo_dir" rev-parse --verify HEAD)
-context_dir=$(mktemp -d -- "$repo_dir/target/rom-coverage-context-XXXXXX")
+context_dir=$(mktemp -d -- "$work_dir/rom-coverage-context-XXXXXX")
 trap 'rm -rf -- "$context_dir"' EXIT
 # Include committed include_bytes! tool assets; WIP scripts must not enter the runtime.
 git -C "$repo_dir" archive --format=tar --output "$context_dir/runtime.tar" "$source_revision" \
@@ -148,5 +149,13 @@ printf 'JSON data on host: %s/coverage.json\n' "$output_dir"
 
 case ${1-} in --help|-h) usage; exit 0 ;; esac
 
+# An unmounted target can be an intentionally non-writable directory.
+if ! mkdir -p -- "$work_dir/build-logs" 2>/dev/null ||
+   [[ ! -w "$work_dir" || ! -w "$work_dir/build-logs" || ! -x "$work_dir/build-logs" ]]; then
+    work_dir="$repo_dir/out/rom-coverage"
+    output_dir="$work_dir/report"
+    printf 'Cannot write coverage files under %s/target. Using %s.\n' "$repo_dir" "$work_dir" >&2
+fi
+
 source "$repo_dir/scripts/linux/build_terminal.sh"
-run_logged_build rom-coverage 'ROM coverage' "$repo_dir/target/build-logs" "$@"
+run_logged_build rom-coverage 'ROM coverage' "$work_dir/build-logs" "$@"

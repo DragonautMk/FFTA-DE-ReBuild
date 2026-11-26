@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-ui-tilemap-rectangles",
+  "title": "Browse UI tilemap source rectangles",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose the three extracted UI tilemap rectangles in the existing tilemap explorer, with source links and preserved raw cell values.",
+    "Show the documented staged and direct template transformations with 16-bit wrapping, labeled original values and staged zero-column padding."
+  ],
+  "validation": [
+    "Synthetic unit iy01h8l1 passed 50 projection, browser, scoped-generation and regression tests.",
+    "Protected EUR unit ptfkl8c_ checked nine source hashes, 490 original cells, 728 cells across seven views, one rendered pixel and 15 Docker/Python files; the ignored local index and world page were published."
+  ],
+  "limitations": [
+    "Graphics, tile base and palette remain manually chosen; the preview does not reproduce complete live interface composition. Windows was deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_ui_rectangles_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

@@ -103,7 +103,7 @@ wiki.
 
 Open the resulting HTML index locally. Its topic links open separate offline
 pages for world/interface data, object animations, actors/equipment, battle
-actors, script actors, audio, text/fonts, event scripts and other resources. The overview embeds
+actors, script actors, audio, text/fonts, event scripts, indexed graphics and other resources. The overview embeds
 only index fields, and each topic page embeds its own projected data and the
 small shared dependencies required by its previews. Full manifest metadata is
 retained on its topic page. Folder selection and other page-session controls
@@ -298,6 +298,19 @@ prototype only when the paused viewer task is requested again.
   and navigation in Linux Chrome. No complete scene or original palette pairing
   is inferred. Initial unit `rom-data-viewer-tilemaps-eur-tuysj7hm` stopped
   because its comparison did not allow the expected resource-status change.
+- [x] **UI source rectangles and template forms.** The tilemap explorer
+  includes all three stored grids from `graphics.ui-raw-transfers`, linked
+  from the resource index. For the two templates, choose stored cells, the
+  staged 16-bit addition of `0x00C0`, or the direct-draw addition of `0x0300`.
+  The staged 12-column template receives two zero columns per row. The cell
+  inspector distinguishes original cells from transformed and added values.
+  Graphics and palettes remain manually selected; these views do not recreate
+  the full interface or establish the live scene. Synthetic Chrome unit
+  `iy01h8l1` passed 50 projection, browser and regression checks. Protected
+  EUR unit `ptfkl8c_` matched nine source ranges, all 490 stored cells, 728
+  cells in seven views and a pixel, and compared 15 Docker/Python files. The
+  validated ignored index and world page were published; Windows is deferred.
+  [Source contract](../rom_data_ui_raw_transfers.md#e538-european-tilemap-rectangles)
 - [x] **Per-cell tilemap palettes.** Optionally use each interpreted cell's
   palette ID within the manually selected palette source. Unit
   `rom-data-viewer-tilemap-palettes-hh4zsvun` checked per-cell colors, flips,
@@ -452,6 +465,23 @@ prototype only when the paused viewer task is requested again.
   The validated index and world page were published locally with guarded inputs;
   the paused inspector and unrelated pages remain unchanged. Windows is deferred.
   [Transfer format](../rom_data_graphics.md#european-background-transfer-programs)
+- [x] **Indexed graphics programs.** A separate scoped page browses the
+  decoded programs in the localized, color-mode, White Flowers, additional and
+  reader-bank families. Choose an archive, program, 4-bit or 8-bit tile depth,
+  grayscale or a stored palette, and tile page. Select a tile for its decoded
+  byte offset; archive source fields and packet counts remain available. Play
+  successive programs from the selection at a chosen rate with optional looping.
+  Program order, chosen graphics interpretation and palettes do not establish
+  a game animation or original timing. Synthetic unit `vrjlte3s` passed 54
+  viewer and generator tests; follow-up `a7de4j7_` checked both catalog formats.
+  Protected EUR unit `thlfcw8m` independently decoded all 3,811 programs in
+  75 archives (677,408 bytes), compared their browser hashes and 24 sample
+  pixels, preserved other scoped data and 145 file pages, and matched 16
+  Docker/Python files. The dedicated page was 2,355,553 bytes. The validated
+  ignored index and ten topic pages were published. Earlier `zhbkd6xw` exposed
+  an unrecognized v2 resource format; the corrected run passed. Primary
+  Terra/xhigh settings were not independently confirmed. Windows is deferred.
+  [Archive format](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks)
 - [x] **Interface tile sheets.** Browse `ui-graphics.json` banks as a 4-bit
   interpretation, using grayscale or a manually chosen `ui-palettes.json`
   bank. Selectors and language IDs open their linked bank when it belongs to

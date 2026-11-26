@@ -288,8 +288,10 @@ new/changed families are visible with review pending. The generated HTML shows
 its real generation time, dataset generation, source commit and separate evidence
 review date. Logs include count deltas or explicit unchanged coverage feedback;
 both HTML/JSON are rewritten on every successful run. PowerShell `-OpenReport`
-uses a timestamped file URL to request the new page. Failure logs remain under
-`target/build-logs/rom-coverage-*.log`, and validation failures preserve the report.
+uses a timestamped file URL to request the new page. Failure logs normally remain
+under `target/build-logs/rom-coverage-*.log`. On Linux, an unavailable target or
+log directory redirects coverage to `out/rom-coverage/`, with logs in `build-logs/`
+and the default report in `report/`. Validation failures preserve the report.
 
 ROM/evidence and explicit datasets/ELF inputs are read-only; only the private
 cache and report output are writable. Generation runs offline and Linux

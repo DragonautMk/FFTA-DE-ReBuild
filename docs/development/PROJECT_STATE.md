@@ -198,8 +198,9 @@ and normal enablement retain their existing acceptance gates.
   reuse the existing coverage image with readonly checkout/network disabled,
   without extraction or runtime builds. Regenerate after report changes; browser
   reload alone cannot discover new local files. Catalog presence/mtime does not
-  establish report validity or new scene acceptance. The template, generated group
-  labels, search feedback and date presentation use English. Existing report
+  establish report validity or new scene acceptance. The coverage shortcut prefers
+  detailed local reports and falls back to the public summary. The template,
+  generated group labels, search feedback and date presentation use English. Existing report
   titles and paths remain verbatim. All eight tracked runtime debug-report HTML
   templates use English fixed UI, including gameplay, issue, comparison and
   graphics views; source-generated metadata is audited separately.
@@ -3739,6 +3740,9 @@ and normal enablement retain their existing acceptance gates.
   path, then wait for Enter on a terminal attached to stdout or stderr.
   Captured runs return the failure code immediately. The normal log directory
   is `target/build-logs/`, with a temporary fallback for log setup failures.
+  The Linux coverage launcher can run with an unwritable target or log directory.
+  It uses `out/rom-coverage/` for its logs, build context, dataset cache and
+  default report.
   [Inventory/contract](ROM_DATA_INVENTORY.md) documents other families' unknowns.
   The [overall ROM coverage atlas](ROM_COVERAGE.md) follows the latest committed
   EUR extractor generation with metadata-only HTML/JSON and separate candidate
