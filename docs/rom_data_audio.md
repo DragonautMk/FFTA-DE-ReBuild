@@ -832,6 +832,67 @@ passed (`e145-audio-callback-dis-wine-1b9xztet`).
 Linux, USA and native Windows remain pending; no performance measurements were
 made.
 
+## E539 European timed sound census
+
+The original scheduler at `080e389c` has 423 aligned direct Thumb call
+patterns in the exact European image. A bounded straight-line analysis
+resolves a source and record count for 398 patterns. The remaining 25
+patterns use indexed tables, pointer directories, branch-dependent counts
+or RAM records. The recovered plan contains 552 controlled cases covering
+those original call sites and 587 distinct eight-byte records. It projects
+6,249 bytes outside the `e333-d332` manifest, preserving existing owners
+for overlapping records, directory entries and literals.
+
+The retained static recovery units `tw2wt2yp` and `41spvgah` pass.
+The complete recovered plan has SHA-256
+`4b296fbcff063fd46d8072b876eb1e5a00bebd75acd99f13e2bc7ee706d0f501`.
+Its authenticated projection has SHA-256
+`0de3d6f452cdc163063be3a9d164fc52013a69fa4b7305a2b1452acbb88a53da`.
+The first recovery reproduced the census of 398 direct patterns and
+3,960 previously unowned bytes within their selected records. The second
+reconstructed the wider selector plan and matched the previously recorded
+projection fingerprint.
+
+EUR `e334-d333` adds the new literal, directory, count, RAM-source-word
+and timed-record spans to `audio.m4a-directory`. Rows retain their tick,
+channel, opaque byte and two sound words. Existing owners continue to serve
+their earlier overlapping source bytes. The original scheduler remains in
+guest code.
+
+Windows build `54qwtb0b` and Wine unit `zw1q89b2` pass. The controlled
+interpreter executes the 552 original caller setups and the selected
+original tick, channel and sound-word loads. With the new backing bytes
+altered, the audio resource serves 5,371 typed bytes. The raw and managed
+machines agree on guest clock and complete saved state. The exact
+`e333-d332` predecessor attaches and an incomplete current dataset is
+rejected without replacing the attached owner. The Wine server drains. The
+manifest SHA-256 is
+`f16de91ae893a0bbad6584c430b5b86a58e45eda879051986e9ba6593091e351`.
+
+E540 Wine unit `_sl6hnxe` replayed 600 recorded Red Spring frames from
+guest frame 7657 with all 681 new E539 spans (6,249 bytes) altered in the
+decoded machine's backing ROM. Complete state, clock, video, OAM, dispatch
+and audio agreed at every frame, and the Wine server drained. The E539 typed
+byte counter was **zero**: this scene did not exercise the new bank, so it
+does not establish ordinary consumption or full scheduler behavior. The test
+option `FFTA_STATE_TEST_POISON_TIMED_SOUNDS` preserves this bounded observation
+for a future scene with a confirmed caller.
+
+E541 protected join `w7moq4q8` compares the 681 new source spans with six
+previously captured, authenticated Wine address inventories. The selected
+readers recorded no intersecting addresses during the captured Star Cross,
+Soil Evidence, White Flowers, Llednar, Blue Screw or Firaga windows. These
+are address-only samples, not exhaustive reader traces or proof that those
+scenes cannot reach the bank in other circumstances. The join establishes no
+executing PCs or current managed serving.
+
+The initial Wine unit `8rryxb16` stopped before the test because the wrapper
+path was relative to the scratch directory. Unit `qoqo7vm7` stopped while
+parsing the plan's earlier-owner field. Both servers drained, and the corrected
+fixture passed. Full scheduler behavior, indirect calls, other producers,
+ordinary gameplay, original BIOS, translated dispatch, Linux, USA and native
+Windows remain open. No performance measurements were made.
+
 ## E187 Red Spring timed sound schedules
 
 EUR E187-d186 extends `audio.m4a-directory` with two original timed sound

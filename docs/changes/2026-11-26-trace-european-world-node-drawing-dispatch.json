@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "trace-european-world-node-drawing-dispatch",
+  "title": "Identify the European world-node drawing dispatch and mode producer",
+  "kind": "docs",
+  "platforms": [
+    "European source and retained Wine state evidence"
+  ],
+  "changes": [
+    "Trace the signed map delta reader to a 30-node drawing loop and its five-entry dispatch. Trace the scheduler and stage 9 initializers through the 256-entry outer switch, and identify the 52 remaining unowned dispatch and literal bytes as one family."
+  ],
+  "validation": [
+    "Metadata unit 785naf3v passes 54 input guards and finds no mode 1 or registered stage 8, 9 or 10 in 45 selected retained EUR snapshots. It authenticates all 17 renderer literals and the three original direct call sites."
+  ],
+  "limitations": [
+    "Ordinary execution requires a normal placement recording before stage 9. Inner dispatch publication, generated dispatch, original BIOS, Linux, USA and native Windows remain open. No new scene replay or performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

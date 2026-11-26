@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-two-word-initializers",
+  "title": "Serve European two-word initializer pairs",
+  "kind": "added",
+  "platforms": [
+    "Windows tests under Wine, European ROM"
+  ],
+  "changes": [
+    "Add ten physical two-word initializer arrays and thirteen literal roots to the copied lookup resource, preserving shared addresses and previous Firaga ownership."
+  ],
+  "validation": [
+    "Wine census x24m4_a0, Windows build bk4evfo2 and Wine xtp6kbf3 passed: thirteen original interpreter/generated readers, shared aliases, altered backing, 32-bit boundaries, full state and clock, preparation/reuse, exact e336 predecessor and transactional rejection; Wine drained."
+  ],
+  "limitations": [
+    "The first Wine attempt qisp2u56 failed because its test expected a stop between chained adjacent generated blocks; the grouped retry passed. Ordinary entry, other formats, original BIOS, Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/initializer_pairs.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/initializer_pair_bank_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

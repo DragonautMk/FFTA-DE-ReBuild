@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-direct-metadata-name-references",
+  "title": "Browse direct metadata name references",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible, searchable and paginated EUR metadata name reference view with language selectors and source text links.",
+    "Keep routed rows unresolved and support metadata catalogs without slot or text dependencies."
+  ],
+  "validation": [
+    "Synthetic unit e7zs0drd passed 40 of 41 tests; the temporary Chrome profile collision was fixed and all four focused tests passed in 318wv1u6.",
+    "Protected EUR e335/d334 unit t_lxfhg8 matched 112 direct records and 560 localized strings, preserved ten scope payloads and 145 resource pages, verified browser navigation and matched 17 Docker/Python outputs. Eleven validated local wiki pages were published."
+  ],
+  "limitations": [
+    "Direct metadata references do not establish live role or job availability; four routed rows are not evaluated. Windows was deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_metadata_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

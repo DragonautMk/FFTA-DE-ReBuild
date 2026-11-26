@@ -127,7 +127,7 @@ class JobNameBrowserTest(unittest.TestCase):
                 end = time.monotonic() + 30
                 while time.monotonic() < end:
                     try:
-                        if browser.evaluate("document.readyState==='complete' && typeof data!=='undefined' && data.wiki.current==='text'"):
+                        if browser.evaluate("document.readyState==='complete' && typeof data!=='undefined' && data.wiki.current==='text-pointers'"):
                             break
                     except (RuntimeError, OSError):
                         pass

@@ -41,6 +41,61 @@ changing another agent's selected goal.
 
 ## Whole-bank extraction priority
 
+- [x] **ROMDATA-04-EUR-TWO-WORD-INITIALIZERS scoped EUR/Wine:** E545
+  `x24m4_a0` authenticates 16 selected load/store patterns. Wine
+  `xtp6kbf3` verifies thirteen original readers, ten distinct pairs and
+  thirteen literal roots, altered backing, generated chains, boundary
+  reads and `e336-d335` attachment.
+  [Evidence](../rom_data_runtime.md#e545-european-two-word-initializer-pairs).
+- [ ] **ROMDATA-04-EUR-TWO-WORD-INITIALIZERS-ORDINARY:** establish ordinary
+  entry and downstream meaning; classify other load/store patterns and
+  indirect consumers before extending the family. The E546 bounded
+  consecutive word-load/stack-store census `o5m6ysfv` finds only the same
+  16 owned E545 patterns. E547 `nowdl2c0` finds no reads of the E543–E545
+  new spans in six retained selected-reader scene windows.
+- [ ] **ROMDATA-05-EUR-TWO-WORD-INITIALIZERS-LINUX:** repeat E545
+  publication, predecessor attachment, original readers and boundary
+  checks on Linux.
+- [ ] **ROMDATA-05-TWO-WORD-INITIALIZERS-USA:** authenticate regional
+  pairs and readers before USA validation; native Windows remains pending.
+- [ ] **ROMDATA-04-EUR-INITIALIZER-COPY-VARIANTS-REVISION-FIXTURE:** update
+  the E544 test's pinned current and predecessor revisions after e337 before
+  rerunning it. Its accepted e336 result remains valid.
+
+- [x] **ROMDATA-04-EUR-INITIALIZER-COPY-VARIANTS scoped EUR/Wine:** E544
+  `m6gmfq5h` authenticates 44 literal-rooted register patterns. Wine
+  `hoduqk8r` verifies 13 source gaps and three additional roots, 212 source
+  bytes and 60 literal bytes, original interpreter/generated copies,
+  boundaries, prior owners and `e335-d334` attachment.
+  [Evidence](../rom_data_runtime.md#e544-european-initializer-copy-register-variants).
+- [ ] **ROMDATA-04-EUR-INITIALIZER-COPY-VARIANTS-ORDINARY:** establish
+  ordinary entry and downstream semantics; investigate other base/register
+  patterns and indirect copies before extending the census.
+- [ ] **ROMDATA-05-EUR-INITIALIZER-COPY-VARIANTS-LINUX:** repeat E544
+  publication, predecessor attachment, copy and boundary checks on Linux.
+- [ ] **ROMDATA-05-INITIALIZER-COPY-VARIANTS-USA:** authenticate regional
+  source arrays and readers before USA validation; native Windows is pending.
+- [ ] **ROMDATA-04-EUR-INITIALIZER-COPY-BANK-REVISION-FIXTURE:** update the
+  E543 test's pinned current and predecessor revisions after e337 before
+  rerunning it. Its accepted e335 result remains valid.
+
+- [x] **ROMDATA-04-EUR-INITIALIZER-COPY-BANK scoped EUR/Wine:** E543
+  `m0qm_8f4` authenticates 17 exact copy patterns and identifies 14
+  previously unowned arrays. Wine `sdjtlh9f` verifies their 204 source and
+  56 literal bytes, original interpreter/generated copies with altered
+  backing, 32-bit boundaries and `e334-d333` attachment.
+  [Evidence](../rom_data_runtime.md#e543-european-literal-rooted-initializer-copies).
+- [ ] **ROMDATA-04-EUR-INITIALIZER-COPY-BANK-ORDINARY:** establish ordinary
+  entry and downstream interpretation for the copied arrays. Classify other
+  register patterns and indirect consumers before extending the census.
+- [ ] **ROMDATA-05-EUR-INITIALIZER-COPY-BANK-LINUX:** repeat E543 publication,
+  predecessor attachment, original copies and boundary checks on Linux.
+- [ ] **ROMDATA-05-INITIALIZER-COPY-BANK-USA:** authenticate regional source
+  arrays and original readers before USA checks; native Windows remains open.
+- [ ] **ROMDATA-04-EUR-TIMED-SOUND-BANKS-REVISION-FIXTURE:** update the E539
+  test's pinned current revision and predecessor after the e337 change before
+  rerunning it. Its accepted e334 result remains valid.
+
 - [x] **ROMDATA-01-EUR-BIOS-LZ77-ROOTS scoped EUR/Wine source inspection:**
   E509 `do_1rw2s` authenticates 24 direct caller patterns and the three
   VRAM streams left outside e316-d315 among 12 complete absolute-pointer
@@ -234,8 +289,99 @@ changing another agent's selected goal.
   constructor and both state handlers through ordinary input. Confirm
   translated dispatch and original BIOS reads on the affected paths.
 - [ ] **ROMDATA-01-EUR-CPUSET-INITIALIZER-FAMILIES:** identify readers
-  for the three 28-byte peers of `3954f0` and resolve their roles and
-  bounds before publication. Track later-state table work below.
+  for the three 28-byte peers of `3954f0` and resolve their roles
+  before publication. E554 `kk_mzy8p` bounds all four records. The
+  three peers remain unowned and seven retained Wine windows have
+  zero overlapping reads. The interior address-shaped PCM word
+  has zero bounded literal-load matches. Require a producer or
+  independent original provenance.
+  [Evidence](../rom_data_graphics.md#e554-european-constructor-peers-and-adjacent-signed-table).
+- [x] **ROMDATA-04-EUR-SIGNED-DELTA-TABLE scoped EUR/Wine:** E555
+  `hszbu_3b` verifies all 48 signed entries and the source word,
+  with 96 typed requests over 52 altered source bytes. Cases 48 and
+  255 bypass the table. Full state, guest clock and `e337-d336`
+  attachment agree. Missing-table rejection preserves the active owner.
+  [Evidence](../rom_data_graphics.md#e555-european-signed-map-delta-runtime).
+- [x] **ROMDATA-02-EUR-SIGNED-DELTA-DATASET-VERIFY-REUSE:** E557
+  `z7fmbzql` verifies all 157 files of each retained revision on
+  Wine. The materialized e338 manifest matches E555. `prepare`
+  reuses the selected e338 generation with all file hashes intact.
+  [Evidence](../rom_data_graphics.md#e557-european-signed-delta-cli-verification-and-reuse).
+- [ ] **ROMDATA-02-EUR-SIGNED-DELTA-DATASET-PUBLICATION:** verify
+  the fresh CLI creation path on Wine with an empty resources root.
+  Compare its manifest to the E555 candidate. E557 closed the
+  retained-revision verification and ready-generation reuse checks.
+- [x] **ROMDATA-01-EUR-SIGNED-DELTA-CALLER-REGISTRY:** E556
+  `785naf3v` authenticates the three direct draw calls, the
+  complete five-mode switch and the stage 9 producer of mode 1.
+  The 256-entry outer switch already has owners for its table and root.
+  [Evidence](../rom_data_graphics.md#e556-european-world-node-drawing-dispatch).
+- [x] **ROMDATA-04-EUR-WORLD-NODE-DISPATCH-BANK scoped EUR/Wine:**
+  E558 `ua5x_s_7` serves all 52 bytes from the two typed packets.
+  Five targets, four bypasses, two draw windows, preserved owners,
+  adjacent bytes, full state and `e338-d337` attachment pass.
+  [Evidence](../rom_data_graphics.md#e558-european-world-node-dispatch-runtime).
+- [x] **ROMDATA-02-EUR-WORLD-NODE-DISPATCH-CLI scoped EUR/Wine:** E559
+  `k44ipd3_` verifies 157 retained e339 files against the E558 manifest
+  and the exact ROM. `prepare` reuses the generation with every file
+  and selector hash intact.
+  [Evidence](../rom_data_graphics.md#e559-european-world-node-dispatch-cli-verification-and-reuse).
+- [ ] **ROMDATA-02-EUR-WORLD-NODE-DISPATCH-FRESH-PUBLICATION:** verify
+  first creation from an empty resources root on Wine and compare the
+  published e339 manifest with E558. E559 covers the ready path.
+- [x] **ROMDATA-01-EUR-WORLD-STATE-TASK-LITERALS:** E560 `tedgyw0j`
+  identifies all 372 words and 381 literal readers in the bounded
+  world task across its 256 switch entries. It classifies the eight
+  common tails and selector 68's cycle against original code.
+  [Evidence](../rom_data_graphics.md#e560-european-world-state-task-literal-census).
+- [x] **ROMDATA-04-EUR-WORLD-STATE-TASK-LITERAL-BANK scoped EUR/Wine:**
+  E561 `y1oruut7` serves the complete 357-word bank and enables page `34`.
+  All 381 original load sites, the 15 earlier word owners, 24 mixed
+  mirror reads, final full state and e339 attachment pass.
+  [Evidence](../rom_data_graphics.md#e561-european-world-state-task-literal-runtime).
+- [x] **ROMDATA-02-EUR-WORLD-STATE-TASK-LITERALS-CLI scoped EUR/Wine:**
+  E562 `yid7rliw` stages e340 against the E561 hashes and retains the
+  verified dataset. The standard CLI verifies 157 files and reuses the
+  ready generation with all file and selector hashes intact.
+  [Evidence](../rom_data_graphics.md#e562-european-world-state-task-cli-verification-and-reuse).
+- [ ] **ROMDATA-02-EUR-WORLD-STATE-TASK-LITERALS-FRESH-PUBLICATION:**
+  verify first creation from an empty resources root on Wine and compare
+  the resulting manifest with E561. E562 covers the retained generation.
+- [ ] **ROMDATA-04-EUR-WORLD-STATE-TASK-LITERALS-GIZA-TRAVEL.** Replay the
+  33 retained E550 travel frames with e340 on Wine. Alter the original
+  backing of the bank, confirm typed consumption and record the observed
+  dispatch slots. Require state, clock, image, OAM, audio and dispatch parity
+  for every frame. The goal was paused with the Windows build waiting on
+  target I/O. Check that build's terminal receipt after the goal resumes.
+- [ ] **ROMDATA-04-EUR-WORLD-STATE-TASK-LITERALS-LIVE:** obtain an
+  ordinary placement route and attribute the world-state task loads.
+  Verify direct generated reads and original BIOS where applicable.
+- [ ] **ROMDATA-05-EUR-WORLD-STATE-TASK-LITERALS-LINUX:** repeat the
+  whole-bank runtime, attachment and boundary checks on native Linux
+  after integration.
+- [ ] **ROMDATA-05-WORLD-STATE-TASK-LITERALS-USA:** authenticate the
+  USA task extent, switch and literal readers before regional validation.
+- [ ] **ROMDATA-04-EUR-SIGNED-DELTA-TABLE-ORDINARY:** obtain a normal
+  placement recording starting before world task stage 9 and retain
+  the enabled region and the selected index. E556 found no mode 1 or
+  stages 8–10 in 45 inspected snapshots. Verify actual reads at
+  `080386ec` and the E558 inner table on a positive path. Check generated
+  dispatch and original BIOS.
+- [ ] **ROMDATA-05-EUR-SIGNED-DELTA-TABLE-LINUX:** repeat the dataset
+  lifecycle, predecessor attachment and bounded original-reader proof
+  on native Linux when selected.
+- [ ] **ROMDATA-05-SIGNED-DELTA-TABLE-USA:** authenticate the regional
+  reader, guard and full source table before validation. Native Windows
+  remains a separate deferred check.
+- [ ] **ROMDATA-05-EUR-WORLD-NODE-DISPATCH-LINUX:** repeat current and
+  predecessor attachment, five targets, bypasses and draw-window reads
+  on native Linux when selected.
+- [ ] **ROMDATA-05-WORLD-NODE-DISPATCH-USA:** authenticate the corresponding
+  five-mode dispatcher and literal pool before USA runtime validation.
+  Native Windows remains deferred.
+- [ ] **ROMDATA-REGRESSION-E338-INITIALIZER-PAIRS-WINE:** adapt the
+  E545 test's pinned dataset expectations before rerunning it with
+  `e338-d337`. Its accepted `e337-d336` results remain valid.
 - [x] **ROMDATA-01-EUR-CPUSET-LATER-STATE-TABLES scoped EUR/Wine:** E524
   `_ar1qo7z` authenticates both eight-word scroll tables and all four
   paired readers. The E522 `tpy1pbna` window establishes the complete
@@ -316,13 +462,46 @@ changing another agent's selected goal.
   with altered backing. The table aliases, scratch, VRAM, guest clock,
   full state and `e331-d330` attachment pass.
   [Evidence](../rom_data_indexed_graphics.md#e537-european-world-map-label-and-calendar-lookups).
-- [ ] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-ORDINARY:** choose the language
-  at ROM startup and follow the stored value into the original map
-  calls. Identify the live label and month producers and verify
-  translated dispatch and original BIOS copies.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-CALENDAR-TRAVEL:** E550
+  `ycsv0f81` passes 33 ordinary Giza travel frames with the 100 E537
+  bytes altered. At frame 19147 the original Thumb interpreter reads
+  the calendar literal and English month 2 byte through the extracted
+  data. Full state, clock, video, OAM, dispatch and audio agree. Wine
+  drains.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-LABELS:** E551 confirms the
+  original normal Select renderer for slot 8 and the Area List builder
+  for all 29 enabled slots. Both paired Wine runs match all 202 frames
+  with all 100 E537 backing bytes altered and 60 typed requests.
+  Reconciliation `biljwb2l` verifies the drained Wine unit `72b0p6g0`
+  and its protected inputs after the private-input retention guard.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-STARTUP:** E552 `thd38sqm`
+  starts at the original startup selector at frame 900 and chooses
+  French before loading File No. 2. At frame 2224 the original
+  interpreter reads the French month 3 offset and its literal from
+  the extracted dataset. All 1,580 frames match with all 100 E537
+  backing bytes altered. The trace and input guards pass, and Wine
+  drains.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-GENERATED-LOADS:** E553
+  `_tm3qa43` translates the six original literal and data loads in
+  isolated blocks. The 93 generated requests cover all 100 E537
+  bytes and both aliases. Complete state and clock match the
+  interpreter with the backing spans altered. Wine drains.
+- [ ] **ROMDATA-04-EUR-WORLD-MAP-LOOKUPS-ORDINARY:** E550 covers the
+  date-advance calendar call with language 0 and month 2, E551 covers
+  both ordinary label readers, and E552 follows the startup choice
+  into the French month 3 lookup. Confirm the dispatch context at
+  `08033448`, other live language and month values, remaining live
+  label slots and the record-list boundary alias. E549 `lg61xqgl`
+  reaches four typed context reads and zero lookup-bank requests
+  when opening the map menu. E553 proves generated reads for the
+  isolated instructions. Confirm generated dispatch in ordinary play
+  and original BIOS copies separately.
+  [Evidence](../rom_data_indexed_graphics.md#e537-european-world-map-label-and-calendar-lookups).
 - [ ] **ROMDATA-05-EUR-WORLD-MAP-LOOKUPS-LINUX:** repeat E537
   preparation, predecessor attachment and original label and calendar
-  comparisons on native Linux.
+  comparisons, and the E549 map menu, E550 Giza travel, E551 labels
+  and E552 startup-to-calendar traces on native Linux. Repeat the E553
+  generated-load comparison.
 - [ ] **ROMDATA-05-WORLD-MAP-LOOKUPS-USA:** authenticate the equivalent
   regional tables, archives and consumers before validation. Native
   Windows remains deferred.
@@ -393,9 +572,12 @@ changing another agent's selected goal.
   [Evidence](../rom_data_indexed_graphics.md#e506-european-indexed-archive-census).
 - [ ] **ROMDATA-01-EUR-INDEXED-ARCHIVE-3B8FBC:** identify an original reader or
   independently establish its provenance. E506 decodes the 20 programs in
-  the 1,139-byte archive. Determine the effective source argument, including
-  computed or indirect roots. Continue the wider grammar and mode inventory
-  under ROMDATA-01-EUR-INDEXED-GRAPHICS-OTHER-GROUPS.
+  the 1,139-byte archive. E548 `l1_gc3as` confirms it remains unowned in e337;
+  neighboring readers, interior address-shaped payloads and seven selected-reader
+  scene windows do not establish a path. Require an original producer supplying
+  `0800537c`, the corresponding program/dictionary addresses at `08005228`, or
+  independent original metadata naming the archive. Continue wider grammar and
+  mode inventory under ROMDATA-01-EUR-INDEXED-GRAPHICS-OTHER-GROUPS.
 - [x] **ROMDATA-04-EUR-INDEXED-ARCHIVE-BANKS scoped EUR/Wine:** E507
   `e2wb1r9a` publishes 31 complete archives, three tables and 16 root
   words. Checks pass for creation, reuse, verification, predecessor
@@ -3354,6 +3536,25 @@ current evidence before running another check.
   corresponding USA tables and consumers; native Windows remains pending.
 - [ ] **ROMDATA-01-E187-SOUND-SCHEDULES-OTHER:** classify the separately rooted
   adjacent rows, the E186 record root `109628`, other schedules and consumers.
+- [x] **ROMDATA-04-EUR-TIMED-SOUND-BANKS scoped EUR/Wine:** E539
+  `zw1q89b2` publishes 6,249 bytes, compares 552 original caller setups
+  and selected record reads with altered backing, and verifies full state,
+  guest clock and `e333-d332` attachment.
+  [Evidence](../rom_data_audio.md#e539-european-timed-sound-census).
+- [ ] **ROMDATA-04-EUR-TIMED-SOUND-BANKS-ORDINARY:** reach representative
+  callers through ordinary gameplay and verify the complete scheduler,
+  indirect producers, translated dispatch and original BIOS paths. The 600-frame
+  Red Spring Wine observation `_sl6hnxe` had zero new E539 typed reads despite
+  matching state, clock, video, OAM, dispatch and audio with altered backing;
+  protected address join `w7moq4q8` also found zero new-span reads in six
+  other retained scene windows for their selected readers. Choose a scene with
+  evidence of a new-bank caller.
+- [ ] **ROMDATA-05-EUR-TIMED-SOUND-BANKS-LINUX:** repeat the selected source
+  binding, attachment and original caller checks on native Linux after the
+  EUR/Wine implementation passes.
+- [ ] **ROMDATA-05-TIMED-SOUND-BANKS-USA:** authenticate the equivalent
+  regional scheduler and source banks before USA validation. Native Windows
+  remains deferred.
 - [ ] **ROMDATA-01-E187-AUDIO-DIRECTORY-FIXTURES:** adapt revision-pinned older
   audio directory oracle/publication fixtures to E187 before rerunning them;
   keep Linux runs pending until Linux validation is selected.

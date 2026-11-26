@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-tilemap-stream-bank",
+  "title": "Browse decoded tilemap stream bank",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Decode bounded halfword tilemap streams and linked fragmented byte streams from authenticated binary resource ranges.",
+    "Show halfword cells in the tilemap explorer and byte cells in a separate grayscale grid with source and transfer references."
+  ],
+  "validation": [
+    "Synthetic Chrome unit h11axgo7 passed 56 projection, browser and regression checks including missing, malformed and shared-source cases.",
+    "Protected EUR unit 33ceaq_x matched 61 halfword streams, seven byte streams, 10110 cells and nine references to authenticated source, checked every map in Chrome, preserved prior scope data and 145 resource pages, and matched 16 Docker/Python outputs. Eleven local wiki pages were published."
+  ],
+  "limitations": [
+    "Previews show only the first decoded traversal; original composition, graphics and palette pairings and Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_tilemap_stream_bank_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

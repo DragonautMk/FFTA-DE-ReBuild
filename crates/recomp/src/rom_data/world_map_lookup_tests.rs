@@ -1,9 +1,9 @@
 //! Run the original EUR label loads and calendar transfer from poisoned ROM copies.
 
 use super::{
-    attach_from_directory, cmd, encode_indexed_graphics,
+    attach_dataset, attach_from_directory, cmd, encode_indexed_graphics,
     indexed_reader_bank_tests::{execute_until, initialize},
-    parse, parse_indexed_graphics, Manifest, INDEXED_GRAPHICS_FILE, INDEXED_GRAPHICS_ID,
+    parse, parse_indexed_graphics, read_dataset, Manifest, INDEXED_GRAPHICS_FILE, INDEXED_GRAPHICS_ID,
     MANIFEST_FILE,
 };
 use gba_core::{
@@ -19,7 +19,12 @@ use gba_core::{
     Bus, Machine,
 };
 use serde::Deserialize;
-use std::{collections::BTreeMap, fs, path::PathBuf, sync::Arc};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fs,
+    path::PathBuf,
+    sync::Arc,
+};
 
 const BASE: u32 = 0x0800_0000;
 const STACK: u32 = 0x0300_7c00;
@@ -319,6 +324,193 @@ fn european_world_map_lookups_use_extracted_tables() {
             "archives_used": stats.archives_used, "programs_used": stats.programs_used,
             "predecessor_attach": true, "missing_group_rejected": true,
             "boundary_aliases_equal": true, "vram_and_full_state_equal": true,
+        }))
+        .unwrap(),
+    )
+    .unwrap();
+}
+
+struct LookupLoad {
+    pc: u32,
+    source: u32,
+    width: usize,
+    address_register: Option<usize>,
+}
+
+#[test]
+#[ignore = "requires the private EUR ROM, an attached dataset with E537 banks and TinyCC"]
+fn european_world_map_lookup_loads_use_generated_bus_reads() {
+    use gba_core::{capi::RT_API, rom_data::read_audit::Reader as AuditReader};
+    use recomp_core::analyze::{Analysis, Block, View};
+
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    assert_eq!(digest(&rom), EUROPE_SHA256);
+    let work = input("FFTA_WORLD_MAP_WORK");
+    let dataset = read_dataset(&input("FFTA_STATE_TEST_DATASET")).unwrap();
+    let owner = dataset
+        .manifest
+        .resources
+        .iter()
+        .find(|resource| resource.id == INDEXED_GRAPHICS_ID)
+        .expect("indexed archives in the authenticated dataset");
+    let spans: Vec<_> = owner
+        .sources
+        .iter()
+        .filter(|source| {
+            matches!(
+                source.role.as_str(),
+                "world-map-label-ids" | "world-map-calendar-offsets" | "world-map-lookup-literal"
+            )
+        })
+        .map(|source| (source.offset, source.offset + source.length))
+        .collect();
+    assert_eq!(spans.len(), 5);
+    assert_eq!(
+        spans.iter().map(|&(start, end)| end - start).sum::<u32>(),
+        100
+    );
+
+    let literals = [
+        (0x033cae, 0x033cdc),
+        (0x03eecc, 0x03ef10),
+        (0x03719a, 0x037264),
+    ];
+    let label_loads = [(0x033cba, 1, 0), (0x03eed4, 0, 1)];
+    let calendar_pc = 0x0371b2;
+    let cases: Vec<_> = literals
+        .iter()
+        .map(|&(pc, source)| LookupLoad {
+            pc,
+            source,
+            width: 4,
+            address_register: None,
+        })
+        .chain(label_loads.iter().flat_map(|&(pc, register, first_slot)| {
+            (first_slot..=31).map(move |slot| LookupLoad {
+                pc,
+                source: LABEL_TABLE + 2 * slot,
+                width: 2,
+                address_register: Some(register),
+            })
+        }))
+        .chain(
+            (CALENDAR_TABLE - 1..CALENDAR_TABLE + 26).map(|source| LookupLoad {
+                pc: calendar_pc,
+                source,
+                width: 1,
+                address_register: Some(0),
+            }),
+        )
+        .collect();
+    assert_eq!(cases.len(), 93);
+
+    let view = View {
+        rom: &rom,
+        ewram: None,
+        iwram: None,
+        bios: None,
+    };
+    let pcs = cases
+        .iter()
+        .map(|case| BASE + case.pc)
+        .collect::<BTreeSet<_>>();
+    let blocks = pcs
+        .iter()
+        .map(|&addr| Block {
+            addr,
+            thumb: true,
+            instrs: vec![armv4t::decode_thumb(view.read16(addr), addr)],
+        })
+        .collect();
+    let scratch = tempfile::tempdir_in(&work).unwrap();
+    let object = scratch.path().join("map-lookup-loads.o");
+    recomp_core::tcc_memory::build(
+        &Analysis { blocks },
+        &view,
+        &recomp_core::tcc_memory::library_path().unwrap(),
+        &object,
+        &mut |_| {},
+    )
+    .unwrap();
+    let (_library, table) = crate::load_native(&object).unwrap();
+
+    let mut raw = Machine::new(rom.clone());
+    let mut generated = Machine::new(rom.clone());
+    attach_dataset(&mut generated, &dataset).unwrap();
+    let initial = raw.save_state().unwrap();
+    let mut covered = BTreeSet::new();
+    for load in &cases {
+        let pc = BASE + load.pc;
+        let address = BASE + load.source;
+        for machine in [&mut raw, &mut generated] {
+            machine.load_state(&initial).unwrap();
+            initialize(machine, pc);
+            if let Some(register) = load.address_register {
+                machine.cpu.regs[register] = address;
+            }
+        }
+        assert!(
+            matches!(raw.step(), gba_core::StepEvent::Instr(instruction) if instruction.addr == pc)
+        );
+
+        // A lookup must come through the typed view even when its raw bytes
+        // differ. Restore the backing before comparing snapshot identity.
+        for &(start, end) in &spans {
+            for byte in &mut generated.bus.rom[start as usize..end as usize] {
+                *byte ^= 0xff;
+            }
+        }
+        let capture = TraceCapture::start(
+            TraceFilter {
+                readers: vec![AuditReader::Bus],
+                ranges: spans.clone(),
+            },
+            4,
+        )
+        .unwrap();
+        capture.frame(Some(generated.bus.frames));
+        let entry = table
+            .get(pc | 1)
+            .expect("generated single-instruction entry");
+        let next = entry(
+            &RT_API,
+            &mut generated as *mut Machine as *mut std::ffi::c_void,
+        );
+        assert_eq!(next, (pc + 2) | 1);
+        let trace = capture.finish();
+        assert_eq!((trace.matched_requests, trace.dropped_requests), (1, 0));
+        let event = &trace.events[0];
+        assert_eq!(event.key.service, Service::Typed);
+        assert_eq!(event.key.read.guest_address, address);
+        assert_eq!(event.key.read.physical_offset, load.source);
+        assert_eq!(event.key.read.length, load.width);
+        assert!(
+            event.key.instruction.is_none(),
+            "compiled load used interpreter at {pc:08x}"
+        );
+        covered.extend(load.source..load.source + load.width as u32);
+        for &(start, end) in &spans {
+            let span = start as usize..end as usize;
+            generated.bus.rom[span.clone()].copy_from_slice(&rom[span]);
+        }
+        assert_eq!(generated.bus.clock, raw.bus.clock, "load at {pc:08x}");
+        assert!(
+            generated.save_state().unwrap() == raw.save_state().unwrap(),
+            "state mismatch at {pc:08x} reading {address:08x}"
+        );
+    }
+    let source_bytes: BTreeSet<_> = spans.iter().flat_map(|&(start, end)| start..end).collect();
+    assert_eq!(covered, source_bytes);
+    fs::write(
+        work.join("native-result.json"),
+        serde_json::to_vec_pretty(&serde_json::json!({
+            "status": "PASS",
+            "revision": [dataset.manifest.extractor_revision, dataset.manifest.decoder_revision],
+            "compiled_load_pcs": pcs,
+            "generated_typed_requests": cases.len(),
+            "covered_source_bytes": covered.len(),
+            "all_backing_spans_altered": true,
+            "state_and_guest_clock_equal_each_case": true,
         }))
         .unwrap(),
     )

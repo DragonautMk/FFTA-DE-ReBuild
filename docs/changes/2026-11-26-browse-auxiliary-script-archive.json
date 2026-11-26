@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-auxiliary-script-archive",
+  "title": "Browse the auxiliary script archive",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose the separate auxiliary script archive and command directory on the event scripts page, with slot-to-instruction links, reverse references, opcode filters and paged physical programs.",
+    "Keep the archive and directory independently browsable when either resource is missing or invalid; retain resource links and scoped page loading."
+  ],
+  "validation": [
+    "Synthetic Chrome unit 6bo4tsoz passed 40 projection, isolation, browser and regression checks.",
+    "Protected EUR unit h6or111a reconstructed 4200 authenticated source bytes, checked 442 slots, 133 programs, 913 instructions and 17 commands in Chrome, preserved other scope payloads and 143 resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files were published with historical ownership retained.",
+    "Initial real unit bwxi9vzj stopped at an overstrict resource inventory equality assertion; the accepted unit preserved the four older retained entries."
+  ],
+  "limitations": [
+    "The view shows stored instructions and source references, without simulating predicates or execution. Native Windows validation is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_auxiliary_scripts_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_scripts.md"
+  ]
+}

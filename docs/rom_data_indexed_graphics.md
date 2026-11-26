@@ -94,6 +94,32 @@ Noncontiguous or aliased layouts, computed and indirect arguments, and
 ordinary invocation remain open. A new claim on `3b8fbc` needs an original
 argument path or independent source provenance.
 
+## E548 Remaining indexed archive provenance
+
+Protected static unit `e548-indexed-archive-provenance-l1_gc3as` confirms
+that `3b8fbc..3b942f` remains entirely unowned in `e337-d336`. The E508
+archive has 20 decoded programs and 1,139 source bytes. The preceding known
+archive ends at `3b8fb9`; an independently rooted OBJ stream begins at
+`3b9430`, after the candidate's one-byte alignment gap. Their placement
+constrains physical neighbors but does not establish a path to the candidate.
+The three original readers of the following OBJ stream pass its root directly
+to the other decoder, without an intervening backward adjustment.
+
+No exact little- or big-endian 24-bit representation of the candidate's
+offset, or little-endian representation of the offset plus one, occurs in
+the image. Three address-shaped words into the candidate occur in authenticated
+background packet payloads and Script39 pose pixels; no original pointer
+reader for those bytes is established. The six retained E460 scene inventories
+and the separate 12-frame home audit contain zero selected-reader bytes in the
+candidate interval. These windows do not cover every reader, scene or dispatch.
+
+The missing prerequisite is an authenticated original producer supplying
+this archive to `0800537c`, its program and dictionary addresses to `08005228`,
+or independent original resource metadata naming it. Keep the archive
+unpublished until one of those proofs exists. Other grammars, ordinary paths,
+Linux, USA and native Windows remain open. No performance measurements were
+made.
+
 ## E436 Fifteen additional European archives source plan
 
 Protected reconstruction `e436-eur-fifteen-indexed-archive-source-plan-dojboxqe`
@@ -225,9 +251,87 @@ missing the new ranges is rejected transactionally. The Wine server drains.
 The new manifest SHA-256 is
 `8a58a451681c932fea452d72e2ce95941587f2ec62c86d67c937a1849c422c24`.
 
-Ordinary play from the language choice at startup, live producers,
-translated execution, original BIOS, Linux, USA and native Windows remain
-on the recovery checklist. No performance measurements were made.
+E549 replays 41 frames from the saved EUR state at frame 4519 that enters
+the world map menu. Wine unit `e549-map-bank-trace-wine-lg61xqgl` uses the
+existing `e337-d336` dataset and alters all five E537 backing spans
+(100 bytes), plus the 132-byte context table as a positive control.
+State, clock, central and wide video, OAM, dispatch, and five nonempty audio
+streams match at every frame. The trace captures four typed context reads
+at frame 4529, zero requests that overlap the E537 spans, and zero dropped
+requests. The Wine server drains and the protected inputs match their
+preimages. The recorded snapshot starts after the language selection.
+
+E550 follows the retained normal Giza travel from frame 19145 through
+19178. Its authenticated snapshots preserve language 0 and month 2
+while the day advances from 9 to 10. In the original code,
+`080468f6` calls the day and month writer and `080468fc` calls the
+calendar routine at `08037170`. A second direct call at `08033448`
+sets `r0` to 1. The record-list builder at `0803ee60` has a direct call
+at `0803f116`.
+
+Wine unit `e550-calendar-travel-wine-ycsv0f81` reuses the E549 Windows
+test and `e337-d336`. It alters all 100 E537 backing bytes. At frame
+19147, Thumb interpreter sites `0803719a` and `080371b2` read the
+four-byte literal at `037264` and the one-byte calendar offset at
+`39562b` through the attached resource. Both requests are typed and
+the trace drops none. State, clock, video, OAM, dispatch and five
+nonempty audio streams match on all 33 frames. The protected inputs
+remain unchanged and the Wine server drains.
+
+E551 reaches both original label consumers. The Giza checkpoint at
+frame 19049 has selected slot 8 and a clear transition gate. A normal
+Select press reaches the renderer at frame 19052. Thumb interpreter
+sites `08033cae` and `08033cba` read the typed literal at `033cdc`
+and the halfword at `3955fc`.
+
+The retained Area List confirmation starts at frame 3216. Its
+authenticated save context enables slots 1–27, 29 and 30 through an
+availability byte in each original twelve-byte record. At frame 3220, Thumb
+interpreter sites `0803eecc` and `0803eed4` read the typed literal
+and halfword for each of those 29 slots. The captured reads match the
+saved slot set exactly.
+
+The paired Wine runs alter all 100 E537 backing bytes. All 16 Select
+frames and 186 Area List frames match in complete state, clock, video,
+OAM, dispatch and five nonempty audio streams. All 60 selected requests
+are typed and the trace drops none. The Wine children exit successfully
+and the server drains. Runner `e551-map-labels-wine-72b0p6g0` retains
+the generated private input files after the output check. Reconciliation
+`e551-map-labels-reconciled-biljwb2l` verifies both results and every
+protected input without rerunning gameplay.
+
+E552 starts from the authenticated original startup language selector
+at frame 900, with English highlighted and the protected cartridge save
+already in memory. Down, release and A select French. The replay
+continues through the title and File No. 2 load in a single run,
+using the retained load intervals. The File No. 2 confirmation
+input arrives at frame 2119.
+
+In Wine unit `e552-startup-calendar-wine-thd38sqm`, Thumb interpreter
+sites `0803719a` and `080371b2` read the typed literal at `037264`
+and the typed French month 3 byte at `395631` at frame 2224. The offset
+identifies the stored language value 1 used by the original calendar
+reader. The retained File No. 2 load establishes month 3. The whole
+1,580-frame replay matches complete state, clock, video, OAM, dispatch
+and five nonempty audio streams with all 100 E537 backing bytes
+altered. The trace drops no requests, the input guards pass and the
+Wine server drains.
+
+E553 checks the same bank through generated instructions. Windows build
+`gkmt47rd` and Wine unit `e553-map-native-wine-_tm3qa43` pass. TinyCC
+compiles six single-instruction blocks at the original literal and
+lookup sites. With `e337-d336` attached and all five backing spans
+altered, the blocks make three word requests, 63 halfword requests and
+27 byte requests. They cover all 100 source bytes, including the
+slot-31 halfword and English month-0 byte aliases. Every request comes
+from a generated bus read. The complete state and guest clock match
+the original interpreter after each instruction. The input guards
+pass and the Wine server drains.
+
+Remaining live label slots, other language and month values, the
+dispatch context at `08033448`, generated dispatch in ordinary play,
+original BIOS, Linux, USA and native Windows remain on the recovery
+checklist. No performance measurements were made.
 
 ## E212 European color-mode archive publication
 

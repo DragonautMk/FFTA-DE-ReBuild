@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-world-state-literal-cli",
+  "title": "Verify and retain the European e340 dataset on Wine",
+  "kind": "docs",
+  "platforms": [
+    "Standard Windows CLI under Wine, European profile"
+  ],
+  "changes": [
+    "Stage the current dataset from retained e339 files and the E561 manifest and literal packet hashes. Bind all 357 added words through the authenticated E560 plan."
+  ],
+  "validation": [
+    "Build qdoiyxhd and Wine yid7rliw pass. Verify checks 157 files, prepare reuses the ready generation, all 18 guards pass and Wine drains. The exact e340 dataset is retained for the next reader checks."
+  ],
+  "limitations": [
+    "Fresh CLI creation, live placement, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

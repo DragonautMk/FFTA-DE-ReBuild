@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 pub mod dynamic_fragments;
 pub mod halfword_copies;
 pub mod localized_queued;
+pub mod signed_map_deltas;
 
 pub const ROOTS: [u32; 7] = [
     0x71e5f4, 0x71e608, 0x71e66c, 0x71e694, 0x71e6a8, 0x71e6e4, 0x71e6f8,
@@ -60,6 +61,8 @@ pub struct RawTransfers {
     pub fixed_banks: Vec<BankView>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub halfword_copies: Option<halfword_copies::HalfwordCopies>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub signed_map_deltas: Option<signed_map_deltas::SignedMapDeltas>,
 }
 impl RawTransfers {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -131,6 +134,9 @@ impl RawTransfers {
         if let Some(copies) = &self.halfword_copies {
             spans.extend(copies.source_spans()?);
         }
+        if let Some(deltas) = &self.signed_map_deltas {
+            spans.extend(deltas.source_spans()?);
+        }
         spans.sort_by_key(|v| v.0);
         if spans
             .windows(2)
@@ -153,20 +159,25 @@ impl RawTransfers {
         }
         self.banks.iter().chain(&self.fixed_banks).find_map(|b| b.byte_at(offset))
             .or_else(|| self.halfword_copies.as_ref()?.byte(offset).map(|(value, _)| value))
+            .or_else(|| self.signed_map_deltas.as_ref()?.byte_at(offset).map(|(value, _)| value))
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        let layout = match &self.halfword_copies {
-            None => CopyLayout::Legacy,
-            Some(copies) if copies.tilemap_rectangles.is_some() => CopyLayout::TilemapRectangles,
-            Some(copies) if copies.scanline_blend.is_some() => CopyLayout::ScanlineBlend,
-            Some(copies) if copies.color_mode_pairs.is_some() => CopyLayout::ColorModePairs,
-            Some(copies) if copies.scroll_register_tables.is_some() => CopyLayout::ScrollRegisters,
-            Some(copies) if copies.state_initializers.is_some() => CopyLayout::StateInitializers,
-            Some(copies) if copies.row_pairs.is_some() => CopyLayout::RowPairs,
-            Some(copies) if copies.vram_loaders.is_some() => CopyLayout::VramLoaders,
-            Some(copies) if copies.preloads.is_none() => CopyLayout::Biased,
-            Some(_) => CopyLayout::Preloads,
+        let layout = if self.signed_map_deltas.is_some() {
+            CopyLayout::SignedMapDeltas
+        } else {
+            match &self.halfword_copies {
+                None => CopyLayout::Legacy,
+                Some(copies) if copies.tilemap_rectangles.is_some() => CopyLayout::TilemapRectangles,
+                Some(copies) if copies.scanline_blend.is_some() => CopyLayout::ScanlineBlend,
+                Some(copies) if copies.color_mode_pairs.is_some() => CopyLayout::ColorModePairs,
+                Some(copies) if copies.scroll_register_tables.is_some() => CopyLayout::ScrollRegisters,
+                Some(copies) if copies.state_initializers.is_some() => CopyLayout::StateInitializers,
+                Some(copies) if copies.row_pairs.is_some() => CopyLayout::RowPairs,
+                Some(copies) if copies.vram_loaders.is_some() => CopyLayout::VramLoaders,
+                Some(copies) if copies.preloads.is_none() => CopyLayout::Biased,
+                Some(_) => CopyLayout::Preloads,
+            }
         };
         if self != &Catalog::from_rom_with_copy_layout(rom, layout)?.decoded {
             return Err("Raw transfers differ from authenticated EUR source".into());
@@ -188,6 +199,7 @@ pub(crate) enum CopyLayout {
     ColorModePairs,
     ScanlineBlend,
     TilemapRectangles,
+    SignedMapDeltas,
 }
 
 pub struct Catalog {
@@ -196,7 +208,7 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
-        Self::from_rom_with_copy_layout(rom, CopyLayout::TilemapRectangles)
+        Self::from_rom_with_copy_layout(rom, CopyLayout::SignedMapDeltas)
     }
 
     pub(crate) fn from_rom_with_copy_layout(
@@ -287,6 +299,9 @@ impl Catalog {
                 pointers,
             });
         }
+        let signed_map_deltas = (layout >= CopyLayout::SignedMapDeltas)
+            .then(|| signed_map_deltas::SignedMapDeltas::from_rom(rom))
+            .transpose()?;
         let decoded = RawTransfers {
             tables,
             banks: banks.into_values().collect(),
@@ -302,6 +317,7 @@ impl Catalog {
                 CopyLayout::Legacy => None,
                 layout => Some(halfword_copies::from_rom(rom, layout)?),
             },
+            signed_map_deltas,
         };
         let spans = decoded.source_spans()?;
         if ffta_rom::digest(

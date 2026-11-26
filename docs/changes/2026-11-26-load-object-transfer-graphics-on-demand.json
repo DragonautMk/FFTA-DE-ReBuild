@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "load-object-transfer-graphics-on-demand",
+  "title": "Load transfer graphics in object animations",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Make the shared compressed and raw transfer inputs available on demand in the object-animation viewer without embedding them in the object topic page.",
+    "Preserve existing selections and restore bookmarks, share embedded data across all three applicable single-page views, and retry missing or mismatched local assets."
+  ],
+  "validation": [
+    "Synthetic unit qu1hh1xv passed 46 of 47 checks; the remaining fixture expected the first-byte color at a later pixel. After correcting the expectation, Chrome unit 0ldr0r2e passed all eight focused checks.",
+    "Initial real unit torujq_d observed the button disabled while loading and checked the payload too early; the accepted retry waits for the populated selector and payload.",
+    "Protected EUR unit rom-data-viewer-obj-transfer-real-8cy6xzm5 checked 323 compressed and 14 raw inputs, sampled a manually paired pixel from each kind, restored a bookmark, preserved 11 scope payloads apart from the object-page asset reference and 145 resource pages, and matched 22 Docker/Python files. Twelve ignored wiki pages were published using the existing asset."
+  ],
+  "limitations": [
+    "Treating a payload as object graphics and selecting a palette or scene association remain manual and unproved. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_obj_transfer_graphics_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

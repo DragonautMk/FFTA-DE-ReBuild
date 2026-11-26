@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-item-effect-parameters",
+  "title": "Browse item effect parameters",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Show the fourteen source-backed European item-effect records, their coefficients and cap, with bidirectional links to item records.",
+    "Calculate the documented bounded increase from user-supplied byte inputs while keeping other regional profiles and missing item records safe."
+  ],
+  "validation": [
+    "Synthetic unit 3d69s9dq passed 39 browser, generator and navigation tests; profile guard 8lkn7_xq passed.",
+    "Protected EUR unit j0h3etxz authenticated 98 reconstructed source bytes, checked 1,848 calculation cases and both links, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "The preview covers the bounded helper only; it does not execute the complete item-use UI or alter game state. Windows was deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_item_effects_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

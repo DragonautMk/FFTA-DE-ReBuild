@@ -8458,3 +8458,123 @@ compact-cell record ends at `af1816`, followed by two alignment bytes
 before the first E457 tilemap at `af1818`. Protected inputs pass and
 Wine drains. Linux, USA and native Windows remain open. Performance
 measurement is deferred. [Compact-cell plan](rom_data_graphics.md#e489-european-adjacent-compact-cell-source-plan)
+
+## E543 European literal-rooted initializer copies
+
+The authenticated E543 scan finds 17 aligned Thumb patterns in which a
+PC-relative literal loads `r0`, followed immediately by one or more identical
+three-word `ldmia r0!` / `stmia r1!` pairs. The Wine disassembler checks every
+instruction against the exact European image. The original copied extents are
+12 bytes for sixteen patterns and 48 bytes for one. Three extents already have
+owners in `graphics.ui-raw-transfers` or `engine.copied-halfword-lookups`.
+The other fourteen are disjoint from `e334-d333` ownership. These are exact
+instruction-pattern candidates; the census does not establish reachability or
+cover copies using other registers and instruction sequences.
+
+EUR `e335-d334` extends `engine.copied-halfword-lookups` with those fourteen
+word arrays and their literal roots: 204 source bytes and 56 pointer bytes.
+Each source retains its physical identity, including identical content at
+distinct addresses. The typed little-endian words reproduce the original bytes;
+the original code retains the stack destination, subsequent interpretation and
+control flow. Existing overlapping owners and unselected bytes keep their prior
+routing. Dataset `e334-d333` remains attachable.
+
+Census `e543-eur-initializer-copy-census-wine-m0qm_8f4` and Windows test build
+`e543-initializer-bank-windows-build-retry-rt7n1bgc` pass. Wine
+`e543-initializer-bank-wine-sdjtlh9f` runs all fourteen original literal and
+copy sequences in interpreter and generated instruction blocks with altered
+new ROM backing. Stack bytes, guest clock and complete state agree with the raw
+machine; 32-bit reads across every source and root boundary also agree. The
+new owner serves all fourteen records. Preparation/reuse, exact predecessor
+attachment and transactional rejection of an incomplete current dataset pass;
+the Wine server drains. Manifest SHA-256:
+`52091fd25ec05e6d905fc3efa52b5e7bb1411d295dcf4775a2f65f1c8bc93675`.
+
+The first build `0s3m7lqu` failed on a missing test-only `Bus` trait import;
+the corrected retry passed. Ordinary scene entry, downstream use of the copied
+stack data, other copy patterns, original BIOS, Linux, USA and native Windows
+remain open. No performance measurements were made.
+
+## E544 European initializer copy register variants
+
+Wine census `e544-eur-initializer-variants-census-wine-m6gmfq5h` extends E543
+beyond its particular register list. It authenticates 44 aligned patterns in
+which a PC-relative Thumb literal loads the source base, followed immediately
+by matching `ldmia`/`stmia` pairs. The source and destination base registers
+must differ and must not occur in the transferred register list. Individual
+pairs may use different register lists. This remains an instruction-pattern
+census, not proof that every pattern is reached or that other copy sequences
+have been identified.
+
+Thirteen patterns include 212 source bytes absent from `e335-d334`. One of
+those patterns continues an E543 array: its first 12 bytes and its literal
+retain the existing owner, and only the next 12 bytes are added. Three further
+patterns have completely owned source arrays but previously unowned literals;
+two of these arrays belong to `graphics.palette-programs`, the other to the
+existing copied lookup resource. All sixteen selected patterns add 60 literal
+bytes. EUR `e336-d335` extends `engine.copied-halfword-lookups` with the new
+word fragments and literal roots without duplicating those earlier owners.
+
+Windows build `e544-initializer-variants-windows-build-tejjsew0` and Wine
+`e544-initializer-variants-wine-hoduqk8r` pass. Each selected original sequence
+runs in interpreter and generated instruction blocks with the new backing
+bytes altered. The copied bytes, guest clock and complete state agree with the
+raw path; 32-bit reads across every new source/root boundary also agree.
+Preparation and reuse, exact `e335-d334` attachment and transactional rejection
+of an incomplete current dataset pass, and Wine drains. Manifest SHA-256:
+`5162d9d53b280ac64b7a1fd6d51331a27a3e0d26bcd87f5ef429710c87231e35`.
+
+The wider census does not cover base registers in the transferred list,
+non-literal roots, indirect copies or other instruction patterns. Ordinary
+scene entry, downstream semantics, original BIOS, Linux, USA and native
+Windows remain open. No performance measurements were made.
+
+## E545 European two-word initializer pairs
+
+Wine census `e545-eur-pair-initializers-census-wine-x24m4_a0` authenticates
+16 aligned Thumb patterns that load a literal-rooted pair of words and store
+them into adjacent stack slots. Thirteen readers and ten physical pairs were
+unowned in `e336-d335`; four of those readers share one pair. Three other
+patterns already belong to `engine.firaga-stack-initialization`. The scan is
+limited to this specific immediate load/store sequence and does not establish
+entrypoint reachability or the extent of other initializer formats.
+
+Protected static census `e546-stack-copy-census-o5m6ysfv` additionally
+allows up to 24 consecutive word loads and stack stores, including
+interleaving, provided the original source and destination words are
+contiguous and ordered. It finds exactly the same 16 two-word patterns; all
+their source and literal bytes have `e337-d336` owners. Other instructions,
+destinations, branches and indirect roots remain outside that census.
+
+EUR `e337-d336` adds those ten two-word arrays and thirteen literal roots to
+`engine.copied-halfword-lookups`: 80 source bytes and 52 pointer bytes. Shared
+addresses have one physical owner; distinct addresses remain distinct even
+when their contents match. Guest code continues to interpret the copied stack
+values. All three pre-existing Firaga sources retain their original owner.
+
+Windows build `e545-pair-chains-windows-build-bk4evfo2` and Wine
+`e545-initializer-pairs-wine-retry-xtp6kbf3` pass. The thirteen original
+readers run with altered new ROM backing in both interpreter and generated
+instruction chains. Copied words, guest clock and complete state agree with
+the raw path; 32-bit reads across every new source and root boundary agree.
+Preparation/reuse, exact `e336-d335` predecessor attachment and transactional
+rejection of an incomplete current dataset pass. All ten pair and thirteen
+root masks are exercised, and Wine drains. Manifest SHA-256:
+`0c1764b25baca3c3ec0d40a744c07cce1a6b62b7abaa9a0db7d0ea9aa183df96`.
+
+The first Wine unit `qisp2u56` failed because its test attempted to stop
+between adjacent generated blocks that can execute as one chain. The corrected
+test compares both adjacent readers together and passes; both Wine servers
+drained. Ordinary scene entry, downstream interpretation, other load/store
+patterns, original BIOS, Linux, USA and native Windows remain open. No
+performance measurements were made.
+
+## E547 initializer reads in retained scene inventories
+
+Protected join `e547-initializer-scene-join-nowdl2c0` compares all 79 E543,
+E544 and E545 source/root spans (664 bytes) against the selected-reader
+address inventories previously recorded on Wine for Star Cross, Soil Evidence,
+White Flowers, Llednar, Blue Screw and Firaga. None of those captured windows
+intersects the new spans. These are address-only samples of selected readers;
+they do not exclude other readers or routes, identify executing PCs, or prove
+current managed serving. Ordinary entry and downstream semantics remain open.

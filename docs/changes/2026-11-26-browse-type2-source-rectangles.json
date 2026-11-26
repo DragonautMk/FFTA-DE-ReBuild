@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-type2-source-rectangles",
+  "title": "Browse type-2 source rectangles",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose complete type-2 source rectangles, copy windows and available list/transfer references in the tilemap explorer.",
+    "Join two palette-row fragments and add window references to three previously browsed maps; report incomplete or unavailable sources independently."
+  ],
+  "validation": [
+    "Synthetic Chrome unit a4urna0v passed 48 projection, partial-source, browser and regression checks.",
+    "Protected EUR unit 3gn5lnjv authenticated 1482 packed ranges and prior resources, compared 203 rectangles, 2338 cells, 539 windows and source links with the ROM, checked all rectangles/windows in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 18 Docker/Python files. Twelve ignored wiki pages were published."
+  ],
+  "limitations": [
+    "Some rectangles contain palette colors and tile interpretation, graphics and palettes are manually selected. Additional unowned windows, scene composition and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_type2_rectangles_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

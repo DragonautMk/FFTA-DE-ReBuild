@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "investigate-european-indexed-archive-provenance",
+  "title": "Investigate the remaining European indexed archive provenance",
+  "kind": "docs",
+  "platforms": [
+    "European ROM and retained Wine evidence"
+  ],
+  "changes": [
+    "Reconcile the unowned canonical indexed archive against authenticated adjacent resources, interior address-shaped matches and seven retained selected-reader scene inventories."
+  ],
+  "validation": [
+    "Protected static unit l1_gc3as passed: the candidate remains unowned, direct neighboring readers do not supply its root, three interior matches are inside known payloads, and the selected Wine windows have no intersecting reads."
+  ],
+  "limitations": [
+    "No original producer or independent metadata names the archive; computed or indirect paths and other scenes remain open. Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

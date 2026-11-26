@@ -538,6 +538,219 @@ checks. The failed unit is retained and its server drained. Ordinary
 entry, translated dispatch, later callback tables, original BIOS, Linux,
 USA and native Windows remain open.
 
+## E554 European constructor peers and adjacent signed table
+
+E554 `e554-constructor-source-census-kk_mzy8p` checks all four
+28-byte records at `3954d4..395544` against EUR `e337-d336`. The
+constructor at `0803eb64` loads the word at `03ebb4` and passes
+the owned `3954f0` record to CPUSet for 14 halfwords. The other
+three records remain unowned. The record at `39550c` matches the
+owned record byte for byte. The word at `267f58` encodes an address
+inside the last record and lies within `audio/pcm-wave/110`. The
+bounded Thumb and ARM literal-load scans find zero consumers for
+that word. The following root at `395544` has its own original
+literal load at `08047858`. Seven retained selected-reader Wine
+windows report zero overlapping reads for the four records.
+Publication of the three peers requires an original producer or
+independent source provenance.
+
+The preceding 48-byte signed table at `3954a4..3954d4` has a
+separate original reader. At `080386ec`, the code accepts unsigned
+indices 0 through 47. It reads the literal at `038704` and
+increments the live index. At `080386f8`, it reads one byte,
+sign-extends it, and adds the result to `r6`. The two source
+spans account for 52 unowned `e337-d336` bytes. The source
+census authenticates both spans and the guarded code window.
+The seven retained Wine windows report zero overlapping requests
+for the signed table. E555 below covers its controlled runtime reader.
+
+## E555 European signed map delta runtime
+
+EUR `e338-d337` adds `signed_map_deltas` to
+`graphics.ui-raw-transfers`. It contains 48 signed bytes and the
+original pointer literal. The runtime serves their original byte
+representation through the existing ROM bus path. The guest still
+checks the index, updates the live counter and applies the signed
+offset. The earlier `e337-d336` revision retains its exact packet
+shape and continues to attach.
+
+Wine unit `e555-signed-map-deltas-wine-hszbu_3b` checks the
+original reader with both source spans altered in the backing ROM.
+All 48 valid indices make exactly one four-byte literal read and
+one byte read. Cases 48 and 255 make no table reads and leave the
+index and accumulator untouched. All 50 paired runs agree on full
+state and guest clock. The first byte of the adjacent constructor
+peer still reads from the backing ROM. Attaching `e338-d337` with
+the table missing fails and preserves the attached dataset.
+
+The test builds the changed packet in memory using the retained
+`e337-d336` dataset and changes only one manifest resource. The
+candidate manifest SHA-256 is
+`9429d5daa30ab207e12200b70fa1af7bf825fb04d63dec0033c7a98b9a1cbc71`.
+The Wine server drained. E557 below checks CLI verification and
+reuse. Fresh publication, ordinary entry, generated dispatch,
+original BIOS, native Linux, USA and native Windows remain open.
+
+## E556 European world-node drawing dispatch
+
+The signed reader belongs to the node renderer at `08038588`,
+called directly from `08035dd2`, `080360ec` and `0803690a`. The
+renderer loops over 30 region records and checks each record's
+enabled flag. A nonzero mode at world manager `+685` and a
+matching region index at `+686` select the inner dispatch at
+`080386a6`. The original subtract-one and unsigned guard bound
+all five entries at `0386b4..0386c8`. Mode 1 selects `080386c8`
+and uses the byte at `+688` as the signed table index. It adds the
+offset to the screen Y before the original draw call at `080387cc`.
+
+The world task at `08032dec` is registered in scheduler slot 0
+at `08031e80`. Its 256-entry outer dispatch at `032e14..033214`
+and its root already have owners. Stage 9 selects `080340b6`,
+sets mode 1, delay 70 and index 0, copies view `+1b` into `+686`,
+then advances to stage 10. The stage 8 placement branch at
+`08033ffc` writes the region record and schedules stage 9 when
+manager `+a52` is `ff`, view `+1a` is nonzero and view `+1b`
+is zero before placement.
+
+Unit `e556-world-node-mode-source-785naf3v` authenticates the
+dispatches and all 17 literal words used by the renderer. The
+20-byte inner table and eight of its renderer's literal words,
+including the inner root, were unowned in `e338-d337`. E558
+below covers the complete 52-byte projection. The
+45 inspected retained snapshots contain no mode 1 or registered
+world stage 8, 9 or 10. A normal placement recording before that
+transition is needed for the ordinary signed-reader proof. The
+first source driver `o_b_lql4` failed resolving its input under
+the scratch directory. The passing driver uses the checkout root.
+
+## E557 European signed delta CLI verification and reuse
+
+The standard Windows CLI build `e557-signed-delta-cli-build-lzjcn9ux`
+verifies both retained `e337-d336` and `e338-d337` datasets on
+Wine. Each verification checks 157 files against the exact EUR
+source. The viewer's locally materialized e338 manifest matches
+the E555 candidate byte for byte. With a copy of that generation
+already selected in scratch, `rom-data prepare` reports `reused`.
+All generation file hashes and the `current` selector match
+before and after the command.
+
+Wine unit `e557-signed-delta-cli-wine-z7fmbzql` passes all 16
+protected input guards and drains the shared server. Fresh
+CLI publication from an empty root, ordinary execution,
+native Linux, USA and native Windows remain deferred.
+
+## E558 European world-node dispatch runtime
+
+EUR `e339-d338` adds the complete five-destination inner table
+to `engine.thumb-switch-tables` and the eight remaining renderer
+words to `engine.thumb-pc-literals`. The original unsigned guard,
+branch destinations and pointer arithmetic stay in guest code.
+The two `e338-d337` packets still encode byte for byte and attach.
+The preceding outer switch and the E555 signed deltas keep their owners.
+
+Wine `e558-world-node-dispatch-wine-ua5x_s_7` covers all five
+destination loads, modes 0, 6 and 255, and a nonmatching region.
+It also covers the three argument loads before the draw call and
+the three loads used to update the delay after the call. Mode 1
+uses the original signed reader and advances the index. The 11
+controlled windows match full state and guest clock with altered
+ROM backing. All 35 observed requests are typed, including the
+previously owned mode word and signed delta reads. The preserved
+outer owners, adjacent raw bytes and missing-bank rejection pass.
+
+The unit reconstructs only the two changed packets in memory over
+the retained e338 files. Its e339 candidate manifest SHA-256 is
+`31d120a811e1305df6f9f13f7886f9b7e258e6f07d00c7e5a3b2275f83036ebe`.
+All 15 input guards pass and the Wine server drains. The initial
+build `skkmiy67` rejected the test's integer width. The corrected
+build `2g4q1n7b` and the Wine test pass. E559 covers the retained
+dataset's CLI checks. Ordinary placement, generated dispatch,
+original BIOS, native Linux, USA and native Windows remain open.
+
+## E559 European world-node dispatch CLI verification and reuse
+
+The retained e339 dataset from `buwzwh4e` has the exact E558
+candidate manifest. The standard Windows CLI build `5zqo_73f`
+verifies all 157 files against the EUR source on Wine. With that
+generation selected in isolated storage, `rom-data prepare`
+reports `reused`. Every generation file and the `current`
+selector have the same hash before and after preparation.
+
+Wine `e559-world-node-cli-wine-k44ipd3_` passes all 13 protected
+input guards and drains the shared server. This check uses a
+ready generation. Fresh creation, ordinary placement, native
+Linux, USA and native Windows remain open.
+
+## E560 European world-state task literal census
+
+The source census starts at the world task entry `08032dec`
+and follows all 61 distinct targets of the 256-slot switch. Its
+scope ends at `08036104`. A byte load makes the out-of-range
+guard call at `08032e00` unreachable from the task entry. The
+105 internal `BL` sites use eight shared tails. Those tails use
+the existing frame and return through the task epilogue at
+`080360f0`. Selector 68 has a separate call-and-branch cycle at
+`080360a2` and `080360a6`. Calls outside the routine contribute
+their local return sites to the traversal.
+
+Unit `e560-world-task-literal-census-corrected-tedgyw0j` finds
+381 literal-load sites reading 372 physical words. No instruction
+site overlaps a literal or an entry in the 256-word table. The
+untraversed remainder includes 120 zero bytes and the four-byte
+guard call. The first census `jzpae9ty` expected a common return
+for selector 68. The corrected census pins its original loop.
+
+The verified e339 manifest already owns 15 words. Thirteen use
+`engine.thumb-pc-literals`, one uses `graphics.ui-custom-banks`
+and one uses `graphics.indexed-archives`. The remaining 357
+words span 1,428 bytes across pages `33` through `36`. Page `34`
+needs to be included in the runtime literal filter. The plan
+records each source hash and each original reader. The eight
+input guards pass. E561 integrates the residual. Live selector
+reachability remains open, including the placement transition.
+
+## E561 European world-state task literal runtime
+
+EUR `e340-d339` adds the complete 357-word residual to
+`engine.thumb-pc-literals`. The catalog authenticates the original
+task window and reconstructs the 1,428 bytes from the declared
+Thumb loads. The runtime includes page `34` in its literal filter.
+The older 15 word owners and the outer switch retain their source
+spans. Removing the appended group yields the exact e339 packet.
+
+Wine `e561-world-state-task-wine-corrected-y1oruut7` executes all
+381 original literal-load sites with the 372 backing words altered.
+All requests use typed resources. The 365 new load sites and the 16
+sites of earlier owners match the reference registers and guest clock
+per instruction. The final full state agrees. Four boundaries across
+raw bytes and existing owners pass 24 halfword and word reads across
+all three mirrors. The e339 dataset attaches. A missing e340 bank
+is rejected and leaves the existing owner attached.
+
+The unit reconstructs only the changed packet over the retained e339
+files. The candidate manifest SHA-256 is
+`6eddac576b41f442b67e4ff9bc2ebc549fec5e30e1ff1d021a36e0b2df560cdf`.
+The first Wine unit `0h8o47l3` exceeded the trace filter's range
+limit. The corrected build `eght_zk0` uses one bounded range and
+checks each trace event. Fifteen input guards pass and Wine drains.
+E562 verifies the retained dataset with the standard CLI. Live
+placement, generated readers, original BIOS, native Linux, USA and
+native Windows remain open.
+
+## E562 European world-state task CLI verification and reuse
+
+E562 stages the retained e339 files and replaces only the manifest
+and Thumb PC literal packet. The 357 added word and reader bindings
+come from the E560 census. The packet and manifest match the hashes
+from E561 before the standard Windows CLI runs.
+
+Wine `e562-world-state-cli-wine-yid7rliw` verifies all 157 files.
+The `prepare` command returns `reused`, with unchanged generation
+and selector hashes. All 18 input guards pass and Wine drains.
+The current e340 dataset is retained in that unit's `work/dataset`
+for subsequent validation. The ready-generation check leaves first
+creation, live placement, native Linux, USA and native Windows open.
+
 ## E524 European scroll register tables
 
 Four original readers each copy both eight-word tables at `14d4cc` and

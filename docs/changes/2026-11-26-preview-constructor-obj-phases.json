@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "preview-constructor-obj-phases",
+  "title": "Preview constructor object phases",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Join four constructor animation phases to their authenticated static object lists and expose them in the object-animation viewer.",
+    "Show source thresholds and preview their 8-bit counter transitions at a selected rate, stopping when a threshold cannot be exceeded; retain manual graphics, palette and loop controls."
+  ],
+  "validation": [
+    "Synthetic Chrome unit l19e38kl passed 47 projection, missing-source, playback and regression tests. Initial q2_tbqhn identified a JavaScript inherited-property collision; the catalog key was changed and navigation tests passed on retry.",
+    "Protected EUR unit fe1v12d_ authenticated five source spans and compared four phases and eight object descriptors with the source, checked playback in Chrome, preserved 11 scope payloads apart from the intended resource move/view and 144 resource pages, and matched 18 Docker/Python files. Fourteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "Graphics and palettes are manually paired; preview tick rate, live task state, affine and other special object modes are not a reconstruction of the game scene. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_constructor_obj_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-script39-index-cells",
+  "title": "Browse opcode-39 index cells",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose source index cells in a collapsible paginated table with target-kind and offset filters and links to sequence previews."
+  ],
+  "validation": [
+    "Synthetic unit pyo47ub8 passed 42/43 checks; corrected split/single-page check alynb5hx passed.",
+    "Protected EUR unit 3i5uayb1 matched 7,924 cells including 7,231 nulls and 693 sequence targets, checked both catalogs in Chrome, preserved ten scope payloads and 145 resource pages, and matched 17 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "Physical cells and target references do not establish live actor, scene or task behavior. Windows was deferred.",
+    "Initial pyo47ub8 incorrectly expected the equipment catalog on a separate script page; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_script39_poses_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

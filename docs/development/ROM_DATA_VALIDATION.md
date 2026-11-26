@@ -294,6 +294,19 @@ frame/clock. `FFTA_STATE_TEST_REQUIRE_SOURCE_MASK=3` additionally requires reads
 from both primary and copied source ranges; a missing range is a coverage
 failure, not proof of initializer execution.
 
+With `rom-data-read-audit`, set `FFTA_STATE_TEST_BANK_WATCH` to
+`resource-id:role[,role]` and `FFTA_STATE_TEST_BANK_TRACE` to an unused
+output path. By default the roles select up to 32 spans from the authenticated
+attached manifest. For a larger bank, set `FFTA_STATE_TEST_BANK_WATCH_WINDOW`
+to hexadecimal `start..end` offsets. The test selects whole matching spans
+within that window and records reads across the whole window. Use the
+selected source offsets to attribute reads to the bank. The decoded arm
+inverts their original backing bytes for each guest frame and restores them
+before the equality checks. The JSON report
+contains the selected spans, grouped requests, serving paths and available
+interpreter sites. Include a source role with a previously observed read
+when checking whether a scene reaches the selected bank.
+
 `rom_data::validation_tests::measure_decoded_startup_costs` takes the private
 ROM and a **new** `FFTA_STATE_TEST_COST_ROOT`. It saves all14observations in
 `startup.toml`, retaining seven independent generation roots and their cached

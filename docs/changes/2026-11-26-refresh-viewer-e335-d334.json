@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "refresh-viewer-e335-d334",
+  "title": "Refresh local viewer to European e335",
+  "kind": "changed",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Refresh the ignored European wiki and local dataset to extractor 335 / decoder 334 while retaining the e334 comparison dataset."
+  ],
+  "validation": [
+    "Protected unit mkd3en8j combined 155 unchanged authenticated files with the core-generated copied-lookup catalog and matched every file and the manifest accepted in sdjtlh9f.",
+    "Protected unit u_3wn8yk checked six wiki pages in Chrome, preserved ten topic payloads and 144 prior file pages, and matched 15 Docker/Python outputs for the updated resource. Thirteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "The core-only export is not a full Linux application build. Windows and other resource previews remain open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

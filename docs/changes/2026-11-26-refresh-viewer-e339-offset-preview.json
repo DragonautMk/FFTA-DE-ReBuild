@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "refresh-viewer-e339-offset-preview",
+  "title": "Preview world offsets in European e339",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Refresh the ignored European wiki and dataset to extractor 339 / decoder 338 and retain e338 for comparison.",
+    "Show each signed map offset as a vertical displacement and allow selected-entry playback, a chosen rate, looping and a collapsible values table."
+  ],
+  "validation": [
+    "Protected unit buwzwh4e matched every dataset file and the manifest accepted by e558-world-node-dispatch-wine-ua5x_s_7, using 154 unchanged resources and nine authenticated source spans.",
+    "Synthetic Chrome unit s91ptt4q passed 45 tests. After adding a zero-only case and nested-section check, focused unit 8ub0enyk passed six tests.",
+    "Protected EUR unit rom-data-viewer-refresh-e339-view-fpd_62za compared all 48 displayed values with the source, checked playback and five pages in Chrome, preserved 11 topic payloads apart from the two changed resource rows and 143 resource pages, and matched 16 Docker/Python files. Fifteen ignored wiki files and the dataset link were published."
+  ],
+  "limitations": [
+    "Preview order and rate do not establish the live index, region placement or original timing. Other previews and audio fidelity remain open; native Windows was deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_signed_map_deltas_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "export-sequence-wav",
+  "title": "Export selected song previews as WAV",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Render the selected bounded song or track preview to a downloadable 32 kHz stereo 16-bit WAV using the current timing, voice, envelope, track-control and mute settings.",
+    "Capture export settings at launch, share note and mix preparation with live playback, and report unavailable rendering and automation limits."
+  ],
+  "validation": [
+    "Synthetic Chrome unit zwqbzr4d passed 42 audio/regression checks including real offline stereo, pan/mutes and live-versus-offline scheduling; 9vk7mg2l passed three focused checks including unavailable-renderer recovery.",
+    "Protected EUR e336 unit rb20l36j exported and independently decoded song 312 with eight PCM notes, verified track-mute silence, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python outputs. Eleven local wiki pages were published."
+  ],
+  "limitations": [
+    "The WAV shares the existing preview limits and approximations; physical audio, exact game mixer behavior and Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_wav_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

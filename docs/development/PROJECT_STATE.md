@@ -1481,7 +1481,9 @@ and normal enablement retain their existing acceptance gates.
   identifies 50 unowned spans in `e315-d314` through three complete pointer
   tables and five direct roots. These include 31 canonical archives with
   852 programs. The canonical archive at `3b8fbc` still lacks a proven
-  reader. Other grammars, ordinary gameplay and platforms remain open.
+  reader. E548 confirms it remains unowned in e337 and records the missing
+  producer or independent metadata prerequisite. Other grammars, ordinary
+  gameplay and platforms remain open.
 
 - EUR [E507 indexed reader banks](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks)
   serves the 31 rooted archives and their source tables and literals in
@@ -1589,6 +1591,59 @@ and normal enablement retain their existing acceptance gates.
   RAM expansion and localized loader. Ordinary scene entry and
   additional producers remain open.
   [E538](../rom_data_ui_raw_transfers.md#e538-european-tilemap-rectangles)
+
+- EUR `e334-d333` serves the selected timed-sound scheduler bank.
+  Wine verifies 552 original caller setups, selected scheduler record
+  reads and predecessor attachment. Ordinary scenes and indirect
+  producers remain open.
+  [E539](../rom_data_audio.md#e539-european-timed-sound-census)
+
+- EUR `e335-d334` serves fourteen literal-rooted initializer arrays and
+  retains three existing owners. Original interpreter and generated copy
+  sequences, source boundaries and `e334-d333` attachment pass on Wine.
+  Ordinary entry and other copy patterns remain open.
+  [E543](../rom_data_runtime.md#e543-european-literal-rooted-initializer-copies)
+
+- EUR `e336-d335` serves sixteen initializer copy variants while preserving
+  existing copied lookup and palette owners. Interpreter and generated Wine
+  checks pass, including boundaries and `e335-d334` attachment. Ordinary
+  entry and other copy patterns remain open.
+  [E544](../rom_data_runtime.md#e544-european-initializer-copy-register-variants)
+
+- EUR `e337-d336` serves ten distinct two-word initializer arrays and
+  thirteen original roots, preserving shared addresses and Firaga ownership.
+  Wine verifies interpreter and generated copies, boundaries and the e336
+  predecessor. Ordinary entry and other load/store patterns remain open.
+  [E545](../rom_data_runtime.md#e545-european-two-word-initializer-pairs)
+
+- EUR `e338-d337` serves the complete 48-entry signed map delta table
+  and its original pointer through raw transfers. The controlled Wine
+  reader proves all valid indices, the unsigned guard, adjacent source
+  routing and `e337-d336` compatibility. Wine CLI verifies both retained
+  revisions and reuses e338. Fresh publication and ordinary reachability
+  remain open.
+  [E555](../rom_data_graphics.md#e555-european-signed-map-delta-runtime)
+  The [E556 source census](../rom_data_graphics.md#e556-european-world-node-drawing-dispatch)
+  identifies the node renderer's stage 9 producer. Ordinary proof
+  requires a recording of the earlier placement transition.
+
+- EUR `e339-d338` serves the entire inner world-node dispatch and
+  the eight remaining literal words. Wine verifies all five targets,
+  bypasses, draw argument and delay reads, prior owners and e338 attachment.
+  The Windows CLI verifies and reuses the exact retained e339 dataset on
+  Wine. Fresh publication and ordinary placement remain open.
+  [E558](../rom_data_graphics.md#e558-european-world-node-dispatch-runtime)
+  [E559](../rom_data_graphics.md#e559-european-world-node-dispatch-cli-verification-and-reuse)
+
+- The world task at `08032dec` has 381 bounded PC-relative readers of
+  372 words across its 256 switch entries. Fifteen words already have
+  e339 owners. EUR `e340-d339` serves the complete 357-word residual and
+  covers page `34`. Wine verifies all 381 original loads, mixed mirrors,
+  final state and e339 attachment. The standard CLI verifies and reuses
+  the retained e340 dataset. Fresh creation and live placement remain open.
+  [E560](../rom_data_graphics.md#e560-european-world-state-task-literal-census)
+  [E561](../rom_data_graphics.md#e561-european-world-state-task-literal-runtime)
+  [E562](../rom_data_graphics.md#e562-european-world-state-task-cli-verification-and-reuse)
 
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining

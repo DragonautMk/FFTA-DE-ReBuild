@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "refresh-viewer-e338-d337",
+  "title": "Browse signed map offsets in European e338",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Refresh the ignored European wiki and dataset to extractor 338 / decoder 337 and retain e337 for comparison.",
+    "Expose 48 source-backed signed map offsets with their indices, byte values and offsets in an independently collapsible world view; isolate malformed table and rectangle projections."
+  ],
+  "validation": [
+    "Protected unit n0musgix matched every dataset file and the manifest accepted by e555-signed-map-deltas-wine-hszbu_3b, using 155 unchanged prior resources and authenticated new source bytes.",
+    "Synthetic Chrome unit txfibfdr passed 41 tests. Protected EUR unit _yqtclhf compared all 48 displayed values to the source, checked four pages and the on-demand transfer asset, preserved 11 topic payloads apart from the changed resource/view and 144 prior resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files and the dataset link were published."
+  ],
+  "limitations": [
+    "The values do not identify named locations or establish the live traversal. Other previews and audio fidelity remain open; native Windows was deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_signed_map_deltas_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

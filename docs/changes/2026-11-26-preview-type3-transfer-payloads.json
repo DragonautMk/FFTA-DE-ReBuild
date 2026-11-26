@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "preview-type3-transfer-payloads",
+  "title": "Preview type-3 transfer payloads",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Decode individually authenticated type-3 LZ77 inputs and expose raw inputs in a separate offline transfer-graphics scope.",
+    "Reuse the tile-sheet viewer for manual 4-bit/8-bit previews, palette selection and payload byte offsets; report and isolate malformed streams."
+  ],
+  "validation": [
+    "Synthetic Chrome unit hgs0dbzz passed 45 projection, isolation, browser and regression checks. Initial bet42kmn detected an incompatible existing offset message, which was restored before the successful run.",
+    "Protected EUR unit geoui_0a authenticated 2214 source ranges, independently decoded 323 LZ77 streams, compared 14 raw inputs and 502064 output bytes, checked all 337 previews at both tile depths in Chrome, preserved 10 prior scope payloads and 144 resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "The 4-bit/8-bit tile interpretation and palettes are manual; payloads can contain non-graphics data. Game composition, live pairing and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_type3_payloads_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

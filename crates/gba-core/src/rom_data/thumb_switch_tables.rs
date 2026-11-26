@@ -50,7 +50,7 @@ pub const TABLES: [TableSpec; TABLE_COUNT] = [
 ];
 
 
-/// Additional battle, home and Red Spring tables use roots owned by Thumb PC literals.
+/// Additional tables use roots owned by Thumb PC literals.
 /// Only destinations are new sources; guest out-of-range behavior remains live.
 pub const PREVIOUS_ADDITIONAL_TABLE_COUNT: usize = 32;
 pub const FIRAGA_ADDITIONAL_TABLE_COUNT: usize = 34;
@@ -58,8 +58,9 @@ pub const WHITE_FLOWERS_ADDITIONAL_TABLE_COUNT: usize = 35;
 pub const WHITE_FLOWERS_RESIDUAL_TABLE_COUNT: usize = 42;
 pub const WHITE_FLOWERS_MIXED_TABLE_COUNT: usize = 47;
 const PRE_TITLE_ADDITIONAL_TABLE_COUNT: usize = 50;
-pub const ADDITIONAL_TABLE_COUNT: usize = 52;
-pub const ADDITIONAL_DESTINATION_COUNT: usize = 1727;
+const TITLE_ADDITIONAL_TABLE_COUNT: usize = 52;
+pub const ADDITIONAL_TABLE_COUNT: usize = 53;
+pub const ADDITIONAL_DESTINATION_COUNT: usize = 1732;
 pub const ADDITIONAL_SOURCE_ROLE: &str = "thumb-switch-destinations";
 
 #[derive(Clone, Copy, Debug)]
@@ -145,6 +146,12 @@ pub const ADDITIONAL_TABLES: [AdditionalTableSpec; ADDITIONAL_TABLE_COUNT] = [
         code_sha256: "d1a39392250cf0f59b6031d9b6476fbaa35b00684cab76a0c9be1b1565be1a93",
         source_sha256: "e761bed0b7f27d0f831c3ce3ccc585751a804c87830f5fa12d307e555958bc71",
     },
+    AdditionalTableSpec {
+        root: 0x386b0, count: 5, code_start: 0x38696, guard: 0x38698,
+        reader: 0x386a4, mov: 0x386a6,
+        code_sha256: "6b075ee1a4a01b0e0b9b5260c3ec520d8fd318bc99ae9408fd8de1a63aee82f3",
+        source_sha256: "66eaa68630ec19b1f97cb4f51bfca0cca228e289c203f103e0f4c908d234591d",
+    },
 ];
 
 /// Even target address used by the original Thumb `MOV pc` instruction.
@@ -198,6 +205,7 @@ impl ThumbSwitchTables {
             WHITE_FLOWERS_RESIDUAL_TABLE_COUNT,
             WHITE_FLOWERS_MIXED_TABLE_COUNT,
             PRE_TITLE_ADDITIONAL_TABLE_COUNT,
+            TITLE_ADDITIONAL_TABLE_COUNT,
             ADDITIONAL_TABLE_COUNT,
         ].contains(&self.additional_tables.len()) {
             return Err("Invalid additional EUR Thumb switch-table count".into());
@@ -238,8 +246,12 @@ impl ThumbSwitchTables {
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        let include_title = self.additional_tables.len() > PRE_TITLE_ADDITIONAL_TABLE_COUNT;
-        if self != &Catalog::from_rom_with_title(rom, &[], include_title)?.decoded {
+        let layout = match self.additional_tables.len() {
+            ADDITIONAL_TABLE_COUNT => SourceLayout::WorldNodeRenderer,
+            TITLE_ADDITIONAL_TABLE_COUNT => SourceLayout::TitleFrontend,
+            _ => SourceLayout::Legacy,
+        };
+        if self != &Catalog::from_rom_with_layout(rom, &[], layout)?.decoded {
             return Err("Thumb switch tables differ from authenticated EUR source".into());
         }
         Ok(())
@@ -250,13 +262,20 @@ pub struct Catalog {
     pub decoded: ThumbSwitchTables,
     pub sources: Vec<SourceRange>,
 }
+
+pub(super) enum SourceLayout {
+    Legacy,
+    TitleFrontend,
+    WorldNodeRenderer,
+}
+
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
-        Self::from_rom_with_title(rom, previous, true)
+        Self::from_rom_with_layout(rom, previous, SourceLayout::WorldNodeRenderer)
     }
 
-    pub(super) fn from_rom_with_title(
-        rom: &[u8], previous: &[Resource], include_title: bool,
+    pub(super) fn from_rom_with_layout(
+        rom: &[u8], previous: &[Resource], layout: SourceLayout,
     ) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Thumb switch tables require exact EUR ROM; USA pending".into());
@@ -265,10 +284,10 @@ impl Catalog {
         let word = |at: u32| u32::from_le_bytes(rom[at as usize..at as usize + 4].try_into().unwrap());
         let prior = PriorSources::new(previous)?;
         let mut tables = Vec::with_capacity(TABLE_COUNT);
-        let additional_count = if include_title {
-            ADDITIONAL_TABLE_COUNT
-        } else {
-            PRE_TITLE_ADDITIONAL_TABLE_COUNT
+        let additional_count = match layout {
+            SourceLayout::Legacy => PRE_TITLE_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::TitleFrontend => TITLE_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::WorldNodeRenderer => ADDITIONAL_TABLE_COUNT,
         };
         let mut sources = Vec::with_capacity(TABLE_COUNT + additional_count);
         for spec in TABLES {

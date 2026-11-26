@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 mod localized_text;
 mod startup_tasks;
 mod title_frontend;
+mod world_node_renderer;
+mod world_state_task;
 
 pub const LITERAL_COUNT: usize = 326;
 pub const SOURCE_ROLE: &str = "thumb-pc-literal";
@@ -3180,11 +3182,11 @@ const CUSTOM_DECODER_ROOTS: [(u32, u32, u16); 31] = [
 
 const LOCALIZED_TEXT_ROOTS_BASE: usize = CUSTOM_DECODER_ROOTS_BASE + CUSTOM_DECODER_ROOTS.len();
 
-pub const SOURCE_PAGES: [usize; 169] = [
+pub const SOURCE_PAGES: [usize; 170] = [
     0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0xd,
     0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b,
     0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
-    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x30, 0x31, 0x32, 0x33, 0x35,
+    0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35,
     0x36, 0x37, 0x38, 0x39, 0x3a, 0x3c, 0x3d, 0x43, 0x44, 0x46, 0x4d, 0x4e,
     0x4f, 0x55, 0x59, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x63, 0x67, 0x69, 0x70, 0x74,
     0x75, 0x83, 0x89, 0x8d, 0x8e, 0x91, 0x92,
@@ -3275,6 +3277,10 @@ pub struct ThumbPcLiterals {
     pub startup_task_roots: Vec<LiteralWord>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub title_frontend_roots: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub world_node_renderer_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub world_state_task_literals: Vec<LiteralWord>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -3505,7 +3511,9 @@ impl ThumbPcLiterals {
         }
         localized_text::validate(&self.localized_text_roots)?;
         startup_tasks::validate(&self.startup_task_roots)?;
-        title_frontend::validate(&self.title_frontend_roots)
+        title_frontend::validate(&self.title_frontend_roots)?;
+        world_node_renderer::validate(&self.world_node_renderer_literals)?;
+        world_state_task::validate(&self.world_state_task_literals)
     }
 
     /// Returns a byte of one observed literal without affecting other guest reads.
@@ -3643,14 +3651,28 @@ impl ThumbPcLiterals {
             let bytes = self.startup_task_roots[index].value.to_le_bytes();
             return Some((bytes[(offset & 3) as usize], startup_base + index));
         }
-        let index = self.title_frontend_roots.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        let bytes = self.title_frontend_roots[index].value.to_le_bytes();
-        Some((bytes[(offset & 3) as usize], startup_base + self.startup_task_roots.len() + index))
+        let frontend_base = startup_base + self.startup_task_roots.len();
+        if let Ok(index) = self.title_frontend_roots.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.title_frontend_roots[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], frontend_base + index));
+        }
+        let renderer_base = frontend_base + self.title_frontend_roots.len();
+        if let Ok(index) = self.world_node_renderer_literals.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.world_node_renderer_literals[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], renderer_base + index));
+        }
+        let index = self.world_state_task_literals.binary_search_by_key(&base, |v| v.source_offset).ok()?;
+        let bytes = self.world_state_task_literals[index].value.to_le_bytes();
+        Some((bytes[(offset & 3) as usize], renderer_base + self.world_node_renderer_literals.len() + index))
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        let layout = if !self.title_frontend_roots.is_empty() {
+        let layout = if !self.world_state_task_literals.is_empty() {
+            SourceLayout::WorldStateTask
+        } else if !self.world_node_renderer_literals.is_empty() {
+            SourceLayout::WorldNodeRenderer
+        } else if !self.title_frontend_roots.is_empty() {
             SourceLayout::TitleFrontend
         } else if self.startup_task_roots.len() > startup_tasks::DISPATCHER_ROOT_COUNT {
             SourceLayout::TitleTaskCallbacks
@@ -3677,7 +3699,8 @@ pub struct Catalog {
     pub sources: Vec<SourceRange>,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+// Each layout adds to the literal groups of its predecessors.
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub(super) enum SourceLayout {
     Legacy,
     CustomDecoderRoots,
@@ -3686,6 +3709,8 @@ pub(super) enum SourceLayout {
     StartupTaskDispatcher,
     TitleTaskCallbacks,
     TitleFrontend,
+    WorldNodeRenderer,
+    WorldStateTask,
 }
 
 impl Catalog {
@@ -4748,27 +4773,28 @@ impl Catalog {
                 });
             }
         }
-        let localized_text_roots = if matches!(
-            layout,
-            SourceLayout::LocalizedTextRoots
-                | SourceLayout::StartupTaskRoots
-                | SourceLayout::StartupTaskDispatcher
-                | SourceLayout::TitleTaskCallbacks
-                | SourceLayout::TitleFrontend
-        ) {
+        let localized_text_roots = if layout >= SourceLayout::LocalizedTextRoots {
             localized_text::extract(rom)?
         } else {
             Vec::new()
         };
-        let startup_task_roots = match layout {
-            SourceLayout::StartupTaskRoots
-            | SourceLayout::StartupTaskDispatcher
-            | SourceLayout::TitleTaskCallbacks
-            | SourceLayout::TitleFrontend => startup_tasks::extract(rom, layout)?,
-            _ => Vec::new(),
+        let startup_task_roots = if layout >= SourceLayout::StartupTaskRoots {
+            startup_tasks::extract(rom, layout)?
+        } else {
+            Vec::new()
         };
-        let title_frontend_roots = if layout == SourceLayout::TitleFrontend {
+        let title_frontend_roots = if layout >= SourceLayout::TitleFrontend {
             title_frontend::extract(rom)?
+        } else {
+            Vec::new()
+        };
+        let world_node_renderer_literals = if layout >= SourceLayout::WorldNodeRenderer {
+            world_node_renderer::extract(rom)?
+        } else {
+            Vec::new()
+        };
+        let world_state_task_literals = if layout >= SourceLayout::WorldStateTask {
+            world_state_task::extract(rom)?
         } else {
             Vec::new()
         };
@@ -4776,6 +4802,8 @@ impl Catalog {
             ("Localized text", &localized_text_roots),
             ("Startup task", &startup_task_roots),
             ("Title frontend", &title_frontend_roots),
+            ("World-node renderer", &world_node_renderer_literals),
+            ("World-state task", &world_state_task_literals),
         ] {
             for word in words {
                 let offset = word.source_offset;
@@ -4826,6 +4854,8 @@ impl Catalog {
             localized_text_roots,
             startup_task_roots,
             title_frontend_roots,
+            world_node_renderer_literals,
+            world_state_task_literals,
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-world-node-dispatch-bank",
+  "title": "Serve the complete European world-node drawing dispatch bank",
+  "kind": "changed",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Serve all five switch destinations and the eight remaining renderer words through the existing engine catalogs in e339-d338. Preserve e338 packet encoding, outer-switch ownership, adjacent raw bytes and the earlier signed-table test revision."
+  ],
+  "validation": [
+    "Windows build 2g4q1n7b and Wine ua5x_s_7 pass. Five targets, four bypasses and two draw windows match full state and guest clock with changed backing. Each of the 35 observed requests is typed. Predecessor attachment and transactional rejection of an incomplete revision pass."
+  ],
+  "limitations": [
+    "The test replaces only the two changed packets in memory using the retained e338 dataset. CLI publication, ordinary placement, generated dispatch, original BIOS, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/startup_tasks.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/world_node_renderer.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/signed_map_delta_tests.rs",
+    "crates/recomp/src/rom_data/world_node_dispatch_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

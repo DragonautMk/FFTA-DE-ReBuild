@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-script39-pose-sources",
+  "title": "Browse opcode-39 pose sources",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse and animate opcode-39 registry and special-unit source sequences by source offset and index cell, including compatible earlier-owner targets.",
+    "Resolve supported object and pixel ranges only when extracted sources agree; keep missing or conflicting sources visible without guessing."
+  ],
+  "validation": [
+    "Synthetic unit _li_0wt2 passed 42 browser and generator checks including earlier, missing, conflicting and partially overlapping sources, pixels and animation controls.",
+    "Protected EUR unit 6nb4p1y3 matched 693 index cells and sequences, 879 frames and 862 graphics joins to authenticated files; checked two browser pixels, preserved 143 resource pages and matched 17 Docker/Python files. Fourteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "Manual palettes and preview timing do not reproduce live actor assignments, task commands, scenes or original timing. Windows was deferred.",
+    "Initial unit b7hg8dzc exposed an optional objects field and wtkudkvp assumed all targets were newly owned; corrected checks passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_script39_poses_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md"
+  ]
+}

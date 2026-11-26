@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-direct-indexed-archives",
+  "title": "Browse directly rooted indexed graphics archives",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Show both directly rooted indexed graphics archives as independently validated families on the scoped graphics page, with resource links and source positions.",
+    "Preserve existing tile, palette and ordered playback controls, and keep valid families available when another resource is missing or invalid."
+  ],
+  "validation": [
+    "Synthetic unit 32khwscw passed 42 projection, browser and generation tests, including standalone and invalid source cases.",
+    "Protected EUR unit uyz3u8oo checked four source ranges, independently decoded 45 programs, checked eight rendered pixels and two updated file links, preserved 143 other file pages and matched 17 Docker/Python files. Fourteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "Tile format, palettes and preview timing are manually selected; they do not establish the complete game animation. Windows was deferred.",
+    "Synthetic 7bum0pad had a test ID expectation error and real q4ru284l expected two relocated links to remain unchanged; corrected checks passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_direct_indexed_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

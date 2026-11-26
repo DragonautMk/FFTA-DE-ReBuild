@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "load-transfer-graphics-on-demand",
+  "title": "Load transfer graphics on demand",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Load the type-3 compressed outputs and raw inputs into both the world tilemap and compact-cell animation viewers on demand, sharing one local companion asset.",
+    "Preserve current selections, restore bookmarked transfer choices, retry missing or mismatched assets, and use embedded payloads in legacy single-page output."
+  ],
+  "validation": [
+    "Synthetic Chrome unit mls3lln9 passed 44 offline loading, selection, retry, bookmark and regression checks.",
+    "Protected EUR unit rom-data-viewer-transfer-lazy-real-98zd4dr0 checked 323 compressed and 14 raw inputs in both views, sampled rendered pixels and restored a bookmark; preserved 11 prior scope payloads except the added world asset reference and 145 resource pages; matched 20 Docker/Python fixture files. Twelve ignored wiki pages and the local asset were published."
+  ],
+  "limitations": [
+    "Interpreting payloads as tiles, selecting palettes and associating graphics with a live scene remain manual and unproven. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_transfer_graphics_lazy_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

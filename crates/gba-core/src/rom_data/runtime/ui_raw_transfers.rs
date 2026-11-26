@@ -90,6 +90,11 @@ impl RawTransfersResources {
                 });
             }
         }
+        if let Some((value, payload)) = self.data.signed_map_deltas.as_ref()
+            .and_then(|deltas| deltas.byte_at(offset))
+        {
+            return Some(Byte { value, bank: None, group: None, payload });
+        }
         self.data.banks.iter().enumerate().find_map(|(bank, view)| {
             view.byte_at(offset).map(|value| Byte {
                 value,
@@ -175,9 +180,13 @@ impl RawTransfersResources {
             + self.data.tables.len()
                 * std::mem::size_of::<super::super::ui_graphics::table_selected::Table>()
             + self.data.halfword_copies.as_ref().map_or(0, halfword_copies::HalfwordCopies::resident_bytes)
+            + self.data.signed_map_deltas.as_ref()
+                .map_or(0, |deltas| std::mem::size_of_val(deltas) + deltas.entries.len())
     }
 }
 const SOURCE_BOUNDS: &[(usize, usize)] = &[
+    (model::signed_map_deltas::LITERAL_OFFSET as usize, 4),
+    (model::signed_map_deltas::TABLE_OFFSET as usize, model::signed_map_deltas::ENTRY_COUNT),
     (0xb80b5c, 0x8000),
     (0xb88c18, 0x2de0),
     (0xb8dcb4, 0x800),

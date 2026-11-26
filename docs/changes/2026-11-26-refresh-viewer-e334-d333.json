@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "refresh-viewer-e334-d333",
+  "title": "Refresh local viewer to European e334",
+  "kind": "changed",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Refresh the ignored local European resource wiki and current dataset to extractor 334 / decoder 333 while retaining e333 as the named previous dataset."
+  ],
+  "validation": [
+    "Protected unit n4iol0rn combined 155 unchanged authenticated resource files with the core-generated audio directory and matched every file and the manifest accepted in zw1q89b2.",
+    "Protected unit mssfn_fg checked five wiki pages in Chrome, preserved ten topic payloads and 144 previous file pages, and matched 15 Docker/Python outputs for the new audio directory. Thirteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "Full Linux application build 1_bunyg0 was blocked by the absent ALSA development package; the core-only audio export passed. A dedicated timed-sound viewer and Windows remain open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

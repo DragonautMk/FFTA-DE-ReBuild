@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-progression-pricing-records",
+  "title": "Browse progression and pricing records",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Add independent collapsible EUR progression, requirement, selection and trade tables with ID/offset filtering and pagination.",
+    "Preserve unknown fields and display the trade count-zero discount alias without asserting live or semantic identities."
+  ],
+  "validation": [
+    "Synthetic unit lmc8ahj2 passed 44 projection, browser and regression checks including profile, missing and malformed catalog cases.",
+    "Protected EUR unit lf7sv8ry matched 233 records and 3272 bytes to the authenticated source, checked all browser rows, preserved prior scope data and 145 resource pages, and matched 18 Docker/Python outputs. Eleven local wiki pages were published."
+  ],
+  "limitations": [
+    "Live progression, semantic skill and item names, price conditions and unobserved ordinary paths are not inferred. Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_progression_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

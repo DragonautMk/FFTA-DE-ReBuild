@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-signed-delta-cli-reuse",
+  "title": "Verify and reuse the European signed delta dataset on Wine",
+  "kind": "docs",
+  "platforms": [
+    "Standard Windows CLI under Wine, European profile"
+  ],
+  "changes": [
+    "Compare the locally materialized e338-d337 manifest with the E555 candidate. Exercise current and previous revision verification and the ready-generation reuse path of rom-data prepare."
+  ],
+  "validation": [
+    "Build lzjcn9ux and Wine z7fmbzql pass. Each retained revision verifies 157 files, and prepare reports reused with the generation and selector unchanged. All 16 input guards pass and the server drains."
+  ],
+  "limitations": [
+    "The test uses an already selected generation in scratch. Fresh CLI publication, ordinary use, original BIOS, Linux, USA and native Windows remain deferred. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

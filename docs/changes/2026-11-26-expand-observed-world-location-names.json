@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "expand-observed-world-location-names",
+  "title": "Expand observed world location names",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Extend the source-gated world map view with four additional observed region/node associations and their localized extracted name strings.",
+    "Preserve per-node coordinates, regional and text identity checks, source links, language selection and the existing observed-placement caveat."
+  ],
+  "validation": [
+    "Synthetic Chrome unit _2mq6zty passed 41 projection, text, navigation and regression checks.",
+    "Protected EUR unit g07anua6 matched five observed node/region pairs to retained source evidence and 25 localized strings to the dataset, checked map selection and a text-page link in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 16 Docker/Python files. The ignored world page was published."
+  ],
+  "limitations": [
+    "The region/node associations reflect one recorded placement and can change between saves or during play; other locations and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

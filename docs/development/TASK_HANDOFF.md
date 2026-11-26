@@ -6,15 +6,13 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Selection: DIRECT-INDEXED; playable wiki.
-- Verified: thlfcw8m; two more archives, 45 programs.
-- Deliverable: browse both as independent families.
-- Proof: synthetic/EUR browser and source hashes.
-- Missing: other previews/audio; Windows deferred.
-- Risk: manual interpretation; JSON worker paused.
-- Resume: project direct archives with isolated failures.
+- Selection: VIEWER-TEXT-SCOPES / e340; user paused the goal.
+- Verified: 53 tests `w2vnicj9`; Chrome/Docker `4aktz7x0`; guarded e340 candidate `574prtnv` PASS.
+- Evidence: `out/ffta-text-scopes-e340-ready-rjx1573u`; `brjnqia7` cleanup FAIL on Chrome symlink.
+- Missing: publication; other previews/audio; Windows deferred.
+- Resume: only on request; review preimages and adapt `/tmp/ffta-text-scopes-e340-publish.py` to the out candidate.
 
 ## Running or suspended tasks
 
@@ -37,14 +35,11 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
-- E539 timed sound paused by user. e333 z2k72eer; plan 600f84a2: 423 sites/587 rows/6,249 bytes. Typed ownership, 552 cases, e333 Wine join open. No build/Wine launch. E518 recovery/e539-sound-plan.json; ordinary/Linux/USA/native open. Resume on request.
 - E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
-- White Flowers E291: E401 reconciles 3,600 copied-code support bytes with E246.
-- E425–E510 scoped graphics, UI, text and indexed milestones: Wine PASS (archive and feature guides).
-- E203–E240 Wine PASS; E215/E207/E172 sample residuals 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
-- TARGET-REATTACH: prior bind proof retained. Current host target is on the internal disk. The external volume is read-only.
+- E401 reconciles E291 White Flowers 3,600 code bytes with E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 residual 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
+- TARGET-REATTACH: prior bind proved. Internal target active; external read-only.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
 - E171/E172 `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; E170 1,068 lower bytes owned (`aqz4qh3s`); 3,600 copied-code bytes and ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: lease retains 114 duplicates; Wine drained, three PIDs unreadable (`2myj8gap/cleanup-observation.json`).
@@ -69,6 +64,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 - INDEXED-DIRECT-ORDINARY: prefix `v89740hr`, legacy 8,820-frame pair `klmjn8sv`, guarded endpoint `0gj2cglj`, 11-frame guarded pair `u75gcclc` PASS; other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 4q2i907e PASS; lower priority, rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
+- E563 paused by user; build 94767 pending at pause. Recovery checklist.
 - Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md), [inventory](ROM_DATA_INVENTORY.md). Children retain IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: 59 writer rows js3rbve5, lists negative/inconclusive m1p_8lhy; live domain, saves, aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: text screen 78suaoix no token; generated/indirect sources open; no blind Select. `docs/rom_data_gameplay.md`.
@@ -197,9 +193,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: COVERAGE-HOMEPAGE-LINK completed.
-- Last verified result: Shortcut opens detailed e333; six tests PASS.
-- Remaining work: Reload root homepage in browser.
-- Errors or blockers: Browser file URL automation blocked.
-- Next action: Follow ROM coverage shortcut or direct map.
-- References: index.html; docs/report_home.md.
+- Task: E563 ROMDATA-04-EUR-WORLD-STATE-TASK-LITERALS-GIZA-TRAVEL paused.
+- Last verified result: E562 `yid7rliw` retains e340; E550 `ycsv0f81` pins 33 frames.
+- Remaining work: Typed reads and slots; placement, BIOS, generated, Linux/USA.
+- Errors or blockers: Build waiting on target loop51 I/O; no Wine launch.
+- Next action: On resume, read `/tmp/e563-build-root-3l3m1gaf`/94767 receipt. Wine script `/tmp/e563-run-world-state-travel.sh`.
+- References: recovery checklist E550/E561/E562/E563; ROM_DATA_VALIDATION.md.

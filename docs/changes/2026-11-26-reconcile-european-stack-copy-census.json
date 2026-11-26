@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "reconcile-european-stack-copy-census",
+  "title": "Reconcile European stack word copy census",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, prior Wine evidence"
+  ],
+  "changes": [
+    "Compare a broader bounded literal-rooted stack word copy grammar with the current resource manifest and retained original-reader census."
+  ],
+  "validation": [
+    "Protected static unit o5m6ysfv passed: sixteen matching patterns are exactly the Wine-disassembled E545 cases and have no missing source or root bytes."
+  ],
+  "limitations": [
+    "Other instructions, non-stack destinations, branches and indirect roots remain open; Linux and USA remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

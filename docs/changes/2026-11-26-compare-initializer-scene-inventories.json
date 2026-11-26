@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "compare-initializer-scene-inventories",
+  "title": "Compare initializer banks with retained scene inventories",
+  "kind": "docs",
+  "platforms": [
+    "Previously recorded Wine scenes, European ROM"
+  ],
+  "changes": [
+    "Join all E543–E545 initializer spans against six retained scene address inventories."
+  ],
+  "validation": [
+    "Protected static join nowdl2c0 passed; none of the selected-reader inventories intersects the 79 new spans."
+  ],
+  "limitations": [
+    "The address-only windows do not identify executing PCs, other readers or ordinary serving. Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

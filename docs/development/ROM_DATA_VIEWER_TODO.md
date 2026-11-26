@@ -101,12 +101,89 @@ from `scripts/viewer_stable_inspector.html` and `.js`; the suspended large-JSON
 prototype remains in the legacy single-page template and is not in the scoped
 wiki.
 
+The earlier European wiki refresh used extractor 334 / decoder 333. Protected
+unit `n4iol0rn` built the source-authenticated core audio exporter, retained the
+155 unchanged resource files and reconstructed the changed audio directory;
+every file matches the accepted e334 manifest from `zw1q89b2`. Protected unit
+`mssfn_fg` checked the generated index, world, script-actor, audio and new
+file pages in Linux Chrome; preserved ten topic payloads and 144 prior resource
+pages; and matched 15 Python/Docker files with the new audio directory. The
+ignored local wiki and `out/rom-data-europe-e334-d333` were published; e333 is
+retained as the named previous dataset. The full Linux application build
+`1_bunyg0` could not start its ALSA-dependent component because the development
+package is absent; the lightweight core export does not claim that build passed.
+The timed-sound view below exposes the added sources and individual candidate
+auditions; full scheduler playback remains open. Windows is deferred.
+
+The earlier European wiki refresh used extractor 335 / decoder 334. Protected
+unit `mkd3en8j` retained the 155 unchanged resource files and used the
+source-authenticated core exporter for the changed copied-lookup catalog;
+every file matches the accepted e335 manifest from `sdjtlh9f`. Protected unit
+`u_3wn8yk` checked the index, world, script-actor, audio, other-resources and
+new file pages in Chrome; preserved ten topic payloads and 144 prior resource
+pages; and matched 15 Python/Docker files. The ignored wiki and
+`out/rom-data-europe-e335-d334` were published; e334 is retained for the named
+comparison. This core export does not claim a full Linux application build.
+Windows remains deferred.
+
+The earlier European wiki refresh used extractor 336 / decoder 335. Protected
+unit `yxq3a7bk` retained the 155 unchanged resource files and used the
+authenticated core exporter for the changed copied-lookup catalog. Every file
+matches the accepted e336 manifest from `hoduqk8r`, including 16 initializer
+variant records. Protected unit `2yzppv5w` checked six wiki pages in Chrome,
+preserved ten topic payloads including the direct metadata names and 144 prior
+resource pages, and matched 15 Python/Docker files. The ignored wiki and
+`out/rom-data-europe-e336-d335` were published; e335 remains available for the
+named comparison. The core export is not a full Linux application build.
+Windows remains deferred.
+
+The earlier European wiki refresh used extractor 337 / decoder 336. Protected
+unit `y_rfw70r` retained the 155 unchanged resource files and used the
+authenticated core exporter for the changed copied-lookup catalog. Every file
+matches the accepted e337 manifest from `xtp6kbf3`, including ten initializer
+pairs. Protected unit `8xh8zwqj` checked six wiki pages in Chrome, preserved
+ten topic payloads including the transfer LZ previews and 144 prior resource
+pages, and matched 15 Python/Docker files. The ignored wiki and
+`out/rom-data-europe-e337-d336` were published; e336 remains available for the
+named comparison. The core export is not a full Linux application build.
+Windows remains deferred.
+
+The earlier European wiki refresh used extractor 338 / decoder 337. Protected
+unit `n0musgix` retained 155 unchanged resource files and reconstructed the
+updated raw-transfer catalog from the authenticated signed source table and
+literal. Every file and the manifest match the candidate accepted in
+`e555-signed-map-deltas-wine-hszbu_3b`. Protected unit `_yqtclhf` compared all
+48 displayed signed values with the ROM, checked four wiki pages and the shared
+transfer asset in Chrome, preserved 11 prior topic payloads apart from the
+documented changed resource and its view, and matched 16 Docker/Python files.
+Fourteen ignored wiki files and `out/rom-data-europe-e338-d337` were published;
+e337 is retained for comparison. The construction uses the accepted core output
+identity and is not a full Linux application build. Windows remains deferred.
+
+The current local European wiki uses extractor 339 / decoder 338. Protected
+unit `buwzwh4e` retained 154 unchanged resources and reconstructed the two
+changed code-reference catalogs from nine authenticated source spans. Every
+file and the manifest match the candidate accepted in
+`e558-world-node-dispatch-wine-ua5x_s_7`. Protected unit `rom-data-viewer-refresh-e339-view-fpd_62za`
+checked the 48 signed offsets and their preview in Chrome, preserved 11 topic
+payloads apart from the two changed resource rows and 143 prior resource
+pages, and matched 16 Docker/Python fixture files. Fifteen ignored wiki
+files and `out/rom-data-europe-e339-d338` were published; e338 remains available
+for comparison. This construction is not a full Linux application build.
+Windows remains deferred.
+
 Open the resulting HTML index locally. Its topic links open separate offline
 pages for world/interface data, object animations, actors/equipment, battle
-actors, script actors, audio, text/fonts, event scripts, indexed graphics and other resources. The overview embeds
+actors, script actors, audio, text/fonts, event scripts, indexed graphics,
+transfer graphics and other resources. The overview embeds
 only index fields, and each topic page embeds its own projected data and the
-small shared dependencies required by its previews. Full manifest metadata is
-retained on its topic page. Folder selection and other page-session controls
+small shared dependencies required by its previews. The world tilemap and
+compact-cell views, and the object-animation view on the object page, can load
+transfer graphics from the same local companion asset on request. Within a
+single-page output, one button shares it across all three views. A saved link to
+one of these graphics loads the asset automatically.
+If the asset is missing or does not match, restore it and retry. Full
+manifest metadata is retained on its topic page. Folder selection and other page-session controls
 are local to the current page. The contents sidebar links to the views available for that dataset;
 each section can be opened or closed independently, and the sidebar can open or
 close all sections. Resource rows link directly to their dedicated views when
@@ -125,6 +202,22 @@ passed 26 tests. An initial browser instrumentation failure in
 `rom-data-viewer-scopes-eur-f4x0f7hf` was isolated with
 `rom-data-viewer-scope-hook-diagnostic-fv97rttp`; its candidate was reused for
 the successful guarded browser and Docker checks. Windows remains unverified.
+
+**Focused text scopes (in progress).** The generator now provides separate
+pointer, relative and script-text pages, while keeping the combined text/font
+page for searches across all archives. Name and event-script links target the
+relevant focused page. Pinned language, hidden commands and normal-font choices
+are saved in browser storage when available; the combined page still works if
+storage is unavailable. Synthetic unit `l5t1ecc_` passed 52 of 53 tests; a
+navigation test clicked between wrapped link lines. Corrected focused unit
+`byl9lek3` passed that check; corrected isolated unit `w2vnicj9` passed all
+53 tests. An unaccepted EUR e339 candidate measures
+21,646,829 bytes for the combined page and 7,534,167 bytes for the pointer page;
+this size observation does not establish browser or Docker acceptance. EUR
+unit `7916yrmi` reached Chrome after its candidate and Docker comparison, but
+failed on a DevTools timeout while the filesystem was stalled; diagnostics were
+retained. EUR/Docker validation and publication of the e340 wiki remain in progress;
+the currently published wiki remains e339.
 
 Sections with dropdowns offer **Link to selected values**. Opening or copying
 that link preserves the dropdown positions for the same generated dataset;
@@ -298,6 +391,74 @@ prototype only when the paused viewer task is requested again.
   and navigation in Linux Chrome. No complete scene or original palette pairing
   is inferred. Initial unit `rom-data-viewer-tilemaps-eur-tuysj7hm` stopped
   because its comparison did not allow the expected resource-status change.
+- [x] **Decoded tilemap stream bank.** Verify the extracted binary source
+  ranges and decode 61 halfword streams into the existing tilemap explorer.
+  Nine type-5 row/descriptor links identify seven byte streams; reconstruct
+  their split source fragments while skipping unowned alignment bytes and
+  display their values in a separate grayscale grid with inspectable cells.
+  Other catalogs remain available if either the bank or its links are missing
+  or malformed. Modes, flags, origins and source references remain visible;
+  the views show the first decoded traversal, not the original game composition
+  or palette. Synthetic Chrome unit `rom-data-viewer-tilemap-bank-synthetic-h11axgo7`
+  passed 56 projection, browser and regression checks. Protected EUR e337/d336
+  unit `rom-data-viewer-tilemap-bank-real-33ceaq_x` authenticated both source
+  files, independently compared all 8,377 halfword and 1,733 byte cells and
+  nine references with the ROM, checked each map in Chrome, preserved prior
+  scope data and 145 resource pages, and matched 16 Docker/Python fixture files.
+  Eleven ignored wiki pages were published; Windows remains deferred.
+  [Stream format](../rom_data_runtime.md#e457-european-tilemap-stream-bank)
+- [x] **Signed map offsets.** Browse the 48 signed bytes in the European
+  map-reader table with their indices, source offsets, signed values and raw
+  byte representations. The view is separately collapsible and linked from the
+  raw-transfer resource; a malformed table does not hide valid rectangles, and
+  a malformed rectangle does not hide a valid table. The stored bytes are not
+  named locations and do not establish an in-game traversal. Synthetic Chrome
+  unit `rom-data-viewer-signed-map-synthetic-txfibfdr` passed 41 projection,
+  invalid-input, navigation and regression checks. Protected EUR e338/d337
+  unit `rom-data-viewer-refresh-e338-view-_yqtclhf` compared every displayed
+  value to the authenticated source and preserved 144 prior resource pages.
+  [Source and scope](../rom_data_graphics.md#e555-european-signed-map-delta-runtime)
+- [x] **Signed map offset preview.** Select a stored offset or its table
+  row, view its vertical displacement from zero and play from that entry with
+  a chosen rate and optional loop. Positive values move down. The documented
+  renderer adds the offset to a region's screen Y; the preview's sequential
+  order and rate do not establish the live selection or game timing. The stored
+  values table can be collapsed independently. Synthetic Chrome unit
+  `s91ptt4q` passed 45 checks. After adding a zero-only case and nested-section
+  check, focused unit `8ub0enyk` passed six checks. Protected EUR e339/d338
+  unit `rom-data-viewer-refresh-e339-view-fpd_62za` compared all 48 displayed values with the source
+  and checked playback, looping and page navigation. Native Windows remains
+  deferred. [Renderer](../rom_data_graphics.md#e556-european-world-node-drawing-dispatch)
+- [x] **Type-2 source rectangles and copy windows.** Browse complete
+  packed source rectangles and their available row windows, list headers and
+  transfer-row references in the tilemap explorer. Two palette-row rectangles
+  join previously typed prefixes to the packed data; three previously browsed
+  rectangles gain their source windows. Incomplete cells, missing dependencies
+  and unavailable entry targets are reported without hiding valid rectangles.
+  Source values may be palette colors; tile graphics, interpretation and palette
+  pairing remain manual. Synthetic Chrome unit
+  `rom-data-viewer-type2-rectangles-synthetic-a4urna0v` passed 48 projection,
+  partial-source, browser and regression checks. Protected EUR e337/d336 unit
+  `rom-data-viewer-type2-real-3gn5lnjv` authenticated 1,482 packed ranges and
+  both prior resources, compared 203 rectangles, 2,338 cells, 539 windows and
+  their source links with the ROM, and checked all rectangles/windows in Chrome.
+  Eleven scope payloads and 145 resource pages were preserved; 18 Docker/Python
+  files matched. Twelve ignored wiki pages were published. Other source windows,
+  live scene composition and Windows remain unverified.
+  [Type-2 source](../rom_data_runtime.md#e483-european-type-2-transfer-resource)
+- [x] **Localized queued rectangles.** The tilemap explorer browses the 30
+  documented European localized transfer sources as 24×4 halfword grids. The
+  selector identifies language and entry IDs; source metadata shows the 48-byte
+  source and 64-byte destination row strides. Graphics and palettes are manual
+  interpretations and do not establish the actual scene or destination contents.
+  Missing or invalid localized data leave other views available. Synthetic unit
+  `3zmfg5xd` passed 45/46 checks; its expected hexadecimal value omitted a
+  leading zero. The corrected browser check passed `jnaacl22`. Protected EUR
+  unit `7uuh8665` authenticated nine source spans, matched all 2,880 halfwords,
+  checked all 30 rectangles and preview pixels in Chrome, preserved ten scope
+  payloads and 145 resource pages, and matched 15 Docker/Python files. Eleven
+  ignored local wiki pages were published; Windows remains deferred.
+  [Source contract](../rom_data_ui_raw_transfers.md#e432-thirty-localized-queued-transfer-resources)
 - [x] **UI source rectangles and template forms.** The tilemap explorer
   includes all three stored grids from `graphics.ui-raw-transfers`, linked
   from the resource index. For the two templates, choose stored cells, the
@@ -482,6 +643,21 @@ prototype only when the paused viewer task is requested again.
   an unrecognized v2 resource format; the corrected run passed. Primary
   Terra/xhigh settings were not independently confirmed. Windows is deferred.
   [Archive format](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks)
+- [x] **Direct indexed archives.** Two independently rooted archives with
+  four and 41 programs are available on the indexed-graphics page, with their
+  own resource links, source file and caller-literal positions. Their previews
+  reuse the tile depth, palette and optional ordered playback controls. Each
+  source is validated independently, so missing or invalid data do not hide
+  other families. Synthetic unit `32khwscw` passed 42 tests. Protected EUR
+  unit `uyz3u8oo` matched the four source hashes and independently decoded all
+  45 programs (2,880 bytes), checked eight browser pixels and both relocated
+  file-page links, preserved the other 143 file pages and matched 17
+  Docker/Python files. Fourteen ignored wiki files were published. The initial
+  synthetic unit `7bum0pad` had an incorrect expected ID; `q4ru284l` expected
+  two topic links to remain unchanged. The corrected checks passed; primary
+  Terra/xhigh settings were not independently confirmed. Interpretation,
+  palettes and preview timing remain manual; Windows is deferred.
+  [Direct sources](../rom_data_indexed_graphics.md#direct-european-archive-at-3ae484)
 - [x] **Interface tile sheets.** Browse `ui-graphics.json` banks as a 4-bit
   interpretation, using grayscale or a manually chosen `ui-palettes.json`
   bank. Selectors and language IDs open their linked bank when it belongs to
@@ -515,6 +691,72 @@ prototype only when the paused viewer task is requested again.
   guarded inputs. Graphics interpretation and palettes are manual; live game
   context and native Windows remain unverified.
   [Observed sources](../rom_data_graphics.md#e304-firaga-battle-lz77-runtime-sources)
+- [x] **Compressed tilemap transfer inputs.** Decode the individual LZ77
+  segments in `tilemap-transfer-lz77.bin` only after checking manifest ranges,
+  source hashes, overlap, encoded extent and bounded output. Their outputs are
+  available alongside the earlier observed streams in the tile-sheet, tilemap
+  and object-animation previews; the source file and offset remain visible.
+  Interpretations, graphics depth and palettes are chosen manually and do not
+  establish a finished game image or live pairing. Synthetic unit
+  `rom-data-viewer-transfer-lz-synthetic-edpestec` passed 54 of 55 checks;
+  the remaining fixture used a 32-byte tile for an 8-bit preview and the
+  corrected four-test unit `rom-data-viewer-transfer-lz-retry-fk63b8__` passed.
+  Protected EUR e336/d335 unit `rom-data-viewer-transfer-lz-real-xaic34k0`
+  authenticated all 13 compressed ranges, independently decoded 6,112 bytes,
+  checked all 13 tile previews and their availability in the other views,
+  preserved prior scope data and 145 resource pages, and matched all 19
+  Docker/Python fixture files. Eleven ignored wiki pages were published.
+  Windows remains deferred. [Source contract](../rom_data_runtime.md#e480-european-task-345-lz77-resource)
+- [x] **Type-3 transfer payload previews.** Verify each packed source extent
+  and show complete LZ77 outputs and raw transfer inputs on a separate offline
+  page. Decode each LZ77 stream independently; an invalid stream is reported
+  and omitted without hiding other valid payloads. The tile-sheet view supports
+  4-bit and 8-bit interpretation, manual palettes, pages and byte offsets.
+  Payloads can contain non-graphics data; these controls do not establish an
+  original palette, composition or live scene. Synthetic Chrome unit
+  `rom-data-viewer-type3-payloads-synthetic-hgs0dbzz` passed 45 projection,
+  isolation, browser and regression checks. Protected EUR e337/d336 unit
+  `rom-data-viewer-type3-real-geoui_0a` authenticated 2,214 source ranges,
+  independently decoded all 323 LZ77 inputs and compared 14 raw inputs,
+  totaling 502,064 output bytes. Chrome checked all 337 previews at both tile
+  depths; ten existing scope payloads and 144 resource pages were preserved,
+  and 16 Docker/Python fixture files matched. Twelve local wiki pages and one
+  changed resource page were published. Initial synthetic unit `bet42kmn`
+  exposed an incompatible offset message; the accepted unit restored it.
+  Windows remains deferred. [Source](../rom_data_runtime.md#e482-european-type-3-transfer-resource)
+- [x] **On-demand transfer graphics for maps and animations.** The two world
+  previews share a locally generated, content-addressed transfer graphics file,
+  loaded only on request or when restoring a bookmarked transfer selection.
+  Existing selections are preserved, absent or mismatched files can be retried,
+  and single-page output uses its embedded data. Keep the companion asset with
+  the other generated pages. Synthetic Chrome unit
+  `rom-data-viewer-transfer-graphics-lazy-synthetic-mls3lln9` passed 44 offline,
+  selection, retry, bookmark and regression checks. Protected EUR e337/d336 unit
+  `rom-data-viewer-transfer-lazy-real-98zd4dr0` checked 323 compressed and 14 raw inputs in both views,
+  sampled rendered pixels, restored a bookmark, preserved 11 prior scope
+  payloads apart from the added world asset reference and 145 resource pages,
+  and matched 20 Docker/Python fixture files. Twelve ignored wiki pages
+  and one companion asset were published. Graphics interpretation, palette and
+  scene pairing remain manual; native Windows remains deferred.
+  [Type-3 source](../rom_data_runtime.md#e482-european-type-3-transfer-resource)
+- [x] **On-demand transfer graphics for object animations.** Load compressed
+  and raw transfer inputs into the object-animation viewer only when requested.
+  The existing local asset is shared with world previews in single-page output;
+  split topic pages refer to it without embedding it. Existing graphics choices
+  remain selected, bookmarks restore transfer choices, and missing or mismatched
+  assets can be restored and retried. Synthetic unit `qu1hh1xv` passed 46 of 47
+  checks; one fixture expected the first-byte color at a later pixel. After
+  correcting that expectation, Chrome unit `0ldr0r2e` passed all eight focused
+  loading, pixel, error, bookmark and regression checks. Protected EUR e338/d337
+  unit `rom-data-viewer-obj-transfer-real-8cy6xzm5` checked 323 compressed and 14 raw inputs, sampled a
+  manually paired pixel from each kind, restored a bookmark, preserved 11 scope
+  payloads apart from the new object-page asset reference and 145
+  resource pages, and matched 22 Docker/Python files. Initial real
+  unit `torujq_d` observed the disabled button before the async asset loaded;
+  the accepted check waited for the populated selector and payload. Twelve ignored
+  wiki pages were published using the existing asset. Graphics/palette and scene
+  pairing remain manual and native Windows remains deferred.
+  [Type-3 source](../rom_data_runtime.md#e482-european-type-3-transfer-resource)
 - [x] **Firaga transfer sources and palette prefixes.** Inspect all four stored
   transfer records, their wrapper and format fields, and the two palette
   entries. Follow the three documented links to decoded LZ outputs and the two
@@ -545,6 +787,34 @@ prototype only when the paused viewer task is requested again.
 - [x] **Items.** Display `items.json`, labeling unclassified fields by offset
   and preserving signed values. The EUR records and a synthetic negative value
   passed in Linux Chrome unit `rom-data-viewer-items-ycfow_31`.
+- [x] **Item effect parameters.** Browse the fourteen documented European
+  item-linked records, their nine coefficients, cap and opaque bits in a
+  collapsible view, with links in both directions to item records. An optional
+  calculator accepts a property, current value and quantity as bytes and shows
+  the bounded increase from the documented helper. It does not change game
+  state or reproduce the complete item-use UI. The view remains available when
+  item records are absent and does not infer this mapping for other profiles.
+  Synthetic unit `3d69s9dq` passed 39 tests; profile guard `8lkn7_xq` passed.
+  Protected EUR unit `j0h3etxz` reconstructed and authenticated all 98 source
+  bytes, checked 1,848 calculation cases and both links in Linux Chrome,
+  preserved ten scope payloads and 145 resource pages, and matched 16
+  Docker/Python files. Eleven ignored wiki pages were published. Windows is
+  deferred. [Source contract](../rom_data_gameplay.md#item-effect-parameter-static-contract)
+- [x] **Progression and pricing records.** Four independent, collapsible EUR
+  views present stored progression deltas, receipt requirements, selection
+  conditions and trade parameters. Records can be filtered by ID or ROM offset
+  and paged; trade discount count zero is shown as the high byte of markup,
+  with all later discounts and unclassified bytes available in nested panels.
+  The views preserve fields without inferring skill names, item identities,
+  live state, ordinary reachability or game outcomes. Synthetic Linux Chrome
+  unit `rom-data-viewer-progression-synthetic-lmc8ahj2` passed 44 projection,
+  browser and regression checks, including missing and invalid catalogs.
+  Protected EUR e336/d335 unit `rom-data-viewer-progression-real-lf7sv8ry`
+  compared 233 records and 3,272 reconstructed bytes with authenticated source,
+  checked every displayed row in Chrome, preserved the prior scope data and
+  145 resource pages, and matched all 18 Docker/Python fixture outputs. Eleven
+  ignored local wiki pages were published. Windows remains deferred.
+  [Source contracts](../rom_data_gameplay.md#next-ten-byte-progression-and-price-records)
 - [x] **Item-linked pair records.** Browse every record of `item-links.json`,
   including its count, opaque byte, all nine selector/value pairs and the
   original source offset. A checkbox hides stored slots beyond the count.
@@ -621,6 +891,39 @@ prototype only when the paused viewer task is requested again.
   with guarded inputs; existing embedded data outside the documented index and
   navigation changes was retained. Windows remains unverified.
   [Script format](../rom_data_scripts.md#relative-script-archive-and-event-key-source-contract)
+- [x] **Effect/event and task links.** Browse stored event rows, effect
+  selectors, both even same-state dispatch tables and all three physical task
+  descriptor catalogs. Event-script effect links open their corresponding
+  selectors; documented selector/event references lead to script descriptors
+  and back. Display both distinct task-ID formulas for the script catalog,
+  nullable odd Thumb callbacks, source offsets and raw fields without inferring
+  execution. Missing or invalid catalogs leave independent sections available.
+  Synthetic Chrome unit `rom-data-viewer-effect-tasks-synthetic-x8jlkpdd`
+  passed 44 projection, isolation, browser and regression checks. Protected EUR
+  e337/d336 unit `rom-data-viewer-effect-tasks-real-kf53rnm5` independently
+  reconstructed 4,812 source bytes; checked 412 descriptors, 75 events, 51
+  selectors, 28 dispatch entries, 493 script-selector links and 70 task links
+  in Chrome; preserved ten scope payloads and 143 resource pages; and matched
+  17 Docker/Python files. Eleven local wiki pages and two changed resource
+  pages were published with historical ownership retained. Windows is deferred.
+  [Effect source](../rom_data_events.md) · [Task source](../rom_data_tasks.md)
+- [x] **Auxiliary script archive.** Browse the separate auxiliary banks, slots
+  and all physical programs. Slot links preserve interior instruction entries;
+  reverse links select those entries and the table pages and filters stored
+  opcodes. An independent directory shows each callback and byte advance.
+  Missing or invalid archive/directory files leave the other view usable. No
+  predicate, execution order or argument meaning is inferred. Synthetic Chrome
+  unit `rom-data-viewer-auxiliary-scripts-synthetic-6bo4tsoz` passed 40 browser,
+  isolation and regression checks. Protected EUR e337/d336 unit
+  `rom-data-viewer-auxiliary-scripts-real-h6or111a` independently reassembled
+  all 4,200 source bytes and checked eight banks, 442 slots, 133 programs, 913
+  instructions and 17 directory records in Chrome. Ten scope payloads and 143
+  unchanged resource pages were preserved; 16 Docker/Python files matched.
+  Eleven local wiki pages and two changed resource pages were published, while
+  historical resource-page ownership was retained. Initial unit `bwxi9vzj`
+  stopped because its inventory comparison did not allow four older retained
+  pages; the successful unit merged their ownership. Windows remains deferred.
+  [Source contract](../rom_data_scripts.md#european-auxiliary-script-archive-source-contract)
 - [x] **Pointer text catalogs.** Browse `text-catalogs.json` by reader,
   language and entry, preserving aliases and showing glyphs and control bytes.
   Unavailable glyphs are labeled; controls and substitutions are not executed.
@@ -705,6 +1008,23 @@ prototype only when the paused viewer task is requested again.
   It preserved the previously validated twenty-slot data and all unrelated
   embedded fields. The complete original text JSON was still unavailable.
   [Earlier lookup evidence](../rom_data_gameplay.md#ordinary-alternate-record-use-and-cli)
+- [x] **Direct metadata name references.** A separate collapsible view lists
+  all 116 EUR metadata rows, with language selection, ID/name filtering,
+  pagination and links to the original pointer text. The direct property-0
+  values use the documented `080165E8` reader; nonzero routing is shown without
+  evaluating it. References do not prove live role or job availability.
+  Missing or ambiguous text catalogs leave names unavailable, and unknown
+  glyphs retain their source image. Unit `rom-data-viewer-metadata-names-retry-318wv1u6`
+  passed four synthetic projection/browser tests. Earlier unit
+  `rom-data-viewer-metadata-names-synthetic-e7zs0drd` passed 40 of 41 checks;
+  its remaining test reused a temporary Chrome profile and passed after the
+  test harness was corrected. Protected EUR e335/d334 unit
+  `rom-data-viewer-metadata-names-real-t_lxfhg8` compared all 112 direct rows
+  and 560 localized strings with the authenticated metadata and text files,
+  kept four redirected rows unresolved, and checked browser navigation, ten
+  existing scope payloads and 145 resource pages. The synthetic Docker and
+  Python outputs matched for all 17 files. Eleven ignored wiki pages were
+  published from the verified output; Windows remains deferred.
 - [x] **Sprite tile sheets.** Display the 8×8 indexed tiles from
   `unit-obj-initial-pose.json` at integer zoom using grayscale palette indices.
   EUR catalog and Linux Chrome checks passed in `rom-data-viewer-sprite-ii7_y869`.
@@ -769,6 +1089,24 @@ prototype only when the paused viewer task is requested again.
   data and inspector. Graphics/palette pairing and timing remain approximate;
   the other layered resource fields are not reproduced.
   [Word-task format](../rom_data_obj.md#european-obj-banks-with-u16-task-counters)
+- [x] **Constructor OBJ phases.** The object-animation page links the
+  separately stored threshold/pointer table to its four authenticated static
+  lists. Browse and play each phase from the selected frame, loop it and choose
+  graphics and palettes manually. The preview starts each 8-bit counter at
+  zero; thresholds below 255 produce threshold plus one preview ticks, while
+  a larger threshold stops because the byte counter wraps. Tick rate is chosen
+  by the user and does not establish original scene timing. Synthetic Chrome
+  unit `rom-data-viewer-constructor-obj-synthetic-l19e38kl` passed 47
+  projection, missing-source, playback, navigation and regression checks.
+  Initial unit `q2_tbqhn` exposed a JavaScript inherited-property collision;
+  the catalog key was changed and the failing navigation tests passed on retry.
+  Protected EUR e338/d337 unit `rom-data-viewer-constructor-obj-real-fe1v12d_`
+  authenticated five source spans, independently checked four phases and eight
+  objects, verified playback in Chrome, preserved 11 scope payloads apart from
+  the documented resource move and new view and 144 resource pages, and matched
+  18 Docker/Python fixture files. Fourteen ignored wiki files were published.
+  Graphics/palette pairing, live task state and original timing remain unproved;
+  native Windows is deferred. [Source](../rom_data_obj.md#conditional-constructor-obj-animation-source-and-model)
 - [x] **Compact OBJ animation families.** Browse and play the eight witnessed
   compact catalogs in the same object-animation view. Sparse list IDs and
   sequence selectors remain visible instead of being renumbered, while each
@@ -859,6 +1197,26 @@ prototype only when the paused viewer task is requested again.
   Docker/Python files. The ignored index and world page were published with
   guarded inputs; native Windows and live game context remain unverified.
   [Compact cell format](../rom_data_graphics.md#e310-firaga-compact-cell-runtime)
+- [x] **Compact-cell bank animations.** Decode individually authenticated
+  compact records into byte and halfword cell frames, retaining source offsets,
+  run controls, placement bytes, sequence flags and second bytes. Browse each
+  frame or preview stored sequence order from a selected entry, with adjustable
+  rate, looping and persistent controls across records. Preview cell indices or
+  select tile graphics and palettes manually. Invalid records are reported and
+  isolated; unavailable sequence frames cannot play. These previews do not
+  establish original timing, transparency, palette pairing or scene composition.
+  Synthetic Chrome unit `rom-data-viewer-compact-cell-bank-synthetic-bqw7ty2z`
+  passed 47 projection, playback, isolation and regression checks, including
+  focus and manual palette selection. Protected EUR e337/d336 unit
+  `rom-data-viewer-compact-cell-real-9dcxp6zh` authenticated all 205 source
+  ranges, independently decoded 91 records, 493 frames, 563 sequence entries
+  and 35,124 cells, and checked every frame and entry in Chrome. Eleven prior
+  scope payloads and 145 resource pages were preserved; 18 Docker/Python files
+  matched. Twelve ignored wiki pages were published. Initial synthetic unit
+  `d121w53o` exposed a fixture count error, corrected before the successful
+  run; the first real launch used a temporary filesystem below the admission
+  floor, so the accepted unit ran under the project target. Windows is deferred.
+  [Frame source](../rom_data_graphics.md#e492-european-compact-cell-frame-decoder)
 - [x] **Firaga and Soil Evidence source grids.** Inspect the two documented
   copied matrices and two Soil Evidence rectangles in the tilemap explorer,
   including every stored cell and the associated pointer fields. Their resource
@@ -930,10 +1288,79 @@ prototype only when the paused viewer task is requested again.
   shared root in Linux Chrome. The local page retained the prior inspector and
   unrelated payloads. Live composition, palette, task commands and original
   timing remain outside the preview. [Script sprite formats](../rom_data_unit_obj.md)
+- [x] **Opcode-39 pose sources.** Browse and play the registry and special-unit
+  source sequences by physical sequence and index-cell offsets. Frames join
+  only compatible extracted object and pixel ranges; missing or conflicting
+  inputs remain identified and are never replaced with guessed graphics.
+  Existing prior-owner sequences referenced by new cells are included when
+  their sources agree. The palette and preview rate remain manual; source
+  relationships do not establish live actor, scene, facing or task behavior.
+  Synthetic unit `_li_0wt2` passed 42 checks, including partial, conflicting,
+  earlier-owner and missing-sequence cases, pixels and playback controls.
+  Protected EUR unit `6nb4p1y3` compared all 693 cells and sequences (519 new,
+  174 earlier), 879 frames and 862 graphic joins against authenticated files;
+  checked two Chrome pixels; preserved 143 resource pages and matched 17
+  Docker/Python files. Two resource links moved to the script-actors topic and
+  fourteen ignored local wiki files were published. Initial unit `b7hg8dzc`
+  exposed a missing optional objects field; `wtkudkvp` expected all 693 targets
+  to be new. Corrected checks pass. Windows is deferred.
+  [Source evidence](../rom_data_unit_obj.md#low-selector-special-unit-pose-projection)
+- [x] **Opcode-39 source index cells.** A collapsible, paginated table shows
+  all recorded physical index offsets, including nulls, and filters by target
+  kind or decimal/hex offset. Sequence targets open the corresponding preview;
+  unavailable sequences remain identified. Filters persist across catalogs;
+  the table does not imply live actor or scene use. Synthetic unit `pyo47ub8`
+  passed 42/43 checks; its test incorrectly assumed the separate script page
+  also contained the equipment catalog. The corrected split/single-page check
+  passed in `alynb5hx`. Protected EUR unit `3i5uayb1` matched all 7,924 cells
+  (7,231 null and 693 sequence targets), exercised both catalogs in Chrome,
+  preserved ten other scope payloads and 145 resource pages, and matched 17
+  Docker/Python files. Eleven ignored local wiki pages were published; Windows
+  remains deferred. [Source evidence](../rom_data_unit_obj.md#low-selector-special-unit-pose-projection)
 - [x] **Maps.** Plot the tile coordinates from `world-nodes.json`. Let the
   reader select a node to see its ID, coordinates and recorded neighbors.
   EUR data and Linux Chrome selection passed in unit `rom-data-viewer-map-povy0tl_`.
   [World map data](../rom_data_maps.md)
+- [x] **Observed world location names.** For authenticated EUR world-node
+  and pointer-text files, a collapsible list links six recorded region/node
+  placements to their localized text entries. Select a node and open its exact
+  source string on the text page. These associations come from one recorded
+  placement and can differ during play; other profiles or changed source hashes
+  do not acquire the names. The initial Giza association had this evidence: Synthetic
+  unit `22pyjgbt` passed 38 of 39 checks; its link-click test targeted a wrapped
+  text gap and passed after correction in `zg52_9wm`. The tests also cover
+  unknown glyph bitmaps, partial languages and both split/single-page links.
+  Protected EUR unit `hl7y6830` matched all five name token sequences to the
+  source, verified browser navigation, preserved ten existing scope payloads
+  and 145 resource pages, and matched 15 Docker/Python files. Eleven ignored
+  wiki pages were published. Earlier unit `iet5gnim` used an incorrect German
+  fallback expectation; its candidate and Docker outputs were reused. The four
+  additional observed associations use regions 1, 2, 6 and 11. Synthetic unit
+  `rom-data-viewer-world-names-expanded-synthetic-_2mq6zty` passed 41 checks.
+  Protected EUR unit `rom-data-viewer-world-names-expanded-real-g07anua6`
+  matched all five observed node/region pairs to retained placement evidence
+  and all 25 localized token sequences to the extracted text, checked names,
+  node selection and source navigation in Chrome, preserved 11 scope payloads
+  and 145 resource pages, and matched 16 Docker/Python files. The ignored world
+  page was published. At that checkpoint, other names and placements remained
+  open; Windows was deferred. [Placement evidence](../rom_data_maps.md#world-selector-and-placed-region-coordinates)
+- [x] **World region name references.** For the authenticated EUR text catalog,
+  a separate collapsible directory filters 31 region IDs and their localized
+  name references, links directly to each source string, and connects six
+  recorded region placements to the map. The region-list builder conditionally
+  calls reader `080165e8` with `718 + region_id` for IDs 0–30; this does not
+  prove permanent or complete placement. The sixth association (region 16,
+  node 2) comes from the existing conditional placement snapshot. Missing
+  languages remain explicitly unavailable, and the directory does not require
+  world-node data. Synthetic unit `t1s_3vy8` passed 44 checks. Protected EUR
+  e339/d338 unit `mo2faka0` authenticated both source windows, checked all 155
+  localized token sequences and six recorded node joins, exercised filtering
+  and navigation in Chrome, preserved the other scope data and 145 resource
+  pages, and matched 16 Docker/Python files. Twelve ignored wiki pages were
+  published. Standalone test discovery initially missed the scripts module;
+  the import was corrected and unit `yq73x3mi` passed all three focused checks.
+  Native Windows and other placements remain unverified.
+  [Source and placement evidence](../rom_data_maps.md#world-selector-and-placed-region-coordinates)
 - [x] **Initial terrain grids.** Reconstruct each normal 16×16 auxiliary seed
   by applying its ordered parent and child halfword writes to a zero-filled
   grid. Browse heights, flags and raw values, choose cells and color mode, and
@@ -1012,6 +1439,21 @@ prototype only when the paused viewer task is requested again.
   `audio-tones.json`. Show its length and loop start alongside the source entry.
   EUR sample values and Linux Chrome canvas passed in unit `rom-data-viewer-audio-6k9qlyf2`.
   [Audio format](../rom_data_audio.md)
+- [x] **Timed sound sources.** Browse the two observed schedules and all 681
+  later source fragments by kind and offset, with raw ticks, channels, opaque
+  bytes and sound words. For nonzero words, the low 12 bits are shown as a
+  candidate directory ID and high bits remain visible as flags. Compatible IDs
+  link to the existing approximate player and can be auditioned individually;
+  live scheduler state, simultaneous sounds, flags and timing are not executed.
+  Older and partially invalid optional groups remain independently available.
+  Synthetic unit `qfvhn_5h` passed 38/39 tests; its invalid-bank fixture shared a
+  row with the observed schedule. The corrected partial-data test passed
+  `i1crr9m5`. Protected EUR unit `wpjg4odq` reconstructed 685 authenticated source
+  spans, matched 681 fragments and 569 rows, checked browser filtering and song
+  navigation, preserved ten scope payloads and 145 resource pages, and matched
+  16 Docker/Python files. Eleven ignored wiki pages were published. Audible
+  physical output and Windows remain unverified.
+  [Source contract](../rom_data_audio.md#e539-european-timed-sound-census)
 - [x] **Stored audio values.** Inspect PCM header fields, signed sample values
   and their raw bytes in pages of 64. Jump to an index or click the waveform;
   selecting a sample does not stop playback. A separate collapsible table
@@ -1129,6 +1571,23 @@ prototype only when the paused viewer task is requested again.
   Docker unit `rom-data-viewer-instrument-wav-docker-h7atiora` matched Python
   on synthetic input. Pitch and interpolation are approximations, and the
   original dataset volume was unavailable for this local-page check.
+- [x] **Export the selected song mix.** Render the selected song or individual
+  track as a 32 kHz, 16-bit stereo WAV using the current bounded preview,
+  estimated or manual timing, instruments and sine fallbacks, optional PCM
+  envelope and track controls, and the current CGB and individual-track mutes.
+  The settings and file name are captured when export starts. The output ends
+  at the last scheduled note and reports unavailable rendering or automation
+  limits; it does not reproduce unmodeled driver behavior. Synthetic Chrome
+  unit `rom-data-viewer-sequence-wav-synthetic-zwqbzr4d` passed 42 audio and
+  regression checks, including real offline stereo output, pan and mute, and
+  comparison with live scheduling. Unit `rom-data-viewer-sequence-wav-errors-9vk7mg2l`
+  passed three focused checks including unavailable-renderer recovery. Protected
+  EUR e336/d335 unit `rom-data-viewer-sequence-wav-real-rb20l36j` exported a
+  two-second song-312 preview with eight resolved PCM notes, decoded its WAV
+  independently, verified track-mute silence, preserved ten scope payloads
+  and 145 resource pages, and matched 16 Docker/Python fixture outputs. Eleven
+  ignored wiki pages were published. Physical audio, exact game mixer behavior
+  and Windows remain unverified.
 - [x] **Song and instrument-bank links.** Each bank lists the song IDs whose
   stored headers reference it, in pages of 25. Follow a song to its sequence or
   open the current song's bank without starting playback; key and CGB mute

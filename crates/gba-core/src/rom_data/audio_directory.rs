@@ -4,6 +4,8 @@ use crate::ffta_rom;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 
+pub mod timed_sounds;
+
 pub const PLAYER_OFFSET: u32 = 0x14f51c;
 pub const DIRECTORY_OFFSET: u32 = 0x14f540;
 pub const DIRECTORY_END: u32 = 0x150940;
@@ -157,6 +159,8 @@ pub struct AudioDirectory {
     pub headers: Vec<Header>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub red_spring_sounds: Option<[TimedSoundSchedule; 2]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub timed_sounds: Option<timed_sounds::TimedSounds>,
 }
 impl AudioDirectory {
     pub fn validate(&self) -> Result<(), String> {
@@ -235,6 +239,9 @@ impl AudioDirectory {
                 return Err(bad());
             }
         }
+        if let Some(bank) = &self.timed_sounds {
+            bank.validate()?;
+        }
         Ok(())
     }
     pub fn header(&self, id: u16) -> Option<&Header> {
@@ -272,6 +279,9 @@ impl AudioDirectory {
                 spans.push((schedule.source_offset, schedule.rows.iter().flat_map(TimedSoundRow::source_bytes).collect()));
             }
         }
+        if let Some(bank) = &self.timed_sounds {
+            spans.extend(bank.source_spans().into_iter().map(|(offset, bytes, _)| (offset, bytes)));
+        }
         spans
     }
 
@@ -293,7 +303,7 @@ impl AudioDirectory {
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom(rom)?.decoded {
+        if self != &Catalog::from_rom_with_timed_sounds(rom, self.timed_sounds.is_some())?.decoded {
             return Err("M4A directory differs from authenticated EUR source".into());
         }
         Ok(())
@@ -306,6 +316,9 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
+        Self::from_rom_with_timed_sounds(rom, true)
+    }
+    pub(crate) fn from_rom_with_timed_sounds(rom: &[u8], enabled: bool) -> Result<Self, String> {
         if ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("M4A directory requires exact EUR ROM; USA pending".into());
         }
@@ -450,6 +463,7 @@ impl Catalog {
             songs,
             headers,
             red_spring_sounds: Some(red_spring_sounds),
+            timed_sounds: if enabled { Some(timed_sounds::TimedSounds::from_rom(rom)?) } else { None },
         };
         decoded.validate()?;
         let sources = decoded
@@ -466,8 +480,10 @@ impl Catalog {
                     "audio/m4a-directory".into()
                 } else if i < 2 + decoded.headers.len() {
                     format!("audio/m4a-header/{}", decoded.headers[i - 2].id)
-                } else {
+                } else if i < 2 + decoded.headers.len() + RED_SPRING_SOUND_ROLES.len() {
                     RED_SPRING_SOUND_ROLES[i - 2 - decoded.headers.len()].into()
+                } else {
+                    decoded.timed_sounds.as_ref().unwrap().source_spans()[i - 2 - decoded.headers.len() - RED_SPRING_SOUND_ROLES.len()].2.into()
                 },
             })
             .collect();

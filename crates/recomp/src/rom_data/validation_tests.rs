@@ -85,6 +85,128 @@ fn measure_decoded_startup_costs() {
     .unwrap();
 }
 
+#[cfg(feature = "rom-data-read-audit")]
+struct SceneBankWatch<'a> {
+    path: PathBuf,
+    resource: &'a str,
+    sources: Vec<&'a gba_core::rom_data::SourceRange>,
+    capture: gba_core::rom_data::read_audit::TraceCapture,
+}
+
+#[cfg(feature = "rom-data-read-audit")]
+impl<'a> SceneBankWatch<'a> {
+    fn from_manifest(manifest: &'a Manifest) -> Option<Self> {
+        use gba_core::rom_data::read_audit::{TraceCapture, TraceFilter};
+
+        let path = std::env::var_os("FFTA_STATE_TEST_BANK_TRACE");
+        let selector = std::env::var_os("FFTA_STATE_TEST_BANK_WATCH");
+        let window = std::env::var_os("FFTA_STATE_TEST_BANK_WATCH_WINDOW").map(|value| {
+            let value = value.into_string().expect("UTF-8 bank watch window");
+            let (start, end) = value
+                .split_once("..")
+                .expect("bank watch window start..end");
+            let parse = |offset: &str| {
+                u32::from_str_radix(offset.trim_start_matches("0x"), 16)
+                    .expect("hexadecimal bank watch window")
+            };
+            (parse(start), parse(end))
+        });
+        assert!(
+            window.is_none() || selector.is_some(),
+            "bank watch window needs a selector"
+        );
+        assert_eq!(
+            path.is_some(),
+            selector.is_some(),
+            "set both bank watch variables"
+        );
+        let path = PathBuf::from(path?);
+        assert!(!path.exists(), "preserve earlier bank trace reports");
+        let selector = selector.unwrap().into_string().expect("UTF-8 bank selector");
+        let (id, roles) = selector
+            .split_once(':')
+            .expect("expected resource-id:role[,role]");
+        let resource = manifest
+            .resources
+            .iter()
+            .find(|entry| entry.id == id)
+            .expect("watched resource in the attached manifest");
+        let roles: Vec<_> = roles.split(',').collect();
+        for role in &roles {
+            assert!(
+                resource.sources.iter().any(|source| source.role == *role),
+                "unknown source role {role} in {id}"
+            );
+        }
+        let sources: Vec<_> = resource
+            .sources
+            .iter()
+            .filter(|source| roles.contains(&source.role.as_str()))
+            .filter(|source| {
+                window.is_none_or(|(start, end)| {
+                    let stop = source.offset.checked_add(source.length).expect("source end");
+                    start <= source.offset && stop <= end
+                })
+            })
+            .collect();
+        assert!(!sources.is_empty(), "bank watch selects no source spans");
+        let ranges = if let Some(window) = window {
+            vec![window]
+        } else {
+            sources
+                .iter()
+                .map(|source| {
+                    let end = source.offset.checked_add(source.length).expect("source end");
+                    (source.offset, end)
+                })
+                .collect()
+        };
+        let capture = TraceCapture::start(
+            TraceFilter { readers: Vec::new(), ranges },
+            10_000,
+        ).expect("bounded bank trace");
+        Some(Self {
+            path,
+            resource: &resource.id,
+            sources,
+            capture,
+        })
+    }
+
+    fn alter_backing(&self, backing: &mut [u8], original: &[u8], alter: bool) {
+        for source in &self.sources {
+            let start = source.offset as usize;
+            let end = start + source.length as usize;
+            for (byte, &raw) in backing[start..end].iter_mut().zip(&original[start..end]) {
+                *byte = if alter { !raw } else { raw };
+            }
+        }
+    }
+
+    fn finish(self, manifest: &Manifest, first: u64, frames: u64) {
+        let trace = self.capture.finish();
+        assert!(!trace.truncated, "bank trace exceeded the event limit");
+        let output = fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(self.path)
+            .expect("new bank trace report");
+        serde_json::to_writer_pretty(
+            output,
+            &serde_json::json!({
+                "resource": self.resource,
+                "sources": self.sources,
+                "profile": manifest.profile,
+                "extractor_revision": manifest.extractor_revision,
+                "decoder_revision": manifest.decoder_revision,
+                "first_guest_frame": first + 1,
+                "last_guest_frame": first + frames,
+                "trace": trace,
+            }),
+        ).expect("write bank trace report");
+    }
+}
+
 #[test]
 #[ignore = "requires private ROM/native/input fixtures and explicit scene length; optional state/save"]
 fn decoded_base_matches_recorded_scene_at_every_frame() {
@@ -117,7 +239,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             dataset
         }
     };
-    attach_from_directory(&mut decoded, &dataset).unwrap();
+    let manifest = {
+        let dataset = read_dataset(&dataset).unwrap();
+        attach_dataset(&mut decoded, &dataset).unwrap();
+        dataset.manifest
+    };
     for machine in [&mut legacy, &mut decoded] {
         if let Some(path) = &state {
             crate::save_state::load(machine, Path::new(path)).unwrap();
@@ -169,6 +295,17 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let poison_tilemap_list_row = std::env::var_os("FFTA_STATE_TEST_POISON_TILEMAP_LIST_ROW").is_some();
     let poison_compact_records = std::env::var_os("FFTA_STATE_TEST_POISON_COMPACT_RECORDS").is_some();
     let poison_red_spring_sounds = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_SOUNDS").is_some();
+    let poison_timed_sounds = std::env::var_os("FFTA_STATE_TEST_POISON_TIMED_SOUNDS").is_some();
+    let timed_sound_ranges: Vec<_> = if poison_timed_sounds {
+        let audio = manifest.resources.iter().find(|resource| resource.id == AUDIO_DIRECTORY_ID)
+            .expect("European audio directory");
+        let ranges: Vec<_> = audio.sources.iter()
+            .filter(|range| range.role.starts_with("audio/timed-sound-"))
+            .map(|range| (range.offset as usize, range.length as usize)).collect();
+        assert_eq!(ranges.len(), 681, "E539 timed-sound source spans");
+        assert_eq!(ranges.iter().map(|(_, length)| length).sum::<usize>(), 6249);
+        ranges
+    } else { Vec::new() };
     let poison_iwram_obj_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_IWRAM_OBJ_CALLBACKS").is_some();
     let poison_extra_iwram_obj_callbacks = std::env::var_os("FFTA_STATE_TEST_POISON_EXTRA_IWRAM_OBJ_CALLBACKS").is_some();
     let poison_obj_layout_offsets = std::env::var_os("FFTA_STATE_TEST_POISON_OBJ_LAYOUT_OFFSETS").is_some();
@@ -297,6 +434,15 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     let mut compact_watch_hit = None;
     #[cfg(feature = "rom-data-read-audit")]
     let scene_audit_path = std::env::var_os("FFTA_STATE_TEST_ROM_AUDIT_REPORT").map(PathBuf::from);
+    #[cfg(feature = "rom-data-read-audit")]
+    let bank_watch = SceneBankWatch::from_manifest(&manifest);
+    #[cfg(not(feature = "rom-data-read-audit"))]
+    assert!(
+        std::env::var_os("FFTA_STATE_TEST_BANK_WATCH").is_none()
+            && std::env::var_os("FFTA_STATE_TEST_BANK_TRACE").is_none()
+            && std::env::var_os("FFTA_STATE_TEST_BANK_WATCH_WINDOW").is_none(),
+        "bank trace requires rom-data-read-audit"
+    );
     #[cfg(feature = "rom-data-read-audit")]
     let poison_red_spring = std::env::var_os("FFTA_STATE_TEST_POISON_RED_SPRING_BANK").is_some();
     #[cfg(feature = "rom-data-read-audit")]
@@ -872,6 +1018,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     }
                 }
             }
+            if index == 1 && poison_timed_sounds {
+                for &(start, length) in &timed_sound_ranges {
+                    for at in start..start + length { machine.bus.rom[at] = !rom[at]; }
+                }
+            }
             if index == 1 && poison_iwram_obj_callbacks {
                 use gba_core::rom_data::obj_lists::{IWRAM_DRAW_CALLBACKS_COUNT, IWRAM_DRAW_CALLBACKS_ROOT};
                 let start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
@@ -967,7 +1118,19 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             #[cfg(feature = "rom-data-read-audit")]
             let scene_audit = (index == 1 && (scene_audit_path.is_some() || poison_red_spring || poison_star_cross))
                 .then(gba_core::rom_data::read_audit::Capture::start);
+            #[cfg(feature = "rom-data-read-audit")]
+            let watched_bank = bank_watch.as_ref().filter(|_| index == 1);
+            #[cfg(feature = "rom-data-read-audit")]
+            if let Some(watch) = watched_bank {
+                watch.alter_backing(&mut machine.bus.rom, &rom, true);
+                watch.capture.frame(Some(machine.bus.frames + 1));
+            }
             counts[index] = run_frame_native(machine, &table, pointer, FRAME_STEP_GUARD);
+            #[cfg(feature = "rom-data-read-audit")]
+            if let Some(watch) = watched_bank {
+                watch.capture.frame(None);
+                watch.alter_backing(&mut machine.bus.rom, &rom, false);
+            }
             #[cfg(feature = "rom-data-read-audit")]
             if let Some(capture) = scene_audit {
                 let reads = capture.finish();
@@ -1602,6 +1765,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
                     }
                 }
             }
+            if index == 1 && poison_timed_sounds {
+                for &(start, length) in &timed_sound_ranges {
+                    machine.bus.rom[start..start + length].copy_from_slice(&rom[start..start + length]);
+                }
+            }
             if index == 1 && poison_iwram_obj_callbacks {
                 use gba_core::rom_data::obj_lists::{IWRAM_DRAW_CALLBACKS_COUNT, IWRAM_DRAW_CALLBACKS_ROOT};
                 let start = IWRAM_DRAW_CALLBACKS_ROOT as usize;
@@ -1800,6 +1968,10 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
             "scene must consume both sound table pointers");
         eprintln!("ROM_DATA_RED_SPRING_SOUNDS_POISON table_bytes={:?} root_bytes={:?}",
             stats.red_spring_sound_bytes, stats.red_spring_root_bytes);
+    }
+    if poison_timed_sounds {
+        let stats = decoded.bus.rom_resources().unwrap().audio_directory_stats().expect("audio directory owner");
+        eprintln!("ROM_DATA_TIMED_SOUNDS_SCENE typed_bytes={}", stats.timed_sound_bytes);
     }
     if poison_iwram_obj_callbacks {
         let stats = decoded.bus.rom_resources().unwrap().obj_list_stats().expect("OBJ list owner");
@@ -3121,7 +3293,11 @@ fn decoded_base_matches_recorded_scene_at_every_frame() {
     );
     #[cfg(feature = "rom-data-read-audit")]
     if let Some(path) = scene_audit_path {
-        write_scene_rom_audit(&path, &source.manifest, first, frames, &scene_reads);
+        write_scene_rom_audit(&path, &manifest, first, frames, &scene_reads);
+    }
+    #[cfg(feature = "rom-data-read-audit")]
+    if let Some(watch) = bank_watch {
+        watch.finish(&manifest, first, frames);
     }
     eprintln!("ROM_DATA_SCENE frames={frames} first={first} native={} fallback={} full_states={frames} audio={audio:?} bus_reads={} host_rom_reads={} host_ram_reads={} dynamic_ram_reads={} bus_source_mask={}", dispatch[0], dispatch[1], stats.bus_reads, stats.host_rom_reads, stats.host_ram_reads, stats.dynamic_ram_reads, stats.bus_source_mask);
     eprintln!(

@@ -175,6 +175,8 @@ impl ThumbPcLiteralsResources {
                 + data.localized_text_roots.len()
                 + data.startup_task_roots.len()
                 + data.title_frontend_roots.len()
+                + data.world_node_renderer_literals.len()
+                + data.world_state_task_literals.len()
         {
             return Err("Thumb literal source count mismatch".into());
         }
@@ -213,6 +215,8 @@ impl ThumbPcLiteralsResources {
             .chain(&data.localized_text_roots)
             .chain(&data.startup_task_roots)
             .chain(&data.title_frontend_roots)
+            .chain(&data.world_node_renderer_literals)
+            .chain(&data.world_state_task_literals)
             .zip(sources)
         {
             if source.offset != literal.source_offset
@@ -704,5 +708,7 @@ impl ThumbPcLiteralsResources {
             + self.data.localized_text_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.startup_task_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.title_frontend_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.world_node_renderer_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.world_state_task_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
     }
 }

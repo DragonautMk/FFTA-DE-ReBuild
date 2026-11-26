@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-effect-event-task-links",
+  "title": "Browse effect, event and task links",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose source-backed effect selectors, event records, dispatch tables and task descriptors on the event scripts page.",
+    "Connect script instructions to effect selectors and documented selector/event references to task descriptors, retaining nullable callbacks, distinct task ID aliases and raw fields."
+  ],
+  "validation": [
+    "Synthetic Chrome unit x8jlkpdd passed 44 projection, isolation, browser and regression checks.",
+    "Protected EUR unit kf53rnm5 reconstructed 4812 authenticated bytes, checked 412 task descriptors, 75 events, 51 selectors, 28 dispatch entries, 493 script-selector links and 70 task links in Chrome, preserved other scope payloads and 143 resource pages, and matched 17 Docker/Python files. Fourteen ignored wiki files were published."
+  ],
+  "limitations": [
+    "Views preserve stored references and unknown fields; runtime execution, actor state, effects and native Windows are not verified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_effect_tasks_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_events.md",
+    "docs/rom_data_tasks.md"
+  ]
+}

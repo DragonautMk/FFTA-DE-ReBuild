@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-signed-map-deltas",
+  "title": "Serve the complete European signed map delta table",
+  "kind": "changed",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Store all 48 signed map deltas and their original pointer as authenticated typed raw-transfer sources in e338-d337. Preserve the exact e337-d336 packet and backing ROM routing for the adjacent constructor record."
+  ],
+  "validation": [
+    "Wine hszbu_3b passes 48 accepted indices, two rejections, 96 typed reads over 52 altered source bytes, full state and guest clock, e337-d336 attachment and rejection of an incomplete revision. The server drained."
+  ],
+  "limitations": [
+    "The test uses the retained e337 dataset and builds the changed packet in memory. CLI publication and verification, ordinary gameplay, generated dispatch, original BIOS, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers.rs",
+    "crates/gba-core/src/rom_data/ui_raw_transfers/signed_map_deltas.rs",
+    "crates/gba-core/src/rom_data/runtime/ui_raw_transfers.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/signed_map_delta_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

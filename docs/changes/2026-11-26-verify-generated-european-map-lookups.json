@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-generated-european-map-lookups",
+  "title": "Verify generated loads across the European map lookup bank",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Add one focused TinyCC comparison of the six original map lookup load instructions against the interpreter. Use the existing authenticated dataset with all five backing spans altered."
+  ],
+  "validation": [
+    "Windows build gkmt47rd and Wine _tm3qa43 pass. The 93 direct generated bus requests cover all 100 E537 bytes and both table-edge aliases. Complete state and guest clock match after each instruction. Protected inputs pass and Wine drains."
+  ],
+  "limitations": [
+    "The test supplies controlled effective addresses to isolated instructions. Generated dispatch in ordinary play, exact startup caller, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/world_map_lookup_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

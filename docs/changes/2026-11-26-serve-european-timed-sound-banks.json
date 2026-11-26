@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-timed-sound-banks",
+  "title": "Serve European timed sound banks",
+  "kind": "changed",
+  "platforms": [
+    "EUR",
+    "Wine"
+  ],
+  "changes": [
+    "Publish the authenticated timed-sound literal, directory, count, RAM-source-word and record spans in e334-d333. Preserve existing owners and predecessor attachment."
+  ],
+  "validation": [
+    "Windows build 54qwtb0b and Wine zw1q89b2 pass. The test executes 552 original caller setups and selected scheduler reads with altered backing. The resource serves 5,371 typed bytes. Guest clock and full state match, the predecessor attaches, and incomplete current data is rejected transactionally. Wine drains. Failed wrapper and fixture attempts are recorded."
+  ],
+  "limitations": [
+    "Ordinary scenes, full scheduler behavior, indirect callers, translated and original-BIOS paths, Linux, USA and native Windows remain open. No performance measurements. Terra reasoning effort unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/audio_directory.rs",
+    "crates/gba-core/src/rom_data/audio_directory/timed_sounds.rs",
+    "crates/gba-core/src/rom_data/audio_directory/timed_sound_shapes.rs",
+    "crates/gba-core/src/rom_data/runtime/audio_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/timed_sound_bank_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

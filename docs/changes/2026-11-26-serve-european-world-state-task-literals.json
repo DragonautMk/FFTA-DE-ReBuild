@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-world-state-task-literals",
+  "title": "Serve the complete European world-state task literal bank",
+  "kind": "changed",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Publish all 357 unowned world-state task words in engine.thumb-pc-literals for e340-d339 and enable runtime page 34. Preserve the 15 earlier word owners, the outer switch, the exact e339 packet and the e339 renderer test revision."
+  ],
+  "validation": [
+    "Wine y1oruut7 and Windows build eght_zk0 pass. All 381 original load sites are typed, with equal registers and guest clock per load and an equal final full state. Twenty-four mixed mirror requests, e339 attachment and rejection of an incomplete e340 pass. Fifteen guards pass and Wine drains."
+  ],
+  "limitations": [
+    "The unit rebuilds the changed packet in memory over e339. Standard CLI publication, ordinary placement, generated readers, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/startup_tasks.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals/world_state_task.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_node_dispatch_tests.rs",
+    "crates/recomp/src/rom_data/world_state_task_literal_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -2,6 +2,7 @@
 """Generate an offline resource wiki for an extracted dataset."""
 import argparse
 import base64
+import bisect
 import hashlib
 import json
 import os
@@ -113,6 +114,35 @@ def project_observed_lz(catalog):
     return {'streams': streams}
 
 
+def project_transfer_lz(content, sources):
+    """Decode individually hashed transfer inputs in manifest file order."""
+    if (not isinstance(content, bytes) or len(content) > 32 * 1024 * 1024
+            or not isinstance(sources, list) or not 0 < len(sources) <= 4096):
+        raise ValueError('Invalid transfer LZ77 input or source list')
+    streams, ranges, cursor, total = [], [], 0, 0
+    for source in sources:
+        offset, length = source['offset'], source['length']
+        if (type(offset) is not int or not 0 <= offset <= 0xffffffff
+                or type(length) is not int or length <= 0 or offset + length > 0x100000000
+                or source['role'] != 'lz77-input' or cursor + length > len(content)):
+            raise ValueError('Invalid transfer LZ77 source extent or role')
+        encoded = content[cursor:cursor + length]
+        if hashlib.sha256(encoded).hexdigest() != source['sha256']:
+            raise ValueError('Transfer LZ77 source SHA-256 mismatch')
+        decoded = decode_gba_lz77(encoded)
+        total += len(decoded)
+        if total > 32 * 1024 * 1024:
+            raise ValueError('Transfer LZ77 output limit exceeded')
+        words = [int.from_bytes(decoded[index:index + 4], 'little') for index in range(0, len(decoded) - 3, 4)]
+        streams.append({'source_offset': offset, 'encoded_length': length, 'decoded_length': len(decoded),
+                        'context': 'Task 345 transfer input', 'words': words, 'tail': list(decoded[len(words) * 4:])})
+        ranges.append((offset, offset + length)); cursor += length
+    ranges.sort()
+    if cursor != len(content) or any(left[1] > right[0] for left, right in zip(ranges, ranges[1:])):
+        raise ValueError('Overlapping transfer LZ77 sources or trailing bytes')
+    return {'streams': streams}
+
+
 def decode_tilemap_tokens(tokens, expected, base_runs=False):
     """Decode the stored literal, repeating and incrementing halfword runs."""
     def word(value):
@@ -140,6 +170,310 @@ def decode_tilemap_tokens(tokens, expected, base_runs=False):
     if len(cells) != expected:
         raise ValueError('Incomplete tilemap stream')
     return cells
+
+
+def project_binary_segments(content, sources):
+    """Map individually hashed source ranges to their concatenated file bytes."""
+    if (not isinstance(content, bytes) or len(content) > 16 * 1024 * 1024
+            or not isinstance(sources, list) or not 0 < len(sources) <= 8192):
+        raise ValueError('Invalid binary source list')
+    segments, intervals, cursor = [], [], 0
+    for source in sources:
+        offset, length, role = source['offset'], source['length'], source['role']
+        if (type(offset) is not int or not 0 <= offset <= 0xffffffff or type(length) is not int or length <= 0
+                or offset + length > 0x100000000 or not isinstance(role, str) or cursor + length > len(content)):
+            raise ValueError('Invalid binary source extent')
+        chunk = content[cursor:cursor + length]
+        if hashlib.sha256(chunk).hexdigest() != source['sha256']:
+            raise ValueError('Binary source SHA-256 mismatch')
+        segments.append((offset, role, chunk)); intervals.append((offset, offset + length)); cursor += length
+    intervals.sort()
+    if cursor != len(content) or any(a[1] > b[0] for a, b in zip(intervals, intervals[1:])):
+        raise ValueError('Overlapping binary sources or trailing bytes')
+    return segments
+
+
+def project_type3_payloads(content, sources):
+    """Validate type-3 ranges and expose complete LZ77 and raw payloads."""
+    compressed, raw, errors, total = [], [], [], 0
+    for offset, role, encoded in project_binary_segments(content, sources):
+        if role not in ('lz77-input', 'raw-input'):
+            continue
+        try:
+            decoded = decode_gba_lz77(encoded) if role == 'lz77-input' else encoded
+        except ValueError as error:
+            errors.append({'source_offset': offset, 'reason': str(error)})
+            continue
+        total += len(decoded)
+        if total > 32 * 1024 * 1024:
+            raise ValueError('Type-3 payload output limit exceeded')
+        words = [int.from_bytes(decoded[index:index + 4], 'little') for index in range(0, len(decoded) - 3, 4)]
+        item = {'source_offset': offset, 'encoded_length': len(encoded), 'decoded_length': len(decoded),
+                'words': words, 'tail': list(decoded[len(words) * 4:])}
+        (compressed if role == 'lz77-input' else raw).append(item)
+    return {'streams': compressed, 'raw_streams': raw, 'errors': errors}
+
+
+def decode_compact_cell_record(source_offset, record):
+    """Decode bounded compact-cell frames and retain their stored sequence bytes."""
+    def half(offset):
+        if offset < 0 or offset + 2 > len(record):
+            raise ValueError('Truncated compact-cell halfword')
+        return int.from_bytes(record[offset:offset + 2], 'little')
+
+    flags, split = half(0), half(2)
+    if flags not in (12, 14) or not 6 <= split <= len(record) - 2:
+        raise ValueError('Invalid compact-cell record header')
+    directory = record[4:split]
+    prefix = int.from_bytes(directory[:2], 'little')
+    if prefix < 2 or prefix > 128 or prefix % 2 or prefix >= len(directory):
+        raise ValueError('Invalid compact-cell frame directory')
+    offsets = [int.from_bytes(directory[index:index + 2], 'little') for index in range(0, prefix, 2)]
+    value_bytes = 2 if flags == 12 else 1
+    frames = []
+    for index, start in enumerate(offsets):
+        end = offsets[index + 1] if index + 1 < len(offsets) else len(directory)
+        if start % 2 or start < prefix or start >= end or end > len(directory):
+            raise ValueError('Invalid compact-cell frame offset')
+        encoded = directory[start:end]
+        if len(encoded) < 4:
+            raise ValueError('Truncated compact-cell frame header')
+        width, height, x, y = encoded[:4]
+        count, cursor, cells, tokens = width * height, 4, [], []
+        if not count:
+            raise ValueError('Empty compact-cell frame')
+        while len(cells) < count:
+            if cursor + 2 > len(encoded):
+                raise ValueError('Truncated compact-cell run control')
+            control = int.from_bytes(encoded[cursor:cursor + 2], 'little'); cursor += 2
+            length, mode = control & 0x3fff, control & 0xc000
+            if not length or length > count - len(cells):
+                raise ValueError('Invalid compact-cell run length')
+            needed = value_bytes * (length if mode == 0 else 1)
+            stored = (needed + 1) & ~1
+            if cursor + stored > len(encoded):
+                raise ValueError('Truncated compact-cell run payload')
+            values = [int.from_bytes(encoded[pos:pos + value_bytes], 'little')
+                      for pos in range(cursor, cursor + needed, value_bytes)]
+            cursor += stored
+            if mode == 0:
+                cells.extend(values)
+            else:
+                mask, step = (0xff if value_bytes == 1 else 0xffff), bool(mode & 0x8000)
+                cells.extend((values[0] + (n if step else 0)) & mask for n in range(length))
+            tokens.append({'control': control, 'values': values})
+        padding = len(encoded) - cursor
+        if padding and not (index + 1 == len(offsets) and padding == 2):
+            raise ValueError('Unexpected compact-cell frame padding')
+        frames.append({'source_offset': source_offset + 4 + start, 'width': width, 'height': height,
+                       'placement': [x, y], 'encoded_length': cursor, 'cells': cells, 'tokens': tokens})
+    count = half(split)
+    if not count or split + 2 + count * 2 != len(record):
+        raise ValueError('Invalid compact-cell sequence extent')
+    sequence = [{'frame_index': record[split + 2 + index * 2] & 63,
+                 'high_flags': record[split + 2 + index * 2] >> 6,
+                 'second_byte': record[split + 3 + index * 2]} for index in range(count)]
+    return {'source_offset': source_offset, 'flags': flags, 'split_offset': split,
+            'frames': frames, 'sequence': sequence}
+
+
+def project_compact_cell_bank(content, sources):
+    """Keep independently valid records from the authenticated packed source."""
+    records, errors, total = [], [], 0
+    for offset, role, record in project_binary_segments(content, sources):
+        if role != 'compact-record':
+            continue
+        try:
+            decoded = decode_compact_cell_record(offset, record)
+        except ValueError as error:
+            errors.append({'source_offset': offset, 'reason': str(error)})
+            continue
+        total += sum(len(frame['cells']) for frame in decoded['frames'])
+        if total > 2_000_000:
+            raise ValueError('Compact-cell output limit exceeded')
+        records.append(decoded)
+    return {'records': records, 'errors': errors}
+
+
+def project_type2_rectangles(content, sources, observed=None, palette_rows=None):
+    """Join available type-2 rectangles, copy windows and prior typed sources."""
+    segments = project_binary_segments(content, sources)
+    grouped = {}
+    for offset, role, chunk in segments:
+        grouped.setdefault(role, {})[offset] = chunk
+    cell_bytes = {offset + index: value for offset, chunk in grouped.get('rectangle-cells', {}).items()
+                  for index, value in enumerate(chunk)}
+    maps, by_root, errors = [], {}, []
+    for root, header in grouped.get('rectangle-header', {}).items():
+        if len(header) != 2 or not 1 <= header[0] <= 16 or not 1 <= header[1] <= 16:
+            errors.append({'source_offset': root, 'reason': 'Invalid rectangle header'})
+            continue
+        height, width = header
+        try:
+            raw = bytes(cell_bytes[root + 2 + index] for index in range(height * width * 2))
+        except KeyError:
+            errors.append({'source_offset': root, 'reason': 'Rectangle cells are incomplete'})
+            continue
+        cells = [int.from_bytes(raw[index:index + 2], 'little') for index in range(0, len(raw), 2)]
+        item = {'kind': 'Type-2 source rectangle', 'source_offset': root, 'width': width, 'height': height,
+                'cells': cells, 'metadata': {'source': 'type-2 packed header and cells'}}
+        maps.append(item); by_root[root] = item
+
+    entry_chunks = grouped.get('rectangle-list-entry', {})
+    roots = {int.from_bytes(chunk[:4], 'little') - 0x08000000 for chunk in entry_chunks.values()
+             if len(chunk) == 8 and 0x08000000 <= int.from_bytes(chunk[:4], 'little') < 0x09000000}
+    if palette_rows:
+        for row in palette_rows['rows']:
+            root, width, height = row['source_offset'], row['width'], row['declared_rows']
+            if root not in roots or root in by_root:
+                continue
+            start = root + 2 + width * 2
+            try:
+                tail = bytes(cell_bytes[start + index] for index in range((height - 1) * width * 2))
+            except KeyError:
+                errors.append({'source_offset': root, 'reason': 'Palette-row rectangle cells are incomplete'})
+                continue
+            cells = row['colors'] + [int.from_bytes(tail[index:index + 2], 'little') for index in range(0, len(tail), 2)]
+            item = {'kind': 'Type-2 palette-row rectangle', 'source_offset': root, 'width': width, 'height': height,
+                    'cells': cells, 'metadata': {'source': 'Firaga palette row and type-2 cells; values can be colors'}}
+            maps.append(item); by_root[root] = item
+
+    prior = {item['source_offset']: item for item in (observed or {}).get('maps', [])
+             if item.get('source_offset') in roots and item.get('source_offset') not in by_root}
+    entry_headers, header_rows = {}, {}
+    def pointer(chunk):
+        value = int.from_bytes(chunk, 'little')
+        return value - 0x08000000 if 0x08000000 <= value < 0x09000000 else None
+    for offset, chunk in grouped.get('rectangle-list-header', {}).items():
+        if len(chunk) != 8 or not 1 <= chunk[0] <= 7:
+            continue
+        start = pointer(chunk[4:8])
+        if start is not None:
+            for index in range(chunk[0]):
+                entry_headers.setdefault(start + index * 8, []).append(offset)
+    for offset, chunk in grouped.get('transfer-row', {}).items():
+        if len(chunk) != 12 or chunk[0] != 2:
+            continue
+        header = pointer(chunk[4:8])
+        if header is not None:
+            header_rows.setdefault(header, []).append(offset)
+
+    prior_references, unresolved = {}, []
+    for offset, chunk in entry_chunks.items():
+        if len(chunk) != 8:
+            unresolved.append({'entry_offset': offset, 'reason': 'Incomplete entry'})
+            continue
+        root = pointer(chunk[:4]); selected = by_root.get(root) or prior.get(root)
+        reference = {'entry_offset': offset, 'source_offset': root, 'raw_byte4': chunk[4], 'raw_byte5': chunk[5],
+                     'first_row': chunk[6], 'row_count': chunk[7],
+                     'list_headers': sorted(set(entry_headers.get(offset, [])))}
+        reference['transfer_rows'] = sorted({row for header in reference['list_headers'] for row in header_rows.get(header, [])})
+        if not selected or not chunk[7] or chunk[6] + chunk[7] > selected['height']:
+            unresolved.append({**reference, 'reason': 'Rectangle unavailable or invalid copy window'})
+        elif root in by_root:
+            selected.setdefault('type2_references', []).append(reference)
+        else:
+            prior_references.setdefault(root, []).append(reference)
+    maps.sort(key=lambda item: item['source_offset'])
+    return {'maps': maps, 'prior_references': prior_references, 'unresolved': unresolved, 'errors': errors}
+
+
+def decode_tilemap_stream(start, read, byte_values):
+    """Decode the bounded first traversal, leaving alignment and mode transforms unmodeled."""
+    header = read(start, 6)
+    width, height, origin_x, origin_y, mode, flags = header
+    if (not 1 <= width <= 32 or not 1 <= height <= 32 or not flags & 2
+            or mode not in ((1, 4) if byte_values else (1, 2, 4, 5, 6, 7))):
+        raise ValueError('Invalid tilemap stream header')
+    unit, cursor, cells, token_count = (1 if byte_values else 2), start + 6, [], 0
+    while len(cells) < width * height:
+        control = int.from_bytes(read(cursor, 2), 'little'); cursor += 2
+        count, operation = control & 0x3fff, control & 0xc000
+        if not count or len(cells) + count > width * height:
+            raise ValueError('Invalid tilemap stream run length')
+        size = unit * (count if operation == 0 else 1)
+        raw = read(cursor, size); cursor += size
+        values = [int.from_bytes(raw[index:index + unit], 'little') for index in range(0, size, unit)]
+        if operation & 0x8000:
+            mask = (1 << (8 * unit)) - 1
+            cells.extend((values[0] + index) & mask for index in range(count))
+        elif operation & 0x4000:
+            cells.extend([values[0]] * count)
+        else:
+            cells.extend(values)
+        if byte_values and size & 1:
+            cursor += 1  # The source reader skips this unowned alignment byte.
+        token_count += 1
+    return {'kind': 'Decoded byte stream' if byte_values else 'Decoded halfword stream',
+            'source_offset': start, 'width': width, 'height': height, 'cells': cells,
+            'metadata': {'mode': mode, 'flags': flags, 'origin_x': origin_x, 'origin_y': origin_y,
+                         'encoded_extent': cursor - start, 'tokens': token_count}}, cursor
+
+
+def project_halfword_streams(segments):
+    maps = []
+    for offset, role, chunk in segments:
+        if role not in ('halfword-stream', 'byte-stream'):
+            raise ValueError('Unknown tilemap bank source role')
+        if role != 'halfword-stream':
+            continue
+        def read(at, length):
+            relative = at - offset
+            if relative < 0 or relative + length > len(chunk):
+                raise ValueError('Incomplete halfword tilemap source')
+            return chunk[relative:relative + length]
+        result, end = decode_tilemap_stream(offset, read, False)
+        if end != offset + len(chunk):
+            raise ValueError('Trailing halfword tilemap source')
+        maps.append(result)
+    return maps
+
+
+def project_byte_streams(bank_segments, control_segments):
+    """Join type-5 rows to their descriptors and decode available byte fragments."""
+    data, starts = {}, set()
+    for offset, role, chunk in bank_segments:
+        if role == 'byte-stream':
+            starts.add(offset)
+            data.update((offset + index, byte) for index, byte in enumerate(chunk))
+    descriptors = {}
+    for offset, role, chunk in control_segments:
+        if role == 'type5-transfer-descriptor':
+            if len(chunk) != 6:
+                raise ValueError('Invalid type-5 descriptor')
+            descriptors[offset] = chunk
+    roots = {}
+    for offset, role, chunk in control_segments:
+        if role != 'type5-transfer-row':
+            continue
+        if len(chunk) != 12 or chunk[0] != 5:
+            raise ValueError('Invalid type-5 row')
+        pointer = int.from_bytes(chunk[4:8], 'little')
+        if not 0x08000000 <= pointer < 0x09000000:
+            raise ValueError('Invalid type-5 descriptor pointer')
+        descriptor = pointer - 0x08000000
+        if descriptor not in descriptors:
+            continue
+        root = int.from_bytes(descriptors[descriptor][:4], 'little')
+        if not 0x08000000 <= root < 0x09000000:
+            raise ValueError('Invalid type-5 stream pointer')
+        root -= 0x08000000
+        if root in starts:
+            roots.setdefault(root, []).append({'row_offset': offset, 'descriptor_offset': descriptor})
+    used, maps = set(), []
+    for root, references in sorted(roots.items()):
+        consumed = set()
+        def read(at, length):
+            try:
+                result = bytes(data[at + index] for index in range(length))
+            except KeyError as error:
+                raise ValueError('Incomplete byte tilemap source') from error
+            consumed.update(range(at, at + length)); return result
+        result, _ = decode_tilemap_stream(root, read, True)
+        if used & consumed:
+            raise ValueError('Overlapping byte tilemap streams')
+        used.update(consumed); result['references'] = references; maps.append(result)
+    return maps
 
 
 def project_observed_tilemaps(catalog):
@@ -293,6 +627,52 @@ def project_ui_tilemap_rectangles(catalog):
                      'width': width, 'height': height, 'cells': list(cells),
                      'ui_template': index < 2})
     return {'maps': maps, 'metadata': {'caller_literals': list(literals)}}
+
+
+def project_signed_map_deltas(catalog):
+    """Expose the bounded signed bytes and pointer from the European map reader."""
+    table = catalog['signed_map_deltas']
+    if not isinstance(table, dict):
+        raise ValueError('Invalid signed map delta table')
+    pointer, entries = table['caller_literal'], table['entries']
+    if (type(pointer) is not int or pointer != 0x083954a4
+            or not isinstance(entries, list) or len(entries) != 48
+            or any(type(entry) is not int or not -128 <= entry <= 127 for entry in entries)):
+        raise ValueError('Invalid signed map delta pointer or entries')
+    return {'source_offset': pointer - 0x08000000, 'caller_literal': pointer, 'entries': list(entries)}
+
+
+def project_localized_queued_grids(catalog):
+    """Retain the documented 30 localized, queued halfword rectangles."""
+    queued = catalog['localized_queued']
+    pointers, lengths, literals, banks = (queued[key] for key in ('pointers', 'lengths', 'literals', 'banks'))
+    roots = (0x438d00, 0x449f00, 0x45baf0, 0x46cd8c, 0x47e434)
+    def uint(value):
+        return type(value) is int and 0 <= value <= 0xffffffff
+    if (not isinstance(pointers, list) or len(pointers) != 30 or any(not uint(value) for value in pointers)
+            or not isinstance(lengths, list) or len(lengths) != 30 or any(type(value) is not int or value != 192 for value in lengths)
+            or not isinstance(literals, list) or len(literals) != 2
+            or any(type(value) is not int for value in literals) or literals != [0x08397fbc, 0x08398034]
+            or not isinstance(banks, list) or len(banks) != len(roots)):
+        raise ValueError('Invalid localized queued transfer tables')
+    maps = []
+    for language, (bank, root) in enumerate(zip(banks, roots)):
+        words = bank['words']
+        if (type(bank['bank_offset']) is not int or bank['bank_offset'] != root
+                or type(bank['relative_offset']) is not int or bank['relative_offset'] != 0
+                or not isinstance(words, list) or len(words) != 288 or any(not uint(value) for value in words)):
+            raise ValueError('Invalid localized queued transfer bank')
+        for entry in range(6):
+            source = root + entry * 192
+            if pointers[language * 6 + entry] != 0x08000000 + source:
+                raise ValueError('Invalid localized queued transfer pointer')
+            cells = [half for word in words[entry * 48:(entry + 1) * 48] for half in (word & 0xffff, word >> 16)]
+            maps.append({'kind': f'Localized transfer · language {language} · entry {entry}',
+                         'source_offset': source, 'width': 24, 'height': 4, 'cells': cells,
+                         'metadata': {'language_id': language, 'entry_id': entry, 'pointer': pointers[language * 6 + entry],
+                                      'source_bytes': 192, 'source_row_bytes': 48, 'destination_row_bytes': 64,
+                                      'pointer_table': literals[0], 'length_table': literals[1]}})
+    return {'maps': maps}
 
 
 def project_firaga_transfer(catalog):
@@ -471,6 +851,72 @@ def project_audio_instruments(catalog):
     return {'banks': projected_banks, 'tones': projected_tones, 'map_links': projected_links}
 
 
+def project_timed_sound_sources(directory):
+    """Preserve observed schedules and source fragments without running the scheduler."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+    def rows(values):
+        if not isinstance(values, list) or not 0 < len(values) <= 65536:
+            raise ValueError('Invalid timed sound rows')
+        for row in values:
+            words = row['sound_words']
+            if (not uint(row['tick'], 65535) or not uint(row['channel'], 255) or not uint(row['opaque03'], 255)
+                    or not isinstance(words, list) or len(words) != 2 or any(not uint(word, 65535) for word in words)):
+                raise ValueError('Invalid timed sound row')
+        return [{'tick': row['tick'], 'channel': row['channel'], 'opaque03': row['opaque03'],
+                 'sound_words': list(row['sound_words'])} for row in values]
+
+    groups, errors = [], []
+    schedules = directory.get('red_spring_sounds')
+    if schedules is not None:
+        try:
+            if not isinstance(schedules, list) or not 0 < len(schedules) <= 256:
+                raise ValueError('Invalid observed sound schedules')
+            observed = []
+            for item in schedules:
+                source, root, pointer = item['source_offset'], item['root_offset'], item['root_pointer']
+                values = rows(item['rows'])
+                if (not uint(source, 0xffffff) or source + 8 * len(values) > 0x1000000
+                        or not uint(root, 0xffffff) or not uint(pointer, 0xffffffff) or pointer != 0x08000000 + source):
+                    raise ValueError('Invalid observed sound source')
+                observed.append({'kind': 'rows', 'origin': 'observed Red Spring', 'source_offset': source,
+                                 'root_offset': root, 'root_pointer': pointer, 'values': values})
+            groups.extend(observed)
+        except (ValueError, KeyError, TypeError, AttributeError) as error:
+            errors.append('observed schedules: ' + str(error))
+    bank = directory.get('timed_sounds')
+    if bank is not None:
+        try:
+            sources = bank['sources']
+            if not isinstance(sources, list) or not 0 < len(sources) <= 8192:
+                raise ValueError('Invalid timed sound source list')
+            projected, seen = [], set()
+            sizes = {'literal': (4, 0xffffffff), 'directory': (4, 0xffffffff),
+                     'counts': (1, 255), 'ram-words': (2, 65535)}
+            for item in sources:
+                source, packed = item['offset'], item['values']
+                kind, values = packed['kind'], packed['values']
+                if kind == 'rows':
+                    values, size = rows(values), 8
+                elif kind in sizes:
+                    size, maximum = sizes[kind]
+                    values = [values] if kind == 'literal' else values
+                    if (not isinstance(values, list) or not 0 < len(values) <= 65536
+                            or any(not uint(value, maximum) for value in values)):
+                        raise ValueError('Invalid timed sound source values')
+                    values = list(values)
+                else:
+                    raise ValueError('Unknown timed sound source kind')
+                if not uint(source, 0xffffff) or source in seen or source + size * len(values) > 0x1000000:
+                    raise ValueError('Invalid timed sound source extent')
+                seen.add(source)
+                projected.append({'kind': kind, 'origin': 'source fragment', 'source_offset': source, 'values': values})
+            groups.extend(projected)
+        except (ValueError, KeyError, TypeError, AttributeError) as error:
+            errors.append('timed sources: ' + str(error))
+    return groups, errors
+
+
 def project_audio_pcm_pitch(catalog):
     keys, bases = catalog['pcm_keys']['entries'], catalog['pcm_bases']['entries']
     if (not isinstance(keys, list) or len(keys) != 180 or not isinstance(bases, list) or len(bases) != 12
@@ -617,6 +1063,164 @@ def project_script_sprites(catalog, *, alternate=False):
     return projected
 
 
+def validate_script39_poses(catalog):
+    """Validate newly owned pose sequences without assuming actor assignments."""
+    def uint(value, maximum=0xffffffff):
+        return type(value) is int and 0 <= value <= maximum
+    sequences, cells, pixels = (catalog[key] for key in ('sequences', 'cells', 'pixels'))
+    objects = catalog.get('objects', [])
+    if (not isinstance(sequences, list) or not sequences or len(sequences) > 65536
+            or not isinstance(cells, list) or len(cells) > 65536
+            or not isinstance(objects, list) or len(objects) > 65536
+            or not isinstance(pixels, list) or len(pixels) > 65536):
+        raise ValueError('Invalid opcode-39 pose catalog')
+    sequence_sources, cell_sources, block_sources = set(), set(), set()
+    for sequence in sequences:
+        source, header, frames = (sequence[key] for key in ('source_offset', 'opaque_header', 'frames'))
+        if (not uint(source, 0xffffff) or source % 4 or source in sequence_sources
+                or not uint(header, 65535) or not isinstance(frames, list) or not 0 < len(frames) < 32768
+                or source + 4 + 20 * len(frames) > 0x1000000):
+            raise ValueError('Invalid opcode-39 pose sequence')
+        sequence_sources.add(source)
+        for frame in frames:
+            if (not uint(frame['word00']) or not uint(frame['word04']) or not uint(frame['duration'], 255)
+                    or not uint(frame['operation'], 255) or not isinstance(frame['bytes_0a_13'], list)
+                    or len(frame['bytes_0a_13']) != 10 or any(not uint(value, 255) for value in frame['bytes_0a_13'])):
+                raise ValueError('Invalid opcode-39 pose frame')
+    for cell in cells:
+        source, target = cell['source_offset'], cell['target']
+        if (not uint(source, 0xffffff) or source % 4 or source in cell_sources
+                or not isinstance(target, dict) or target.get('kind') not in ('null', 'sequence')):
+            raise ValueError('Invalid opcode-39 pose cell')
+        if target['kind'] == 'sequence' and (not uint(target['source_offset'], 0xffffff) or target['source_offset'] % 4):
+            raise ValueError('Invalid opcode-39 pose target')
+        cell_sources.add(source)
+    if objects:
+        project_obj_static_lists({'lists': objects})
+    for block in pixels:
+        source, tiles = block['source_offset'], block['tiles']
+        if (not uint(source, 0xffffff) or source % 4 or source in block_sources
+                or not isinstance(tiles, list) or not tiles or source + len(tiles) * 32 > 0x1000000):
+            raise ValueError('Invalid opcode-39 pixel block')
+        block_sources.add(source)
+        for tile in tiles:
+            lines = tile['indices']
+            if (not isinstance(lines, list) or len(lines) != 8 or any(not isinstance(line, list) or len(line) != 8
+                    or any(not uint(value, 15) for value in line) for line in lines)):
+                raise ValueError('Invalid opcode-39 pixel tile')
+    return catalog
+
+
+def project_script39_poses(catalog, path, object_pool, pixel_pool, sequence_pool=()):
+    """Resolve each frame only where compatible extracted source ranges agree."""
+    sizes = (((8,8),(16,16),(32,32),(64,64)), ((16,8),(32,8),(32,16),(64,32)),
+             ((8,16),(8,32),(16,32),(32,64)))
+    objects = {}
+    for item, origin in object_pool:
+        try:
+            project_obj_static_lists({'lists': [item]})
+            source = item['source_offset']
+            if source in objects and objects[source] is not None and objects[source][0] != item:
+                objects[source] = None
+            elif source not in objects:
+                objects[source] = (item, origin)
+        except (ValueError, KeyError, TypeError):
+            continue
+    blocks = sorted(pixel_pool, key=lambda entry: entry[0]['source_offset'])
+    starts = [entry[0]['source_offset'] for entry in blocks]
+    pixel_cache, used_blocks, used_objects, block_indices, object_indices = {}, [], [], {}, {}
+    references = {}
+    for cell in catalog['cells']:
+        target = cell['target']
+        if target['kind'] == 'sequence':
+            references.setdefault(target['source_offset'], []).append(cell['source_offset'])
+    # Earlier owners may contain sequences referenced by these new index cells.
+    # Compare the stored fields, ignoring renderer-specific block indices.
+    fields = ('word00', 'word04', 'duration', 'operation', 'bytes_0a_13')
+    earlier = {}
+    for candidate, origin in sequence_pool:
+        normalized = {'source_offset': candidate['source_offset'], 'opaque_header': candidate['opaque_header'],
+                      'frames': [{key: frame[key] for key in fields} for frame in candidate['frames']]}
+        source = normalized['source_offset']
+        if source in earlier and earlier[source] is not None and earlier[source][0] != normalized:
+            earlier[source] = None
+        elif source not in earlier:
+            earlier[source] = (normalized, origin)
+    owned = {sequence['source_offset'] for sequence in catalog['sequences']}
+    candidates = [(sequence, path) for sequence in catalog['sequences']]
+    candidates.extend(earlier[source] for source in sorted(references) if source not in owned and earlier.get(source))
+    sequences, bindings, sequence_indices = [], [], {}
+    for sequence, sequence_path in candidates:
+        frames = []
+        for frame in sequence['frames']:
+            projected = {key: frame[key] for key in ('word00', 'word04', 'duration', 'operation', 'bytes_0a_13')}
+            if frame['operation'] == 1:
+                pixel_source, object_source = 0x898a40 + frame['word00'], 0xa50020 + frame['word04']
+                projected.update(block=None, objects=None, pixel_source=pixel_source, object_source=object_source)
+                match = objects.get(object_source)
+                if match:
+                    item, origin = match
+                    needed = 0
+                    for obj in item['objects']:
+                        if (obj['shape'] >= 3 or obj['affine_mode'] or obj['color_256']
+                                or obj['object_mode'] or obj['mosaic']):
+                            needed = 0; break
+                        width, height = sizes[obj['shape']][obj['size']]
+                        needed = max(needed, obj['tile'] + width * height // 64)
+                    if needed:
+                        key = (pixel_source, needed)
+                        if key not in pixel_cache:
+                            chosen, chosen_origin, overlap = None, None, []
+                            for block, block_origin in blocks[:bisect.bisect_left(starts, pixel_source + 32 * needed)]:
+                                delta = pixel_source - block['source_offset']
+                                if delta % 32 or delta >= len(block['tiles']) * 32:
+                                    continue
+                                overlap.append(block)
+                                if delta >= 0 and delta // 32 + needed <= len(block['tiles']):
+                                    chosen = block['tiles'][delta // 32:delta // 32 + needed]
+                                    chosen_origin = block_origin
+                            conflict = False
+                            if chosen is not None:
+                                for block in overlap:
+                                    begin = max(pixel_source, block['source_offset'])
+                                    end = min(pixel_source + 32 * needed, block['source_offset'] + len(block['tiles']) * 32)
+                                    left, right = (begin - pixel_source) // 32, (begin - block['source_offset']) // 32
+                                    if chosen[left:left + (end - begin) // 32] != block['tiles'][right:right + (end - begin) // 32]:
+                                        conflict = True; break
+                            pixel_cache[key] = None if conflict or chosen is None else (chosen, chosen_origin)
+                        resolved = pixel_cache[key]
+                        if resolved is not None:
+                            if key not in block_indices:
+                                block_indices[key] = len(used_blocks)
+                                used_blocks.append({'source_offset': pixel_source, 'tiles': resolved[0], 'path': resolved[1]})
+                            if object_source not in object_indices:
+                                object_indices[object_source] = len(used_objects)
+                                used_objects.append({**item, 'path': origin})
+                            projected['block'], projected['objects'] = block_indices[key], object_indices[object_source]
+            frames.append(projected)
+        sequence_indices[sequence['source_offset']] = len(sequences)
+        sequences.append({'source_offset': sequence['source_offset'], 'opaque_header': sequence['opaque_header'],
+                          'path': sequence_path, 'frames': frames})
+    for target, cells in references.items():
+        for source in cells:
+            index = sequence_indices.get(target)
+            binding = {'sprite_id': target, 'animation': 0, 'part': 0, 'index_source': source, 'sequence': index}
+            if index is None:
+                binding['target'] = {'kind': 'unavailable-sequence', 'source_offset': target}
+            bindings.append(binding)
+    # A sequence without an owned cell is still inspectable; it has no claimed source binding.
+    bound = {item['sequence'] for item in bindings}
+    for index, sequence in enumerate(sequences):
+        if index not in bound:
+            bindings.append({'sprite_id': sequence['source_offset'], 'animation': 0, 'part': 0,
+                             'index_source': None, 'sequence': index})
+    cells = [{'source_offset': item['source_offset'],
+              'target': None if item['target']['kind'] == 'null' else item['target']['source_offset']}
+             for item in catalog['cells']]
+    return {'path': path, 'source_sequences': True, 'blocks': used_blocks, 'objects': used_objects,
+            'sequences': sequences, 'bindings': bindings, 'cells': cells}
+
+
 def project_item_links(catalog):
     """Retain all item-linked pair slots, including storage beyond each count."""
     source, records = catalog['source_offset'], catalog['records']
@@ -633,6 +1237,54 @@ def project_item_links(catalog):
         for slot in slots:
             if any(type(slot[key]) is not int or not 0 <= slot[key] <= 255 for key in ('selector', 'value')):
                 raise ValueError('Invalid item link slot')
+    return {'source_offset': source, 'records': records}
+
+
+def project_item_effect_parameters(catalog):
+    """Validate the documented EUR item-effect bank and its direct item IDs."""
+    source, records = catalog['source_offset'], catalog['records']
+    if type(source) is not int or source != 0x6e879c or not isinstance(records, list) or len(records) != 14:
+        raise ValueError('Invalid item effect source or record count')
+    for index, record in enumerate(records):
+        coefficients = record['coefficients']
+        if (type(record['id']) is not int or record['id'] != index
+                or type(record['item_id']) is not int or record['item_id'] != 362 + index
+                or type(record['source_offset']) is not int or record['source_offset'] != source + index * 7
+                or not isinstance(coefficients, list) or len(coefficients) != 9
+                or any(type(value) is not int or not 0 <= value <= 31 for value in coefficients)
+                or type(record['cap45_52']) is not int or not 0 <= record['cap45_52'] <= 255
+                or type(record['opaque53_55']) is not int or not 0 <= record['opaque53_55'] <= 7):
+            raise ValueError('Invalid item effect ID, source, or packed field')
+    return {'source_offset': source, 'records': records}
+
+
+def project_progression_catalog(catalog, kind):
+    """Retain documented EUR progression and pricing records as stored."""
+    specs = {
+        'rewards': (0x6e79da, 100, 10, 0, {'discount08': 255, 'byte09': 255}, {'deltas00_07': 8}),
+        'gates': (0x6e7dce, 64, 12, 0, {'byte00': 255, 'halfword01': 65535, 'byte03': 255},
+                  {'requirements04_0b': 8}),
+        'selection': (0x6e80de, 64, 16, 1, {'selector00': 255, 'minimum01': 255, 'minimum02': 65535,
+                                           'minimum04': 65535, 'flag0e': 65535}, {'any_minima06_0d': 8}),
+        'trade': (0x6e85bc, 5, 96, 2, {'markup40_41': 65535},
+                  {'bytes00_1f': 32, 'bytes20_3f': 32, 'discounts42_5f': 30}),
+    }
+    source, count, stride, first_id, scalar_fields, array_fields = specs[kind]
+    records = catalog['records']
+    if (type(catalog['source_offset']) is not int or catalog['source_offset'] != source
+            or not isinstance(records, list) or len(records) != count):
+        raise ValueError('Invalid progression/pricing source or record count')
+    for index, record in enumerate(records):
+        if (type(record['id']) is not int or record['id'] != first_id + index
+                or type(record['source_offset']) is not int or record['source_offset'] != source + index * stride
+                or any(type(record[key]) is not int or not 0 <= record[key] <= maximum
+                       for key, maximum in scalar_fields.items())):
+            raise ValueError('Invalid progression/pricing identity or scalar field')
+        for key, length in array_fields.items():
+            values = record[key]
+            if (not isinstance(values, list) or len(values) != length
+                    or any(type(value) is not int or not 0 <= value <= 255 for value in values)):
+                raise ValueError('Invalid progression/pricing byte array')
     return {'source_offset': source, 'records': records}
 
 
@@ -1176,6 +1828,39 @@ def project_soil_evidence_animation(static, compact):
                                                       'frames': sequence}]}]}
 
 
+def project_constructor_obj_animation(source, static):
+    """Join four constructor phases to their independently owned static lists."""
+    if not static:
+        raise ValueError('Static object lists are unavailable')
+    lists = project_obj_static_lists({'lists': static['lists']})['lists']
+    if (type(source['source_offset']) is not int or source['source_offset'] != 0x394fbc
+            or not isinstance(source['frames'], list) or len(source['frames']) != 4):
+        raise ValueError('Invalid constructor animation table')
+    by_offset = {item['source_offset']: item for item in lists}
+    selected, frames = [], []
+    for index, (item, expected) in enumerate(zip(source['frames'], (0x394f82, 0x394f90, 0x394f9e, 0x394fac))):
+        threshold, offset = item['threshold'], item['list_offset']
+        if (type(threshold) is not int or not 0 <= threshold <= 0xffffffff
+                or type(offset) is not int or offset != expected):
+            raise ValueError('Invalid constructor animation threshold or list pointer')
+        layout = by_offset.get(offset)
+        if layout is None:
+            raise ValueError('Referenced constructor object list is unavailable')
+        if len(layout['objects']) != 2 or any(obj['shape'] >= 3 for obj in layout['objects']):
+            raise ValueError('Invalid constructor object list')
+        selected.append(layout)
+        # The guest reloads an 8-bit counter before comparing it to the word.
+        stalled = threshold >= 255
+        frames.append({'object_list': index, 'list_id': index, 'threshold': threshold,
+                       'duration': 1 if stalled else threshold + 1, 'counter_stalls': stalled})
+    return {'selector_tables': [], 'preview_mode': 'constructor_thresholds',
+            'metadata': {'table_offset': source['source_offset'], 'counter_bits': 8,
+                         'thresholds': [frame['threshold'] for frame in frames]},
+            'banks': [{'object_root': selected[0]['source_offset'], 'sequence_root': source['source_offset'],
+                       'lists': selected, 'sequences': [{'selector': 0, 'source_offset': source['source_offset'],
+                                                        'frames': frames}]}]}
+
+
 FIRAGA_OBJ_SPECS = {
     'graphics.firaga-indexed-obj-bank': {
         'key': 'firaga_indexed', 'root': 0x418e9c, 'sequence_root': 0x412050, 'sequence_offset': 4,
@@ -1289,6 +1974,130 @@ def project_script_commands(catalog):
                 or not uint(command['advance'], 65535) or not uint(offset, 0xffffff) or offset % 2):
             raise ValueError('Invalid script command record')
     return {'source_offset': source, 'commands': commands}
+
+
+def project_auxiliary_script_archive(catalog):
+    """Retain physical programs and each slot's exact instruction entry."""
+    def uint(value, maximum=0xffffffff):
+        return type(value) is int and 0 <= value <= maximum
+
+    banks = catalog['banks']
+    if (not uint(catalog['source_offset']) or not isinstance(banks, list)
+            or not 0 < len(banks) <= 256):
+        raise ValueError('Invalid auxiliary script archive')
+    program_ids, ranges = set(), []
+    for bank_index, bank in enumerate(banks):
+        entries, programs, alignment = bank['entries'], bank['programs'], bank['alignment_after']
+        if (type(bank['id']) is not int or bank['id'] != bank_index
+                or not uint(bank['source_offset']) or not isinstance(entries, list)
+                or not 0 < len(entries) <= 256 or not isinstance(programs, list)
+                or not 0 < len(programs) <= 65536 or not isinstance(alignment, list)
+                or len(alignment) > 256 or any(not uint(value, 255) for value in alignment)):
+            raise ValueError('Invalid auxiliary script bank')
+        in_bank = {}
+        for program in programs:
+            identity, source, instructions = program['id'], program['source_offset'], program['instructions']
+            if (not uint(identity, 65535) or identity in program_ids or not uint(source)
+                    or not isinstance(instructions, list) or not 0 < len(instructions) <= 65536):
+                raise ValueError('Invalid auxiliary script program')
+            program_ids.add(identity)
+            in_bank[identity] = program
+            next_offset = source
+            for instruction in instructions:
+                params = instruction['parameters']
+                if (not uint(instruction['source_offset']) or instruction['source_offset'] != next_offset
+                        or not uint(instruction['command'], 255) or not isinstance(params, list)
+                        or len(params) > 255 or any(not uint(value, 255) for value in params)):
+                    raise ValueError('Invalid auxiliary script instruction')
+                next_offset += 1 + len(params)
+                if next_offset > 0x100000000:
+                    raise ValueError('Auxiliary script source overflows')
+            ranges.append((source, next_offset))
+        for entry in entries:
+            identity, instruction = entry['program_id'], entry['instruction']
+            if (not uint(identity, 65535) or identity not in in_bank
+                    or not uint(instruction, len(in_bank[identity]['instructions']) - 1)):
+                raise ValueError('Invalid auxiliary script entry')
+    ranges.sort()
+    if any(left[1] > right[0] for left, right in zip(ranges, ranges[1:])):
+        raise ValueError('Overlapping auxiliary script programs')
+    return {'source_offset': catalog['source_offset'], 'banks': banks}
+
+
+def project_task_descriptors(catalog):
+    """Keep the three physical catalogs and their nullable Thumb callbacks."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+
+    result, spans = {}, []
+    for name in ('primary', 'auxiliary', 'script'):
+        table = catalog[name]
+        source, entries = table['source_offset'], table['entries']
+        if (not uint(source, 0xffffff) or not isinstance(entries, list)
+                or not 0 < len(entries) <= 65535 or source + len(entries) * 8 > 0x1000000):
+            raise ValueError('Invalid task descriptor table')
+        for index, item in enumerate(entries):
+            callback = item['callback']
+            if (type(item['ordinal']) is not int or item['ordinal'] != index
+                    or not uint(item['context_size'], 65535) or not uint(item['metadata_raw'], 65535)):
+                raise ValueError('Invalid task descriptor')
+            if callback is not None:
+                offset = callback['rom_offset']
+                if not uint(offset, 0xffffff) or offset % 2:
+                    raise ValueError('Invalid task Thumb callback')
+        spans.append((source, source + len(entries) * 8))
+        result[name] = {'source_offset': source, 'entries': entries}
+    spans.sort()
+    if any(left[1] > right[0] for left, right in zip(spans, spans[1:])):
+        raise ValueError('Overlapping task descriptor tables')
+    return result
+
+
+def project_effect_event_directories(catalog):
+    """Retain stored fields and documented, bounded task references."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+
+    events, selectors = catalog['events'], catalog['selectors']
+    if (not uint(catalog['event_source_offset'], 0xffffff)
+            or not uint(catalog['selector_source_offset'], 0xffffff)
+            or not isinstance(events, list) or not 0 < len(events) <= 65535
+            or not isinstance(selectors, list) or not 0 < len(selectors) <= 65535
+            or catalog['event_source_offset'] + len(events) * 16 > 0x1000000
+            or catalog['selector_source_offset'] + len(selectors) * 4 > 0x1000000):
+        raise ValueError('Invalid event or selector table')
+    for index, item in enumerate(events):
+        if (type(item['index']) is not int or item['index'] != index
+                or any(not uint(item[key], 255) for key in ('opcode', 'byte1_raw', 'post_delay', 'byte5_raw'))
+                or any(not uint(item[key], 65535) for key in ('id_raw', 'half6_raw'))
+                or any(not uint(item[key], 0xffffffff) for key in ('arg8_raw', 'arg12_raw'))):
+            raise ValueError('Invalid event record')
+        descriptor = item['script_descriptor']
+        if item['opcode'] == 0:
+            if not uint(descriptor, 65535 - 363) or item['id_raw'] != descriptor + 363:
+                raise ValueError('Invalid event descriptor reference')
+        elif descriptor is not None:
+            raise ValueError('Unexpected event descriptor reference')
+    for index, item in enumerate(selectors):
+        params = item['parameters']
+        if (type(item['index']) is not int or item['index'] != index
+                or not uint(item['kind'], 255) or not isinstance(params, list) or len(params) != 3
+                or any(not uint(value, 255) for value in params)
+                or type(item['script_descriptor']) is not int or item['script_descriptor'] != index):
+            raise ValueError('Invalid effect selector')
+    for name in ('event_dispatch', 'selector_dispatch'):
+        table = catalog[name]
+        if (not uint(table['source_offset'], 0xffffff) or not isinstance(table['slots'], list)
+                or not 0 < len(table['slots']) <= 256
+                or table['source_offset'] + len(table['slots']) * 4 > 0x1000000):
+            raise ValueError('Invalid dispatch table')
+        for index, item in enumerate(table['slots']):
+            offset = item['target']['rom_offset']
+            if (type(item['selector']) is not int or item['selector'] != index
+                    or not uint(offset, 0xffffff) or offset % 2):
+                raise ValueError('Invalid same-state dispatch target')
+    return {key: catalog[key] for key in ('event_source_offset', 'events', 'selector_source_offset',
+                                           'selectors', 'event_dispatch', 'selector_dispatch')}
 
 
 def project_script_archive(catalog):
@@ -1683,6 +2492,99 @@ def project_slot_job_names(slots, metadata, pointer_texts):
             'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used] if languages else []}
 
 
+def project_metadata_name_references(metadata, pointer_texts):
+    """Expose direct property-0 text references without resolving routed rows."""
+    catalogs = [] if not pointer_texts else [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
+                                             if catalog['reader'] == 0x80165e8]
+    selected = catalogs[0] if len(catalogs) == 1 else None
+    languages = [] if selected is None else selected[1]['languages']
+    used, rows = set(), []
+    for index, record in enumerate(metadata['records']):
+        first = record['bytes_00_04']
+        name_index = first[0] | first[1] << 8 if record['routing'] == 0 else None
+        names = []
+        for language in languages:
+            if name_index is None or name_index >= len(language['entries']):
+                names.append(None)
+                continue
+            units = pointer_texts['strings'][language['entries'][name_index]]['units']
+            names.append(units)
+            used.update(unit for unit in units if type(unit) is int)
+        rows.append({'id': index, 'routing': record['routing'], 'name_index': name_index, 'names': names})
+    return {'path': metadata['path'], 'source_offset': metadata['source_offset'],
+            'text_path': pointer_texts['path'] if languages else None,
+            'reader_index': selected[0] if languages else None,
+            'languages': list(range(len(languages))), 'rows': rows,
+            'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used] if languages else []}
+
+
+EUROPE_WORLD_NODES_SHA256 = '4336cfcc8b4bfb898530729f6ff5f8fd33e475dda17db8de643ee0e6ee3e1fdc'
+EUROPE_TEXT_CATALOG_SHA256 = '514af42870d44e5f772e26d9cd246db4cde2d8ab8ecc9f3d065f67510db05c33'
+
+
+def project_observed_world_names(profile, node_sha, text_sha, world_nodes, pointer_texts):
+    """Connect source-backed EUR placement observations to their text entries."""
+    if (profile != 'europe' or node_sha != EUROPE_WORLD_NODES_SHA256 or text_sha != EUROPE_TEXT_CATALOG_SHA256
+            or not world_nodes or not pointer_texts):
+        return None
+    catalogs = [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
+                if catalog['reader'] == 0x080165e8]
+    if len(catalogs) != 1:
+        return None
+    reader_index, catalog = catalogs[0]
+    # The node positions come from one recorded placement, not a fixed region map.
+    observations = ((19, 7, 725, 13, 36), (17, 1, 719, 14, 26), (25, 2, 720, 13, 20),
+                    (26, 6, 724, 3, 20), (14, 11, 729, 19, 24), (2, 16, 734, 8, 11))
+    locations, used = [], set()
+    for node_index, region_index, name_index, x, y in observations:
+        if node_index >= len(world_nodes['nodes']):
+            continue
+        node = world_nodes['nodes'][node_index]
+        if (node['index'], node['x_tile'], node['y_tile']) != (node_index, x, y):
+            continue
+        names = []
+        for language in catalog['languages']:
+            if len(language['entries']) <= name_index:
+                names.append(None)
+                continue
+            units = pointer_texts['strings'][language['entries'][name_index]]['units']
+            names.append(units)
+            used.update(unit for unit in units if type(unit) is int)
+        if any(name is not None for name in names):
+            locations.append({'node_index': node_index, 'region_index': region_index,
+                              'name_index': name_index, 'names': names})
+    if not locations:
+        return None
+    return {'path': pointer_texts['path'], 'reader_index': reader_index,
+            'languages': list(range(len(catalog['languages']))),
+            'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used], 'locations': locations}
+
+
+def project_world_region_names(profile, text_sha, pointer_texts):
+    """Project the EUR region list's conditional 718 + region text references."""
+    if profile != 'europe' or text_sha != EUROPE_TEXT_CATALOG_SHA256 or not pointer_texts:
+        return None
+    catalogs = [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
+                if catalog['reader'] == 0x080165e8]
+    if len(catalogs) != 1:
+        return None
+    reader_index, catalog = catalogs[0]
+    regions, used = [], set()
+    for region_index in range(31):
+        name_index, names = 718 + region_index, []
+        for language in catalog['languages']:
+            if len(language['entries']) <= name_index:
+                names.append(None)
+                continue
+            units = pointer_texts['strings'][language['entries'][name_index]]['units']
+            names.append(units)
+            used.update(unit for unit in units if type(unit) is int)
+        regions.append({'region_index': region_index, 'name_index': name_index, 'names': names})
+    return {'path': pointer_texts['path'], 'reader_index': reader_index,
+            'languages': list(range(len(catalog['languages']))), 'regions': regions,
+            'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used]}
+
+
 def project_bg_descriptors(catalog):
     """Validate the stored descriptor fields without inferring scene semantics."""
     entries = catalog['entries']
@@ -1846,32 +2748,48 @@ def project_color_mode_palettes(catalog):
 
 
 WIKI_SCOPES = (
-    ('world', 'World and interface', ('palettes', 'items', 'item_links', 'job_names', 'encounters', 'mission_events',
-      'terrain_seeds', 'bg_plane_programs', 'script_paths', 'ui_choice_lists', 'world_nodes', 'world_roads', 'bg_descriptors', 'bg_graphics', 'bg_transfers',
+    ('world', 'World and interface', ('palettes', 'items', 'item_links', 'item_effects', 'progression_catalogs', 'job_names', 'metadata_names', 'encounters', 'mission_events',
+      'terrain_seeds', 'bg_plane_programs', 'script_paths', 'ui_choice_lists', 'world_nodes', 'world_roads', 'world_location_names', 'world_region_names', 'bg_descriptors', 'bg_graphics', 'bg_transfers',
       'alternate_palettes', 'palette_programs', 'blend_programs', 'raster_palettes', 'ui_graphics', 'ui_palettes',
-      'obj_graphics', 'unit_palettes', 'observed_tilemaps', 'firaga_compact_cells', 'extra_tilemaps', 'lz_graphics',
-      'firaga_transfer', 'firaga_palette_rows')),
+      'obj_graphics', 'unit_palettes', 'observed_tilemaps', 'firaga_compact_cells', 'extra_tilemaps', 'byte_tilemaps', 'lz_graphics',
+      'firaga_transfer', 'firaga_palette_rows', 'compact_cell_bank', 'signed_map_deltas')),
     ('objects', 'Object animations', ('obj_animation_banks', 'obj_animation_extra', 'obj_animation_compact', 'obj_graphics',
       'ui_palettes', 'unit_palettes', 'lz_graphics')),
     ('actors', 'Actors and equipment', ('dimensions', 'sprite_pixels', 'equipment_sprites', 'unit_palettes', 'color_mode_palettes')),
     ('battle', 'Battle actors', ('battle_sprites', 'unit_palettes')),
-    ('script-actors', 'Script actors', ('script_sprites', 'unit_palettes')),
-    ('audio', 'Audio', ('audio', 'sequence_directory', 'sequences', 'pcm_pitch')),
-    ('text', 'Text and fonts', ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts', 'font', 'name_keyboard')),
-    ('scripts', 'Event scripts', ('script_archive', 'script_commands', 'script_text_refs')),
+    ('script-actors', 'Script actors', ('script_sprites', 'script39_poses', 'unit_palettes')),
+    ('audio', 'Audio', ('audio', 'sequence_directory', 'sequences', 'pcm_pitch', 'timed_sound_sources')),
+    ('text', 'All text and fonts', ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts', 'font', 'name_keyboard')),
+    ('text-pointers', 'Pointer texts', ('pointer_texts',)),
+    ('text-relative', 'Relative text archives', ('relative_texts',)),
+    ('text-scripts', 'Script text archives', ('script_texts',)),
+    ('scripts', 'Event scripts', ('script_archive', 'script_commands', 'script_text_refs',
+                                  'auxiliary_script_archive', 'auxiliary_script_commands',
+                                  'task_descriptors', 'effect_events')),
     ('other', 'Other resources', ()),
     ('indexed-graphics', 'Indexed graphics', ('indexed_archives', 'palettes', 'ui_palettes', 'unit_palettes')),
+    ('transfer-graphics', 'Transfer graphics', ('type3_payloads', 'ui_palettes', 'unit_palettes')),
 )
 
 
 def viewer_resource_scope(resource_id):
+    if resource_id == 'graphics.tilemap-type3-transfers':
+        return 'transfer-graphics'
     if resource_id in ('graphics.indexed-archives', 'graphics.direct-indexed-archive',
                        'graphics.direct-indexed-dictionary-archive'):
         return 'indexed-graphics'
-    if resource_id in ('engine.script-archive', 'engine.script-command-directory'):
+    if resource_id in ('engine.script-archive', 'engine.script-command-directory',
+                       'engine.auxiliary-script-archive', 'engine.auxiliary-script-command-directory',
+                       'engine.task-descriptors', 'engine.effect-event-directories'):
         return 'scripts'
+    if resource_id in ('graphics.script39-registry-poses', 'graphics.script39-special-poses'):
+        return 'script-actors'
     if resource_id.startswith('audio.'):
         return 'audio'
+    if resource_id == 'text.catalogs':
+        return 'text-pointers'
+    if resource_id == 'text.script-archives':
+        return 'text-scripts'
     if resource_id.startswith(('text.', 'font.')):
         return 'text'
     if resource_id.startswith('graphics.unit-obj-script-'):
@@ -1881,7 +2799,7 @@ def viewer_resource_scope(resource_id):
     if (resource_id.startswith('graphics.unit-obj-')
             or resource_id in ('graphics.obj-dimensions', 'graphics.color-mode-palettes')):
         return 'actors'
-    if (resource_id in FIRAGA_OBJ_SPECS
+    if (resource_id in FIRAGA_OBJ_SPECS or resource_id == 'graphics.constructor-obj-animation'
             or resource_id.startswith(('graphics.obj-', 'graphics.conditional-compact-obj-animations'))
             or resource_id in ('graphics.word-task-obj-animations', 'graphics.layered-obj-animations',
                                'graphics.conditional-compact-obj-catalog')):
@@ -1936,9 +2854,25 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     for row in data['resources']:
         scope = viewer_resource_scope(row['id'])
         groups[scope].append(row)
+        if row['id'] in ('text.catalogs', 'text.script-archives'):
+            groups['text'].append(row)
+        if row['id'] == 'text.catalogs':
+            groups['text-relative'].append(row)
         overview.append({**{key: row[key] for key in ('id', 'path', 'format', 'description', 'status')},
                          **({'embedded_view': row['embedded_view']} if 'embedded_view' in row else {}),
                          'viewer_scope': scope})
+
+    transfer = data.get('type3_payloads')
+    transfer_asset = None
+    if transfer and (transfer['streams'] or transfer['raw_streams']):
+        encoded = json.dumps(transfer, ensure_ascii=True, separators=(',', ':')).replace('<', '\\u003c')
+        fingerprint = hashlib.sha256(encoded.encode('utf-8')).hexdigest()
+        transfer_asset = {'href': 'type3-' + fingerprint + '.js', 'key': fingerprint,
+                          'content': 'globalThis.__FFTA_TYPE3_PAYLOADS__ = {"key":"' + fingerprint + '","payload":' + encoded + '};\n'}
+        existing = parts / transfer_asset['href']
+        if existing.is_symlink() or (existing.exists() and
+                (not existing.is_file() or existing.read_text(encoding='utf-8') != transfer_asset['content'])):
+            raise ValueError('Existing transfer graphics asset does not match its content identity')
 
     def pages(current):
         page_list = [{'id': 'index', 'label': 'All resources',
@@ -1947,7 +2881,10 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
             href = quote(parts_name, safe='') + '/' + key + '.html' if current == 'index' else key + '.html'
             page_list.append({'id': key, 'label': label, 'href': href})
         directory = (quote(parts_name, safe='') + '/files/' if current == 'index' else 'files/')
-        return {'current': current, 'pages': page_list, 'resource_directory': directory}
+        result = {'current': current, 'pages': page_list, 'resource_directory': directory}
+        if current in ('world', 'objects') and transfer_asset:
+            result['transfer_graphics'] = {'href': transfer_asset['href'], 'key': transfer_asset['key']}
+        return result
 
     def render(payload):
         encoded = json.dumps(payload, ensure_ascii=True).replace('<', '\\u003c')
@@ -1958,6 +2895,8 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
         stage = Path(temporary)
         staged_parts = stage / parts_name
         staged_parts.mkdir()
+        if transfer_asset:
+            (staged_parts / transfer_asset['href']).write_text(transfer_asset['content'], encoding='utf-8')
         if resource_files:
             resource_dir = parts / 'files'
             resource_marker = resource_dir / '.ffta-viewer-resources.json'
@@ -2025,6 +2964,13 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
                     os.replace(path, resource_dir / path.name)
             os.replace(staged_files / '.ffta-viewer-resources.json', resource_marker)
             staged_files.rmdir()
+        if transfer_asset:
+            path = staged_parts / transfer_asset['href']
+            existing = parts / path.name
+            if existing.is_symlink() or (existing.exists() and
+                    (not existing.is_file() or existing.read_text(encoding='utf-8') != transfer_asset['content'])):
+                raise ValueError('Existing transfer graphics asset changed during generation')
+            os.replace(path, existing)
         for path in staged_parts.iterdir():
             os.replace(path, parts / path.name)
         os.replace(stage / filename, output / filename)
@@ -2042,29 +2988,40 @@ def generate(dataset, output, filename='index.html', *, split=False):
     dimensions = None
     items = None
     item_links = None
+    item_effects = None
+    progression_catalogs = {}
     slot_jobs = None
     job_metadata = None
     slot_job_row = None
     job_metadata_row = None
     world_nodes = None
+    world_node_sha = None
     audio = None
     short_texts = None
     sprite_pixels = None
     equipment_sprites = None
     battle_sprites = {}
     script_sprites = {}
+    script39_pending = {}
+    script39_poses = {}
     unit_palettes = None
     color_mode_palettes = None
     script_texts = None
     script_text_refs = None
     script_archive = None
     script_commands = None
+    auxiliary_script_archive = None
+    auxiliary_script_commands = None
+    task_descriptors = None
+    effect_events = None
     pointer_texts = None
+    pointer_text_sha = None
     relative_texts = None
     font = None
     font_path = None
     name_keyboard = None
     sequence_directory = None
+    timed_sound_sources = None
     sequences = None
     pcm_pitch = None
     bg_descriptors = None
@@ -2086,16 +3043,28 @@ def generate(dataset, output, filename='index.html', *, split=False):
     ui_palettes = None
     obj_graphics = None
     lz_graphics = None
+    transfer_lz = None
+    transfer_lz_row = None
+    type3_payloads = None
+    compact_cell_bank = None
+    type2_pending = None
     firaga_transfer = None
     firaga_palette_rows = None
     obj_animation_banks = None
     obj_animation_extra = {}
     obj_animation_compact = {}
     firaga_obj_pending = {}
+    constructor_obj_pending = None
     world_roads = None
     observed_tilemaps = None
+    tilemap_bank = None
+    tilemap_bank_row = None
+    tilemap_direct = None
+    tilemap_direct_row = None
+    byte_tilemaps = None
     firaga_compact_cells = None
     extra_tilemaps = {}
+    signed_map_deltas = None
     resource_files = []
     for resource in manifest['resources']:
         row = dict(resource)
@@ -2148,6 +3117,61 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available: decoded LZ77 outputs'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid observed LZ77 data: {error}'
+            elif row['id'] == 'graphics.tilemap-transfer-lz77' and row['format'] == 'tilemap-transfer-lz77-v1-bin':
+                try:
+                    transfer_lz = project_transfer_lz(content, row['sources'])
+                    transfer_lz_row = row
+                    for stream in transfer_lz['streams']:
+                        stream['path'] = row['path']; stream['resource_id'] = row['id']
+                    row['status'] = 'Available: decoded transfer LZ77 outputs'
+                except (ValueError, KeyError, TypeError) as error:
+                    transfer_lz = None
+                    row['status'] = f'Invalid transfer LZ77 data: {error}'
+            elif row['id'] == 'graphics.tilemap-type3-transfers' and row['format'] == 'tilemap-type3-transfers-v1-bin':
+                try:
+                    type3_payloads = project_type3_payloads(content, row['sources'])
+                    type3_payloads['path'] = row['path']
+                    for stream in type3_payloads['streams'] + type3_payloads['raw_streams']:
+                        stream['path'] = row['path']; stream['resource_id'] = row['id']
+                    count = len(type3_payloads['streams']) + len(type3_payloads['raw_streams'])
+                    row['status'] = (f"Available: {len(type3_payloads['streams'])} LZ77 and {len(type3_payloads['raw_streams'])} raw inputs"
+                                     if count else 'Preview unavailable: no valid type-3 inputs')
+                    if type3_payloads['errors']:
+                        row['status'] += f" ({len(type3_payloads['errors'])} invalid LZ77 inputs)"
+                except (ValueError, KeyError, TypeError) as error:
+                    type3_payloads = None
+                    row['status'] = f'Invalid type-3 transfer data: {error}'
+            elif row['id'] == 'graphics.compact-cell-bank' and row['format'] == 'compact-cell-bank-v1-bin':
+                try:
+                    compact_cell_bank = project_compact_cell_bank(content, row['sources'])
+                    compact_cell_bank['path'] = row['path']
+                    count = len(compact_cell_bank['records'])
+                    row['status'] = f'Available: {count} compact-cell records' if count else 'Preview unavailable: no valid compact-cell records'
+                    if compact_cell_bank['errors']:
+                        row['status'] += f" ({len(compact_cell_bank['errors'])} invalid records)"
+                except (ValueError, KeyError, TypeError) as error:
+                    compact_cell_bank = None
+                    row['status'] = f'Invalid compact-cell bank: {error}'
+            elif row['id'] == 'graphics.tilemap-type2-transfers' and row['format'] == 'tilemap-type2-transfers-v1-bin':
+                type2_pending = (content, row)
+                row['status'] = 'Preview unavailable'
+            elif row['id'] == 'graphics.tilemap-stream-bank' and row['format'] == 'tilemap-stream-bank-v1-bin':
+                try:
+                    segments = project_binary_segments(content, row['sources'])
+                    tilemap_bank = {'segments': segments, 'maps': project_halfword_streams(segments)}
+                    tilemap_bank_row = row
+                    row['status'] = 'Available: decoded halfword streams' if tilemap_bank['maps'] else 'Preview unavailable'
+                except (ValueError, KeyError, TypeError) as error:
+                    tilemap_bank = None
+                    row['status'] = f'Invalid tilemap stream bank: {error}'
+            elif row['id'] == 'graphics.tilemap-direct-transfers' and row['format'] == 'tilemap-direct-transfers-v1-bin':
+                try:
+                    tilemap_direct = project_binary_segments(content, row['sources'])
+                    tilemap_direct_row = row
+                    row['status'] = 'Preview unavailable'
+                except (ValueError, KeyError, TypeError) as error:
+                    tilemap_direct = None
+                    row['status'] = f'Invalid tilemap direct transfers: {error}'
             elif row['id'] == 'graphics.indexed-archives' and row['format'] in ('indexed-graphics-v1-json', 'indexed-graphics-v2-json'):
                 try:
                     indexed_archives = project_indexed_graphics(json.loads(content))
@@ -2179,6 +3203,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid source grid data: {error}'
             elif row['id'] == 'graphics.ui-raw-transfers' and row['format'] == 'ui-raw-transfers-v1-json':
+                raw = None
                 try:
                     raw = json.loads(content)
                     copies = raw.get('halfword_copies')
@@ -2193,6 +3218,32 @@ def generate(dataset, output, filename='index.html', *, split=False):
                         row['status'] = 'Preview unavailable'
                 except (ValueError, KeyError, TypeError, AttributeError) as error:
                     row['status'] = f'Invalid UI tilemap rectangle data: {error}'
+                if (manifest['profile'] == 'europe' and isinstance(raw, dict)
+                        and raw.get('signed_map_deltas') is not None):
+                    try:
+                        signed_map_deltas = project_signed_map_deltas(raw)
+                        signed_map_deltas['path'] = row['path']
+                        if row['status'] == 'Preview unavailable':
+                            row['status'] = 'Available: signed map deltas'
+                        elif row['status'].startswith('Available:'):
+                            row['status'] += ' and signed map deltas'
+                        else:
+                            row['status'] = 'Available: signed map deltas; ' + row['status']
+                    except (ValueError, KeyError, TypeError, AttributeError) as error:
+                        row['status'] += f'; invalid signed map delta data: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.dynamic-raw-fragments'
+                  and row['format'] in ('dynamic-raw-fragments-v1-json', 'dynamic-raw-fragments-v2-json', 'dynamic-raw-fragments-v3-json')):
+                try:
+                    raw = json.loads(content)
+                    if raw.get('localized_queued') is None:
+                        row['status'] = 'Preview unavailable: no localized queued transfers'
+                    else:
+                        projected = project_localized_queued_grids(raw)
+                        projected['path'] = row['path']
+                        extra_tilemaps['localized_queued'] = projected
+                        row['status'] = 'Available: localized transfer rectangles'
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
+                    row['status'] = f'Invalid localized queued transfer data: {error}'
             elif row['id'] == 'graphics.firaga-compact-cells' and row['format'] == 'firaga-compact-cells-v1-json':
                 try:
                     firaga_compact_cells = project_firaga_compact_cells(json.loads(content))
@@ -2280,6 +3331,38 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid script archive data: {error}'
+            elif (row['id'] == 'engine.auxiliary-script-command-directory'
+                  and row['format'] == 'auxiliary-script-command-directory-v1-json'):
+                try:
+                    auxiliary_script_commands = project_script_commands(json.loads(content))
+                    auxiliary_script_commands['path'] = row['path']
+                    row['status'] = 'Available: auxiliary command directory'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid auxiliary command data: {error}'
+            elif (row['id'] == 'engine.auxiliary-script-archive'
+                  and row['format'] == 'auxiliary-script-archive-v1-json'):
+                try:
+                    auxiliary_script_archive = project_auxiliary_script_archive(json.loads(content))
+                    auxiliary_script_archive['path'] = row['path']
+                    row['status'] = 'Available: auxiliary script archive'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid auxiliary script data: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'engine.task-descriptors'
+                  and row['format'] == 'task-descriptors-v1-json'):
+                try:
+                    task_descriptors = project_task_descriptors(json.loads(content))
+                    task_descriptors['path'] = row['path']
+                    row['status'] = 'Available: task descriptor tables'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid task descriptor data: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'engine.effect-event-directories'
+                  and row['format'] == 'effect-event-directories-v1-json'):
+                try:
+                    effect_events = project_effect_event_directories(json.loads(content))
+                    effect_events['path'] = row['path']
+                    row['status'] = 'Available: event and effect directories'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid event directory data: {error}'
             elif row['id'] == 'engine.ui-choice-lists' and row['format'] == 'ui-choice-lists-v1-json':
                 try:
                     ui_choice_lists = project_ui_choice_lists(json.loads(content))
@@ -2383,6 +3466,13 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 except (ValueError, KeyError, TypeError) as error:
                     obj_graphics = None
                     row['status'] = f'Invalid OBJ graphics: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.constructor-obj-animation'
+                  and row['format'] == 'constructor-obj-animation-v1-json'):
+                try:
+                    constructor_obj_pending = (json.loads(content), row)
+                    row['status'] = 'Preview unavailable: static object lists not loaded'
+                except (ValueError, TypeError) as error:
+                    row['status'] = f'Invalid constructor animation data: {error}'
             elif row['id'] in FIRAGA_OBJ_SPECS and row['format'] == row['id'].removeprefix('graphics.') + '-v1-json':
                 try:
                     firaga_obj_pending[row['id']] = (json.loads(content), row)
@@ -2505,6 +3595,14 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid script sprite data: {error}'
+            elif (manifest['profile'] == 'europe'
+                  and row['id'] in ('graphics.script39-registry-poses', 'graphics.script39-special-poses')
+                  and row['format'] == row['id'].removeprefix('graphics.') + '-v1-json'):
+                try:
+                    script39_pending[row['id']] = (validate_script39_poses(json.loads(content)), row)
+                    row['status'] = 'Preview unavailable: resolving pose sources'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid opcode-39 pose data: {error}'
             elif (row['id'] in ('graphics.unit-obj-normal-battle', 'graphics.unit-obj-alternate-battle')
                   and row['format'] == row['id'].removeprefix('graphics.') + '-v1-json'):
                 mode = 'normal' if row['id'] == 'graphics.unit-obj-normal-battle' else 'alternate'
@@ -2639,6 +3737,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     pointer_texts = {'catalogs': catalogs, 'strings': strings,
                                      'glyphs': [glyphs[index] for index in sorted(used) if index in glyphs],
                                      'path': row['path']}
+                    pointer_text_sha = content_digest
                     relative_error = None
                     try:
                         source_archives = catalog.get('archive_catalogs', [])
@@ -2674,6 +3773,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                                      else 'Available: pointer and relative texts' if relative_texts else 'Available: pointer texts')
                 except (ValueError, KeyError, TypeError) as error:
                     pointer_texts = None
+                    pointer_text_sha = None
                     relative_texts = None
                     row['status'] = f'Invalid pointer text data: {error}'
             elif row['id'] == 'text.script-archives' and row['format'] == 'script-text-v1-json':
@@ -2732,8 +3832,11 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid short-text data: {error}'
             elif row['id'] == 'audio.m4a-directory' and row['format'] == 'audio-directory-v2-json':
+                timed_sound_sources = None
                 try:
                     directory = json.loads(content)
+                    sources, sound_errors = project_timed_sound_sources(directory)
+                    timed_sound_sources = {'path': row['path'], 'groups': sources} if sources else None
                     songs, headers = directory['songs'], directory['headers']
                     if not isinstance(songs, list) or not songs or not isinstance(headers, list) or not headers:
                         raise ValueError('Empty audio directory')
@@ -2753,10 +3856,13 @@ def generate(dataset, output, filename='index.html', *, split=False):
                         projected_headers.append({'id': header['id'], 'tone_bank_address': bank_address})
                     sequence_directory = {'songs': [{'id': song['id'], 'header_id': song['header_id']} for song in songs],
                                           'headers': projected_headers, 'path': row['path']}
-                    row['status'] = 'Available for sequence preview'
-                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = 'Available for sequence preview' + (' and timed sound sources' if sources else '')
+                    if sound_errors:
+                        row['status'] += '; invalid ' + '; '.join(sound_errors)
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
                     sequence_directory = None
-                    row['status'] = f'Invalid audio directory: {error}'
+                    row['status'] = (f'Available: timed sound sources; invalid song directory: {error}'
+                                     if timed_sound_sources else f'Invalid audio directory: {error}')
             elif row['id'] == 'audio.m4a-sequences' and row['format'] == 'audio-sequences-v1-json':
                 try:
                     sequences = project_audio_sequences(json.loads(content))
@@ -2840,6 +3946,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                             if any(type(link[key]) is not int or not 0 <= link[key] <= 255 for key in ('path_id', 'neighbor')):
                                 raise ValueError('Invalid link')
                     world_nodes = {'nodes': nodes, 'path': row['path']}
+                    world_node_sha = content_digest
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid world node data: {error}'
@@ -2898,6 +4005,27 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid item link data: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'gameplay.item-effect-parameters'
+                  and row['format'] == 'item-effect-parameters-v1-json'):
+                try:
+                    item_effects = project_item_effect_parameters(json.loads(content))
+                    item_effects['path'] = row['path']
+                    row['status'] = 'Available: item effect parameters'
+                except (ValueError, KeyError, TypeError) as error:
+                    item_effects = None
+                    row['status'] = f'Invalid item effect data: {error}'
+            elif (manifest['profile'] == 'europe'
+                  and row['id'] in ('gameplay.progression-rewards', 'gameplay.progression-gates',
+                                    'gameplay.progression-selection-gates', 'gameplay.trade-parameters')
+                  and row['format'] == row['id'].removeprefix('gameplay.') + '-v1-json'):
+                kind = {'gameplay.progression-rewards': 'rewards', 'gameplay.progression-gates': 'gates',
+                        'gameplay.progression-selection-gates': 'selection', 'gameplay.trade-parameters': 'trade'}[row['id']]
+                try:
+                    progression_catalogs[kind] = project_progression_catalog(json.loads(content), kind)
+                    progression_catalogs[kind]['path'] = row['path']
+                    row['status'] = 'Available: progression and pricing records'
+                except (ValueError, KeyError, TypeError) as error:
+                    row['status'] = f'Invalid progression/pricing {kind} data: {error}'
             elif row['id'] == 'gameplay.item-records' and row['format'] == 'item-records-v1-json':
                 try:
                     records = json.loads(content)['records']
@@ -2934,10 +4062,60 @@ def generate(dataset, output, filename='index.html', *, split=False):
             else:
                 row['status'] = 'Preview unavailable'
         rows.append(row)
+    if type2_pending:
+        content, row = type2_pending
+        try:
+            projected = project_type2_rectangles(content, row['sources'], observed_tilemaps, firaga_palette_rows)
+            prior_references = projected.pop('prior_references')
+            if observed_tilemaps:
+                for item in observed_tilemaps['maps']:
+                    if item['source_offset'] in prior_references:
+                        item['type2_references'] = prior_references[item['source_offset']]
+            projected['path'] = row['path']
+            if projected['maps']:
+                extra_tilemaps['type2_rectangles'] = projected
+                row['status'] = f"Available: {len(projected['maps'])} type-2 source rectangles"
+                if projected['unresolved'] or projected['errors']:
+                    row['status'] += f" ({len(projected['unresolved'])} unresolved entries, {len(projected['errors'])} incomplete sources)"
+        except (ValueError, KeyError, TypeError) as error:
+            row['status'] = f'Invalid type-2 transfer data: {error}'
+    if tilemap_bank:
+        if tilemap_bank['maps']:
+            extra_tilemaps['stream_bank'] = {'path': tilemap_bank_row['path'], 'maps': tilemap_bank['maps']}
+        if tilemap_direct:
+            try:
+                byte_maps = project_byte_streams(tilemap_bank['segments'], tilemap_direct)
+                if byte_maps:
+                    byte_tilemaps = {'path': tilemap_bank_row['path'], 'controls_path': tilemap_direct_row['path'], 'maps': byte_maps}
+                    tilemap_bank_row['status'] = 'Available: decoded halfword and byte streams' if tilemap_bank['maps'] else 'Available: decoded byte streams'
+                    tilemap_direct_row['status'] = 'Available: byte stream links'
+            except (ValueError, KeyError, TypeError) as error:
+                tilemap_direct_row['status'] = f'Invalid byte tilemap links: {error}'
+    if transfer_lz:
+        existing = lz_graphics['streams'] if lz_graphics else []
+        if any(left['source_offset'] < right['source_offset'] + right['encoded_length']
+               and right['source_offset'] < left['source_offset'] + left['encoded_length']
+               for left in existing for right in transfer_lz['streams']):
+            transfer_lz_row['status'] = 'Invalid transfer LZ77 data: overlaps an observed source'
+        elif lz_graphics:
+            lz_graphics['streams'].extend(transfer_lz['streams'])
+        else:
+            transfer_lz['path'] = transfer_lz_row['path']
+            lz_graphics = transfer_lz
     if indexed_direct:
         if indexed_archives is None:
             indexed_archives = {'families': []}
         indexed_archives['families'].extend(indexed_direct)
+    if constructor_obj_pending:
+        source, row = constructor_obj_pending
+        try:
+            static = obj_animation_extra.get('static_lists')
+            projected = project_constructor_obj_animation(source, static)
+            projected['path'] = row['path'] + ' · lists: ' + static['path']
+            obj_animation_extra['constructor_phases'] = projected
+            row['status'] = 'Available: constructor animation phases'
+        except (ValueError, KeyError, TypeError, AttributeError) as error:
+            row['status'] = f'Preview unavailable: {error}'
     for resource_id, (source, row) in firaga_obj_pending.items():
         try:
             projected = project_firaga_obj_animation(source, obj_animation_extra.get('static_lists'), resource_id)
@@ -2954,22 +4132,62 @@ def generate(dataset, output, filename='index.html', *, split=False):
         used_glyphs = {unit for language in script_texts['languages'] for bank in language['banks']
                        for program in bank['programs'] for unit in program['units'] if isinstance(unit, int)}
         script_texts['glyphs'] = [font[index] for index in sorted(used_glyphs) if font and index in font]
+    if script39_pending:
+        object_pool, pixel_pool, sequence_pool = [], [], []
+        static_lists = obj_animation_extra.get('static_lists')
+        if static_lists:
+            object_pool.extend((item, static_lists['path']) for item in static_lists['lists'])
+        if sprite_pixels:
+            pixel_pool.extend((block, sprite_pixels['path']) for block in sprite_pixels['blocks'])
+            for sprite in sprite_pixels['sprites']:
+                object_pool.extend(({'source_offset': frame['object_source'], 'objects': frame['objects']}, sprite_pixels['path'])
+                                   for frame in sprite['frames'])
+        for source in [equipment_sprites, *battle_sprites.values(), *script_sprites.values()]:
+            if source:
+                object_pool.extend((item, source['path']) for item in source['objects'])
+                pixel_pool.extend((item, source['path']) for item in source['blocks'])
+                sequence_pool.extend((item, source['path']) for item in source['sequences'])
+        for source, row in script39_pending.values():
+            object_pool.extend((item, row['path']) for item in source.get('objects', []))
+            pixel_pool.extend((item, row['path']) for item in source['pixels'])
+        for resource_id, (source, row) in script39_pending.items():
+            try:
+                projected = project_script39_poses(source, row['path'], object_pool, pixel_pool, sequence_pool)
+                frames = [frame for sequence in projected['sequences'] for frame in sequence['frames'] if frame['operation'] == 1]
+                resolved = sum(frame['block'] is not None for frame in frames)
+                row['status'] = f'Available: pose sequences ({resolved}/{len(frames)} graphics frames resolved)'
+                script39_poses[resource_id] = projected
+            except (ValueError, KeyError, TypeError) as error:
+                row['status'] = f'Invalid opcode-39 pose links: {error}'
     job_names = project_slot_job_names(slot_jobs, job_metadata, pointer_texts) if slot_jobs else None
+    metadata_names = project_metadata_name_references(job_metadata, pointer_texts) if job_metadata else None
+    world_location_names = project_observed_world_names(manifest['profile'], world_node_sha, pointer_text_sha,
+                                                         world_nodes, pointer_texts)
+    world_region_names = project_world_region_names(manifest['profile'], pointer_text_sha, pointer_texts)
+    if metadata_names:
+        job_metadata_row['status'] = 'Available: direct metadata name references'
     if job_names and any(any(name is not None for name in item['names']) for item in job_names['rows']):
         slot_job_row['status'] = 'Available: localized names for selected job slots'
         if job_metadata_row:
             job_metadata_row['status'] = 'Available: selected job name references'
     data = {'profile': manifest['profile'], 'extractor': manifest['extractor_revision'],
             'decoder': manifest['decoder_revision'], 'resources': rows, 'palettes': palettes,
-            'dimensions': dimensions, 'items': items, 'item_links': item_links, 'job_names': job_names, 'encounters': encounters,
+            'dimensions': dimensions, 'items': items, 'item_links': item_links, 'item_effects': item_effects,
+            'progression_catalogs': progression_catalogs,
+            'job_names': job_names, 'metadata_names': metadata_names, 'encounters': encounters,
             'mission_events': mission_events, 'terrain_seeds': terrain_seeds, 'bg_plane_programs': bg_plane_programs, 'script_paths': script_paths,
             'ui_choice_lists': ui_choice_lists,
-            'world_nodes': world_nodes, 'world_roads': world_roads,
+            'world_nodes': world_nodes, 'world_roads': world_roads, 'world_location_names': world_location_names,
+            'world_region_names': world_region_names,
             'audio': audio, 'short_texts': short_texts, 'sprite_pixels': sprite_pixels,
             'equipment_sprites': equipment_sprites, 'battle_sprites': battle_sprites, 'script_sprites': script_sprites,
+            'script39_poses': script39_poses,
             'unit_palettes': unit_palettes, 'color_mode_palettes': color_mode_palettes, 'script_texts': script_texts, 'pointer_texts': pointer_texts,
             'script_archive': script_archive, 'script_commands': script_commands, 'script_text_refs': script_text_refs,
+            'auxiliary_script_archive': auxiliary_script_archive, 'auxiliary_script_commands': auxiliary_script_commands,
+            'task_descriptors': task_descriptors, 'effect_events': effect_events,
             'relative_texts': relative_texts, 'sequence_directory': sequence_directory, 'sequences': sequences,
+            'timed_sound_sources': timed_sound_sources,
             'pcm_pitch': pcm_pitch,
             'bg_descriptors': bg_descriptors, 'bg_graphics': bg_graphics, 'bg_transfers': bg_transfers, 'alternate_palettes': alternate_palettes, 'palette_programs': palette_programs,
             'indexed_archives': indexed_archives,
@@ -2980,6 +4198,10 @@ def generate(dataset, output, filename='index.html', *, split=False):
             'obj_animation_extra': obj_animation_extra,
             'obj_animation_compact': obj_animation_compact,
             'observed_tilemaps': observed_tilemaps, 'firaga_compact_cells': firaga_compact_cells, 'extra_tilemaps': extra_tilemaps,
+            'byte_tilemaps': byte_tilemaps,
+            'signed_map_deltas': signed_map_deltas,
+            'type3_payloads': type3_payloads,
+            'compact_cell_bank': compact_cell_bank,
             'font': {'glyphs': [font[index] for index in sorted(font)], 'path': font_path} if font else None,
             'name_keyboard': name_keyboard}
     template = (Path(__file__).resolve().parent.parent / 'view_rom_data.html').read_text(encoding='utf-8')

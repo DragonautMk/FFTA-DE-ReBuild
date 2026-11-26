@@ -400,7 +400,8 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   1D tiles and a chosen tick rate, treating zero duration as one preview tick.
   Layered sequences can be overlaid at a shared origin using duration plus one
   preview tick per frame. Their live offsets, task state and clock are not
-  reproduced. Affine, mosaic and special object
+  reproduced. Constructor phases use their stored counter thresholds, starting
+  the 8-bit counter at zero for the preview. Affine, mosaic and special object
   modes are shown as outlines only.</p>
   <label>Catalog <select id="obj-animation-catalog"></select></label>
   <label>Bank <select id="obj-animation-bank"></select></label>
@@ -414,7 +415,9 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p><label for="obj-animation-progress">Frame position</label> <progress id="obj-animation-progress" max="1" value="0"></progress>
     <span id="obj-animation-position"></span></p>
   <label>Manual graphics <select id="obj-animation-graphics"></select></label>
-  <label>LZ byte offset <input id="obj-animation-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
+  <button type="button" id="obj-animation-load-transfer" hidden>Load transfer graphics</button>
+  <span id="obj-animation-transfer-load-status" role="status"></span>
+  <label>Payload byte offset <input id="obj-animation-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
   <label>First tile ID <input id="obj-animation-base" type="number" min="0" max="1023" value="0" style="width:6rem"></label>
   <label>Manual palette <select id="obj-animation-palette"></select></label>
   <label><input id="obj-animation-object-palettes" type="checkbox"> Use each object's 4-bit palette ID</label>
@@ -478,8 +481,8 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <canvas id="ui-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interface tile sheet"></canvas>
 </details></section>
 <section id="obj-tiles" hidden>
-  <details><summary><h2>Object tile sheets</h2></summary>
-  <p>Inspect decoded object banks and observed LZ77 outputs as 8×8 tiles.
+  <details><summary><h2>Object and transfer tile sheets</h2></summary>
+  <p>Inspect decoded object banks and transfer payloads as 8×8 tiles.
   Some bytes can hold other data. Tile depth and palettes are chosen manually;
   neither their pairing nor a finished sprite or screen is inferred.</p>
   <label>Selector <select id="obj-selector"></select></label>
@@ -487,11 +490,12 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="obj-selector-detail"></p>
   <label>Bank catalog <select id="obj-catalog"></select></label>
   <label>Graphics bank <select id="obj-bank"></select></label>
-  <label>LZ byte offset <input id="obj-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
+  <label>Payload byte offset <input id="obj-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
   <label>Tile depth <select id="obj-depth"><option value="4">4-bit</option><option value="8">8-bit</option></select></label>
   <label>Palette <select id="obj-palette"></select></label>
   <label>Page <select id="obj-page"></select></label>
   <p id="obj-detail"></p>
+  <p id="obj-input-errors" role="status" hidden></p>
   <p id="obj-lz-transfer-reference" hidden><a href="#firaga-transfers"></a></p>
   <canvas id="obj-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Object tile sheet"></canvas>
 </details></section>
@@ -523,6 +527,10 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p>Choose extracted cells and optionally interpret them as 4-bit background
   tile entries. Graphics, tile placement and colors are selected manually;
   the preview does not establish the game's actual scene or palette pairing.
+  Localized transfer rectangles retain four source rows of 24 halfwords; the
+  original destination row stride is 64 bytes.
+  Type-2 source rectangles can contain color words; interpreting them as tile
+  entries is a manual preview.
   You can apply one selected color bank to every cell, or use the stored
   palette IDs within the selected palette source.</p>
   <label>Map or rectangle <select id="tilemap-id"></select></label>
@@ -548,7 +556,9 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <p id="firaga-cell-status" role="status"></p>
   </div>
   <label>Tile graphics <select id="tilemap-graphics"></select></label>
-  <label>LZ byte offset <input id="tilemap-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
+  <button type="button" id="tilemap-load-transfer" hidden>Load transfer graphics</button>
+  <span id="tilemap-transfer-load-status" role="status"></span>
+  <label>Payload byte offset <input id="tilemap-lz-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
   <label>First tile ID <input id="tilemap-base" type="number" min="0" max="1023" value="0" style="width:6rem"></label>
   <label>Palette source <select id="tilemap-palette-source"></select></label>
   <label>Palette bank <select id="tilemap-palette-bank"></select></label>
@@ -557,6 +567,14 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <canvas id="tilemap-canvas" style="max-width:100%;height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interpreted tilemap preview"></canvas>
   <p id="tilemap-cell-detail" role="status"></p>
   <details id="tilemap-source-metadata" hidden><summary>Stored source fields</summary><p id="tilemap-source-fields"></p></details>
+  <details id="type2-windows" hidden><summary>Type-2 copy windows</summary>
+    <p>These stored source-row windows and transfer references do not establish which ones run in a scene.</p>
+    <table><thead><tr><th>Entry source</th><th>Raw bytes 4/5</th><th>First row</th><th>Rows</th><th>List headers</th><th>Transfer rows</th></tr></thead><tbody id="type2-window-rows"></tbody></table>
+  </details>
+  <details id="type2-unresolved" hidden><summary>Incomplete type-2 sources</summary>
+    <p id="type2-unresolved-detail"></p>
+    <table><thead><tr><th>Entry source</th><th>Rectangle source</th><th>Reason</th></tr></thead><tbody id="type2-unresolved-rows"></tbody></table>
+  </details>
   <details id="firaga-cell-encoding" hidden><summary>Stored frame and sequence fields</summary>
     <p id="firaga-cell-metadata"></p>
     <table><thead><tr><th>Run</th><th>Control</th><th>Stored values</th></tr></thead><tbody id="firaga-cell-runs"></tbody></table>
@@ -566,12 +584,87 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <div class="tilemap-grid"><table id="tilemap-cells" aria-label="Tilemap cell values"></table></div>
   </details>
 </details></section>
+<section id="signed-map-deltas" hidden>
+  <details><summary><h2>Signed map offsets</h2></summary>
+  <p>One documented map-rendering mode adds a stored signed offset to a region's
+  screen Y position; positive values move down. This preview follows the stored entry order at a chosen
+  rate; it does not reproduce the live selection or original timing.</p>
+  <p id="signed-map-deltas-source"></p>
+  <label>Entry <select id="signed-map-delta-index"></select></label>
+  <label>Preview steps per second <input id="signed-map-delta-rate" type="number" min="1" max="60" step="1" value="6" style="width:6rem"></label>
+  <button type="button" id="signed-map-delta-play">Play from selected entry</button>
+  <button type="button" id="signed-map-delta-stop" disabled>Stop</button>
+  <label><input type="checkbox" id="signed-map-delta-loop"> Loop preview</label>
+  <p><label for="signed-map-delta-progress">Entry position</label>
+    <progress id="signed-map-delta-progress" max="1" value="0"></progress> <span id="signed-map-delta-position"></span></p>
+  <p id="signed-map-delta-status" role="status"></p>
+  <canvas id="signed-map-delta-canvas" width="240" height="180" style="max-width:100%;height:auto;background:#f3f6fa"
+    aria-label="Selected vertical offset relative to zero; positive values move downward"></canvas>
+  <details><summary>Stored values</summary>
+    <table><thead><tr><th>Index</th><th>Source offset</th><th>Signed offset</th><th>Stored byte</th></tr></thead>
+      <tbody id="signed-map-deltas-rows"></tbody></table>
+  </details>
+  </details>
+</section>
+<section id="byte-tilemaps" hidden>
+  <details><summary><h2>Byte tilemap streams</h2></summary>
+  <p>Each cell shows one decoded byte from the first traversal. Grayscale maps
+  the stored value to brightness; it does not establish a palette, final image
+  or the effect of the original traversal mode.</p>
+  <label>Stream <select id="byte-tilemap-id"></select></label>
+  <p id="byte-tilemap-source"></p>
+  <canvas id="byte-tilemap-canvas" style="max-width:100%;height:auto;image-rendering:pixelated;border:1px solid #93a9b5" aria-label="Decoded byte tilemap grid"></canvas>
+  <p id="byte-tilemap-cell-detail" role="status"></p>
+  <details><summary>Stored cell values</summary>
+    <div class="tilemap-grid"><table id="byte-tilemap-cells" aria-label="Byte tilemap cell values"></table></div>
+  </details>
+  <details><summary>Transfer references</summary>
+    <p id="byte-tilemap-control-source"></p>
+    <table><thead><tr><th>Row offset</th><th>Descriptor offset</th></tr></thead><tbody id="byte-tilemap-references"></tbody></table>
+  </details>
+</details></section>
+<section id="compact-cell-bank" hidden>
+  <details><summary><h2>Compact-cell animations</h2></summary>
+  <p>Browse the stored cell frames and preview their sequence order. Timing,
+  graphics and palettes are chosen manually; this is not a reconstructed game scene.
+  Byte-cell graphics use each byte as a tile ID for this preview.</p>
+  <label>Record <select id="compact-cell-record"></select></label>
+  <label>Frame <select id="compact-cell-frame"></select></label>
+  <label>Sequence entry <select id="compact-cell-sequence"></select></label>
+  <label>Preview frames per second <input id="compact-cell-rate" type="number" min="1" max="60" value="6" style="width:6rem"></label>
+  <button type="button" id="compact-cell-play">Play from selected entry</button>
+  <button type="button" id="compact-cell-stop" disabled>Stop</button>
+  <label><input type="checkbox" id="compact-cell-loop"> Loop animation</label>
+  <p id="compact-cell-sequence-detail" role="status"></p>
+  <p><progress id="compact-cell-progress" max="1" value="0"></progress> <span id="compact-cell-position"></span></p>
+  <p id="compact-cell-status" role="status"></p>
+  <label>Tile graphics <select id="compact-cell-graphics"></select></label>
+  <button type="button" id="compact-cell-load-transfer" hidden>Load transfer graphics</button>
+  <span id="compact-cell-transfer-load-status" role="status"></span>
+  <label>Payload byte offset <input id="compact-cell-offset" type="number" min="0" step="1" value="0" style="width:7rem" disabled></label>
+  <label>First tile ID <input id="compact-cell-base" type="number" min="0" max="1023" value="0" style="width:6rem"></label>
+  <label>Palette source <select id="compact-cell-palette"></select></label>
+  <label>Palette bank <select id="compact-cell-palette-bank"></select></label>
+  <label><input type="checkbox" id="compact-cell-use-palettes"> Use halfword cells' palette IDs</label>
+  <p id="compact-cell-source"></p>
+  <canvas id="compact-cell-canvas" style="max-width:100%;height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Compact-cell preview"></canvas>
+  <p id="compact-cell-detail" role="status"></p>
+  <details><summary>Stored frame and runs</summary>
+    <p id="compact-cell-metadata"></p>
+    <table><thead><tr><th>Run</th><th>Control</th><th>Stored values</th></tr></thead><tbody id="compact-cell-runs"></tbody></table>
+  </details>
+  <details><summary>Cell values</summary>
+    <div class="tilemap-grid"><table id="compact-cell-values" aria-label="Compact-cell values"></table></div>
+  </details>
+  <p id="compact-cell-errors" role="status" hidden></p>
+</details></section>
 <section id="items" hidden>
   <details><summary><h2>Item records</h2></summary>
   <p>Static fields are identified by their byte offset within each record.</p>
   <label>Item ID <select id="item-id"></select></label>
   <p id="items-source"></p>
   <p id="item-link-navigation" hidden><a id="item-link-open" href="#item-links">Open linked pair record</a></p>
+  <p id="item-effect-navigation" hidden><a id="item-effect-open" href="#item-effects">Open item effect parameters</a></p>
   <table><thead><tr><th>Offset</th><th>Type</th><th>Value</th></tr></thead><tbody id="item-fields"></tbody></table>
   <details id="item-encounter-references" hidden><summary>Encounter template references</summary>
     <p>These are stored equipment IDs in extracted templates; live unit state can differ.</p>
@@ -580,6 +673,26 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <span id="item-encounter-page"></span>
     <table><thead><tr><th>Encounter</th><th>Unit</th><th>Equipment slot</th></tr></thead>
       <tbody id="item-encounter-rows"></tbody></table>
+  </details>
+</details></section>
+<section id="item-effects" hidden>
+  <details><summary><h2>Item effect parameters</h2></summary>
+  <p>These stored coefficients and cap are linked to item IDs by the documented
+  European source. The calculation previews one bounded helper using supplied
+  values; it does not execute item use or change the game state.</p>
+  <label>Item ID <select id="item-effect-id"></select></label>
+  <p id="item-effect-source"></p>
+  <p id="effect-item-navigation" hidden><a id="effect-item-open" href="#items">Open item record</a></p>
+  <details><summary>Stored coefficients</summary>
+    <table><thead><tr><th>Coefficient ID</th><th>Value</th><th>Property IDs</th></tr></thead><tbody id="item-effect-coefficients"></tbody></table>
+  </details>
+  <details><summary>Calculate bounded increase</summary>
+    <p>Property IDs 0–19 select a coefficient; other byte values select zero.
+    Current value and quantity are unsigned bytes. The cap limits the increase.</p>
+    <label>Property ID <input id="item-effect-property" type="number" min="0" max="255" step="1" value="0" style="width:6rem"></label>
+    <label>Current value <input id="item-effect-current" type="number" min="0" max="255" step="1" value="0" style="width:6rem"></label>
+    <label>Quantity <input id="item-effect-quantity" type="number" min="0" max="255" step="1" value="1" style="width:6rem"></label>
+    <p id="item-effect-result" role="status"></p>
   </details>
 </details></section>
 <section id="job-names" hidden>
@@ -597,6 +710,20 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <table><thead><tr><th>Metadata ID</th><th>Localized name</th><th>Name source</th></tr></thead><tbody id="job-reference-rows"></tbody></table>
   </details>
 </details></section>
+<section id="metadata-names" hidden>
+  <details><summary><h2>Direct metadata name references</h2></summary>
+  <p>Direct property-0 values are looked up in the European name text reader.
+  Routed rows are not evaluated. These references do not establish a row's
+  live role or availability. Unknown glyphs keep their original image and text
+  substitutions are not executed.</p>
+  <label id="metadata-name-language-control">Language ID <select id="metadata-name-language"></select></label>
+  <label>Filter by row ID or displayed name <input id="metadata-name-filter" type="search"></label>
+  <p id="metadata-name-source"></p>
+  <button type="button" id="metadata-name-prev">Previous</button>
+  <button type="button" id="metadata-name-next">Next</button>
+  <span id="metadata-name-page" role="status"></span>
+  <table><thead><tr><th>Metadata ID</th><th>Routing</th><th>Localized name</th><th>Name source</th></tr></thead><tbody id="metadata-name-rows"></tbody></table>
+</details></section>
 <section id="item-links" hidden>
   <details><summary><h2>Item-linked pair records</h2></summary>
   <p>Each item selects a record using its byte at offset 0x1D. The selector and
@@ -609,6 +736,36 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <tbody id="item-link-slots"></tbody></table>
   <details><summary>Items referencing this record</summary>
     <p id="item-link-owners"></p>
+  </details>
+</details></section>
+<section id="progression-records" hidden>
+  <details><summary><h2>Progression and pricing records</h2></summary>
+  <p>These European tables retain physical IDs and stored values. They do not
+  establish a character's live state, reward availability, skill names, item
+  links or the result of running the original game code.</p>
+  <details id="progression-rewards-panel" hidden><summary>Progression deltas and discount</summary>
+    <p>Eight stored deltas feed corresponding progress slots; the discount byte
+    is used by a separate price reader. The final byte remains unclassified.</p>
+    <div id="progression-rewards-view"></div>
+  </details>
+  <details id="progression-gates-panel" hidden><summary>Progression requirements</summary>
+    <p>The original reader checks all eight minima for each unreceived physical
+    row. The returned halfword and output byte are shown without inferring an
+    item or reward identity; a zero return can still belong to a matching row.</p>
+    <div id="progression-gates-view"></div>
+  </details>
+  <details id="progression-selection-panel" hidden><summary>Progression selection conditions</summary>
+    <p>All three minima must pass. If any of the eight slot minima is nonzero,
+    at least one active minimum must pass; a nonzero flag is checked separately.
+    The first eligible physical row is significant. A row without conditions
+    stores zero; an exhausted table leaves the previous value unchanged.</p>
+    <div id="progression-selection-view"></div>
+  </details>
+  <details id="progression-trade-panel" hidden><summary>Trade price parameters</summary>
+    <p>Count zero reads byte 0x41, the high byte of the markup field. Counts
+    1–30 use the following discount bytes. The preceding 64 bytes are preserved
+    as unclassified data; live flags and other price inputs are not simulated.</p>
+    <div id="progression-trade-view"></div>
   </details>
 </details></section>
 <section id="mission-records" hidden>
@@ -687,9 +844,16 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 <section id="world" hidden>
   <details><summary><h2>World nodes</h2></summary>
   <p>Positions use tile coordinates. Select a node to inspect its recorded links.</p>
+  <p id="world-regions-navigation" hidden><a href="#world-regions">Browse region name references</a></p>
   <div class="map" id="world-plot"><svg id="world-road-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg></div>
   <p id="world-detail"></p>
+  <div id="world-selected-name" class="text-preview" hidden></div>
   <table><thead><tr><th>Slot</th><th>Neighbor ID</th><th>Path ID</th></tr></thead><tbody id="world-links"></tbody></table>
+  <details id="world-observed-names" hidden><summary>Observed location names</summary>
+    <p>These names use a recorded region-to-node association. Region placement can differ during play.</p>
+    <label>Language ID <select id="world-name-language"></select></label>
+    <table><thead><tr><th>Node</th><th>Observed name</th><th>Source</th></tr></thead><tbody id="world-name-rows"></tbody></table>
+  </details>
   <details id="world-roads-controls" hidden><summary>Sampled roads</summary>
     <p>Points are offsets from the lower-index node. The preview uses the stored
     samples without extending them to the other node. Playback can follow them
@@ -704,6 +868,17 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <p id="world-road-detail"></p><p id="world-road-status" role="status"></p>
   </details>
 </details></section>
+<section id="world-regions" hidden>
+  <details><summary><h2>World region name references</h2></summary>
+  <p>The original region list conditionally references these 31 localized strings.
+  Region placement depends on game state; node links identify only one recorded placement.</p>
+  <label>Language ID <select id="world-region-language"></select></label>
+  <label>Filter by region ID, string ID or recognized name <input id="world-region-filter" type="search"></label>
+  <p id="world-region-status" role="status"></p>
+  <table><thead><tr><th>Region ID</th><th>Name</th><th>Recorded placement</th><th>Source</th></tr></thead>
+    <tbody id="world-region-rows"></tbody></table>
+  </details>
+</section>
 <section id="audio" hidden>
   <details><summary><h2>PCM waveforms</h2></summary>
   <label>Wave <select id="audio-id"></select></label>
@@ -780,6 +955,23 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <table><thead><tr><th>Song ID</th><th>Header ID</th></tr></thead><tbody id="instrument-songs-rows"></tbody></table>
   </details>
 </details></section>
+<section id="timed-sounds" hidden>
+  <details><summary><h2>Timed sound sources</h2></summary>
+  <p>Browse recorded schedule rows and source fragments. A nonzero sound word
+  may reference the directory ID in its low 12 bits; higher bits are retained
+  as flags. Audition plays the selected directory entry independently and
+  approximately: live scheduling, flags, channel state and timing are not reproduced.</p>
+  <label>Source kind <select id="timed-sound-kind"><option value="all">All sources</option>
+    <option value="rows">Schedule rows</option><option value="literal">Literals</option>
+    <option value="directory">Directories</option><option value="counts">Counts</option>
+    <option value="ram-words">RAM words</option></select></label>
+  <label>Find source offset <input id="timed-sound-filter" type="search" placeholder="Decimal or hexadecimal"></label>
+  <label>Source <select id="timed-sound-source"></select></label>
+  <p id="timed-sound-detail" role="status"></p>
+  <p><button type="button" id="timed-sound-prev">Previous page</button>
+    <span id="timed-sound-page"></span><button type="button" id="timed-sound-next">Next page</button></p>
+  <div style="overflow-x:auto"><table><thead id="timed-sound-head"></thead><tbody id="timed-sound-rows"></tbody></table></div>
+</details></section>
 <section id="sequence-audio" hidden>
   <details><summary><h2>Song track sequences</h2></summary>
   <p>Explore one track or play the extracted tracks together. Known PCM and
@@ -822,6 +1014,8 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   </details>
   <button type="button" id="sequence-play">Play approximation</button>
   <button type="button" id="sequence-stop" disabled>Stop</button>
+  <button type="button" id="sequence-download">Download selected mix as WAV</button>
+  <p id="sequence-export-status" role="status">WAV export uses the selected preview settings and track mutes.</p>
   <p><label for="sequence-progress">Playback position</label>
     <progress id="sequence-progress" max="1" value="0"></progress> <span id="sequence-progress-label">Not playing.</span></p>
   <p id="sequence-status" role="status"></p>
@@ -858,6 +1052,8 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   Commands and controls are replaced by spaces; dynamic substitutions are not
   executed. An unknown glyph appears as � and cannot be searched by its
   character. Results link to the stored entries, which may contain duplicates.</p>
+  <p id="text-search-scope-note" hidden>This search covers the archives on this page.
+  <a id="text-search-all-link" href="#text-search">Search all text archives</a>.</p>
   <form id="text-search-form">
     <label>Text <input id="text-search-query" type="search" maxlength="256" required></label>
     <label>Archive <select id="text-search-scope"><option value="">All archives</option></select></label>
@@ -953,6 +1149,59 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <label>Opcode <select id="script-command-opcode"></select></label>
   <p id="script-command-detail"></p>
 </details></section>
+<section id="auxiliary-scripts" hidden>
+  <details><summary><h2>Auxiliary script archive</h2></summary>
+  <p>Browse the separate auxiliary archive by bank and slot, or select any
+  stored physical program. A slot can enter in the middle of a program. Raw
+  instructions are shown in storage order; predicates and execution are not simulated.</p>
+  <label>Bank <select id="auxiliary-bank"></select></label>
+  <label>Slot <select id="auxiliary-slot"></select></label>
+  <label>Physical program <select id="auxiliary-program"></select></label>
+  <p id="auxiliary-target" role="status"></p>
+  <p id="auxiliary-source"></p>
+  <details><summary>Slots referencing this program</summary><div id="auxiliary-references"></div></details>
+  <label>Opcode filter <select id="auxiliary-filter"><option value="all">All opcodes</option></select></label>
+  <table><thead><tr><th>Instruction</th><th>Source</th><th>Opcode</th><th>Raw parameters</th><th>Selected entry</th></tr></thead><tbody id="auxiliary-rows"></tbody></table>
+  <p><button type="button" id="auxiliary-previous">Previous</button> <span id="auxiliary-page"></span>
+    <button type="button" id="auxiliary-next">Next</button></p>
+</details></section>
+<section id="auxiliary-commands" hidden>
+  <details><summary><h2>Auxiliary command directory</h2></summary>
+  <p>This directory is separate from the main event script directory. Stored
+  advances and callback addresses do not establish predicate behavior.</p>
+  <label>Opcode <select id="auxiliary-command-opcode"></select></label>
+  <p id="auxiliary-command-detail"></p>
+</details></section>
+<section id="effect-events" hidden>
+  <details><summary><h2>Effect selectors and event records</h2></summary>
+  <p>These stored records link to task descriptors where the source establishes
+  that relationship. Raw arguments and dispatch targets do not describe live execution.</p>
+  <details><summary>Effect selector records</summary>
+    <label>Selector <select id="effect-selector"></select></label>
+    <p id="effect-selector-detail"></p>
+    <button type="button" id="effect-selector-task">Open referenced script task descriptor</button>
+  </details>
+  <details><summary>Event records</summary>
+    <label>Event <select id="effect-event"></select></label>
+    <p id="effect-event-detail"></p>
+    <button type="button" id="effect-event-task">Open referenced script task descriptor</button>
+  </details>
+  <details><summary>Dispatch tables</summary>
+    <p>Targets are even same-state Thumb addresses, not odd callback pointers.</p>
+    <label>Table <select id="effect-dispatch-table"><option value="event_dispatch">Event opcodes</option><option value="selector_dispatch">Selector kinds</option></select></label>
+    <table><thead><tr><th>Selector</th><th>Source</th><th>Same-state target</th></tr></thead><tbody id="effect-dispatch-rows"></tbody></table>
+  </details>
+</details></section>
+<section id="task-descriptors" hidden>
+  <details><summary><h2>Task descriptors</h2></summary>
+  <p>These physical records preserve nullable Thumb callbacks, context sizes
+  and raw metadata. The two task-ID formulas differ for the script catalog;
+  stored links do not prove that a task executes in a particular scene.</p>
+  <label>Catalog <select id="task-catalog"><option value="primary">Primary</option><option value="auxiliary">Auxiliary</option><option value="script">Script</option></select></label>
+  <label>Record <select id="task-descriptor"></select></label>
+  <p id="task-descriptor-detail"></p>
+  <details><summary>Effect and event references</summary><div id="task-references"></div></details>
+</details></section>
 <section id="script-texts" hidden>
   <details><summary><h2>Script text archives</h2></summary>
   <p>Select a physical bank and program. Commands and operands are shown as stored;
@@ -1028,9 +1277,19 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   tick rate; task commands, game timing, live palettes and composition of actor
   parts are not reproduced. Shared index roots are not sequence headers.</p>
   <label>Sprite catalog <select id="equipment-catalog"></select></label>
-  <label>Sprite ID <select id="equipment-sprite"></select></label>
-  <label>Animation and part <select id="equipment-binding"></select></label>
+  <label><span id="equipment-sprite-label">Sprite ID</span> <select id="equipment-sprite"></select></label>
+  <label><span id="equipment-binding-label">Animation and part</span> <select id="equipment-binding"></select></label>
+  <p id="equipment-source-note" hidden>These sequences are identified by source offset and index cell. Actor, facing and scene assignments depend on live conditions.</p>
   <p id="equipment-binding-detail"></p>
+  <details id="equipment-index-cells" hidden><summary>Source index cells</summary>
+    <p>These are recorded physical cells. A null cell does not establish a live actor or scene.</p>
+    <label>Target <select id="equipment-cell-kind"><option value="all">All cells</option><option value="sequence">Sequence</option><option value="null">Null</option></select></label>
+    <label>Find offset <input id="equipment-cell-filter" type="search" placeholder="Decimal or hexadecimal"></label>
+    <p><button type="button" id="equipment-cell-prev">Previous</button>
+      <span id="equipment-cell-page" role="status"></span>
+      <button type="button" id="equipment-cell-next">Next</button></p>
+    <table><thead><tr><th>Index offset</th><th>Stored target</th></tr></thead><tbody id="equipment-cell-rows"></tbody></table>
+  </details>
   <details id="equipment-witnesses" hidden><summary>Conditional script source witnesses</summary>
     <p>These source records match this sprite and animation; their conditions do not
     establish which actor uses the animation during a particular scene.</p>
@@ -1056,6 +1315,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 </div>
 <script>
 const data = /* DATA */;
+let transferGraphicsRequest = null, transferGraphicsLoaded = null;
 document.getElementById('info').textContent = data.profile + ' · extractor ' + data.extractor + ' · decoder ' + data.decoder;
 if (data.wiki) {
   const links = document.getElementById('wiki-page-links');
@@ -1085,6 +1345,8 @@ const resourceViews = {
   'graphics.bg-packet-programs': ['terrain-seeds', 'bg-planes'],
   'engine.script-coordinate-paths': 'script-paths',
   'engine.script-archive': 'event-scripts', 'engine.script-command-directory': 'script-commands',
+  'engine.auxiliary-script-archive': 'auxiliary-scripts', 'engine.auxiliary-script-command-directory': 'auxiliary-commands',
+  'engine.task-descriptors': 'task-descriptors', 'engine.effect-event-directories': 'effect-events',
   'graphics.map-raster-palettes': 'raster-palettes',
   'graphics.palette-programs': 'palette-programs',
   'graphics.blend-programs': 'blend-programs',
@@ -1092,19 +1354,27 @@ const resourceViews = {
   'graphics.obj-animation-banks': 'obj-animations',
   'graphics.word-task-obj-animations': 'obj-animations', 'graphics.layered-obj-animations': 'obj-animations',
   'graphics.ui-custom-banks': 'ui-tiles', 'graphics.ui-raw-palettes': 'ui-tiles',
-  'graphics.ui-raw-transfers': 'tilemaps',
+  'graphics.ui-raw-transfers': ['tilemaps', 'signed-map-deltas'], 'graphics.dynamic-raw-fragments': 'tilemaps',
   'graphics.obj-custom-banks': 'obj-tiles', 'graphics.observed-lz-block': 'obj-tiles',
+  'graphics.tilemap-transfer-lz77': 'obj-tiles',
+  'graphics.tilemap-type3-transfers': 'obj-tiles',
+  'graphics.tilemap-stream-bank': ['tilemaps', 'byte-tilemaps'], 'graphics.tilemap-direct-transfers': 'byte-tilemaps',
+  'graphics.tilemap-type2-transfers': 'tilemaps',
+  'graphics.compact-cell-bank': 'compact-cell-bank',
   'graphics.firaga-transfer-program': 'firaga-transfers', 'graphics.firaga-palette-rows': 'firaga-palette-rows',
   'graphics.observed-tilemap': 'tilemaps', 'graphics.firaga-compact-cells': 'tilemaps',
   'graphics.firaga-copied-matrices': 'tilemaps', 'graphics.soil-remaining-rectangles': 'tilemaps',
-  'gameplay.item-records': 'items', 'gameplay.item-links': 'item-links',
-  'gameplay.slot-job-lookup': 'job-names', 'gameplay.linked-metadata52': 'job-names',
+  'gameplay.item-records': 'items', 'gameplay.item-links': 'item-links', 'gameplay.item-effect-parameters': 'item-effects',
+  'gameplay.progression-rewards': 'progression-records', 'gameplay.progression-gates': 'progression-records',
+  'gameplay.progression-selection-gates': 'progression-records', 'gameplay.trade-parameters': 'progression-records',
+  'gameplay.slot-job-lookup': 'job-names', 'gameplay.linked-metadata52': ['job-names', 'metadata-names'],
   'gameplay.mission-records70': 'mission-records', 'gameplay.event-records12': 'mission-records',
   'gameplay.parameter-records27': 'mission-records',
   'gameplay.encounter-headers': 'encounters', 'gameplay.encounter-unit-templates': 'encounters',
   'gameplay.encounter-coordinates': 'encounters',
   'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': ['audio', 'instruments'],
-  'audio.m4a-directory': 'sequence-audio', 'audio.m4a-sequences': 'sequence-audio', 'audio.m4a-driver-tables': 'sequence-audio',
+  'graphics.script39-registry-poses': 'equipment-sprites', 'graphics.script39-special-poses': 'equipment-sprites',
+  'audio.m4a-directory': ['sequence-audio', 'timed-sounds'], 'audio.m4a-sequences': 'sequence-audio', 'audio.m4a-driver-tables': 'sequence-audio',
   'text.short-strings': 'texts', 'text.catalogs': ['pointer-texts', 'relative-texts'], 'text.script-archives': 'script-texts',
   'font.complete-bank': ['font-atlas', 'script-texts'], 'text.name-keyboard': 'name-keyboard',
   'graphics.unit-obj-initial-pose': 'sprites',
@@ -1126,7 +1396,9 @@ const spriteCatalogModes = {'graphics.unit-obj-equipment': 'equipment',
   'graphics.unit-obj-script-registry-special': 'registry-special',
   'graphics.unit-obj-script-registry-generic': 'registry-generic'};
 const objAnimationModes = {'graphics.obj-static-lists': 'static_lists', 'graphics.obj-animation-banks': 'indexed',
-  'graphics.word-task-obj-animations': 'word_task', 'graphics.layered-obj-animations': 'layered'};
+  'graphics.word-task-obj-animations': 'word_task', 'graphics.layered-obj-animations': 'layered',
+  'graphics.constructor-obj-animation': 'constructor_phases'};
+resourceViews['graphics.constructor-obj-animation'] = 'obj-animations';
 ['', '-secondary', '-tertiary', '-quaternary', '-quinary', '-senary', '-septenary', '-octonary'].forEach(suffix => {
   const id = 'graphics.conditional-compact-obj-animations' + suffix;
   objAnimationModes[id] = 'compact' + suffix.replace(/-/g, '_'); resourceViews[id] = 'obj-animations';
@@ -1143,11 +1415,15 @@ Object.entries(firagaObjModes).forEach(([id, key]) => {
 const objAnimationData = {indexed: data.obj_animation_banks,
   word_task: (data.obj_animation_extra || {}).word_task, layered: (data.obj_animation_extra || {}).layered,
   static_lists: (data.obj_animation_extra || {}).static_lists, soil_evidence: (data.obj_animation_extra || {}).soil_evidence,
+  constructor_phases: (data.obj_animation_extra || {}).constructor_phases,
   ...(data.obj_animation_compact || {})};
 Object.values(firagaObjModes).forEach(key => { objAnimationData[key] = (data.obj_animation_extra || {})[key]; });
 resourceViews['graphics.obj-static-lists'] = 'obj-animations';
 const missionRecordPanels = {'gameplay.mission-records70': 'mission-record-panel',
   'gameplay.event-records12': 'event-record-panel', 'gameplay.parameter-records27': 'parameter-record-panel'};
+const progressionRecordPanels = {'gameplay.progression-rewards': 'progression-rewards-panel',
+  'gameplay.progression-gates': 'progression-gates-panel', 'gameplay.progression-selection-gates': 'progression-selection-panel',
+  'gameplay.trade-parameters': 'progression-trade-panel'};
 function appendManifestDetails(parent, item) {
   if (!('sha256' in item) && !('dependencies' in item) && !('sources' in item)) return;
   const details = document.createElement('details'), summary = document.createElement('summary');
@@ -1251,14 +1527,23 @@ function renderRows() {
       if (!item.status.startsWith('Available') || (target === 'script-texts' && !data.script_texts)
           || (target === 'event-scripts' && !data.script_archive)
           || (target === 'script-commands' && !data.script_commands)
+          || (target === 'auxiliary-scripts' && !data.auxiliary_script_archive)
+          || (target === 'auxiliary-commands' && !data.auxiliary_script_commands)
+          || (target === 'task-descriptors' && !data.task_descriptors)
+          || (target === 'effect-events' && !data.effect_events)
           || (target === 'font-atlas' && !data.font)
           || (target === 'name-keyboard' && !data.name_keyboard)
+          || (target === 'pointer-texts' && !data.pointer_texts)
           || (target === 'relative-texts' && !data.relative_texts) || (target === 'sprites' && !data.sprite_pixels)
           || (target === 'color-books' && !data.color_mode_palettes)
           || (target === 'equipment-sprites' && !data.equipment_sprites && !Object.keys(data.battle_sprites || {}).length
-              && !Object.keys(data.script_sprites || {}).length)
+              && !Object.keys(data.script_sprites || {}).length && !Object.keys(data.script39_poses || {}).length)
+          || (target === 'equipment-sprites' && item.id.startsWith('graphics.script39-') && !(data.script39_poses || {})[item.id])
           || (target === 'item-links' && !data.item_links)
+          || (target === 'item-effects' && !data.item_effects)
+          || (target === 'progression-records' && !Object.keys(data.progression_catalogs || {}).length)
           || (target === 'job-names' && !data.job_names)
+          || (target === 'metadata-names' && !data.metadata_names)
           || (target === 'mission-records' && !Object.keys(data.mission_events || {}).length)
           || (target === 'encounters' && !Object.keys(data.encounters || {}).length)
           || (target === 'world' && !data.world_nodes)
@@ -1278,15 +1563,25 @@ function renderRows() {
           || (target === 'palette-programs' && !data.palette_programs)
           || (target === 'blend-programs' && !data.blend_programs)
           || (target === 'ui-tiles' && !data.ui_graphics)
-          || (target === 'obj-tiles' && (item.id === 'graphics.observed-lz-block' ? !data.lz_graphics : !data.obj_graphics))
+          || (target === 'obj-tiles' && (item.id === 'graphics.observed-lz-block' ? !data.lz_graphics
+              : item.id === 'graphics.tilemap-transfer-lz77' ? !(data.lz_graphics && data.lz_graphics.streams.some(stream => stream.resource_id === item.id))
+                : item.id === 'graphics.tilemap-type3-transfers' ? !(data.type3_payloads && (data.type3_payloads.streams.length || data.type3_payloads.raw_streams.length))
+                : !data.obj_graphics))
           || (target === 'firaga-transfers' && !data.firaga_transfer)
           || (target === 'firaga-palette-rows' && !data.firaga_palette_rows)
           || (target === 'tilemaps' && (item.id === 'graphics.firaga-compact-cells'
               ? !data.firaga_compact_cells : item.id === 'graphics.firaga-copied-matrices'
                 ? !(data.extra_tilemaps || {}).firaga_matrices : item.id === 'graphics.soil-remaining-rectangles'
                   ? !(data.extra_tilemaps || {}).soil_rectangles : item.id === 'graphics.ui-raw-transfers'
-                    ? !(data.extra_tilemaps || {}).ui_rectangles : !data.observed_tilemaps))
+                    ? !(data.extra_tilemaps || {}).ui_rectangles : item.id === 'graphics.dynamic-raw-fragments'
+                      ? !(data.extra_tilemaps || {}).localized_queued : item.id === 'graphics.tilemap-stream-bank'
+                        ? !(data.extra_tilemaps || {}).stream_bank : item.id === 'graphics.tilemap-type2-transfers'
+                          ? !(data.extra_tilemaps || {}).type2_rectangles : !data.observed_tilemaps))
+          || (target === 'byte-tilemaps' && !data.byte_tilemaps)
+          || (target === 'signed-map-deltas' && !data.signed_map_deltas)
+          || (target === 'compact-cell-bank' && !(data.compact_cell_bank && data.compact_cell_bank.records.length))
           || (target === 'instruments' && !(data.audio && data.audio.instruments && data.audio.instruments.banks.length))
+          || (target === 'timed-sounds' && !data.timed_sound_sources)
           || (target === 'sequence-audio' && (!data.sequences || !data.sequence_directory))) continue;
       const link = document.createElement('a'); link.href = '#' + target; link.textContent = 'Open view';
       if (target === 'indexed-graphics') link.addEventListener('click', () => {
@@ -1295,9 +1590,29 @@ function renderRows() {
           const target = document.getElementById('indexed-family'); target.value = String(selected); target.dispatchEvent(new Event('change'));
         }
       });
-      if (target === 'obj-tiles' && item.id === 'graphics.observed-lz-block') link.addEventListener('click', () => {
+      if (target === 'equipment-sprites' && item.id.startsWith('graphics.script39-')) link.addEventListener('click', () => {
+        const catalog = document.getElementById('equipment-catalog'); catalog.value = item.id; catalog.dispatchEvent(new Event('change'));
+      });
+      if (target === 'obj-tiles' && ['graphics.observed-lz-block', 'graphics.tilemap-transfer-lz77'].includes(item.id)) link.addEventListener('click', () => {
         const catalog = document.getElementById('obj-catalog');
         catalog.value = 'lz'; catalog.dispatchEvent(new Event('change'));
+        if (item.id === 'graphics.tilemap-transfer-lz77') {
+          const selected = data.lz_graphics.streams.findIndex(stream => stream.resource_id === item.id);
+          if (selected >= 0) {
+            const bank = document.getElementById('obj-bank'), offset = document.getElementById('obj-lz-offset');
+            offset.value = '0'; offset.dispatchEvent(new Event('input'));
+            bank.value = String(selected); bank.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+      if (target === 'obj-tiles' && item.id === 'graphics.tilemap-type3-transfers') link.addEventListener('click', () => {
+        const catalog = document.getElementById('obj-catalog'), offset = document.getElementById('obj-lz-offset');
+        const compressed = data.type3_payloads.streams.length > 0;
+        catalog.value = compressed ? 'lz' : 'raw'; catalog.dispatchEvent(new Event('change'));
+        offset.value = '0'; offset.dispatchEvent(new Event('input'));
+        const bank = document.getElementById('obj-bank');
+        bank.value = String(compressed && data.lz_graphics ? data.lz_graphics.streams.length : 0);
+        bank.dispatchEvent(new Event('change'));
       });
       if (target === 'tilemaps' && item.id === 'graphics.firaga-compact-cells') link.addEventListener('click', () => {
         const map = document.getElementById('tilemap-id');
@@ -1306,7 +1621,9 @@ function renderRows() {
         sequence.value = '0'; sequence.dispatchEvent(new Event('change'));
       });
       const extraTilemap = {'graphics.firaga-copied-matrices': 'firaga_matrices',
-        'graphics.soil-remaining-rectangles': 'soil_rectangles', 'graphics.ui-raw-transfers': 'ui_rectangles'}[item.id];
+        'graphics.soil-remaining-rectangles': 'soil_rectangles', 'graphics.ui-raw-transfers': 'ui_rectangles',
+        'graphics.dynamic-raw-fragments': 'localized_queued', 'graphics.tilemap-stream-bank': 'stream_bank',
+        'graphics.tilemap-type2-transfers': 'type2_rectangles'}[item.id];
       if (target === 'tilemaps' && extraTilemap) link.addEventListener('click', () => {
         document.getElementById('tilemaps').dispatchEvent(new CustomEvent('open-source-grid', {detail: extraTilemap}));
       });
@@ -1321,12 +1638,18 @@ function renderRows() {
       if (missionRecordPanels[item.id]) link.addEventListener('click', () => {
         document.getElementById(missionRecordPanels[item.id]).open = true;
       });
+      if (progressionRecordPanels[item.id]) link.addEventListener('click', () => {
+        document.getElementById(progressionRecordPanels[item.id]).open = true;
+      });
       if (views.length > 1) link.textContent = 'Open ' + ({'pointer-texts': 'pointer texts', 'relative-texts': 'relative archives',
                                                            'palette': 'palettes', 'color-books': 'color fragments', 'sprites': 'sprites', 'alternate-palettes': 'alternate palettes', 'bg-tiles': 'background tiles',
                                                            'terrain-seeds': 'terrain seeds', 'bg-planes': 'background planes',
+                                                           'tilemaps': 'halfword maps', 'byte-tilemaps': 'byte grids', 'signed-map-deltas': 'signed map offsets',
+                                                           'job-names': 'selected job names', 'metadata-names': 'direct metadata names',
                                                            'obj-animations': 'animations', 'compact-catalog-tables': 'compact source tables',
                                                            'font-atlas': 'glyph atlas', 'script-texts': 'script texts',
-                                                           'audio': 'waveforms', 'instruments': 'instrument banks'}[target] || 'view');
+                                                           'audio': 'waveforms', 'instruments': 'instrument banks',
+                                                           'sequence-audio': 'song sequences', 'timed-sounds': 'timed sound sources'}[target] || 'view');
       name.append(document.createElement('br'), link);
     }
     if (item.embedded_view && data.wiki && data.wiki.resource_directory) {
@@ -2020,6 +2343,7 @@ if (data.items) {
   const selector = document.getElementById('item-id');
   const fields = document.getElementById('item-fields');
   const linked = document.getElementById('item-link-navigation'), openLink = document.getElementById('item-link-open');
+  const effect = document.getElementById('item-effect-navigation'), openEffect = document.getElementById('item-effect-open');
   data.items.records.forEach((record, index) => selector.add(new Option(index, index)));
   function drawItem() {
     fields.replaceChildren();
@@ -2027,6 +2351,7 @@ if (data.items) {
     const linkId = record.bytes_18_1f[5];
     linked.hidden = !data.item_links || !data.item_links.records[linkId];
     openLink.textContent = 'Open linked pair record ' + linkId;
+    effect.hidden = !data.item_effects || !data.item_effects.records.some(item => item.item_id === Number(selector.value));
     for (const [name, start, step, type] of [
       ['halfwords_00_06', 0, 2, 'unsigned 16-bit'],
       ['bytes_08_0f', 8, 1, 'unsigned 8-bit'],
@@ -2047,7 +2372,123 @@ if (data.items) {
     const linkSelector = document.getElementById('item-link-record');
     linkSelector.value = String(linkId); linkSelector.dispatchEvent(new Event('change'));
   });
+  openEffect.addEventListener('click', () => {
+    const item = data.item_effects.records.find(record => record.item_id === Number(selector.value));
+    if (!item) return;
+    const target = document.getElementById('item-effect-id'); target.value = String(item.id); target.dispatchEvent(new Event('change'));
+    document.querySelector('#item-effects > details').open = true;
+  });
   drawItem();
+}
+if (data.item_effects) {
+  const catalog = data.item_effects, section = document.getElementById('item-effects'); section.hidden = false;
+  const selector = document.getElementById('item-effect-id'), rows = document.getElementById('item-effect-coefficients');
+  const property = document.getElementById('item-effect-property'), current = document.getElementById('item-effect-current');
+  const quantity = document.getElementById('item-effect-quantity'), result = document.getElementById('item-effect-result');
+  const itemNavigation = document.getElementById('effect-item-navigation'), itemLink = document.getElementById('effect-item-open');
+  const propertyCoefficients = [0,0,1,1,1,2,2,3,3,3,4,4,5,5,6,6,7,7,8,8];
+  catalog.records.forEach(record => selector.add(new Option(record.item_id, record.id)));
+  function calculateEffect() {
+    const inputs = [property, current, quantity], values = inputs.map(input => Number(input.value));
+    if (inputs.some((input, index) => input.value === '' || !Number.isInteger(values[index]) || values[index] < 0 || values[index] > 255)) {
+      result.textContent = 'Enter whole numbers from 0 to 255.'; return;
+    }
+    const record = catalog.records[Number(selector.value)], [id, value, count] = values;
+    const coefficient = id < propertyCoefficients.length ? record.coefficients[propertyCoefficients[id]] : 0;
+    const increase = Math.min(coefficient * count, Math.max(0, record.cap45_52 - value));
+    result.textContent = 'Coefficient ' + coefficient + ' · cap ' + record.cap45_52 + ' · increase ' + increase + ' · resulting value ' + (value + increase);
+  }
+  function drawEffect() {
+    const record = catalog.records[Number(selector.value)];
+    document.getElementById('item-effect-source').textContent = catalog.path + ' · record ' + record.id + ' · source 0x' +
+      record.source_offset.toString(16).toUpperCase() + ' · cap ' + record.cap45_52 + ' · opaque bits ' + record.opaque53_55;
+    itemNavigation.hidden = !data.items || record.item_id >= data.items.records.length;
+    itemLink.textContent = 'Open item record ' + record.item_id;
+    rows.replaceChildren();
+    record.coefficients.forEach((value, index) => {
+      const row = rows.insertRow(), ids = propertyCoefficients.flatMap((coefficient, id) => coefficient === index ? [id] : []);
+      [index, value, ids.join(', ')].forEach(cell => { row.insertCell().textContent = String(cell); });
+    });
+    calculateEffect();
+  }
+  itemLink.addEventListener('click', () => {
+    const record = catalog.records[Number(selector.value)];
+    if (!data.items || record.item_id >= data.items.records.length) return;
+    const target = document.getElementById('item-id'); target.value = String(record.item_id); target.dispatchEvent(new Event('change'));
+    document.querySelector('#items > details').open = true;
+  });
+  selector.addEventListener('change', drawEffect); [property, current, quantity].forEach(input => input.addEventListener('input', calculateEffect));
+  drawEffect();
+}
+if (Object.keys(data.progression_catalogs || {}).length) {
+  const section = document.getElementById('progression-records'); section.hidden = false;
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  const slots = label => Array.from({length:8}, (_, index) => label + ' ' + (index + 1));
+  function expandable(label, text) {
+    const details = document.createElement('details'), summary = document.createElement('summary'), values = document.createElement('pre');
+    summary.textContent = label; values.textContent = text; details.append(summary, values); return details;
+  }
+  const specs = {
+    rewards: {headers: ['Record ID', 'ROM offset', ...slots('Delta slot'), 'Discount byte 0x08', 'Unclassified byte 0x09'],
+      cells: row => [row.id, hex(row.source_offset), ...row.deltas00_07, row.discount08, row.byte09]},
+    gates: {headers: ['Record ID', 'ROM offset', 'Stored byte 0x00', 'Return halfword 0x01', 'Output byte 0x03', ...slots('Minimum')],
+      cells: row => [row.id, hex(row.source_offset), row.byte00, row.halfword01, row.byte03, ...row.requirements04_0b]},
+    selection: {headers: ['Record ID', 'ROM offset', 'Selector 0x00', 'Minimum 0x01', 'Minimum 0x02', 'Minimum 0x04',
+                          ...slots('Any minimum'), 'Flag 0x0E'],
+      cells: row => [row.id, hex(row.source_offset), row.selector00, row.minimum01, row.minimum02, row.minimum04,
+                     ...row.any_minima06_0d, row.flag0e + ' (' + hex(row.flag0e, 4) + ')']},
+    trade: {headers: ['Record ID', 'ROM offset', 'Markup 0x40–0x41', 'Discount count 0 / byte 0x41',
+                      'Discount counts 1–30', 'Unclassified bytes 0x00–0x3F'],
+      cells: row => {
+        const discounts = row.discounts42_5f.map((value, index) => (index + 1) + ': ' + value).join('\n');
+        const bytes = [...row.bytes00_1f, ...row.bytes20_3f];
+        const opaque = Array.from({length:4}, (_, index) => hex(index * 16, 2) + ': ' +
+          bytes.slice(index * 16, index * 16 + 16).map(value => hex(value, 2)).join(' ')).join('\n');
+        return [row.id, hex(row.source_offset), row.markup40_41, row.markup40_41 >> 8,
+                expandable('Show 30 discounts', discounts), expandable('Show 64 bytes', opaque)];
+      }}
+  };
+  Object.entries(specs).forEach(([kind, spec]) => {
+    const catalog = data.progression_catalogs[kind];
+    if (!catalog) return;
+    const panel = document.getElementById('progression-' + kind + '-panel'), view = document.getElementById('progression-' + kind + '-view');
+    panel.hidden = false;
+    let initialized = false;
+    panel.addEventListener('toggle', () => {
+      if (!panel.open || initialized) return;
+      initialized = true;
+      const source = document.createElement('p'); source.textContent = catalog.path + ' · ROM offset ' + hex(catalog.source_offset);
+      const label = document.createElement('label'), filter = document.createElement('input');
+      label.textContent = 'Filter by record ID or ROM offset '; filter.type = 'search'; filter.id = 'progression-' + kind + '-filter'; label.append(filter);
+      const previous = document.createElement('button'), next = document.createElement('button'), pageLabel = document.createElement('span');
+      previous.type = next.type = 'button'; previous.id = 'progression-' + kind + '-prev'; next.id = 'progression-' + kind + '-next';
+      previous.textContent = 'Previous'; next.textContent = 'Next'; pageLabel.id = 'progression-' + kind + '-page'; pageLabel.setAttribute('role', 'status');
+      const wrapper = document.createElement('div'), table = document.createElement('table'), head = table.createTHead().insertRow(), rows = table.createTBody();
+      wrapper.style.overflowX = 'auto'; rows.id = 'progression-' + kind + '-rows';
+      spec.headers.forEach(title => { const cell = document.createElement('th'); cell.textContent = title; head.append(cell); });
+      wrapper.append(table); view.append(source, label, document.createElement('br'), previous, next, pageLabel, wrapper);
+      let page = 0;
+      function draw() {
+        const query = filter.value.trim().toLowerCase();
+        const matches = catalog.records.filter(row => String(row.id).includes(query) || hex(row.source_offset).toLowerCase().includes(query));
+        page = Math.min(page, Math.max(0, Math.ceil(matches.length / 25) - 1));
+        const start = page * 25; rows.replaceChildren();
+        matches.slice(start, start + 25).forEach(record => {
+          const row = rows.insertRow();
+          spec.cells(record).forEach(value => {
+            const cell = row.insertCell();
+            if (value instanceof Node) cell.append(value); else cell.textContent = String(value);
+          });
+        });
+        pageLabel.textContent = matches.length ? (start + 1) + '–' + Math.min(start + 25, matches.length) + ' of ' + matches.length : '0 of 0';
+        previous.disabled = page === 0; next.disabled = start + 25 >= matches.length;
+      }
+      filter.addEventListener('input', () => { page = 0; draw(); });
+      previous.addEventListener('click', () => { if (page) { page--; draw(); } });
+      next.addEventListener('click', () => { page++; draw(); });
+      draw();
+    });
+  });
 }
 if (data.item_links) {
   document.getElementById('item-links').hidden = false;
@@ -2115,6 +2556,8 @@ if (Object.values(objAnimationData).some(Boolean)) {
   }
   if (objAnimationData.soil_evidence) families.set('soil_evidence', {...objAnimationData.soil_evidence,
     label: 'Soil Evidence · witnessed sequence'});
+  if (objAnimationData.constructor_phases) families.set('constructor_phases', {...objAnimationData.constructor_phases,
+    label: 'Constructor object phases'});
   [['firaga_indexed', 'Firaga · indexed sequence'], ['firaga_compact', 'Firaga · compact 0x6B3578'],
    ['firaga_adjacent', 'Firaga · compact 0x6B36AC'], ['firaga_6c12c8', 'Firaga · compact 0x6C12C8']]
     .forEach(([key, label]) => { if (objAnimationData[key]) families.set(key, {...objAnimationData[key], label}); });
@@ -2158,12 +2601,20 @@ if (Object.values(objAnimationData).some(Boolean)) {
   (data.lz_graphics ? data.lz_graphics.streams : []).forEach(item => sources.push({label: 'LZ output ' + hex(item.source_offset) +
     (item.context ? ' · ' + item.context : ''), words: item.words, lz: item}));
   sources.forEach((item, index) => graphics.add(new Option(item.label, index)));
+  registerTransferGraphics(section, document.getElementById('obj-animation-load-transfer'),
+    document.getElementById('obj-animation-transfer-load-status'), graphics, (item, raw) => {
+      const index = sources.length, label = 'Transfer ' + (raw ? 'raw input ' : 'LZ output ') + hex(item.source_offset);
+      sources.push({label, words: item.words, lz: item, raw}); graphics.add(new Option(label, index));
+    });
   palette.add(new Option('Grayscale indices', 'gray'));
   (data.unit_palettes || []).forEach(item => palettes.push({label: 'Unit ' + item.variant + ' · bank ' + item.bank, colors: item.colors}));
   (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => palettes.push({label: 'Interface ' + hex(item.source_offset) + ' · ' + item.colors.length + ' colors', colors: item.colors}));
   palettes.forEach((item, index) => palette.add(new Option(item.label, index)));
   const selectedBank = () => catalog.banks[Number(bank.value)];
   const selectedSequence = () => selectedBank().sequences[Number(sequence.value)];
+  const timingLabel = part => catalog.preview_mode === 'constructor_thresholds'
+    ? 'threshold ' + part.threshold + (part.counter_stalls ? ' · 8-bit counter cannot advance'
+      : ' · ' + part.duration + ' preview ticks') : 'duration ' + part.duration;
   const compositeActive = () => composite.checked && !composite.disabled;
   const sequenceTicks = item => item.frames.reduce((total, part) => total + part.duration + 1, 0);
   const frameStart = (item, index) => item.frames.slice(0, index).reduce((total, part) => total + part.duration + 1, 0);
@@ -2271,11 +2722,11 @@ if (Object.values(objAnimationData).some(Boolean)) {
        ', ' + (object.color_256 ? '8-bit' : '4-bit') + ', transform ' + hex(object.transform, 2)].forEach(value => { row.insertCell().textContent = value; });
     });
     progress.max = Math.max(1, selected.frames.length); progress.value = part ? index + 1 : 0;
-    position.textContent = catalog.static ? 'Static layout · no animation' : part ? 'Frame ' + (index + 1) + ' of ' + selected.frames.length + ' · duration ' + part.duration : 'No stored frames in the selected layer.';
+    position.textContent = catalog.static ? 'Static layout · no animation' : part ? 'Frame ' + (index + 1) + ' of ' + selected.frames.length + ' · ' + timingLabel(part) : 'No stored frames in the selected layer.';
     document.getElementById('obj-animation-detail').textContent = (compositeActive() ? parts.length + ' layers · preview tick ' + phase + ' · ' : '') +
       (part ? (catalog.static ? 'Static list ' : 'Object list ') + (part.list_id ?? part.object_list) + ' · source ' + hex(list.source_offset) : 'No selected layer frame') +
       ' · ' + rendered + ' rendered, ' + outlineOnly + ' unrendered or outline only' + (missingColors ? ' · ' + missingColors + ' pixels lack palette colors (magenta)' : '') +
-      (invalidLzOffset ? ' · choose a valid LZ byte offset' : '') +
+      (invalidLzOffset ? ' · choose a valid ' + (source.raw ? 'raw' : 'LZ') + ' byte offset' : '') +
       (!validBase && words ? ' · choose a first tile ID from 0 to 1023' : '');
   }
   function schedule() {
@@ -2283,6 +2734,10 @@ if (Object.values(objAnimationData).some(Boolean)) {
     const speed = Number(rate.value), selected = selectedSequence();
     if (!Number.isFinite(speed) || speed < 1 || speed > 60) {
       stopAnimation(); status.textContent = 'Choose a preview rate from 1 to 60 ticks per second.'; return;
+    }
+    if (!compositeActive() && catalog.preview_mode === 'constructor_thresholds' &&
+        selected.frames[Number(frame.value)].counter_stalls) {
+      stopAnimation(); status.textContent = 'The 8-bit counter wraps before exceeding this threshold; select another frame to preview.'; return;
     }
     if (compositeActive()) {
       timer = setTimeout(() => {
@@ -2328,7 +2783,7 @@ if (Object.values(objAnimationData).some(Boolean)) {
   function chooseSequence() {
     const wasPlaying = playing, previous = Number(frame.value) || 0; stopAnimation();
     const item = selectedSequence(); frame.replaceChildren();
-    item.frames.forEach((part, index) => frame.add(new Option(catalog.static ? 'Static layout' : index + ' · list ' + (part.list_id ?? part.object_list) + ' · duration ' + part.duration, index)));
+    item.frames.forEach((part, index) => frame.add(new Option(catalog.static ? 'Static layout' : index + ' · list ' + (part.list_id ?? part.object_list) + ' · ' + timingLabel(part), index)));
     frame.disabled = catalog.static || !item.frames.length;
     if (item.frames.length) frame.value = String(Math.min(previous, item.frames.length - 1));
     phase = item.frames.length ? frameStart(item, Number(frame.value)) : 0;
@@ -2336,7 +2791,8 @@ if (Object.values(objAnimationData).some(Boolean)) {
     play.disabled = !playable;
     bounds = sequenceBounds(compositeActive() ? selectedBank().sequences : [item]) || {minX: 0, minY: 0, maxX: 48, maxY: 48}; drawFrame();
     document.getElementById('obj-animation-source').textContent = catalog.static ? catalog.path + ' · static list ' + item.selector + ' · source ' + hex(item.source_offset) : catalog.path + ' · sequence ' + (item.selector ?? sequence.value) + ' · source ' + hex(item.source_offset) +
-      ' · ' + item.frames.length + ' stored frames' + (selectedBank().flags === undefined ? '' : ' · bank flags ' + hex(selectedBank().flags, 4)) +
+      ' · ' + item.frames.length + ' stored frames' + (catalog.preview_mode === 'constructor_thresholds' ? ' · preview counter starts at zero' : '') +
+      (selectedBank().flags === undefined ? '' : ' · bank flags ' + hex(selectedBank().flags, 4)) +
       (item.zero_count_hold ? ' · zero-count hold list ' + item.zero_count_hold.object_list +
       ' · duration alias ' + hex(item.zero_count_hold.duration_source_offset) : '') +
       (catalog.descriptors && catalog.descriptors[Number(bank.value)] ? ' · descriptor bytes ' +
@@ -3109,8 +3565,11 @@ if (data.world_nodes) {
   const roadLoop = document.getElementById('world-road-loop'), roadStatus = document.getElementById('world-road-status');
   const roadControls = document.getElementById('world-roads-controls');
   const roadDetail = document.getElementById('world-road-detail'), overlay = document.getElementById('world-road-overlay');
+  const nameSource = data.world_location_names, nameLanguage = document.getElementById('world-name-language');
+  const nameRows = document.getElementById('world-name-rows'), selectedName = document.getElementById('world-selected-name');
+  const nameGlyphs = new Map((nameSource ? nameSource.glyphs : []).map(glyph => [glyph.index, glyph]));
   const ns = 'http://www.w3.org/2000/svg', coordinate = value => 4 + 92 * value / extent;
-  let roadTimer = null, selectedRoad = null, marker = null, roadPlaying = false;
+  let roadTimer = null, selectedRoad = null, marker = null, roadPlaying = false, selectedNode = 0;
   function cancelRoadTimer() { if (roadTimer !== null) clearTimeout(roadTimer); roadTimer = null; }
   function stopRoad(message) {
     roadPlaying = false; cancelRoadTimer(); roadStop.disabled = true;
@@ -3197,7 +3656,52 @@ if (data.world_nodes) {
   roadControls.addEventListener('toggle', () => { if (!roadControls.open && roadPlaying) stopRoad('Playback stopped because the road view was closed.'); });
   document.querySelector('#world > details').addEventListener('toggle', event => { if (!event.target.open && roadPlaying) stopRoad('Playback stopped because the map was closed.'); });
   if (roads.size) chooseRoad();
+  function appendWorldName(container, units) {
+    if (!units) { container.textContent = 'Name unavailable for this language.'; return; }
+    appendTextUnits(container, units, nameGlyphs, unit => typeof unit === 'number' ? unit : null,
+      () => '', {normalFont: true, hideCommands: true});
+  }
+  function drawSelectedName() {
+    selectedName.replaceChildren();
+    const location = nameSource && nameSource.locations.find(item => item.node_index === selectedNode);
+    selectedName.hidden = !location;
+    if (location) {
+      selectedName.append(document.createTextNode('Observed name: '));
+      appendWorldName(selectedName, location.names[Number(nameLanguage.value)]);
+    }
+  }
+  function drawWorldNames() {
+    nameRows.replaceChildren();
+    const languageIndex = Number(nameLanguage.value);
+    nameSource.locations.forEach(item => {
+      const row = nameRows.insertRow(), node = row.insertCell(), button = document.createElement('button');
+      button.type = 'button'; button.textContent = String(item.node_index);
+      button.setAttribute('aria-label', 'Select observed node ' + item.node_index);
+      button.addEventListener('click', () => selectNode(data.world_nodes.nodes[item.node_index])); node.append(button);
+      const name = row.insertCell(), preview = document.createElement('div'); preview.className = 'text-preview';
+      appendWorldName(preview, item.names[languageIndex]); name.append(preview);
+      const source = row.insertCell();
+      if (item.names[languageIndex]) {
+        const link = document.createElement('a'), page = data.wiki &&
+          (data.wiki.pages.find(item => item.id === 'text-pointers') || data.wiki.pages.find(item => item.id === 'text'));
+        link.textContent = 'Open name string ' + item.name_index + ' (region ' + item.region_index + ')';
+        if (page) {
+          const target = new URL(page.href, location.href);
+          target.searchParams.set('job_reader', nameSource.reader_index);
+          target.searchParams.set('job_language', languageIndex);
+          target.searchParams.set('job_entry', item.name_index);
+          target.hash = 'pointer-texts'; link.href = target.href;
+        } else {
+          link.href = '#pointer-texts';
+          link.addEventListener('click', () => selectPointerText(nameSource.reader_index, languageIndex, item.name_index));
+        }
+        source.append(link);
+      } else source.textContent = 'String unavailable';
+    });
+    drawSelectedName();
+  }
   function selectNode(node) {
+    selectedNode = node.index; drawSelectedName();
     document.getElementById('world-detail').textContent = data.world_nodes.path + ' · node ' + node.index + ' · tile (' + node.x_tile + ', ' + node.y_tile + ')';
     links.replaceChildren();
     node.links.forEach((link, slot) => {
@@ -3224,7 +3728,75 @@ if (data.world_nodes) {
     button.addEventListener('click', () => selectNode(node));
     plot.append(button);
   });
+  if (nameSource) {
+    document.getElementById('world-observed-names').hidden = false;
+    nameSource.languages.forEach(id => nameLanguage.add(new Option(id, id)));
+    nameLanguage.addEventListener('change', drawWorldNames); drawWorldNames();
+  }
   selectNode(data.world_nodes.nodes[0]);
+}
+if (data.world_region_names) {
+  const source = data.world_region_names, section = document.getElementById('world-regions');
+  const language = document.getElementById('world-region-language'), filter = document.getElementById('world-region-filter');
+  const rows = document.getElementById('world-region-rows'), status = document.getElementById('world-region-status');
+  const glyphs = new Map(source.glyphs.map(glyph => [glyph.index, glyph]));
+  const observed = new Map((data.world_location_names ? data.world_location_names.locations : [])
+    .map(item => [item.region_index, item]));
+  section.hidden = false;
+  document.getElementById('world-regions-navigation').hidden = !data.world_nodes;
+  source.languages.forEach(id => language.add(new Option(id, id)));
+  function drawRegionNames() {
+    rows.replaceChildren();
+    const languageIndex = Number(language.value), query = filter.value.trim().toLocaleLowerCase();
+    let count = 0;
+    source.regions.forEach(item => {
+      const units = item.names[languageIndex];
+      const searchable = item.region_index + ' ' + item.name_index + ' ' +
+        (units ? textEntryLabel(item.name_index, units, glyphs, unit => typeof unit === 'number' ? unit : null) : '');
+      if (!searchable.toLocaleLowerCase().includes(query)) return;
+      count++;
+      const row = rows.insertRow(); row.insertCell().textContent = item.region_index;
+      const name = row.insertCell();
+      if (units) {
+        const preview = document.createElement('div'); preview.className = 'text-preview';
+        appendTextUnits(preview, units, glyphs, unit => typeof unit === 'number' ? unit : null,
+          () => '', {normalFont:true, hideCommands:true});
+        name.append(preview);
+      } else name.textContent = 'Name unavailable for this language.';
+      const placement = row.insertCell(), observation = observed.get(item.region_index);
+      if (observation && data.world_nodes) {
+        const link = document.createElement('a'); link.href = '#world';
+        link.textContent = 'Node ' + observation.node_index + ' (recorded)';
+        link.addEventListener('click', () => {
+          document.querySelector('#world > details').open = true;
+          const selectedLanguage = document.getElementById('world-name-language');
+          selectedLanguage.value = String(languageIndex); selectedLanguage.dispatchEvent(new Event('change'));
+          document.querySelector('#world-plot [aria-label="Node ' + observation.node_index + '"]').click();
+        });
+        placement.append(link);
+      } else placement.textContent = 'Not recorded';
+      const cell = row.insertCell();
+      if (units) {
+        const link = document.createElement('a'), page = data.wiki &&
+          (data.wiki.pages.find(item => item.id === 'text-pointers') || data.wiki.pages.find(item => item.id === 'text'));
+        link.textContent = 'Open name string ' + item.name_index;
+        if (page) {
+          const target = new URL(page.href, location.href);
+          target.searchParams.set('job_reader', source.reader_index);
+          target.searchParams.set('job_language', languageIndex);
+          target.searchParams.set('job_entry', item.name_index);
+          target.hash = 'pointer-texts'; link.href = target.href;
+        } else {
+          link.href = '#pointer-texts';
+          link.addEventListener('click', () => selectPointerText(source.reader_index, languageIndex, item.name_index));
+        }
+        cell.append(link);
+      } else cell.textContent = 'String unavailable';
+    });
+    status.textContent = count + ' of ' + source.regions.length + ' region references · ' + source.path;
+  }
+  language.addEventListener('change', drawRegionNames); filter.addEventListener('input', drawRegionNames);
+  drawRegionNames();
 }
 if (data.sprite_pixels) {
   document.getElementById('sprites').hidden = false;
@@ -3371,7 +3943,8 @@ if (data.sprite_pixels) {
   palette.addEventListener('change', selectFrame);
   if (data.sprite_pixels.sprites.length) selectSprite(); else spritePages();
 }
-if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || Object.keys(data.script_sprites || {}).length) {
+if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || Object.keys(data.script_sprites || {}).length
+    || Object.keys(data.script39_poses || {}).length) {
   const catalogs = [
     {id: 'equipment', label: 'Equipment', data: data.equipment_sprites},
     {id: 'normal', label: 'Normal battle actors', data: (data.battle_sprites || {}).normal},
@@ -3380,7 +3953,9 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     {id: 'special-alternate', label: 'Script special actors: alternate', data: (data.script_sprites || {})['special-alternate']},
     {id: 'override', label: 'Script actor overrides', data: (data.script_sprites || {}).override},
     {id: 'registry-special', label: 'Script registry: special actors', data: (data.script_sprites || {})['registry-special']},
-    {id: 'registry-generic', label: 'Script registry: generic actors', data: (data.script_sprites || {})['registry-generic']}
+    {id: 'registry-generic', label: 'Script registry: generic actors', data: (data.script_sprites || {})['registry-generic']},
+    {id: 'graphics.script39-registry-poses', label: 'Opcode 39: registry pose sources', data: (data.script39_poses || {})['graphics.script39-registry-poses']},
+    {id: 'graphics.script39-special-poses', label: 'Opcode 39: special-unit pose sources', data: (data.script39_poses || {})['graphics.script39-special-poses']}
   ].filter(item => item.data);
   let catalog = catalogs[0].data;
   const section = document.getElementById('equipment-sprites'), catalogSelect = document.getElementById('equipment-catalog');
@@ -3393,7 +3968,12 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
   const witnesses = document.getElementById('equipment-witnesses'), witnessRows = document.getElementById('equipment-witness-rows');
   const witnessPrev = document.getElementById('equipment-witness-prev'), witnessNext = document.getElementById('equipment-witness-next');
   const witnessPageLabel = document.getElementById('equipment-witness-page');
+  const cellsPanel = document.getElementById('equipment-index-cells'), cellRows = document.getElementById('equipment-cell-rows');
+  const cellKind = document.getElementById('equipment-cell-kind'), cellFilter = document.getElementById('equipment-cell-filter');
+  const cellPrev = document.getElementById('equipment-cell-prev'), cellNext = document.getElementById('equipment-cell-next');
+  const cellPageLabel = document.getElementById('equipment-cell-page');
   let witnessMatches = [], witnessPage = 0;
+  let cellPage = 0;
   const sizes = [[[8,8],[16,16],[32,32],[64,64]], [[16,8],[32,8],[32,16],[64,32]], [[8,16],[8,32],[16,32],[32,64]]];
   let playing = false, timer = null, bounds = null;
   keepSelectFocus(play, section);
@@ -3426,7 +4006,7 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
   }
   function sequenceBounds(sequence) {
     const objects = sequence.frames.filter(item => item.operation === 1)
-      .flatMap(item => catalog.objects[item.objects].objects)
+      .flatMap(item => item.objects !== null && catalog.objects[item.objects] ? catalog.objects[item.objects].objects : [])
       .filter(object => object && Number.isInteger(object.shape) && object.shape >= 0 && object.shape < 3 &&
         Number.isInteger(object.size) && object.size >= 0 && object.size < 4 &&
         Number.isInteger(object.x) && Number.isInteger(object.y));
@@ -3440,6 +4020,9 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     const ctx = pose.getContext('2d'), description = document.getElementById('equipment-pose-detail');
     ctx.clearRect(0, 0, pose.width, pose.height);
     if (!item) { description.textContent = 'No graphics are active at this frame.'; return; }
+    if (item.block === null || item.objects === null || !catalog.blocks[item.block] || !catalog.objects[item.objects]) {
+      description.textContent = 'Graphics source is missing, conflicting, or unsupported for this frame.'; return;
+    }
     const tiles = catalog.blocks[item.block].tiles, objects = catalog.objects[item.objects].objects;
     const colors = palette.value === 'gray' ? null : data.unit_palettes[Number(palette.value)].colors;
     if (!bounds || !objects.length || objects.some(object => !object || !Number.isInteger(object.shape) || object.shape < 0 || object.shape > 2 ||
@@ -3448,7 +4031,8 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
       object.object_mode || object.mosaic || object.tile + sizes[object.shape][object.size][0] * sizes[object.shape][object.size][1] / 64 > tiles.length)) {
       description.textContent = 'This frame uses object attributes or tile ranges that this preview does not support.'; return;
     }
-    description.textContent = 'Manual palette and shared frame origin; live palette and actor composition are not applied.';
+    description.textContent = 'Manual palette and shared frame origin; live palette and actor composition are not applied.' +
+      (catalog.source_sequences ? ' Pixel source: ' + catalog.blocks[item.block].path + ' · object source: ' + catalog.objects[item.objects].path : '');
     const {minX, minY, maxX, maxY} = bounds;
     pose.width = Math.max(1, maxX - minX) * 3; pose.height = Math.max(1, maxY - minY) * 3;
     for (const object of [...objects].reverse()) {
@@ -3494,9 +4078,13 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     witnessPage = 0; drawWitnesses();
     frame.replaceChildren(); bounds = sequence ? sequenceBounds(sequence) : null;
     const shared = selected.target && selected.target.kind === 'shared-index-root' ? selected.target : null;
-    document.getElementById('equipment-binding-detail').textContent = catalog.path + ' · index ' + hex(selected.index_source) +
+    const unavailable = selected.target && selected.target.kind === 'unavailable-sequence' ? selected.target : null;
+    document.getElementById('equipment-binding-detail').textContent = catalog.path +
+      (selected.index_source === null ? ' · no owned index cell' : ' · index ' + hex(selected.index_source)) +
       (sequence ? ' · sequence ' + hex(sequence.source_offset) + ' · header ' + hex(sequence.opaque_header, 4)
+        + (sequence.path ? ' · sequence source ' + sequence.path : '')
         : shared ? ' · shared index root ' + hex(shared.source_offset) + ' · sprite ' + shared.sprite_id + ' (not a sequence)'
+        : unavailable ? ' · sequence ' + hex(unavailable.source_offset) + ' is unavailable in the selected data'
         : ' · no sequence (null binding)');
     if (sequence) sequence.frames.forEach((item, index) => frame.add(new Option(index + ' · operation ' + item.operation, index)));
     frame.disabled = !sequence; play.disabled = !sequence;
@@ -3507,13 +4095,48 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     binding.replaceChildren();
     catalog.bindings.forEach((item, index) => {
       if (String(item.sprite_id) === sprite.value) {
-        const suffix = item.sequence !== null ? '' : item.target && item.target.kind === 'shared-index-root' ? ' · shared index' : ' · empty';
-        binding.add(new Option('Animation ' + item.animation + ' · part ' + item.part + suffix, index));
-        if (previous && item.animation === previous.animation && item.part === previous.part) binding.value = String(index);
+      const suffix = item.sequence !== null ? '' : item.target && item.target.kind === 'shared-index-root' ? ' · shared index'
+        : item.target && item.target.kind === 'unavailable-sequence' ? ' · unavailable sequence' : ' · empty';
+        const label = catalog.source_sequences ? (item.index_source === null ? 'No owned index cell' : 'Index cell ' + hex(item.index_source) + suffix)
+          : 'Animation ' + item.animation + ' · part ' + item.part + suffix;
+        binding.add(new Option(label, index));
+        if (previous && (catalog.source_sequences ? item.index_source === previous.index_source
+          : item.animation === previous.animation && item.part === previous.part)) binding.value = String(index);
       }
     });
     selectBinding(preferredFrame);
   }
+  function drawIndexCells() {
+    cellRows.replaceChildren();
+    if (!catalog.source_sequences) return;
+    const query = cellFilter.value.trim().toLowerCase();
+    const matches = catalog.cells.filter(item => {
+      const kind = item.target === null ? 'null' : 'sequence';
+      const offsets = [item.source_offset, item.target].filter(value => value !== null);
+      return (cellKind.value === 'all' || cellKind.value === kind) && (!query || offsets.some(value =>
+        String(value).includes(query) || hex(value).toLowerCase().includes(query)));
+    });
+    const size = 100, pages = Math.max(1, Math.ceil(matches.length / size));
+    cellPage = Math.max(0, Math.min(cellPage, pages - 1));
+    for (const item of matches.slice(cellPage * size, (cellPage + 1) * size)) {
+      const row = cellRows.insertRow(); row.insertCell().textContent = hex(item.source_offset);
+      const target = row.insertCell();
+      if (item.target === null) { target.textContent = 'Null'; continue; }
+      const link = document.createElement('a'); link.href = '#equipment-sprites'; link.textContent = 'Sequence ' + hex(item.target);
+      link.addEventListener('click', () => {
+        sprite.value = String(item.target); sprite.dispatchEvent(new Event('change'));
+        const selected = catalog.bindings.findIndex(binding => binding.index_source === item.source_offset);
+        if (selected >= 0) { binding.value = String(selected); binding.dispatchEvent(new Event('change')); }
+      });
+      target.append(link);
+    }
+    cellPrev.disabled = cellPage === 0; cellNext.disabled = cellPage + 1 >= pages;
+    cellPageLabel.textContent = matches.length + ' cells · page ' + (cellPage + 1) + ' of ' + pages;
+  }
+  cellKind.addEventListener('change', () => { cellPage = 0; drawIndexCells(); });
+  cellFilter.addEventListener('input', () => { cellPage = 0; drawIndexCells(); });
+  cellPrev.addEventListener('click', () => { if (cellPage) { cellPage--; drawIndexCells(); } });
+  cellNext.addEventListener('click', () => { if (!cellNext.disabled) { cellPage++; drawIndexCells(); } });
   function schedule() {
     if (!playing) return;
     const ticks = Number(rate.value), sequence = selectedSequence();
@@ -3534,7 +4157,9 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
       playing = true; stop.disabled = false; status.textContent = 'Playing the selected frame sequence.'; schedule();
     } else status.textContent = selectedSequence() ? 'Select Play to preview the frames.'
       : selectedBinding().target && selectedBinding().target.kind === 'shared-index-root'
-        ? 'This binding points to a shared index root, not a sequence.' : 'This binding has no sequence.';
+        ? 'This binding points to a shared index root, not a sequence.'
+        : selectedBinding().target && selectedBinding().target.kind === 'unavailable-sequence'
+          ? 'This sequence source is unavailable in the selected data.' : 'This binding has no sequence.';
   }
   catalogs.forEach(item => catalogSelect.add(new Option(item.label, item.id)));
   palette.add(new Option('Grayscale indices', 'gray'));
@@ -3545,7 +4170,11 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     const chosen = catalogs.find(item => item.id === catalogSelect.value);
     if (!chosen) { status.textContent = 'This sprite catalog is unavailable.'; return; }
     catalog = chosen.data; sprite.replaceChildren();
-    [...new Set(catalog.bindings.map(item => item.sprite_id))].forEach(id => sprite.add(new Option(id, id)));
+    document.getElementById('equipment-sprite-label').textContent = catalog.source_sequences ? 'Sequence source' : 'Sprite ID';
+    document.getElementById('equipment-binding-label').textContent = catalog.source_sequences ? 'Index cell' : 'Animation and part';
+    document.getElementById('equipment-source-note').hidden = !catalog.source_sequences;
+    cellsPanel.hidden = !catalog.source_sequences; cellPage = 0; drawIndexCells();
+    [...new Set(catalog.bindings.map(item => item.sprite_id))].forEach(id => sprite.add(new Option(catalog.source_sequences ? hex(id) : id, id)));
     if ([...sprite.options].some(item => item.value === previousSprite)) sprite.value = previousSprite;
     selectSprite(previous, preferredFrame); resumeAfterChange(wasPlaying);
   });
@@ -3697,6 +4326,20 @@ if (data.name_keyboard) {
   drawKeyboard(); drawKeyboardPreview();
 }
 const textSettings = {pinned: false, languageId: null, hideCommands: false, normalFont: false}, textViews = [];
+const textSettingsKey = 'ffta-viewer-text-settings-v1';
+try {
+  const saved = JSON.parse(localStorage.getItem(textSettingsKey));
+  if (saved && typeof saved === 'object') {
+    textSettings.hideCommands = saved.hideCommands === true;
+    textSettings.normalFont = saved.normalFont === true;
+    if (saved.pinned === true && typeof saved.languageId === 'string' && saved.languageId.length <= 32) {
+      textSettings.pinned = true; textSettings.languageId = saved.languageId;
+    }
+  }
+} catch (_) { /* The viewer remains usable when browser storage is unavailable. */ }
+function saveTextSettings() {
+  try { localStorage.setItem(textSettingsKey, JSON.stringify(textSettings)); } catch (_) {}
+}
 let syncingTextLanguages = false;
 function applyPinnedTextLanguage(select) {
   const view = textViews.find(item => item.select === select);
@@ -3725,22 +4368,24 @@ function registerTextSettings(prefix, select, redraw) {
                 hide: document.getElementById(prefix + '-hide-commands'), normal: document.getElementById(prefix + '-normal-font'),
                 status: document.getElementById(prefix + '-pin-status')};
   textViews.push(view);
+  view.pin.checked = textSettings.pinned; view.hide.checked = textSettings.hideCommands; view.normal.checked = textSettings.normalFont;
+  if (select.options.length) applyPinnedTextLanguage(select);
   view.pin.addEventListener('change', () => {
     textSettings.pinned = view.pin.checked;
     textSettings.languageId = textSettings.pinned && select.selectedOptions.length ? select.selectedOptions[0].textContent : null;
-    syncPinnedTextLanguages();
+    syncPinnedTextLanguages(); saveTextSettings();
   });
   view.hide.addEventListener('change', () => {
     textSettings.hideCommands = view.hide.checked;
-    textViews.forEach(item => { item.hide.checked = textSettings.hideCommands; item.redraw(); });
+    textViews.forEach(item => { item.hide.checked = textSettings.hideCommands; item.redraw(); }); saveTextSettings();
   });
   view.normal.addEventListener('change', () => {
     textSettings.normalFont = view.normal.checked;
-    textViews.forEach(item => { item.normal.checked = textSettings.normalFont; item.redraw(); });
+    textViews.forEach(item => { item.normal.checked = textSettings.normalFont; item.redraw(); }); saveTextSettings();
   });
   select.addEventListener('change', () => {
     if (!textSettings.pinned || syncingTextLanguages || !select.selectedOptions.length) return;
-    textSettings.languageId = select.selectedOptions[0].textContent; syncPinnedTextLanguages();
+    textSettings.languageId = select.selectedOptions[0].textContent; syncPinnedTextLanguages(); saveTextSettings();
   });
 }
 // These EUR glyphs were matched visually; other glyphs keep their original bitmap.
@@ -3887,6 +4532,193 @@ if (data.relative_texts) {
   reader.addEventListener('change', relativeLanguages); language.addEventListener('change', relativeEntries);
   entry.addEventListener('change', drawRelativeText); registerTextSettings('relative', language, drawRelativeText); relativeLanguages();
 }
+function openEffectSelector(index) {
+  if (!data.effect_events || !Number.isInteger(index) || index < 0 || index >= data.effect_events.selectors.length) return;
+  const control = document.getElementById('effect-selector'); control.value = String(index);
+  control.dispatchEvent(new Event('change', {bubbles: true}));
+  document.querySelector('#effect-events > details').open = true; control.closest('details').open = true;
+}
+function openEffectEvent(index) {
+  if (!data.effect_events || !Number.isInteger(index) || index < 0 || index >= data.effect_events.events.length) return;
+  const control = document.getElementById('effect-event'); control.value = String(index);
+  control.dispatchEvent(new Event('change', {bubbles: true}));
+  document.querySelector('#effect-events > details').open = true; control.closest('details').open = true;
+}
+function openScriptTask(index) {
+  if (!data.task_descriptors || !Number.isInteger(index) || index < 0 || index >= data.task_descriptors.script.entries.length) return;
+  const catalog = document.getElementById('task-catalog'), control = document.getElementById('task-descriptor');
+  catalog.value = 'script'; catalog.dispatchEvent(new Event('change', {bubbles: true}));
+  control.value = String(index); control.dispatchEvent(new Event('change', {bubbles: true}));
+  document.querySelector('#task-descriptors > details').open = true;
+}
+if (data.effect_events) {
+  const catalog = data.effect_events, section = document.getElementById('effect-events');
+  const selector = document.getElementById('effect-selector'), event = document.getElementById('effect-event');
+  const selectorTask = document.getElementById('effect-selector-task'), eventTask = document.getElementById('effect-event-task');
+  const dispatch = document.getElementById('effect-dispatch-table'), rows = document.getElementById('effect-dispatch-rows');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  section.hidden = false;
+  catalog.selectors.forEach(item => selector.add(new Option(item.index, item.index)));
+  catalog.events.forEach(item => event.add(new Option(item.index, item.index)));
+  function taskAvailable(index) {
+    return data.task_descriptors && Number.isInteger(index) && index >= 0 && index < data.task_descriptors.script.entries.length;
+  }
+  function drawSelector() {
+    const item = catalog.selectors[Number(selector.value)], slot = catalog.selector_dispatch.slots[item.kind];
+    document.getElementById('effect-selector-detail').textContent = catalog.path + ' · source ' + hex(catalog.selector_source_offset + 4 * item.index) +
+      ' · kind ' + hex(item.kind, 2) + ' · parameters ' + item.parameters.map(value => hex(value, 2)).join(' ') +
+      ' · script descriptor ' + item.script_descriptor + ' · secondary task ID ' + (item.script_descriptor + 363) +
+      (slot ? ' · same-state target ' + hex(0x08000000 + slot.target.rom_offset, 8) : ' · dispatch target outside stored table');
+    selectorTask.disabled = !taskAvailable(item.script_descriptor);
+  }
+  function drawEvent() {
+    const item = catalog.events[Number(event.value)], slot = catalog.event_dispatch.slots[item.opcode];
+    document.getElementById('effect-event-detail').textContent = catalog.path + ' · source ' + hex(catalog.event_source_offset + 16 * item.index) +
+      ' · opcode ' + hex(item.opcode, 2) + ' · raw byte 1 ' + hex(item.byte1_raw, 2) + ' · raw ID ' + item.id_raw +
+      ' · delay ' + item.post_delay + ' · raw byte 5 ' + hex(item.byte5_raw, 2) + ' · raw halfword 6 ' + hex(item.half6_raw, 4) +
+      ' · raw words 8/12 ' + hex(item.arg8_raw, 8) + ' / ' + hex(item.arg12_raw, 8) +
+      (item.script_descriptor === null ? ' · no stored descriptor link' : ' · script descriptor ' + item.script_descriptor) +
+      (slot ? ' · same-state target ' + hex(0x08000000 + slot.target.rom_offset, 8) : ' · dispatch target outside stored table');
+    eventTask.disabled = !taskAvailable(item.script_descriptor);
+  }
+  function drawDispatch() {
+    rows.replaceChildren(); const table = catalog[dispatch.value];
+    table.slots.forEach(item => {
+      const row = rows.insertRow(); row.insertCell().textContent = item.selector;
+      row.insertCell().textContent = hex(table.source_offset + 4 * item.selector);
+      row.insertCell().textContent = hex(0x08000000 + item.target.rom_offset, 8);
+    });
+  }
+  selector.addEventListener('change', drawSelector); event.addEventListener('change', drawEvent);
+  selectorTask.addEventListener('click', () => openScriptTask(catalog.selectors[Number(selector.value)].script_descriptor));
+  eventTask.addEventListener('click', () => openScriptTask(catalog.events[Number(event.value)].script_descriptor));
+  dispatch.addEventListener('change', drawDispatch); drawSelector(); drawEvent(); drawDispatch();
+}
+if (data.task_descriptors) {
+  const catalog = data.task_descriptors, section = document.getElementById('task-descriptors');
+  const table = document.getElementById('task-catalog'), descriptor = document.getElementById('task-descriptor');
+  const references = document.getElementById('task-references');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  section.hidden = false;
+  function drawTask() {
+    const item = catalog[table.value].entries[Number(descriptor.value)], index = item.ordinal;
+    const ids = table.value === 'primary' ? 'primary task ID ' + (index + 1) : table.value === 'auxiliary' ?
+      'primary task ID ' + (index + 342) : 'primary task ID ' + (index + 362) + ' · secondary task ID ' + (index + 363);
+    document.getElementById('task-descriptor-detail').textContent = catalog.path + ' · source ' + hex(catalog[table.value].source_offset + index * 8) +
+      ' · ' + ids + ' · context size ' + item.context_size + ' bytes · raw metadata ' + hex(item.metadata_raw, 4) +
+      ' · Thumb callback ' + (item.callback ? hex(0x08000001 + item.callback.rom_offset, 8) : 'null');
+    references.replaceChildren(); let count = 0;
+    if (table.value === 'script' && data.effect_events) {
+      data.effect_events.selectors.filter(value => value.script_descriptor === index).forEach(value => {
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Selector ' + value.index;
+        button.addEventListener('click', () => openEffectSelector(value.index)); references.append(button, document.createTextNode(' ')); count++;
+      });
+      data.effect_events.events.filter(value => value.script_descriptor === index).forEach(value => {
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Event ' + value.index;
+        button.addEventListener('click', () => openEffectEvent(value.index)); references.append(button, document.createTextNode(' ')); count++;
+      });
+    }
+    if (!count) references.textContent = data.effect_events ? 'No stored references in this catalog.' : 'Effect/event directory unavailable.';
+  }
+  function chooseTaskCatalog() {
+    const old = Number(descriptor.value) || 0; descriptor.replaceChildren();
+    catalog[table.value].entries.forEach(item => descriptor.add(new Option(item.ordinal, item.ordinal)));
+    descriptor.value = String(Math.min(old, catalog[table.value].entries.length - 1)); drawTask();
+  }
+  table.addEventListener('change', chooseTaskCatalog); descriptor.addEventListener('change', drawTask); chooseTaskCatalog();
+}
+if (data.auxiliary_script_commands) {
+  const catalog = data.auxiliary_script_commands, section = document.getElementById('auxiliary-commands');
+  const opcode = document.getElementById('auxiliary-command-opcode'), detail = document.getElementById('auxiliary-command-detail');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  section.hidden = false;
+  catalog.commands.forEach(item => opcode.add(new Option(hex(item.opcode, 2), item.opcode)));
+  function drawAuxiliaryCommand() {
+    const item = catalog.commands[Number(opcode.value)];
+    detail.textContent = catalog.path + ' · record ' + hex(catalog.source_offset + item.opcode * 6) +
+      ' · opcode ' + hex(item.opcode, 2) + ' · stored advance ' + item.advance +
+      ' bytes · Thumb callback ' + hex(0x08000001 + item.callback.rom_offset, 8);
+  }
+  opcode.addEventListener('change', drawAuxiliaryCommand); drawAuxiliaryCommand();
+}
+if (data.auxiliary_script_archive) {
+  const catalog = data.auxiliary_script_archive, section = document.getElementById('auxiliary-scripts');
+  const bank = document.getElementById('auxiliary-bank'), slot = document.getElementById('auxiliary-slot');
+  const program = document.getElementById('auxiliary-program'), filter = document.getElementById('auxiliary-filter');
+  const rows = document.getElementById('auxiliary-rows'), refs = document.getElementById('auxiliary-references');
+  const previous = document.getElementById('auxiliary-previous'), next = document.getElementById('auxiliary-next');
+  const pageLabel = document.getElementById('auxiliary-page'), target = document.getElementById('auxiliary-target');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let page = 0, matches = [], entryIndex = null;
+  section.hidden = false;
+  catalog.banks.forEach(item => bank.add(new Option(item.id, item.id)));
+  [...new Set(catalog.banks.flatMap(item => item.programs.flatMap(value => value.instructions.map(instruction => instruction.command))))]
+    .sort((a, b) => a - b).forEach(value => filter.add(new Option(hex(value, 2), value)));
+  function selectedProgram() { return catalog.banks[Number(bank.value)].programs.find(item => item.id === Number(program.value)); }
+  function drawPage() {
+    rows.replaceChildren();
+    const selected = selectedProgram(), start = page * 50, end = Math.min(matches.length, start + 50);
+    matches.slice(start, end).forEach(index => {
+      const item = selected.instructions[index], row = rows.insertRow();
+      row.insertCell().textContent = index; row.insertCell().textContent = hex(item.source_offset);
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = hex(item.command, 2);
+      button.disabled = !data.auxiliary_script_commands || item.command >= data.auxiliary_script_commands.commands.length;
+      button.addEventListener('click', () => {
+        const control = document.getElementById('auxiliary-command-opcode'); control.value = String(item.command);
+        control.dispatchEvent(new Event('change')); document.querySelector('#auxiliary-commands > details').open = true;
+      });
+      row.insertCell().append(button);
+      row.insertCell().textContent = item.parameters.map(value => hex(value, 2)).join(' ') || '—';
+      row.insertCell().textContent = index === entryIndex ? '← Slot entry' : '—';
+    });
+    previous.disabled = page === 0; next.disabled = end >= matches.length;
+    pageLabel.textContent = matches.length ? 'Instructions ' + (start + 1) + '–' + end + ' of ' + matches.length : 'No matching instructions';
+  }
+  function drawReferences() {
+    refs.replaceChildren();
+    const selected = selectedProgram(), entries = catalog.banks[Number(bank.value)].entries;
+    let count = 0;
+    entries.forEach((item, index) => {
+      if (item.program_id !== selected.id) return;
+      if (count++) refs.append(document.createTextNode(', '));
+      const button = document.createElement('button'); button.type = 'button';
+      button.textContent = 'Slot ' + index + ' → instruction ' + item.instruction;
+      button.addEventListener('click', () => { slot.value = String(index); chooseSlot(); }); refs.append(button);
+    });
+    if (!count) refs.textContent = 'No stored slot points to this physical program.';
+  }
+  function drawProgram(jumpToEntry = false) {
+    const item = selectedProgram();
+    document.getElementById('auxiliary-source').textContent = catalog.path + ' · bank ' + bank.value +
+      ' · physical program ' + item.id + ' · source ' + hex(item.source_offset) + ' · ' + item.instructions.length + ' stored instructions';
+    matches = item.instructions.map((value, index) => ({value, index})).filter(item =>
+      filter.value === 'all' || item.value.command === Number(filter.value)).map(item => item.index);
+    page = jumpToEntry && entryIndex !== null && matches.includes(entryIndex) ? Math.floor(matches.indexOf(entryIndex) / 50) : 0;
+    drawReferences(); drawPage();
+  }
+  function chooseSlot() {
+    const selected = catalog.banks[Number(bank.value)].entries[Number(slot.value)];
+    program.value = String(selected.program_id); entryIndex = selected.instruction;
+    const instruction = selectedProgram().instructions[entryIndex];
+    target.textContent = 'Bank ' + bank.value + ' · slot ' + slot.value + ' → physical program ' + selected.program_id +
+      ' · instruction ' + entryIndex + ' at ' + hex(instruction.source_offset) + (entryIndex ? ' (interior entry)' : '');
+    if (filter.value !== 'all' && Number(filter.value) !== instruction.command) filter.value = 'all';
+    drawProgram(true);
+  }
+  function chooseBank() {
+    const selected = catalog.banks[Number(bank.value)], old = Number(slot.value) || 0;
+    slot.replaceChildren(); program.replaceChildren();
+    selected.entries.forEach((item, index) => slot.add(new Option(index + ' → program ' + item.program_id + ', instruction ' + item.instruction, index)));
+    selected.programs.forEach(item => program.add(new Option(item.id + ' · ' + hex(item.source_offset), item.id)));
+    slot.value = String(Math.min(old, selected.entries.length - 1)); chooseSlot();
+  }
+  bank.addEventListener('change', chooseBank); slot.addEventListener('change', chooseSlot);
+  program.addEventListener('change', () => { entryIndex = null; target.textContent = 'Browsing an independent physical program.'; drawProgram(); });
+  filter.addEventListener('change', () => drawProgram());
+  previous.addEventListener('click', () => { if (page) { page--; drawPage(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { page++; drawPage(); } });
+  chooseBank();
+}
 if (data.script_commands) {
   const catalog = data.script_commands, section = document.getElementById('script-commands');
   const opcode = document.getElementById('script-command-opcode'), detail = document.getElementById('script-command-detail');
@@ -3932,7 +4764,8 @@ if (data.script_archive) {
     if (variant.options.length) variant.value = String(Math.min(previousVariant, variant.options.length - 1));
     variantLabel.hidden = targetBank !== null;
     const physical = targetBank === null ? mapping.variants[Number(variant.value)] : targetBank;
-    const textPage = data.wiki && data.wiki.pages.find(item => item.id === 'text');
+    const textPage = data.wiki && (data.wiki.pages.find(item => item.id === 'text-scripts') ||
+      data.wiki.pages.find(item => item.id === 'text'));
     const available = Number.isInteger(physical) && (!data.wiki || !!textPage);
     textOpen.hidden = !available;
     textDetail.textContent = ' · source text bank ' + entry.text_bank +
@@ -3958,7 +4791,13 @@ if (data.script_archive) {
       });
       row.insertCell().append(button);
       row.insertCell().textContent = item.parameters.map(value => hex(value, 2)).join(' ') || '—';
-      row.insertCell().textContent = item.effect_selector === null ? '—' : item.effect_selector;
+      const effectCell = row.insertCell();
+      if (item.effect_selector === null) effectCell.textContent = '—';
+      else if (data.effect_events && item.command === 0x5a && item.parameters.length === 1 &&
+               item.parameters[0] === item.effect_selector + 1 && item.effect_selector < data.effect_events.selectors.length) {
+        const link = document.createElement('button'); link.type = 'button'; link.textContent = item.effect_selector;
+        link.addEventListener('click', () => openEffectSelector(item.effect_selector)); effectCell.append(link);
+      } else effectCell.textContent = item.effect_selector + ' · unavailable';
     });
     previous.disabled = page === 0; next.disabled = end >= matches.length;
     pageLabel.textContent = matches.length ? 'Instructions ' + (start + 1) + '–' + end + ' of ' + matches.length : 'No matching instructions';
@@ -4067,6 +4906,11 @@ if (data.script_texts) {
     const pageSize = 20, limit = 1000, languages = new Set();
     let matches = [], page = 0, timer = null, generation = 0, scanned = 0;
     section.hidden = false;
+    const allTextPage = data.wiki && data.wiki.current !== 'text' && data.wiki.pages.find(page => page.id === 'text');
+    if (allTextPage) {
+      const note = document.getElementById('text-search-scope-note'), link = document.getElementById('text-search-all-link');
+      const target = new URL(allTextPage.href, location.href); target.hash = 'text-search'; link.href = target.href; note.hidden = false;
+    }
     sources.forEach(source => {
       scope.add(new Option(source.label, source.key));
       source.glyphs = new Set(source.value.glyphs.map(glyph => glyph.index));
@@ -4252,7 +5096,8 @@ if (data.job_names) {
     } else name.textContent = 'Name unavailable for this direct reference.';
     const cell = row.insertCell();
     if (units && source.reader_index !== null) {
-      const link = document.createElement('a'), page = data.wiki && data.wiki.pages.find(item => item.id === 'text');
+      const link = document.createElement('a'), page = data.wiki &&
+        (data.wiki.pages.find(item => item.id === 'text-pointers') || data.wiki.pages.find(item => item.id === 'text'));
       link.textContent = 'Open name string ' + item.name_index;
       if (page) {
         const target = new URL(page.href, location.href);
@@ -4282,6 +5127,68 @@ if (data.job_names) {
   }
   language.addEventListener('change', drawJobNames); drawJobNames();
 }
+if (data.metadata_names) {
+  const section = document.getElementById('metadata-names'), source = data.metadata_names;
+  const language = document.getElementById('metadata-name-language'), filter = document.getElementById('metadata-name-filter');
+  const rows = document.getElementById('metadata-name-rows'), pageLabel = document.getElementById('metadata-name-page');
+  const prev = document.getElementById('metadata-name-prev'), next = document.getElementById('metadata-name-next');
+  const glyphs = new Map(source.glyphs.map(glyph => [glyph.index, glyph]));
+  const pageSize = 25;
+  let pageIndex = 0;
+  section.hidden = false;
+  source.languages.forEach(id => language.add(new Option(id, id)));
+  document.getElementById('metadata-name-language-control').hidden = !source.languages.length;
+  document.getElementById('metadata-name-source').textContent = source.path + ' · metadata table 0x'
+    + source.source_offset.toString(16).toUpperCase()
+    + (source.text_path ? ' · name strings ' + source.text_path : ' · name strings unavailable');
+  function drawMetadataNames() {
+    const languageIndex = Number(language.value) || 0, query = filter.value.trim().toLocaleLowerCase();
+    const matches = source.rows.filter(item => {
+      const units = item.names[languageIndex];
+      const name = units ? textEntryLabel(item.id, units, glyphs, unit => typeof unit === 'number' ? unit : null) : String(item.id);
+      return name.toLocaleLowerCase().includes(query);
+    });
+    pageIndex = Math.min(pageIndex, Math.max(0, Math.ceil(matches.length / pageSize) - 1));
+    const start = pageIndex * pageSize;
+    rows.replaceChildren();
+    matches.slice(start, start + pageSize).forEach(item => {
+      const row = rows.insertRow(), units = item.names[languageIndex];
+      row.insertCell().textContent = String(item.id);
+      row.insertCell().textContent = item.routing === 0 ? 'Direct' : 'Redirect ' + item.routing + ' (not evaluated)';
+      const name = row.insertCell();
+      if (units) {
+        const preview = document.createElement('div'); preview.className = 'text-preview';
+        appendTextUnits(preview, units, glyphs, unit => typeof unit === 'number' ? unit : null,
+          () => '', {normalFont:true, hideCommands:true});
+        name.append(preview);
+      } else name.textContent = item.routing ? 'Redirect not evaluated' : 'Name unavailable';
+      const cell = row.insertCell();
+      if (units && source.reader_index !== null) {
+      const link = document.createElement('a'), textPage = data.wiki &&
+        (data.wiki.pages.find(item => item.id === 'text-pointers') || data.wiki.pages.find(item => item.id === 'text'));
+        link.textContent = 'Open name string ' + item.name_index;
+        if (textPage) {
+          const target = new URL(textPage.href, location.href);
+          target.searchParams.set('job_reader', source.reader_index);
+          target.searchParams.set('job_language', languageIndex);
+          target.searchParams.set('job_entry', item.name_index);
+          target.hash = 'pointer-texts'; link.href = target.href;
+        } else {
+          link.href = '#pointer-texts';
+          link.addEventListener('click', () => selectPointerText(source.reader_index, languageIndex, item.name_index));
+        }
+        cell.append(link);
+      } else cell.textContent = item.name_index === null ? 'No direct name index' : 'String unavailable';
+    });
+    pageLabel.textContent = matches.length ? (start + 1) + '–' + Math.min(start + pageSize, matches.length) + ' of ' + matches.length : '0 of 0';
+    prev.disabled = pageIndex === 0; next.disabled = start + pageSize >= matches.length;
+  }
+  filter.addEventListener('input', () => { pageIndex = 0; drawMetadataNames(); });
+  language.addEventListener('change', () => { pageIndex = 0; drawMetadataNames(); });
+  prev.addEventListener('click', () => { if (pageIndex) { pageIndex--; drawMetadataNames(); } });
+  next.addEventListener('click', () => { pageIndex++; drawMetadataNames(); });
+  drawMetadataNames();
+}
 function pcmWaveBytes(samples, rate) {
   const padding = samples.length % 2;
   if (samples.length > 0xffffffff - 36 - padding) throw Error('Sample is too large for a WAV file.');
@@ -4293,6 +5200,30 @@ function pcmWaveBytes(samples, rate) {
   header.setUint16(32, 1, true); header.setUint16(34, 8, true);
   ascii(36, 'data'); header.setUint32(40, samples.length, true);
   samples.forEach((sample, index) => { bytes[44 + index] = sample + 128; });
+  return bytes;
+}
+function stereoWaveBytes(buffer) {
+  const frames = buffer.length, rate = buffer.sampleRate;
+  if (buffer.numberOfChannels !== 2 || !Number.isSafeInteger(frames) || frames <= 0 ||
+      !Number.isInteger(rate) || rate <= 0 || rate > Math.floor(0xffffffff / 4) ||
+      frames > Math.floor((0xffffffff - 36) / 4))
+    throw Error('Invalid stereo audio buffer.');
+  const bytes = new Uint8Array(44 + frames * 4), header = new DataView(bytes.buffer);
+  function ascii(offset, text) { for (let i = 0; i < text.length; i++) bytes[offset + i] = text.charCodeAt(i); }
+  ascii(0, 'RIFF'); header.setUint32(4, bytes.length - 8, true); ascii(8, 'WAVE');
+  ascii(12, 'fmt '); header.setUint32(16, 16, true); header.setUint16(20, 1, true);
+  header.setUint16(22, 2, true); header.setUint32(24, rate, true); header.setUint32(28, rate * 4, true);
+  header.setUint16(32, 4, true); header.setUint16(34, 16, true); ascii(36, 'data'); header.setUint32(40, frames * 4, true);
+  const left = buffer.getChannelData(0), right = buffer.getChannelData(1);
+  if (left.length !== frames || right.length !== frames) throw Error('Incomplete stereo audio buffer.');
+  function sample(value) {
+    value = Number.isFinite(value) ? Math.max(-1, Math.min(1, value)) : 0;
+    return Math.round(value * (value < 0 ? 32768 : 32767));
+  }
+  for (let index = 0; index < frames; index++) {
+    header.setInt16(44 + index * 4, sample(left[index]), true);
+    header.setInt16(46 + index * 4, sample(right[index]), true);
+  }
   return bytes;
 }
 function instrumentWaveBytes(sample, values, seconds) {
@@ -4632,6 +5563,19 @@ function envelopeValueAt(points, at) {
     if (at <= end) return end === start ? right : left + (right - left) * (at - start) / (end - start);
   }
   return points[points.length - 1][1];
+}
+function sequencePlaybackEvents(notes, seconds, envelopeEnabled) {
+  const events = notes.map(note => {
+    const begin = note.startSeconds, gate = note.endSeconds - note.startSeconds;
+    const envelope = envelopeEnabled && note.sample && note.sample.kind.startsWith('pcm') && note.envelope !== null
+      ? approximatePcmEnvelope(note.envelope, gate, Math.max(0, seconds - begin)) : null;
+    return {...note, envelope, audioEnd: envelope ? begin + envelope.duration : note.endSeconds};
+  });
+  const boundaries = events.flatMap(note => note.audioEnd > note.startSeconds ? [[note.startSeconds, 1], [note.audioEnd, -1]] : []);
+  boundaries.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let active = 0, maximum = 0;
+  boundaries.forEach(([, change]) => { active += change; maximum = Math.max(maximum, active); });
+  return {events, mixScale: maximum ? Math.min(1, .7 / (maximum * .08)) : 1};
 }
 // Approximate the M4A command's doubled tempo and 150-unit frame accumulator.
 // Live tempo multipliers and frame-by-frame quantization are not reproduced.
@@ -4979,9 +5923,11 @@ if (data.sequences && data.sequence_directory) {
   const trackMixer = document.getElementById('sequence-track-mixer'), trackMuteList = document.getElementById('sequence-track-mutes');
   try { muteCgb.checked = localStorage.getItem(muteStorageKey) === '1'; } catch (_) {}
   const stop = document.getElementById('sequence-stop'), status = document.getElementById('sequence-status');
+  const download = document.getElementById('sequence-download'), exportStatus = document.getElementById('sequence-export-status');
   const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
   const sequenceProgress = playbackProgress('sequence', document.getElementById('sequence-playhead'));
   keepSelectFocus(play, document.getElementById('sequence-audio'));
+  keepSelectFocus(download, document.getElementById('sequence-audio'));
   const noteRows = document.getElementById('sequence-note-rows'), noteDetail = document.getElementById('sequence-timeline-detail');
   const notePrevious = document.getElementById('sequence-note-prev'), noteNext = document.getElementById('sequence-note-next');
   const notePageLabel = document.getElementById('sequence-note-page');
@@ -5057,9 +6003,11 @@ if (data.sequences && data.sequence_directory) {
   }
   let selectedTracks = [], trace = [], notes = [], controls = [], page = 0, notePage = 0, controlPage = 0;
   let audioContext = null, playing = [], generation = 0, schedulerTimer = null, cgbBus = null, routeNodes = [];
+  let exporting = false;
   const mutedTracks = new Set(), liveTrackMutes = new Map();
   const sampleBuffers = new Map();
   let selectedBank = null;
+  function updateDownload() { download.disabled = exporting || play.disabled; }
   function resolveTone(program, key) {
     if (!selectedBank || program === null || !selectedBank.has(program)) return null;
     let tone = tones.get(selectedBank.get(program));
@@ -5088,19 +6036,19 @@ if (data.sequences && data.sequence_directory) {
     if (!Number.isFinite(frequency) || frequency < 0 || frequency > 384000) return null;
     return {kind: 'pcm', wave, frequency};
   }
-  function sampleBuffer(sample) {
+  function sampleBuffer(sample, targetContext = audioContext, buffers = sampleBuffers) {
     const wave = sample.wave, cacheKey = sample.kind + ':' + (sample.kind === 'cgb-square' ? sample.duty : wave.id);
-    if (!sampleBuffers.has(cacheKey)) {
+    if (!buffers.has(cacheKey)) {
       const duties = [[-1,-1,-1,-1,-1,-1,-1,1], [1,-1,-1,-1,-1,-1,-1,1],
                       [1,-1,-1,-1,-1,1,1,1], [-1,1,1,1,1,1,1,-1]];
       const values = sample.kind === 'cgb-square' ? duties[sample.duty].flatMap(value => Array(32).fill(value))
         : sample.kind === 'cgb' ? wave.amplitudes : wave.samples;
-      const buffer = audioContext.createBuffer(1, values.length, sample.kind.startsWith('cgb') ? 32000 : 22050), channel = buffer.getChannelData(0);
+      const buffer = targetContext.createBuffer(1, values.length, sample.kind.startsWith('cgb') ? 32000 : 22050), channel = buffer.getChannelData(0);
       for (let i = 0; i < values.length; i++) channel[i] = sample.kind === 'cgb-square' ? values[i]
         : sample.kind === 'cgb' ? values[i] / 7.5 - 1 : values[i] / 128;
-      sampleBuffers.set(cacheKey, buffer);
+      buffers.set(cacheKey, buffer);
     }
-    return sampleBuffers.get(cacheKey);
+    return buffers.get(cacheKey);
   }
   function stopSequence() {
     generation++;
@@ -5247,16 +6195,16 @@ if (data.sequences && data.sequence_directory) {
     stopSequence(); sequenceProgress.reset(); page = 0; notePage = 0; controlPage = 0; trace = []; notes = []; controls = [];
     const ticks = Number(rate.value), seconds = Number(duration.value);
     if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) {
-      status.textContent = 'Choose a tick rate from 1 to 400 per second.'; play.disabled = true;
+      status.textContent = 'Choose a tick rate from 1 to 400 per second.'; play.disabled = true; updateDownload();
       drawTracePage(); drawControlPage(); drawNotes(1); return;
     }
     if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180) {
-      status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; play.disabled = true;
+      status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; play.disabled = true; updateDownload();
       drawTracePage(); drawControlPage(); drawNotes(1); return;
     }
     const selected = track.value === 'all' ? selectedTracks : [selectedTracks[Number(track.value)]].filter(Boolean);
     if (!selected.length) {
-      status.textContent = 'This song has no extracted tracks.'; play.disabled = true;
+      status.textContent = 'This song has no extracted tracks.'; play.disabled = true; updateDownload();
       drawTracePage(); drawControlPage(); drawNotes(seconds); return;
     }
     const tempoChanges = [];
@@ -5303,7 +6251,7 @@ if (data.sequences && data.sequence_directory) {
     });
     if (voice.value === 'pcm' && notes.some(note => note.sample && note.sample.kind === 'pcm-fixed') &&
         (!Number.isInteger(Number(fixedRate.value)) || Number(fixedRate.value) < 1000 || Number(fixedRate.value) > 96000)) {
-      status.textContent = 'Choose a fixed-PCM mixer rate from 1000 to 96000 Hz.'; play.disabled = true;
+      status.textContent = 'Choose a fixed-PCM mixer rate from 1000 to 96000 Hz.'; play.disabled = true; updateDownload();
       drawTracePage(); drawControlPage(); drawNotes(seconds); return;
     }
     const pcmMapped = notes.filter(note => note.sample && note.sample.kind.startsWith('pcm')).length;
@@ -5315,7 +6263,7 @@ if (data.sequences && data.sequence_directory) {
         + (timing.paused ? ', stopped by zero tempo' : '') + (tempoLimited ? ', ' + tempoLimited + ' track scans incomplete' : '') : ' · manual timing')
       + ' · ' + controls.length + (useTrackControls.checked ? ' track controls selected' : ' track controls listed')
       + ' · ' + skipped + ' commands or unresolved notes not played.';
-    play.disabled = !notes.length;
+    play.disabled = !notes.length; updateDownload();
     drawTracePage(); drawControlPage(); drawNotes(seconds);
   }
   function setTrackMuted(index, muted) {
@@ -5438,17 +6386,7 @@ if (data.sequences && data.sequence_directory) {
           pitchBudget--; parameter.setValueAtTime(value(steps[index].semitones), start + steps[index].time);
         }
       }
-      const events = notes.map(note => {
-        const begin = note.startSeconds, gate = note.endSeconds - note.startSeconds;
-        const envelope = selectedVoice === 'pcm' && useEnvelope.checked && note.sample && note.sample.kind.startsWith('pcm') && note.envelope !== null
-          ? approximatePcmEnvelope(note.envelope, gate, Math.max(0, seconds - begin)) : null;
-        return {...note, envelope, audioEnd: envelope ? begin + envelope.duration : note.endSeconds};
-      });
-      const boundaries = events.flatMap(note => note.audioEnd > note.startSeconds ? [[note.startSeconds, 1], [note.audioEnd, -1]] : []);
-      boundaries.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
-      let active = 0, maximum = 0;
-      boundaries.forEach(([, change]) => { active += change; maximum = Math.max(maximum, active); });
-      const mixScale = maximum ? Math.min(1, .7 / (maximum * .08)) : 1;
+      const {events, mixScale} = sequencePlaybackEvents(notes, seconds, selectedVoice === 'pcm' && useEnvelope.checked);
       let cursor = 0, late = 0;
       function scheduleWindow() {
         if (request !== generation) return;
@@ -5527,7 +6465,204 @@ if (data.sequences && data.sequence_directory) {
       stop.disabled = false; status.textContent = 'Playing an approximate track mix.'; scheduleWindow();
     } catch (error) { if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; } }
   });
+  download.addEventListener('click', async () => {
+    if (exporting || play.disabled) return;
+    const seconds = Number(duration.value), ticks = Number(rate.value), selectedVoice = voice.value;
+    if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180 || !Number.isFinite(ticks) || ticks < 1 || ticks > 400) {
+      exportStatus.textContent = 'Choose a valid preview duration and tick rate.'; return;
+    }
+    const selectedSong = data.sequence_directory.songs[Number(song.value)];
+    const selectedTrack = track.value === 'all' ? 'all-tracks' : 'track-' + selectedTracks[Number(track.value)].track_index;
+    const muted = new Set(mutedTracks), cgbMuted = muteCgb.checked, trackControls = useTrackControls.checked;
+    const selectedControls = controls.map(item => ({...item}));
+    const {events, mixScale} = sequencePlaybackEvents(notes, seconds, selectedVoice === 'pcm' && useEnvelope.checked);
+    const renderEnd = Math.max(0, ...events.map(note => note.audioEnd > note.startSeconds ? note.audioEnd : 0));
+    if (!renderEnd) { exportStatus.textContent = 'No audible note durations in this preview.'; return; }
+    exporting = true; updateDownload(); exportStatus.textContent = 'Rendering the selected mix…';
+    try {
+      // Allow the status to paint before scheduling a bounded offline preview.
+      await new Promise(resolve => setTimeout(resolve, 0));
+      const OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!OfflineContext) throw Error('Offline audio rendering is unavailable in this browser.');
+      const outputRate = 32000, frames = Math.ceil(renderEnd * outputRate);
+      if (!Number.isSafeInteger(frames) || frames <= 0 || frames > 180 * outputRate) throw Error('Preview length exceeds the export limit.');
+      const offline = new OfflineContext(2, frames, outputRate), buffers = new Map(), routes = new Map();
+      const mixer = offline.createGain(); mixer.gain.setValueAtTime(cgbMuted ? 0 : 1, 0); mixer.connect(offline.destination);
+      const controlsByTrack = new Map(), pitchesByTrack = new Map();
+      if (trackControls) selectedControls.forEach(control => {
+        if (!controlsByTrack.has(control.track)) controlsByTrack.set(control.track, []);
+        controlsByTrack.get(control.track).push(control);
+      });
+      controlsByTrack.forEach((items, index) => pitchesByTrack.set(index, sequencePitchSteps(items)));
+      let pitchBudget = 100000, pitchLimited = false, pitchUnavailable = false, panUnavailable = false;
+      function route(trackIndex, isCgb) {
+        const key = trackIndex + ':' + isCgb;
+        if (routes.has(key)) return routes.get(key);
+        const trackMute = offline.createGain(); trackMute.gain.setValueAtTime(muted.has(trackIndex) ? 0 : 1, 0);
+        trackMute.connect(isCgb ? mixer : offline.destination);
+        const items = controlsByTrack.get(trackIndex) || [], volumes = items.filter(item => item.command === 0xbe);
+        const pans = items.filter(item => item.command === 0xbf);
+        let first = trackMute, last = null;
+        if (volumes.length) {
+          const volume = offline.createGain(); first = last = volume; volume.gain.setValueAtTime(1, 0);
+          volumes.forEach(item => volume.gain.setValueAtTime(Math.min(127, Math.max(0, item.value)) / 127, Math.max(0, item.time)));
+        }
+        if (pans.length && typeof offline.createStereoPanner === 'function') {
+          const pan = offline.createStereoPanner();
+          if (last) last.connect(pan); else first = pan;
+          last = pan; pan.pan.setValueAtTime(0, 0);
+          pans.forEach(item => pan.pan.setValueAtTime(Math.max(-1, Math.min(1, item.value / 64)), Math.max(0, item.time)));
+        } else if (pans.length) panUnavailable = true;
+        if (last) last.connect(trackMute);
+        routes.set(key, first); return first;
+      }
+      function applyPitch(oscillator, note, useSample, begin, end) {
+        if (useSample && note.sample.kind === 'pcm-fixed') return;
+        const steps = pitchesByTrack.get(note.track) || [];
+        if (!steps.length) return;
+        const parameter = useSample ? oscillator.playbackRate : oscillator.frequency, base = parameter.value;
+        const maximum = useSample ? (note.sample.kind.startsWith('cgb') ? 384 : 384000 / 22050) : 384000;
+        const value = semitones => Math.min(maximum, Math.max(0, base * Math.pow(2, semitones / 12)));
+        let low = 0, high = steps.length;
+        while (low < high) {
+          const middle = (low + high) >>> 1;
+          if (steps[middle].time <= begin) low = middle + 1; else high = middle;
+        }
+        parameter.value = value(low ? steps[low - 1].semitones : 0);
+        if (typeof parameter.setValueAtTime !== 'function') {
+          if (low < steps.length && steps[low].time < end) pitchUnavailable = true;
+          return;
+        }
+        parameter.setValueAtTime(parameter.value, begin);
+        for (let index = low; index < steps.length && steps[index].time < end; index++) {
+          if (!pitchBudget) { pitchLimited = true; break; }
+          pitchBudget--; parameter.setValueAtTime(value(steps[index].semitones), steps[index].time);
+        }
+      }
+      events.forEach(note => {
+        const begin = note.startSeconds, end = note.audioEnd;
+        if (end <= begin) return;
+        const useSample = selectedVoice === 'pcm' && note.sample;
+        const oscillator = useSample ? offline.createBufferSource() : offline.createOscillator(), gain = offline.createGain();
+        if (useSample) {
+          const wave = note.sample.wave; oscillator.buffer = sampleBuffer(note.sample, offline, buffers);
+          oscillator.playbackRate.value = note.sample.kind === 'cgb-square' ? note.sample.frequency * 256 / 32000
+            : note.sample.kind === 'cgb' ? note.sample.frequency * 32 / 32000 : note.sample.frequency / 22050;
+          if (note.sample.kind.startsWith('cgb')) oscillator.loop = true;
+          else if ((wave.flags & 0xc000) && wave.loop_start >= 0 && wave.loop_start < wave.samples.length) {
+            oscillator.loop = true; oscillator.loopStart = wave.loop_start / 22050; oscillator.loopEnd = wave.samples.length / 22050;
+          }
+        } else {
+          oscillator.type = 'sine'; oscillator.frequency.value = 440 * Math.pow(2, (note.key - 69) / 12);
+        }
+        applyPitch(oscillator, note, useSample, begin, end);
+        const amplitude = Math.min(.08, note.velocity / 127 * .08) * mixScale;
+        gain.gain.setValueAtTime(0, begin);
+        if (note.envelope) {
+          const first = Math.min(end, begin + .003), cutoff = Math.max(first, end - .003);
+          gain.gain.linearRampToValueAtTime(amplitude * envelopeValueAt(note.envelope.points, first - begin), first);
+          note.envelope.points.forEach(([offset, value]) => {
+            const when = begin + offset;
+            if (when > first && when < cutoff) gain.gain.linearRampToValueAtTime(amplitude * value, when);
+          });
+          if (cutoff > first) gain.gain.linearRampToValueAtTime(amplitude * envelopeValueAt(note.envelope.points, cutoff - begin), cutoff);
+          gain.gain.linearRampToValueAtTime(0, end);
+        } else {
+          gain.gain.linearRampToValueAtTime(amplitude, Math.min(end, begin + .008));
+          gain.gain.setValueAtTime(amplitude, Math.max(begin, end - .02));
+          gain.gain.linearRampToValueAtTime(0, end);
+        }
+        oscillator.connect(gain); gain.connect(route(note.track, note.isCgb)); oscillator.start(begin); oscillator.stop(end);
+      });
+      const rendered = await offline.startRendering(), bytes = stereoWaveBytes(rendered);
+      const url = URL.createObjectURL(new Blob([bytes], {type: 'audio/wav'})), link = document.createElement('a');
+      link.href = url; link.download = 'song-' + selectedSong.id + '-' + selectedTrack + '.wav';
+      document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const warnings = [];
+      if (pitchLimited) warnings.push('pitch automation limit reached');
+      if (pitchUnavailable) warnings.push('live pitch changes unavailable');
+      if (panUnavailable) warnings.push('stereo pan unavailable');
+      exportStatus.textContent = 'WAV prepared for song ' + selectedSong.id + ' · ' + selectedTrack +
+        (warnings.length ? ' · ' + warnings.join(' · ') : '') + '.';
+    } catch (error) { exportStatus.textContent = 'Cannot prepare WAV: ' + error.message; }
+    finally { exporting = false; updateDownload(); }
+  });
   chooseSong();
+}
+if (data.timed_sound_sources) {
+  const catalog = data.timed_sound_sources, section = document.getElementById('timed-sounds'); section.hidden = false;
+  const kind = document.getElementById('timed-sound-kind'), filter = document.getElementById('timed-sound-filter');
+  const source = document.getElementById('timed-sound-source'), detail = document.getElementById('timed-sound-detail');
+  const head = document.getElementById('timed-sound-head'), body = document.getElementById('timed-sound-rows');
+  const previous = document.getElementById('timed-sound-prev'), next = document.getElementById('timed-sound-next');
+  const pageLabel = document.getElementById('timed-sound-page');
+  const songSelect = document.getElementById('sequence-song'), player = document.getElementById('sequence-audio');
+  const songs = data.sequence_directory ? data.sequence_directory.songs : [];
+  const songIndices = new Map(songs.map((song, index) => [song.id, index]));
+  const trackHeaders = new Set((data.sequences ? data.sequences.tracks : []).map(track => track.directory_header));
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let page = 0;
+  function openSong(index) {
+    if (!data.sequences || !data.sequence_directory || player.hidden) return false;
+    songSelect.value = String(index); songSelect.dispatchEvent(new Event('change', {bubbles: true}));
+    player.querySelector(':scope > details').open = true; return true;
+  }
+  function appendSound(cell, word) {
+    cell.append(document.createTextNode(hex(word, 4)));
+    if (!word) return;
+    const id = word & 0x0fff, flags = word >>> 12, index = songIndices.get(id);
+    cell.append(document.createTextNode(' · candidate ID ' + id + ' · flags ' + hex(flags)));
+    if (index === undefined || !data.sequences || player.hidden) return;
+    const link = document.createElement('a'); link.href = '#sequence-audio'; link.textContent = 'Open';
+    link.setAttribute('aria-label', 'Open candidate directory ID ' + id);
+    link.addEventListener('click', () => openSong(index)); cell.append(' ', link);
+    if (trackHeaders.has(songs[index].header_id)) {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Audition';
+      button.setAttribute('aria-label', 'Audition candidate directory ID ' + id);
+      button.addEventListener('click', () => { if (openSong(index)) document.getElementById('sequence-play').click(); });
+      cell.append(' ', button);
+    }
+  }
+  function drawSource() {
+    head.replaceChildren(); body.replaceChildren();
+    const group = catalog.groups[Number(source.value)];
+    if (!group || source.disabled) {
+      detail.textContent = 'No matching source.'; previous.disabled = next.disabled = true; pageLabel.textContent = ''; return;
+    }
+    const heading = head.insertRow(), labels = group.kind === 'rows'
+      ? ['Offset', 'Tick', 'Channel', 'Opaque byte', 'Sound word 0', 'Sound word 1'] : ['Offset', 'Stored value'];
+    labels.forEach(label => { const cell = document.createElement('th'); cell.textContent = label; heading.append(cell); });
+    const size = group.kind === 'rows' ? 8 : group.kind === 'counts' ? 1 : group.kind === 'ram-words' ? 2 : 4;
+    const pageSize = 100, pages = Math.max(1, Math.ceil(group.values.length / pageSize));
+    page = Math.max(0, Math.min(page, pages - 1));
+    group.values.slice(page * pageSize, (page + 1) * pageSize).forEach((item, index) => {
+      const row = body.insertRow(); row.insertCell().textContent = hex(group.source_offset + (page * pageSize + index) * size);
+      if (group.kind === 'rows') {
+        row.insertCell().textContent = String(item.tick); row.insertCell().textContent = String(item.channel);
+        row.insertCell().textContent = hex(item.opaque03, 2);
+        appendSound(row.insertCell(), item.sound_words[0]); appendSound(row.insertCell(), item.sound_words[1]);
+      } else row.insertCell().textContent = hex(item, size * 2);
+    });
+    detail.textContent = catalog.path + ' · ' + group.origin + ' · ' + group.kind + ' · source ' + hex(group.source_offset)
+      + (group.root_offset === undefined ? '' : ' · root ' + hex(group.root_offset) + ' · pointer ' + hex(group.root_pointer));
+    previous.disabled = page === 0; next.disabled = page + 1 >= pages;
+    pageLabel.textContent = group.values.length + ' values · page ' + (page + 1) + ' of ' + pages;
+  }
+  function filterSources() {
+    const before = source.value, query = filter.value.trim().toLowerCase(); source.replaceChildren();
+    catalog.groups.forEach((group, index) => {
+      if (kind.value !== 'all' && group.kind !== kind.value) return;
+      if (query && !String(group.source_offset).includes(query) && !hex(group.source_offset).toLowerCase().includes(query)) return;
+      source.add(new Option(group.origin + ' · ' + group.kind + ' · ' + hex(group.source_offset) + ' · ' + group.values.length, index));
+    });
+    if ([...source.options].some(item => item.value === before)) source.value = before;
+    source.disabled = !source.options.length; page = 0; drawSource();
+  }
+  kind.addEventListener('change', filterSources); filter.addEventListener('input', filterSources);
+  source.addEventListener('change', () => { page = 0; drawSource(); });
+  previous.addEventListener('click', () => { if (page) { page--; drawSource(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { page++; drawSource(); } });
+  filterSources();
 }
 if (data.palettes) {
   document.getElementById('palette').hidden = false;
@@ -5555,6 +6690,59 @@ if (data.palettes) {
   descriptor.addEventListener('change', banks);
   bank.addEventListener('change', draw);
   banks();
+}
+function loadTransferGraphics() {
+  if (data.type3_payloads) return Promise.resolve(data.type3_payloads);
+  const asset = data.wiki && data.wiki.transfer_graphics;
+  if (!asset) return Promise.reject(new Error('Transfer graphics are unavailable for this dataset.'));
+  if (!transferGraphicsRequest) {
+    transferGraphicsRequest = new Promise((resolve, reject) => {
+      const script = document.createElement('script'); script.src = asset.href;
+      script.dataset.transferGraphics = 'true';
+      script.onload = () => {
+        const loaded = globalThis.__FFTA_TYPE3_PAYLOADS__;
+        if (!loaded || loaded.key !== asset.key || !loaded.payload || !Array.isArray(loaded.payload.streams) ||
+            !Array.isArray(loaded.payload.raw_streams)) {
+          script.remove(); reject(new Error('The transfer graphics file does not match this dataset.')); return;
+        }
+        resolve(loaded.payload);
+      };
+      script.onerror = () => { script.remove(); reject(new Error('The transfer graphics file could not be opened.')); };
+      document.head.append(script);
+    }).catch(error => { transferGraphicsRequest = null; throw error; });
+  }
+  return transferGraphicsRequest;
+}
+function registerTransferGraphics(section, button, status, select, append) {
+  const embedded = data.type3_payloads && (data.type3_payloads.streams.length || data.type3_payloads.raw_streams.length);
+  if (!(embedded || data.wiki && data.wiki.transfer_graphics)) return;
+  button.hidden = false; keepSelectFocus(button, section); let populated = false;
+  const params = new URLSearchParams(location.search);
+  const bookmark = params.get('view') === section.id ? params.getAll('select').map(value => {
+    const match = /^([a-z0-9-]+):(\d{1,7})$/.exec(value);
+    return match && match[1] === select.id ? Number(match[2]) : null;
+  }).find(value => value !== null) : undefined;
+  function add(payload) {
+    if (populated) return;
+    payload.streams.forEach(item => append(item, false));
+    payload.raw_streams.forEach(item => append(item, true));
+    populated = true; button.disabled = true;
+    status.textContent = payload.streams.length + ' compressed and ' + payload.raw_streams.length + ' raw transfer inputs available.';
+    if (bookmark !== undefined && bookmark >= 0 && bookmark < select.options.length && bookmark !== select.selectedIndex) {
+      select.selectedIndex = bookmark; select.dispatchEvent(new Event('change', {bubbles: true}));
+    }
+  }
+  document.addEventListener('ffta-transfer-graphics-ready', event => add(event.detail));
+  if (transferGraphicsLoaded) add(transferGraphicsLoaded);
+  button.addEventListener('click', () => {
+    if (populated) return;
+    button.disabled = true; status.textContent = 'Loading transfer graphics…';
+    loadTransferGraphics().then(payload => {
+      transferGraphicsLoaded = payload;
+      document.dispatchEvent(new CustomEvent('ffta-transfer-graphics-ready', {detail: payload}));
+    }).catch(error => { button.disabled = false; status.textContent = error.message; });
+  });
+  if (!populated && bookmark !== undefined && bookmark >= select.options.length) queueMicrotask(() => button.click());
 }
 function lzWordsAt(stream, offset) {
   if (!Number.isSafeInteger(offset) || offset < 0 || offset > stream.decoded_length) return null;
@@ -6462,7 +7650,7 @@ if (data.ui_graphics) {
   language.addEventListener('change', chooseUiLanguage);
   chooseUiSelector(); chooseUiPalette(); chooseUiBank();
 }
-if (data.obj_graphics || data.lz_graphics) {
+if (data.obj_graphics || data.lz_graphics || (data.type3_payloads && (data.type3_payloads.streams.length || data.type3_payloads.raw_streams.length))) {
   document.getElementById('obj-tiles').hidden = false;
   const catalog = document.getElementById('obj-catalog'), bank = document.getElementById('obj-bank');
   const selector = document.getElementById('obj-selector'), language = document.getElementById('obj-language');
@@ -6472,7 +7660,15 @@ if (data.obj_graphics || data.lz_graphics) {
   const canvas = document.getElementById('obj-sheet'), hex = value => '0x' + value.toString(16).toUpperCase();
   const transferReference = document.getElementById('obj-lz-transfer-reference');
   const objects = data.obj_graphics || {banks: [], archive_banks: [], selectors: []};
-  const lz = data.lz_graphics ? data.lz_graphics.streams : [];
+  const lz = [...(data.lz_graphics ? data.lz_graphics.streams : []), ...(data.type3_payloads ? data.type3_payloads.streams : [])];
+  const raw = data.type3_payloads ? data.type3_payloads.raw_streams : [];
+  const inputErrors = document.getElementById('obj-input-errors');
+  if (data.type3_payloads && data.type3_payloads.errors.length) {
+    inputErrors.hidden = false;
+    inputErrors.textContent = data.type3_payloads.errors.length + ' invalid LZ77 input(s) omitted: ' +
+      data.type3_payloads.errors.slice(0, 5).map(item => hex(item.source_offset) + ' (' + item.reason + ')').join(', ') +
+      (data.type3_payloads.errors.length > 5 ? ' …' : '');
+  }
   const palettes = [];
   (data.unit_palettes || []).forEach(item => palettes.push({label: 'Unit ' + item.variant + ' · bank ' + item.bank, colors: item.colors}));
   (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => {
@@ -6485,12 +7681,14 @@ if (data.obj_graphics || data.lz_graphics) {
   palettes.forEach((item, index) => palette.add(new Option(item.label, index)));
   if (objects.banks.length) catalog.add(new Option('Direct banks', 'direct'));
   if (objects.archive_banks.length) catalog.add(new Option('Relative archive banks', 'archive'));
-  if (lz.length) catalog.add(new Option('Observed LZ77 outputs', 'lz'));
+  if (lz.length) catalog.add(new Option('LZ77 outputs', 'lz'));
+  if (raw.length) catalog.add(new Option('Raw transfer inputs', 'raw'));
   selector.add(new Option('Manual bank selection', 'manual'));
   objects.selectors.forEach((item, index) => selector.add(new Option(hex(item.source_offset), index)));
-  function selectedBanks() { return catalog.value === 'direct' ? objects.banks : catalog.value === 'archive' ? objects.archive_banks : lz; }
+  function payloadSelected() { return catalog.value === 'lz' || catalog.value === 'raw'; }
+  function selectedBanks() { return catalog.value === 'direct' ? objects.banks : catalog.value === 'archive' ? objects.archive_banks : catalog.value === 'raw' ? raw : lz; }
   function selectedWords(item) {
-    return catalog.value === 'lz' ? (lzOffset.value === '' ? null : lzWordsAt(item, Number(lzOffset.value))) : item.words;
+    return payloadSelected() ? (lzOffset.value === '' ? null : lzWordsAt(item, Number(lzOffset.value))) : item.words;
   }
   function draw8bpp(words, start, colors) {
     const context = canvas.getContext('2d'), image = context.createImageData(canvas.width, canvas.height);
@@ -6515,18 +7713,19 @@ if (data.obj_graphics || data.lz_graphics) {
     if (words === null) {
       transferReference.hidden = true;
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-      detail.textContent = 'Choose an LZ byte offset from 0 to ' + selected.decoded_length + '.'; return;
+      detail.textContent = 'Choose ' + (catalog.value === 'lz' ? 'an LZ' : 'a raw') +
+        ' byte offset from 0 to ' + selected.decoded_length + '.'; return;
     }
     const wordsPerTile = depth.value === '8' ? 16 : 8, total = Math.floor(words.length / wordsPerTile);
-    const bytes = (selected.decoded_length ?? selected.words.length * 4) - (catalog.value === 'lz' ? Number(lzOffset.value) : 0);
+    const bytes = (selected.decoded_length ?? selected.words.length * 4) - (payloadSelected() ? Number(lzOffset.value) : 0);
     const trailing = bytes - total * wordsPerTile * 4;
     const colors = palette.value === 'gray' ? null : palettes[Number(palette.value)].colors;
     const result = depth.value === '8' ? draw8bpp(words, start, colors)
       : {end: draw4bppTileSheet(canvas, words, start, colors), missing: 0};
-    detail.textContent = (catalog.value === 'lz' ? data.lz_graphics.path : objects.path) + ' · source ' + hex(selected.source_offset) + ' · '
+    detail.textContent = (payloadSelected() ? (selected.path || (data.lz_graphics && data.lz_graphics.path) || data.type3_payloads.path) : objects.path) + ' · source ' + hex(selected.source_offset) + ' · '
       + (total ? 'tiles ' + start + '–' + (result.end - 1) + ' of ' + total : 'no complete tiles')
       + (catalog.value === 'lz' ? ' · ' + selected.encoded_length + ' encoded / ' + selected.decoded_length +
-        ' decoded bytes · byte offset ' + lzOffset.value : '')
+        ' decoded bytes · byte offset ' + lzOffset.value : catalog.value === 'raw' ? ' · ' + selected.decoded_length + ' raw bytes · byte offset ' + lzOffset.value : '')
       + (trailing ? ' · ' + trailing + ' trailing bytes not displayed' : '')
       + (result.missing ? ' · ' + result.missing + ' pixels lack palette colors (magenta)' : '');
     const transferIndex = data.firaga_transfer && catalog.value === 'lz'
@@ -6543,7 +7742,7 @@ if (data.obj_graphics || data.lz_graphics) {
   }
   function chooseObjCatalog() {
     bank.replaceChildren();
-    lzOffset.disabled = catalog.value !== 'lz';
+    lzOffset.disabled = !payloadSelected();
     selectedBanks().forEach((item, index) => bank.add(new Option(hex(item.source_offset) + (item.context ? ' · ' + item.context : ''), index)));
     chooseObjBank();
   }
@@ -6648,6 +7847,72 @@ if (data.firaga_palette_rows) {
   }
   selected.addEventListener('change', drawFiragaPalette); drawFiragaPalette();
 }
+if (data.signed_map_deltas) {
+  const table = data.signed_map_deltas, section = document.getElementById('signed-map-deltas');
+  const rows = document.getElementById('signed-map-deltas-rows');
+  const selected = document.getElementById('signed-map-delta-index'), rate = document.getElementById('signed-map-delta-rate');
+  const play = document.getElementById('signed-map-delta-play'), stop = document.getElementById('signed-map-delta-stop');
+  const loop = document.getElementById('signed-map-delta-loop'), progress = document.getElementById('signed-map-delta-progress');
+  const position = document.getElementById('signed-map-delta-position'), status = document.getElementById('signed-map-delta-status');
+  const canvas = document.getElementById('signed-map-delta-canvas'), context = canvas.getContext('2d');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  const sign = value => value > 0 ? '+' + value : String(value);
+  let playing = false, timer = null, previous = null;
+  section.hidden = false; keepSelectFocus(play, section);
+  document.getElementById('signed-map-deltas-source').textContent = table.path + ' · source ' + hex(table.source_offset) +
+    ' · stored pointer ' + hex(table.caller_literal, 8) + ' · ' + table.entries.length + ' signed bytes';
+  table.entries.forEach((entry, index) => {
+    selected.add(new Option(index + ' · ' + sign(entry), index));
+    const row = rows.insertRow(), button = document.createElement('button');
+    button.type = 'button'; button.textContent = String(index);
+    button.addEventListener('click', () => { selected.value = String(index); selected.dispatchEvent(new Event('change', {bubbles: true})); });
+    row.insertCell().append(button);
+    [hex(table.source_offset + index), sign(entry), hex(entry & 255, 2)]
+      .forEach(value => { row.insertCell().textContent = value; });
+  });
+  function draw() {
+    const index = Number(selected.value), value = table.entries[index];
+    const low = Math.min(0, ...table.entries), high = Math.max(0, ...table.entries);
+    const height = canvas.height, width = canvas.width;
+    const y = offset => high === low ? height / 2 : 20 + (offset - low) * (height - 40) / (high - low);
+    context.fillStyle = '#f3f6fa'; context.fillRect(0, 0, width, height);
+    context.strokeStyle = '#9aabb7'; context.beginPath(); context.moveTo(24, y(0)); context.lineTo(width - 20, y(0)); context.stroke();
+    context.strokeStyle = '#536c7b'; context.beginPath(); context.moveTo(80, 20); context.lineTo(80, height - 20); context.stroke();
+    context.fillStyle = '#bd3d3d'; context.fillRect(74, Math.round(y(value)) - 6, 12, 12);
+    context.fillStyle = '#263d4a'; context.fillText('0', 12, y(0) - 4); context.fillText('Y ' + sign(value), 104, Math.max(14, Math.min(height - 6, y(value))));
+    if (previous !== null) rows.rows[previous].querySelector('button').removeAttribute('aria-current');
+    rows.rows[index].querySelector('button').setAttribute('aria-current', 'step'); previous = index;
+    progress.max = table.entries.length; progress.value = index + 1;
+    position.textContent = 'Entry ' + (index + 1) + ' of ' + table.entries.length + ' · screen Y ' + sign(value);
+  }
+  function halt() { playing = false; if (timer !== null) clearTimeout(timer); timer = null; stop.disabled = true; }
+  function schedule() {
+    if (!playing) return;
+    const speed = Number(rate.value);
+    if (!Number.isFinite(speed) || speed < 1 || speed > 60) {
+      halt(); status.textContent = 'Choose a preview rate from 1 to 60 steps per second.'; return;
+    }
+    timer = setTimeout(() => {
+      if (!playing) return;
+      let index = Number(selected.value) + 1;
+      if (index >= table.entries.length) {
+        if (!loop.checked) { halt(); status.textContent = 'Offset preview finished.'; return; }
+        index = 0;
+      }
+      selected.value = String(index); draw(); schedule();
+    }, 1000 / speed);
+  }
+  function reschedule() { if (playing) { if (timer !== null) clearTimeout(timer); timer = null; schedule(); } }
+  selected.addEventListener('change', () => { draw(); reschedule(); });
+  rate.addEventListener('input', reschedule);
+  play.addEventListener('click', () => { halt(); playing = true; stop.disabled = false; status.textContent = 'Playing stored entry order.'; schedule(); });
+  stop.addEventListener('click', () => { halt(); status.textContent = 'Offset preview stopped.'; });
+  const panel = section.querySelector('details');
+  panel.addEventListener('toggle', event => {
+    if (event.target === panel && !panel.open && playing) { halt(); status.textContent = 'Offset preview stopped.'; }
+  });
+  draw();
+}
 if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extra_tilemaps || {}).length) {
   document.getElementById('tilemaps').hidden = false;
   const map = document.getElementById('tilemap-id'), graphics = document.getElementById('tilemap-graphics');
@@ -6663,10 +7928,10 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
   const firagaStart = maps.length;
   if (firaga) firaga.maps.forEach(item => maps.push({...item, path: firaga.path}));
   const extraStarts = {}, extra = data.extra_tilemaps || {};
-  ['firaga_matrices', 'soil_rectangles', 'ui_rectangles'].forEach(key => {
+  ['firaga_matrices', 'soil_rectangles', 'ui_rectangles', 'localized_queued', 'stream_bank', 'type2_rectangles'].forEach(key => {
     if (!extra[key]) return;
     extraStarts[key] = maps.length;
-    extra[key].maps.forEach(item => maps.push({...item, path: extra[key].path, metadata: extra[key].metadata}));
+    extra[key].maps.forEach(item => maps.push({...item, path: extra[key].path, metadata: item.metadata || extra[key].metadata}));
   });
   const controls = document.getElementById('firaga-cell-controls'), entries = document.getElementById('firaga-cell-sequence');
   const rate = document.getElementById('firaga-cell-rate'), play = document.getElementById('firaga-cell-play');
@@ -6677,6 +7942,19 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
   const sourceMetadata = document.getElementById('tilemap-source-metadata'), sourceFields = document.getElementById('tilemap-source-fields');
   const templateControls = document.getElementById('tilemap-template-controls'), templateView = document.getElementById('tilemap-template-view');
   const runs = document.getElementById('firaga-cell-runs');
+  const type2Windows = document.getElementById('type2-windows'), type2Rows = document.getElementById('type2-window-rows');
+  const type2 = extra.type2_rectangles, type2Unresolved = document.getElementById('type2-unresolved');
+  if (type2 && (type2.unresolved.length || type2.errors.length)) {
+    type2Unresolved.hidden = false;
+    document.getElementById('type2-unresolved-detail').textContent = type2.unresolved.length + ' unresolved entries · ' +
+      type2.errors.length + ' incomplete source(s)' + (type2.errors.length ? ': ' + type2.errors.slice(0, 5)
+        .map(item => hex(item.source_offset) + ' (' + item.reason + ')').join(', ') : '');
+    const body = document.getElementById('type2-unresolved-rows');
+    type2.unresolved.forEach(item => {
+      const row = body.insertRow(); [hex(item.entry_offset), item.source_offset === null || item.source_offset === undefined ? '—' : hex(item.source_offset), item.reason]
+        .forEach(value => { row.insertCell().textContent = value; });
+    });
+  }
   let playing = false, timer = null, syncingSequence = false;
   let selectedCell = 0;
   maps.forEach((item, index) => {
@@ -6702,6 +7980,11 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     sources.push({label: 'LZ output ' + hex(item.source_offset) + (item.context ? ' · ' + item.context : ''), words: item.words, base: 0, lz: item});
   });
   sources.forEach((item, index) => graphics.add(new Option(item.label, index)));
+  registerTransferGraphics(document.getElementById('tilemaps'), document.getElementById('tilemap-load-transfer'),
+    document.getElementById('tilemap-transfer-load-status'), graphics, (item, raw) => {
+      const index = sources.length, label = 'Transfer ' + (raw ? 'raw input ' : 'LZ output ') + hex(item.source_offset);
+      sources.push({label, words: item.words, base: 0, lz: item, raw}); graphics.add(new Option(label, index));
+    });
   paletteSource.add(new Option('Grayscale indices', 'gray'));
   (data.palettes ? data.palettes.entries : []).forEach((item, index) => {
     palettes.push({label: 'Background descriptor ' + index, banks: item.banks});
@@ -6754,7 +8037,7 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     let missing = 0, missingPalettes = 0;
     if (source && source.lz && words === null) {
       context.clearRect(0, 0, canvas.width, canvas.height);
-      description.textContent = 'Choose an LZ byte offset from 0 to ' + source.lz.decoded_length + '.'; return;
+      description.textContent = 'Choose ' + (source.raw ? 'a raw' : 'an LZ') + ' byte offset from 0 to ' + source.lz.decoded_length + '.'; return;
     }
     if (source && (base.value === '' || !Number.isInteger(first) || first < 0 || first > 1023)) {
       context.clearRect(0, 0, canvas.width, canvas.height);
@@ -6813,6 +8096,13 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     controls.hidden = !isFiraga; encoding.hidden = !isFiraga;
     sourceMetadata.hidden = !selected.metadata;
     sourceFields.textContent = selected.metadata ? JSON.stringify(selected.metadata) : '';
+    const windows = selected.type2_references || []; type2Windows.hidden = !windows.length; type2Rows.replaceChildren();
+    windows.forEach(item => {
+      const row = type2Rows.insertRow();
+      [hex(item.entry_offset), hex(item.raw_byte4, 2) + ' / ' + hex(item.raw_byte5, 2), item.first_row, item.row_count,
+        item.list_headers.map(value => hex(value)).join(', ') || '—', item.transfer_rows.map(value => hex(value)).join(', ') || '—']
+        .forEach(value => { row.insertCell().textContent = value; });
+    });
     if (!isFiraga) stopFiraga();
     else {
       if (!syncingSequence) {
@@ -6909,6 +8199,230 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     if (x >= 0 && x < selected.width && y >= 0 && y < selected.height) showCell(y * selected.width + x);
   });
   base.disabled = true; paletteBank.disabled = true; cellPalettes.disabled = true; chooseTilemap();
+}
+if (data.compact_cell_bank && data.compact_cell_bank.records.length) {
+  const catalog = data.compact_cell_bank, section = document.getElementById('compact-cell-bank');
+  const record = document.getElementById('compact-cell-record'), frame = document.getElementById('compact-cell-frame');
+  const sequence = document.getElementById('compact-cell-sequence'), rate = document.getElementById('compact-cell-rate');
+  const play = document.getElementById('compact-cell-play'), stop = document.getElementById('compact-cell-stop');
+  const loop = document.getElementById('compact-cell-loop'), progress = document.getElementById('compact-cell-progress');
+  const position = document.getElementById('compact-cell-position'), status = document.getElementById('compact-cell-status');
+  const sequenceDetail = document.getElementById('compact-cell-sequence-detail');
+  const graphics = document.getElementById('compact-cell-graphics'), offset = document.getElementById('compact-cell-offset');
+  const base = document.getElementById('compact-cell-base'), paletteSource = document.getElementById('compact-cell-palette');
+  const paletteBank = document.getElementById('compact-cell-palette-bank'), perCell = document.getElementById('compact-cell-use-palettes');
+  const canvas = document.getElementById('compact-cell-canvas'), table = document.getElementById('compact-cell-values');
+  const detail = document.getElementById('compact-cell-detail'), sources = [], palettes = [];
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let playing = false, timer = null;
+  section.hidden = false; keepSelectFocus(play, section);
+  catalog.records.forEach((item, index) => record.add(new Option(hex(item.source_offset) + ' · ' + item.frames.length + ' frames', index)));
+  if (catalog.errors.length) {
+    const errors = document.getElementById('compact-cell-errors'); errors.hidden = false;
+    errors.textContent = catalog.errors.length + ' invalid record(s) omitted: ' + catalog.errors.slice(0, 5)
+      .map(item => hex(item.source_offset) + ' (' + item.reason + ')').join(', ') + (catalog.errors.length > 5 ? ' …' : '');
+  }
+  graphics.add(new Option('Cell indices only', 'none'));
+  (data.bg_graphics ? data.bg_graphics.graphics : []).forEach((item, index) => sources.push({
+    label: 'Background graphic ' + index + ' · ' + hex(item.relative_source), words: item.words, base: item.destination_offset / 32}));
+  (data.ui_graphics ? data.ui_graphics.banks : []).forEach(item => sources.push({label: 'Interface bank ' + hex(item.source_offset), words: item.words, base: 0}));
+  (data.obj_graphics ? data.obj_graphics.banks : []).forEach(item => sources.push({label: 'Object bank ' + hex(item.source_offset), words: item.words, base: 0}));
+  (data.obj_graphics ? data.obj_graphics.archive_banks : []).forEach(item => sources.push({label: 'Object archive ' + hex(item.source_offset), words: item.words, base: 0}));
+  (data.lz_graphics ? data.lz_graphics.streams : []).forEach(item => sources.push({label: 'LZ output ' + hex(item.source_offset), words: item.words, base: 0, lz: item}));
+  sources.forEach((item, index) => graphics.add(new Option(item.label, index)));
+  registerTransferGraphics(section, document.getElementById('compact-cell-load-transfer'),
+    document.getElementById('compact-cell-transfer-load-status'), graphics, (item, raw) => {
+      const index = sources.length, label = 'Transfer ' + (raw ? 'raw input ' : 'LZ output ') + hex(item.source_offset);
+      sources.push({label, words: item.words, base: 0, lz: item, raw}); graphics.add(new Option(label, index));
+    });
+  paletteSource.add(new Option('Grayscale indices', 'gray'));
+  (data.palettes ? data.palettes.entries : []).forEach((item, index) => palettes.push({label: 'Background descriptor ' + index, banks: item.banks}));
+  (data.ui_palettes ? data.ui_palettes.banks : []).forEach(item => {
+    const banks = []; for (let index = 0; index < item.colors.length; index += 16) banks.push(item.colors.slice(index, index + 16));
+    palettes.push({label: 'Interface ' + hex(item.source_offset), banks});
+  });
+  (data.unit_palettes || []).forEach(item => palettes.push({label: 'Unit mode ' + item.variant + ' · bank ' + item.bank, banks: [item.colors]}));
+  palettes.forEach((item, index) => paletteSource.add(new Option(item.label, index)));
+  function currentRecord() { return catalog.records[Number(record.value)]; }
+  function currentFrame() { return currentRecord().frames[Number(frame.value)]; }
+  function currentEntry() { return sequence.value === '' ? null : currentRecord().sequence[Number(sequence.value)]; }
+  function stopPlayback() { playing = false; if (timer !== null) clearTimeout(timer); timer = null; stop.disabled = true; }
+  function describeSequence() {
+    const item = currentEntry(), index = sequence.value === '' ? -1 : Number(sequence.value);
+    const valid = !!item && item.frame_index < currentRecord().frames.length;
+    play.disabled = !valid; progress.max = Math.max(1, currentRecord().sequence.length); progress.value = item ? index + 1 : 0;
+    position.textContent = item ? 'Entry ' + (index + 1) + ' of ' + currentRecord().sequence.length : 'No sequence entry selects this frame.';
+    sequenceDetail.textContent = item ? 'Frame ' + item.frame_index + ' · high flags ' + hex(item.high_flags) +
+      ' · second byte ' + hex(item.second_byte, 2) + (valid ? '' : ' · frame unavailable') : '';
+    return valid;
+  }
+  function showCell(index) {
+    const selected = currentFrame(), value = selected.cells[index], byte = currentRecord().flags === 14;
+    detail.textContent = 'Cell (' + (index % selected.width) + ', ' + Math.floor(index / selected.width) + ') · raw ' +
+      hex(value, byte ? 2 : 4) + (byte ? ' · preview tile ID ' + value : ' · interpreted tile ' + (value & 0x3ff) +
+      ' · horizontal flip ' + ((value & 0x400) ? 'yes' : 'no') + ' · vertical flip ' + ((value & 0x800) ? 'yes' : 'no') +
+      ' · palette ID ' + (value >>> 12)) + '.';
+    table.querySelectorAll('button').forEach((button, position) => button.setAttribute('aria-pressed', String(position === index)));
+  }
+  function drawFrame() {
+    const selected = currentFrame(), group = currentRecord(), byte = group.flags === 14;
+    const source = graphics.value === 'none' ? null : sources[Number(graphics.value)];
+    const words = source && source.lz ? (offset.value === '' ? null : lzWordsAt(source.lz, Number(offset.value))) : source && source.words;
+    const first = Number(base.value), palette = paletteSource.value === 'gray' ? null : palettes[Number(paletteSource.value)];
+    const useCells = !!palette && perCell.checked && !byte;
+    perCell.disabled = !palette || byte; paletteBank.disabled = !palette || useCells;
+    canvas.width = selected.width * 8; canvas.height = selected.height * 8; canvas.style.width = Math.min(canvas.width * 3, 768) + 'px';
+    const context = canvas.getContext('2d'), image = context.createImageData(canvas.width, canvas.height);
+    let missing = 0, missingPalettes = 0, error = '';
+    if (source && source.lz && words === null) error = 'Choose ' + (source.raw ? 'a raw' : 'an LZ') + ' byte offset from 0 to ' + source.lz.decoded_length + '.';
+    else if (source && (base.value === '' || !Number.isInteger(first) || first < 0 || first > 1023)) error = 'Choose a first tile ID from 0 to 1023.';
+    if (!error) selected.cells.forEach((value, index) => {
+      const tileId = byte ? value : value & 0x3ff, tile = tileId - first;
+      const available = source && tile >= 0 && (tile + 1) * 8 <= words.length;
+      const colors = palette ? palette.banks[useCells ? value >>> 12 : Number(paletteBank.value)] : null;
+      if (source && !available) missing++;
+      if (source && available && palette && !colors) missingPalettes++;
+      for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+        let rgb;
+        if (!source) { const shade = byte ? value : (tileId & 15) * 17; rgb = [shade, shade, shade]; }
+        else if (!available) rgb = [255, 0, 255];
+        else if (palette && !colors) rgb = [0, 192, 255];
+        else {
+          const sx = !byte && value & 0x400 ? 7 - x : x, sy = !byte && value & 0x800 ? 7 - y : y;
+          const index = (words[tile * 8 + sy] >>> (sx * 4)) & 15;
+          rgb = colors ? [0, 5, 10].map(shift => Math.floor(((colors[index] >> shift) & 31) * 255 / 31)) : [index * 17, index * 17, index * 17];
+        }
+        const px = (index % selected.width) * 8 + x, py = Math.floor(index / selected.width) * 8 + y, at = (py * canvas.width + px) * 4;
+        image.data[at] = rgb[0]; image.data[at + 1] = rgb[1]; image.data[at + 2] = rgb[2]; image.data[at + 3] = 255;
+      }
+    });
+    context.putImageData(image, 0, 0);
+    document.getElementById('compact-cell-source').textContent = error || catalog.path + ' · record ' + hex(group.source_offset) +
+      ' · frame ' + hex(selected.source_offset) + ' · ' + selected.width + '×' + selected.height + ' · ' +
+      (byte ? 'byte cells' : 'halfword cells') + (source ? ' · ' + missing + ' cells outside graphics (magenta), ' + missingPalettes + ' missing palette banks (cyan).' : ' · grayscale cell indices.');
+    document.getElementById('compact-cell-metadata').textContent = 'Record flags ' + hex(group.flags) + ' · sequence offset ' +
+      hex(group.split_offset) + ' · placement bytes ' + selected.placement.map(value => hex(value, 2)).join(' ') +
+      ' · encoded frame ' + selected.encoded_length + ' bytes.';
+    const runs = document.getElementById('compact-cell-runs'); runs.replaceChildren();
+    selected.tokens.forEach((item, index) => {
+      const row = runs.insertRow(); [index, hex(item.control, 4), item.values.map(value => hex(value, byte ? 2 : 4)).join(', ')]
+        .forEach(value => { row.insertCell().textContent = value; });
+    });
+    table.replaceChildren();
+    for (let y = 0; y < selected.height; y++) {
+      const row = table.insertRow(), heading = document.createElement('th'); heading.scope = 'row'; heading.textContent = y; row.append(heading);
+      for (let x = 0; x < selected.width; x++) {
+        const index = y * selected.width + x, button = document.createElement('button'); button.type = 'button';
+        button.textContent = hex(selected.cells[index], byte ? 2 : 4);
+        button.setAttribute('aria-label', 'Cell ' + x + ', ' + y + ': ' + button.textContent);
+        button.addEventListener('click', () => showCell(index)); row.insertCell().append(button);
+      }
+    }
+    showCell(0);
+  }
+  function chooseSequence() {
+    const item = currentEntry(), valid = describeSequence();
+    if (valid) frame.value = String(item.frame_index);
+    else if (playing) { stopPlayback(); status.textContent = 'The selected sequence frame is unavailable.'; }
+    drawFrame();
+  }
+  function chooseFrame() {
+    const previous = currentEntry(), selected = Number(frame.value);
+    if (!previous || previous.frame_index !== selected) {
+      const match = currentRecord().sequence.findIndex(item => item.frame_index === selected);
+      sequence.value = match < 0 ? '' : String(match);
+    }
+    if (!describeSequence() && playing) { stopPlayback(); status.textContent = 'No sequence entry selects this frame.'; }
+    drawFrame();
+  }
+  function chooseRecord() {
+    const group = currentRecord(), old = Number(sequence.value) || 0;
+    frame.replaceChildren(); sequence.replaceChildren();
+    group.frames.forEach((item, index) => frame.add(new Option(index + ' · ' + hex(item.source_offset), index)));
+    group.sequence.forEach((item, index) => sequence.add(new Option(index + ' · frame ' + item.frame_index, index)));
+    sequence.value = String(Math.min(old, group.sequence.length - 1)); chooseSequence();
+  }
+  function schedule() {
+    if (!playing) return;
+    const speed = Number(rate.value);
+    if (!Number.isFinite(speed) || speed < 1 || speed > 60) { stopPlayback(); status.textContent = 'Choose a preview rate from 1 to 60 frames per second.'; return; }
+    timer = setTimeout(() => {
+      if (!playing) return;
+      let next = Number(sequence.value) + 1;
+      if (next >= currentRecord().sequence.length) {
+        if (!loop.checked) { stopPlayback(); status.textContent = 'Animation preview finished.'; return; }
+        next = 0;
+      }
+      sequence.value = String(next); chooseSequence(); if (playing) schedule();
+    }, 1000 / speed);
+  }
+  function chooseGraphics() {
+    const selected = graphics.value === 'none' ? null : sources[Number(graphics.value)];
+    base.disabled = !selected; offset.disabled = !(selected && selected.lz);
+    if (selected) base.value = String(selected.base); drawFrame();
+  }
+  function choosePalette() {
+    paletteBank.replaceChildren(); const selected = paletteSource.value === 'gray' ? null : palettes[Number(paletteSource.value)];
+    if (selected) selected.banks.forEach((_, index) => paletteBank.add(new Option(index, index))); drawFrame();
+  }
+  record.addEventListener('change', chooseRecord); frame.addEventListener('change', chooseFrame); sequence.addEventListener('change', chooseSequence);
+  play.addEventListener('click', () => { if (!describeSequence()) return; stopPlayback(); playing = true; stop.disabled = false; status.textContent = 'Playing stored entry order.'; schedule(); });
+  stop.addEventListener('click', () => { stopPlayback(); status.textContent = 'Animation preview stopped.'; });
+  rate.addEventListener('input', () => { if (playing) { if (timer !== null) clearTimeout(timer); timer = null; schedule(); } });
+  graphics.addEventListener('change', chooseGraphics); offset.addEventListener('input', drawFrame); base.addEventListener('input', drawFrame);
+  paletteSource.addEventListener('change', choosePalette); paletteBank.addEventListener('change', drawFrame); perCell.addEventListener('change', drawFrame);
+  section.querySelector('details').addEventListener('toggle', event => { if (!event.target.open && playing) { stopPlayback(); status.textContent = 'Animation preview stopped.'; } });
+  chooseRecord(); chooseGraphics(); choosePalette();
+}
+if (data.byte_tilemaps && data.byte_tilemaps.maps.length) {
+  const catalog = data.byte_tilemaps, section = document.getElementById('byte-tilemaps'); section.hidden = false;
+  const selector = document.getElementById('byte-tilemap-id'), canvas = document.getElementById('byte-tilemap-canvas');
+  const table = document.getElementById('byte-tilemap-cells'), detail = document.getElementById('byte-tilemap-cell-detail');
+  const references = document.getElementById('byte-tilemap-references');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  catalog.maps.forEach((item, index) => selector.add(new Option(hex(item.source_offset) + ' · ' + item.width + '×' + item.height, index)));
+  function selectCell(index) {
+    const item = catalog.maps[Number(selector.value)], value = item.cells[index];
+    detail.textContent = 'Cell (' + (index % item.width) + ', ' + Math.floor(index / item.width) + ') · value ' + value + ' · ' + hex(value, 2) + '.';
+    table.querySelectorAll('button').forEach((button, position) => button.setAttribute('aria-pressed', String(position === index)));
+  }
+  function drawByteTilemap() {
+    const item = catalog.maps[Number(selector.value)], fields = item.metadata;
+    document.getElementById('byte-tilemap-source').textContent = catalog.path + ' · source ' + hex(item.source_offset) +
+      ' · ' + item.width + '×' + item.height + ' cells · origin ' + fields.origin_x + ', ' + fields.origin_y +
+      ' · mode ' + fields.mode + ' · flags ' + hex(fields.flags, 2) + ' · encoded extent ' + fields.encoded_extent + ' bytes';
+    document.getElementById('byte-tilemap-control-source').textContent = catalog.controls_path;
+    references.replaceChildren();
+    item.references.forEach(reference => {
+      const row = references.insertRow();
+      [reference.row_offset, reference.descriptor_offset].forEach(value => { row.insertCell().textContent = hex(value); });
+    });
+    canvas.width = item.width * 8; canvas.height = item.height * 8; canvas.style.width = Math.min(canvas.width * 3, 768) + 'px';
+    const context = canvas.getContext('2d'), image = context.createImageData(canvas.width, canvas.height);
+    table.replaceChildren();
+    for (let y = 0; y < item.height; y++) {
+      const row = table.insertRow(), heading = document.createElement('th'); heading.scope = 'row'; heading.textContent = y; row.append(heading);
+      for (let x = 0; x < item.width; x++) {
+        const index = y * item.width + x, value = item.cells[index], button = document.createElement('button');
+        button.type = 'button'; button.textContent = hex(value, 2); button.setAttribute('aria-label', 'Cell ' + x + ', ' + y + ': ' + button.textContent);
+        button.addEventListener('click', () => selectCell(index)); row.insertCell().append(button);
+        for (let py = 0; py < 8; py++) for (let px = 0; px < 8; px++) {
+          const position = ((y * 8 + py) * canvas.width + x * 8 + px) * 4;
+          image.data[position] = image.data[position + 1] = image.data[position + 2] = value; image.data[position + 3] = 255;
+        }
+      }
+    }
+    context.putImageData(image, 0, 0); selectCell(0);
+  }
+  selector.addEventListener('change', drawByteTilemap);
+  canvas.addEventListener('click', event => {
+    const rect = canvas.getBoundingClientRect(), item = catalog.maps[Number(selector.value)];
+    if (!rect.width || !rect.height) return;
+    const x = Math.floor((event.clientX - rect.left) / rect.width * item.width);
+    const y = Math.floor((event.clientY - rect.top) / rect.height * item.height);
+    if (x >= 0 && x < item.width && y >= 0 && y < item.height) selectCell(y * item.width + x);
+  });
+  drawByteTilemap();
 }
 // Selection links contain only control IDs and option positions, never option labels.
 {

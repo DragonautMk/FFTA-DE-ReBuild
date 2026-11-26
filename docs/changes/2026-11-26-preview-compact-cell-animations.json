@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "preview-compact-cell-animations",
+  "title": "Preview compact-cell animations",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Decode independently authenticated compact-cell records, byte/halfword frames and sequence entries, isolating malformed records.",
+    "Browse and preview stored frame order with adjustable speed and loop, persistent controls, selectable graphics and palettes, and inspectable cells and run fields."
+  ],
+  "validation": [
+    "Synthetic Chrome unit bqw7ty2z passed 47 projection, focus, playback, palette, isolation and regression checks; initial d121w53o exposed a corrected fixture count error.",
+    "Protected EUR unit 9dcxp6zh authenticated 205 ranges, independently decoded 91 records, 493 frames, 563 entries and 35124 cells, checked all frames and entries in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 18 Docker/Python files. Twelve ignored wiki pages were published.",
+    "An initial launch under the temporary filesystem was refused by the free-space floor; the passing unit used the project target with the same reserve."
+  ],
+  "limitations": [
+    "Playback uses a user-selected preview rate; original timing, transparency, live graphics/palette pairings, scene composition and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_compact_cell_bank_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -141,7 +141,7 @@ class EventScriptsBrowserTest(unittest.TestCase):
                   q('#event-script-variant').value='1';change(q('#event-script-variant'));
                   q('#event-script-language').value='1';change(q('#event-script-language'));
                   const link=q('#event-script-text-open').href;
-                  if(!link.includes('text.html')||!link.includes('script-bank%3A1')||!link.includes('script-language%3A1'))throw Error('text link');
+                  if(!link.includes('text-scripts.html')||!link.includes('script-bank%3A1')||!link.includes('script-language%3A1'))throw Error('text link');
                   q('#event-script-target button').click();
                   if(q('#event-script-bank').value!=='2'||!q('#event-script-target').textContent.includes('fill at'))throw Error('header navigation/fill');
                   q('#event-script-program').value='2';change(q('#event-script-program'));
@@ -156,7 +156,7 @@ class EventScriptsBrowserTest(unittest.TestCase):
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);return q('#event-script-key').value==='2'&&
                   q('#event-script-program-view').hidden&&q('#event-script-target').textContent.includes('bank header 2');})()'''))
                 navigate(browser, links['link'])
-                self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);return data.wiki.current==='text'&&
+                self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);return data.wiki.current==='text-scripts'&&
                   q('#script-texts>details').open&&q('#script-language').value==='1'&&q('#script-bank').value==='1';})()'''))
             finally:
                 browser.close()

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-world-region-name-references",
+  "title": "Browse world region name references",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Add a collapsible searchable directory of the 31 source-backed EUR region name references, with language selection and links to the original extracted text.",
+    "Link six source-shaped recorded placements to map nodes, including region 16, while retaining conditional placement and source-identity gates."
+  ],
+  "validation": [
+    "Synthetic Chrome unit t1s_3vy8 passed 44 projection, filtering, navigation, partial-language and regression checks.",
+    "Protected EUR e339/d338 unit mo2faka0 checked two source windows, 155 extracted text sequences and six conditional placements; Chrome navigation, 11 scope payloads, 145 unchanged resource pages and 16 Docker/Python files passed. Twelve ignored wiki pages were published.",
+    "Standalone unittest discovery initially failed to find the scripts module; focused unit yq73x3mi passed all three tests after correcting its import path."
+  ],
+  "limitations": [
+    "Name references follow a conditional original list; recorded placement can change and other region positions, other profiles and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "scripts/tests/test_viewer_world_regions_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

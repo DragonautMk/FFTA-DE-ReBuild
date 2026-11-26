@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "trace-recorded-scene-rom-banks",
+  "title": "Trace attached ROM-data banks in recorded scenes",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Allow the recorded-scene comparator to watch named source roles in the attached authenticated manifest. Invert those backing bytes during decoded execution, restore them before state comparison, and retain the bounded serving-path trace.",
+    "Use the attached manifest for scene source audit ownership and optional timed-sound source selection."
+  ],
+  "validation": [
+    "Windows test build e549-map-bank-trace-build-7wo4tdnz and Wine e549-map-bank-trace-wine-lg61xqgl pass. The e337-d336 scene matches all 41 frames of state, clock, central and wide video, OAM, dispatch and five nonempty audio streams. Four context reads are typed and none overlap the altered 100 lookup bytes. Zero requests are dropped and Wine releases the prefix."
+  ],
+  "limitations": [
+    "The map-menu recording starts after language selection and has no observed E537 table or literal reads. Live producers, translated lookup calls and original BIOS copies remain open. Linux, USA and native Windows are deferred. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/validation_tests.rs"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

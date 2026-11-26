@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "split-text-archive-scopes",
+  "title": "Split text archive views into focused pages",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Add separate pointer, relative and script text pages while retaining the combined archive search and routing source links to the appropriate page.",
+    "Persist pinned language and text display preferences across pages when browser storage is available."
+  ],
+  "validation": [
+    "Synthetic unit l5t1ecc_ passed 52 of 53 checks; the failing navigation test targeted whitespace in a wrapped link. The corrected focused Chrome unit byl9lek3 passed.",
+    "An unaccepted EUR e339 candidate measured 21,646,829 bytes for the combined text page and 7,534,167 bytes for its pointer-only page; this is a size observation, not acceptance.",
+    "EUR unit 7916yrmi reached Chrome after candidate generation and Docker comparison but failed on a DevTools timeout while the filesystem was stalled; its diagnostics were retained.",
+    "Corrected isolated synthetic unit w2vnicj9 passed all 53 scope, text, navigation, settings and generator checks."
+  ],
+  "limitations": [
+    "Real EUR and Docker validation and publication remain pending; the current local wiki uses e339/d338. Browser storage may be unavailable; Windows verification remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_text_scopes_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_event_scripts_browser.py",
+    "scripts/tests/test_viewer_job_names_browser.py",
+    "scripts/tests/test_viewer_metadata_names_browser.py",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "scripts/tests/test_viewer_world_regions_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": []
+}

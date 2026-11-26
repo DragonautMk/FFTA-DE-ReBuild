@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-world-map-label-reads",
+  "title": "Verify both European world map label readers in normal play",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Use the authenticated Select gate and the retained Area List confirmation to verify both normal consumers of the existing E537 label table. Check all 29 enabled Area List slots against the original availability fields."
+  ],
+  "validation": [
+    "Wine 72b0p6g0 records two typed label and literal requests at frame 19052 for Select slot 8, and 58 at frame 3220 for all enabled list slots. With all 100 E537 bytes altered, all 16 and 186 frames match complete state, clock, video, OAM, dispatch and five nonempty audio streams.",
+    "The Windows children exit 0 and Wine drains. The initial receipt retains private input files. Host reconciliation biljwb2l passes the original guards, both logs and exact trace frames without running Wine again."
+  ],
+  "limitations": [
+    "The selected snapshots start after language selection and use HLE BIOS. Other live label slots, the ordinary boundary alias, startup lineage, direct translated reads, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

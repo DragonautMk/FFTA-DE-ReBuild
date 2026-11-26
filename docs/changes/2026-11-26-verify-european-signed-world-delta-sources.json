@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-signed-world-delta-sources",
+  "title": "Authenticate the European signed world delta table and constructor boundaries",
+  "kind": "docs",
+  "platforms": [
+    "EUR source and retained Wine evidence"
+  ],
+  "changes": [
+    "Reconcile all four constructor defaults and both neighboring source roots against e337-d336. Identify the complete 48-entry signed table and its original literal and index guard."
+  ],
+  "validation": [
+    "Protected source census kk_mzy8p verifies the EUR ROM, all spans, direct load instructions and seven previously validated Wine inventories. The three 28-byte peers have no proved producer. The interior address-shaped word lies in PCM and has zero matching literal loads. The signed table and its literal account for 52 unowned bytes."
+  ],
+  "limitations": [
+    "The seven retained inventories have no overlaps. The new table still needs file-backed runtime and ordinary-use proof. Constructor peer producers, Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}

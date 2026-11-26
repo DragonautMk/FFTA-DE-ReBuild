@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "recover-european-timed-sound-census",
+  "title": "Recover European timed sound census",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Recover the complete source-derived E539 timed sound plan after temporary recovery files disappeared, retaining 552 proposed cases and prior-owner bindings."
+  ],
+  "validation": [
+    "Static managed units tw2wt2yp and 41spvgah pass against the exact EUR ROM and e333 manifest. The recovered 6,249-byte projection matches its prior fingerprint."
+  ],
+  "limitations": [
+    "Typed extraction, runtime ownership and the Wine checks remain open. Linux, USA, native Windows and ordinary gameplay remain on the recovery checklist. Terra reasoning effort was not independently confirmed."
+  ],
+  "files": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

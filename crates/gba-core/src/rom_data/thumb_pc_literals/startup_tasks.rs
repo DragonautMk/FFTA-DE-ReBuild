@@ -110,7 +110,7 @@ pub(super) fn extract(rom: &[u8], layout: SourceLayout) -> Result<Vec<LiteralWor
     let count = match layout {
         SourceLayout::StartupTaskRoots => INSTALLATION_ROOT_COUNT,
         SourceLayout::StartupTaskDispatcher => DISPATCHER_ROOT_COUNT,
-        SourceLayout::TitleTaskCallbacks | SourceLayout::TitleFrontend => FULL_ROOT_COUNT,
+        layout if layout >= SourceLayout::TitleTaskCallbacks => FULL_ROOT_COUNT,
         _ => return Err("Invalid startup task layout".into()),
     };
     if ffta_rom::digest(&rom[0x36c4..0x3712]) != INSTALLER_SHA256 {

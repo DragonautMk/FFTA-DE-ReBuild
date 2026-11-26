@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-transfer-lz77-inputs",
+  "title": "Browse compressed tilemap transfer inputs",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Decode individually authenticated LZ77 transfer inputs and make them available as manually interpreted tiles, tilemap graphics and object-animation sources.",
+    "Preserve the source file and offset, reject malformed or overlapping inputs, and keep earlier observed streams independently available."
+  ],
+  "validation": [
+    "Synthetic unit edpestec passed 54 of 55 checks; after correcting an 8-bit tile fixture, focused unit fk63b8__ passed four checks.",
+    "Protected EUR unit xaic34k0 independently decoded 13 authenticated streams and 6112 bytes, checked all 13 tile previews, preserved scope data and 145 resource pages, and matched 19 Docker/Python outputs. Eleven local wiki pages were published."
+  ],
+  "limitations": [
+    "These are manual interpretations; original graphics/palette pairing, final screens and Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_transfer_lz_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

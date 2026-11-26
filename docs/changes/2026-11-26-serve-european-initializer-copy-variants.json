@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-initializer-copy-variants",
+  "title": "Serve European initializer copy register variants",
+  "kind": "added",
+  "platforms": [
+    "Windows tests under Wine, European ROM"
+  ],
+  "changes": [
+    "Extend the copied lookup resource with thirteen previously unowned word fragments and fifteen pointer literals, preserving existing copied lookup and palette owners."
+  ],
+  "validation": [
+    "Wine census m6gmfq5h, Windows build tejjsew0 and Wine hoduqk8r passed: sixteen original interpreter/generated copies, altered backing, boundaries, full state and clock, preparation/reuse, exact e335 predecessor and transactional rejection; Wine drained."
+  ],
+  "limitations": [
+    "The census covers literal-rooted disjoint-base patterns only; ordinary entry, other formats, original BIOS, Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/initializer_variants.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/initializer_variant_bank_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

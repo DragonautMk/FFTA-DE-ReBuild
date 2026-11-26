@@ -109,7 +109,7 @@ class ScopeBrowserTest(unittest.TestCase):
                     self.fail('Scope did not load: ' + current)
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=[...q('#rows').rows].find(r=>r.cells[0].textContent.includes('audio.m4a-tones'));
-                  return !q('#wiki-pages').hidden && q('#wiki-page-links').querySelectorAll('a').length===11 &&
+                  return !q('#wiki-pages').hidden && q('#wiki-page-links').querySelectorAll('a').length===15 &&
                     typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
                     row.querySelector('a').textContent.includes('Browse Audio') && !q('#tree-load-large');
                 })()'''))

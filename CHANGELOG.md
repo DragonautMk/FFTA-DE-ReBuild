@@ -3,6 +3,694 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-26 — Verify generated loads across the European map lookup bank
+
+Type: added. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Add one focused TinyCC comparison of the six original map lookup load instructions against the interpreter. Use the existing authenticated dataset with all five backing spans altered.
+
+**Validation**
+
+- Windows build gkmt47rd and Wine _tm3qa43 pass. The 93 direct generated bus requests cover all 100 E537 bytes and both table-edge aliases. Complete state and guest clock match after each instruction. Protected inputs pass and Wine drains.
+
+**Limitations**
+
+- The test supplies controlled effective addresses to isolated instructions. Generated dispatch in ordinary play, exact startup caller, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-26-verify-generated-european-map-lookups.json)
+
+## 2026-11-26 — Verify and retain the European e340 dataset on Wine
+
+Type: docs. Platforms: Standard Windows CLI under Wine, European profile.
+
+**Changes**
+
+- Stage the current dataset from retained e339 files and the E561 manifest and literal packet hashes. Bind all 357 added words through the authenticated E560 plan.
+
+**Validation**
+
+- Build qdoiyxhd and Wine yid7rliw pass. Verify checks 157 files, prepare reuses the ready generation, all 18 guards pass and Wine drains. The exact e340 dataset is retained for the next reader checks.
+
+**Limitations**
+
+- Fresh CLI creation, live placement, native Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-world-state-literal-cli.json)
+
+## 2026-11-26 — Verify and reuse the complete European e339 dataset on Wine
+
+Type: docs. Platforms: Standard Windows CLI under Wine, European profile.
+
+**Changes**
+
+- Verify the materialized e339 world-node dataset using the E558 manifest as its identity anchor. Exercise standard preparation with an already selected generation.
+
+**Validation**
+
+- Build 5zqo_73f and Wine k44ipd3_ pass. Verify checks 157 files and prepare reports reused. All file and selector hashes remain stable, all 13 input guards pass and the server drains.
+
+**Limitations**
+
+- Fresh CLI creation, ordinary placement, native Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-world-node-dispatch-cli.json)
+
+## 2026-11-26 — Verify both European world map label readers in normal play
+
+Type: docs. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Use the authenticated Select gate and the retained Area List confirmation to verify both normal consumers of the existing E537 label table. Check all 29 enabled Area List slots against the original availability fields.
+
+**Validation**
+
+- Wine 72b0p6g0 records two typed label and literal requests at frame 19052 for Select slot 8, and 58 at frame 3220 for all enabled list slots. With all 100 E537 bytes altered, all 16 and 186 frames match complete state, clock, video, OAM, dispatch and five nonempty audio streams.
+- The Windows children exit 0 and Wine drains. The initial receipt retains private input files. Host reconciliation biljwb2l passes the original guards, both logs and exact trace frames without running Wine again.
+
+**Limitations**
+
+- The selected snapshots start after language selection and use HLE BIOS. Other live label slots, the ordinary boundary alias, startup lineage, direct translated reads, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-world-map-label-reads.json)
+
+## 2026-11-26 — Verify European calendar language through startup and file load
+
+Type: docs. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Follow a normal French selection at the original startup selector through File No. 2 load, using the same machine and the existing authenticated e337-d336 dataset.
+
+**Validation**
+
+- Wine thd38sqm reaches the French month 3 offset and its literal at frame 2224, using the original Thumb interpreter with all 100 E537 backing bytes altered. Both requests are typed and the trace drops none. All 1,580 frames match complete state, clock, video, OAM, dispatch and five nonempty audio streams. Protected inputs pass and Wine drains.
+
+**Limitations**
+
+- The replay begins at the startup selector checkpoint at frame 900. Other live languages and months, the 08033448 dispatch context, direct translated reads, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-startup-calendar-language.json)
+
+## 2026-11-26 — Authenticate the European signed world delta table and constructor boundaries
+
+Type: docs. Platforms: EUR source and retained Wine evidence.
+
+**Changes**
+
+- Reconcile all four constructor defaults and both neighboring source roots against e337-d336. Identify the complete 48-entry signed table and its original literal and index guard.
+
+**Validation**
+
+- Protected source census kk_mzy8p verifies the EUR ROM, all spans, direct load instructions and seven previously validated Wine inventories. The three 28-byte peers have no proved producer. The interior address-shaped word lies in PCM and has zero matching literal loads. The signed table and its literal account for 52 unowned bytes.
+
+**Limitations**
+
+- The seven retained inventories have no overlaps. The new table still needs file-backed runtime and ordinary-use proof. Constructor peer producers, Linux and USA remain open. No performance measurements.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-signed-world-delta-sources.json)
+
+## 2026-11-26 — Verify and reuse the European signed delta dataset on Wine
+
+Type: docs. Platforms: Standard Windows CLI under Wine, European profile.
+
+**Changes**
+
+- Compare the locally materialized e338-d337 manifest with the E555 candidate. Exercise current and previous revision verification and the ready-generation reuse path of rom-data prepare.
+
+**Validation**
+
+- Build lzjcn9ux and Wine z7fmbzql pass. Each retained revision verifies 157 files, and prepare reports reused with the generation and selector unchanged. All 16 input guards pass and the server drains.
+
+**Limitations**
+
+- The test uses an already selected generation in scratch. Fresh CLI publication, ordinary use, original BIOS, Linux, USA and native Windows remain deferred. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-signed-delta-cli-reuse.json)
+
+## 2026-11-26 — Verify European calendar lookup during normal travel
+
+Type: docs. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Link the authenticated day-advance and calendar caller to the retained Giza travel suffix. Record the second calendar caller and the label record-list call as source evidence.
+
+**Validation**
+
+- Wine e550-calendar-travel-wine-ycsv0f81 reuses the E549 binary and e337-d336 dataset with all 100 E537 source bytes altered. At frame 19147, two Thumb interpreter sites read the typed calendar literal and the English month 2 offset. All 33 frames match full state, clock, video, OAM, dispatch and five nonempty audio streams. Inputs remain unchanged, the trace drops no requests and Wine drains.
+
+**Limitations**
+
+- The HLE BIOS recording begins after language selection. Continuous startup lineage, other ordinary calendar and label paths, direct translated reads, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [ROM_DATA_TODO.md](docs/development/ROM_DATA_TODO.md).
+
+[Change record](docs/changes/2026-11-26-verify-european-calendar-travel.json)
+
+## 2026-11-26 — Trace attached ROM-data banks in recorded scenes
+
+Type: added. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Allow the recorded-scene comparator to watch named source roles in the attached authenticated manifest. Invert those backing bytes during decoded execution, restore them before state comparison, and retain the bounded serving-path trace.
+- Use the attached manifest for scene source audit ownership and optional timed-sound source selection.
+
+**Validation**
+
+- Windows test build e549-map-bank-trace-build-7wo4tdnz and Wine e549-map-bank-trace-wine-lg61xqgl pass. The e337-d336 scene matches all 41 frames of state, clock, central and wide video, OAM, dispatch and five nonempty audio streams. Four context reads are typed and none overlap the altered 100 lookup bytes. Zero requests are dropped and Wine releases the prefix.
+
+**Limitations**
+
+- The map-menu recording starts after language selection and has no observed E537 table or literal reads. Live producers, translated lookup calls and original BIOS copies remain open. Linux, USA and native Windows are deferred. No performance measurements.
+
+Documentation: [ROM_DATA_VALIDATION.md](docs/development/ROM_DATA_VALIDATION.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md), [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-26-trace-recorded-scene-rom-banks.json)
+
+## 2026-11-26 — Identify the European world-node drawing dispatch and mode producer
+
+Type: docs. Platforms: European source and retained Wine state evidence.
+
+**Changes**
+
+- Trace the signed map delta reader to a 30-node drawing loop and its five-entry dispatch. Trace the scheduler and stage 9 initializers through the 256-entry outer switch, and identify the 52 remaining unowned dispatch and literal bytes as one family.
+
+**Validation**
+
+- Metadata unit 785naf3v passes 54 input guards and finds no mode 1 or registered stage 8, 9 or 10 in 45 selected retained EUR snapshots. It authenticates all 17 renderer literals and the three original direct call sites.
+
+**Limitations**
+
+- Ordinary execution requires a normal placement recording before stage 9. Inner dispatch publication, generated dispatch, original BIOS, Linux, USA and native Windows remain open. No new scene replay or performance measurement.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-trace-european-world-node-drawing-dispatch.json)
+
+## 2026-11-26 — Split text archive views into focused pages
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Add separate pointer, relative and script text pages while retaining the combined archive search and routing source links to the appropriate page.
+- Persist pinned language and text display preferences across pages when browser storage is available.
+
+**Validation**
+
+- Synthetic unit l5t1ecc_ passed 52 of 53 checks; the failing navigation test targeted whitespace in a wrapped link. The corrected focused Chrome unit byl9lek3 passed.
+- An unaccepted EUR e339 candidate measured 21,646,829 bytes for the combined text page and 7,534,167 bytes for its pointer-only page; this is a size observation, not acceptance.
+- EUR unit 7916yrmi reached Chrome after candidate generation and Docker comparison but failed on a DevTools timeout while the filesystem was stalled; its diagnostics were retained.
+- Corrected isolated synthetic unit w2vnicj9 passed all 53 scope, text, navigation, settings and generator checks.
+
+**Limitations**
+
+- Real EUR and Docker validation and publication remain pending; the current local wiki uses e339/d338. Browser storage may be unavailable; Windows verification remains deferred.
+
+[Change record](docs/changes/2026-11-26-split-text-archive-scopes.json)
+
+## 2026-11-26 — Show an observed world location name
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose the source-backed, conditional EUR region-to-node observation as a collapsible localized world-map entry with a link to its original text catalog.
+- Restrict the association to the authenticated world-node and text-catalog files and keep other datasets unnamed.
+
+**Validation**
+
+- Synthetic unit 22pyjgbt passed 38 of 39 checks including glyph fallback, identity gates and single-page navigation; the corrected wrapped-link click passed in zg52_9wm.
+- Protected EUR unit hl7y6830 matched all five localized token sequences, checked map and text-page navigation, preserved ten other scope payloads and 145 resource pages, and matched 15 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- Region placement was observed in one game situation, not proved invariant. Other location names and placements remain open; Windows was deferred.
+- Initial EUR unit iet5gnim expected an unmapped German glyph although the glyph was recognized. Its candidate and Docker outputs were reused in the successful check. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-26-show-observed-world-location-name.json)
+
+## 2026-11-26 — Serve the complete European world-state task literal bank
+
+Type: changed. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Publish all 357 unowned world-state task words in engine.thumb-pc-literals for e340-d339 and enable runtime page 34. Preserve the 15 earlier word owners, the outer switch, the exact e339 packet and the e339 renderer test revision.
+
+**Validation**
+
+- Wine y1oruut7 and Windows build eght_zk0 pass. All 381 original load sites are typed, with equal registers and guest clock per load and an equal final full state. Twenty-four mixed mirror requests, e339 attachment and rejection of an incomplete e340 pass. Fifteen guards pass and Wine drains.
+
+**Limitations**
+
+- The unit rebuilds the changed packet in memory over e339. Standard CLI publication, ordinary placement, generated readers, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-world-state-task-literals.json)
+
+## 2026-11-26 — Serve the complete European world-node drawing dispatch bank
+
+Type: changed. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Serve all five switch destinations and the eight remaining renderer words through the existing engine catalogs in e339-d338. Preserve e338 packet encoding, outer-switch ownership, adjacent raw bytes and the earlier signed-table test revision.
+
+**Validation**
+
+- Windows build 2g4q1n7b and Wine ua5x_s_7 pass. Five targets, four bypasses and two draw windows match full state and guest clock with changed backing. Each of the 35 observed requests is typed. Predecessor attachment and transactional rejection of an incomplete revision pass.
+
+**Limitations**
+
+- The test replaces only the two changed packets in memory using the retained e338 dataset. CLI publication, ordinary placement, generated dispatch, original BIOS, native Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-world-node-dispatch-bank.json)
+
+## 2026-11-26 — Serve European two-word initializer pairs
+
+Type: added. Platforms: Windows tests under Wine, European ROM.
+
+**Changes**
+
+- Add ten physical two-word initializer arrays and thirteen literal roots to the copied lookup resource, preserving shared addresses and previous Firaga ownership.
+
+**Validation**
+
+- Wine census x24m4_a0, Windows build bk4evfo2 and Wine xtp6kbf3 passed: thirteen original interpreter/generated readers, shared aliases, altered backing, 32-bit boundaries, full state and clock, preparation/reuse, exact e336 predecessor and transactional rejection; Wine drained.
+
+**Limitations**
+
+- The first Wine attempt qisp2u56 failed because its test expected a stop between chained adjacent generated blocks; the grouped retry passed. Ordinary entry, other formats, original BIOS, Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-two-word-initializers.json)
+
+## 2026-11-26 — Serve European timed sound banks
+
+Type: changed. Platforms: EUR, Wine.
+
+**Changes**
+
+- Publish the authenticated timed-sound literal, directory, count, RAM-source-word and record spans in e334-d333. Preserve existing owners and predecessor attachment.
+
+**Validation**
+
+- Windows build 54qwtb0b and Wine zw1q89b2 pass. The test executes 552 original caller setups and selected scheduler reads with altered backing. The resource serves 5,371 typed bytes. Guest clock and full state match, the predecessor attaches, and incomplete current data is rejected transactionally. Wine drains. Failed wrapper and fixture attempts are recorded.
+
+**Limitations**
+
+- Ordinary scenes, full scheduler behavior, indirect callers, translated and original-BIOS paths, Linux, USA and native Windows remain open. No performance measurements. Terra reasoning effort unconfirmed.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-timed-sound-banks.json)
+
+## 2026-11-26 — Serve the complete European signed map delta table
+
+Type: changed. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- Store all 48 signed map deltas and their original pointer as authenticated typed raw-transfer sources in e338-d337. Preserve the exact e337-d336 packet and backing ROM routing for the adjacent constructor record.
+
+**Validation**
+
+- Wine hszbu_3b passes 48 accepted indices, two rejections, 96 typed reads over 52 altered source bytes, full state and guest clock, e337-d336 attachment and rejection of an incomplete revision. The server drained.
+
+**Limitations**
+
+- The test uses the retained e337 dataset and builds the changed packet in memory. CLI publication and verification, ordinary gameplay, generated dispatch, original BIOS, native Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-signed-map-deltas.json)
+
+## 2026-11-26 — Serve European initializer copy register variants
+
+Type: added. Platforms: Windows tests under Wine, European ROM.
+
+**Changes**
+
+- Extend the copied lookup resource with thirteen previously unowned word fragments and fifteen pointer literals, preserving existing copied lookup and palette owners.
+
+**Validation**
+
+- Wine census m6gmfq5h, Windows build tejjsew0 and Wine hoduqk8r passed: sixteen original interpreter/generated copies, altered backing, boundaries, full state and clock, preparation/reuse, exact e335 predecessor and transactional rejection; Wine drained.
+
+**Limitations**
+
+- The census covers literal-rooted disjoint-base patterns only; ordinary entry, other formats, original BIOS, Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-initializer-copy-variants.json)
+
+## 2026-11-26 — Serve European literal-rooted initializer copies
+
+Type: added. Platforms: Windows tests under Wine, European ROM.
+
+**Changes**
+
+- Extend the copied lookup resource with fourteen typed initializer word arrays and their pointer literals, preserving three previously owned arrays and e334 predecessor compatibility.
+
+**Validation**
+
+- Wine census m0qm_8f4, Windows build rt7n1bgc and Wine sdjtlh9f passed: original interpreter and generated copies, altered backing, boundary reads, state and clock, preparation/reuse, predecessor attachment and transactional rejection; Wine drained.
+
+**Limitations**
+
+- The census covers the selected exact instruction pattern, not all copy formats or ordinary entry. Linux, USA, native Windows, original BIOS and downstream semantics remain pending. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-serve-european-initializer-copy-bank.json)
+
+## 2026-11-26 — Preview world offsets in European e339
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored European wiki and dataset to extractor 339 / decoder 338 and retain e338 for comparison.
+- Show each signed map offset as a vertical displacement and allow selected-entry playback, a chosen rate, looping and a collapsible values table.
+
+**Validation**
+
+- Protected unit buwzwh4e matched every dataset file and the manifest accepted by e558-world-node-dispatch-wine-ua5x_s_7, using 154 unchanged resources and nine authenticated source spans.
+- Synthetic Chrome unit s91ptt4q passed 45 tests. After adding a zero-only case and nested-section check, focused unit 8ub0enyk passed six tests.
+- Protected EUR unit rom-data-viewer-refresh-e339-view-fpd_62za compared all 48 displayed values with the source, checked playback and five pages in Chrome, preserved 11 topic payloads apart from the two changed resource rows and 143 resource pages, and matched 16 Docker/Python files. Fifteen ignored wiki files and the dataset link were published.
+
+**Limitations**
+
+- Preview order and rate do not establish the live index, region placement or original timing. Other previews and audio fidelity remain open; native Windows was deferred.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e339-offset-preview.json)
+
+## 2026-11-26 — Browse signed map offsets in European e338
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored European wiki and dataset to extractor 338 / decoder 337 and retain e337 for comparison.
+- Expose 48 source-backed signed map offsets with their indices, byte values and offsets in an independently collapsible world view; isolate malformed table and rectangle projections.
+
+**Validation**
+
+- Protected unit n0musgix matched every dataset file and the manifest accepted by e555-signed-map-deltas-wine-hszbu_3b, using 155 unchanged prior resources and authenticated new source bytes.
+- Synthetic Chrome unit txfibfdr passed 41 tests. Protected EUR unit _yqtclhf compared all 48 displayed values to the source, checked four pages and the on-demand transfer asset, preserved 11 topic payloads apart from the changed resource/view and 144 prior resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files and the dataset link were published.
+
+**Limitations**
+
+- The values do not identify named locations or establish the live traversal. Other previews and audio fidelity remain open; native Windows was deferred.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e338-d337.json)
+
+## 2026-11-26 — Refresh local viewer to European e337
+
+Type: changed. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored European wiki and local dataset to extractor 337 / decoder 336 while retaining the e336 comparison dataset.
+
+**Validation**
+
+- Protected unit y_rfw70r combined 155 unchanged authenticated files with the core-generated copied-lookup catalog and matched every file and the manifest accepted in xtp6kbf3.
+- Protected unit 8xh8zwqj checked six wiki pages in Chrome, preserved ten topic payloads and 144 prior file pages, and matched 15 Docker/Python outputs for the updated resource. Thirteen ignored wiki files were published.
+
+**Limitations**
+
+- The core-only export is not a full Linux application build. Windows and other resource previews remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e337-d336.json)
+
+## 2026-11-26 — Refresh local viewer to European e336
+
+Type: changed. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored European wiki and local dataset to extractor 336 / decoder 335 while retaining the e335 comparison dataset.
+
+**Validation**
+
+- Protected unit yxq3a7bk combined 155 unchanged authenticated files with the core-generated copied-lookup catalog and matched every file and the manifest accepted in hoduqk8r.
+- Protected unit 2yzppv5w checked six wiki pages in Chrome, preserved ten topic payloads and 144 prior file pages, and matched 15 Docker/Python outputs for the updated resource. Thirteen ignored wiki files were published.
+
+**Limitations**
+
+- The core-only export is not a full Linux application build. Windows and other resource previews remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e336-d335.json)
+
+## 2026-11-26 — Refresh local viewer to European e335
+
+Type: changed. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored European wiki and local dataset to extractor 335 / decoder 334 while retaining the e334 comparison dataset.
+
+**Validation**
+
+- Protected unit mkd3en8j combined 155 unchanged authenticated files with the core-generated copied-lookup catalog and matched every file and the manifest accepted in sdjtlh9f.
+- Protected unit u_3wn8yk checked six wiki pages in Chrome, preserved ten topic payloads and 144 prior file pages, and matched 15 Docker/Python outputs for the updated resource. Thirteen ignored wiki files were published.
+
+**Limitations**
+
+- The core-only export is not a full Linux application build. Windows and other resource previews remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e335-d334.json)
+
+## 2026-11-26 — Refresh local viewer to European e334
+
+Type: changed. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Refresh the ignored local European resource wiki and current dataset to extractor 334 / decoder 333 while retaining e333 as the named previous dataset.
+
+**Validation**
+
+- Protected unit n4iol0rn combined 155 unchanged authenticated resource files with the core-generated audio directory and matched every file and the manifest accepted in zw1q89b2.
+- Protected unit mssfn_fg checked five wiki pages in Chrome, preserved ten topic payloads and 144 previous file pages, and matched 15 Docker/Python outputs for the new audio directory. Thirteen ignored wiki files were published.
+
+**Limitations**
+
+- Full Linux application build 1_bunyg0 was blocked by the absent ALSA development package; the core-only audio export passed. A dedicated timed-sound viewer and Windows remain open.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-refresh-viewer-e334-d333.json)
+
+## 2026-11-26 — Recover European timed sound census
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Recover the complete source-derived E539 timed sound plan after temporary recovery files disappeared, retaining 552 proposed cases and prior-owner bindings.
+
+**Validation**
+
+- Static managed units tw2wt2yp and 41spvgah pass against the exact EUR ROM and e333 manifest. The recovered 6,249-byte projection matches its prior fingerprint.
+
+**Limitations**
+
+- Typed extraction, runtime ownership and the Wine checks remain open. Linux, USA, native Windows and ordinary gameplay remain on the recovery checklist. Terra reasoning effort was not independently confirmed.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-recover-european-timed-sound-census.json)
+
+## 2026-11-26 — Reconcile European stack word copy census
+
+Type: docs. Platforms: European ROM, prior Wine evidence.
+
+**Changes**
+
+- Compare a broader bounded literal-rooted stack word copy grammar with the current resource manifest and retained original-reader census.
+
+**Validation**
+
+- Protected static unit o5m6ysfv passed: sixteen matching patterns are exactly the Wine-disassembled E545 cases and have no missing source or root bytes.
+
+**Limitations**
+
+- Other instructions, non-stack destinations, branches and indirect roots remain open; Linux and USA remain pending. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-reconcile-european-stack-copy-census.json)
+
+## 2026-11-26 — Preview type-3 transfer payloads
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Decode individually authenticated type-3 LZ77 inputs and expose raw inputs in a separate offline transfer-graphics scope.
+- Reuse the tile-sheet viewer for manual 4-bit/8-bit previews, palette selection and payload byte offsets; report and isolate malformed streams.
+
+**Validation**
+
+- Synthetic Chrome unit hgs0dbzz passed 45 projection, isolation, browser and regression checks. Initial bet42kmn detected an incompatible existing offset message, which was restored before the successful run.
+- Protected EUR unit geoui_0a authenticated 2214 source ranges, independently decoded 323 LZ77 streams, compared 14 raw inputs and 502064 output bytes, checked all 337 previews at both tile depths in Chrome, preserved 10 prior scope payloads and 144 resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files were published.
+
+**Limitations**
+
+- The 4-bit/8-bit tile interpretation and palettes are manual; payloads can contain non-graphics data. Game composition, live pairing and native Windows remain unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-preview-type3-transfer-payloads.json)
+
+## 2026-11-26 — Preview constructor object phases
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Join four constructor animation phases to their authenticated static object lists and expose them in the object-animation viewer.
+- Show source thresholds and preview their 8-bit counter transitions at a selected rate, stopping when a threshold cannot be exceeded; retain manual graphics, palette and loop controls.
+
+**Validation**
+
+- Synthetic Chrome unit l19e38kl passed 47 projection, missing-source, playback and regression tests. Initial q2_tbqhn identified a JavaScript inherited-property collision; the catalog key was changed and navigation tests passed on retry.
+- Protected EUR unit fe1v12d_ authenticated five source spans and compared four phases and eight object descriptors with the source, checked playback in Chrome, preserved 11 scope payloads apart from the intended resource move/view and 144 resource pages, and matched 18 Docker/Python files. Fourteen ignored wiki files were published.
+
+**Limitations**
+
+- Graphics and palettes are manually paired; preview tick rate, live task state, affine and other special object modes are not a reconstruction of the game scene. Native Windows remains unverified.
+
+Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
+
+[Change record](docs/changes/2026-11-26-preview-constructor-obj-phases.json)
+
+## 2026-11-26 — Preview compact-cell animations
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Decode independently authenticated compact-cell records, byte/halfword frames and sequence entries, isolating malformed records.
+- Browse and preview stored frame order with adjustable speed and loop, persistent controls, selectable graphics and palettes, and inspectable cells and run fields.
+
+**Validation**
+
+- Synthetic Chrome unit bqw7ty2z passed 47 projection, focus, playback, palette, isolation and regression checks; initial d121w53o exposed a corrected fixture count error.
+- Protected EUR unit 9dcxp6zh authenticated 205 ranges, independently decoded 91 records, 493 frames, 563 entries and 35124 cells, checked all frames and entries in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 18 Docker/Python files. Twelve ignored wiki pages were published.
+- An initial launch under the temporary filesystem was refused by the free-space floor; the passing unit used the project target with the same reserve.
+
+**Limitations**
+
+- Playback uses a user-selected preview rate; original timing, transparency, live graphics/palette pairings, scene composition and native Windows remain unverified.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-preview-compact-cell-animations.json)
+
+## 2026-11-26 — Record a Red Spring timed sound bank observation
+
+Type: changed. Platforms: Windows tests under Wine, European ROM.
+
+**Changes**
+
+- Added an opt-in scene comparison that alters all new timed sound source spans and reports typed bytes served.
+
+**Validation**
+
+- Windows test build ms9sjecq and Wine scene _sl6hnxe passed: 600 frames matched state, clock, video, OAM, dispatch and audio; the Wine server drained.
+
+**Limitations**
+
+- The scene read zero new timed sound bytes, so ordinary consumption remains open; Linux, USA, native Windows, original BIOS and other scenes remain pending. No performance measurements.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-observe-timed-sound-bank-scene.json)
+
+## 2026-11-26 — Load transfer graphics on demand
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Load the type-3 compressed outputs and raw inputs into both the world tilemap and compact-cell animation viewers on demand, sharing one local companion asset.
+- Preserve current selections, restore bookmarked transfer choices, retry missing or mismatched assets, and use embedded payloads in legacy single-page output.
+
+**Validation**
+
+- Synthetic Chrome unit mls3lln9 passed 44 offline loading, selection, retry, bookmark and regression checks.
+- Protected EUR unit rom-data-viewer-transfer-lazy-real-98zd4dr0 checked 323 compressed and 14 raw inputs in both views, sampled rendered pixels and restored a bookmark; preserved 11 prior scope payloads except the added world asset reference and 145 resource pages; matched 20 Docker/Python fixture files. Twelve ignored wiki pages and the local asset were published.
+
+**Limitations**
+
+- Interpreting payloads as tiles, selecting palettes and associating graphics with a live scene remain manual and unproven. Native Windows remains unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-load-transfer-graphics-on-demand.json)
+
+## 2026-11-26 — Load transfer graphics in object animations
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Make the shared compressed and raw transfer inputs available on demand in the object-animation viewer without embedding them in the object topic page.
+- Preserve existing selections and restore bookmarks, share embedded data across all three applicable single-page views, and retry missing or mismatched local assets.
+
+**Validation**
+
+- Synthetic unit qu1hh1xv passed 46 of 47 checks; the remaining fixture expected the first-byte color at a later pixel. After correcting the expectation, Chrome unit 0ldr0r2e passed all eight focused checks.
+- Initial real unit torujq_d observed the button disabled while loading and checked the payload too early; the accepted retry waits for the populated selector and payload.
+- Protected EUR unit rom-data-viewer-obj-transfer-real-8cy6xzm5 checked 323 compressed and 14 raw inputs, sampled a manually paired pixel from each kind, restored a bookmark, preserved 11 scope payloads apart from the object-page asset reference and 145 resource pages, and matched 22 Docker/Python files. Twelve ignored wiki pages were published using the existing asset.
+
+**Limitations**
+
+- Treating a payload as object graphics and selecting a palette or scene association remain manual and unproved. Native Windows remains unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-load-object-transfer-graphics-on-demand.json)
+
 ## 2026-11-26 — Open the detailed ROM coverage map from the local homepage
 
 Type: fixed. Platforms: Linux, Windows.
@@ -25,6 +713,46 @@ Type: fixed. Platforms: Linux, Windows.
 Documentation: [report_home.md](docs/report_home.md), [report_home.py](scripts/report_home.py).
 
 [Change record](docs/changes/2026-11-26-link-detailed-coverage-from-home.json)
+
+## 2026-11-26 — Investigate the remaining European indexed archive provenance
+
+Type: docs. Platforms: European ROM and retained Wine evidence.
+
+**Changes**
+
+- Reconcile the unowned canonical indexed archive against authenticated adjacent resources, interior address-shaped matches and seven retained selected-reader scene inventories.
+
+**Validation**
+
+- Protected static unit l1_gc3as passed: the candidate remains unowned, direct neighboring readers do not supply its root, three interior matches are inside known payloads, and the selected Wine windows have no intersecting reads.
+
+**Limitations**
+
+- No original producer or independent metadata names the archive; computed or indirect paths and other scenes remain open. Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-26-investigate-european-indexed-archive-provenance.json)
+
+## 2026-11-26 — Inventory the complete European world-state task literal bank
+
+Type: docs. Platforms: European source and retained Wine dataset evidence.
+
+**Changes**
+
+- Follow all 256 switch entries, eight shared tails and the existing selector 68 cycle. Join all 372 literal words and 381 original readers with the verified e339 manifest and plan the complete 357-word residual, including runtime page 34.
+
+**Validation**
+
+- Source census tedgyw0j passes all eight guards, leaves no overlapping code or literal spans and classifies 15 words already owned. The first attempt assumed a return in selector 68. The passing proof pins the original cycle.
+
+**Limitations**
+
+- No new game replay. The 1,428 residual bytes still require catalog integration and Wine runtime checks. Live placement, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-26-inventory-european-world-state-task-literals.json)
 
 ## 2026-11-26 — Keep Linux ROM coverage available when the target mount is unwritable
 
@@ -49,6 +777,113 @@ Documentation: [ROM_COVERAGE.md](docs/development/ROM_COVERAGE.md), [rom_coverag
 
 [Change record](docs/changes/2026-11-26-fallback-rom-coverage-workspace.json)
 
+## 2026-11-26 — Export selected song previews as WAV
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Render the selected bounded song or track preview to a downloadable 32 kHz stereo 16-bit WAV using the current timing, voice, envelope, track-control and mute settings.
+- Capture export settings at launch, share note and mix preparation with live playback, and report unavailable rendering and automation limits.
+
+**Validation**
+
+- Synthetic Chrome unit zwqbzr4d passed 42 audio/regression checks including real offline stereo, pan/mutes and live-versus-offline scheduling; 9vk7mg2l passed three focused checks including unavailable-renderer recovery.
+- Protected EUR e336 unit rb20l36j exported and independently decoded song 312 with eight PCM notes, verified track-mute silence, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python outputs. Eleven local wiki pages were published.
+
+**Limitations**
+
+- The WAV shares the existing preview limits and approximations; physical audio, exact game mixer behavior and Windows remain unverified.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-export-sequence-wav.json)
+
+## 2026-11-26 — Expand observed world location names
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Extend the source-gated world map view with four additional observed region/node associations and their localized extracted name strings.
+- Preserve per-node coordinates, regional and text identity checks, source links, language selection and the existing observed-placement caveat.
+
+**Validation**
+
+- Synthetic Chrome unit _2mq6zty passed 41 projection, text, navigation and regression checks.
+- Protected EUR unit g07anua6 matched five observed node/region pairs to retained source evidence and 25 localized strings to the dataset, checked map selection and a text-page link in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 16 Docker/Python files. The ignored world page was published.
+
+**Limitations**
+
+- The region/node associations reflect one recorded placement and can change between saves or during play; other locations and native Windows remain unverified.
+
+Documentation: [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-26-expand-observed-world-location-names.json)
+
+## 2026-11-26 — Compare timed sound spans with retained scene inventories
+
+Type: docs. Platforms: Previously recorded Wine scenes, European ROM.
+
+**Changes**
+
+- Joined the authenticated timed sound source plan against six retained selected-reader scene inventories.
+
+**Validation**
+
+- Protected static join w7moq4q8 passed; none of the six inventories intersect the new spans.
+
+**Limitations**
+
+- The inventories are selected-reader address samples and do not prove executing PCs or exclude other routes. Ordinary consumption, Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-compare-timed-sound-scene-inventories.json)
+
+## 2026-11-26 — Compare initializer banks with retained scene inventories
+
+Type: docs. Platforms: Previously recorded Wine scenes, European ROM.
+
+**Changes**
+
+- Join all E543–E545 initializer spans against six retained scene address inventories.
+
+**Validation**
+
+- Protected static join nowdl2c0 passed; none of the selected-reader inventories intersects the 79 new spans.
+
+**Limitations**
+
+- The address-only windows do not identify executing PCs, other readers or ordinary serving. Linux, USA and native Windows remain pending. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-compare-initializer-scene-inventories.json)
+
+## 2026-11-26 — Browse world region name references
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Add a collapsible searchable directory of the 31 source-backed EUR region name references, with language selection and links to the original extracted text.
+- Link six source-shaped recorded placements to map nodes, including region 16, while retaining conditional placement and source-identity gates.
+
+**Validation**
+
+- Synthetic Chrome unit t1s_3vy8 passed 44 projection, filtering, navigation, partial-language and regression checks.
+- Protected EUR e339/d338 unit mo2faka0 checked two source windows, 155 extracted text sequences and six conditional placements; Chrome navigation, 11 scope payloads, 145 unchanged resource pages and 16 Docker/Python files passed. Twelve ignored wiki pages were published.
+- Standalone unittest discovery initially failed to find the scripts module; focused unit yq73x3mi passed all three tests after correcting its import path.
+
+**Limitations**
+
+- Name references follow a conditional original list; recorded placement can change and other region positions, other profiles and native Windows remain unverified.
+
+Documentation: [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-26-browse-world-region-name-references.json)
+
 ## 2026-11-26 — Browse UI tilemap source rectangles
 
 Type: added. Platforms: Linux and offline Docker.
@@ -70,6 +905,207 @@ Type: added. Platforms: Linux and offline Docker.
 Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
 
 [Change record](docs/changes/2026-11-26-browse-ui-tilemap-rectangles.json)
+
+## 2026-11-26 — Browse type-2 source rectangles
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose complete type-2 source rectangles, copy windows and available list/transfer references in the tilemap explorer.
+- Join two palette-row fragments and add window references to three previously browsed maps; report incomplete or unavailable sources independently.
+
+**Validation**
+
+- Synthetic Chrome unit a4urna0v passed 48 projection, partial-source, browser and regression checks.
+- Protected EUR unit 3gn5lnjv authenticated 1482 packed ranges and prior resources, compared 203 rectangles, 2338 cells, 539 windows and source links with the ROM, checked all rectangles/windows in Chrome, preserved 11 scope payloads and 145 resource pages, and matched 18 Docker/Python files. Twelve ignored wiki pages were published.
+
+**Limitations**
+
+- Some rectangles contain palette colors and tile interpretation, graphics and palettes are manually selected. Additional unowned windows, scene composition and native Windows remain unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-browse-type2-source-rectangles.json)
+
+## 2026-11-26 — Browse compressed tilemap transfer inputs
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Decode individually authenticated LZ77 transfer inputs and make them available as manually interpreted tiles, tilemap graphics and object-animation sources.
+- Preserve the source file and offset, reject malformed or overlapping inputs, and keep earlier observed streams independently available.
+
+**Validation**
+
+- Synthetic unit edpestec passed 54 of 55 checks; after correcting an 8-bit tile fixture, focused unit fk63b8__ passed four checks.
+- Protected EUR unit xaic34k0 independently decoded 13 authenticated streams and 6112 bytes, checked all 13 tile previews, preserved scope data and 145 resource pages, and matched 19 Docker/Python outputs. Eleven local wiki pages were published.
+
+**Limitations**
+
+- These are manual interpretations; original graphics/palette pairing, final screens and Windows remain unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-browse-transfer-lz77-inputs.json)
+
+## 2026-11-26 — Browse timed sound sources
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Browse observed schedules and timed-sound fragments by source kind and offset, retaining raw rows, flags and values.
+- Link compatible low-12-bit candidate directory IDs to the existing approximate player for individual audition, with safe handling for unavailable or invalid optional sources.
+
+**Validation**
+
+- Synthetic unit qfvhn_5h passed 38/39 checks; corrected partial-data fixture i1crr9m5 passed. The browser test exercised candidate audition and persistent CGB mute.
+- Protected EUR unit wpjg4odq authenticated 685 source spans, matched 681 fragments and 569 rows, checked browser filters and song navigation, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- Candidate IDs and individual approximate auditions do not reproduce live scheduling, simultaneous sounds, flag semantics or original timing. Physical audio output and Windows remain unverified.
+- The initial partial-data test shared one fixture row between groups; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-26-browse-timed-sound-sources.json)
+
+## 2026-11-26 — Browse decoded tilemap stream bank
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Decode bounded halfword tilemap streams and linked fragmented byte streams from authenticated binary resource ranges.
+- Show halfword cells in the tilemap explorer and byte cells in a separate grayscale grid with source and transfer references.
+
+**Validation**
+
+- Synthetic Chrome unit h11axgo7 passed 56 projection, browser and regression checks including missing, malformed and shared-source cases.
+- Protected EUR unit 33ceaq_x matched 61 halfword streams, seven byte streams, 10110 cells and nine references to authenticated source, checked every map in Chrome, preserved prior scope data and 145 resource pages, and matched 16 Docker/Python outputs. Eleven local wiki pages were published.
+
+**Limitations**
+
+- Previews show only the first decoded traversal; original composition, graphics and palette pairings and Windows remain unverified.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-26-browse-tilemap-stream-bank.json)
+
+## 2026-11-26 — Browse opcode-39 pose sources
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Browse and animate opcode-39 registry and special-unit source sequences by source offset and index cell, including compatible earlier-owner targets.
+- Resolve supported object and pixel ranges only when extracted sources agree; keep missing or conflicting sources visible without guessing.
+
+**Validation**
+
+- Synthetic unit _li_0wt2 passed 42 browser and generator checks including earlier, missing, conflicting and partially overlapping sources, pixels and animation controls.
+- Protected EUR unit 6nb4p1y3 matched 693 index cells and sequences, 879 frames and 862 graphics joins to authenticated files; checked two browser pixels, preserved 143 resource pages and matched 17 Docker/Python files. Fourteen ignored wiki files were published.
+
+**Limitations**
+
+- Manual palettes and preview timing do not reproduce live actor assignments, task commands, scenes or original timing. Windows was deferred.
+- Initial unit b7hg8dzc exposed an optional objects field and wtkudkvp assumed all targets were newly owned; corrected checks passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-26-browse-script39-pose-sources.json)
+
+## 2026-11-26 — Browse opcode-39 index cells
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose source index cells in a collapsible paginated table with target-kind and offset filters and links to sequence previews.
+
+**Validation**
+
+- Synthetic unit pyo47ub8 passed 42/43 checks; corrected split/single-page check alynb5hx passed.
+- Protected EUR unit 3i5uayb1 matched 7,924 cells including 7,231 nulls and 693 sequence targets, checked both catalogs in Chrome, preserved ten scope payloads and 145 resource pages, and matched 17 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- Physical cells and target references do not establish live actor, scene or task behavior. Windows was deferred.
+- Initial pyo47ub8 incorrectly expected the equipment catalog on a separate script page; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-26-browse-script39-index-cells.json)
+
+## 2026-11-26 — Browse progression and pricing records
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Add independent collapsible EUR progression, requirement, selection and trade tables with ID/offset filtering and pagination.
+- Preserve unknown fields and display the trade count-zero discount alias without asserting live or semantic identities.
+
+**Validation**
+
+- Synthetic unit lmc8ahj2 passed 44 projection, browser and regression checks including profile, missing and malformed catalog cases.
+- Protected EUR unit lf7sv8ry matched 233 records and 3272 bytes to the authenticated source, checked all browser rows, preserved prior scope data and 145 resource pages, and matched 18 Docker/Python outputs. Eleven local wiki pages were published.
+
+**Limitations**
+
+- Live progression, semantic skill and item names, price conditions and unobserved ordinary paths are not inferred. Windows remains deferred.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-26-browse-progression-pricing-records.json)
+
+## 2026-11-26 — Browse localized queued rectangles
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose thirty source-backed European localized 24-by-4 halfword rectangles in the tilemap explorer with language, entry and transfer-stride metadata.
+- Offer manual graphics and palette interpretation while isolating missing, invalid and other-profile data.
+
+**Validation**
+
+- Synthetic unit 3zmfg5xd passed 45/46 tests; the corrected leading-zero browser assertion passed in jnaacl22.
+- Protected EUR unit 7uuh8665 authenticated nine source spans, compared 2,880 halfwords, checked all 30 rectangles and preview pixels, preserved ten scope payloads and 145 resource pages, and matched 15 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- The preview does not establish original scene graphics, palettes or destination state; Windows was deferred.
+- The initial browser test omitted a leading hexadecimal zero; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_ui_raw_transfers.md](docs/rom_data_ui_raw_transfers.md).
+
+[Change record](docs/changes/2026-11-26-browse-localized-queued-rectangles.json)
+
+## 2026-11-26 — Browse item effect parameters
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Show the fourteen source-backed European item-effect records, their coefficients and cap, with bidirectional links to item records.
+- Calculate the documented bounded increase from user-supplied byte inputs while keeping other regional profiles and missing item records safe.
+
+**Validation**
+
+- Synthetic unit 3d69s9dq passed 39 browser, generator and navigation tests; profile guard 8lkn7_xq passed.
+- Protected EUR unit j0h3etxz authenticated 98 reconstructed source bytes, checked 1,848 calculation cases and both links, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published.
+
+**Limitations**
+
+- The preview covers the bounded helper only; it does not execute the complete item-use UI or alter game state. Windows was deferred.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-26-browse-item-effect-parameters.json)
 
 ## 2026-11-26 — Browse indexed graphics programs
 
@@ -93,6 +1129,116 @@ Type: added. Platforms: Linux and offline Docker.
 Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
 
 [Change record](docs/changes/2026-11-26-browse-indexed-graphics-programs.json)
+
+## 2026-11-26 — Browse effect, event and task links
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose source-backed effect selectors, event records, dispatch tables and task descriptors on the event scripts page.
+- Connect script instructions to effect selectors and documented selector/event references to task descriptors, retaining nullable callbacks, distinct task ID aliases and raw fields.
+
+**Validation**
+
+- Synthetic Chrome unit x8jlkpdd passed 44 projection, isolation, browser and regression checks.
+- Protected EUR unit kf53rnm5 reconstructed 4812 authenticated bytes, checked 412 task descriptors, 75 events, 51 selectors, 28 dispatch entries, 493 script-selector links and 70 task links in Chrome, preserved other scope payloads and 143 resource pages, and matched 17 Docker/Python files. Fourteen ignored wiki files were published.
+
+**Limitations**
+
+- Views preserve stored references and unknown fields; runtime execution, actor state, effects and native Windows are not verified.
+
+Documentation: [rom_data_events.md](docs/rom_data_events.md), [rom_data_tasks.md](docs/rom_data_tasks.md).
+
+[Change record](docs/changes/2026-11-26-browse-effect-event-task-links.json)
+
+## 2026-11-26 — Browse direct metadata name references
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Add a collapsible, searchable and paginated EUR metadata name reference view with language selectors and source text links.
+- Keep routed rows unresolved and support metadata catalogs without slot or text dependencies.
+
+**Validation**
+
+- Synthetic unit e7zs0drd passed 40 of 41 tests; the temporary Chrome profile collision was fixed and all four focused tests passed in 318wv1u6.
+- Protected EUR e335/d334 unit t_lxfhg8 matched 112 direct records and 560 localized strings, preserved ten scope payloads and 145 resource pages, verified browser navigation and matched 17 Docker/Python outputs. Eleven validated local wiki pages were published.
+
+**Limitations**
+
+- Direct metadata references do not establish live role or job availability; four routed rows are not evaluated. Windows was deferred.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-26-browse-direct-metadata-name-references.json)
+
+## 2026-11-26 — Browse directly rooted indexed graphics archives
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Show both directly rooted indexed graphics archives as independently validated families on the scoped graphics page, with resource links and source positions.
+- Preserve existing tile, palette and ordered playback controls, and keep valid families available when another resource is missing or invalid.
+
+**Validation**
+
+- Synthetic unit 32khwscw passed 42 projection, browser and generation tests, including standalone and invalid source cases.
+- Protected EUR unit uyz3u8oo checked four source ranges, independently decoded 45 programs, checked eight rendered pixels and two updated file links, preserved 143 other file pages and matched 17 Docker/Python files. Fourteen ignored wiki files were published.
+
+**Limitations**
+
+- Tile format, palettes and preview timing are manually selected; they do not establish the complete game animation. Windows was deferred.
+- Synthetic 7bum0pad had a test ID expectation error and real q4ru284l expected two relocated links to remain unchanged; corrected checks passed. Primary Terra/xhigh settings were not independently confirmed.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-26-browse-direct-indexed-archives.json)
+
+## 2026-11-26 — Browse the auxiliary script archive
+
+Type: added. Platforms: Linux and offline Docker.
+
+**Changes**
+
+- Expose the separate auxiliary script archive and command directory on the event scripts page, with slot-to-instruction links, reverse references, opcode filters and paged physical programs.
+- Keep the archive and directory independently browsable when either resource is missing or invalid; retain resource links and scoped page loading.
+
+**Validation**
+
+- Synthetic Chrome unit 6bo4tsoz passed 40 projection, isolation, browser and regression checks.
+- Protected EUR unit h6or111a reconstructed 4200 authenticated source bytes, checked 442 slots, 133 programs, 913 instructions and 17 commands in Chrome, preserved other scope payloads and 143 resource pages, and matched 16 Docker/Python files. Fourteen ignored wiki files were published with historical ownership retained.
+- Initial real unit bwxi9vzj stopped at an overstrict resource inventory equality assertion; the accepted unit preserved the four older retained entries.
+
+**Limitations**
+
+- The view shows stored instructions and source references, without simulating predicates or execution. Native Windows validation is deferred.
+
+Documentation: [rom_data_scripts.md](docs/rom_data_scripts.md).
+
+[Change record](docs/changes/2026-11-26-browse-auxiliary-script-archive.json)
+
+## 2026-11-26 — Trace a larger bank in a recorded scene
+
+Type: changed. Platforms: Windows under Wine, European profile.
+
+**Changes**
+
+- The optional physical trace window selects whole authenticated spans of the requested role and records nearby serving paths without requiring one filter range per word.
+
+**Validation**
+
+- Parsed the staged Wine driver and checked the runner wrapper syntax. The managed Windows build receipt was still running while waiting on target I/O when the goal was paused.
+
+**Limitations**
+
+- The e340 Giza replay, live placement, native Linux and USA checks remain pending. No performance measurements.
+
+Documentation: [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-26-bound-recorded-scene-bank-traces.json)
 
 ## 2026-11-25 — Verify ordinary European compact-cell byte reads
 

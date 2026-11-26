@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-initializer-copy-bank",
+  "title": "Serve European literal-rooted initializer copies",
+  "kind": "added",
+  "platforms": [
+    "Windows tests under Wine, European ROM"
+  ],
+  "changes": [
+    "Extend the copied lookup resource with fourteen typed initializer word arrays and their pointer literals, preserving three previously owned arrays and e334 predecessor compatibility."
+  ],
+  "validation": [
+    "Wine census m0qm_8f4, Windows build rt7n1bgc and Wine sdjtlh9f passed: original interpreter and generated copies, altered backing, boundary reads, state and clock, preparation/reuse, predecessor attachment and transactional rejection; Wine drained."
+  ],
+  "limitations": [
+    "The census covers the selected exact instruction pattern, not all copy formats or ordinary entry. Linux, USA, native Windows, original BIOS and downstream semantics remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/initializer_bank.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/initializer_copy_bank_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

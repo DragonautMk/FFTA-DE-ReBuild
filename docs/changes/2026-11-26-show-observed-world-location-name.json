@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "show-observed-world-location-name",
+  "title": "Show an observed world location name",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose the source-backed, conditional EUR region-to-node observation as a collapsible localized world-map entry with a link to its original text catalog.",
+    "Restrict the association to the authenticated world-node and text-catalog files and keep other datasets unnamed."
+  ],
+  "validation": [
+    "Synthetic unit 22pyjgbt passed 38 of 39 checks including glyph fallback, identity gates and single-page navigation; the corrected wrapped-link click passed in zg52_9wm.",
+    "Protected EUR unit hl7y6830 matched all five localized token sequences, checked map and text-page navigation, preserved ten other scope payloads and 145 resource pages, and matched 15 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "Region placement was observed in one game situation, not proved invariant. Other location names and placements remain open; Windows was deferred.",
+    "Initial EUR unit iet5gnim expected an unmapped German glyph although the glyph was recognized. Its candidate and Docker outputs were reused in the successful check. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_maps.md"
+  ]
+}

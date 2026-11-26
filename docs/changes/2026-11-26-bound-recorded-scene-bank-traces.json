@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "bound-recorded-scene-bank-traces",
+  "title": "Trace a larger bank in a recorded scene",
+  "kind": "changed",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "The optional physical trace window selects whole authenticated spans of the requested role and records nearby serving paths without requiring one filter range per word."
+  ],
+  "validation": [
+    "Parsed the staged Wine driver and checked the runner wrapper syntax. The managed Windows build receipt was still running while waiting on target I/O when the goal was paused."
+  ],
+  "limitations": [
+    "The e340 Giza replay, live placement, native Linux and USA checks remain pending. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/validation_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

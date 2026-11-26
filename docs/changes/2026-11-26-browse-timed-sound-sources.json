@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-timed-sound-sources",
+  "title": "Browse timed sound sources",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse observed schedules and timed-sound fragments by source kind and offset, retaining raw rows, flags and values.",
+    "Link compatible low-12-bit candidate directory IDs to the existing approximate player for individual audition, with safe handling for unavailable or invalid optional sources."
+  ],
+  "validation": [
+    "Synthetic unit qfvhn_5h passed 38/39 checks; corrected partial-data fixture i1crr9m5 passed. The browser test exercised candidate audition and persistent CGB mute.",
+    "Protected EUR unit wpjg4odq authenticated 685 source spans, matched 681 fragments and 569 rows, checked browser filters and song navigation, preserved ten scope payloads and 145 resource pages, and matched 16 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "Candidate IDs and individual approximate auditions do not reproduce live scheduling, simultaneous sounds, flag semantics or original timing. Physical audio output and Windows remain unverified.",
+    "The initial partial-data test shared one fixture row between groups; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_timed_sounds_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

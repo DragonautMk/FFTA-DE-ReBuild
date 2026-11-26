@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-localized-queued-rectangles",
+  "title": "Browse localized queued rectangles",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Expose thirty source-backed European localized 24-by-4 halfword rectangles in the tilemap explorer with language, entry and transfer-stride metadata.",
+    "Offer manual graphics and palette interpretation while isolating missing, invalid and other-profile data."
+  ],
+  "validation": [
+    "Synthetic unit 3zmfg5xd passed 45/46 tests; the corrected leading-zero browser assertion passed in jnaacl22.",
+    "Protected EUR unit 7uuh8665 authenticated nine source spans, compared 2,880 halfwords, checked all 30 rectangles and preview pixels, preserved ten scope payloads and 145 resource pages, and matched 15 Docker/Python files. Eleven ignored wiki pages were published."
+  ],
+  "limitations": [
+    "The preview does not establish original scene graphics, palettes or destination state; Windows was deferred.",
+    "The initial browser test omitted a leading hexadecimal zero; the corrected test passed. Primary Terra/xhigh settings were not independently confirmed."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_localized_queued_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_raw_transfers.md"
+  ]
+}

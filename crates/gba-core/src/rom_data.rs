@@ -167,8 +167,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 333;
-pub const DECODER_REV: u32 = 332;
+pub const EXTRACTOR_REV: u32 = 340;
+pub const DECODER_REV: u32 = 339;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -200,6 +200,13 @@ const PRE_SCANLINE_BLEND_REVISION: (u32, u32) = (329, 328);
 const PRE_INDEXED_VRAM_SELECTORS_REVISION: (u32, u32) = (330, 329);
 const PRE_WORLD_MAP_LOOKUPS_REVISION: (u32, u32) = (331, 330);
 const PRE_TILEMAP_RECTANGLES_REVISION: (u32, u32) = (332, 331);
+const PRE_TIMED_SOUND_BANKS_REVISION: (u32, u32) = (333, 332);
+const PRE_INITIALIZER_BANK_REVISION: (u32, u32) = (334, 333);
+const PRE_INITIALIZER_VARIANTS_REVISION: (u32, u32) = (335, 334);
+const PRE_INITIALIZER_PAIRS_REVISION: (u32, u32) = (336, 335);
+const PRE_SIGNED_MAP_DELTAS_REVISION: (u32, u32) = (337, 336);
+const PRE_WORLD_NODE_RENDERER_REVISION: (u32, u32) = (338, 337);
+const PRE_WORLD_STATE_TASK_REVISION: (u32, u32) = (339, 338);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -1293,7 +1300,11 @@ impl Extraction {
             | PRE_TITLE_CALLBACKS_REVISION | PRE_TITLE_FRONTEND_REVISION
             | PRE_TITLE_COLOR_MODE_REVISION | PRE_COLOR_MODE_PAIRS_REVISION
             | PRE_SCANLINE_BLEND_REVISION | PRE_INDEXED_VRAM_SELECTORS_REVISION
-            | PRE_WORLD_MAP_LOOKUPS_REVISION | PRE_TILEMAP_RECTANGLES_REVISION) => previous,
+            | PRE_WORLD_MAP_LOOKUPS_REVISION | PRE_TILEMAP_RECTANGLES_REVISION
+            | PRE_TIMED_SOUND_BANKS_REVISION | PRE_INITIALIZER_BANK_REVISION
+            | PRE_INITIALIZER_VARIANTS_REVISION | PRE_INITIALIZER_PAIRS_REVISION
+            | PRE_SIGNED_MAP_DELTAS_REVISION | PRE_WORLD_NODE_RENDERER_REVISION
+            | PRE_WORLD_STATE_TASK_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -1591,7 +1602,9 @@ impl Extraction {
                 sha256: String::new(), dependencies: vec![ITEM_RECORDS_ID.into()], sources: metadata.sources.clone(),
             });
             result.item_effect_parameters = Some(metadata);
-            let metadata = audio_directory::Catalog::from_rom(rom)?;
+            let metadata = audio_directory::Catalog::from_rom_with_timed_sounds(
+                rom, revision > PRE_TIMED_SOUND_BANKS_REVISION
+            )?;
             result.manifest.coverage.push(AUDIO_DIRECTORY_ID.into());
             result.manifest.resources.push(Resource {
                 id: AUDIO_DIRECTORY_ID.into(), path: AUDIO_DIRECTORY_FILE.into(), format: AUDIO_DIRECTORY_FORMAT.into(),
@@ -1915,7 +1928,9 @@ impl Extraction {
             result.manifest.coverage.push(INDEXED_GRAPHICS_ID.into());
             result.manifest.resources.push(Resource {id:INDEXED_GRAPHICS_ID.into(),path:INDEXED_GRAPHICS_FILE.into(),format:INDEXED_GRAPHICS_FORMAT.into(),sha256:String::new(),dependencies:vec![UNIT_OBJ_FFFF_READER_FIELDS_ID.into()],sources:metadata.sources.clone()});
             result.indexed_graphics = Some(metadata);
-            let copy_layout = if revision > PRE_TILEMAP_RECTANGLES_REVISION {
+            let copy_layout = if revision > PRE_SIGNED_MAP_DELTAS_REVISION {
+                ui_raw_transfers::CopyLayout::SignedMapDeltas
+            } else if revision > PRE_TILEMAP_RECTANGLES_REVISION {
                 ui_raw_transfers::CopyLayout::TilemapRectangles
             } else if revision > PRE_SCANLINE_BLEND_REVISION {
                 ui_raw_transfers::CopyLayout::ScanlineBlend
@@ -2208,8 +2223,16 @@ impl Extraction {
             });
             result.indexed_words_3959 = Some(metadata);
             let title_frontend = revision > PRE_TITLE_FRONTEND_REVISION;
-            let metadata = thumb_switch_tables::Catalog::from_rom_with_title(
-                rom, &result.manifest.resources, title_frontend,
+            let world_node_renderer = revision > PRE_WORLD_NODE_RENDERER_REVISION;
+            let layout = if world_node_renderer {
+                thumb_switch_tables::SourceLayout::WorldNodeRenderer
+            } else if title_frontend {
+                thumb_switch_tables::SourceLayout::TitleFrontend
+            } else {
+                thumb_switch_tables::SourceLayout::Legacy
+            };
+            let metadata = thumb_switch_tables::Catalog::from_rom_with_layout(
+                rom, &result.manifest.resources, layout,
             )?;
             result.manifest.coverage.push(THUMB_SWITCH_TABLES_ID.into());
             result.manifest.resources.push(Resource {
@@ -2218,7 +2241,11 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_switch_tables = Some(metadata);
-            let layout = if title_frontend {
+            let layout = if revision > PRE_WORLD_STATE_TASK_REVISION {
+                thumb_pc_literals::SourceLayout::WorldStateTask
+            } else if world_node_renderer {
+                thumb_pc_literals::SourceLayout::WorldNodeRenderer
+            } else if title_frontend {
                 thumb_pc_literals::SourceLayout::TitleFrontend
             } else if revision > PRE_TITLE_CALLBACKS_REVISION {
                 thumb_pc_literals::SourceLayout::TitleTaskCallbacks
@@ -2241,7 +2268,9 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_pc_literals = Some(metadata);
-            let metadata = copied_halfword_lookups::Catalog::from_rom(rom, &result.manifest.resources)?;
+            let metadata = copied_halfword_lookups::Catalog::from_rom_with_initializers(
+                rom, &result.manifest.resources, revision > PRE_INITIALIZER_BANK_REVISION,
+                revision > PRE_INITIALIZER_VARIANTS_REVISION, revision > PRE_INITIALIZER_PAIRS_REVISION)?;
             result.manifest.coverage.push(COPIED_HALFWORD_LOOKUPS_ID.into());
             result.manifest.resources.push(Resource {
                 id: COPIED_HALFWORD_LOOKUPS_ID.into(), path: COPIED_HALFWORD_LOOKUPS_FILE.into(),

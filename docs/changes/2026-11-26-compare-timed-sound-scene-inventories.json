@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "compare-timed-sound-scene-inventories",
+  "title": "Compare timed sound spans with retained scene inventories",
+  "kind": "docs",
+  "platforms": [
+    "Previously recorded Wine scenes, European ROM"
+  ],
+  "changes": [
+    "Joined the authenticated timed sound source plan against six retained selected-reader scene inventories."
+  ],
+  "validation": [
+    "Protected static join w7moq4q8 passed; none of the six inventories intersect the new spans."
+  ],
+  "limitations": [
+    "The inventories are selected-reader address samples and do not prove executing PCs or exclude other routes. Ordinary consumption, Linux, USA and native Windows remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

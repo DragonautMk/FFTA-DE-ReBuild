@@ -10,6 +10,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DESCRIPTIONS = {
+    'tilemap-transfer-lz77.bin': 'Compressed European tilemap transfer inputs',
+    'tilemap-stream-bank.bin': 'Encoded European halfword and byte tilemap streams',
+    'tilemap-direct-transfers.bin': 'European direct tilemap transfer references',
     'linked-metadata4.json': 'European paired selectors/values; original live qualification scans retained',
     'linked-metadata2.json': 'European stored key/value map; distinct original forward and inverse extents',
     'default-constructor-template.json': 'European default constructor template; original live patches and alternate sources retained',
@@ -31,6 +34,9 @@ DESCRIPTIONS = {
     'palette-effect-dispatch.json': 'European producer-bounded palette callback slots; original live object indexing retained',
     'palette-programs.json': 'European typed palette programs and producer projections; original guest scheduling retained',
     'blend-programs.json': 'European typed blending controls, coefficients, commands and producer tables; live RAM programs retained',
+    'tilemap-type3-transfers.bin': 'European type-3 transfer rows and independently bounded LZ77 and raw inputs',
+    'tilemap-type2-transfers.bin': 'European type-2 transfer rows, copy windows and rectangle sources',
+    'compact-cell-bank.bin': 'European compact-cell records with bounded frame grids and sequence entries',
     'task-descriptors.json': 'European typed task callbacks, context sizes and metadata; original guest selectors and scheduling retained',
     'effect-event-directories.json': 'European typed event records, effect selectors and even same-state dispatch tables; original guest sequencing retained',
     'script-command-directory.json': 'European typed script command advances and Thumb callbacks; original guest stream and control flow retained',

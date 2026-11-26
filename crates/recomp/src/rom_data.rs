@@ -498,6 +498,14 @@ mod item_effect_parameter_tests;
 mod audio_directory_tests;
 #[cfg(test)]
 mod red_spring_sound_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod timed_sound_bank_tests;
+#[cfg(test)]
+mod initializer_copy_bank_tests;
+#[cfg(test)]
+mod initializer_variant_bank_tests;
+#[cfg(test)]
+mod initializer_pair_bank_tests;
 #[cfg(test)]
 mod audio_tone_source_tests;
 #[cfg(test)]
@@ -618,6 +626,12 @@ mod color_mode_pair_tests;
 mod scanline_blend_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod tilemap_rectangle_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod signed_map_delta_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod world_node_dispatch_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod world_state_task_literal_tests;
 #[cfg(test)]
 mod state_initializer_tests;
 #[cfg(test)]
@@ -3570,6 +3584,10 @@ fn check_dataset_budget(
 
 pub fn attach_from_directory(machine: &mut gba_core::Machine, path: &Path) -> Result<(), String> {
     let dataset = read_dataset(path)?;
+    attach_dataset(machine, &dataset)
+}
+
+fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<(), String> {
     let resources =
         gba_core::rom_data::RuntimeResources::from_base_files(&machine.bus.rom, dataset.files())?;
     let obj_resident = resources.obj_resident_bytes() + 2 * std::mem::size_of::<usize>();

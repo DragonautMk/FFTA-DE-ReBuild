@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-calendar-travel",
+  "title": "Verify European calendar lookup during normal travel",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Link the authenticated day-advance and calendar caller to the retained Giza travel suffix. Record the second calendar caller and the label record-list call as source evidence."
+  ],
+  "validation": [
+    "Wine e550-calendar-travel-wine-ycsv0f81 reuses the E549 binary and e337-d336 dataset with all 100 E537 source bytes altered. At frame 19147, two Thumb interpreter sites read the typed calendar literal and the English month 2 offset. All 33 frames match full state, clock, video, OAM, dispatch and five nonempty audio streams. Inputs remain unchanged, the trace drops no requests and Wine drains."
+  ],
+  "limitations": [
+    "The HLE BIOS recording begins after language selection. Continuous startup lineage, other ordinary calendar and label paths, direct translated reads, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_TODO.md"
+  ]
+}
