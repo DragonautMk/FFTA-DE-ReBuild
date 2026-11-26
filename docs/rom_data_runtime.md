@@ -8578,3 +8578,433 @@ White Flowers, Llednar, Blue Screw and Firaga. None of those captured windows
 intersects the new spans. These are address-only samples of selected readers;
 they do not exclude other readers or routes, identify executing PCs, or prove
 current managed serving. Ordinary entry and downstream semantics remain open.
+
+## E565 European ten-byte stack copy sources
+
+The E560 census and e340 manifest expose two unowned data starts at
+`14d360` and `14d36a`. Wine `o3ed4jee` reconciles all 372 world task
+words and 381 original loaders. The selected literals at `035824`
+and `035aa0` feed the source register of the existing byte-copy helper
+`08147dc0` with the original count set to 10. Both literals already belong
+to `engine.thumb-pc-literals`. World task slots 31 and 36 enter the
+two copies, and the task later reads the copied bytes as signed offsets.
+
+Wine `e565-ten-byte-copy-source-plan-g0_w9rrh` scans all 181 aligned
+direct Thumb BL patterns to the authenticated helper. Exactly seven
+put `movs r2, #10` immediately before the call. Each loads a separate
+ROM literal into the source register and copies to a fixed stack
+offset. The source extents are `14d360..14d37e`, three consecutive
+ten-byte blocks, and four ten-byte blocks beginning at `14d92c`,
+`14d938`, `14d944` and `14d94e`. Each start has one exact aligned
+reference across the three ROM mirrors. Two middle sources have
+equal contents and distinct physical addresses.
+
+The plan authenticates 70 unowned payload bytes and five unowned
+literal words against e340. Two earlier literals keep their owner.
+It preserves the two-byte gaps at `14d936` and `14d942` as
+unclassified. The plan SHA-256 is
+`85b08267eec28fcf5e559be616452f3f49a27d673f8201006020549fd78ccef7`.
+Twelve input guards pass and Wine drains. The first plan check
+`tm0vlea8` expected a Thumb bit in the even world-table destinations.
+The corrected check uses the original dispatch values.
+
+The bounds apply to the exact immediate ten-byte pattern. Other
+lengths, earlier or computed size arguments, indirect calls and
+ordinary dispatch remain open. Linux and USA remain deferred.
+
+## E566 European ten-byte stack copies at runtime
+
+EUR `e341-d340` adds `stack_byte_copies` to
+`engine.copied-halfword-lookups`. It preserves seven original
+ten-byte arrays as fixed-size byte records with their physical
+offsets. The packet publishes five literal roots and retains
+the earlier Thumb literal owner for the two world-task copies.
+The original helper supplies the destination and subsequent
+guest code interprets the copied data.
+
+Windows build `gcjjl32e` and Wine
+`e566-stack-byte-copies-wine-r2a5swsy` pass. The seven original
+interpreter paths make 77 typed requests with the 70 source
+bytes and all seven literal words altered in memory. The stack
+bytes, guest clock and full serialized state match the raw
+reference after each copy. An additional 144 boundary checks
+cover halfword and word reads across all three mirrors. Both
+two-byte gaps still read the altered raw backing.
+
+The exact `e340-d339` dataset attaches. Assigning e341 to the
+old packet is rejected while the previous owner stays attached.
+Removing the new group produces the exact earlier packet. Only
+this resource differs among the 156 entries in the E566 manifest,
+whose SHA-256 is
+`dc77a74b0ebe493ced79370d8e25be11f4876e408af261fdbafc2395b275e59b`.
+Thirteen input guards pass, Wine drains and the unit retains the
+candidate manifest and changed packet.
+
+E567 verifies the existing generation and reuse with the standard
+CLI. First creation, generated copies, ordinary routes, real BIOS,
+Linux, USA and native Windows remain open.
+
+## E567 European stack copy dataset verification and reuse
+
+Internal stage `e567-e341-internal-stage-zuua33cz` verifies all 157
+files of the exact E566 candidate. It takes 151 unchanged resource
+files from the verified e333 copy and four updated files from e340.
+The E566 manifest and copied lookup packet supply the remaining files.
+
+The default-feature Windows build `evwkootc` and Wine
+`e567-stack-byte-cli-wine-xcsq9618` pass. The standard
+`rom-data verify` command authenticates all 157 files. The standard
+`rom-data prepare` command returns `reused` for the selected e341
+generation. File and selector hashes agree before and after both
+commands. Eleven input guards pass and Wine drains.
+
+The stage retains the verified generation under
+`out/e567-validation/staging/target/validation/units/e567-e341-internal-stage-zuua33cz/work/resources`.
+The empty test-only fallback guard was removed after verification.
+First creation from an empty resource root remains an independent
+entry in the recovery checklist.
+
+## E568 European fixed-size literal byte-copy census
+
+Wine `e568-fixed-byte-copy-source-plan-uqy1fdv4` follows the same
+181 aligned direct Thumb BL patterns to `08147dc0` as E565. It
+selects every setup with a positive immediate byte count in `r2`
+and a PC-relative literal source in `r1`, allowing one intervening
+instruction that only sets destination register `r0`.
+The 120 ROM-source calls copy 2, 3, 4, 5, 6, 8, 10, 24 or 64 bytes.
+The other patterns include eight literal sources outside ROM,
+40 different source setups and 13 different size setups.
+
+Against the exact e341 manifest, 21 selected calls have both
+arguments covered by existing resources, including all seven
+E565 ten-byte copies. The other 99 calls leave **526 payload
+bytes in 91 distinct source ranges** and **388 bytes in 97 literal
+words**. The plan records shared sources and literals once per
+physical range. The only new payload outside page `14d` is the
+four-byte source at `6df49e`, shared by three calls.
+
+The verified Windows CLI checks 590 halfwords in 12 original
+instruction windows. All 16 input guards pass and Wine drains.
+The plan SHA-256 is
+`aa5ff835be13361562868356d7bf8b8b27a5059a8c2383efaaf6470c06a91560`.
+E569 integrates this residual. Other argument setups, indirect branches,
+ordinary dispatch, Linux and USA remain open.
+
+## E569 European fixed-size byte copies at runtime
+
+EUR `e342-d341` extends `engine.copied-halfword-lookups` with the
+E568 residual. It extracts 91 distinct payload ranges (526 bytes)
+and 97 distinct literal words (388 bytes) from the exact European ROM.
+Calls sharing a source or a literal use the same physical span. The
+runtime serves each covered byte through its original address and
+Game Pak aliases. Unowned bytes in a mixed request use the original
+backing or their existing owner.
+
+Windows build `xwc6z8ye` and Wine
+`e569-fixed-byte-copies-wine-77d8ytdh` pass. The original Thumb
+instructions execute all 99 affected copies with every newly owned
+byte altered in the test ROM buffer. The trace records 591 typed
+requests, including byte and word payload reads. The destination,
+full serialized state and guest clock match the raw reference after
+each call. All 2,256 halfword and word checks at span boundaries
+across the three cartridge windows and both raw gap checks pass.
+
+The verified e341 dataset still attaches. Relabeling it as e342 without
+the new bank is rejected before replacing the attached resources.
+The e342 manifest changes only the copied lookup entry among the 156
+resources. The candidate manifest and packet are retained in the Wine
+evidence. Thirteen input guards pass and Wine drains.
+
+E570 verifies standard CLI creation, verification and reuse. Ordinary
+routes, generated copies, other source/count setups, indirect calls,
+original BIOS, Linux, USA and native Windows remain open. See the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E570 European fixed-size byte-copy CLI publication
+
+The default-feature Windows build `b_ocl3zy` creates the complete
+`e342-d341` generation with `rom-data prepare` from an empty root under
+Wine. Its manifest and copied lookup packet equal the E569 files byte
+for byte. All 157 files match their expected hashes. The standard
+`rom-data verify` command confirms the dataset, and a second
+`rom-data prepare` selects the same generation. The file set, hashes,
+modification times and selector match before and after verification
+and reuse.
+
+The initial Wine unit `nirq6vbi` timed out in filesystem I/O while
+preparing on the external artifact volume. Its partial output remains
+available for diagnosis. Wine drained and the runner released the lease.
+The successful unit `e570-fixed-byte-cli-internal-wine-9c5u5ikm` uses
+the same executable and managed Wine prefix with the resource root on
+the internal disk. All 13 input guards pass and Wine drains.
+
+The verified e342 predecessor is retained under
+`out/e570-validation/staging/target/validation/units/e570-e342-internal-stage-qc09ozju/work/resources`.
+The unit's `evidence/result.json` identifies the exact generation.
+
+## E571 Remaining European direct byte-copy arguments
+
+The default Windows CLI verifies 2,876 distinct Thumb halfwords in
+12 disassembly windows on Wine. The census covers the 53 argument
+setups left open by E568 and the eight earlier literal-source RAM
+copies. The other 120 direct calls have complete payload and literal
+ownership in e342.
+
+The local argument slices resolve a positive count for all 61 calls.
+The 13 previously unresolved count expressions all produce 264 bytes.
+Twelve copies take 80 bytes from `03000940`, two use a fixed or bounded
+EWRAM address, and three take a stack-relative pointer. Forty source
+domains still depend on loaded pointers or registers from outside the
+local slices. These include the two counted lists, 14 copies of
+204-byte records, seven temporary-block restores and 11 indirect
+264-byte copies. The copy at `0d84ee` takes a stack buffer filled from
+IWRAM by an earlier setup. That producer and its literal at `0d8508`
+have their own verification boundary.
+
+Four paths resolve to two four-byte ROM payloads at `14d70c` and
+`14d724`. Each pair shares a PC-relative literal through `r9`, which
+the authenticated copy helper preserves. The e342 join covers 53
+distinct source/count literal words. `engine.thumb-pc-literals` owns
+the word at `12969c`. The residual is 52 words (208 bytes) plus the two
+payloads (8 bytes), with no overlapping ranges.
+
+Wine unit `e571-byte-copy-direct-windows-gr7xv4qr` passes all 16 input
+guards and drains Wine. The ownership join `wq5etv7t` passes all 11
+input guards and retains the complete per-call argument and source
+plan under `out/e571-validation/projection/target/validation/units`.
+It records local instruction definitions and candidate payload extents.
+E572 integrates the two payloads and the 52 residual argument words.
+Ordinary entry paths, dynamic producer domains, indirect calls to the
+helper, original BIOS, Linux and USA remain open.
+
+## E572 European direct byte-copy argument bank at runtime
+
+EUR `e343-d342` extends `engine.copied-halfword-lookups` by 216 bytes
+from the E571 ownership join. The extractor reads 52 argument words
+from the attested Thumb literal sites and extracts the two four-byte
+ROM payloads reached through those words. The runtime serves each
+physical span through the existing copied lookup paths. The standard
+Thumb literal resource still owns the word at `12969c`.
+
+Windows build `gdyjs9j4` and Wine
+`e572-direct-byte-copy-arguments-wine-0z1brzgc` pass. Each of the 53
+original literal instructions uses its extracted word with the ROM
+backing altered. Two original sequences execute both copies of each
+shared payload, including the `r9` forwarding across intervening
+helper calls. The four copy paths make 18 typed requests. The copied
+bytes, serialized state and guest clock match their raw references.
+All 648 mixed halfword and word mirror checks pass, including the
+raw gap beside the span at `0088dc`.
+
+The verified e342 dataset attaches. Relabeling it as e343 without the
+new bank is rejected before replacing the attached resources. The
+e343 manifest changes one entry among the 156 resources. The Wine
+unit retains the candidate manifest and copied lookup packet. All 14
+input guards pass and Wine drains.
+
+E573 verifies standard CLI creation, verification and reuse. The
+dynamic producers, ordinary and generated routes, original BIOS,
+Linux, USA and native Windows remain open.
+
+## E573 European direct byte-copy CLI publication
+
+The default-feature Windows build `yf___ub5` creates the complete
+`e343-d342` generation with `rom-data prepare` from an empty internal
+resource root under Wine. The manifest and copied lookup packet match
+the E572 reference byte for byte. All 157 files match their expected
+hashes. `rom-data verify` accepts the generation, and a second
+`rom-data prepare` reports `reused` for the same path. File set,
+identity, hashes, modification times and the selector agree before and
+after verification and reuse.
+
+Wine `e573-direct-copy-cli-internal-wine-e3sb3wpw` passes all 13
+input guards and drains the server. The current European generation
+is retained under
+`out/e573-validation/staging/target/validation/units/e573-e343-internal-stage-f4gl9ktu/work/resources`.
+The unit's `evidence/result.json` identifies the exact dataset directory.
+
+## E574 European dynamic byte-copy producer families
+
+Three managed Wine units attest 14,233 distinct Thumb halfwords around
+the 40 direct copy setups whose source pointers E571 left open. The
+setups group into two counted message record paths, two cached-object
+copies, seven scratch block restores, 14 context record copies, 11
+indirect context record copies, one EWRAM record loop, two indexed
+exchanges and one five-byte list projection.
+
+The loop's call at `08c00a` copies 264 bytes from
+`02000080 + 264 * slot`. The loop visits slots 1 through 23. A source
+requires a previous empty slot, so the first possible source is slot
+2. The half-open source envelope `[02000290, 02001940)` lies entirely
+in EWRAM.
+
+For the 11 copies that read the pointer field at context offset
+`0x1d10`, nine local writes supply `02000080 + 264 * index` with an
+unsigned byte index. These writes bound the 264-byte record within
+`[02000080, 02010880)`. Seven other writes relay the pointer from
+IWRAM slot `030027f4`. The seven confirmed local writes to that slot
+include a fixed EWRAM address, two indexed EWRAM addresses, a preview
+allocation offset, a helper result, a selected quest list pointer and
+a forwarded register. The helper, selected pointer, forwarded register
+and possible alias writers leave the live pointer domain open.
+
+The local context and scratch allocation definitions narrow several
+other source paths. The two counted message constructors forward an
+incoming pointer and share a dispatcher. The five-byte projection
+receives the first word of a list node through its one direct caller.
+The 39 remaining domains still require live provenance. The earlier
+stack copy at `0d84ee` draws from a buffer filled from IWRAM under the
+attested setup. Other upstream stack definitions and indirect callers
+remain open.
+
+The guarded e343 ownership join yields 124 distinct aligned PC-relative
+literal words at 125 original readers. The copied lookup bank owns
+37 words and the standard Thumb literal bank owns three. The residual
+is 84 complete words (336 bytes) across 85 readers. The plan records
+exact span hashes and reader offsets without extending ownership.
+
+Wine units `rd18kcew`, `e4k9r2zs` and `w7i6m4kp` pass 18, 22
+and 26 input guards respectively and drain the server. The join
+`d7fx1ud0` passes 21 input guards and retains the per-call plan under
+`out/e574-validation/projection/target/validation/units`. E575
+integrates the 84 residual words. Ordinary and generated dispatch,
+original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E575 European byte-copy producer literals at runtime
+
+EUR `e344-d343` extends `engine.copied-halfword-lookups` by 84
+aligned producer literal words (336 bytes). The extractor follows the
+original Thumb loads to the literal words in the authenticated ROM.
+The two readers of the word at `07deb4` share a single source span.
+The packet binds each word as a `byte-copy-producer-literal`. The
+existing copied lookup path serves the bytes and preserves the 40
+earlier owners.
+
+Windows build `wbvwdsfb` and Wine unit
+`e575-byte-copy-producer-literals-wine-unsgvy6q` pass. Each of the 85
+original load instructions makes one typed four-byte read with its
+ROM backing altered. The loaded values, full serialized state and
+guest clock match the raw references. All 1,008 halfword and word
+boundary checks pass across the three ROM mirrors. The adjacent raw
+word at `006910` continues to reflect the altered backing.
+
+The exact e343 dataset attaches. An e343 packet relabeled as e344 is
+rejected before replacing the attached resources. The e344 manifest
+changes a single resource among 156. The previous copied lookup packet
+matches after removing the new field. All 16 input guards pass and
+Wine drains. The unit retains the new manifest and packet.
+
+The initial build `j3fkxz15` fails with E0599 because the test
+omits the `Bus` trait import. The corrected build is the one used
+for Wine validation. E576 verifies standard CLI publication. The 39
+live source domains, ordinary and generated use, original BIOS,
+Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E576 European byte-copy producer literal CLI publication
+
+The default-feature Windows build `v5htx1gr` creates the European
+`e344-d343` generation with `rom-data prepare` from an empty internal
+resource root under Wine. The manifest and copied lookup packet match
+the E575 reference byte for byte. All 157 file hashes match.
+`rom-data verify` accepts the generation and a second
+`rom-data prepare` reports `reused` for the same path. File set,
+identities, hashes, modification times and the selector agree before
+and after verification and reuse.
+
+Wine unit `e576-producer-literal-cli-internal-wine-bdfakqb6` passes
+all 13 input guards and drains the server. The current European
+generation is retained under
+`out/e576-validation/staging/target/validation/units/e576-e344-internal-stage-3i4ioqmk/work/resources`.
+The unit's `evidence/result.json` identifies the exact dataset
+directory. The 39 live source domains and the deferred runtime and
+platform checks remain in the recovery checklist.
+
+## E577 European shared byte-copy pointer producers
+
+E577 traces the seven direct writes to `030027f4` from E574. The
+write at `032040` supplies fixed EWRAM address `02002fc4`. Two
+writes supply `02000080 + 264 * u8(index)`, giving the half-open
+264-byte envelope `[02000080, 02010880)`. The dispatcher at
+`125c70` selects one of eight entries by the input byte at offset
+`0x6`. Its branch at `125dd8` forms `02003b1c` in `r6`.
+The call at `125e38` receives that pointer in `r1`. The write at
+`125e3e` stores the fixed source on an `r6`-preserving return.
+
+The write at `05cb42` supplies `[0200f428] + 0x3284`. The four
+observed allocation sizes at that root are `0x1d7c`, `0x2fa0`,
+`0x3404` and `0x9c08`. A complete 264-byte record at the observed
+offset requires at least `0x338c` bytes. The two larger allocations
+meet that size. The live allocation and reachability remain open.
+
+The call at `024be2` makes the write at `024be8` load field `0x18`
+of the object referenced by `0200f438`. Two local field writes
+take a pointer from an indexed array reached through offset
+`0x94`. The setter at `02a720` has six aligned direct callers and
+stores its incoming pointer. At `062f26`, the source is a selected
+word from `[0200f44c] + 0x20 + 4 * index`. The selection routine
+adds a signed delta to the view offset and clamps to the available
+count for a valid positive count. The list writers, live selections
+and pointer contents still require evidence.
+
+The two Wine units `rzp7_338` and `3y34xpii` attest 1,908
+halfwords and 786 further halfwords respectively. They pass 30
+and 34 input guards and drain Wine. The guarded e344 join
+`ui3_rhik` passes all 32 input guards and finds 51 aligned literal
+words at 51 original loads. The current dataset owns 24 words and
+the dispatcher table. The remaining 27 words (108 bytes) form one
+candidate extraction bank. The initial join `nahd38zl` had a
+reversed register expectation at `032040` and the corrected join
+uses the same Wine evidence.
+
+E578 integrates the 27 literal words. Live aliases and ordering, the
+other source families, ordinary and generated use, original BIOS,
+Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E578 European shared-slot literals at runtime
+
+EUR `e345-d344` extracts all 27 unowned literal words (108 bytes)
+in the E577 shared-slot producer plan. Each original Thumb load
+identifies its source word in the authenticated ROM. The existing
+`engine.copied-halfword-lookups` packet binds each word as a
+`byte-copy-shared-slot-literal`. Its earlier spans, the other
+155 resource entries and the complete eight-entry dispatcher table
+match e344.
+
+Windows build `j981vha7` and Wine unit
+`e578-shared-slot-literals-wine-fj32mu8e` pass. Each of the 27
+original loads makes one typed four-byte read with the ROM backing
+altered. Loaded values, serialized state and guest clock match the
+raw references. All 324 halfword and word boundary checks across
+the three ROM mirrors pass. The adjacent raw word at `0270b0`
+continues to reflect the backing.
+
+The exact e344 predecessor attaches. An e344 packet relabeled
+as e345 is rejected before replacing the attached resources.
+Wine drains after all 15 input guards pass. The unit retains
+the e345 manifest and copied lookup packet.
+
+E579 verifies standard CLI publication. The 39 live source domains,
+ordinary and generated use, original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E579 European shared-slot literal CLI publication
+
+The default-feature Windows build `l0eyeusr` creates the European
+`e345-d344` generation with `rom-data prepare` from an empty internal
+resource root under Wine. The manifest and copied lookup packet match
+E578 byte for byte. All 157 file hashes agree. The standard
+`rom-data verify` command accepts the generation and a second
+`rom-data prepare` reports `reused` for the same path. The generation,
+file set, identities, hashes, modification times and selector match
+before and after verification and reuse.
+
+Wine unit `e579-shared-slot-cli-internal-wine-mm0k4grq` passes
+all 13 input guards and drains the server. The current European
+generation is retained under
+`out/e579-validation/staging/target/validation/units/e579-e345-internal-stage-7sglfxj4/work/resources`.
+The unit's `evidence/result.json` identifies the exact dataset
+directory. The 39 live source domains and the deferred runtime and
+platform checks remain in the recovery checklist.

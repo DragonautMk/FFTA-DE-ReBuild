@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "inventory-european-dynamic-copy-producers",
+  "title": "Bound European dynamic byte-copy producers and literal ownership",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Classified the 40 European dynamic direct byte-copy calls into eight producer families. Bounded the 264-byte record loop at 08c00a to EWRAM source slots 2 through 23.",
+    "Compared 124 producer literal words at 125 original readers with the exact e343 generation. Recorded 84 unowned words (336 bytes) at 85 readers as a single extraction unit."
+  ],
+  "validation": [
+    "Wine rd18kcew, e4k9r2zs and w7i6m4kp attest 14,233 distinct Thumb halfwords. All 18, 22 and 26 input guards pass and Wine drains after each unit.",
+    "The e343 ownership join d7fx1ud0 passes 21 input guards and retains the exact per-call plan and residual span hashes."
+  ],
+  "limitations": [
+    "The runtime bank, 39 live source domains, other stack and indirect producers, ordinary and generated dispatch, original BIOS, Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

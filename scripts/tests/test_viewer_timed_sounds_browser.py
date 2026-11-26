@@ -142,6 +142,6 @@ class TimedSoundBrowserTest(unittest.TestCase):
             work = Path(directory); dataset, _ = fixture(work, include_sequences=False)
             browser = Chrome(work, generate(dataset, work / 'view'))
             try:
-                self.assertTrue(browser.evaluate("!document.querySelector('#timed-sounds').hidden && document.querySelector('#sequence-audio').hidden && !document.querySelector('#timed-sound-rows a')"))
+                self.assertTrue(browser.evaluate("!document.querySelector('#timed-sounds').hidden && document.querySelector('#sequence-audio').hidden && !document.querySelector('#timed-sound-rows a') && document.querySelector('#timed-sound-play').disabled"))
             finally:
                 browser.close()

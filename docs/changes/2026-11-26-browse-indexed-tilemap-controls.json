@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-indexed-tilemap-controls",
+  "title": "Connect indexed controls to tilemaps",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose indexed tilemap control pointers, rows and descriptors with bidirectional links to uniquely matched extracted map previews.",
+    "Validate bounded fields and withhold preview links when source pointers disagree or map targets are missing or ambiguous."
+  ],
+  "validation": [
+    "Synthetic Chrome unit viewer-indexed-maps-synthetic-wsvczx61 passed 54 checks including forward and reverse navigation, malformed input, missing and ambiguous maps.",
+    "Protected e343 unit viewer-indexed-maps-real-38kkyllk authenticated 12 source spans, reconstructed 12 controls, checked all forward and reverse links, preserved other scope payloads and matched 20 Python/Docker files.",
+    "Published 16 ignored local wiki pages with guarded preimages. Earlier unit euf9mysl failed because a browser test used a single-element selector as a list; the corrected check passed."
+  ],
+  "limitations": [
+    "Graphics, palette and scene composition remain manual interpretations; native Windows remains unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_indexed_tilemap_controls_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

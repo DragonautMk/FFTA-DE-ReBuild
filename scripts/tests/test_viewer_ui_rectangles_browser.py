@@ -40,7 +40,7 @@ def fixture(work, value=None, *, observed=False):
                      f'sha256="{hashlib.sha256(content).hexdigest()}"\n')
     (dataset / 'manifest.toml').write_text(manifest)
     index = generate(dataset, work / 'view', split=True)
-    return index, index.parent / (index.name + '.parts/world.html')
+    return index, index.parent / (index.name + '.parts/interface.html')
 
 
 def payload(path):

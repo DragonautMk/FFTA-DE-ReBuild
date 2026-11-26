@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Extracted resource wiki</title>
+<style>
+body { font:16px system-ui,sans-serif; max-width:1100px; margin:2rem auto; padding:0 1rem; color:#182132; background:#f6f7fa; }
+h1 { margin-bottom:.3rem; } a { color:#155d7a; } summary { cursor:pointer; color:#155d7a; }
+section { background:white; padding:1.2rem; margin:1rem 0; border-radius:.5rem; }
+summary h2 { display:inline; font-size:1.25rem; } details[open]>summary { margin-bottom:.8rem; }
+.wiki-page-category, .resource-category, .resource-family { margin:.65rem 0; padding:.65rem; background:#eaf0f4; border-radius:.4rem; }
+.resource-family { background:white; border:1px solid #d8e0e6; } .resource-list { list-style:none; padding:0; margin:0; }
+.resource-list li { padding:.6rem 0; border-bottom:1px solid #ddd; overflow-wrap:anywhere; }
+.resource-list li:last-child { border-bottom:0; } .resource-file { display:block; color:#475569; font-size:.9rem; }
+.resource-links a { margin-right:1rem; } .wiki-page-category ul { padding-left:1.2rem; }
+input, select { font:inherit; padding:.45rem; border:1px solid #aab4c2; border-radius:.3rem; }
+input { width:min(35rem,90%); } input[type="checkbox"] { width:auto; }
+button { font:inherit; padding:.4rem .6rem; border:1px solid #93a9b5; border-radius:.3rem; background:#f3f7f9; color:#184b60; cursor:pointer; }
+button:disabled { opacity:.55; cursor:default; }
+table { border-collapse:collapse; width:100%; } td,th { text-align:left; padding:.5rem; border-bottom:1px solid #ddd; vertical-align:top; overflow-wrap:anywhere; }
+/* WIKI NAVIGATION CSS */
+</style>
+</head>
+<body>
+<nav id="wiki-pages" class="wiki-navbar" aria-label="Wiki pages" hidden><div id="wiki-page-links"></div></nav>
+<h1>Extracted resource wiki</h1>
+<p id="info"></p>
+<p>Choose a page or expand a category to browse the local extraction.</p>
+<main>
+<section id="resource-index">
+  <details open><summary><h2>Resource index</h2></summary>
+  <label>Search <input id="search" type="search" placeholder="Name, ID, file or format"></label>
+  <p id="index-count" role="status"></p>
+  <details><summary>Connect a dataset folder</summary>
+    <p>Files stay in the browser. Matches use relative paths; contents are not checked again.</p>
+    <label>Dataset folder <input id="dataset-directory" type="file" webkitdirectory multiple disabled></label>
+    <button type="button" id="dataset-disconnect" disabled>Disconnect folder</button>
+    <p id="dataset-status" role="status">Loading viewer…</p>
+  </details>
+  <div id="rows"></div>
+  </details>
+</section>
+<!-- FILE INSPECTOR -->
+</main>
+<script>
+const data = /* DATA */;
+let directoryFiles = new Map(), openIndexedFile = null, releaseIndexedFile = null;
+const directoryInput = document.getElementById('dataset-directory'), disconnectDirectory = document.getElementById('dataset-disconnect');
+const directoryStatus = document.getElementById('dataset-status');
+document.getElementById('info').textContent = data.profile + ' · extractor ' + data.extractor + ' · decoder ' + data.decoder;
+/* WIKI NAVIGATION */
+/* INDEX SCRIPT */
+/* FILE INSPECTOR */
+document.body.dataset.indexReady = 'true';
+</script>
+</body>
+</html>

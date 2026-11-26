@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-world-state-generated-literal-loads",
+  "title": "Verify European world-state literal loads through generated code",
+  "kind": "changed",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Add one focused audit that compiles both halfword alignments separately and executes every original world-state literal-load site through the generated bus API."
+  ],
+  "validation": [
+    "Windows cross-build fniu8rl2 and Wine e564-world-state-generated-wine-if47kps4 PASS. All 381 typed loads cover 372 words with original backing altered, including 15 earlier owners. Registers, guest clock and complete serialized state match the original interpreter after every instruction. All 13 input guards pass and Wine drains.",
+    "The first Wine unit 9u7famxn failed when the emitter chained two adjacent loads. Separating adjacent sites into two objects isolates each instruction."
+  ],
+  "limitations": [
+    "Ordinary generated dispatch, live placement, original BIOS, first publication, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/recomp/src/rom_data/world_state_task_literal_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -13,6 +13,9 @@ h1 { margin-bottom: .3rem; } a { color: #155d7a; }
 .sidebar ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .sidebar li { margin: .45rem 0; }
 .sidebar button { display: block; width: 100%; margin: .35rem 0; text-align: left; }
+.wiki-page-category, .section-group { margin: .65rem 0; padding: .65rem; background: #eaf0f4; border-radius: .4rem; }
+.wiki-page-category ul, #contents ul { margin: .5rem 0; padding-left: 1.2rem; }
+.section-group > summary { font-weight: 650; }
 main { min-width: 0; }
 @media (max-width: 760px) { .layout { display: block; } .sidebar { position: static; max-height: none; } }
 input, select { font: inherit; padding: .45rem; border: 1px solid #aab4c2; border-radius: .3rem; }
@@ -62,13 +65,14 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 .tilemap-grid table { width:auto; }
 .tilemap-grid td, .tilemap-grid th { padding:.1rem; }
 .tilemap-grid button { font:12px monospace; padding:.25rem; }
+/* WIKI NAVIGATION CSS */
 </style>
 </head>
 <body>
+<nav id="wiki-pages" class="wiki-navbar" aria-label="Wiki pages" hidden><div id="wiki-page-links"></div></nav>
 <h1>Extracted resource wiki</h1>
 <p id="info"></p>
 <p>Browse the local extraction by topic, or inspect an extracted file. Open a section to see its contents.</p>
-<nav id="wiki-pages" aria-label="Wiki pages" hidden><strong>Pages: </strong><span id="wiki-page-links"></span></nav>
 <div class="layout">
 <aside class="sidebar">
   <nav aria-label="Contents"><h2>Contents</h2><ul id="contents"></ul></nav>
@@ -452,6 +456,26 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p><button type="button" id="compact-table-previous">Previous</button> <span id="compact-table-page"></span>
     <button type="button" id="compact-table-next">Next</button></p>
 </details></section>
+<section id="ui-context-templates" hidden>
+  <details><summary><h2>UI context templates</h2></summary>
+  <p>Browse stored context coordinates, entry counts, flags and opaque bytes.
+  The coordinates are multiplied by eight and plotted against a 240×160
+  reference; this does not reconstruct the live interface or window size.</p>
+  <label>Template <select id="ui-context-template"></select></label>
+  <label id="ui-context-category-control" hidden>Category <select id="ui-context-category"></select></label>
+  <label><input type="checkbox" id="ui-context-show-all" checked> Show all template positions</label>
+  <p id="ui-context-source"></p><p id="ui-context-detail" role="status"></p>
+  <canvas id="ui-context-canvas" width="480" height="320" style="max-width:100%;height:auto;border:1px solid #93a9b5" aria-label="Stored UI context coordinates"></canvas>
+  <details><summary>Stored template fields</summary>
+    <table><thead><tr><th>Offset</th><th>Field</th><th>Stored value</th></tr></thead><tbody id="ui-context-fields"></tbody></table>
+  </details>
+  <details id="ui-context-category-mapping" hidden><summary>Documented category selection</summary>
+    <p>These categories select templates in the authenticated European source.
+    Other category values return template 0; live context and labels may differ.</p>
+    <table><thead><tr><th>Category</th><th>Template</th><th>Coordinates</th><th>Entry count</th></tr></thead><tbody id="ui-context-category-rows"></tbody></table>
+  </details>
+  </details>
+</section>
 <section id="ui-choices" hidden>
   <details><summary><h2>UI choice lists</h2></summary>
   <p>Each point represents a stored cursor coordinate. The navigation bytes,
@@ -480,6 +504,18 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="ui-detail"></p>
   <canvas id="ui-sheet" width="128" height="64" style="width:min(100%,512px);height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interface tile sheet"></canvas>
 </details></section>
+<section id="transfer-directory" hidden>
+  <details><summary><h2>Transfer selector directory</h2></summary>
+    <p>Browse the stored selector, row, descriptor and wrapper links. Some
+    selectors share rows and some entries are empty. Linked LZ77 inputs can be
+    inspected as tiles; their depth, palette and scene composition remain manual.</p>
+    <label>Selector <select id="transfer-directory-slot"></select></label>
+    <p id="transfer-directory-source" role="status"></p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Row</th><th>Stored row fields</th>
+      <th>Descriptor and wrapper</th><th>Shared selectors</th><th>Preview</th></tr></thead>
+      <tbody id="transfer-directory-rows"></tbody></table></div>
+  </details>
+</section>
 <section id="obj-tiles" hidden>
   <details><summary><h2>Object and transfer tile sheets</h2></summary>
   <p>Inspect decoded object banks and transfer payloads as 8×8 tiles.
@@ -520,6 +556,16 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <label>Source row <select id="firaga-palette-row"></select></label>
     <p id="firaga-palette-source"></p><p id="firaga-palette-references" hidden></p>
     <div id="firaga-palette-colors" class="grid"></div>
+  </details>
+</section>
+<section id="indexed-tilemap-controls" hidden>
+  <details><summary><h2>Indexed tilemap controls</h2></summary>
+    <p>These stored pointers connect indexed controls, transfer rows and tilemap
+    descriptors. Open a uniquely matched extracted map below; graphics and
+    palette choices do not establish the original scene composition.</p>
+    <p id="indexed-tilemap-source"></p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Slot and pointer</th><th>Stored row fields</th>
+      <th>Descriptor fields</th><th>Map preview</th></tr></thead><tbody id="indexed-tilemap-rows"></tbody></table></div>
   </details>
 </section>
 <section id="tilemaps" hidden>
@@ -564,6 +610,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <label>Palette bank <select id="tilemap-palette-bank"></select></label>
   <label><input id="tilemap-cell-palettes" type="checkbox"> Use each cell's palette ID</label>
   <p id="tilemap-description"></p>
+  <p id="tilemap-indexed-references" hidden></p>
   <canvas id="tilemap-canvas" style="max-width:100%;height:auto;image-rendering:pixelated;background:#e4ebf0" aria-label="Interpreted tilemap preview"></canvas>
   <p id="tilemap-cell-detail" role="status"></p>
   <details id="tilemap-source-metadata" hidden><summary>Stored source fields</summary><p id="tilemap-source-fields"></p></details>
@@ -662,6 +709,20 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <details><summary><h2>Item records</h2></summary>
   <p>Static fields are identified by their byte offset within each record.</p>
   <label>Item ID <select id="item-id"></select></label>
+  <div id="item-names" hidden>
+    <p>Names come from the item's stored text index and the European name reader.
+    Unrecognized characters keep their original glyph image.</p>
+    <label>Language ID <select id="item-name-language"></select></label>
+    <div id="item-name-preview" class="text-preview"></div>
+    <p id="item-name-source"></p>
+    <details><summary>Browse and filter item names</summary>
+      <label>Filter by item ID or name <input id="item-name-filter" type="search"></label>
+      <button type="button" id="item-name-prev">Previous</button>
+      <button type="button" id="item-name-next">Next</button>
+      <span id="item-name-page" role="status"></span>
+      <table><thead><tr><th>Item ID</th><th>Localized name</th><th>Source</th></tr></thead><tbody id="item-name-rows"></tbody></table>
+    </details>
+  </div>
   <p id="items-source"></p>
   <p id="item-link-navigation" hidden><a id="item-link-open" href="#item-links">Open linked pair record</a></p>
   <p id="item-effect-navigation" hidden><a id="item-effect-open" href="#item-effects">Open item effect parameters</a></p>
@@ -718,17 +779,91 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   substitutions are not executed.</p>
   <label id="metadata-name-language-control">Language ID <select id="metadata-name-language"></select></label>
   <label>Filter by row ID or displayed name <input id="metadata-name-filter" type="search"></label>
+  <label>Match <select id="metadata-name-filter-mode"><option value="contains">Contains</option><option value="exact-id">Exact ID</option></select></label>
+  <div id="metadata-sprite-controls" hidden>
+    <p>Sprite links use stored direct metadata fields. Palette choices are previews;
+    live redirects, palette changes and actor composition are not evaluated.</p>
+    <label>Preview palette <select id="metadata-sprite-palette"><option value="gray">Grayscale</option>
+      <option value="low">Stored low nibble</option><option value="high">Stored high nibble</option></select></label>
+    <label>Color mode <select id="metadata-sprite-variant"><option value="0">Default</option>
+      <option value="1">Mode 1</option><option value="2">Mode 2</option></select></label>
+  </div>
   <p id="metadata-name-source"></p>
   <button type="button" id="metadata-name-prev">Previous</button>
   <button type="button" id="metadata-name-next">Next</button>
   <span id="metadata-name-page" role="status"></span>
-  <table><thead><tr><th>Metadata ID</th><th>Routing</th><th>Localized name</th><th>Name source</th></tr></thead><tbody id="metadata-name-rows"></tbody></table>
+  <table><thead><tr><th>Metadata ID</th><th>Routing</th><th>Localized name</th><th>Name source</th><th>Item-linked slots</th><th>Two-pair references</th><th>Special-unit references</th><th>Battle sprites</th></tr></thead><tbody id="metadata-name-rows"></tbody></table>
+</details></section>
+<section id="metadata4" hidden>
+  <details><summary><h2>Two-pair metadata records</h2></summary>
+  <p>Each stored row contains two selector/value pairs. A nonzero selector is
+  counted, while the original leading walk stops at the first zero. These
+  links show source references and do not evaluate live requirements.</p>
+  <label>Record ID <select id="metadata4-record"></select></label>
+  <p id="metadata4-source"></p><p id="metadata4-summary" role="status"></p>
+  <table><thead><tr><th>Slot</th><th>Selector</th><th>Value</th><th>Counted</th><th>In leading walk</th></tr></thead><tbody id="metadata4-slots"></tbody></table>
+  <details><summary>Metadata rows referencing this record</summary>
+    <label>Filter row ID or name <input id="metadata4-owner-filter" type="search"></label>
+    <p id="metadata4-owner-status" role="status"></p>
+    <table><thead><tr><th>Metadata ID</th><th>Reference</th></tr></thead><tbody id="metadata4-owners"></tbody></table>
+    <button type="button" id="metadata4-owner-prev">Previous</button>
+    <button type="button" id="metadata4-owner-next">Next</button>
+  </details>
+</details></section>
+<section id="metadata14" hidden>
+  <details><summary><h2>Special-unit source records</h2></summary>
+    <p>Browse stored special-unit fields, default metadata selectors, sprite IDs
+    and palette selections. A live descriptor can override these values; a
+    referenced job name does not identify the character.</p>
+    <label>Record ID <select id="metadata14-record"></select></label>
+    <p id="metadata14-source"></p>
+    <p id="metadata14-job"></p>
+    <p id="metadata14-sprites"></p>
+    <details><summary>Stored palette selection</summary>
+      <p>The original branch uses these packed fields to select an override
+      palette and destination bank. Color mode and branch are preview choices.</p>
+      <label>Branch <select id="metadata14-branch"><option value="other">Argument other than 1</option><option value="one">Argument 1</option></select></label>
+      <label>Color mode <select id="metadata14-variant"><option value="0">Default</option><option value="1">Mode 1</option><option value="2">Mode 2</option></select></label>
+      <p id="metadata14-palette-detail" role="status"></p>
+      <div id="metadata14-colors" class="grid"></div>
+    </details>
+    <details><summary>All stored fields</summary><table><tbody id="metadata14-fields"></tbody></table></details>
+  </details>
+</section>
+<section id="action-records" hidden>
+  <details><summary><h2>Action-linked records</h2></summary>
+  <p>Browse physical 28-byte metadata records. A documented original lookup
+  passes the first field to a localized text reader; some records were observed
+  on an action menu. Other field meanings and live availability remain open.</p>
+  <label>Record ID <select id="action-record-id"></select></label>
+  <div id="action-names" hidden>
+    <label>Language ID <select id="action-name-language"></select></label>
+    <div id="action-name-preview" class="text-preview"></div>
+    <p id="action-name-source"></p>
+    <details><summary>Browse and filter names</summary>
+      <label>Filter by record ID or name <input id="action-name-filter" type="search"></label>
+      <button type="button" id="action-name-prev">Previous</button>
+      <button type="button" id="action-name-next">Next</button>
+      <span id="action-name-page" role="status"></span>
+      <table><thead><tr><th>Record ID</th><th>Localized name</th><th>Source</th></tr></thead><tbody id="action-name-rows"></tbody></table>
+    </details>
+  </div>
+  <p id="action-record-source"></p>
+  <details><summary>Stored fields</summary>
+    <table><thead><tr><th>Field</th><th>Stored value</th></tr></thead><tbody id="action-record-fields"></tbody></table>
+  </details>
+  <details><summary>Flag bits</summary>
+    <p>Original selectors 11–31 test bits 0–20. Other bits remain stored without inferred meaning.</p>
+    <table><thead><tr><th>Bit</th><th>Value</th><th>Original selector</th></tr></thead><tbody id="action-record-flags"></tbody></table>
+  </details>
 </details></section>
 <section id="item-links" hidden>
   <details><summary><h2>Item-linked pair records</h2></summary>
   <p>Each item selects a record using its byte at offset 0x1D. The selector and
   value bytes are shown as stored; their broader meanings and live conditions
-  are not inferred. Slots beyond the count are preserved storage.</p>
+  are not inferred. Slots beyond the count are preserved storage. Where source
+  identities match, active nonzero selectors link to matching metadata rows;
+  this correspondence does not establish live selection.</p>
   <label>Pair record <select id="item-link-record"></select></label>
   <p id="item-link-source"></p>
   <label><input type="checkbox" id="item-link-show-inactive" checked> Show slots beyond the count</label>
@@ -777,6 +912,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <label>Mission record ID <select id="mission-record-id"></select></label>
     <p id="mission-record-source"></p>
     <p id="mission-event-navigation" hidden><a id="mission-event-open" href="#mission-records">Open stored event row</a></p>
+    <p id="mission-world-navigation" hidden><a id="mission-world-open" href="#world-records">Open referenced world record</a></p>
     <table><thead><tr><th>Field</th><th>Stored value</th></tr></thead><tbody id="mission-record-fields"></tbody></table>
   </details>
   <details id="event-record-panel"><summary>Event records</summary>
@@ -803,6 +939,27 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
       <span id="parameter-event-page"></span>
       <table><thead><tr><th>Event record ID</th></tr></thead><tbody id="parameter-event-rows"></tbody></table>
     </details>
+  </details>
+</details></section>
+<section id="world-records" hidden>
+  <details><summary><h2>World records</h2></summary>
+  <p>These 38-byte source records contain unsigned fields and 31 stored threshold
+  bytes. Their names, live effects and relation to world-map locations are not
+  established. Mission links use a documented European packed-index calculation;
+  they do not establish that a mission or record was used during play.</p>
+  <label>World record ID <select id="world-record-id"></select></label>
+  <p id="world-record-source"></p>
+  <table><thead><tr><th>Field</th><th>Stored value</th></tr></thead><tbody id="world-record-fields"></tbody></table>
+  <details><summary>Stored thresholds</summary>
+    <p>Values are raw bytes; the bars use the full 0–255 range.</p>
+    <table><thead><tr><th>Index</th><th>Value</th><th>Byte value</th></tr></thead><tbody id="world-threshold-rows"></tbody></table>
+  </details>
+  <details><summary>Mission records referencing this row</summary>
+    <label>Filter mission ID <input id="world-mission-filter" type="search" style="width:10rem"></label>
+    <button type="button" id="world-mission-prev">Previous</button>
+    <button type="button" id="world-mission-next">Next</button>
+    <span id="world-mission-page" role="status"></span>
+    <table><thead><tr><th>Mission record ID</th></tr></thead><tbody id="world-mission-rows"></tbody></table>
   </details>
 </details></section>
 <section id="encounters" hidden>
@@ -921,6 +1078,24 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     </details>
   </div>
 </details></section>
+<section id="cgb-noise" hidden>
+  <details><summary><h2>CGB noise register codes</h2></summary>
+  <p>These 60 stored driver codes select noise-generator settings. Choose an
+  entry to hear a one-second synthesized reference; no song or instrument
+  association is inferred. The preview uses the project's noise-generator
+  model, without the game's envelope, channel allocation or mixer effects.</p>
+  <label>Noise code <select id="noise-code"></select></label>
+  <label><input type="checkbox" id="noise-loop"> Repeat preview</label>
+  <label><input type="checkbox" id="noise-mute-cgb"> Mute CGB voices</label>
+  <button type="button" id="noise-play">Play noise</button>
+  <button type="button" id="noise-stop" disabled>Stop</button>
+  <button type="button" id="noise-download">Download noise WAV</button>
+  <p><label for="noise-progress">Playback position</label>
+    <progress id="noise-progress" max="1" value="0"></progress> <span id="noise-progress-label">Not playing.</span></p>
+  <p id="noise-detail"></p><p id="noise-status" role="status"></p>
+  <canvas id="noise-waveform" width="640" height="160" style="width:100%;max-width:640px;background:#f3f6fa" aria-label="Synthesized noise waveform"></canvas>
+  </details>
+</section>
 <section id="instruments" hidden>
   <details><summary><h2>Instrument banks and programs</h2></summary>
   <p>Browse stored bank/program and key-map links, then audition the resolved
@@ -968,6 +1143,19 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <label>Find source offset <input id="timed-sound-filter" type="search" placeholder="Decimal or hexadecimal"></label>
   <label>Source <select id="timed-sound-source"></select></label>
   <p id="timed-sound-detail" role="status"></p>
+  <details id="timed-sound-audition" hidden><summary>Audition schedule</summary>
+    <p>Play recognized directory entries together at their stored ticks. The
+    schedule rate and maximum sound length are preview settings; source flags,
+    channel behavior and the original scheduler are not reproduced. The song
+    player's voice, tempo, track controls and mutes also apply.</p>
+    <label>Schedule ticks per second <input id="timed-sound-rate" type="number" min="1" max="400" value="60" style="width:6rem"></label>
+    <label>Maximum seconds per sound <input id="timed-sound-duration" type="number" min="1" max="60" value="3" style="width:6rem"></label>
+    <button type="button" id="timed-sound-play">Play schedule approximation</button>
+    <button type="button" id="timed-sound-stop" disabled>Stop schedule</button>
+    <p><label for="timed-sound-progress">Playback position</label>
+      <progress id="timed-sound-progress" max="1" value="0"></progress> <span id="timed-sound-progress-label">Not playing.</span></p>
+    <p id="timed-sound-play-status" role="status">Select a row source to audition its candidates.</p>
+  </details>
   <p><button type="button" id="timed-sound-prev">Previous page</button>
     <span id="timed-sound-page"></span><button type="button" id="timed-sound-next">Next page</button></p>
   <div style="overflow-x:auto"><table><thead id="timed-sound-head"></thead><tbody id="timed-sound-rows"></tbody></table></div>
@@ -1100,6 +1288,17 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="pointer-source"></p>
   <div id="pointer-preview" class="text-preview"></div>
 </details></section>
+<section id="text-reader-registry" hidden>
+  <details><summary><h2>Text reader registry</h2></summary>
+  <p>These are stored callback slots. A link identifies an extracted archive whose
+  reader address matches the callback; it does not establish that the callback
+  was executed or describe when the game uses it.</p>
+  <p id="text-registry-source"></p>
+  <label>Filter by slot or address <input id="text-registry-filter" type="search"></label>
+  <p id="text-registry-count" role="status"></p>
+  <table><thead><tr><th>Slot</th><th>File offset</th><th>Callback</th><th>Archive</th></tr></thead>
+    <tbody id="text-registry-rows"></tbody></table>
+</details></section>
 <section id="relative-texts" hidden>
   <details><summary><h2>Relative text archives</h2></summary>
   <p>Browse archive programs by reader and language. Commands and operands are
@@ -1108,6 +1307,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   Latin subset; other glyphs retain their original image. Program labels show a
   short recognized preview; � marks unknown glyphs.</p>
   <label>Reader <select id="relative-reader"></select></label>
+  <p id="relative-registry-navigation" hidden><button id="relative-registry-open" type="button">Show matching registry slots</button></p>
   <label>Language ID <select id="relative-language"></select></label>
   <label><input type="checkbox" id="relative-pin"> Pin language ID across text views</label>
   <label><input type="checkbox" id="relative-hide-commands"> Hide commands and controls</label>
@@ -1317,23 +1517,67 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 const data = /* DATA */;
 let transferGraphicsRequest = null, transferGraphicsLoaded = null;
 document.getElementById('info').textContent = data.profile + ' · extractor ' + data.extractor + ' · decoder ' + data.decoder;
-if (data.wiki) {
-  const links = document.getElementById('wiki-page-links');
-  document.getElementById('wiki-pages').hidden = false;
-  data.wiki.pages.forEach((page, index) => {
-    if (index) links.append(document.createTextNode(' · '));
-    const link = document.createElement('a'); link.href = page.href; link.textContent = page.label;
-    if (page.id === data.wiki.current) link.setAttribute('aria-current', 'page');
-    links.append(link);
-  });
-  const current = data.wiki.pages.find(page => page.id === data.wiki.current);
-  if (current && current.id !== 'index') {
-    document.title = current.label + ' · Extracted resource wiki';
-    document.querySelector('h1').textContent = document.title;
-  }
+/* WIKI NAVIGATION */
+function relatedWikiView(scope, section, control, index) {
+  if (!data.wiki || !Number.isInteger(index) || index < 0) return null;
+  const page = data.wiki.pages.find(item => item.id === scope);
+  const view = page && (page.sections || []).find(item => item.id === section);
+  if (!view || !Number.isInteger(view.count) || index >= view.count) return null;
+  const target = new URL(page.href, location.href); target.hash = section;
+  target.searchParams.set('view', section); target.searchParams.append('select', control + ':' + index);
+  return target.href;
 }
 const rows = document.getElementById('rows');
 let directoryFiles = new Map(), openIndexedFile = null, releaseIndexedFile = null;
+const itemNameGlyphs = new Map((data.item_names ? data.item_names.glyphs : []).map(glyph => [glyph.index, glyph]));
+function itemNameLabel(id) {
+  const source = data.item_names, item = source && source.rows[id];
+  const language = Number(document.getElementById('item-name-language').value) || 0;
+  const units = item && item.names[language];
+  return units ? textEntryLabel(id, units, itemNameGlyphs, unit => typeof unit === 'number' ? unit : null) : String(id);
+}
+const metadataReferenceGlyphs = new Map((data.metadata_names ? data.metadata_names.glyphs : []).map(glyph => [glyph.index, glyph]));
+function metadataReferenceLabel(id) {
+  const source = data.metadata_names, item = source && source.rows.find(row => row.id === id);
+  const language = Number(document.getElementById('metadata-name-language').value) || 0;
+  const units = item && item.names[language];
+  return data.item_metadata_links && data.item_metadata_links.names_verified && units
+    ? textEntryLabel(id, units, metadataReferenceGlyphs, unit => typeof unit === 'number' ? unit : null) : String(id);
+}
+function openMetadataReference(id) {
+  const filter = document.getElementById('metadata-name-filter');
+  document.getElementById('metadata-name-filter-mode').value = 'exact-id';
+  filter.value = String(id); filter.dispatchEvent(new Event('input', {bubbles: true}));
+  document.querySelector('#metadata-names > details').open = true;
+}
+function metadata4Label(id) {
+  const source = data.metadata_names, item = source && source.rows.find(row => row.id === id);
+  const language = Number(document.getElementById('metadata-name-language').value) || 0;
+  const units = item && item.names[language];
+  return data.metadata4_links && data.metadata4_links.names_verified && units
+    ? textEntryLabel(id, units, metadataReferenceGlyphs, unit => typeof unit === 'number' ? unit : null) : String(id);
+}
+function openMetadata4(id) {
+  if (!data.metadata4 || !Number.isInteger(id) || id < 0 || id >= data.metadata4.records.length) return;
+  const section = document.getElementById('metadata4'), selector = document.getElementById('metadata4-record');
+  selector.value = String(id); selector.dispatchEvent(new Event('change', {bubbles: true}));
+  section.querySelector('details').open = true;
+  const group = section.closest('.section-group'); if (group) group.open = true;
+}
+function metadata14Label(id) {
+  const source = data.metadata_names, item = source && source.rows.find(row => row.id === id);
+  const language = Number(document.getElementById('metadata-name-language').value) || 0;
+  const units = item && item.names[language];
+  return data.metadata14_links && data.metadata14_links.names_verified && units
+    ? textEntryLabel(id, units, metadataReferenceGlyphs, unit => typeof unit === 'number' ? unit : null) : String(id);
+}
+function openMetadata14(id) {
+  if (!data.metadata14 || !data.metadata14.records.some(record => record.id === id)) return;
+  const section = document.getElementById('metadata14'), selector = document.getElementById('metadata14-record');
+  selector.value = String(id); selector.dispatchEvent(new Event('change', {bubbles: true}));
+  section.querySelector('details').open = true;
+  const group = section.closest('.section-group'); if (group) group.open = true;
+}
 const resourceViews = {
   'graphics.obj-dimensions': 'dimensions', 'graphics.bg-descriptors': 'bg-descriptors',
   'graphics.indexed-archives': 'indexed-graphics',
@@ -1351,11 +1595,14 @@ const resourceViews = {
   'graphics.palette-programs': 'palette-programs',
   'graphics.blend-programs': 'blend-programs',
   'engine.ui-choice-lists': 'ui-choices',
+  'ui.context-templates': 'ui-context-templates',
   'graphics.obj-animation-banks': 'obj-animations',
   'graphics.word-task-obj-animations': 'obj-animations', 'graphics.layered-obj-animations': 'obj-animations',
   'graphics.ui-custom-banks': 'ui-tiles', 'graphics.ui-raw-palettes': 'ui-tiles',
   'graphics.ui-raw-transfers': ['tilemaps', 'signed-map-deltas'], 'graphics.dynamic-raw-fragments': 'tilemaps',
   'graphics.obj-custom-banks': 'obj-tiles', 'graphics.observed-lz-block': 'obj-tiles',
+  'graphics.tilemap-transfer-directory': 'transfer-directory',
+  'graphics.indexed-tilemap-controls': 'indexed-tilemap-controls',
   'graphics.tilemap-transfer-lz77': 'obj-tiles',
   'graphics.tilemap-type3-transfers': 'obj-tiles',
   'graphics.tilemap-stream-bank': ['tilemaps', 'byte-tilemaps'], 'graphics.tilemap-direct-transfers': 'byte-tilemaps',
@@ -1368,14 +1615,19 @@ const resourceViews = {
   'gameplay.progression-rewards': 'progression-records', 'gameplay.progression-gates': 'progression-records',
   'gameplay.progression-selection-gates': 'progression-records', 'gameplay.trade-parameters': 'progression-records',
   'gameplay.slot-job-lookup': 'job-names', 'gameplay.linked-metadata52': ['job-names', 'metadata-names'],
+  'gameplay.linked-metadata28': 'action-records', 'gameplay.linked-metadata4': 'metadata4',
+  'gameplay.linked-metadata14': 'metadata14',
   'gameplay.mission-records70': 'mission-records', 'gameplay.event-records12': 'mission-records',
   'gameplay.parameter-records27': 'mission-records',
+  'gameplay.world-records38': 'world-records',
   'gameplay.encounter-headers': 'encounters', 'gameplay.encounter-unit-templates': 'encounters',
   'gameplay.encounter-coordinates': 'encounters',
   'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': ['audio', 'instruments'],
   'graphics.script39-registry-poses': 'equipment-sprites', 'graphics.script39-special-poses': 'equipment-sprites',
-  'audio.m4a-directory': ['sequence-audio', 'timed-sounds'], 'audio.m4a-sequences': 'sequence-audio', 'audio.m4a-driver-tables': 'sequence-audio',
+  'audio.m4a-directory': ['sequence-audio', 'timed-sounds'], 'audio.m4a-sequences': 'sequence-audio',
+  'audio.m4a-driver-tables': ['sequence-audio', 'cgb-noise'],
   'text.short-strings': 'texts', 'text.catalogs': ['pointer-texts', 'relative-texts'], 'text.script-archives': 'script-texts',
+  'engine.text-reader-registry': 'text-reader-registry',
   'font.complete-bank': ['font-atlas', 'script-texts'], 'text.name-keyboard': 'name-keyboard',
   'graphics.unit-obj-initial-pose': 'sprites',
   'graphics.unit-obj-equipment': 'equipment-sprites',
@@ -1386,6 +1638,7 @@ const resourceViews = {
   'graphics.unit-obj-script-override': 'equipment-sprites',
   'graphics.unit-obj-script-registry-special': 'equipment-sprites',
   'graphics.unit-obj-script-registry-generic': 'equipment-sprites',
+  'graphics.unit-obj-property-words': 'metadata-names',
   'graphics.color-mode-palettes': ['color-books', 'sprites']
 };
 const spriteCatalogModes = {'graphics.unit-obj-equipment': 'equipment',
@@ -1533,7 +1786,9 @@ function renderRows() {
           || (target === 'effect-events' && !data.effect_events)
           || (target === 'font-atlas' && !data.font)
           || (target === 'name-keyboard' && !data.name_keyboard)
+          || (target === 'cgb-noise' && !data.audio_noise)
           || (target === 'pointer-texts' && !data.pointer_texts)
+          || (target === 'text-reader-registry' && !data.text_reader_registry)
           || (target === 'relative-texts' && !data.relative_texts) || (target === 'sprites' && !data.sprite_pixels)
           || (target === 'color-books' && !data.color_mode_palettes)
           || (target === 'equipment-sprites' && !data.equipment_sprites && !Object.keys(data.battle_sprites || {}).length
@@ -1544,7 +1799,11 @@ function renderRows() {
           || (target === 'progression-records' && !Object.keys(data.progression_catalogs || {}).length)
           || (target === 'job-names' && !data.job_names)
           || (target === 'metadata-names' && !data.metadata_names)
+          || (target === 'metadata4' && !data.metadata4)
+          || (target === 'metadata14' && !data.metadata14)
+          || (target === 'action-records' && !data.action_records)
           || (target === 'mission-records' && !Object.keys(data.mission_events || {}).length)
+          || (target === 'world-records' && !data.world_records)
           || (target === 'encounters' && !Object.keys(data.encounters || {}).length)
           || (target === 'world' && !data.world_nodes)
           || (target === 'indexed-graphics' && (!data.indexed_archives ||
@@ -1557,6 +1816,9 @@ function renderRows() {
           || (target === 'bg-planes' && !data.bg_plane_programs)
           || (target === 'script-paths' && !data.script_paths)
           || (target === 'ui-choices' && !data.ui_choice_lists)
+          || (target === 'ui-context-templates' && !data.ui_context_templates)
+          || (target === 'transfer-directory' && !data.transfer_directory)
+          || (target === 'indexed-tilemap-controls' && !data.indexed_tilemap_controls)
           || (target === 'obj-animations' && !objAnimationData[objAnimationModes[item.id]])
           || (target === 'compact-catalog-tables' && !(objAnimationData.compact_catalog && objAnimationData.compact_catalog.auxiliary))
           || (target === 'raster-palettes' && !data.raster_palettes)
@@ -1649,8 +1911,16 @@ function renderRows() {
                                                            'obj-animations': 'animations', 'compact-catalog-tables': 'compact source tables',
                                                            'font-atlas': 'glyph atlas', 'script-texts': 'script texts',
                                                            'audio': 'waveforms', 'instruments': 'instrument banks',
-                                                           'sequence-audio': 'song sequences', 'timed-sounds': 'timed sound sources'}[target] || 'view');
+                                                           'sequence-audio': 'song sequences', 'cgb-noise': 'CGB noise codes',
+                                                           'timed-sounds': 'timed sound sources'}[target] || 'view');
       name.append(document.createElement('br'), link);
+    }
+    if (item.id === 'graphics.unit-obj-property-words' && item.status.startsWith('Available') && data.wiki && data.wiki.current !== 'world') {
+      const page = data.wiki.pages.find(entry => entry.id === 'world');
+      if (page) {
+        const link = document.createElement('a'); link.href = page.href + '#metadata-names'; link.textContent = 'Open job sprite references';
+        name.append(document.createElement('br'), link);
+      }
     }
     if (item.embedded_view && data.wiki && data.wiki.resource_directory) {
       const link = document.createElement('a');
@@ -2387,7 +2657,7 @@ if (data.item_effects) {
   const quantity = document.getElementById('item-effect-quantity'), result = document.getElementById('item-effect-result');
   const itemNavigation = document.getElementById('effect-item-navigation'), itemLink = document.getElementById('effect-item-open');
   const propertyCoefficients = [0,0,1,1,1,2,2,3,3,3,4,4,5,5,6,6,7,7,8,8];
-  catalog.records.forEach(record => selector.add(new Option(record.item_id, record.id)));
+  catalog.records.forEach(record => selector.add(new Option(itemNameLabel(record.item_id), record.id)));
   function calculateEffect() {
     const inputs = [property, current, quantity], values = inputs.map(input => Number(input.value));
     if (inputs.some((input, index) => input.value === '' || !Number.isInteger(values[index]) || values[index] < 0 || values[index] > 255)) {
@@ -2418,6 +2688,9 @@ if (data.item_effects) {
     document.querySelector('#items > details').open = true;
   });
   selector.addEventListener('change', drawEffect); [property, current, quantity].forEach(input => input.addEventListener('input', calculateEffect));
+  document.getElementById('item-name-language').addEventListener('change', () => {
+    catalog.records.forEach((record, index) => { selector.options[index].textContent = itemNameLabel(record.item_id); });
+  });
   drawEffect();
 }
 if (Object.keys(data.progression_catalogs || {}).length) {
@@ -2510,10 +2783,19 @@ if (data.item_links) {
     record.slots.forEach((slot, index) => {
       const active = index < record.count;
       if (!active && !showInactive.checked) return;
-      const row = slots.insertRow();
-      [index, active ? 'Within count' : 'Beyond count', slot.selector, slot.value].forEach(value => {
-        row.insertCell().textContent = String(value);
-      });
+      const row = slots.insertRow(); row.dataset.slot = String(index);
+      row.insertCell().textContent = String(index);
+      row.insertCell().textContent = active ? 'Within count' : 'Beyond count';
+      const cell = row.insertCell(), metadata = data.metadata_names &&
+        data.metadata_names.rows.find(item => item.id === slot.selector);
+      if (data.item_metadata_links && active && slot.selector > 0 && slot.selector !== 255 && metadata) {
+        const link = document.createElement('a'); link.href = '#metadata-names';
+        link.dataset.metadataId = String(slot.selector);
+        link.textContent = metadataReferenceLabel(slot.selector);
+        link.setAttribute('aria-label', 'Open matching metadata row ' + slot.selector);
+        link.addEventListener('click', () => openMetadataReference(slot.selector)); cell.append(link);
+      } else cell.textContent = String(slot.selector);
+      row.insertCell().textContent = String(slot.value);
     });
     owners.replaceChildren();
     const ids = byLink.get(index) || [];
@@ -2523,7 +2805,7 @@ if (data.item_links) {
       owners.append(document.createTextNode(ids.length + ' item records: '));
       ids.forEach((id, position) => {
         if (position) owners.append(document.createTextNode(', '));
-        const link = document.createElement('a'); link.href = '#items'; link.textContent = String(id);
+        const link = document.createElement('a'); link.href = '#items'; link.textContent = itemNameLabel(id);
         link.addEventListener('click', () => {
           const itemSelector = document.getElementById('item-id');
           itemSelector.value = String(id); itemSelector.dispatchEvent(new Event('change'));
@@ -2533,6 +2815,8 @@ if (data.item_links) {
     }
   }
   selector.addEventListener('change', drawItemLink); showInactive.addEventListener('change', drawItemLink);
+  document.getElementById('metadata-name-language').addEventListener('change', drawItemLink);
+  document.getElementById('item-name-language').addEventListener('change', drawItemLink);
   drawItemLink();
 }
 if (Object.values(objAnimationData).some(Boolean)) {
@@ -2937,6 +3221,86 @@ if (objAnimationData.compact_catalog && objAnimationData.compact_catalog.auxilia
   });
   chooseGroup();
 }
+if (data.ui_context_templates) {
+  const catalog = data.ui_context_templates, section = document.getElementById('ui-context-templates');
+  const template = document.getElementById('ui-context-template'), category = document.getElementById('ui-context-category');
+  const showAll = document.getElementById('ui-context-show-all'), rows = document.getElementById('ui-context-fields');
+  const categoryRows = document.getElementById('ui-context-category-rows'), canvas = document.getElementById('ui-context-canvas');
+  const context = canvas.getContext('2d'), hex = (value, width = 2) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  const coordinate = record => ({x: record.x_units8 * 8, y: record.y_units8 * 8});
+  const inReference = point => point.x < 240 && point.y < 160;
+  const bytes = values => values.map(value => hex(value)).join(' ');
+  section.hidden = false;
+  catalog.records.forEach((_, index) => template.add(new Option('Template ' + index, index)));
+  if (catalog.category_templates.length) {
+    category.add(new Option('Choose a category', ''));
+    catalog.category_templates.forEach((index, offset) => {
+      const number = offset + 1, record = catalog.records[index], point = coordinate(record);
+      category.add(new Option('Category ' + number, number));
+      const row = categoryRows.insertRow(), button = document.createElement('button');
+      row.insertCell().textContent = String(number); button.type = 'button'; button.textContent = 'Template ' + index;
+      button.addEventListener('click', () => { category.value = String(number); chooseCategory(); });
+      row.insertCell().append(button); row.insertCell().textContent = point.x + ', ' + point.y;
+      row.insertCell().textContent = String(record.entry_count);
+    });
+    document.getElementById('ui-context-category-control').hidden = false;
+    document.getElementById('ui-context-category-mapping').hidden = false;
+  }
+  function drawContext() {
+    const selected = Number(template.value), record = catalog.records[selected], point = coordinate(record);
+    const source = catalog.source_offset === null ? 'source offset unavailable' : 'source ' + hex(catalog.source_offset + selected * 20, 1);
+    document.getElementById('ui-context-source').textContent = catalog.path + ' · template ' + selected + ' · ' + source;
+    const categories = catalog.category_templates.flatMap((value, index) => value === selected ? [index + 1] : []);
+    document.getElementById('ui-context-detail').textContent = 'Stored position (' + record.x_units8 + ', ' + record.y_units8 +
+      ') × 8 = (' + point.x + ', ' + point.y + ') pixels · stored entry count ' + record.entry_count + ' · flags ' + hex(record.flags) +
+      ' · bit 3 ' + ((record.flags & 8) ? 'set' : 'clear') + (inReference(point) ? '' : ' · outside the reference area') +
+      (catalog.category_templates.length ? ' · categories: ' + (categories.join(', ') || 'none') : '');
+    rows.replaceChildren();
+    [['00', 'X units of 8', record.x_units8], ['01', 'Y units of 8', record.y_units8],
+     ['02–03', 'Opaque bytes', bytes(record.opaque_02_03)], ['04–05', 'Entry count', record.entry_count],
+     ['06–08', 'Opaque bytes', bytes(record.opaque_06_08)], ['09', 'Flags', hex(record.flags)],
+     ['0A–13', 'Opaque bytes', bytes(record.opaque_0a_13)]].forEach(values => {
+      const row = rows.insertRow(); values.forEach(value => { row.insertCell().textContent = String(value); });
+    });
+    context.setTransform(2, 0, 0, 2, 0, 0); context.fillStyle = '#f3f6fa'; context.fillRect(0, 0, 240, 160);
+    context.strokeStyle = '#e1e8ed'; context.lineWidth = .5;
+    for (let x = 0; x <= 240; x += 8) { context.beginPath(); context.moveTo(x, 0); context.lineTo(x, 160); context.stroke(); }
+    for (let y = 0; y <= 160; y += 8) { context.beginPath(); context.moveTo(0, y); context.lineTo(240, y); context.stroke(); }
+    catalog.records.forEach((item, index) => {
+      if (!showAll.checked && index !== selected) return;
+      const position = coordinate(item); if (!inReference(position)) return;
+      context.fillStyle = index === selected ? '#db4f27' : '#17617d';
+      context.beginPath(); context.arc(position.x, position.y, index === selected ? 4 : 3, 0, 2 * Math.PI); context.fill();
+      context.fillStyle = '#182132'; context.font = '8px sans-serif';
+      context.fillText(String(index), Math.min(position.x + 5, 229), Math.max(position.y - 4, 8));
+    });
+    canvas.setAttribute('aria-label', 'Template ' + selected + ' position ' + point.x + ', ' + point.y + ' pixels');
+  }
+  function chooseCategory() {
+    const number = Number(category.value);
+    if (number >= 1 && number <= catalog.category_templates.length) template.value = String(catalog.category_templates[number - 1]);
+    drawContext();
+  }
+  template.addEventListener('change', () => {
+    const number = Number(category.value);
+    if (number && catalog.category_templates[number - 1] !== Number(template.value)) category.value = '';
+    drawContext();
+  });
+  category.addEventListener('change', chooseCategory); showAll.addEventListener('change', drawContext);
+  canvas.addEventListener('click', event => {
+    const rect = canvas.getBoundingClientRect(); if (!rect.width || !rect.height) return;
+    const x = (event.clientX - rect.left) * 240 / rect.width, y = (event.clientY - rect.top) * 160 / rect.height;
+    let nearest = -1, distance = 8 * 8;
+    catalog.records.forEach((item, index) => {
+      if (!showAll.checked && index !== Number(template.value)) return;
+      const point = coordinate(item); if (!inReference(point)) return;
+      const next = (point.x - x) ** 2 + (point.y - y) ** 2;
+      if (next < distance) { nearest = index; distance = next; }
+    });
+    if (nearest >= 0) { template.value = String(nearest); template.dispatchEvent(new Event('change', {bubbles: true})); }
+  });
+  drawContext();
+}
 if (data.ui_choice_lists) {
   const section = document.getElementById('ui-choices'), catalog = data.ui_choice_lists;
   const list = document.getElementById('choice-list'), entry = document.getElementById('choice-entry');
@@ -3214,8 +3578,10 @@ if (data.terrain_seeds) {
     const map = maps[Number(descriptor.value)], previous = encounter.value;
     document.getElementById('terrain-source').textContent = data.terrain_seeds.path + ' · descriptor ' + map.descriptor +
       ' · program ' + map.program + ' · inheritance ' + map.chain.join(' → ');
-    document.getElementById('terrain-bg-navigation').hidden = !data.bg_graphics ||
-      map.descriptor >= data.bg_graphics.descriptor_graphics.length;
+    const localBackground = data.bg_graphics && map.descriptor < data.bg_graphics.descriptor_graphics.length;
+    const backgroundPage = relatedWikiView('interface', 'bg-tiles', 'bg-descriptor', map.descriptor);
+    document.getElementById('terrain-bg-navigation').hidden = !localBackground && !backgroundPage;
+    document.getElementById('terrain-bg-open').href = localBackground ? '#bg-tiles' : backgroundPage || '#bg-tiles';
     document.getElementById('terrain-path-navigation').hidden = !data.script_paths;
     encounter.replaceChildren(); encounter.add(new Option('No encounter overlay', 'none'));
     headerRecords.filter(item => item.map_argument === map.descriptor + 1).forEach(item => encounter.add(new Option(item.index, item.index)));
@@ -3223,6 +3589,7 @@ if (data.terrain_seeds) {
     encounter.disabled = encounter.options.length === 1; drawCells(); chooseEncounter();
   }
   document.getElementById('terrain-bg-open').addEventListener('click', () => {
+    if (!data.bg_graphics) return;
     const target = document.getElementById('bg-descriptor'); target.value = descriptor.value; target.dispatchEvent(new Event('change'));
   });
   document.getElementById('terrain-path-open').addEventListener('click', () => {
@@ -3311,7 +3678,7 @@ if (Object.keys(data.encounters || {}).length) {
       const row = equipment.insertRow(); row.insertCell().textContent = String(slot);
       const cell = row.insertCell();
       if (!data.items || id >= data.items.records.length) { cell.textContent = String(id); return; }
-      const link = document.createElement('a'); link.href = '#items'; link.textContent = String(id);
+      const link = document.createElement('a'); link.href = '#items'; link.textContent = itemNameLabel(id);
       link.addEventListener('click', () => {
         const target = document.getElementById('item-id'); target.value = String(id); target.dispatchEvent(new Event('change'));
       });
@@ -3382,6 +3749,7 @@ if (Object.keys(data.encounters || {}).length) {
     drawList();
   }
   encounter.addEventListener('change', chooseEncounter); unit.addEventListener('change', drawUnit);
+  document.getElementById('item-name-language').addEventListener('change', drawUnit);
   list.addEventListener('change', drawList); point.addEventListener('change', drawPlot);
   coordinateMode.addEventListener('change', drawPlot);
   document.getElementById('encounter-terrain-open').addEventListener('click', () => {
@@ -3425,6 +3793,9 @@ if (Object.keys(data.encounters || {}).length) {
     next.addEventListener('click', () => { if (!next.disabled) { page++; drawReferences(); } });
     itemSelector.addEventListener('change', () => { page = 0; drawReferences(); }); drawReferences();
   }
+}
+function missionWorldIndex(record) {
+  return (record.packed02[0] >>> 6) | ((record.packed02[1] & 15) << 2);
 }
 if (Object.keys(data.mission_events || {}).length) {
   document.getElementById('mission-records').hidden = false;
@@ -3498,6 +3869,10 @@ if (Object.keys(data.mission_events || {}).length) {
       hex(catalogs.missions.source_offset + record.index * 70);
     const navigation = document.getElementById('mission-event-navigation'), link = document.getElementById('mission-event-open');
     navigation.hidden = !events.has(record.event_row45); link.textContent = 'Open stored event row ' + record.event_row45;
+    const worldId = missionWorldIndex(record), worldLink = document.getElementById('mission-world-open');
+    document.getElementById('mission-world-navigation').hidden = data.profile !== 'europe' || !data.world_records ||
+      !data.world_records.records.some(item => item.index === worldId);
+    worldLink.textContent = 'Open referenced world record ' + worldId;
     drawFields(document.getElementById('mission-record-fields'), record, [
       ['Word 00', 'word00', 4], ['Packed bytes 02–04', 'packed02'], ['Key 05', 'key05', 4], ['Operand 07', 'operand07'],
       ['Key 08', 'key08', 4], ['Operand 0A', 'operand0a'], ['Key 0B', 'key0b', 4], ['Operand 0D', 'operand0d'],
@@ -3542,6 +3917,12 @@ if (Object.keys(data.mission_events || {}).length) {
   document.getElementById('mission-event-open').addEventListener('click', () => {
     openRecord(eventSelect, eventPanel, missions.get(Number(missionSelect.value)).event_row45);
   });
+  document.getElementById('mission-world-open').addEventListener('click', () => {
+    const record = missions.get(Number(missionSelect.value));
+    if (!record || !data.world_records) return;
+    const select = document.getElementById('world-record-id'); select.value = String(missionWorldIndex(record));
+    select.dispatchEvent(new Event('change')); document.querySelector('#world-records > details').open = true;
+  });
   document.getElementById('event-parameter-open').addEventListener('click', () => {
     openRecord(parameterSelect, parameterPanel, events.get(Number(eventSelect.value)).parameter06);
   });
@@ -3552,6 +3933,72 @@ if (Object.keys(data.mission_events || {}).length) {
   missionSelect.addEventListener('change', drawMission); eventSelect.addEventListener('change', drawEvent);
   parameterSelect.addEventListener('change', drawParameter);
   drawMission(); drawEvent(); drawParameter();
+}
+if (data.world_records) {
+  const catalog = data.world_records, select = document.getElementById('world-record-id');
+  const fields = document.getElementById('world-record-fields'), thresholds = document.getElementById('world-threshold-rows');
+  const filter = document.getElementById('world-mission-filter'), rows = document.getElementById('world-mission-rows');
+  const previous = document.getElementById('world-mission-prev'), next = document.getElementById('world-mission-next');
+  const label = document.getElementById('world-mission-page'), missions = data.mission_events && data.mission_events.missions;
+  const byIndex = new Map(catalog.records.map(record => [record.index, record])), references = new Map();
+  const hex = (value, width = 2) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let page = 0;
+  document.getElementById('world-records').hidden = false;
+  catalog.records.forEach(record => select.add(new Option(record.index, record.index)));
+  if (data.profile === 'europe' && missions) missions.records.forEach(record => {
+    const index = missionWorldIndex(record);
+    if (!references.has(index)) references.set(index, []);
+    references.get(index).push(record.index);
+  });
+  function drawReferences() {
+    const available = data.profile === 'europe' && missions;
+    const query = filter.value.trim();
+    const values = available ? (references.get(Number(select.value)) || []).filter(id => String(id).includes(query)) : [];
+    const size = 20, pages = Math.max(1, Math.ceil(values.length / size));
+    page = Math.min(page, pages - 1); rows.replaceChildren();
+    values.slice(page * size, (page + 1) * size).forEach(id => {
+      const link = document.createElement('a'); link.href = '#mission-records'; link.textContent = String(id);
+      link.addEventListener('click', () => {
+        const target = document.getElementById('mission-record-id'); target.value = String(id);
+        target.dispatchEvent(new Event('change')); document.querySelector('#mission-records > details').open = true;
+        document.getElementById('mission-record-panel').open = true;
+      });
+      rows.insertRow().insertCell().append(link);
+    });
+    previous.disabled = !available || page === 0; next.disabled = !available || page + 1 >= pages;
+    label.textContent = available ? values.length + ' references · page ' + (page + 1) + ' of ' + pages
+      : data.profile !== 'europe' ? 'Mission links are available only for the European profile.'
+      : 'Mission records are unavailable in this dataset.';
+  }
+  function drawWorldRecord() {
+    const record = byIndex.get(Number(select.value)); if (!record) return;
+    document.getElementById('world-record-source').textContent = catalog.path + ' · source ' +
+      hex(catalog.source_offset + record.index * 38, 1);
+    fields.replaceChildren();
+    const values = [['Opaque byte 00', record.opaque00, 2], ['Byte 01', record.byte01, 2],
+      ['Byte 02', record.byte02, 2], ['Byte 03', record.byte03, 2],
+      ['Little-endian value 02–03', record.byte02 | record.byte03 << 8, 4],
+      ['Value 04–05', record.value04, 4], ['Low 10 bits of value 04–05', record.value04 & 1023, 3],
+      ['Opaque byte 06', record.opaque06, 2]];
+    values.forEach(([name, value, width]) => {
+      const row = fields.insertRow(); row.insertCell().textContent = name;
+      row.insertCell().textContent = value + ' (' + hex(value, width) + ')';
+    });
+    thresholds.replaceChildren();
+    record.thresholds07.forEach((value, index) => {
+      const row = thresholds.insertRow(); row.insertCell().textContent = String(index);
+      row.insertCell().textContent = value + ' (' + hex(value) + ')';
+      const meter = document.createElement('meter'); meter.min = 0; meter.max = 255; meter.value = value;
+      meter.setAttribute('aria-label', 'Threshold ' + index + ': ' + value + ' of 255');
+      meter.style.width = 'min(100%, 14rem)'; row.insertCell().append(meter);
+    });
+    page = 0; drawReferences();
+  }
+  select.addEventListener('change', drawWorldRecord);
+  filter.addEventListener('input', () => { page = 0; drawReferences(); });
+  previous.addEventListener('click', () => { if (page) { page--; drawReferences(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { page++; drawReferences(); } });
+  drawWorldRecord();
 }
 if (data.world_nodes) {
   document.getElementById('world').hidden = false;
@@ -3965,6 +4412,8 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
   const play = document.getElementById('equipment-play'), stop = document.getElementById('equipment-stop');
   const loop = document.getElementById('equipment-loop'), palette = document.getElementById('equipment-palette');
   const pose = document.getElementById('equipment-pose'), status = document.getElementById('equipment-status');
+  const specialPaletteColors = new Map((data.special_unit_palettes ? data.special_unit_palettes.banks : [])
+    .map(item => ['special:' + item.variant + ':' + item.index, item.colors]));
   const witnesses = document.getElementById('equipment-witnesses'), witnessRows = document.getElementById('equipment-witness-rows');
   const witnessPrev = document.getElementById('equipment-witness-prev'), witnessNext = document.getElementById('equipment-witness-next');
   const witnessPageLabel = document.getElementById('equipment-witness-page');
@@ -4024,7 +4473,8 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
       description.textContent = 'Graphics source is missing, conflicting, or unsupported for this frame.'; return;
     }
     const tiles = catalog.blocks[item.block].tiles, objects = catalog.objects[item.objects].objects;
-    const colors = palette.value === 'gray' ? null : data.unit_palettes[Number(palette.value)].colors;
+    const colors = palette.value === 'gray' ? null : specialPaletteColors.get(palette.value) ||
+      ((data.unit_palettes || [])[Number(palette.value)] || {}).colors || null;
     if (!bounds || !objects.length || objects.some(object => !object || !Number.isInteger(object.shape) || object.shape < 0 || object.shape > 2 ||
       !Number.isInteger(object.size) || object.size < 0 || object.size > 3 || !Number.isInteger(object.x) || !Number.isInteger(object.y) ||
       !Number.isInteger(object.tile) || object.tile < 0 || !Number.isInteger(object.transform) || object.affine_mode || object.color_256 ||
@@ -4164,6 +4614,8 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
   catalogs.forEach(item => catalogSelect.add(new Option(item.label, item.id)));
   palette.add(new Option('Grayscale indices', 'gray'));
   (data.unit_palettes || []).forEach((item, index) => palette.add(new Option('Mode ' + item.variant + ', bank ' + item.bank, index)));
+  (data.special_unit_palettes ? data.special_unit_palettes.banks : []).forEach(item =>
+    palette.add(new Option('Special-unit mode ' + item.variant + ' · source ' + item.index, 'special:' + item.variant + ':' + item.index)));
   catalogSelect.addEventListener('change', () => {
     const previous = selectedBinding(), previousSprite = sprite.value, wasPlaying = playing, preferredFrame = Number(frame.value) || 0;
     stopAnimation();
@@ -4198,6 +4650,34 @@ if (data.equipment_sprites || Object.keys(data.battle_sprites || {}).length || O
     if (!event.target.open && playing) { stopAnimation(); status.textContent = 'Frame preview stopped.'; }
   });
   catalogSelect.dispatchEvent(new Event('change'));
+  const spriteParams = new URLSearchParams(location.search), requestedMode = spriteParams.get('sprite_catalog');
+  const requestedId = spriteParams.get('sprite_id');
+  if (['normal', 'alternate'].includes(requestedMode) && /^\d{1,5}$/.test(requestedId || '') &&
+      Number(requestedId) <= 65535 && catalogs.some(item => item.id === requestedMode)) {
+    catalogSelect.value = requestedMode; catalogSelect.dispatchEvent(new Event('change'));
+    if ([...sprite.options].some(option => option.value === String(Number(requestedId)))) {
+      sprite.value = String(Number(requestedId)); sprite.dispatchEvent(new Event('change'));
+      const preferred = [...binding.options].find(option => {
+        const item = catalog.bindings[Number(option.value)], sequence = item && item.sequence !== null ? catalog.sequences[item.sequence] : null;
+        return sequence && sequence.frames.some(frame => frame.operation === 1 && frame.block !== null && frame.objects !== null);
+      });
+      if (preferred) {
+        binding.value = preferred.value; binding.dispatchEvent(new Event('change'));
+        const sequence = selectedSequence(), first = sequence.frames.findIndex(item => item.operation === 1 && item.block !== null && item.objects !== null);
+        if (first >= 0) { frame.value = String(first); frame.dispatchEvent(new Event('change')); }
+      }
+      const paletteKey = 'special:' + spriteParams.get('special_variant') + ':' + spriteParams.get('special_index');
+      if (specialPaletteColors.has(paletteKey)) { palette.value = paletteKey; palette.dispatchEvent(new Event('change')); }
+      else {
+        const variant = spriteParams.get('unit_variant'), bank = spriteParams.get('unit_bank');
+        if (/^[012]$/.test(variant || '') && /^(?:[0-9]|1[0-5])$/.test(bank || '')) {
+          const matches = (data.unit_palettes || []).flatMap((item, index) =>
+            item.variant === Number(variant) && item.bank === Number(bank) ? [index] : []);
+          if (matches.length === 1) { palette.value = String(matches[0]); palette.dispatchEvent(new Event('change')); }
+        }
+      }
+    }
+  }
 }
 function appendTextGlyph(preview, glyph, index) {
   if (!glyph || !glyph.width) {
@@ -4502,6 +4982,58 @@ if (data.pointer_texts) {
   reader.addEventListener('change', pointerLanguages); language.addEventListener('change', pointerEntries);
   entry.addEventListener('change', drawPointerText); registerTextSettings('pointer', language, drawPointerText); pointerLanguages();
 }
+if (data.text_reader_registry) {
+  const registry = data.text_reader_registry, section = document.getElementById('text-reader-registry');
+  const filter = document.getElementById('text-registry-filter'), rows = document.getElementById('text-registry-rows');
+  const hex = value => '0x' + value.toString(16).toUpperCase().padStart(8, '0');
+  section.hidden = false;
+  document.getElementById('text-registry-source').textContent = registry.path + ' · table at file offset ' + hex(registry.table_offset);
+  function drawRegistry() {
+    rows.replaceChildren();
+    const query = filter.value.trim().toLowerCase();
+    let shown = 0;
+    for (const item of registry.rows) {
+      const source = hex(registry.table_offset + item.slot * 4), callback = hex(item.callback);
+      const reader = item.reader === null ? '' : hex(item.reader);
+      if (query && ![String(item.slot), source, callback, reader].some(value => value.toLowerCase().includes(query))) continue;
+      shown++;
+      const row = rows.insertRow(); row.dataset.slot = String(item.slot);
+      row.insertCell().textContent = String(item.slot);
+      row.insertCell().textContent = source;
+      row.insertCell().textContent = item.callback === 0 ? 'Null' : callback;
+      const cell = row.insertCell();
+      const page = data.wiki && (data.wiki.pages.find(entry => entry.id === 'text-relative') ||
+                                  data.wiki.pages.find(entry => entry.id === 'text'));
+      if (item.reader_index !== null && (data.relative_texts || page)) {
+        const link = document.createElement('a'); link.textContent = 'Open reader ' + reader;
+        if (data.relative_texts) {
+          link.href = '#relative-texts';
+          link.addEventListener('click', () => {
+            const select = document.getElementById('relative-reader'); select.value = String(item.reader_index);
+            select.dispatchEvent(new Event('change', {bubbles: true}));
+            document.querySelector('#relative-texts > details').open = true;
+          });
+        } else {
+          const target = new URL(page.href, location.href); target.search = ''; target.hash = 'relative-texts';
+          target.searchParams.set('view', 'relative-texts');
+          target.searchParams.append('select', 'relative-reader:' + item.reader_index); link.href = target.href;
+        }
+        cell.append(link);
+      } else {
+        cell.textContent = item.callback === 0 ? 'No callback' : 'No unique matching extracted archive';
+      }
+    }
+    document.getElementById('text-registry-count').textContent = shown + ' of ' + registry.rows.length + ' slots';
+  }
+  filter.addEventListener('input', drawRegistry); drawRegistry();
+  if (data.relative_texts) {
+    document.getElementById('relative-registry-open').addEventListener('click', () => {
+      const select = document.getElementById('relative-reader');
+      filter.value = hex(data.relative_texts.catalogs[Number(select.value)].reader);
+      drawRegistry(); section.querySelector('details').open = true; section.scrollIntoView(); filter.focus();
+    });
+  }
+}
 if (data.relative_texts) {
   document.getElementById('relative-texts').hidden = false;
   const reader = document.getElementById('relative-reader'), language = document.getElementById('relative-language');
@@ -4529,8 +5061,15 @@ if (data.relative_texts) {
     applyPinnedTextLanguage(language);
     relativeEntries();
   }
+  function updateRelativeRegistry() {
+    const rows = data.text_reader_registry && data.text_reader_registry.rows;
+    document.getElementById('relative-registry-navigation').hidden =
+      !rows || !rows.some(item => item.reader_index === Number(reader.value));
+  }
   reader.addEventListener('change', relativeLanguages); language.addEventListener('change', relativeEntries);
-  entry.addEventListener('change', drawRelativeText); registerTextSettings('relative', language, drawRelativeText); relativeLanguages();
+  reader.addEventListener('change', updateRelativeRegistry);
+  entry.addEventListener('change', drawRelativeText); registerTextSettings('relative', language, drawRelativeText);
+  relativeLanguages(); updateRelativeRegistry();
 }
 function openEffectSelector(index) {
   if (!data.effect_events || !Number.isInteger(index) || index < 0 || index >= data.effect_events.selectors.length) return;
@@ -5073,6 +5612,165 @@ if (data.pointer_texts) {
   const params = new URLSearchParams(location.search), names = ['job_reader', 'job_language', 'job_entry'];
   if (names.every(name => /^\d+$/.test(params.get(name) || ''))) selectPointerText(...names.map(name => Number(params.get(name))));
 }
+if (data.action_records) {
+  const catalog = data.action_records, names = data.action_names, section = document.getElementById('action-records');
+  const select = document.getElementById('action-record-id'), fields = document.getElementById('action-record-fields');
+  const flags = document.getElementById('action-record-flags'), language = document.getElementById('action-name-language');
+  const preview = document.getElementById('action-name-preview'), sourceLine = document.getElementById('action-name-source');
+  const filter = document.getElementById('action-name-filter'), rows = document.getElementById('action-name-rows');
+  const previous = document.getElementById('action-name-prev'), next = document.getElementById('action-name-next');
+  const label = document.getElementById('action-name-page'), pageSize = 25;
+  const glyphs = new Map((names ? names.glyphs : []).map(glyph => [glyph.index, glyph]));
+  const hex = (value, width = 2) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  let page = 0;
+  section.hidden = false;
+  if (names) {
+    document.getElementById('action-names').hidden = false;
+    names.languages.forEach(id => language.add(new Option(id, id)));
+  }
+  function nameLabel(id) {
+    const item = names && names.rows[id], units = item && item.names[Number(language.value) || 0];
+    return units ? textEntryLabel(id, units, glyphs, unit => typeof unit === 'number' ? unit : null) : String(id);
+  }
+  catalog.records.forEach(record => select.add(new Option(nameLabel(record.index), record.index)));
+  function addName(parent, units) {
+    if (!units) { parent.textContent = 'Name unavailable'; return; }
+    appendTextUnits(parent, units, glyphs, unit => typeof unit === 'number' ? unit : null,
+      () => '', {normalFont:true, hideCommands:true});
+  }
+  function addSource(parent, item, languageIndex) {
+    if (!item.names[languageIndex]) { parent.textContent = 'String unavailable'; return; }
+    const link = document.createElement('a'), textPage = data.wiki &&
+      (data.wiki.pages.find(entry => entry.id === 'text-pointers') || data.wiki.pages.find(entry => entry.id === 'text'));
+    link.textContent = 'Open name string ' + item.name_index;
+    if (textPage) {
+      const target = new URL(textPage.href, location.href); target.search = ''; target.hash = 'pointer-texts';
+      target.searchParams.set('job_reader', names.reader_index); target.searchParams.set('job_language', languageIndex);
+      target.searchParams.set('job_entry', item.name_index); link.href = target.href;
+    } else {
+      link.href = '#pointer-texts';
+      link.addEventListener('click', () => selectPointerText(names.reader_index, languageIndex, item.name_index));
+    }
+    parent.append(link);
+  }
+  function drawRecord() {
+    const record = catalog.records[Number(select.value)]; if (!record) return;
+    document.getElementById('action-record-source').textContent = catalog.path + ' · source ' +
+      hex(catalog.source_offset + record.index * 28, 1);
+    fields.replaceChildren(); flags.replaceChildren();
+    const specs = [['Text index 00', 'field00', 4], ['Byte 02', 'field02'], ['Opaque byte 03', 'opaque03'],
+      ['Bytes 04–0B', 'fields04_0b'], ['Inline bytes 0C–0F', 'inline0c_0f'], ['Flags 10–13', 'flags10', 8],
+      ['Halfword 14–15', 'field14', 4], ['Halfword 16–17', 'field16', 4], ['Byte 18', 'field18'],
+      ['Byte 19', 'field19'], ['Byte 1A', 'field1a'], ['Opaque byte 1B', 'opaque1b']];
+    specs.forEach(([name, key, width = 2]) => {
+      const value = record[key], row = fields.insertRow(); row.insertCell().textContent = name;
+      row.insertCell().textContent = Array.isArray(value) ? value.map(item => hex(item)).join(' ')
+        : value + ' (' + hex(value, width) + ')';
+    });
+    for (let bit = 0; bit < 32; bit++) {
+      const row = flags.insertRow();
+      [String(bit), String((record.flags10 >>> bit) & 1), bit <= 20 ? String(bit + 11) : '—']
+        .forEach(value => { row.insertCell().textContent = value; });
+    }
+    if (names) {
+      const item = names.rows[record.index], languageIndex = Number(language.value) || 0;
+      preview.replaceChildren(); sourceLine.replaceChildren(); addName(preview, item.names[languageIndex]);
+      sourceLine.append(document.createTextNode(names.text_path + ' · ')); addSource(sourceLine, item, languageIndex);
+    }
+  }
+  function drawNames() {
+    if (!names) return;
+    const languageIndex = Number(language.value) || 0, query = filter.value.trim().toLocaleLowerCase();
+    const matches = names.rows.filter(item => nameLabel(item.id).toLocaleLowerCase().includes(query));
+    page = Math.min(page, Math.max(0, Math.ceil(matches.length / pageSize) - 1));
+    const start = page * pageSize; rows.replaceChildren();
+    matches.slice(start, start + pageSize).forEach(item => {
+      const row = rows.insertRow(), id = document.createElement('a'); id.href = '#action-records'; id.textContent = String(item.id);
+      id.addEventListener('click', () => { select.value = String(item.id); select.dispatchEvent(new Event('change')); });
+      row.insertCell().append(id);
+      const name = document.createElement('div'); name.className = 'text-preview';
+      addName(name, item.names[languageIndex]); row.insertCell().append(name);
+      addSource(row.insertCell(), item, languageIndex);
+    });
+    label.textContent = matches.length ? (start + 1) + '–' + Math.min(start + pageSize, matches.length) + ' of ' + matches.length : '0 of 0';
+    previous.disabled = page === 0; next.disabled = start + pageSize >= matches.length;
+  }
+  select.addEventListener('change', drawRecord);
+  language.addEventListener('change', () => {
+    catalog.records.forEach(item => { select.options[item.index].textContent = nameLabel(item.index); });
+    page = 0; drawRecord(); drawNames();
+  });
+  filter.addEventListener('input', () => { page = 0; drawNames(); });
+  previous.addEventListener('click', () => { if (page) { page--; drawNames(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { page++; drawNames(); } });
+  drawRecord(); drawNames();
+}
+if (data.item_names && data.items) {
+  const source = data.item_names, section = document.getElementById('item-names');
+  const language = document.getElementById('item-name-language'), selected = document.getElementById('item-id');
+  const filter = document.getElementById('item-name-filter'), rows = document.getElementById('item-name-rows');
+  const previous = document.getElementById('item-name-prev'), next = document.getElementById('item-name-next');
+  const preview = document.getElementById('item-name-preview'), sourceLine = document.getElementById('item-name-source');
+  const pageLabel = document.getElementById('item-name-page'), pageSize = 25;
+  let pageIndex = 0;
+  section.hidden = false;
+  source.languages.forEach(id => language.add(new Option(id, id)));
+  function addName(parent, units) {
+    if (!units) { parent.textContent = 'Name unavailable'; return; }
+    appendTextUnits(parent, units, itemNameGlyphs, unit => typeof unit === 'number' ? unit : null,
+      () => '', {normalFont:true, hideCommands:true});
+  }
+  function addSource(parent, item, languageIndex) {
+    if (!item.names[languageIndex]) { parent.append(document.createTextNode('String unavailable')); return; }
+    const link = document.createElement('a'), page = data.wiki &&
+      (data.wiki.pages.find(item => item.id === 'text-pointers') || data.wiki.pages.find(item => item.id === 'text'));
+    link.textContent = 'Open name string ' + item.name_index;
+    if (page) {
+      const target = new URL(page.href, location.href); target.search = ''; target.hash = 'pointer-texts';
+      target.searchParams.set('job_reader', source.reader_index);
+      target.searchParams.set('job_language', languageIndex);
+      target.searchParams.set('job_entry', item.name_index); link.href = target.href;
+    } else {
+      link.href = '#pointer-texts';
+      link.addEventListener('click', () => selectPointerText(source.reader_index, languageIndex, item.name_index));
+    }
+    parent.append(link);
+  }
+  function drawSelectedName() {
+    const item = source.rows[Number(selected.value)], languageIndex = Number(language.value) || 0;
+    preview.replaceChildren(); sourceLine.replaceChildren();
+    if (!item) return;
+    addName(preview, item.names[languageIndex]);
+    sourceLine.append(document.createTextNode(source.text_path + ' · '));
+    addSource(sourceLine, item, languageIndex);
+  }
+  function drawNames() {
+    const languageIndex = Number(language.value) || 0, query = filter.value.trim().toLocaleLowerCase();
+    const matches = source.rows.filter(item => itemNameLabel(item.id).toLocaleLowerCase().includes(query));
+    pageIndex = Math.min(pageIndex, Math.max(0, Math.ceil(matches.length / pageSize) - 1));
+    const start = pageIndex * pageSize; rows.replaceChildren();
+    matches.slice(start, start + pageSize).forEach(item => {
+      const row = rows.insertRow(), id = document.createElement('a'); id.href = '#items'; id.textContent = String(item.id);
+      id.addEventListener('click', () => { selected.value = String(item.id); selected.dispatchEvent(new Event('change')); });
+      row.insertCell().append(id);
+      const name = document.createElement('div'); name.className = 'text-preview';
+      addName(name, item.names[languageIndex]); row.insertCell().append(name);
+      addSource(row.insertCell(), item, languageIndex);
+    });
+    pageLabel.textContent = matches.length ? (start + 1) + '–' + Math.min(start + pageSize, matches.length) + ' of ' + matches.length : '0 of 0';
+    previous.disabled = pageIndex === 0; next.disabled = start + pageSize >= matches.length;
+  }
+  function drawLanguage() {
+    source.rows.forEach(item => { const option = selected.options[item.id]; if (option) option.textContent = itemNameLabel(item.id); });
+    pageIndex = 0; drawSelectedName(); drawNames();
+  }
+  selected.addEventListener('change', drawSelectedName);
+  language.addEventListener('change', drawLanguage);
+  filter.addEventListener('input', () => { pageIndex = 0; drawNames(); });
+  previous.addEventListener('click', () => { if (pageIndex) { pageIndex--; drawNames(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { pageIndex++; drawNames(); } });
+  drawLanguage();
+}
 if (data.job_names) {
   const section = document.getElementById('job-names'), source = data.job_names;
   const language = document.getElementById('job-name-language'), rows = document.getElementById('job-name-rows');
@@ -5115,13 +5813,26 @@ if (data.job_names) {
   function drawJobNames() {
     rows.replaceChildren(); references.replaceChildren();
     const languageIndex = Number(language.value) || 0;
+    function appendMetadataId(row, id) {
+      const cell = row.insertCell();
+      if (!data.metadata_names) { cell.textContent = String(id); return; }
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = String(id);
+      button.setAttribute('aria-label', 'Open metadata row ' + id);
+      button.addEventListener('click', () => {
+        openMetadataReference(id);
+        const target = document.getElementById('metadata-names'), group = target.closest('.section-group');
+        if (group) group.open = true;
+        target.scrollIntoView({block: 'start'});
+      });
+      cell.append(button);
+    }
     source.rows.forEach(item => {
       const row = rows.insertRow();
-      row.insertCell().textContent = String(item.slot); row.insertCell().textContent = String(item.job_id);
+      row.insertCell().textContent = String(item.slot); appendMetadataId(row, item.job_id);
       appendJobName(row, item, languageIndex);
     });
     (source.reference_rows || []).forEach(item => {
-      const row = references.insertRow(); row.insertCell().textContent = String(item.job_id);
+      const row = references.insertRow(); appendMetadataId(row, item.job_id);
       appendJobName(row, item, languageIndex);
     });
   }
@@ -5130,12 +5841,36 @@ if (data.job_names) {
 if (data.metadata_names) {
   const section = document.getElementById('metadata-names'), source = data.metadata_names;
   const language = document.getElementById('metadata-name-language'), filter = document.getElementById('metadata-name-filter');
+  const filterMode = document.getElementById('metadata-name-filter-mode'), references = new Map(), pairReferences = new Map(), specialReferences = new Map();
   const rows = document.getElementById('metadata-name-rows'), pageLabel = document.getElementById('metadata-name-page');
   const prev = document.getElementById('metadata-name-prev'), next = document.getElementById('metadata-name-next');
+  const spritePalette = document.getElementById('metadata-sprite-palette'), spriteVariant = document.getElementById('metadata-sprite-variant');
   const glyphs = new Map(source.glyphs.map(glyph => [glyph.index, glyph]));
   const pageSize = 25;
   let pageIndex = 0;
   section.hidden = false;
+  document.getElementById('metadata-sprite-controls').hidden = !data.job_sprite_links;
+  spritePalette.querySelectorAll('option:not([value="gray"])').forEach(option => { option.disabled = !(data.job_sprite_links && data.job_sprite_links.palette_preview); });
+  spriteVariant.disabled = !(data.job_sprite_links && data.job_sprite_links.palette_preview);
+  if (data.item_metadata_links && data.item_links) data.item_links.records.forEach((record, recordId) => {
+    record.slots.slice(0, record.count).forEach((slot, slotId) => {
+      if (slot.selector === 0 || slot.selector === 255) return;
+      if (!references.has(slot.selector)) references.set(slot.selector, []);
+      references.get(slot.selector).push({record: recordId, slot: slotId, value: slot.value});
+    });
+  });
+  if (data.metadata4_links && data.metadata4) data.metadata4.records.forEach((record, recordId) => {
+    record.slots.forEach((slot, slotId) => {
+      if (!slot.selector) return;
+      if (!pairReferences.has(slot.selector)) pairReferences.set(slot.selector, []);
+      pairReferences.get(slot.selector).push({record: recordId, slot: slotId, value: slot.value});
+    });
+  });
+  if (data.metadata14_links && data.metadata14_links.metadata_verified && data.metadata14) data.metadata14.records.forEach(record => {
+    const id = record.selectors01_02[1];
+    if (!specialReferences.has(id)) specialReferences.set(id, []);
+    specialReferences.get(id).push(record.id);
+  });
   source.languages.forEach(id => language.add(new Option(id, id)));
   document.getElementById('metadata-name-language-control').hidden = !source.languages.length;
   document.getElementById('metadata-name-source').textContent = source.path + ' · metadata table 0x'
@@ -5146,13 +5881,13 @@ if (data.metadata_names) {
     const matches = source.rows.filter(item => {
       const units = item.names[languageIndex];
       const name = units ? textEntryLabel(item.id, units, glyphs, unit => typeof unit === 'number' ? unit : null) : String(item.id);
-      return name.toLocaleLowerCase().includes(query);
+      return filterMode.value === 'exact-id' && query ? String(item.id) === query : name.toLocaleLowerCase().includes(query);
     });
     pageIndex = Math.min(pageIndex, Math.max(0, Math.ceil(matches.length / pageSize) - 1));
     const start = pageIndex * pageSize;
     rows.replaceChildren();
     matches.slice(start, start + pageSize).forEach(item => {
-      const row = rows.insertRow(), units = item.names[languageIndex];
+      const row = rows.insertRow(), units = item.names[languageIndex]; row.dataset.metadataId = String(item.id);
       row.insertCell().textContent = String(item.id);
       row.insertCell().textContent = item.routing === 0 ? 'Direct' : 'Redirect ' + item.routing + ' (not evaluated)';
       const name = row.insertCell();
@@ -5179,15 +5914,217 @@ if (data.metadata_names) {
         }
         cell.append(link);
       } else cell.textContent = item.name_index === null ? 'No direct name index' : 'String unavailable';
+      const referenceCell = row.insertCell(), matches = references.get(item.id) || [];
+      if (!data.item_metadata_links) referenceCell.textContent = 'Unavailable';
+      else if (!matches.length) referenceCell.textContent = 'None';
+      else {
+        const details = document.createElement('details'), summary = document.createElement('summary');
+        summary.textContent = matches.length + ' matching slots'; details.append(summary);
+        const list = document.createElement('ul');
+        matches.forEach(match => {
+          const entry = document.createElement('li'), link = document.createElement('a');
+          link.dataset.pairRecord = String(match.record); link.dataset.pairSlot = String(match.slot);
+          link.href = '#item-links'; link.textContent = 'Pair ' + match.record + ' · slot ' + match.slot + ' · value ' + match.value;
+          link.addEventListener('click', () => {
+            const selector = document.getElementById('item-link-record'); selector.value = String(match.record);
+            selector.dispatchEvent(new Event('change')); document.querySelector('#item-links > details').open = true;
+          });
+          entry.append(link); list.append(entry);
+        });
+        details.append(list); referenceCell.append(details);
+      }
+      const pairCell = row.insertCell();
+      if (!data.metadata4_links) pairCell.textContent = 'Unavailable';
+      else {
+        const index = data.metadata4_links.owners[item.id], owner = document.createElement('a');
+        owner.href = '#metadata4'; owner.dataset.metadata4Owner = String(index); owner.textContent = 'Record ' + index;
+        owner.addEventListener('click', () => openMetadata4(index)); pairCell.append(owner);
+        const incoming = pairReferences.get(item.id) || [];
+        if (incoming.length) {
+          const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('ul');
+          summary.textContent = incoming.length + ' selector references'; details.append(summary);
+          incoming.forEach(match => {
+            const entry = document.createElement('li'), link = document.createElement('a');
+            link.href = '#metadata4'; link.dataset.metadata4Record = String(match.record); link.dataset.metadata4Slot = String(match.slot);
+            link.textContent = 'Record ' + match.record + ' · slot ' + match.slot + ' · value ' + match.value;
+            link.addEventListener('click', () => openMetadata4(match.record)); entry.append(link); list.append(entry);
+          });
+          details.append(list); pairCell.append(details);
+        }
+      }
+      const specialCell = row.insertCell(), special = specialReferences.get(item.id) || [];
+      if (!(data.metadata14_links && data.metadata14_links.metadata_verified)) specialCell.textContent = 'Unavailable';
+      else if (!special.length) specialCell.textContent = 'None';
+      else {
+        const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('ul');
+        summary.textContent = special.length + ' stored references'; details.append(summary);
+        special.forEach(id => {
+          const entry = document.createElement('li'), link = document.createElement('a');
+          link.href = '#metadata14'; link.dataset.specialUnit = String(id); link.textContent = 'Record ' + id;
+          link.addEventListener('click', () => openMetadata14(id)); entry.append(link); list.append(entry);
+        });
+        details.append(list); specialCell.append(details);
+      }
+      const spriteCell = row.insertCell(), sprite = data.job_sprite_links && data.job_sprite_links.rows[item.id];
+      if (!sprite) spriteCell.textContent = 'Verified sprite references unavailable';
+      else if (sprite.routing) spriteCell.textContent = 'Redirect not evaluated';
+      else {
+        const battlePage = data.wiki && data.wiki.pages.find(page => page.id === 'battle');
+        ['normal', 'alternate'].forEach((mode, index) => {
+          if (index) spriteCell.append(document.createTextNode(' · '));
+          const id = sprite[mode];
+          if (id === null || (data.wiki && !battlePage)) {
+            spriteCell.append(document.createTextNode(mode + ' unavailable')); return;
+          }
+          const target = new URL(battlePage ? battlePage.href : location.href, location.href);
+          target.search = ''; target.hash = 'equipment-sprites';
+          target.searchParams.set('sprite_catalog', mode); target.searchParams.set('sprite_id', String(id));
+          if (data.job_sprite_links.palette_preview && spritePalette.value !== 'gray') {
+            const nibble = sprite.palette_nibbles[spritePalette.value === 'low' ? 0 : 1];
+            target.searchParams.set('unit_variant', spriteVariant.value); target.searchParams.set('unit_bank', String(nibble));
+          }
+          const link = document.createElement('a'); link.href = target.href; link.dataset.jobId = String(item.id);
+          link.dataset.spriteMode = mode; link.dataset.spriteId = String(id); link.textContent = mode + ' ' + id; spriteCell.append(link);
+        });
+      }
     });
     pageLabel.textContent = matches.length ? (start + 1) + '–' + Math.min(start + pageSize, matches.length) + ' of ' + matches.length : '0 of 0';
     prev.disabled = pageIndex === 0; next.disabled = start + pageSize >= matches.length;
   }
   filter.addEventListener('input', () => { pageIndex = 0; drawMetadataNames(); });
+  filterMode.addEventListener('change', () => { pageIndex = 0; drawMetadataNames(); });
   language.addEventListener('change', () => { pageIndex = 0; drawMetadataNames(); });
+  spritePalette.addEventListener('change', drawMetadataNames); spriteVariant.addEventListener('change', drawMetadataNames);
   prev.addEventListener('click', () => { if (pageIndex) { pageIndex--; drawMetadataNames(); } });
   next.addEventListener('click', () => { pageIndex++; drawMetadataNames(); });
   drawMetadataNames();
+}
+if (data.metadata4) {
+  const catalog = data.metadata4, section = document.getElementById('metadata4');
+  const selector = document.getElementById('metadata4-record'), slots = document.getElementById('metadata4-slots');
+  const filter = document.getElementById('metadata4-owner-filter'), owners = document.getElementById('metadata4-owners');
+  const status = document.getElementById('metadata4-owner-status'), previous = document.getElementById('metadata4-owner-prev');
+  const next = document.getElementById('metadata4-owner-next'), pageSize = 25;
+  let page = 0;
+  section.hidden = false; catalog.records.forEach((_, index) => selector.add(new Option(index, index)));
+  function drawOwners() {
+    owners.replaceChildren();
+    if (!data.metadata4_links || !data.metadata_names) {
+      status.textContent = 'Authenticated metadata references are unavailable.'; previous.disabled = next.disabled = true; return;
+    }
+    const index = Number(selector.value), query = filter.value.trim().toLocaleLowerCase();
+    const matches = data.metadata4_links.owners.flatMap((owner, id) => owner === index &&
+      (!query || metadata4Label(id).toLocaleLowerCase().includes(query) || String(id).includes(query)) ? [id] : []);
+    page = Math.min(page, Math.max(0, Math.ceil(matches.length / pageSize) - 1));
+    const start = page * pageSize;
+    matches.slice(start, start + pageSize).forEach(id => {
+      const row = owners.insertRow(), link = document.createElement('a'); row.dataset.metadataId = String(id);
+      row.insertCell().textContent = String(id); link.href = '#metadata-names'; link.textContent = metadata4Label(id);
+      link.addEventListener('click', () => openMetadataReference(id)); row.insertCell().append(link);
+    });
+    status.textContent = matches.length ? (start + 1) + '–' + Math.min(start + pageSize, matches.length) + ' of ' + matches.length + ' references'
+      : '0 references';
+    previous.disabled = page === 0; next.disabled = start + pageSize >= matches.length;
+  }
+  function drawRecord() {
+    const index = Number(selector.value), record = catalog.records[index], active = record.slots.filter(slot => slot.selector !== 0).length;
+    const leading = record.slots[0].selector === 0 ? 0 : record.slots[1].selector === 0 ? 1 : 2;
+    document.getElementById('metadata4-source').textContent = catalog.path + ' · record ' + index + ' · source 0x' +
+      (catalog.source_offset + index * 4).toString(16).toUpperCase();
+    document.getElementById('metadata4-summary').textContent = active + ' nonzero selectors counted · ' + leading + ' in the leading walk';
+    slots.replaceChildren(); record.slots.forEach((slot, slotId) => {
+      const row = slots.insertRow(), cell = row.insertCell(); row.dataset.slot = String(slotId); cell.textContent = String(slotId);
+      const target = row.insertCell();
+      if (slot.selector && data.metadata4_links && data.metadata_names) {
+        const link = document.createElement('a'); link.href = '#metadata-names'; link.dataset.metadataId = String(slot.selector);
+        link.textContent = metadata4Label(slot.selector); link.addEventListener('click', () => openMetadataReference(slot.selector)); target.append(link);
+      } else target.textContent = String(slot.selector);
+      row.insertCell().textContent = String(slot.value); row.insertCell().textContent = slot.selector ? 'Yes' : 'No';
+      row.insertCell().textContent = slotId < leading ? 'Yes' : 'No';
+    });
+    page = 0; drawOwners();
+  }
+  selector.addEventListener('change', drawRecord);
+  filter.addEventListener('input', () => { page = 0; drawOwners(); });
+  previous.addEventListener('click', () => { if (page) { page--; drawOwners(); } });
+  next.addEventListener('click', () => { if (!next.disabled) { page++; drawOwners(); } });
+  if (data.metadata_names) document.getElementById('metadata-name-language').addEventListener('change', drawRecord);
+  drawRecord();
+}
+if (data.metadata14) {
+  const catalog = data.metadata14, section = document.getElementById('metadata14');
+  const selector = document.getElementById('metadata14-record'), branch = document.getElementById('metadata14-branch');
+  const variant = document.getElementById('metadata14-variant'), job = document.getElementById('metadata14-job');
+  const sprites = document.getElementById('metadata14-sprites'), fields = document.getElementById('metadata14-fields');
+  const colors = document.getElementById('metadata14-colors'), paletteDetail = document.getElementById('metadata14-palette-detail');
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  const byId = new Map(catalog.records.map(record => [record.id, record]));
+  section.hidden = false; catalog.records.forEach(record => selector.add(new Option(record.id, record.id)));
+  function updateLabels() {
+    catalog.records.forEach((record, index) => {
+      const name = metadata14Label(record.selectors01_02[1]);
+      selector.options[index].textContent = 'Record ' + record.id + ' · stored job reference ' + name;
+    });
+  }
+  function paletteFor(record) {
+    if (!data.metadata14_links) return {verified: false};
+    const [a, b, c] = record.packed08_0a;
+    const bank = branch.value === 'one' ? a & 15 : b >>> 4;
+    const stored = branch.value === 'one' ? (a >>> 4) | ((b & 15) << 4) : c;
+    const index = stored ? stored - 1 : null;
+    const source = index === null || !data.special_unit_palettes ? null : data.special_unit_palettes.banks.find(item =>
+      item.variant === Number(variant.value) && item.index === index);
+    return {verified: true, bank, stored, index, source};
+  }
+  function drawRecord() {
+    const record = byId.get(Number(selector.value)); if (!record) return;
+    const selectedPalette = paletteFor(record), jobId = record.selectors01_02[1];
+    document.getElementById('metadata14-source').textContent = catalog.path + ' · record ' + record.id + ' · source ' + hex(record.source_offset);
+    job.replaceChildren(); job.append(document.createTextNode('Stored default job metadata: '));
+    if (data.metadata14_links && data.metadata14_links.metadata_verified && data.metadata_names) {
+      const link = document.createElement('a'); link.href = '#metadata-names'; link.textContent = metadata14Label(jobId);
+      link.dataset.metadataId = String(jobId); link.addEventListener('click', () => openMetadataReference(jobId)); job.append(link);
+    } else job.append(document.createTextNode(String(jobId) + ' · reference unavailable'));
+    sprites.replaceChildren(); sprites.append(document.createTextNode('Stored battle sprite IDs: '));
+    [['normal', 0], ['alternate', 1]].forEach(([mode, index]) => {
+      if (index) sprites.append(document.createTextNode(' · '));
+      const spriteId = record.halfwords04_06[index], available = data.metadata14_links &&
+        ((data.metadata14_links.sprite_ids || {})[mode] || []).includes(spriteId);
+      const page = data.wiki && data.wiki.pages.find(item => item.id === 'battle');
+      if (!available || (data.wiki && !page)) { sprites.append(document.createTextNode(mode + ' ' + spriteId + ' (preview unavailable)')); return; }
+      const target = new URL(page ? page.href : location.href, location.href); target.search = ''; target.hash = 'equipment-sprites';
+      target.searchParams.set('sprite_catalog', mode); target.searchParams.set('sprite_id', String(spriteId));
+      if (selectedPalette.source) {
+        target.searchParams.set('special_variant', String(selectedPalette.source.variant));
+        target.searchParams.set('special_index', String(selectedPalette.source.index));
+      }
+      const link = document.createElement('a'); link.href = target.href; link.dataset.spriteMode = mode; link.dataset.spriteId = String(spriteId);
+      link.textContent = 'Open ' + mode + ' sprite ' + spriteId; sprites.append(link);
+    });
+    colors.replaceChildren();
+    if (!selectedPalette.verified) paletteDetail.textContent = 'Palette interpretation requires the authenticated special-unit source.';
+    else if (selectedPalette.index === null) paletteDetail.textContent = 'Stored selector 0: no override copy · destination bank ' + selectedPalette.bank + '.';
+    else if (!selectedPalette.source) paletteDetail.textContent = 'Selector ' + selectedPalette.stored + ' · destination bank ' + selectedPalette.bank + ' · palette source unavailable.';
+    else {
+      paletteDetail.textContent = data.special_unit_palettes.path + ' · source ' + hex(selectedPalette.source.source_offset) +
+        ' · source index ' + selectedPalette.index + ' · destination bank ' + selectedPalette.bank + '.';
+      selectedPalette.source.colors.forEach((word, index) => {
+        const card = document.createElement('div'), color = document.createElement('div'), detail = document.createElement('div');
+        const rgb = [0, 5, 10].map(shift => Math.floor(((word >> shift) & 31) * 255 / 31).toString(16).padStart(2, '0')).join('').toUpperCase();
+        card.className = 'swatch'; color.className = 'color'; detail.className = 'detail'; color.style.backgroundColor = '#' + rgb;
+        detail.textContent = 'Color ' + index + ' · ' + hex(word, 4) + ' · #' + rgb; card.append(color, detail); colors.append(card);
+      });
+    }
+    fields.replaceChildren();
+    [['Byte 00', hex(record.byte00, 2)], ['Bytes 01–02', record.selectors01_02.map(value => hex(value, 2)).join(' ')],
+     ['Byte 03', hex(record.byte03, 2)], ['Halfwords 04–06', record.halfwords04_06.map(value => hex(value, 4)).join(' ')],
+     ['Packed bytes 08–0A', record.packed08_0a.map(value => hex(value, 2)).join(' ')], ['Byte 0B', hex(record.byte0b, 2)],
+     ['Bytes 0C–0D', record.bytes0c_0d.map(value => hex(value, 2)).join(' ')]]
+      .forEach(([label, value]) => { const row = fields.insertRow(); row.insertCell().textContent = label; row.insertCell().textContent = value; });
+  }
+  [selector, branch, variant].forEach(element => element.addEventListener('change', drawRecord));
+  if (data.metadata_names) document.getElementById('metadata-name-language').addEventListener('change', () => { updateLabels(); drawRecord(); });
+  updateLabels(); drawRecord();
 }
 function pcmWaveBytes(samples, rate) {
   const padding = samples.length % 2;
@@ -5300,6 +6237,116 @@ function playbackProgress(prefix, marker = null) {
       if (marker) marker.hidden = true;
     }
   };
+}
+// Area-average the project's CGB noise LFSR over 32 kHz output samples.
+function cgbNoiseSamples(register, frames = 32000) {
+  if (!Number.isInteger(register) || register < 0 || register > 255 ||
+      !Number.isInteger(frames) || frames < 1 || frames > 320000) throw Error('Invalid noise register or sample count.');
+  const divisor = (register & 7) ? 16 * (register & 7) : 8;
+  const period = divisor * Math.pow(2, register >>> 4) * 4 * 32000, clock = 16777216;
+  const short = !!(register & 8), samples = new Float32Array(frames);
+  let phase = 0, lfsr = 0x7fff;
+  for (let index = 0; index < frames; index++) {
+    let remaining = clock, area = 0;
+    while (remaining > 0) {
+      const span = Math.min(period - phase, remaining);
+      area += (lfsr & 1 ? -1 : 1) * span; phase += span; remaining -= span;
+      if (phase === period) {
+        phase = 0;
+        const bit = (lfsr ^ (lfsr >>> 1)) & 1;
+        lfsr = (lfsr >>> 1) | (bit << 14);
+        if (short) lfsr = (lfsr & ~0x40) | (bit << 6);
+      }
+    }
+    samples[index] = area / clock;
+  }
+  return samples;
+}
+if (data.audio_noise) {
+  const section = document.getElementById('cgb-noise'), catalog = data.audio_noise;
+  const code = document.getElementById('noise-code'), loop = document.getElementById('noise-loop');
+  const mute = document.getElementById('noise-mute-cgb'), sequenceMute = document.getElementById('sequence-mute-cgb');
+  const play = document.getElementById('noise-play'), stop = document.getElementById('noise-stop');
+  const download = document.getElementById('noise-download'), status = document.getElementById('noise-status');
+  const detail = document.getElementById('noise-detail'), canvas = document.getElementById('noise-waveform');
+  const context = canvas.getContext('2d'), progress = playbackProgress('noise');
+  const storageKey = 'ffta.viewer.sequence.muteCgb';
+  let audioContext = null, source = null, gain = null, request = 0;
+  section.hidden = false; keepSelectFocus(play, section); keepSelectFocus(download, section);
+  catalog.entries.forEach((value, index) => code.add(new Option(index + ' · 0x' + value.toString(16).toUpperCase().padStart(2, '0'), index)));
+  code.value = String(Math.min(39, catalog.entries.length - 1));
+  try { mute.checked = localStorage.getItem(storageKey) === '1'; } catch (_) {}
+  function updateMute() {
+    if (gain && audioContext) gain.gain.setValueAtTime(mute.checked ? 0 : .08, audioContext.currentTime);
+    if (source) status.textContent = mute.checked ? 'Playing synthesized CGB noise · muted.' : 'Playing synthesized CGB noise.';
+  }
+  mute.addEventListener('change', () => {
+    try { localStorage.setItem(storageKey, mute.checked ? '1' : '0'); } catch (_) {}
+    updateMute();
+    if (sequenceMute.checked !== mute.checked) {
+      sequenceMute.checked = mute.checked; sequenceMute.dispatchEvent(new Event('change'));
+    }
+  });
+  sequenceMute.addEventListener('change', () => { mute.checked = sequenceMute.checked; updateMute(); });
+  function stopNoise(message) {
+    request++;
+    if (source) { source.onended = null; try { source.stop(); } catch (_) {} source.disconnect(); source = null; }
+    if (gain) { gain.disconnect(); gain = null; }
+    stop.disabled = true; progress.stop('Stopped');
+    if (message) status.textContent = message;
+  }
+  function drawNoise() {
+    const index = Number(code.value), register = catalog.entries[index];
+    const divisor = (register & 7) ? 16 * (register & 7) : 8, shift = register >>> 4;
+    const keys = index === 0 ? '0–21' : index === 59 ? '80–127' : String(index + 21);
+    detail.textContent = catalog.path + ' · source 0x' + (catalog.source_offset + index).toString(16).toUpperCase() +
+      ' · entry ' + index + ' · keys ' + keys + ' · register 0x' + register.toString(16).toUpperCase().padStart(2, '0') +
+      ' · ' + ((register & 8) ? '7-bit' : '15-bit') + ' LFSR · shift rate ' + (4194304 / (divisor * Math.pow(2, shift))).toFixed(2) + ' Hz';
+    const values = cgbNoiseSamples(register, 2048);
+    context.clearRect(0, 0, canvas.width, canvas.height); context.strokeStyle = '#17617d'; context.beginPath();
+    for (let x = 0; x < canvas.width; x++) {
+      const first = Math.floor(x * values.length / canvas.width), end = Math.max(first + 1, Math.floor((x + 1) * values.length / canvas.width));
+      let minimum = 1, maximum = -1;
+      for (let i = first; i < end; i++) { minimum = Math.min(minimum, values[i]); maximum = Math.max(maximum, values[i]); }
+      context.moveTo(x + .5, (1 - maximum) * canvas.height / 2); context.lineTo(x + .5, (1 - minimum) * canvas.height / 2);
+    }
+    context.stroke();
+  }
+  code.addEventListener('change', () => { stopNoise('Select Play noise to hear this setting.'); progress.reset(); drawNoise(); });
+  loop.addEventListener('change', () => stopNoise('Select Play noise to apply the repeat setting.'));
+  stop.addEventListener('click', () => stopNoise('Playback stopped.'));
+  section.querySelector('details').addEventListener('toggle', event => {
+    if (!event.target.open && source) stopNoise('Playback stopped because the section was closed.');
+  });
+  play.addEventListener('click', async () => {
+    try {
+      stopNoise(); const current = request, values = cgbNoiseSamples(catalog.entries[Number(code.value)]);
+      audioContext = audioContext || new AudioContext(); await audioContext.resume();
+      if (current !== request) return;
+      const buffer = audioContext.createBuffer(1, values.length, 32000); buffer.getChannelData(0).set(values);
+      const playing = audioContext.createBufferSource(), output = audioContext.createGain();
+      playing.buffer = buffer; playing.loop = loop.checked;
+      output.gain.setValueAtTime(mute.checked ? 0 : .08, audioContext.currentTime);
+      playing.connect(output); output.connect(audioContext.destination); source = playing; gain = output;
+      playing.onended = () => { if (source === playing) {
+        source = null; output.disconnect(); gain = null; stop.disabled = true;
+        progress.stop('Finished', true); status.textContent = 'Synthesized noise playback finished.';
+      } };
+      const started = audioContext.currentTime; playing.start();
+      progress.start(audioContext, started, 1, playing.loop ? {loop:true, position:elapsed => elapsed % 1} : {});
+      stop.disabled = false; updateMute();
+    } catch (error) { status.textContent = 'Cannot play noise: ' + error.message; }
+  });
+  download.addEventListener('click', () => {
+    try {
+      const samples = cgbNoiseSamples(catalog.entries[Number(code.value)]), bytes = new Int8Array(samples.length);
+      for (let index = 0; index < samples.length; index++) bytes[index] = Math.max(-128, Math.min(127, Math.round(samples[index] * 127)));
+      const url = URL.createObjectURL(new Blob([pcmWaveBytes(bytes, 32000)], {type:'audio/wav'})), link = document.createElement('a');
+      link.href = url; link.download = 'cgb-noise-' + code.value + '.wav'; document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000); status.textContent = 'One-second noise WAV prepared at 32000 Hz.';
+    } catch (error) { status.textContent = 'Cannot prepare noise WAV: ' + error.message; }
+  });
+  status.textContent = 'Select Play noise to hear this setting.'; drawNoise();
 }
 if (data.audio) {
   document.getElementById('audio').hidden = false;
@@ -5567,9 +6614,10 @@ function envelopeValueAt(points, at) {
 function sequencePlaybackEvents(notes, seconds, envelopeEnabled) {
   const events = notes.map(note => {
     const begin = note.startSeconds, gate = note.endSeconds - note.startSeconds;
+    const cutoff = Number.isFinite(note.soundEnd) ? Math.min(seconds, note.soundEnd) : seconds;
     const envelope = envelopeEnabled && note.sample && note.sample.kind.startsWith('pcm') && note.envelope !== null
-      ? approximatePcmEnvelope(note.envelope, gate, Math.max(0, seconds - begin)) : null;
-    return {...note, envelope, audioEnd: envelope ? begin + envelope.duration : note.endSeconds};
+      ? approximatePcmEnvelope(note.envelope, gate, Math.max(0, cutoff - begin)) : null;
+    return {...note, envelope, audioEnd: Math.min(cutoff, envelope ? begin + envelope.duration : note.endSeconds)};
   });
   const boundaries = events.flatMap(note => note.audioEnd > note.startSeconds ? [[note.startSeconds, 1], [note.audioEnd, -1]] : []);
   boundaries.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
@@ -5909,6 +6957,7 @@ if (data.audio && data.audio.instruments && data.audio.instruments.banks.length)
   });
   chooseBank();
 }
+let startTimedSoundMix = null, stopTimedSoundMix = null;
 if (data.sequences && data.sequence_directory) {
   document.getElementById('sequence-audio').hidden = false;
   const song = document.getElementById('sequence-song'), track = document.getElementById('sequence-track');
@@ -5926,6 +6975,8 @@ if (data.sequences && data.sequence_directory) {
   const download = document.getElementById('sequence-download'), exportStatus = document.getElementById('sequence-export-status');
   const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
   const sequenceProgress = playbackProgress('sequence', document.getElementById('sequence-playhead'));
+  const timedProgress = playbackProgress('timed-sound'), timedStop = document.getElementById('timed-sound-stop');
+  const timedStatus = document.getElementById('timed-sound-play-status');
   keepSelectFocus(play, document.getElementById('sequence-audio'));
   keepSelectFocus(download, document.getElementById('sequence-audio'));
   const noteRows = document.getElementById('sequence-note-rows'), noteDetail = document.getElementById('sequence-timeline-detail');
@@ -6003,6 +7054,7 @@ if (data.sequences && data.sequence_directory) {
   }
   let selectedTracks = [], trace = [], notes = [], controls = [], page = 0, notePage = 0, controlPage = 0;
   let audioContext = null, playing = [], generation = 0, schedulerTimer = null, cgbBus = null, routeNodes = [];
+  let activeTimedMix = null;
   let exporting = false;
   const mutedTracks = new Set(), liveTrackMutes = new Map();
   const sampleBuffers = new Map();
@@ -6060,6 +7112,10 @@ if (data.sequences && data.sequence_directory) {
     liveTrackMutes.clear();
     if (cgbBus) { cgbBus.disconnect(); cgbBus = null; }
     stop.disabled = true; sequenceProgress.stop('Stopped');
+    if (activeTimedMix) {
+      timedStop.disabled = true; timedProgress.stop('Stopped');
+      timedStatus.textContent = 'Timed audition stopped.'; activeTimedMix = null;
+    }
   }
   function collectTempo(root, trackIndex, limit, maxSteps) {
     const changes = [], stack = [];
@@ -6266,6 +7322,80 @@ if (data.sequences && data.sequence_directory) {
     play.disabled = !notes.length; updateDownload();
     drawTracePage(); drawControlPage(); drawNotes(seconds);
   }
+  startTimedSoundMix = (group, scheduleRate, soundSeconds) => {
+    const ticks = Number(rate.value);
+    if (!group || group.kind !== 'rows') return 'Choose a source with schedule rows.';
+    if (!Number.isFinite(scheduleRate) || scheduleRate < 1 || scheduleRate > 400) return 'Choose a schedule rate from 1 to 400 ticks per second.';
+    if (!Number.isInteger(soundSeconds) || soundSeconds < 1 || soundSeconds > 60) return 'Choose a sound limit from 1 to 60 seconds.';
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) return 'Choose a valid song tick rate in the song player.';
+    const byId = new Map();
+    songDirectory.forEach((entry, index) => { if (byId.has(entry.id)) byId.set(entry.id, null); else byId.set(entry.id, index); });
+    const candidates = []; let unavailable = 0, outside = 0;
+    group.values.forEach((row, rowIndex) => row.sound_words.forEach((word, slot) => {
+      if (!word) return;
+      const songIndex = byId.get(word & 0x0fff), item = songIndex === null || songIndex === undefined ? null : songDirectory[songIndex];
+      const eventTracks = item ? tracksByHeader.get(item.header_id) || [] : [];
+      if (!eventTracks.length) { unavailable++; return; }
+      const offset = row.tick / scheduleRate;
+      if (offset >= 180) { outside++; return; }
+      candidates.push({offset, rowIndex, slot, item, tracks: eventTracks});
+    }));
+    candidates.sort((a, b) => a.offset - b.offset || a.rowIndex - b.rowIndex || a.slot - b.slot);
+    const selected = candidates.slice(0, 64), omitted = Math.max(0, candidates.length - selected.length);
+    if (!selected.length) return 'No unambiguous playable directory entries within the 180-second limit.';
+    const trackCount = selected.reduce((total, item) => total + item.tracks.length, 0);
+    const maxSteps = Math.min(32000, Math.max(1, Math.floor(128000 / trackCount)));
+    const maxNotes = Math.max(1, Math.floor(8000 / trackCount));
+    const mixNotes = [], mixControls = [], oldBank = selectedBank;
+    let route = 0, limited = 0, silent = 0, end = 0;
+    try {
+      selected.forEach(event => {
+        const seconds = Math.min(soundSeconds, 180 - event.offset), header = headers.get(event.item.header_id);
+        selectedBank = header ? banks.get(header.tone_bank_address) || null : null;
+        const tempoChanges = [];
+        if (useTempo.checked) {
+          const scanLimit = Math.ceil(seconds * Math.max(ticks, estimatedTempoRate(255))) + 1;
+          event.tracks.forEach(trackItem => {
+            const scan = collectTempo(trackItem.entry, trackItem.track_index, scanLimit, maxSteps);
+            tempoChanges.push(...scan.changes); if (scan.limited) limited++;
+          });
+        }
+        const timing = estimatedTempoTimeline(tempoChanges, ticks, seconds);
+        const tickLimit = useTempo.checked ? Math.max(1e-9, timing.endTick) : ticks * seconds;
+        const before = mixNotes.length; end = Math.max(end, event.offset + seconds);
+        event.tracks.forEach(trackItem => {
+          const track = route++, result = buildTrace(trackItem.entry, tickLimit, maxSteps, maxNotes);
+          if (['instruction or note limit', 'pattern stack limit', 'missing successor', 'no successor'].includes(result.reason)) limited++;
+          result.executed.forEach(item => {
+            const decoded = item.code[0] === 'parameter' ? decodeSequenceControl(item.code[1], item.code[2]) : null;
+            const time = timing.timeAt(item.tick);
+            if (decoded && Number.isFinite(time) && time <= seconds)
+              mixControls.push({track, sourceTrack: trackItem.track_index, tick: item.tick,
+                time: event.offset + time, command: item.code[1], ...decoded});
+          });
+          result.events.forEach(note => {
+            const start = timing.timeAt(note.start), finish = timing.timeAt(note.end);
+            if (!Number.isFinite(start) || start >= seconds) return;
+            const tone = resolveTone(note.program, note.key), sample = resolveSample(tone, note.key);
+            mixNotes.push({...note, track, sourceTrack: trackItem.track_index,
+              startSeconds: event.offset + start, endSeconds: event.offset + (Number.isFinite(finish) ? Math.min(seconds, finish) : seconds),
+              soundEnd: event.offset + seconds, isCgb: !!tone && [1, 2, 3, 4].includes(tone.ctype), sample,
+              envelope: tone && (tone.ctype === 0 || tone.ctype === 8) && Number.isInteger(tone.word08) ? tone.word08 : null});
+          });
+        });
+        if (mixNotes.length === before) silent++;
+      });
+    } finally { selectedBank = oldBank; }
+    if (!mixNotes.length) return 'The selected candidates contain no playable notes in the chosen limits.';
+    mixNotes.sort((a, b) => a.startSeconds - b.startSeconds || a.track - b.track);
+    mixControls.sort((a, b) => a.time - b.time || a.track - b.track);
+    const summary = selected.length + ' candidate starts · ' + unavailable + ' unavailable or ambiguous · ' + outside +
+      ' beyond 180 seconds · ' + omitted + ' beyond the 64-start limit · ' + silent + ' without notes' +
+      (limited ? ' · ' + limited + ' incomplete track scans' : '') + ' · flags and channels not interpreted';
+    playSequence({notes: mixNotes, controls: mixControls, duration: end, summary});
+    return null;
+  };
+  stopTimedSoundMix = () => { if (activeTimedMix) { stopSequence(); status.textContent = 'Approximate audition stopped.'; } };
   function setTrackMuted(index, muted) {
     if (muted) mutedTracks.add(index); else mutedTracks.delete(index);
     (liveTrackMutes.get(index) || []).forEach(node => {
@@ -6315,11 +7445,23 @@ if (data.sequences && data.sequence_directory) {
     drawNotePage();
   });
   stop.addEventListener('click', () => { stopSequence(); status.textContent = 'Approximate audition stopped.'; });
-  play.addEventListener('click', async () => {
+  async function playSequence(timedRequest = null) {
     stopSequence();
-    const request = generation, ticks = Number(rate.value), seconds = Number(duration.value);
-    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) { status.textContent = 'Choose a tick rate from 1 to 400 per second.'; return; }
-    if (!Number.isInteger(seconds) || seconds < 1 || seconds > 180) { status.textContent = 'Choose a preview duration from 1 to 180 seconds.'; return; }
+    const request = generation, ticks = Number(rate.value), seconds = timedRequest ? timedRequest.duration : Number(duration.value);
+    const playbackNotes = timedRequest ? timedRequest.notes : notes, playbackControls = timedRequest ? timedRequest.controls : controls;
+    function report(message) { status.textContent = message; if (timedRequest) timedStatus.textContent = message; }
+    if (!Number.isFinite(ticks) || ticks < 1 || ticks > 400) { report('Choose a tick rate from 1 to 400 per second.'); return; }
+    if (!Number.isFinite(seconds) || seconds <= 0 || seconds > 180 || (!timedRequest && !Number.isInteger(seconds))) {
+      report('Choose a preview duration from 1 to 180 seconds.'); return;
+    }
+    if (voice.value === 'pcm' && playbackNotes.some(note => note.sample && note.sample.kind === 'pcm-fixed') &&
+        (!Number.isInteger(Number(fixedRate.value)) || Number(fixedRate.value) < 1000 || Number(fixedRate.value) > 96000)) {
+      report('Choose a fixed-PCM mixer rate from 1000 to 96000 Hz.'); return;
+    }
+    if (timedRequest) {
+      activeTimedMix = timedRequest; timedStop.disabled = false; timedProgress.reset(); sequenceProgress.reset();
+      timedStatus.textContent = 'Preparing timed schedule approximation · ' + timedRequest.summary + '.';
+    }
     try {
       audioContext = audioContext || new AudioContext();
       await audioContext.resume();
@@ -6329,20 +7471,20 @@ if (data.sequences && data.sequence_directory) {
       mixer.connect(audioContext.destination); cgbBus = mixer;
       const start = audioContext.currentTime + .05, selectedVoice = voice.value;
       const controlsByTrack = new Map(), pitchesByTrack = new Map(), routes = new Map();
-      if (useTrackControls.checked) controls.forEach(control => {
+      if (useTrackControls.checked) playbackControls.forEach(control => {
         if (!controlsByTrack.has(control.track)) controlsByTrack.set(control.track, []);
         controlsByTrack.get(control.track).push(control);
       });
       controlsByTrack.forEach((items, trackIndex) => pitchesByTrack.set(trackIndex, sequencePitchSteps(items)));
       let pitchBudget = 100000, pitchLimited = false, pitchUnavailable = false, panUnavailable = false;
-      function trackRoute(trackIndex, isCgb) {
+      function trackRoute(trackIndex, isCgb, sourceTrack = trackIndex) {
         const destination = isCgb ? mixer : audioContext.destination, key = trackIndex + ':' + isCgb;
         if (routes.has(key)) return routes.get(key);
         const mute = audioContext.createGain();
-        mute.gain.setValueAtTime(mutedTracks.has(trackIndex) ? 0 : 1, audioContext.currentTime);
+        mute.gain.setValueAtTime(mutedTracks.has(sourceTrack) ? 0 : 1, audioContext.currentTime);
         mute.connect(destination); routeNodes.push(mute);
-        if (!liveTrackMutes.has(trackIndex)) liveTrackMutes.set(trackIndex, []);
-        liveTrackMutes.get(trackIndex).push(mute);
+        if (!liveTrackMutes.has(sourceTrack)) liveTrackMutes.set(sourceTrack, []);
+        liveTrackMutes.get(sourceTrack).push(mute);
         const items = controlsByTrack.get(trackIndex) || [], volumes = items.filter(item => item.command === 0xbe);
         const pans = items.filter(item => item.command === 0xbf);
         let first = mute, last = null;
@@ -6386,7 +7528,7 @@ if (data.sequences && data.sequence_directory) {
           pitchBudget--; parameter.setValueAtTime(value(steps[index].semitones), start + steps[index].time);
         }
       }
-      const {events, mixScale} = sequencePlaybackEvents(notes, seconds, selectedVoice === 'pcm' && useEnvelope.checked);
+      const {events, mixScale} = sequencePlaybackEvents(playbackNotes, seconds, selectedVoice === 'pcm' && useEnvelope.checked);
       let cursor = 0, late = 0;
       function scheduleWindow() {
         if (request !== generation) return;
@@ -6430,14 +7572,17 @@ if (data.sequences && data.sequence_directory) {
               gain.gain.setValueAtTime(amplitude, Math.max(begin, end - .02));
               gain.gain.linearRampToValueAtTime(0, end);
             }
-            oscillator.connect(gain); gain.connect(trackRoute(note.track, note.isCgb));
+            oscillator.connect(gain); gain.connect(trackRoute(note.track, note.isCgb, note.sourceTrack));
             oscillator.onended = () => {
               playing = playing.filter(node => node !== oscillator);
               if (request === generation && cursor >= events.length && !playing.length && schedulerTimer === null) {
                 routeNodes.forEach(node => { try { node.disconnect(); } catch (_) {} }); routeNodes = []; liveTrackMutes.clear();
                 if (cgbBus === mixer) { mixer.disconnect(); cgbBus = null; }
-                stop.disabled = true; sequenceProgress.stop('Finished', true);
-                status.textContent = 'Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes.' : '.');
+                stop.disabled = true;
+                if (timedRequest) { timedStop.disabled = true; timedProgress.stop('Finished', true); activeTimedMix = null; }
+                else sequenceProgress.stop('Finished', true);
+                report('Approximate audition finished' + (late ? ' · ' + late + ' delayed or skipped notes' : '') +
+                  (timedRequest ? ' · ' + timedRequest.summary : '') + '.');
               }
             };
             playing.push(oscillator); oscillator.start(begin); oscillator.stop(end);
@@ -6448,23 +7593,30 @@ if (data.sequences && data.sequence_directory) {
             if (pitchLimited) messages.push('pitch automation limit reached');
             if (pitchUnavailable) messages.push('live pitch changes unavailable');
             if (panUnavailable) messages.push('stereo pan unavailable');
-            status.textContent = 'Playing an approximate track mix · ' + messages.join(' · ') + '.';
+            report('Playing an approximate ' + (timedRequest ? 'timed schedule' : 'track mix') + ' · ' + messages.join(' · ') +
+              (timedRequest ? ' · ' + timedRequest.summary : '') + '.');
           }
           if (cursor < events.length) schedulerTimer = setTimeout(scheduleWindow, 50);
           else if (!playing.length) {
             if (cgbBus === mixer) { mixer.disconnect(); cgbBus = null; }
-            stop.disabled = true; sequenceProgress.stop('Finished');
-            status.textContent = 'No audible note durations in this preview.';
+            stop.disabled = true;
+            if (timedRequest) { timedStop.disabled = true; timedProgress.stop('Finished'); activeTimedMix = null; }
+            else sequenceProgress.stop('Finished');
+            report('No audible note durations in this preview.');
           }
         } catch (error) {
-          if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; }
+          if (request === generation) { stopSequence(); report('Cannot play approximation: ' + error.message); }
         }
       }
       const playbackEnd = Math.max(...events.map(note => note.audioEnd));
-      sequenceProgress.start(audioContext, start, playbackEnd, {timeline: seconds});
-      stop.disabled = false; status.textContent = 'Playing an approximate track mix.'; scheduleWindow();
-    } catch (error) { if (request === generation) { stopSequence(); status.textContent = 'Cannot play approximation: ' + error.message; } }
-  });
+      if (timedRequest) timedProgress.start(audioContext, start, playbackEnd, {timeline: seconds});
+      else sequenceProgress.start(audioContext, start, playbackEnd, {timeline: seconds});
+      stop.disabled = false;
+      report(timedRequest ? 'Playing an approximate timed schedule · ' + timedRequest.summary + '.' : 'Playing an approximate track mix.');
+      scheduleWindow();
+    } catch (error) { if (request === generation) { stopSequence(); report('Cannot play approximation: ' + error.message); } }
+  }
+  play.addEventListener('click', () => playSequence());
   download.addEventListener('click', async () => {
     if (exporting || play.disabled) return;
     const seconds = Number(duration.value), ticks = Number(rate.value), selectedVoice = voice.value;
@@ -6597,6 +7749,10 @@ if (data.timed_sound_sources) {
   const previous = document.getElementById('timed-sound-prev'), next = document.getElementById('timed-sound-next');
   const pageLabel = document.getElementById('timed-sound-page');
   const songSelect = document.getElementById('sequence-song'), player = document.getElementById('sequence-audio');
+  const audition = document.getElementById('timed-sound-audition'), auditionPlay = document.getElementById('timed-sound-play');
+  const auditionStop = document.getElementById('timed-sound-stop'), auditionStatus = document.getElementById('timed-sound-play-status');
+  const auditionRate = document.getElementById('timed-sound-rate'), auditionDuration = document.getElementById('timed-sound-duration');
+  keepSelectFocus(auditionPlay, section);
   const songs = data.sequence_directory ? data.sequence_directory.songs : [];
   const songIndices = new Map(songs.map((song, index) => [song.id, index]));
   const trackHeaders = new Set((data.sequences ? data.sequences.tracks : []).map(track => track.directory_header));
@@ -6626,6 +7782,9 @@ if (data.timed_sound_sources) {
   function drawSource() {
     head.replaceChildren(); body.replaceChildren();
     const group = catalog.groups[Number(source.value)];
+    audition.hidden = !group || source.disabled || group.kind !== 'rows';
+    auditionPlay.disabled = !startTimedSoundMix;
+    if (!startTimedSoundMix) auditionStatus.textContent = 'Song sequence data is unavailable in this dataset.';
     if (!group || source.disabled) {
       detail.textContent = 'No matching source.'; previous.disabled = next.disabled = true; pageLabel.textContent = ''; return;
     }
@@ -6649,6 +7808,7 @@ if (data.timed_sound_sources) {
     pageLabel.textContent = group.values.length + ' values · page ' + (page + 1) + ' of ' + pages;
   }
   function filterSources() {
+    if (stopTimedSoundMix) stopTimedSoundMix();
     const before = source.value, query = filter.value.trim().toLowerCase(); source.replaceChildren();
     catalog.groups.forEach((group, index) => {
       if (kind.value !== 'all' && group.kind !== kind.value) return;
@@ -6659,9 +7819,19 @@ if (data.timed_sound_sources) {
     source.disabled = !source.options.length; page = 0; drawSource();
   }
   kind.addEventListener('change', filterSources); filter.addEventListener('input', filterSources);
-  source.addEventListener('change', () => { page = 0; drawSource(); });
+  source.addEventListener('change', () => { if (stopTimedSoundMix) stopTimedSoundMix(); page = 0; drawSource(); });
   previous.addEventListener('click', () => { if (page) { page--; drawSource(); } });
   next.addEventListener('click', () => { if (!next.disabled) { page++; drawSource(); } });
+  auditionPlay.addEventListener('click', () => {
+    if (!startTimedSoundMix || source.disabled) return;
+    const error = startTimedSoundMix(catalog.groups[Number(source.value)], Number(auditionRate.value), Number(auditionDuration.value));
+    if (error) auditionStatus.textContent = error;
+  });
+  auditionStop.addEventListener('click', () => { if (stopTimedSoundMix) stopTimedSoundMix(); });
+  [auditionRate, auditionDuration].forEach(input => input.addEventListener('input', () => { if (stopTimedSoundMix) stopTimedSoundMix(); }));
+  [audition, section.querySelector(':scope > details')].forEach(details => details.addEventListener('toggle', () => {
+    if (!details.open && stopTimedSoundMix) stopTimedSoundMix();
+  }));
   filterSources();
 }
 if (data.palettes) {
@@ -7139,7 +8309,10 @@ if (data.bg_graphics) {
     document.getElementById('bg-plane-navigation').hidden = !data.bg_plane_programs || index >= data.bg_plane_programs.descriptor_programs.length;
     document.getElementById('bg-raster-navigation').hidden = !data.raster_palettes ||
       index >= data.raster_palettes.descriptor_programs.length;
-    document.getElementById('bg-terrain-navigation').hidden = !data.terrain_seeds || index >= data.terrain_seeds.maps.length;
+    const localTerrain = data.terrain_seeds && index < data.terrain_seeds.maps.length;
+    const terrainPage = relatedWikiView('world', 'terrain-seeds', 'terrain-descriptor', index);
+    document.getElementById('bg-terrain-navigation').hidden = !localTerrain && !terrainPage;
+    document.getElementById('bg-terrain-open').href = localTerrain ? '#terrain-seeds' : terrainPage || '#terrain-seeds';
     document.getElementById('bg-alternate-navigation').hidden = !data.alternate_palettes ||
       index >= data.alternate_palettes.descriptor_keys.length;
     document.getElementById('bg-transfer-navigation').hidden = !data.bg_transfers ||
@@ -7174,6 +8347,7 @@ if (data.bg_graphics) {
     target.value = descriptor.value; target.dispatchEvent(new Event('change'));
   });
   document.getElementById('bg-terrain-open').addEventListener('click', () => {
+    if (!data.terrain_seeds) return;
     const target = document.getElementById('terrain-descriptor');
     target.value = descriptor.value; target.dispatchEvent(new Event('change'));
   });
@@ -7769,6 +8943,67 @@ if (data.obj_graphics || data.lz_graphics || (data.type3_payloads && (data.type3
   selector.addEventListener('change', chooseObjSelector); language.addEventListener('change', chooseObjLanguage);
   chooseObjSelector(); chooseObjCatalog();
 }
+if (data.transfer_directory) {
+  const catalog = data.transfer_directory, section = document.getElementById('transfer-directory');
+  const selector = document.getElementById('transfer-directory-slot'), body = document.getElementById('transfer-directory-rows');
+  const source = document.getElementById('transfer-directory-source'), hex = value => '0x' + value.toString(16).toUpperCase();
+  const rowByOffset = new Map(catalog.rows.map(row => [row.source_offset, row]));
+  const descriptorByOffset = new Map(catalog.descriptors.map(item => [item.source_offset, item]));
+  const offsetOf = address => address >= 0x08000000 && address < 0x0a000000 ? address - 0x08000000 : null;
+  const references = new Map();
+  catalog.slots.forEach((slot, index) => {
+    selector.add(new Option(index + ' · ' + slot.row_count + (slot.row_count === 1 ? ' row' : ' rows'), index));
+    const base = offsetOf(slot.row_pointer);
+    if (base === null) return;
+    for (let i = 0; i < slot.row_count; i++) {
+      const offset = base + i * 12;
+      if (!references.has(offset)) references.set(offset, []);
+      references.get(offset).push(index);
+    }
+  });
+  function drawDirectory() {
+    body.replaceChildren();
+    const slot = catalog.slots[Number(selector.value)];
+    if (!slot || selector.disabled) { source.textContent = 'No selectors available.'; return; }
+    const base = offsetOf(slot.row_pointer);
+    source.textContent = catalog.path + ' · selector ' + selector.value + ' · row pointer ' + hex(slot.row_pointer) +
+      ' · ' + slot.row_count + (slot.row_count === 1 ? ' stored row' : ' stored rows') +
+      (!slot.row_count ? ' · no rows' : base === null ? ' · row pointer is outside the extracted ROM address range' : '');
+    for (let index = 0; index < slot.row_count; index++) {
+      const offset = base === null ? null : base + index * 12, item = offset === null ? null : rowByOffset.get(offset);
+      const row = body.insertRow(); row.insertCell().textContent = index + (offset === null ? '' : ' · ' + hex(offset));
+      if (!item) { const cell = row.insertCell(); cell.colSpan = 4; cell.textContent = 'Row is not present in this extraction.'; continue; }
+      row.insertCell().textContent = 'Byte 0 ' + hex(item.field0) + ' · byte 1 ' + hex(item.field1) +
+        ' · halfword 2 ' + hex(item.field2) + ' · word 8 ' + hex(item.field8);
+      const descriptor = descriptorByOffset.get(offsetOf(item.descriptor_pointer)), cell = row.insertCell();
+      cell.textContent = 'Pointer ' + hex(item.descriptor_pointer);
+      if (descriptor) {
+        const wrapper = descriptor.wrapper;
+        cell.append(document.createTextNode(' · parameters ' + hex(descriptor.parameter16) + ', ' + hex(descriptor.parameter8) +
+          ' · byte ' + hex(descriptor.opaque_byte) + ' · asset ' + hex(descriptor.asset_pointer) +
+          (wrapper ? ' · wrapper kind ' + hex(wrapper.kind) + ', flags ' + hex(wrapper.flags) +
+            ', halfword ' + hex(wrapper.opaque_halfword) : ' · wrapper unavailable')));
+      } else cell.append(document.createTextNode(' · descriptor unavailable'));
+      const shared = (references.get(offset) || []).filter(value => value !== Number(selector.value));
+      row.insertCell().textContent = shared.length ? shared.join(', ') : '—';
+      const preview = row.insertCell(), wrapper = descriptor && descriptor.wrapper;
+      const matches = wrapper && data.lz_graphics ? data.lz_graphics.streams.map((stream, streamIndex) => ({stream, streamIndex}))
+        .filter(({stream}) => stream.source_offset === wrapper.source_offset + 4) : [];
+      if (matches.length !== 1) { preview.textContent = 'Decoded LZ77 input unavailable'; continue; }
+      const link = document.createElement('a'); link.href = '#obj-tiles'; link.textContent = 'Open decoded tiles';
+      link.addEventListener('click', () => {
+        const kind = document.getElementById('obj-catalog'), bank = document.getElementById('obj-bank');
+        const position = document.getElementById('obj-lz-offset');
+        kind.value = 'lz'; kind.dispatchEvent(new Event('change'));
+        position.value = '0'; position.dispatchEvent(new Event('input'));
+        bank.value = String(matches[0].streamIndex); bank.dispatchEvent(new Event('change'));
+      });
+      preview.append(link);
+    }
+  }
+  section.hidden = false; selector.disabled = !catalog.slots.length;
+  selector.addEventListener('change', drawDirectory); drawDirectory();
+}
 if (data.firaga_transfer) {
   const catalog = data.firaga_transfer, section = document.getElementById('firaga-transfers');
   const records = document.getElementById('firaga-transfer-records'), paletteRows = document.getElementById('firaga-transfer-palette-records');
@@ -7913,6 +9148,13 @@ if (data.signed_map_deltas) {
   });
   draw();
 }
+function indexedTilemapTarget(slot) {
+  const row = slot.row, descriptor = slot.descriptor, pointer = slot.pointer;
+  if (row.field0 !== 4 || row.descriptor_pointer !== 0x08000000 + descriptor.source_offset ||
+      pointer !== descriptor.tilemap_pointer || pointer < 0x08000000 || pointer >= 0x0a000000) return null;
+  return pointer - 0x08000000;
+}
+let findTilemapBySource = () => -1;
 if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extra_tilemaps || {}).length) {
   document.getElementById('tilemaps').hidden = false;
   const map = document.getElementById('tilemap-id'), graphics = document.getElementById('tilemap-graphics');
@@ -7933,6 +9175,10 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     extraStarts[key] = maps.length;
     extra[key].maps.forEach(item => maps.push({...item, path: extra[key].path, metadata: item.metadata || extra[key].metadata}));
   });
+  findTilemapBySource = offset => {
+    const matches = maps.flatMap((item, index) => item.source_offset === offset ? [index] : []);
+    return matches.length === 1 ? matches[0] : -1;
+  };
   const controls = document.getElementById('firaga-cell-controls'), entries = document.getElementById('firaga-cell-sequence');
   const rate = document.getElementById('firaga-cell-rate'), play = document.getElementById('firaga-cell-play');
   const stop = document.getElementById('firaga-cell-stop'), loop = document.getElementById('firaga-cell-loop');
@@ -8091,6 +9337,27 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
   }
   function chooseTilemap() {
     const selected = selectedTilemap(), firagaIndex = Number(map.value) - firagaStart;
+    const indexedReferences = document.getElementById('tilemap-indexed-references');
+    indexedReferences.replaceChildren(); indexedReferences.hidden = true;
+    if (data.indexed_tilemap_controls && findTilemapBySource(selected.source_offset) === Number(map.value)) {
+      const references = data.indexed_tilemap_controls.slots.flatMap((slot, index) =>
+        indexedTilemapTarget(slot) === selected.source_offset ? [index] : []);
+      if (references.length) {
+        indexedReferences.hidden = false; indexedReferences.append(document.createTextNode('Indexed controls: '));
+        references.forEach((index, position) => {
+          if (position) indexedReferences.append(document.createTextNode(', '));
+          const link = document.createElement('a'); link.href = '#indexed-tilemap-controls'; link.textContent = 'slot ' + index;
+          link.addEventListener('click', () => {
+            const section = document.getElementById('indexed-tilemap-controls'), group = section.closest('.section-group');
+            if (group) group.open = true;
+            section.querySelector('details').open = true;
+            const row = document.getElementById('indexed-tilemap-slot-' + index);
+            if (row) row.scrollIntoView({block: 'nearest'});
+          });
+          indexedReferences.append(link);
+        });
+      }
+    }
     templateControls.hidden = !selected.ui_template;
     const isFiraga = !!firaga && firagaIndex >= 0 && firagaIndex < firaga.maps.length;
     controls.hidden = !isFiraga; encoding.hidden = !isFiraga;
@@ -8199,6 +9466,32 @@ if (data.observed_tilemaps || data.firaga_compact_cells || Object.keys(data.extr
     if (x >= 0 && x < selected.width && y >= 0 && y < selected.height) showCell(y * selected.width + x);
   });
   base.disabled = true; paletteBank.disabled = true; cellPalettes.disabled = true; chooseTilemap();
+}
+if (data.indexed_tilemap_controls) {
+  const catalog = data.indexed_tilemap_controls, section = document.getElementById('indexed-tilemap-controls');
+  const body = document.getElementById('indexed-tilemap-rows'), hex = value => '0x' + value.toString(16).toUpperCase();
+  document.getElementById('indexed-tilemap-source').textContent = catalog.path + ' · ' + catalog.slots.length + ' indexed slots';
+  catalog.slots.forEach((slot, index) => {
+    const row = body.insertRow(), stored = slot.row, descriptor = slot.descriptor;
+    row.id = 'indexed-tilemap-slot-' + index;
+    row.insertCell().textContent = index + ' · source ' + hex(slot.pointer_offset) + ' · pointer ' + hex(slot.pointer);
+    row.insertCell().textContent = 'Source ' + hex(stored.source_offset) + ' · bytes ' + hex(stored.field0) + ', ' +
+      hex(stored.field1) + ' · halfword ' + hex(stored.field2) + ' · descriptor ' + hex(stored.descriptor_pointer) + ' · word ' + hex(stored.field8);
+    row.insertCell().textContent = 'Source ' + hex(descriptor.source_offset) + ' · map ' + hex(descriptor.tilemap_pointer) +
+      ' · parameters ' + hex(descriptor.parameter16) + ', ' + hex(descriptor.parameter8) + ' · byte ' + hex(descriptor.opaque_byte);
+    const cell = row.insertCell(), target = indexedTilemapTarget(slot), mapIndex = target === null ? -1 : findTilemapBySource(target);
+    if (mapIndex < 0) {
+      cell.textContent = target === null ? 'Stored pointers do not identify a type-4 map.' : 'Matching extracted map unavailable or ambiguous.';
+      return;
+    }
+    const link = document.createElement('a'); link.href = '#tilemaps'; link.textContent = 'Open map';
+    link.addEventListener('click', () => {
+      const selector = document.getElementById('tilemap-id'); selector.value = String(mapIndex);
+      selector.dispatchEvent(new Event('change', {bubbles: true}));
+    });
+    cell.append(link);
+  });
+  section.hidden = false;
 }
 if (data.compact_cell_bank && data.compact_cell_bank.records.length) {
   const catalog = data.compact_cell_bank, section = document.getElementById('compact-cell-bank');
@@ -8472,16 +9765,52 @@ if (data.byte_tilemaps && data.byte_tilemaps.maps.length) {
 }
 {
   const sections = [...document.querySelectorAll('main > section')].filter(section => !section.hidden);
-  const contents = document.getElementById('contents');
-  sections.forEach(section => {
+  const contents = document.getElementById('contents'), main = document.querySelector('main');
+  const categories = [
+    ['Audio', ['audio', 'cgb-noise', 'instruments', 'sequence-audio', 'timed-sounds']],
+    ['Characters and animation', ['dimensions', 'sprites', 'equipment-sprites', 'obj-animations', 'compact-catalog-tables', 'compact-cell-bank']],
+    ['Graphics and palettes', ['indexed-graphics', 'color-books', 'bg-descriptors', 'palette', 'alternate-palettes',
+      'bg-tiles', 'bg-planes', 'bg-transfers', 'palette-programs', 'blend-programs', 'raster-palettes',
+      'transfer-directory', 'indexed-tilemap-controls', 'obj-tiles', 'firaga-transfers', 'firaga-palette-rows', 'tilemaps', 'byte-tilemaps']],
+    ['Interface', ['ui-choices', 'ui-context-templates', 'ui-tiles']],
+    ['Items and progression', ['items', 'item-effects', 'item-links', 'job-names', 'metadata-names', 'metadata4', 'metadata14', 'action-records', 'progression-records']],
+    ['Text and scripts', ['text-search', 'texts', 'pointer-texts', 'text-reader-registry', 'relative-texts', 'script-texts',
+      'event-scripts', 'script-commands', 'auxiliary-scripts', 'auxiliary-commands', 'effect-events', 'task-descriptors', 'font-atlas', 'name-keyboard']],
+    ['World and missions', ['terrain-seeds', 'script-paths', 'signed-map-deltas', 'mission-records',
+      'world-records', 'encounters', 'world', 'world-regions']]
+  ];
+  function title(section) { return section.querySelector('summary h2').textContent; }
+  function appendLink(parent, section) {
     const item = document.createElement('li'), link = document.createElement('a');
-    link.href = '#' + section.id;
-    link.textContent = section.querySelector('summary h2').textContent;
-    item.append(link); contents.append(item);
+    link.href = '#' + section.id; link.textContent = title(section); item.append(link); parent.append(item);
+  }
+  const common = sections.filter(section => ['resource-index', 'file-inspector'].includes(section.id));
+  common.forEach(section => appendLink(contents, section));
+  if (data.wiki && data.wiki.current !== 'index') document.querySelector('#resource-index > details').open = false;
+  const assigned = new Set(common), mainGroups = [];
+  const allGroups = categories.map(([label, ids]) => [label, sections.filter(section => ids.includes(section.id))]);
+  const known = new Set(categories.flatMap(([, ids]) => ids));
+  const other = sections.filter(section => !assigned.has(section) && !known.has(section.id));
+  if (other.length) allGroups.push(['Other views', other]);
+  allGroups.sort((a, b) => a[0].localeCompare(b[0], 'en', {sensitivity:'base', numeric:true}));
+  allGroups.forEach(([label, entries]) => {
+    if (!entries.length) return;
+    entries.sort((a, b) => title(a).localeCompare(title(b), 'en', {sensitivity:'base', numeric:true}));
+    const group = document.createElement('details'), summary = document.createElement('summary');
+    group.className = 'section-group'; group.dataset.category = label; summary.textContent = label + ' · ' + entries.length;
+    group.append(summary); entries.forEach(section => { assigned.add(section); group.append(section); });
+    group.open = entries.some(section => section.querySelector('details').open);
+    main.append(group); mainGroups.push(group);
+    const item = document.createElement('li'), navigation = document.createElement('details');
+    const heading = document.createElement('summary'), list = document.createElement('ul'); heading.textContent = label;
+    entries.forEach(section => appendLink(list, section)); navigation.append(heading, list); item.append(navigation); contents.append(item);
   });
   function openTarget(id) {
     const section = document.getElementById(id);
-    if (section && !section.hidden && sections.includes(section)) section.querySelector('details').open = true;
+    if (!section || section.hidden || !sections.includes(section)) return;
+    for (let parent = section.parentElement; parent && parent !== main; parent = parent.parentElement)
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    section.querySelector('details').open = true;
   }
   document.addEventListener('click', event => {
     const link = event.target.closest('a[href^="#"]');
@@ -8489,8 +9818,12 @@ if (data.byte_tilemaps && data.byte_tilemaps.maps.length) {
   });
   window.addEventListener('hashchange', () => openTarget(location.hash.slice(1)));
   openTarget(location.hash.slice(1));
-  document.getElementById('expand-all').addEventListener('click', () => sections.forEach(section => { section.querySelector('details').open = true; }));
-  document.getElementById('collapse-all').addEventListener('click', () => sections.forEach(section => { section.querySelector('details').open = false; }));
+  document.getElementById('expand-all').addEventListener('click', () => {
+    mainGroups.forEach(group => { group.open = true; }); sections.forEach(section => { section.querySelector('details').open = true; });
+  });
+  document.getElementById('collapse-all').addEventListener('click', () => {
+    sections.forEach(section => { section.querySelector('details').open = false; }); mainGroups.forEach(group => { group.open = false; });
+  });
 }
 </script>
 </body>

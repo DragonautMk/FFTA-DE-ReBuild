@@ -22,7 +22,7 @@ def fixture(work):
                        'path="bg-transfer-programs.json"\nformat="bg-transfer-programs-v1-json"\n'
                        f'sha256="{hashlib.sha256(content).hexdigest()}"\n')
     index = generate(dataset, work / 'animated-view', split=True)
-    return index.parent / (index.name + '.parts/world.html')
+    return index.parent / (index.name + '.parts/interface.html')
 
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')
@@ -121,7 +121,7 @@ class BackgroundPlaneAnimationTest(unittest.TestCase):
                   slot(0).checked=true;change(slot(0));slot(2).checked=false;change(slot(2));frame(0).value='1';change(frame(0));
                   q('#bg-plane-loop').checked=false;q('#bg-plane-play').click();firePlaneTimer();
                   if(!q('#bg-plane-stop').disabled||frame(0).value!=='1'||!q('#bg-plane-animation-status').textContent.includes('finished'))throw Error('one-shot completion');
-                  q('#bg-plane-animation').open=true;frame(0).focus();return 'PASS';
+                  q('#bg-planes').closest('.section-group').open=true;q('#bg-plane-animation').open=true;frame(0).focus();return 'PASS';
                 })()'''), 'PASS')
                 browser.click('#bg-plane-play')
                 self.assertEqual(browser.evaluate("document.activeElement.getAttribute('aria-label')"), 'Frame for transfer slot 0')

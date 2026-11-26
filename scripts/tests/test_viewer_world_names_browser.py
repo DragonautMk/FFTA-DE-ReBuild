@@ -126,7 +126,9 @@ class ObservedWorldNameBrowserTest(unittest.TestCase):
                 })()'''))
                 browser.evaluate("document.querySelector('#world>details').open=true; document.querySelector('#world-observed-names').open=true")
                 hit = browser.evaluate('''(()=>{
-                  const a=document.querySelector('#world-name-rows a');a.scrollIntoView({block:'center'});
+                  const a=document.querySelector('#world-name-rows a');
+                  for(let p=a.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;
+                  a.scrollIntoView({block:'center'});
                   const r=a.getClientRects()[0],x=r.left+r.width/2,y=r.top+r.height/2,e=document.elementFromPoint(x,y);
                   return {x,y,match:e===a||a.contains(e)};
                 })()''')

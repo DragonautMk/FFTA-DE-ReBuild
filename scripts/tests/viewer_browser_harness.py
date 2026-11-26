@@ -61,7 +61,8 @@ class Chrome:
             self.seq = 0
             for _ in range(400):
                 try:
-                    if self.evaluate('document.readyState === "complete" && Boolean(document.querySelector("#sprite-loop"))'):
+                    if self.evaluate('document.readyState === "complete" && '
+                                     '(Boolean(document.querySelector("#sprite-loop")) || document.body.dataset.indexReady === "true")'):
                         break
                 except RuntimeError:
                     pass
@@ -131,7 +132,8 @@ class Chrome:
 
     def click(self, selector):
         box = self.evaluate('(()=>{const e=document.querySelector(' + json.dumps(selector) +
-                            ');e.scrollIntoView({block:"center"});const r=e.getBoundingClientRect();'
+                            ');for(let p=e.parentElement;p;p=p.parentElement)if(p.tagName==="DETAILS")p.open=true;'
+                            'e.scrollIntoView({block:"center"});const r=e.getBoundingClientRect();'
                             'return {x:r.left+r.width/2,y:r.top+r.height/2}})()')
         self.command('Input.dispatchMouseEvent', {'type': 'mouseMoved', **box})
         self.command('Input.dispatchMouseEvent', {'type': 'mousePressed', **box, 'button': 'left', 'clickCount': 1})

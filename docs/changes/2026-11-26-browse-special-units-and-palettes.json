@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-special-units-and-palettes",
+  "title": "Browse special-unit records and palettes",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Browse special-unit source records with authenticated default job-name references, bidirectional metadata links and normal or alternate battle sprite links.",
+    "Decode the documented palette branches, display verified special-unit palettes and apply a selected palette to the linked sprite preview."
+  ],
+  "validation": [
+    "Synthetic Chrome unit viewer-special-units-synthetic-fk7q0v4h passed 50 checks covering source identities, missing dependencies, palette pixels and cross-page navigation.",
+    "Protected e343 unit viewer-special-units-real-e0vzt_ay reconstructed 1302 source bytes, checked 27 palettes, 51 active palette branches, 186 sprite links and 93 reverse references, and matched 20 Python/Docker files.",
+    "Published 16 ignored local wiki pages with guarded preimages; other scoped payloads remained unchanged."
+  ],
+  "limitations": [
+    "Displayed names are stored job references, not character identities. Live overrides, final actor composition and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_special_units_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

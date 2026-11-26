@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-transfer-selector-directory",
+  "title": "Browse transfer selector directory",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose stored transfer selectors, rows, shared aliases, descriptors and wrappers in a collapsible interface view, with links to uniquely matched decoded tile sheets.",
+    "Validate and bound the extracted catalog, report unavailable links and retain the chosen selector in normal wiki bookmarks."
+  ],
+  "validation": [
+    "Synthetic Chrome unit viewer-transfer-directory-synthetic-g4b2wsdh passed 49 tests covering projections, aliases, missing data, preview links and navigation.",
+    "Protected e343 unit viewer-transfer-directory-real-qzgr5pwp authenticated 85 source spans, reconstructed 23 selectors, 18 rows and 16 descriptors, checked 23 preview links, preserved other scope payloads and matched 20 Python/Docker files.",
+    "Published 16 ignored local wiki pages with guarded preimages. Earlier unit 1f4pbo5v failed because a browser test used a single-element selector as a list; the corrected check passed."
+  ],
+  "limitations": [
+    "Tile depth, palette and scene composition are manual interpretations; native Windows remains unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_transfer_directory_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

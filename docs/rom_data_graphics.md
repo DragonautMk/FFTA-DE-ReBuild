@@ -733,9 +733,10 @@ files. The candidate manifest SHA-256 is
 The first Wine unit `0h8o47l3` exceeded the trace filter's range
 limit. The corrected build `eght_zk0` uses one bounded range and
 checks each trace event. Fifteen input guards pass and Wine drains.
-E562 verifies the retained dataset with the standard CLI. Live
-placement, generated readers, original BIOS, native Linux, USA and
-native Windows remain open.
+E562 verifies the retained dataset with the standard CLI. E564
+checks isolated generated loads across the same bank. Ordinary
+generated dispatch, live placement, original BIOS, native Linux,
+USA and native Windows remain open.
 
 ## E562 European world-state task CLI verification and reuse
 
@@ -750,6 +751,63 @@ and selector hashes. All 18 input guards pass and Wine drains.
 The current e340 dataset is retained in that unit's `work/dataset`
 for subsequent validation. The ready-generation check leaves first
 creation, live placement, native Linux, USA and native Windows open.
+
+## E563 European world-state literals during Giza travel
+
+The focused Wine check reuses the E550 recording from frame 19145
+through 19178. It attaches the exact e340 dataset and inverts the
+original backing of 370 watched words for each candidate frame,
+including all 357 words added by E561. A single trace window also
+includes the world task's outer dispatch table.
+
+Wine `e563-world-state-travel-wine-802fd3zx` observes 29 dispatches
+through slot 47. It records 116 typed reads of four new words at
+`034cd4`, `034d94`, `035224` and `035228`. All 116 are attributed
+to the original Thumb load sites. Complete state, guest clock,
+central and wide images, OAM, dispatch counts and all five nonempty
+audio streams match on every frame. The scene's dispatch counts and
+audio sample counts also match E550.
+
+The Windows build `gpgfv740` passes. To avoid slow reads on the
+artifact volume, internal staging `ykq8bups` copies 151 unchanged
+packets from verified e333 files and five updated packets plus the
+manifest from e340. All 157 hashes match before the replay. The earlier
+preflight ended before acquiring a Wine lease. The successful run
+passes 22 input guards and drains Wine.
+
+The trace covers a normal travel route in stage 47. Independent
+proof for ordinary generated dispatch, placement stages 8–10,
+original BIOS, Linux, USA and native Windows remains open.
+
+## E564 European world-state literals through generated code
+
+Wine `e564-world-state-generated-wine-if47kps4` executes all 381
+original Thumb literal loads through TinyCC-generated CPU blocks
+with the e340 dataset attached. The census and original opcode
+match at every compiled address. The test inverts the original
+backing of all 372 words, including the 15 earlier owners. Each
+entry makes one typed 32-bit bus read at its census address. The
+registers, guest clock and full serialized state match the original
+interpreter after each instruction.
+
+The initial Wine attempt `9u7famxn` used one object for all
+instructions. Generated code chained the two neighboring loads
+starting at `0803330a`, so the test's one-instruction return
+assertion failed. The passing test builds separate objects for
+the two halfword alignments to isolate each load. Corrected build
+`fniu8rl2`, the exact 157-file stage `0zahu27q` and all 13 Wine
+input guards pass. The Wine server drains after both attempts.
+
+To reproduce the ignored test, select
+`rom_data::world_state_task_literal_tests::european_world_state_task_generated_loads_use_the_complete_literal_bank`
+with `--exact --ignored --nocapture --test-threads=1`. Provide
+`FFTA_STATE_TEST_ROM`, `FFTA_STATE_TEST_DATASET`,
+`FFTA_WORLD_STATE_TASK_CENSUS`, `FFTA_WORLD_STATE_TASK_WORK`
+and `FFTA_TCC_LIBRARY` under the managed Wine runner. The local
+unit retains the driver and both verdict files.
+
+Ordinary generated dispatch, live placement, original BIOS,
+native Linux, USA and native Windows remain open.
 
 ## E524 European scroll register tables
 

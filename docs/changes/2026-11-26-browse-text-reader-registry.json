@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-text-reader-registry",
+  "title": "Browse text reader registry links",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse and filter stored text reader callback slots, with bidirectional links to uniquely matching extracted relative archives.",
+    "Keep null, invalid, missing and ambiguous addresses visible without guessed links; avoid loading text archives on the other-resources page."
+  ],
+  "validation": [
+    "Synthetic unit pja7ibuu passed 47 projection, Chrome navigation and regression checks, including partial data and duplicate slots.",
+    "Protected EUR e340 unit 690a5zd6 matched 27 callback words and three source spans to the authenticated ROM, verified 24 matching slots for 23 unique readers and checked Chrome navigation. Docker and Python generated 20 identical fixture files. Fifteen ignored local wiki pages were published with a recoverable backup."
+  ],
+  "limitations": [
+    "Address matches do not establish callback execution or ordinary game use. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_text_registry_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

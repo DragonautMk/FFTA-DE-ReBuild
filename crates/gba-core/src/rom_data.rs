@@ -167,8 +167,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 340;
-pub const DECODER_REV: u32 = 339;
+pub const EXTRACTOR_REV: u32 = 345;
+pub const DECODER_REV: u32 = 344;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -207,6 +207,11 @@ const PRE_INITIALIZER_PAIRS_REVISION: (u32, u32) = (336, 335);
 const PRE_SIGNED_MAP_DELTAS_REVISION: (u32, u32) = (337, 336);
 const PRE_WORLD_NODE_RENDERER_REVISION: (u32, u32) = (338, 337);
 const PRE_WORLD_STATE_TASK_REVISION: (u32, u32) = (339, 338);
+const PRE_STACK_BYTE_COPIES_REVISION: (u32, u32) = (340, 339);
+const PRE_FIXED_BYTE_COPIES_REVISION: (u32, u32) = (341, 340);
+const PRE_DIRECT_COPY_ARGUMENTS_REVISION: (u32, u32) = (342, 341);
+const PRE_COPY_PRODUCER_LITERALS_REVISION: (u32, u32) = (343, 342);
+const PRE_SHARED_SLOT_LITERALS_REVISION: (u32, u32) = (344, 343);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -1304,7 +1309,9 @@ impl Extraction {
             | PRE_TIMED_SOUND_BANKS_REVISION | PRE_INITIALIZER_BANK_REVISION
             | PRE_INITIALIZER_VARIANTS_REVISION | PRE_INITIALIZER_PAIRS_REVISION
             | PRE_SIGNED_MAP_DELTAS_REVISION | PRE_WORLD_NODE_RENDERER_REVISION
-            | PRE_WORLD_STATE_TASK_REVISION) => previous,
+            | PRE_WORLD_STATE_TASK_REVISION | PRE_STACK_BYTE_COPIES_REVISION
+            | PRE_FIXED_BYTE_COPIES_REVISION | PRE_DIRECT_COPY_ARGUMENTS_REVISION
+            | PRE_COPY_PRODUCER_LITERALS_REVISION | PRE_SHARED_SLOT_LITERALS_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2268,9 +2275,22 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_pc_literals = Some(metadata);
+            let fixed_bytes = if revision > PRE_SHARED_SLOT_LITERALS_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithSharedSlotLiterals)
+            } else if revision > PRE_COPY_PRODUCER_LITERALS_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithProducerLiterals)
+            } else if revision > PRE_DIRECT_COPY_ARGUMENTS_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithDirectArguments)
+            } else if revision > PRE_FIXED_BYTE_COPIES_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::FixedSize)
+            } else {
+                None
+            };
             let metadata = copied_halfword_lookups::Catalog::from_rom_with_initializers(
                 rom, &result.manifest.resources, revision > PRE_INITIALIZER_BANK_REVISION,
-                revision > PRE_INITIALIZER_VARIANTS_REVISION, revision > PRE_INITIALIZER_PAIRS_REVISION)?;
+                revision > PRE_INITIALIZER_VARIANTS_REVISION, revision > PRE_INITIALIZER_PAIRS_REVISION,
+                revision > PRE_STACK_BYTE_COPIES_REVISION, fixed_bytes,
+            )?;
             result.manifest.coverage.push(COPIED_HALFWORD_LOOKUPS_ID.into());
             result.manifest.resources.push(Resource {
                 id: COPIED_HALFWORD_LOOKUPS_ID.into(), path: COPIED_HALFWORD_LOOKUPS_FILE.into(),

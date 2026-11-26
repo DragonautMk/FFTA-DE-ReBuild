@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-producer-literal-publication",
+  "title": "Verify European byte-copy producer literal dataset publication",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Verified standard CLI creation, verification and reuse of e344-d343 for the complete E575 producer literal bank. The current dataset is retained internally."
+  ],
+  "validation": [
+    "Default Windows build v5htx1gr and Wine e576-producer-literal-cli-internal-wine-bdfakqb6 PASS. The empty-root prepare produces all 157 exact file hashes and matches the E575 manifest and packet. Explicit verification and ready preparation retain the same generation, selector, file identities, contents and modification times. Thirteen input guards pass and Wine drains. Internal retention 3i4ioqmk PASS."
+  ],
+  "limitations": [
+    "Thirty-nine live pointer domains, indirect calls, ordinary and generated use, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

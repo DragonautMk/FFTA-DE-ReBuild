@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "refresh-viewer-e343",
+  "title": "Refresh extracted-resource wiki to e343",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private local wiki from the retained verified European e343-d342 dataset, preserving existing topic views and previously owned resource pages.",
+    "Expose the updated copied-halfword lookup file and its 54 direct-copy argument records through the existing structured inspector."
+  ],
+  "validation": [
+    "Protected unit viewer-e343-refresh-vhmqjk0v authenticated 156 resource files, checked all 16 topic payloads, preserved 153 previous resource pages, and exercised the updated packet in Chrome.",
+    "All 22 synthetic Python and Docker outputs matched; sixteen ignored pages and the updated resource page were published with guarded preimages."
+  ],
+  "limitations": [
+    "The remaining dynamic source domains, ordinary and generated copy paths are not established by this viewer refresh."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

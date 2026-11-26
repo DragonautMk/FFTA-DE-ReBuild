@@ -6,6 +6,7 @@ use super::{
     parse_thumb_pc_literals, read_dataset, THUMB_PC_LITERALS_ID,
 };
 use gba_core::{
+    capi::RT_API,
     ffta_rom::{digest, EUROPE_SHA256},
     rom_data::{
         read_audit::{Reader, Service, TraceCapture, TraceFilter},
@@ -14,8 +15,14 @@ use gba_core::{
     },
     Bus, Machine,
 };
+use recomp_core::analyze::{Analysis, Block, View};
 use serde::Deserialize;
-use std::{fs, path::PathBuf, sync::Arc};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fs,
+    path::PathBuf,
+    sync::Arc,
+};
 
 const BASE: u32 = 0x0800_0000;
 const WORLD_STATE_REVISION: (u32, u32) = (340, 339);
@@ -49,6 +56,12 @@ struct Owner {
 
 fn input(name: &str) -> PathBuf {
     std::env::var_os(name).expect(name).into()
+}
+
+fn read_census() -> Census {
+    let bytes = fs::read(input("FFTA_WORLD_STATE_TASK_CENSUS")).unwrap();
+    assert_eq!(digest(&bytes), CENSUS_SHA256);
+    serde_json::from_slice(&bytes).unwrap()
 }
 
 fn run_load(machine: &mut Machine, rom: &[u8], word: &Word, load: &Load) -> ([u32; 16], u32, u64) {
@@ -104,9 +117,7 @@ fn check_mixed_reads(machine: &mut Machine, rom: &[u8]) -> usize {
 fn european_world_state_task_serves_the_complete_literal_bank() {
     let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
     assert_eq!(digest(&rom), EUROPE_SHA256);
-    let census_bytes = fs::read(input("FFTA_WORLD_STATE_TASK_CENSUS")).unwrap();
-    assert_eq!(digest(&census_bytes), CENSUS_SHA256);
-    let census: Census = serde_json::from_slice(&census_bytes).unwrap();
+    let census = read_census();
     let words = &census.literal_sources;
     assert_eq!(words.len(), 372);
     let mut dataset = read_dataset(&input("FFTA_STATE_TEST_DATASET")).unwrap();
@@ -278,6 +289,152 @@ fn european_world_state_task_serves_the_complete_literal_bank() {
     });
     fs::write(
         work.join("test-result.json"),
+        serde_json::to_vec_pretty(&result).unwrap(),
+    )
+    .unwrap();
+}
+
+#[test]
+#[ignore = "requires the exact EUR ROM, the e340 dataset, the E560 census and TinyCC"]
+fn european_world_state_task_generated_loads_use_the_complete_literal_bank() {
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    assert_eq!(digest(&rom), EUROPE_SHA256);
+    let census = read_census();
+    let words = &census.literal_sources;
+    assert_eq!(words.len(), 372);
+    let cases: BTreeMap<_, _> = words
+        .iter()
+        .flat_map(|word| {
+            word.readers
+                .iter()
+                .map(move |load| (BASE + load.instruction_offset, (word, load)))
+        })
+        .collect();
+    assert_eq!(cases.len(), 381);
+
+    let work = input("FFTA_WORLD_STATE_TASK_WORK");
+    let dataset = read_dataset(&input("FFTA_STATE_TEST_DATASET")).unwrap();
+    assert_eq!(
+        (
+            dataset.manifest.extractor_revision,
+            dataset.manifest.decoder_revision
+        ),
+        WORLD_STATE_REVISION
+    );
+    let view = View {
+        rom: &rom,
+        ewram: None,
+        iwram: None,
+        bios: None,
+    };
+    let scratch = tempfile::tempdir_in(&work).unwrap();
+    let compiler = recomp_core::tcc_memory::library_path().unwrap();
+
+    let mut raw = Machine::new(rom.clone());
+    let mut generated = Machine::new(rom.clone());
+    attach_dataset(&mut generated, &dataset).unwrap();
+    let initial = raw.save_state().unwrap();
+    let flip_backing = |machine: &mut Machine| {
+        for word in words {
+            let start = word.offset as usize;
+            for byte in &mut machine.bus.rom[start..start + word.length as usize] {
+                *byte ^= 0xff;
+            }
+        }
+    };
+    let filter = TraceFilter {
+        readers: vec![Reader::Bus],
+        ranges: vec![(words[0].offset, words.last().unwrap().offset + 4)],
+    };
+    let mut covered = BTreeSet::new();
+    // Keep adjacent instructions in different objects so the emitter cannot
+    // chain them. Each entry must return after the single original load.
+    for alignment in [0, 2] {
+        let group: Vec<_> = cases
+            .iter()
+            .filter(|(pc, _)| **pc & 2 == alignment)
+            .collect();
+        let blocks = group
+            .iter()
+            .map(|&(&addr, &(_, load))| {
+                let opcode = view.read16(addr);
+                assert_eq!(opcode, load.halfword, "load at {addr:08x}");
+                Block {
+                    addr,
+                    thumb: true,
+                    instrs: vec![armv4t::decode_thumb(opcode, addr)],
+                }
+            })
+            .collect();
+        let object = scratch
+            .path()
+            .join(format!("world-state-task-loads-{alignment}.o"));
+        recomp_core::tcc_memory::build(
+            &Analysis { blocks },
+            &view,
+            &compiler,
+            &object,
+            &mut |_| {},
+        )
+        .unwrap();
+        let (_library, table) = crate::load_native(&object).unwrap();
+
+        for (&pc, &(word, load)) in group {
+            raw.load_state(&initial).unwrap();
+            generated.load_state(&initial).unwrap();
+            let (regs, cpsr, clock) = run_load(&mut raw, &rom, word, load);
+            initialize(&mut generated, pc);
+            flip_backing(&mut generated);
+
+            let capture = TraceCapture::start(filter.clone(), 4).unwrap();
+            capture.frame(Some(generated.bus.frames));
+            let entry = table.get(pc | 1).expect("generated literal load entry");
+            let next = entry(&RT_API, (&mut generated as *mut Machine).cast());
+            assert_eq!(next, (pc + 2) | 1, "load at {pc:08x}");
+            let trace = capture.finish();
+            assert_eq!(
+                (trace.matched_requests, trace.dropped_requests),
+                (1, 0),
+                "load at {pc:08x}"
+            );
+            let [event] = trace.events.as_slice() else {
+                panic!("Expected a single read at {pc:08x}");
+            };
+            assert_eq!(event.key.service, Service::Typed, "load at {pc:08x}");
+            assert_eq!(event.key.read.guest_address, BASE + word.offset);
+            assert_eq!(event.key.read.physical_offset, word.offset);
+            assert_eq!(event.key.read.length, 4);
+            assert!(
+                event.key.instruction.is_none(),
+                "interpreter load at {pc:08x}"
+            );
+            covered.insert(word.offset);
+
+            flip_backing(&mut generated);
+            assert_eq!(
+                (generated.cpu.regs, generated.cpu.cpsr, generated.bus.clock),
+                (regs, cpsr, clock),
+                "generated state at {pc:08x}"
+            );
+            assert!(
+                generated.save_state().unwrap() == raw.save_state().unwrap(),
+                "serialized state at {pc:08x}"
+            );
+        }
+    }
+    assert_eq!(covered, words.iter().map(|word| word.offset).collect());
+    let result = serde_json::json!({
+        "status": "PASS",
+        "revision": WORLD_STATE_REVISION,
+        "generated_typed_requests": cases.len(),
+        "compiled_load_pcs": cases.keys().collect::<Vec<_>>(),
+        "covered_words": covered.len(),
+        "previous_owners_checked": words.iter().filter(|word| !word.owners.is_empty()).count(),
+        "all_backing_words_altered": true,
+        "state_and_guest_clock_equal_each_load": true,
+    });
+    fs::write(
+        work.join("generated-result.json"),
         serde_json::to_vec_pretty(&result).unwrap(),
     )
     .unwrap();

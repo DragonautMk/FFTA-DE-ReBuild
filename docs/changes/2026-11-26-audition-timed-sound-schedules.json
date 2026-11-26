@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "audition-timed-sound-schedules",
+  "title": "Audition timed sound schedules",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Play resolved timed-sound candidates as a bounded approximate mix at their stored ticks, with progress, stop, configurable rate and duration, and shared track and CGB mute controls.",
+    "Report ambiguous, unavailable and omitted candidates, preserve the source selector focus, and retain the original individual audition links."
+  ],
+  "validation": [
+    "Synthetic Chrome unit viewer-timed-mix-synthetic-pqk1y3w0 passed 15 tests covering overlap, delays, mutes, limits, missing sequences and focus.",
+    "Protected e343 unit viewer-timed-mix-real-xythz3co matched 683 source groups, checked both observed schedules in Chrome, preserved 16 page payloads and matched 21 Python/Docker files; the ignored local wiki was updated with guarded preimages."
+  ],
+  "limitations": [
+    "The original scheduler, source flags, channel behavior and exact timing remain unresolved; physical audio and native Windows are unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_timed_mix_browser.py",
+    "scripts/tests/test_viewer_timed_sounds_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

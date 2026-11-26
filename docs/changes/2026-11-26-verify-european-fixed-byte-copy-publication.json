@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-fixed-byte-copy-publication",
+  "title": "Verify European fixed-size byte-copy dataset publication",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Confirm cold publication, standard verification and ready reuse for e342-d341. Retain the verified current European generation on the internal disk."
+  ],
+  "validation": [
+    "Default Windows build b_ocl3zy and Wine e570-fixed-byte-cli-internal-wine-9c5u5ikm PASS. The CLI creates the generation from an empty root and all 157 file hashes match E569. It verifies and reuses the same generation with file identities, modification times and selector intact. Thirteen input guards pass and Wine drains. Internal retention qc09ozju PASS."
+  ],
+  "limitations": [
+    "Initial external-volume attempt nirq6vbi timed out during preparation I/O. Its diagnostics are retained and Wine drained before the retry. Ordinary and generated copies, other source and count setups, indirect calls, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

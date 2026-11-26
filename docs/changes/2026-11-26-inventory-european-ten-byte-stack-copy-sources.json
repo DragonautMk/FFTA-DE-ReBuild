@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "inventory-european-ten-byte-stack-copy-sources",
+  "title": "Inventory the European ten-byte stack copy sources",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Use the world task literals as roots for a complete census of the immediate ten-byte calls to the authenticated copy helper. Bind each copy to its fixed ROM extent, literal and stack destination."
+  ],
+  "validation": [
+    "Wine o3ed4jee reconciles 372 original words and 381 loads with e340. Wine e565-ten-byte-copy-source-plan-g0_w9rrh verifies seven original setups among 181 aligned BL patterns, 70 unowned bytes and five unowned literals, two earlier owners and 12 input guards. The initial tm0vlea8 attempt expected odd destinations at two original even switch entries. Wine drains."
+  ],
+  "limitations": [
+    "Other copy lengths, computed counts, indirect callers, managed runtime and ordinary gameplay remain pending. Linux and USA are deferred. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

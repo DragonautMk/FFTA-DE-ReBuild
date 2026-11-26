@@ -2543,6 +2543,7 @@ impl crate::MemMap {
                 || resources.tilemap_type2.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.tilemap_direct.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.compact_cell_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.copied_halfword_lookups.as_ref().is_some_and(|data| data.fixed_byte_copy_overlaps(index, 4))
         })
             || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97
             | 0x569..=0x56c | 0x766..=0x769)

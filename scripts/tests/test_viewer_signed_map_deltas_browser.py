@@ -64,7 +64,7 @@ class SignedMapDeltaProjectionTest(unittest.TestCase):
             if case == 'other-profile': profile = 'usa'
             with self.subTest(case=case), tempfile.TemporaryDirectory(prefix='viewer-signed-map-') as directory:
                 index = fixture(Path(directory), value, profile=profile, bad_hash=case == 'bad-hash')
-                parts = index.parent / 'index.html.parts'; world = payload(parts / 'world.html')
+                parts = index.parent / 'index.html.parts'; world = payload(parts / 'interface.html')
                 self.assertNotIn('signed_map_deltas', payload(index))
                 self.assertNotIn('signed_map_deltas', payload(parts / 'audio.html'))
                 expected = case in ('valid', 'invalid-rectangles')
@@ -80,7 +80,7 @@ class SignedMapDeltaBrowserTest(unittest.TestCase):
     def test_preview_playback_loop_focus_and_bookmark(self):
         with tempfile.TemporaryDirectory(prefix='viewer-signed-map-preview-') as directory:
             work = Path(directory); index = fixture(work, catalog())
-            browser = Chrome(work, index.parent / 'index.html.parts/world.html')
+            browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
             try:
                 bookmark = browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
@@ -121,7 +121,7 @@ class SignedMapDeltaBrowserTest(unittest.TestCase):
     def test_zero_values_and_invalid_preview_rate(self):
         with tempfile.TemporaryDirectory(prefix='viewer-signed-map-zero-') as directory:
             work = Path(directory); value = catalog(); value['signed_map_deltas']['entries'] = [0] * 48
-            index = fixture(work, value); browser = Chrome(work, index.parent / 'index.html.parts/world.html')
+            index = fixture(work, value); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
             try:
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);
                   const pixel=[...q('#signed-map-delta-canvas').getContext('2d').getImageData(80,90,1,1).data];
@@ -132,7 +132,7 @@ class SignedMapDeltaBrowserTest(unittest.TestCase):
 
     def test_links_values_and_collapsible_section(self):
         with tempfile.TemporaryDirectory(prefix='viewer-signed-map-browser-') as directory:
-            index = fixture(Path(directory), catalog()); browser = Chrome(Path(directory), index.parent / 'index.html.parts/world.html')
+            index = fixture(Path(directory), catalog()); browser = Chrome(Path(directory), index.parent / 'index.html.parts/interface.html')
             try:
                 result = browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=q('[data-resource-id="graphics.ui-raw-transfers"]');
@@ -160,7 +160,7 @@ class SignedMapDeltaBrowserTest(unittest.TestCase):
     def test_link_with_invalid_rectangles_and_legacy_single_page(self):
         with tempfile.TemporaryDirectory(prefix='viewer-signed-map-partial-') as directory:
             value = catalog(); value['halfword_copies']['tilemap_rectangles']['rectangles'][0]['width'] = 1
-            index = fixture(Path(directory), value); browser = Chrome(Path(directory), index.parent / 'index.html.parts/world.html')
+            index = fixture(Path(directory), value); browser = Chrome(Path(directory), index.parent / 'index.html.parts/interface.html')
             try:
                 self.assertTrue(browser.evaluate('''(()=>{const row=document.querySelector('[data-resource-id="graphics.ui-raw-transfers"]');
                   return !!row.querySelector('a[href="#signed-map-deltas"]')&&!row.querySelector('a[href="#tilemaps"]');})()'''))

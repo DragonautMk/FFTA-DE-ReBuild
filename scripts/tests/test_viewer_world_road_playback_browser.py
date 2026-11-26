@@ -74,7 +74,7 @@ class WorldRoadPlaybackTest(unittest.TestCase):
                   if(!q('#world-road-stop').disabled||roadTimers.size)throw Error('manual stop');
                   q('#world-road-play').click();q('#world-roads-controls').open=false;q('#world-roads-controls').dispatchEvent(new Event('toggle'));
                   if(!q('#world-road-stop').disabled||roadTimers.size)throw Error('closed stop');
-                  q('#world-roads-controls').open=true;q('#world-road-id').focus();return 'PASS';
+                  q('#world').closest('.section-group').open=true;q('#world-roads-controls').open=true;q('#world-road-id').focus();return 'PASS';
                 })()'''), 'PASS')
                 browser.click('#world-road-play')
                 self.assertEqual(browser.evaluate('document.activeElement.id'), 'world-road-id')

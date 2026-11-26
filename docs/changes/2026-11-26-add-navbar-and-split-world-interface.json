@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "add-navbar-and-split-world-interface",
+  "title": "Add wiki navbar and split world from interface",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Replace the page disclosure with a persistent, responsive navbar linking directly to each available topic section, including all audio views.",
+    "Split world/gameplay and interface/graphics payloads, preserving terrain-to-background selection links, older world bookmarks and resource-page scope links."
+  ],
+  "validation": [
+    "Regression unit viewer-navbar-regression-m7klgbt9 passed 145 tests; moved-graphics unit viewer-navbar-moved-5_u2_mjl passed 74 tests.",
+    "Protected local unit viewer-navbar-real-fya7nxy2 checked all 15 topic-page menus against visible sections, all 156 resources, desktop and mobile Chrome and 22 identical Docker/Python fixture files.",
+    "Published 16 ignored wiki pages and 33 updated resource-page links with guarded backups; world shrank from 11955079 to 3481448 bytes and the separate interface page measures 9168863 bytes."
+  ],
+  "limitations": [
+    "Native Windows and Windows Docker execution remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_index.html",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_navigation.css",
+    "scripts/tests/test_viewer_navbar_split_browser.py",
+    "scripts/tests/test_viewer_navigation_categories_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_text_scopes_browser.py",
+    "scripts/tests/test_viewer_cgb_noise_browser.py",
+    "scripts/tests/test_viewer_world_road_playback_browser.py",
+    "scripts/tests/test_viewer_obj_transfer_graphics_browser.py",
+    "scripts/tests/test_viewer_signed_map_deltas_browser.py",
+    "scripts/tests/test_viewer_firaga_cells_browser.py",
+    "scripts/tests/test_viewer_tilemap_stream_bank_browser.py",
+    "scripts/tests/test_viewer_observed_lz_browser.py",
+    "scripts/tests/test_viewer_ui_rectangles_browser.py",
+    "scripts/tests/test_viewer_transfer_lz_browser.py",
+    "scripts/tests/test_viewer_bg_planes_browser.py",
+    "scripts/tests/test_viewer_type2_rectangles_browser.py",
+    "scripts/tests/test_viewer_source_grids_browser.py",
+    "scripts/tests/test_viewer_localized_queued_browser.py",
+    "scripts/tests/test_viewer_transfer_graphics_lazy_browser.py",
+    "scripts/tests/test_viewer_bg_plane_animation_browser.py",
+    "scripts/tests/test_viewer_bg_descriptors_browser.py",
+    "scripts/tests/test_viewer_compact_cell_bank_browser.py",
+    "scripts/tests/test_viewer_firaga_transfer_browser.py",
+    "scripts/tests/test_viewer_blend_programs_browser.py",
+    "scripts/tests/test_viewer_bg_transfers_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

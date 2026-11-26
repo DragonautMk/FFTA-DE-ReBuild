@@ -86,6 +86,15 @@ eight bytes08..0f, eight signed bytes10..17and eight bytes18..1f. Semantic names
 for most fields remain unproved; do not infer item names, prices, abilities or
 job rules solely from plausible numeric values.
 
+The European name lookup is now separately supported by an original caller:
+`08019F28` loads an item ID, calls `080CE1EC` with property 0, and passes the
+returned value directly to localized text reader `080165E8`. The getter's
+property-0 target reads the unsigned halfword at record offset 00. Protected
+source unit `item-name-source-disasm-3oqgxrxf` retains the selected disassembly.
+The viewer follows this relationship only for the authenticated EUR item and
+text catalogs; it does not infer other item properties, live availability or
+behavior outside the extracted record set.
+
 Properties10..13are dynamic. Original getter080ccf00reads live EWRAM bytes at
 02002030+u16index. With byte13nonzero, the property reader returns the raw
 signed field. With that byte zero, item IDs0033/012e/0094/011eadd live bytes
@@ -3220,6 +3229,14 @@ through its first three byte indices0..2 and uses the following four-byte family
 Byte15 remains uninterpreted in the inspected loads. The returned view itself
 has no new three-byte bound. All full flags, raw values and opaque bytes stay
 exact; observed values do not become enums, Boolean storage or zero policies.
+
+An original European text path at `08027E1E..08027E2C` uses the same 28-byte
+root and passes the record's first halfword to localized reader `08016588`.
+The separate path at `080AB21A..080AB220` passes selector 0 to `080D07A4` and
+feeds its result to that reader. Source unit `action-name-source-disasm-ndhlj_2c`
+retains both bounded disassemblies. The viewer follows the documented index
+for authenticated EUR record and text catalogs, while retaining the source
+fields without claiming every row's live role or the effects of an action.
 
 Twenty authenticated windows (14 new/six reused) and69 instruction/literal/
 jump-table pins pass. Additional successor/neighbor windows remain exploratory

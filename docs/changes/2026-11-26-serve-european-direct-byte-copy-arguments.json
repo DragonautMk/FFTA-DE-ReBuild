@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-direct-byte-copy-arguments",
+  "title": "Serve the European direct byte-copy argument bank",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Extend the European copied lookup packet in e343-d342 with the E571 residual of 52 exact argument words and two four-byte payloads. Authenticate the original literal loads, preserve the earlier owner at 12969c and retain e342 attachment compatibility."
+  ],
+  "validation": [
+    "Windows build gdyjs9j4 and Wine e572-direct-byte-copy-arguments-wine-0z1brzgc PASS. All 53 original literal reads and four complete copy paths use extracted bytes with altered backing. The copy paths make 18 typed requests and produce matching copied contents, full state and clock. All 648 mixed mirror checks and the raw gap pass. e342 attaches and incomplete e343 is rejected without replacement. Only one manifest entry changes. Fourteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Default CLI creation, verification and reuse, 40 dynamic pointer domains, ordinary and generated use, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/fixed_byte_copies.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/direct_byte_copy_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

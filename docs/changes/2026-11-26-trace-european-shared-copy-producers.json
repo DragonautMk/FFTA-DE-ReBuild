@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "trace-european-shared-copy-producers",
+  "title": "Trace all seven direct European shared byte-copy pointer producers",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Follow the seven attested direct writes to 030027f4. Record the fixed and indexed RAM origins, the preview allocation size condition, the helper field and the quest list selector.",
+    "Join the computed producer scopes with the complete e344 dataset. Keep 24 earlier literal owners and the eight-entry dispatcher table. Identify 27 unowned words (108 bytes) across 27 original readers."
+  ],
+  "validation": [
+    "Wine rzp7_338 and 3y34xpii attest 1,908 and 786 further halfwords, pass 30 and 34 input guards and drain the server. Guarded e344 join ui3_rhik passes 32 input guards. The first join nahd38zl had an incorrect register expectation, corrected using the same attested instructions."
+  ],
+  "limitations": [
+    "Literal bank integration, 39 live source domains, including reachable preview sizes, the live helper field and quest pointer list, aliases, ordinary and generated dispatch, original BIOS, Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

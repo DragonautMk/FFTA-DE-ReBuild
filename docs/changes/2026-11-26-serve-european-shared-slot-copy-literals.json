@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-shared-slot-copy-literals",
+  "title": "Serve all European shared byte-copy slot producer literals",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Extract the full E577 residual bank of 27 aligned words (108 bytes) in e345-d344. Serve them through the existing copied lookup path and preserve all 24 earlier owners and the eight-entry dispatcher table."
+  ],
+  "validation": [
+    "Windows build j981vha7 and Wine e578-shared-slot-literals-wine-fj32mu8e PASS. All 27 original loads use extracted data with altered backing and match the raw values, full state and clock. All 324 mixed mirror checks and the adjacent raw word pass. Exact e344 attaches and incomplete e345 is rejected before replacement. The 155 other manifest entries and earlier packet fields match e344. Fifteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Standard CLI publication and reuse, 39 live pointer domains, indirect calls, ordinary and generated use, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/fixed_byte_copies.rs",
+    "crates/recomp/src/rom_data/byte_copy_producer_literal_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-localized-action-records",
+  "title": "Browse action-linked records and localized names",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse physical 28-byte records and their stored fields and flag bits, including without a text catalog.",
+    "Follow the original European property-0 lookup to localized names, with filtering, pagination and links to the source strings; leave names unresolved for unsupported or ambiguous inputs."
+  ],
+  "validation": [
+    "Source unit ndhlj_2c recorded both original text paths. Synthetic unit qdr71hgk passed 51 projection, partial-input, browser and regression tests.",
+    "Protected EUR unit yqidzlof reconstructed 347 records and checked 1735 localized references and 88 glyphs against the ROM, exercised Chrome navigation and matched 19 Python/Docker files using the actual extracted inputs. Fifteen ignored wiki pages were published with a recoverable backup."
+  ],
+  "limitations": [
+    "The links do not establish every record's live role or action effects. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_action_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_text.md"
+  ]
+}

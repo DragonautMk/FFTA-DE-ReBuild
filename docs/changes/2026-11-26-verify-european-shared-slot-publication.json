@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-shared-slot-publication",
+  "title": "Verify European shared-slot literal dataset publication",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Verified standard CLI creation, verification and reuse of the complete e345-d344 generation with the shared-slot literal bank. Retained the current European generation internally."
+  ],
+  "validation": [
+    "Default Windows build l0eyeusr, Wine e579-shared-slot-cli-internal-wine-mm0k4grq and internal retention 7sglfxj4 PASS. All 157 files match the expected hashes. The manifest and packet equal E578. Explicit verification and ready preparation retain the generation, selector, file set, identities, contents and modification times. Thirteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Thirty-nine live source domains, indirect calls, ordinary and generated use, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

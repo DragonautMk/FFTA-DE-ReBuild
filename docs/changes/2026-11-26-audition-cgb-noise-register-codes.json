@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "audition-cgb-noise-register-codes",
+  "title": "Browse and audition CGB noise codes",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse 60 extracted CGB noise-register codes with source offsets, key ranges and a one-second synthesized waveform preview and WAV export.",
+    "Synchronize the CGB mute with the existing instrument and song controls while retaining focus, playback progress and optional repeat.",
+    "Validate the noise table independently so malformed or missing noise data does not disable valid PCM/CGB pitch data."
+  ],
+  "validation": [
+    "Synthetic unit 94zs89xc passed 40 of 41 tests; its remaining failure was a test-only DOM selector error. Corrected unit _mfk8r2v passed all three focused checks, including independent waveform and WAV checks.",
+    "Protected EUR e340 unit kc7uabxu matched all 60 codes to the authenticated ROM range, checked live Chrome Web Audio and mute, preserved 13 other scoped data payloads and matched 19 Docker/Python files. Fifteen ignored wiki pages were published."
+  ],
+  "limitations": [
+    "The preview models noise-generator settings without original envelopes, channel scheduling or mixer effects. No type-4 tone or song association was established in the current EUR catalog; physical audio and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_cgb_noise_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md",
+    "crates/gba-core/src/apu.rs"
+  ]
+}

@@ -112,8 +112,9 @@ ignored local wiki and `out/rom-data-europe-e334-d333` were published; e333 is
 retained as the named previous dataset. The full Linux application build
 `1_bunyg0` could not start its ALSA-dependent component because the development
 package is absent; the lightweight core export does not claim that build passed.
-The timed-sound view below exposes the added sources and individual candidate
-auditions; full scheduler playback remains open. Windows is deferred.
+The timed-sound view below exposes the added sources and candidate auditions,
+including an approximate timed mix; full scheduler playback remains open.
+Windows is deferred.
 
 The earlier European wiki refresh used extractor 335 / decoder 334. Protected
 unit `mkd3en8j` retained the 155 unchanged resource files and used the
@@ -160,7 +161,7 @@ Fourteen ignored wiki files and `out/rom-data-europe-e338-d337` were published;
 e337 is retained for comparison. The construction uses the accepted core output
 identity and is not a full Linux application build. Windows remains deferred.
 
-The current local European wiki uses extractor 339 / decoder 338. Protected
+The previous local European wiki used extractor 339 / decoder 338. Protected
 unit `buwzwh4e` retained 154 unchanged resources and reconstructed the two
 changed code-reference catalogs from nine authenticated source spans. Every
 file and the manifest match the candidate accepted in
@@ -172,12 +173,44 @@ files and `out/rom-data-europe-e339-d338` were published; e338 remains available
 for comparison. This construction is not a full Linux application build.
 Windows remains deferred.
 
+The earlier local European wiki used extractor 340 / decoder 339. Existing
+unit `yid7rliw` verified the retained European dataset and manifest. Unit
+`574prtnv` guarded and checked the exact candidate before publication, including
+11 unchanged topic payloads, three focused text scopes and one changed resource
+page. Unit `4aktz7x0` exercised browser navigation, shared reading preferences
+and combined search, and matched all 20 Python/Docker fixture files. Seventeen
+ignored wiki files were published with a recoverable backup under
+`out/ffta-viewer-before-e340-ivgdfkkd`; `out/rom-data-europe-e340-d339` points
+to the verified dataset. This is not a native Windows or full Linux runtime
+validation.
+
+The previous local European wiki used extractor 343 / decoder 342. The retained
+generation `out/rom-data-europe-e343-d342` was already created, verified and
+reused by E573. Protected unit `viewer-e343-refresh-vhmqjk0v` authenticated all
+156 resource files, regenerated all 16 wiki pages, and confirmed that only the
+copied-halfword-lookup resource changed from e340. The updated file's structured
+inspector exposes the 54 stored direct-copy argument entries. Existing topic
+payloads and 153 older resource pages were preserved; Chrome navigation and 22
+synthetic Python/Docker outputs passed. The ignored pages and new resource page
+were published with preimages under `out/ffta-e343-before-y_6ydq0c`.
+
+The current local European wiki uses extractor 344 / decoder 343. E576 created,
+verified and reused the retained `out/rom-data-europe-e344-d343` dataset.
+Protected unit `viewer-e344-refresh-qx239myo` authenticated all 156 resource
+files and the 84 newly added producer literals, checked the updated structured
+inspector in Chrome, preserved existing topic data across 16 pages and 154 earlier resource
+pages, and matched 22 synthetic Python/Docker outputs. The ignored pages and
+new resource page were published with preimages under
+`out/ffta-e344-before-zqhroz9t`. The previous e343 dataset remains available
+for this comparison; this refresh does not establish the remaining live pointer
+domains or generated-copy paths.
+
 Open the resulting HTML index locally. Its topic links open separate offline
-pages for world/interface data, object animations, actors/equipment, battle
+pages for world/gameplay data, interface/graphics data, object animations, actors/equipment, battle
 actors, script actors, audio, text/fonts, event scripts, indexed graphics,
 transfer graphics and other resources. The overview embeds
 only index fields, and each topic page embeds its own projected data and the
-small shared dependencies required by its previews. The world tilemap and
+small shared dependencies required by its previews. The interface tilemap and
 compact-cell views, and the object-animation view on the object page, can load
 transfer graphics from the same local companion asset on request. Within a
 single-page output, one button shares it across all three views. A saved link to
@@ -188,6 +221,41 @@ are local to the current page. The contents sidebar links to the views available
 each section can be opened or closed independently, and the sidebar can open or
 close all sections. Resource rows link directly to their dedicated views when
 available. On narrow screens the sidebar and resource rows stack vertically.
+
+**Navbar and compact overview.** The persistent navbar groups topic pages and
+their available views into alphabetically ordered menus. Audio exposes direct
+links to each available player and catalog; links open the containing section.
+The overview groups its
+resources by topic page and then by resource family; both levels start closed,
+while search opens matching groups. On topic pages, the contents sidebar and
+the available views are grouped into ordered, collapsible sections. Saved links
+open their containing group as well as the requested view. The overview uses a
+separate template and does not load topic-view code.
+
+Synthetic unit `viewer-nav-synthetic-l9qux7c7` passed 61 browser and generator
+checks, including search, selected-folder inspection, topic navigation and saved
+selections. Protected local unit `viewer-nav-real-1fs0hl6a` verified all 156
+resource entries, preserved the data in all 15 pages, checked the overview and
+world page in Linux Chrome including a 375-pixel viewport, and matched all 21
+files generated from a synthetic dataset by Python and Docker. That earlier
+index was 94,458 bytes, down from 670,218 bytes; the 15 ignored local pages were
+published with a recoverable backup under `out/ffta-viewer-nav-before-1cqrfezb`.
+Native Windows remains unverified.
+
+The world/gameplay and interface/graphics scopes now load separately. Links
+between terrain and background tiles carry the selected descriptor across pages;
+old world-page links to moved interface views retain their selections. Resource
+pages point to the appropriate scope. Regression unit `viewer-navbar-regression-m7klgbt9`
+passed 145 tests; `viewer-navbar-moved-5_u2_mjl` passed 74 checks of the moved
+graphics views. Protected local unit `viewer-navbar-real-fya7nxy2` compared
+the menu entries against every visible section on 15 topic pages, checked the
+audio links and mobile menu in Chrome, preserved the scoped data and all 156
+resources, and matched 22 synthetic Python/Docker files. The combined world page
+measured 11,955,079 bytes; its replacements measure 3,481,448 and 9,168,863
+bytes. Sixteen ignored wiki pages and 33 updated resource links were published
+with recoverable preimages under `out/ffta-navbar-before-6fdhi1kt`.
+Native Windows and Windows Docker remain unverified.
+
 Linux Chrome units `rom-data-viewer-wiki-legs66p4` and
 `rom-data-viewer-wiki-eur-s3qt2yel` checked navigation and section controls,
 including the compact layout, EUR text selection, palette and audio controls.
@@ -203,21 +271,19 @@ passed 26 tests. An initial browser instrumentation failure in
 `rom-data-viewer-scope-hook-diagnostic-fv97rttp`; its candidate was reused for
 the successful guarded browser and Docker checks. Windows remains unverified.
 
-**Focused text scopes (in progress).** The generator now provides separate
-pointer, relative and script-text pages, while keeping the combined text/font
-page for searches across all archives. Name and event-script links target the
+**Focused text scopes.** Separate pointer, relative and script-text pages
+load only their associated text projections; the combined text/font page
+supports searches across all archives. Name and event-script links target the
 relevant focused page. Pinned language, hidden commands and normal-font choices
-are saved in browser storage when available; the combined page still works if
-storage is unavailable. Synthetic unit `l5t1ecc_` passed 52 of 53 tests; a
-navigation test clicked between wrapped link lines. Corrected focused unit
-`byl9lek3` passed that check; corrected isolated unit `w2vnicj9` passed all
-53 tests. An unaccepted EUR e339 candidate measures
-21,646,829 bytes for the combined page and 7,534,167 bytes for the pointer page;
-this size observation does not establish browser or Docker acceptance. EUR
-unit `7916yrmi` reached Chrome after its candidate and Docker comparison, but
-failed on a DevTools timeout while the filesystem was stalled; diagnostics were
-retained. EUR/Docker validation and publication of the e340 wiki remain in progress;
-the currently published wiki remains e339.
+are saved in browser storage when available. Unit `w2vnicj9` passed all 53
+synthetic checks; protected EUR `4aktz7x0` and `574prtnv` verified browser,
+Docker and candidate data before publication. The EUR combined page measures
+21,646,829 bytes; the pointer, relative and script pages measure 7,534,167,
+11,692,365 and 7,597,975 bytes respectively. Earlier unit `l5t1ecc_` had a
+wrapped-link click failure corrected in `byl9lek3`; unit `7916yrmi` timed out
+while the filesystem stalled, and `brjnqia7` passed its application checks but
+failed runner cleanup because Chrome left a scratch symlink. Their diagnostics
+remain available. Browser storage can be disabled; native Windows is deferred.
 
 Sections with dropdowns offer **Link to selected values**. Opening or copying
 that link preserves the dropdown positions for the same generated dataset;
@@ -707,6 +773,36 @@ prototype only when the paused viewer task is requested again.
   preserved prior scope data and 145 resource pages, and matched all 19
   Docker/Python fixture files. Eleven ignored wiki pages were published.
   Windows remains deferred. [Source contract](../rom_data_runtime.md#e480-european-task-345-lz77-resource)
+- [x] **Transfer selector directory.** Browse the stored selector lists, row
+  fields, shared rows, descriptors and wrappers in a collapsible interface view.
+  Direct wrapper links open a unique matching decoded LZ77 source in the tile
+  sheet, including earlier observed streams; missing or ambiguous targets remain
+  unavailable. Tile depth, colors and scene composition are manual choices.
+  Synthetic Chrome unit `viewer-transfer-directory-synthetic-g4b2wsdh` passed
+  49 tests, including malformed or missing data, shared and empty selectors,
+  direct previews and bookmarks. Protected e343 unit
+  `viewer-transfer-directory-real-qzgr5pwp` authenticated 85 source spans and
+  reconstructed the 23 selectors, 18 rows and 16 descriptors from the source;
+  Chrome checked all 23 links, three empty selectors and shared rows. It preserved
+  the other scope payloads and matched 20 Python/Docker files. Sixteen ignored
+  wiki pages were updated with guarded preimages. Earlier real unit `1f4pbo5v`
+  failed because its browser test used a single-element selector as a list;
+  the corrected test passed. Windows remains deferred.
+  [Source contract](../rom_data_runtime.md#e468-european-task-345-managed-transfer-metadata)
+- [x] **Indexed tilemap control links.** Inspect stored indexed pointers, rows
+  and descriptor fields, then open uniquely matched tilemaps. Each map links
+  back to its matching control slots; mismatched pointers and missing or
+  ambiguous map sources have no preview link. Graphics and palettes remain
+  manual choices. Synthetic Chrome unit `viewer-indexed-maps-synthetic-wsvczx61`
+  passed 54 checks covering forward and reverse links, partial data, ambiguous
+  sources and scoped navigation. Protected e343 unit `viewer-indexed-maps-real-38kkyllk`
+  authenticated 12 source spans, reconstructed all 12 control records from the
+  source and checked every forward and reverse link in Chrome. It preserved the
+  other scope payloads and matched 20 Python/Docker files; sixteen ignored pages
+  were published with guarded preimages. Earlier real unit `euf9mysl` failed
+  because its browser test treated a single selected element as a list; the
+  corrected check passed. Windows remains deferred.
+  [Source contract](../rom_data_runtime.md#e478-european-indexed-tilemap-control-resource)
 - [x] **Type-3 transfer payload previews.** Verify each packed source extent
   and show complete LZ77 outputs and raw transfer inputs on a separate offline
   page. Decode each LZ77 stream independently; an invalid stream is reported
@@ -787,6 +883,23 @@ prototype only when the paused viewer task is requested again.
 - [x] **Items.** Display `items.json`, labeling unclassified fields by offset
   and preserving signed values. The EUR records and a synthetic negative value
   passed in Linux Chrome unit `rom-data-viewer-items-ycfow_31`.
+- [x] **Localized item names.** The authenticated European item record's
+  property-0 index links to the original five-language name reader. Show names
+  in the item selector, item-effect selector and encounter equipment links;
+  provide a language selector, a filterable, paginated directory and links to
+  the source strings. Unknown glyphs retain their bitmaps. Other profiles,
+  changed source identities, missing or ambiguous readers keep item IDs without
+  guessed names. The world page embeds only the referenced names and glyphs,
+  not the full text catalog.
+  Synthetic unit `item-names-synthetic-675ze1_1` passed 54 projection, browser
+  and regression tests. Protected EUR unit `item-names-recheck-5xhxehqn`
+  verified 376 item records, 1,880 localized references and 81 glyphs against
+  the ROM, checked Chrome navigation and matched 19 Python/Docker files using
+  the actual item and text inputs. Initial unit `item-names-real-w97e1kgo`
+  stopped on a test-only DOM iteration error; the corrected unit reused its
+  candidate and Docker output. Fifteen ignored wiki pages were published with
+  backup `out/ffta-item-names-before-0uxlj1k1`. Native Windows remains deferred.
+  [Original lookup](../rom_data_gameplay.md#original-field-access-contract)
 - [x] **Item effect parameters.** Browse the fourteen documented European
   item-linked records, their nine coefficients, cap and opaque bits in a
   collapsible view, with links in both directions to item records. An optional
@@ -830,6 +943,53 @@ prototype only when the paused viewer task is requested again.
   Initial unit `rom-data-viewer-item-links-eur-9piev0p6` reached the browser
   check but the test incorrectly treated a single element as a list; the
   corrected harness passed. The existing local payload and inspector were kept.
+- [x] **Item-pair and metadata links.** For authenticated European pair and
+  metadata catalogs, active nonzero selectors link to matching metadata rows;
+  the reverse list opens each matching pair and slot. Selector zero, `0xFF`,
+  slots beyond the count, missing rows and unsupported source identities do
+  not receive links. Direct names appear only with the authenticated text
+  catalog; otherwise the numeric references remain usable. Item owners use
+  the available localized item labels. The links show stored relationships,
+  without evaluating live unit conditions. Synthetic unit
+  `item-metadata-synthetic-0uvnwvf9` passed 49 tests. Protected EUR unit
+  `item-metadata-real-2lo4iet7` reconstructed 225 pair records and 116 metadata
+  rows from the ROM, checked 464 active links in both directions and eight
+  `0xFF` slots in Chrome, and matched 20 Python/Docker files using the actual
+  extracted inputs. Fifteen ignored wiki pages were published with backup
+  `out/ffta-item-metadata-before-gfcuvkm4`; native Windows remains deferred.
+  [Source contract](../rom_data_gameplay.md#item-linked-pair-source-contract)
+- [x] **Two-pair metadata records.** Browse all twenty physical records and
+  both selector/value slots, including zeros and stored values after a zero.
+  The view distinguishes nonzero counts from the original leading walk. For
+  authenticated European pair and metadata catalogs, selectors link to direct
+  metadata names when the text source is also authenticated; metadata rows link
+  back to both their raw offset-0x30 record and incoming selector slots. Owner
+  lists support filtering and pagination. These are stored source references,
+  not an evaluation of live job requirements or redirected rows.
+  Synthetic unit `viewer-metadata4-synthetic-udnualg5` passed 54 checks.
+  Protected EUR unit `viewer-metadata4-real-gz6mz0ix` reconstructed 6,112 ROM
+  bytes, checked all 40 slots, 26 nonzero selector links and 116 metadata owner
+  links in Chrome, and matched 20 Python/Docker fixture files. Sixteen ignored
+  wiki pages were published with backup `out/ffta-metadata4-before-l1_1rvdt`.
+  [Source contract](../rom_data_gameplay.md#four-byte-two-pair-source-contract)
+- [x] **Special-unit source records.** Browse the 93 stored records, including
+  their default job metadata references, normal and alternate battle sprite
+  IDs and packed palette selectors. Verified job references link both ways to
+  localized metadata names; these are job references, not character names, and
+  live descriptors can override them. The two documented palette branches
+  show the selected destination bank and, when available, one of 27 verified
+  source palettes. Sprite links open a graphics frame and apply that selected
+  palette as a preview; live palette state and actor composition are not inferred.
+  Synthetic Chrome unit `viewer-special-units-synthetic-fk7q0v4h` passed 50
+  checks, including identity guards, missing sources, reverse links, palette
+  pixels and cross-page navigation. Protected EUR e343 unit
+  `viewer-special-units-real-e0vzt_ay` reconstructed all 1,302 record bytes,
+  checked the 27 palettes against the source, verified 51 active palette
+  branches, 186 sprite links and 93 metadata reverse links, and matched 20
+  Python/Docker files. Sixteen ignored wiki pages were published with guarded
+  preimages. Windows remains deferred.
+  [Record source](../rom_data_gameplay.md#typed-fourteen-byte-records-source-proof) ·
+  [Palette source](../rom_data_color_palettes.md#original-source-contract)
 - [x] **Text.** Select a language and entry in `short-texts.json`. Draw the
   extracted glyphs at their recorded widths and label control codes and
   unresolved glyph IDs inline. The preview uses grayscale for glyph color indices.
@@ -862,6 +1022,20 @@ prototype only when the paused viewer task is requested again.
   42 entries with their source and checked a filtered template and a real point
   in Linux Chrome. The local page retained its previous data and inspector.
   [Choice list format](../rom_data_ui.md#lossless-model-and-original-wine-readers)
+- [x] **UI context templates.** Browse all eleven stored templates, plot their
+  coordinates against a 240×160 reference and inspect the original entry
+  counts, flag byte and every opaque byte. A dropdown and table connect the 15
+  documented category values to their templates only when the EUR ROM identity
+  and reconstructed source bytes match the verified source. The view remains
+  available without that identity, but does not invent category labels, window
+  sizes or live interface behavior. Synthetic unit
+  `viewer-ui-context-synthetic-tre5gvyf` passed 45 checks. Protected EUR unit
+  `viewer-ui-context-real-qfn6g2c9` reconstructed all 220 source bytes, compared
+  the category mapping with the original-selector oracle, checked navigation,
+  selection and bookmarks in Chrome, and matched 20 Python/Docker fixture files.
+  Sixteen ignored wiki pages and one updated resource link were published with
+  recoverable preimages under `out/ffta-ui-context-before-8goe0eri`.
+  [Source contract](../rom_data_ui.md#category-selected-ui-context-templates)
 - [x] **Script text archives.** Browse the physical banks and programs in
   `script-text.json` by language and draw their referenced glyphs from
   `font-bank.json`. Original command and operand bytes are labeled inline;
@@ -974,6 +1148,20 @@ prototype only when the paused viewer task is requested again.
   each archive; Docker unit `rom-data-viewer-text-search-docker-3uu3oerp`
   matched the validated Python output. The ignored local page retains its
   previous data and the verified file inspector. Windows remains unverified.
+- [x] **Text reader registry.** Browse and filter stored callback slots by
+  index or address. Unique Thumb-address matches link to extracted relative
+  archives, which link back to all matching slots; null, invalid, missing and
+  ambiguous entries stay visible without guessed links. The other-resources
+  page carries only the small registry, while the focused and combined text
+  pages also provide the reverse links. Address equality does not prove a
+  callback executed. Synthetic unit `text-reader-registry-synthetic-pja7ibuu`
+  passed 47 projection, browser and regression checks. Protected EUR e340 unit
+  `text-reader-registry-real-690a5zd6` compared all 27 callback words and three
+  source spans to the authenticated ROM, found 24 matching slots for 23 unique
+  readers, checked real navigation in Chrome and matched 20 Docker/Python fixture
+  files. Fifteen ignored local wiki pages were published with a recoverable
+  backup under `out/ffta-text-registry-before-b_z8hud7`; Windows is deferred.
+  [Source evidence](../rom_data_text.md#conditional-european-text-reader-registry)
 - [x] **Selected job names.** The template and generator provide a view
   for the 20 stored slot-job references, joining direct metadata52 property 0
   to the documented European `080165E8` name reader. Names are rendered from
@@ -1025,6 +1213,38 @@ prototype only when the paused viewer task is requested again.
   existing scope payloads and 145 resource pages. The synthetic Docker and
   Python outputs matched for all 17 files. Eleven ignored wiki pages were
   published from the verified output; Windows remains deferred.
+- [x] **Job sprite references.** Direct metadata rows link the stored normal
+  and alternate sprite IDs to the battle actor preview when both extracted
+  source catalogs match their verified EUR identities. Selected job names open
+  their corresponding metadata row. Users may choose grayscale or either stored
+  palette nibble and a color-mode variant; the choice previews a source bank and
+  does not infer the live palette, actor composition or redirected rows. The
+  references and localized names stay on the world page; graphics and palettes
+  load on the battle page. Synthetic unit `viewer-job-sprites-synthetic-zdg6f3ml`
+  passed 52 checks, including identity guards, missing sources, palette pixels
+  and navigation. Protected e344/d343 unit `viewer-job-sprites-real-1qfq_2b2`
+  reconstructed 6,032 metadata bytes, checked 110 normal and 100 alternate
+  sprite links and four redirects in Chrome, and matched 26 Python/Docker files.
+  Sixteen ignored wiki pages were published with backup
+  `out/ffta-job-sprites-before-3d2a1t89`; Windows remains deferred.
+  [Sprite source](../rom_data_unit_obj.md) ·
+  [Palette source](../rom_data_color_palettes.md#original-source-contract)
+- [x] **Action-linked records and names.** Browse all physical 28-byte records,
+  including their stored fields and flag bits. An original European lookup
+  connects each first halfword to the localized text reader; names can be
+  filtered, paged and opened at their source string. Missing text, ambiguous
+  readers or other profiles leave the record fields browsable without guessed
+  names. Only referenced names and glyphs are added to the world scope; the
+  complete text catalog stays on its own page. Source unit
+  `action-name-source-disasm-ndhlj_2c` records the original paths. Synthetic
+  unit `action-names-synthetic-qdr71hgk` passed 51 tests. Protected EUR unit
+  `action-names-real-yqidzlof` verified 347 records, 1,735 localized references
+  and 88 glyphs against the ROM, exercised Chrome navigation, and matched 19
+  Python/Docker files using the actual extracted inputs. Fifteen ignored wiki
+  pages were published with backup `out/ffta-action-names-before-bdziom0j`.
+  The source links do not establish every record's live role or action effects;
+  native Windows remains deferred.
+  [Original lookup](../rom_data_gameplay.md#european-indexed-28-byte-metadata-source-contract)
 - [x] **Sprite tile sheets.** Display the 8×8 indexed tiles from
   `unit-obj-initial-pose.json` at integer zoom using grayscale palette indices.
   EUR catalog and Linux Chrome checks passed in `rom-data-viewer-sprite-ii7_y869`.
@@ -1420,6 +1640,22 @@ prototype only when the paused viewer task is requested again.
   initial EUR unit `hjbckpaj` incorrectly iterated one DOM element in its test;
   the corrected harness passed. The prior local payload and inspector were kept.
   [Event source](../rom_data_gameplay.md#european-event-record-source-contract)
+- [x] **World records and mission references.** Browse all fields in each
+  physical 38-byte record and inspect its 31 threshold bytes as numbers and
+  0–255 bars. In the European profile, each mission links to the world record
+  selected by its documented packed index; the reverse list can be filtered
+  and paged. Missing, invalid and non-European inputs remain independent.
+  These source references do not identify map locations or establish live use.
+  Synthetic unit `world-records-synthetic-zggmm8of` passed 47 projection,
+  Chrome and regression checks. Protected EUR unit
+  `world-records-recheck-mq38y35o` reconstructed 31 rows and all 961 threshold
+  bytes from the authenticated ROM, verified 512 packed mission links in both
+  directions in Chrome, and matched 20 Python/Docker files. Initial unit
+  `world-records-real-swi3tfcl` stopped at a test-only DOM iteration error;
+  the corrected unit reused its candidate and Docker output. Fifteen ignored
+  local pages were published with backup `out/ffta-world38-before-ktc6iktb`.
+  Native Windows remains deferred.
+  [Source contract](../rom_data_gameplay.md#observed-european-world-records-with-38-byte-stride)
 - [x] **Sampled world roads.** Overlay uniquely linked roads from
   `world-roads.json` on the node plot using each sample as a pixel offset from
   the lower-index node. Select a road or its node link to inspect and animate
@@ -1443,8 +1679,13 @@ prototype only when the paused viewer task is requested again.
   later source fragments by kind and offset, with raw ticks, channels, opaque
   bytes and sound words. For nonzero words, the low 12 bits are shown as a
   candidate directory ID and high bits remain visible as flags. Compatible IDs
-  link to the existing approximate player and can be auditioned individually;
-  live scheduler state, simultaneous sounds, flags and timing are not executed.
+  link to the existing approximate player and can be auditioned individually.
+  A separate schedule audition starts unambiguous candidates at their stored
+  ticks, including simultaneous starts. It exposes a schedule tick rate, a
+  per-sound duration, playback progress and stop control; the song player's
+  voice, tempo, track controls and mutes also apply. It reports skipped or
+  ambiguous IDs and bounds work to 64 starts and 180 seconds. Live scheduler
+  state, original channel behavior, flags and exact timing are not reproduced.
   Older and partially invalid optional groups remain independently available.
   Synthetic unit `qfvhn_5h` passed 38/39 tests; its invalid-bank fixture shared a
   row with the observed schedule. The corrected partial-data test passed
@@ -1452,7 +1693,13 @@ prototype only when the paused viewer task is requested again.
   spans, matched 681 fragments and 569 rows, checked browser filtering and song
   navigation, preserved ten scope payloads and 145 resource pages, and matched
   16 Docker/Python files. Eleven ignored wiki pages were published. Audible
-  physical output and Windows remain unverified.
+  physical output and Windows remain unverified. Synthetic Chrome unit
+  `viewer-timed-mix-synthetic-pqk1y3w0` passed 15 tests, including simultaneous
+  starts, stored-tick delays, both mute types, stop, focus and bounded work.
+  Protected e343 unit `viewer-timed-mix-real-xythz3co` matched all 683 source
+  groups, exercised both observed schedules (11 and 15 scheduled notes),
+  preserved all 16 page payloads and matched 21 Python/Docker files. The ignored
+  local wiki was updated with guarded preimages; physical audio remains untested.
   [Source contract](../rom_data_audio.md#e539-european-timed-sound-census)
 - [x] **Stored audio values.** Inspect PCM header fields, signed sample values
   and their raw bytes in pages of 64. Jump to an index or click the waveform;
@@ -1714,6 +1961,21 @@ prototype only when the paused viewer task is requested again.
   The ignored local index and audio page were published with unrelated data
   preserved. Physical output and Windows remain unverified; the large-JSON
   worker remains paused. [Driver tables](../rom_data_audio.md#original-pitch-rate-noise-and-volume-lookup-tables)
+- [x] **CGB noise-code reference.** The audio page browses all 60 stored
+  driver noise codes and displays their source offset, key range, register,
+  LFSR width and shift rate. A one-second synthesized preview and WAV use
+  the project's area-averaged noise-generator model; optional repeat restarts
+  that preview. The CGB mute stays synchronized with the instrument and song
+  controls. Driver codes are not mapped to songs or instruments: the current
+  EUR tone catalog contains no recognized type-4 tone. Synthetic unit
+  `94zs89xc` passed 40 of 41 checks; the remaining test had an invalid DOM
+  selector, corrected in `_mfk8r2v` (three focused checks PASS). Protected EUR
+  e340 unit `kc7uabxu` matched all 60 codes to the authenticated ROM range,
+  checked real Chrome Web Audio, preserved 13 other topic payloads, and
+  matched 19 Python/Docker files. Fifteen ignored wiki pages were published.
+  This is an audition of generator settings, not original song playback; game
+  envelopes, channel scheduling, mixer effects and native Windows are unverified.
+  [Driver table evidence](../rom_data_audio.md#original-pitch-rate-noise-and-volume-lookup-tables)
 - [x] **Mute CGB voices in sequences.** The sequence player can mute and
   unmute identified CGB tones during playback, including key-mapped tones and
   sine fallbacks. Unidentified voices remain audible. The checkbox stays set

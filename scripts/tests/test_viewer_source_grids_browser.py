@@ -77,7 +77,7 @@ class SourceGridsProjectionTest(unittest.TestCase):
                 index = fixture(Path(directory), invalid=invalid); parts = index.parent / (index.name + '.parts')
                 self.assertNotIn('extra_tilemaps', payload(index))
                 self.assertNotIn('extra_tilemaps', payload(parts / 'objects.html'))
-                groups = payload(parts / 'world.html')['extra_tilemaps']
+                groups = payload(parts / 'interface.html')['extra_tilemaps']
                 self.assertEqual('firaga_matrices' in groups, invalid != 'firaga')
                 self.assertEqual('soil_rectangles' in groups, invalid != 'soil')
 
@@ -86,7 +86,7 @@ class SourceGridsProjectionTest(unittest.TestCase):
 class SourceGridsBrowserTest(unittest.TestCase):
     def test_resource_navigation_values_and_manual_lz_graphics(self):
         with tempfile.TemporaryDirectory(prefix='viewer-source-grids-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
@@ -116,7 +116,7 @@ class SourceGridsBrowserTest(unittest.TestCase):
         for invalid in (None, 'firaga', 'soil'):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-source-grids-alone-') as directory:
                 work = Path(directory); index = fixture(work, invalid=invalid, with_other=False)
-                browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+                browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
                 try:
                     result = browser.evaluate('''(()=>{
                       const row=id=>[...document.querySelector('#rows').rows].find(r=>r.dataset.resourceId===id);

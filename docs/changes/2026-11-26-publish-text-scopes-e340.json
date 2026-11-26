@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "publish-text-scopes-e340",
+  "title": "Publish the scoped European e340 wiki",
+  "kind": "changed",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Publish the previously verified e340/d339 dataset and focused pointer, relative and script text pages with the combined search and shared reading preferences.",
+    "Update the local dataset link and preserve the preceding generated pages in a recoverable ignored backup."
+  ],
+  "validation": [
+    "Synthetic unit w2vnicj9 passed 53 checks; browser unit 4aktz7x0 verified navigation, preferences and combined search and matched 20 Docker/Python files.",
+    "Guarded unit 574prtnv verified the exact e340 candidate, 11 unchanged topic payloads, three new scopes and 145 resource pages. After publishing 17 files, all 14 installed topic pages and the dataset link were checked against their expected identities.",
+    "Earlier unit brjnqia7 passed its application checks but failed runner cleanup because Chrome left a scratch symlink; the separate guarded candidate passed."
+  ],
+  "limitations": [
+    "Browser storage may be unavailable, and native Windows and complete original audio playback remain unverified. The broader viewer work remains open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-26-split-text-archive-scopes.json"
+  ]
+}

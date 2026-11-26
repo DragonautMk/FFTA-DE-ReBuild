@@ -214,6 +214,88 @@ def project_type3_payloads(content, sources):
     return {'streams': compressed, 'raw_streams': raw, 'errors': errors}
 
 
+def project_transfer_directory(catalog):
+    """Keep bounded transfer slots, rows and descriptors without inferring usage."""
+    def number(value, maximum, label):
+        if type(value) is not int or not 0 <= value <= maximum:
+            raise ValueError('Invalid transfer directory ' + label)
+        return value
+
+    def entries(name, limit):
+        value = catalog[name]
+        if not isinstance(value, list) or len(value) > limit:
+            raise ValueError('Invalid transfer directory ' + name)
+        return value
+
+    slots, rows, descriptors = [], [], []
+    row_offsets, descriptor_offsets = set(), set()
+    for slot in entries('slots', 512):
+        slots.append({'row_pointer': number(slot['row_pointer'], 0xffffffff, 'row pointer'),
+                      'row_count': number(slot['row_count'], 255, 'row count')})
+    if sum(slot['row_count'] for slot in slots) > 4096:
+        raise ValueError('Transfer directory row count exceeds limit')
+    for row in entries('rows', 4096):
+        offset = number(row['source_offset'], 0x01ffffff, 'row offset')
+        if offset in row_offsets:
+            raise ValueError('Duplicate transfer row offset')
+        row_offsets.add(offset)
+        rows.append({'source_offset': offset, 'field0': number(row['field0'], 255, 'field0'),
+                     'field1': number(row['field1'], 255, 'field1'),
+                     'field2': number(row['field2'], 65535, 'field2'),
+                     'descriptor_pointer': number(row['descriptor_pointer'], 0xffffffff, 'descriptor pointer'),
+                     'field8': number(row['field8'], 0xffffffff, 'field8')})
+    for item in entries('descriptors', 4096):
+        offset = number(item['source_offset'], 0x01ffffff, 'descriptor offset')
+        if offset in descriptor_offsets:
+            raise ValueError('Duplicate transfer descriptor offset')
+        descriptor_offsets.add(offset)
+        pointer = number(item['asset_pointer'], 0xffffffff, 'asset pointer')
+        wrapper = item['wrapper']
+        if wrapper is not None:
+            wrapper = {'source_offset': number(wrapper['source_offset'], 0x01ffffff, 'wrapper offset'),
+                       'kind': number(wrapper['kind'], 255, 'wrapper kind'),
+                       'flags': number(wrapper['flags'], 255, 'wrapper flags'),
+                       'opaque_halfword': number(wrapper['opaque_halfword'], 65535, 'wrapper halfword')}
+            if not 0x08000000 <= pointer < 0x0a000000 or pointer - 0x08000000 != wrapper['source_offset']:
+                raise ValueError('Transfer wrapper does not match its stored pointer')
+        descriptors.append({'source_offset': offset, 'asset_pointer': pointer,
+                            'parameter16': number(item['parameter16'], 65535, 'parameter16'),
+                            'parameter8': number(item['parameter8'], 255, 'parameter8'),
+                            'opaque_byte': number(item['opaque_byte'], 255, 'opaque byte'), 'wrapper': wrapper})
+    return {'slots': slots, 'rows': rows, 'descriptors': descriptors}
+
+
+def project_indexed_tilemap_controls(catalog):
+    """Keep bounded control records and their stored pointers without inventing scene names."""
+    def number(value, maximum, label):
+        if type(value) is not int or not 0 <= value <= maximum:
+            raise ValueError('Invalid indexed tilemap ' + label)
+        return value
+
+    slots = catalog['slots']
+    if not isinstance(slots, list) or len(slots) > 512:
+        raise ValueError('Invalid indexed tilemap slots')
+    projected = []
+    for slot in slots:
+        row, descriptor = slot['row'], slot['descriptor']
+        projected.append({
+            'pointer_offset': number(slot['pointer_offset'], 0x01fffffc, 'pointer offset'),
+            'pointer': number(slot['pointer'], 0xffffffff, 'pointer'),
+            'row': {'source_offset': number(row['source_offset'], 0x01fffff4, 'row offset'),
+                    'field0': number(row['field0'], 255, 'row byte 0'),
+                    'field1': number(row['field1'], 255, 'row byte 1'),
+                    'field2': number(row['field2'], 65535, 'row halfword'),
+                    'descriptor_pointer': number(row['descriptor_pointer'], 0xffffffff, 'descriptor pointer'),
+                    'field8': number(row['field8'], 0xffffffff, 'row word')},
+            'descriptor': {'source_offset': number(descriptor['source_offset'], 0x01fffff8, 'descriptor offset'),
+                           'tilemap_pointer': number(descriptor['tilemap_pointer'], 0xffffffff, 'tilemap pointer'),
+                           'parameter16': number(descriptor['parameter16'], 65535, 'descriptor halfword'),
+                           'parameter8': number(descriptor['parameter8'], 255, 'descriptor byte'),
+                           'opaque_byte': number(descriptor['opaque_byte'], 255, 'opaque byte')},
+        })
+    return {'slots': projected}
+
+
 def decode_compact_cell_record(source_offset, record):
     """Decode bounded compact-cell frames and retain their stored sequence bytes."""
     def half(offset):
@@ -944,6 +1026,46 @@ def project_audio_pcm_pitch(catalog):
     return result
 
 
+def project_audio_noise(catalog):
+    """Expose the original driver's 60 noise-register codes independently of pitch."""
+    if not isinstance(catalog, dict):
+        raise ValueError('Invalid CGB noise catalog')
+    if 'noise_codes' not in catalog:
+        return None
+    table = catalog['noise_codes']
+    if not isinstance(table, dict):
+        raise ValueError('Invalid CGB noise table')
+    entries, offset = table['entries'], table['source_offset']
+    if (not isinstance(entries, list) or len(entries) != 60
+            or any(type(value) is not int or not 0 <= value <= 255 for value in entries)
+            or type(offset) is not int or not 0 <= offset <= 0x1000000 - len(entries)):
+        raise ValueError('Invalid CGB noise table')
+    return {'entries': list(entries), 'source_offset': offset}
+
+
+def project_text_reader_registry(catalog):
+    """Preserve recorded callback slots without inferring execution."""
+    offset, callbacks = catalog['table_offset'], catalog['callbacks']
+    if (type(offset) is not int or offset < 0 or offset % 4
+            or not isinstance(callbacks, list) or not 0 < len(callbacks) <= 1024
+            or offset + 4 * len(callbacks) > 0x2000000
+            or any(type(value) is not int or not 0 <= value <= 0xffffffff for value in callbacks)):
+        raise ValueError('Invalid text reader registry')
+    return {'table_offset': offset, 'callbacks': list(callbacks)}
+
+
+def link_text_reader_registry(registry, relative_texts):
+    """Join unique extracted readers to equal Thumb callback addresses."""
+    readers = relative_texts['catalogs'] if relative_texts else []
+    rows = []
+    for slot, callback in enumerate(registry['callbacks']):
+        reader = callback & ~1 if callback & 1 and 0x08000000 <= callback < 0x0a000000 else None
+        matches = [index for index, item in enumerate(readers) if item['reader'] == reader] if reader is not None else []
+        rows.append({'slot': slot, 'callback': callback, 'reader': reader,
+                     'reader_index': matches[0] if len(matches) == 1 else None})
+    return {'path': registry['path'], 'table_offset': registry['table_offset'], 'rows': rows}
+
+
 def project_equipment_sprites(catalog, *, alternate=False):
     """Retain sprite bindings, commands and links to their indexed graphics."""
     def source_map(items, name):
@@ -1416,6 +1538,55 @@ def project_mission_event_catalog(catalog, kind):
         if not valid:
             raise ValueError('Invalid mission/event record fields')
     return {'source_offset': source, 'records': records}
+
+
+def project_world_records(catalog):
+    """Keep physical world rows and their stored threshold bytes."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+
+    source, records = catalog['source_offset'], catalog['records']
+    if (not uint(source, 0x1ffffff) or not isinstance(records, list) or not 1 <= len(records) <= 64
+            or source + len(records) * 38 > 0x2000000):
+        raise ValueError('Invalid world record source or extent')
+    keys = ('opaque00', 'byte01', 'byte02', 'byte03', 'opaque06')
+    projected = []
+    for index, record in enumerate(records):
+        thresholds = record['thresholds07']
+        if (type(record['index']) is not int or record['index'] != index
+                or not all(uint(record[key], 255) for key in keys)
+                or not uint(record['value04'], 65535)
+                or not isinstance(thresholds, list) or len(thresholds) != 31
+                or any(not uint(value, 255) for value in thresholds)):
+            raise ValueError('Invalid world record fields')
+        projected.append({'index': index, **{key: record[key] for key in keys},
+                          'value04': record['value04'], 'thresholds07': list(thresholds)})
+    return {'source_offset': source, 'records': projected}
+
+
+def project_action_records(catalog):
+    """Retain all fields of the physical 28-byte metadata records."""
+    def uint(value, maximum):
+        return type(value) is int and 0 <= value <= maximum
+
+    source, records = catalog['source_offset'], catalog['records']
+    if (not uint(source, 0x1ffffff) or not isinstance(records, list) or not 1 <= len(records) <= 65536
+            or source + 28 * len(records) > 0x2000000):
+        raise ValueError('Invalid action record source or extent')
+    scalar = {'field00': 65535, 'field02': 255, 'opaque03': 255, 'flags10': 0xffffffff,
+              'field14': 65535, 'field16': 65535, 'field18': 255, 'field19': 255,
+              'field1a': 255, 'opaque1b': 255}
+    arrays = {'fields04_0b': 8, 'inline0c_0f': 4}
+    projected = []
+    for index, record in enumerate(records):
+        if (type(record['index']) is not int or record['index'] != index
+                or any(not uint(record[key], maximum) for key, maximum in scalar.items())
+                or any(not isinstance(record[key], list) or len(record[key]) != length
+                       or any(not uint(value, 255) for value in record[key]) for key, length in arrays.items())):
+            raise ValueError('Invalid action record fields')
+        projected.append({'index': index, **{key: record[key] for key in scalar},
+                          **{key: list(record[key]) for key in arrays}})
+    return {'source_offset': source, 'records': projected}
 
 
 def project_bg_plane_programs(catalog):
@@ -2354,6 +2525,48 @@ def project_ui_choice_lists(catalog):
     return {'lists': lists}
 
 
+EUROPE_ROM_SHA256 = '8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632'
+EUROPE_UI_CONTEXT_SHA256 = 'f3f20b6c259a2353b0db6189b8596c37dabdb312850b7d92a8b0b9d23898c16f'
+EUROPE_UI_CONTEXT_CATEGORIES = (0, 6, 7, 1, 2, 3, 3, 3, 0, 1, 4, 5, 8, 9, 10)
+
+
+def project_ui_context_templates(catalog, *, source=None, profile=None, rom_sha256=None):
+    """Validate and retain all bytes of eleven physical UI templates."""
+    records = catalog['records']
+    if not isinstance(records, list) or len(records) != 11:
+        raise ValueError('Expected eleven UI context templates')
+    encoded, projected = bytearray(), []
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError('Invalid UI context record')
+        x, y, count, flags = (record[key] for key in ('x_units8', 'y_units8', 'entry_count', 'flags'))
+        blocks = [record[key] for key in ('opaque_02_03', 'opaque_06_08', 'opaque_0a_13')]
+        if (any(type(value) is not int or not 0 <= value <= 255 for value in (x, y, flags))
+                or type(count) is not int or not 0 <= count <= 65535
+                or any(not isinstance(block, list) or len(block) != length
+                       or any(type(value) is not int or not 0 <= value <= 255 for value in block)
+                       for block, length in zip(blocks, (2, 3, 10)))):
+            raise ValueError('Invalid UI context fields')
+        encoded.extend(bytes((x, y, *blocks[0])))
+        encoded.extend(count.to_bytes(2, 'little'))
+        encoded.extend(bytes((*blocks[1], flags, *blocks[2])))
+        projected.append({'x_units8': x, 'y_units8': y, 'entry_count': count, 'flags': flags,
+                          'opaque_02_03': list(blocks[0]), 'opaque_06_08': list(blocks[1]),
+                          'opaque_0a_13': list(blocks[2])})
+    source_offset = None
+    digest = hashlib.sha256(encoded).hexdigest()
+    if source is not None:
+        if (not isinstance(source, dict) or type(source.get('offset')) is not int
+                or not 0 <= source['offset'] <= 0xffffffff - len(encoded)
+                or source.get('length') != len(encoded) or source.get('sha256') != digest):
+            raise ValueError('UI context source does not match reconstructed bytes')
+        source_offset = source['offset']
+    known_selector = (profile == 'europe' and rom_sha256 == EUROPE_ROM_SHA256 and
+                      source_offset == 0x394e44 and digest == EUROPE_UI_CONTEXT_SHA256)
+    return {'source_offset': source_offset, 'records': projected,
+            'category_templates': list(EUROPE_UI_CONTEXT_CATEGORIES) if known_selector else []}
+
+
 def project_alternate_palettes(catalog):
     """Keep decoded banks and their documented descriptor/catalog links."""
     keys, sources, catalogs = (catalog[name] for name in ('descriptor_keys', 'relative_sources', 'catalogs'))
@@ -2451,6 +2664,52 @@ def project_job_metadata(catalog):
     return {'source_offset': catalog['source_offset'], 'records': records}
 
 
+def project_metadata4(catalog):
+    """Retain both selector/value slots without collapsing zero or hole entries."""
+    records = catalog['records']
+    if (catalog['source_offset'] != 0x6e6bf4 or not isinstance(records, list) or len(records) != 20):
+        raise ValueError('Invalid European two-pair metadata extent')
+    projected = []
+    for record in records:
+        slots = record['slots']
+        if not isinstance(slots, list) or len(slots) != 2:
+            raise ValueError('Invalid two-pair metadata slots')
+        pair = []
+        for slot in slots:
+            selector, value = slot['selector'], slot['value']
+            if any(type(item) is not int or not 0 <= item <= 255 for item in (selector, value)):
+                raise ValueError('Invalid two-pair metadata bytes')
+            pair.append({'selector': selector, 'value': value})
+        projected.append({'slots': pair})
+    return {'source_offset': catalog['source_offset'], 'records': projected}
+
+
+def project_metadata14(catalog):
+    """Retain the fixed EUR special-unit records and their original field widths."""
+    records = catalog['records']
+    if (catalog['address_bias'] != 0x6e6f50 or catalog['source_offset'] != 0x6e6f6c
+            or catalog['first_id'] != 2 or not isinstance(records, list) or len(records) != 93):
+        raise ValueError('Invalid European special-unit extent')
+    fields = (('selectors01_02', 2, 255), ('halfwords04_06', 2, 65535),
+              ('packed08_0a', 3, 255), ('bytes0c_0d', 2, 255))
+    projected = []
+    for index, item in enumerate(records):
+        if (type(item['id']) is not int or item['id'] != index + 2
+                or type(item['source_offset']) is not int or item['source_offset'] != 0x6e6f6c + index * 14
+                or any(type(item[key]) is not int or not 0 <= item[key] <= 255 for key in ('byte00', 'byte03', 'byte0b'))):
+            raise ValueError('Invalid special-unit ID, source or byte')
+        record = {key: item[key] for key in ('id', 'source_offset', 'byte00', 'byte03', 'byte0b')}
+        for key, count, maximum in fields:
+            values = item[key]
+            if (not isinstance(values, list) or len(values) != count
+                    or any(type(value) is not int or not 0 <= value <= maximum for value in values)):
+                raise ValueError('Invalid special-unit ' + key)
+            record[key] = list(values)
+        projected.append(record)
+    return {'address_bias': catalog['address_bias'], 'source_offset': catalog['source_offset'],
+            'first_id': catalog['first_id'], 'records': projected}
+
+
 def project_slot_job_names(slots, metadata, pointer_texts):
     """Join direct selected and separately documented rows to the EUR name reader."""
     catalogs = [] if not pointer_texts else [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
@@ -2520,6 +2779,190 @@ def project_metadata_name_references(metadata, pointer_texts):
 
 EUROPE_WORLD_NODES_SHA256 = '4336cfcc8b4bfb898530729f6ff5f8fd33e475dda17db8de643ee0e6ee3e1fdc'
 EUROPE_TEXT_CATALOG_SHA256 = '514af42870d44e5f772e26d9cd246db4cde2d8ab8ecc9f3d065f67510db05c33'
+EUROPE_ITEMS_SHA256 = 'c151e82d6fac0c171414451623142c77aaf29f6a66ccb25495d652a37324ffc7'
+EUROPE_ACTION_RECORDS_SHA256 = '590ba29559b1f5a44212f3ac9e09eab723c14dcc32c5a8e4642097ec64b60966'
+EUROPE_ITEM_LINKS_SHA256 = 'c6817d93fe8e808c13487037c9f780448011091537c9b95e06baf2053af6ec6f'
+EUROPE_METADATA52_SHA256 = '6ac18b39995e6677bf5d80e830ab17d7b442d36171cfb90a45b6ea8a231d2fbd'
+EUROPE_METADATA4_SHA256 = '172f858a68236d78adca393004e431230f19a88f9a20d4bce8cb1172e82bb594'
+EUROPE_METADATA14_SHA256 = 'b9f66ba25c3fb1308b92372c251ace8180ad5594cef59e9d6f295b987f72fc0e'
+EUROPE_COLOR_MODE_SHA256 = '98068136afc44d24640c2c27027ccc34954aa0d92a01a603db767b07cfaab382'
+EUROPE_OBJ_PROPERTY_WORDS_SHA256 = 'be429aaf9073f5dc811a0272d8d76da35badbc8d6b40ff08f727c2f276ca7bb7'
+EUROPE_BATTLE_SPRITE_SHA256 = {
+    'normal': '33d0c76b2a254cb565733c53317950531bf9b8fc0604eb6f1905d98e5c019d53',
+    'alternate': 'cad7771dbddf3d92b93c6a9df6a62fa430b775b9e7e2932253207d71dff35580',
+}
+
+
+def project_special_unit_palettes(profile, digest, palettes):
+    """Expose only the three verified, complete special-unit color fragments."""
+    if profile != 'europe' or digest != EUROPE_COLOR_MODE_SHA256 or not palettes:
+        return None
+    roots = {0: 0x40fa90, 1: 0x4110f0, 2: 0x410610}
+    spans = [span for span in palettes['spans'] if span['book'] == 'special-unit']
+    if (len(spans) != 3 or {span['variant'] for span in spans} != set(roots)
+            or any(span['source_offset'] != roots[span['variant']] or len(span['colors']) != 144 for span in spans)):
+        return None
+    banks = []
+    for span in sorted(spans, key=lambda item: item['variant']):
+        for index in range(9):
+            banks.append({'variant': span['variant'], 'index': index, 'source_offset': span['source_offset'] + index * 32,
+                          'colors': span['colors'][index * 16:index * 16 + 16]})
+    return {'path': palettes['path'], 'banks': banks}
+
+
+def battle_preview_ids(battle_sha, battle):
+    """Find sprite IDs with an extracted graphics frame in an authenticated catalog."""
+    sprite_ids = {}
+    for mode, expected in EUROPE_BATTLE_SPRITE_SHA256.items():
+        catalog = battle.get(mode)
+        if battle_sha.get(mode) == expected and catalog:
+            def previewable(binding):
+                sequence = binding['sequence']
+                return sequence is not None and any(frame['operation'] == 1 and frame['block'] is not None and frame['objects'] is not None
+                                                    for frame in catalog['sequences'][sequence]['frames'])
+            sprite_ids[mode] = sorted({item['sprite_id'] for item in catalog['bindings'] if previewable(item)})
+    return sprite_ids
+
+
+def link_metadata14(profile, digest, metadata_sha, text_sha, battle_sha, special, metadata, names, battle):
+    """Join only verified source owners; live unit overrides remain separate."""
+    if profile != 'europe' or digest != EUROPE_METADATA14_SHA256 or not special:
+        return None
+    metadata_verified = bool(metadata_sha == EUROPE_METADATA52_SHA256 and metadata and names
+                             and all(item['selectors01_02'][1] < len(metadata['records']) for item in special['records']))
+    return {'metadata_verified': metadata_verified,
+            'names_verified': bool(metadata_verified and text_sha == EUROPE_TEXT_CATALOG_SHA256
+                                   and names['reader_index'] is not None),
+            'sprite_ids': battle_preview_ids(battle_sha, battle)}
+
+
+def project_job_sprite_producers(catalog):
+    """Retain bounded job producers, rejecting duplicate or malformed references."""
+    producers = catalog['producers']
+    if not isinstance(producers, list) or len(producers) > 4096:
+        raise ValueError('Invalid actor sprite producers')
+    rows, keys = [], set()
+    for item in producers:
+        if not isinstance(item, dict):
+            raise ValueError('Invalid actor sprite producer')
+        if item.get('kind') != 'job':
+            continue
+        mode, identity, source, sprite = (item[key] for key in ('mode', 'logical_id', 'metadata_source', 'sprite_id'))
+        if (mode not in ('normal', 'alternate') or type(identity) is not int or not 0 <= identity < 116
+                or type(source) is not int or not 0 <= source <= 0xffffffff
+                or type(sprite) is not int or not 0 <= sprite < 65535 or (mode, identity) in keys):
+            raise ValueError('Invalid job sprite producer')
+        keys.add((mode, identity))
+        rows.append({'mode': mode, 'logical_id': identity, 'metadata_source': source, 'sprite_id': sprite})
+    return rows
+
+
+def link_job_sprites(profile, metadata_sha, producer_sha, text_sha, palette_sha, battle_sha,
+                     metadata, producers, names, battle, unit_palettes):
+    """Join direct rows to their authenticated normal and alternate sprite sources."""
+    if (profile != 'europe' or metadata_sha != EUROPE_METADATA52_SHA256
+            or producer_sha != EUROPE_OBJ_PROPERTY_WORDS_SHA256 or not metadata or producers is None):
+        return None
+    expected = {}
+    for identity, record in enumerate(metadata['records']):
+        if record['routing']:
+            continue
+        raw = record['bytes_06_1f']
+        for mode, offset in (('normal', 1), ('alternate', 3)):
+            sprite = raw[offset] | raw[offset + 1] << 8
+            if sprite != 65535:
+                expected[(mode, identity)] = (metadata['source_offset'] + identity * 52 + 6 + offset, sprite)
+    actual = {(row['mode'], row['logical_id']): (row['metadata_source'], row['sprite_id']) for row in producers}
+    if len(actual) != len(producers) or actual != expected:
+        return None
+    available = {mode: set(ids) for mode, ids in battle_preview_ids(battle_sha, battle).items()}
+    rows = []
+    for identity, record in enumerate(metadata['records']):
+        raw = record['bytes_06_1f']; entry = {'id': identity, 'routing': record['routing']}
+        entry['palette_nibbles'] = None if record['routing'] else [raw[5] & 15, raw[5] >> 4]
+        for mode in ('normal', 'alternate'):
+            value = expected.get((mode, identity))
+            entry[mode] = value[1] if value and value[1] in available.get(mode, set()) else None
+        rows.append(entry)
+    palettes = bool(palette_sha == EUROPE_COLOR_MODE_SHA256 and unit_palettes and len(unit_palettes) == 48
+                    and {(item['variant'], item['bank']) for item in unit_palettes} ==
+                    {(variant, bank) for variant in range(3) for bank in range(16)})
+    return {'rows': rows, 'names_verified': bool(text_sha == EUROPE_TEXT_CATALOG_SHA256 and names
+                                                and names['reader_index'] is not None),
+            'palette_preview': palettes}
+
+
+def link_metadata4(profile, pair_sha, metadata_sha, text_sha, pairs, metadata, names):
+    """Link raw indices only when both independently extracted owners match."""
+    if (profile != 'europe' or pair_sha != EUROPE_METADATA4_SHA256 or metadata_sha != EUROPE_METADATA52_SHA256
+            or not pairs or not metadata):
+        return None
+    records, owners = pairs['records'], [record['bytes_20_33'][16] for record in metadata['records']]
+    if any(index >= len(records) for index in owners) or any(
+            slot['selector'] >= len(owners) for record in records for slot in record['slots']):
+        return None
+    return {'metadata_path': metadata['path'], 'owners': owners,
+            'names_verified': bool(text_sha == EUROPE_TEXT_CATALOG_SHA256 and names and names['reader_index'] is not None)}
+
+
+def project_item_names(profile, item_sha, text_sha, items, pointer_texts):
+    """Follow the EUR item's property-0 index into its original name reader."""
+    if (profile != 'europe' or item_sha != EUROPE_ITEMS_SHA256 or text_sha != EUROPE_TEXT_CATALOG_SHA256
+            or not items or not pointer_texts):
+        return None
+    catalogs = [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
+                if catalog['reader'] == 0x080165e8]
+    if len(catalogs) != 1:
+        return None
+    reader_index, catalog = catalogs[0]
+    rows, used = [], set()
+    for item_id, record in enumerate(items['records']):
+        name_index, names = record['halfwords_00_06'][0], []
+        for language in catalog['languages']:
+            if name_index >= len(language['entries']):
+                names.append(None)
+                continue
+            units = pointer_texts['strings'][language['entries'][name_index]]['units']
+            names.append(units)
+            used.update(unit for unit in units if type(unit) is int)
+        rows.append({'id': item_id, 'name_index': name_index, 'names': names})
+    return {'path': items['path'], 'text_path': pointer_texts['path'], 'reader_index': reader_index,
+            'languages': list(range(len(catalog['languages']))), 'rows': rows,
+            'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used]}
+
+
+def project_action_names(profile, record_sha, text_sha, records, pointer_texts):
+    """Follow the EUR metadata property-0 index into its original text reader."""
+    if (profile != 'europe' or record_sha != EUROPE_ACTION_RECORDS_SHA256 or text_sha != EUROPE_TEXT_CATALOG_SHA256
+            or not records or not pointer_texts):
+        return None
+    catalogs = [(index, catalog) for index, catalog in enumerate(pointer_texts['catalogs'])
+                if catalog['reader'] == 0x08016588]
+    if len(catalogs) != 1:
+        return None
+    reader_index, catalog = catalogs[0]
+    rows, used = [], set()
+    for record in records['records']:
+        name_index, names = record['field00'], []
+        for language in catalog['languages']:
+            if name_index >= len(language['entries']):
+                names.append(None)
+                continue
+            units = pointer_texts['strings'][language['entries'][name_index]]['units']
+            names.append(units)
+            used.update(unit for unit in units if type(unit) is int)
+        rows.append({'id': record['index'], 'name_index': name_index, 'names': names})
+    return {'path': records['path'], 'text_path': pointer_texts['path'], 'reader_index': reader_index,
+            'languages': list(range(len(catalog['languages']))), 'rows': rows,
+            'glyphs': [glyph for glyph in pointer_texts['glyphs'] if glyph['index'] in used]}
+
+
+def project_item_metadata_links(profile, links_sha, metadata_sha, text_sha, links, names):
+    """Enable the documented EUR selector-to-metadata relation only for known inputs."""
+    if (profile != 'europe' or links_sha != EUROPE_ITEM_LINKS_SHA256 or metadata_sha != EUROPE_METADATA52_SHA256
+            or not links or not names or text_sha not in (None, EUROPE_TEXT_CATALOG_SHA256)):
+        return None
+    return {'names_verified': bool(text_sha == EUROPE_TEXT_CATALOG_SHA256 and names['reader_index'] is not None)}
 
 
 def project_observed_world_names(profile, node_sha, text_sha, world_nodes, pointer_texts):
@@ -2748,25 +3191,26 @@ def project_color_mode_palettes(catalog):
 
 
 WIKI_SCOPES = (
-    ('world', 'World and interface', ('palettes', 'items', 'item_links', 'item_effects', 'progression_catalogs', 'job_names', 'metadata_names', 'encounters', 'mission_events',
-      'terrain_seeds', 'bg_plane_programs', 'script_paths', 'ui_choice_lists', 'world_nodes', 'world_roads', 'world_location_names', 'world_region_names', 'bg_descriptors', 'bg_graphics', 'bg_transfers',
+    ('world', 'World and gameplay', ('items', 'item_names', 'item_links', 'item_metadata_links', 'metadata4', 'metadata4_links', 'metadata14', 'metadata14_links', 'special_unit_palettes', 'item_effects', 'progression_catalogs', 'job_names', 'metadata_names', 'job_sprite_links', 'action_records', 'action_names', 'encounters', 'mission_events', 'world_records',
+      'terrain_seeds', 'script_paths', 'world_nodes', 'world_roads', 'world_location_names', 'world_region_names')),
+    ('interface', 'Interface and graphics', ('palettes', 'bg_plane_programs', 'ui_choice_lists', 'ui_context_templates', 'bg_descriptors', 'bg_graphics', 'bg_transfers',
       'alternate_palettes', 'palette_programs', 'blend_programs', 'raster_palettes', 'ui_graphics', 'ui_palettes',
-      'obj_graphics', 'unit_palettes', 'observed_tilemaps', 'firaga_compact_cells', 'extra_tilemaps', 'byte_tilemaps', 'lz_graphics',
+      'obj_graphics', 'unit_palettes', 'observed_tilemaps', 'firaga_compact_cells', 'extra_tilemaps', 'byte_tilemaps', 'lz_graphics', 'transfer_directory', 'indexed_tilemap_controls',
       'firaga_transfer', 'firaga_palette_rows', 'compact_cell_bank', 'signed_map_deltas')),
     ('objects', 'Object animations', ('obj_animation_banks', 'obj_animation_extra', 'obj_animation_compact', 'obj_graphics',
       'ui_palettes', 'unit_palettes', 'lz_graphics')),
     ('actors', 'Actors and equipment', ('dimensions', 'sprite_pixels', 'equipment_sprites', 'unit_palettes', 'color_mode_palettes')),
-    ('battle', 'Battle actors', ('battle_sprites', 'unit_palettes')),
+    ('battle', 'Battle actors', ('battle_sprites', 'unit_palettes', 'special_unit_palettes')),
     ('script-actors', 'Script actors', ('script_sprites', 'script39_poses', 'unit_palettes')),
-    ('audio', 'Audio', ('audio', 'sequence_directory', 'sequences', 'pcm_pitch', 'timed_sound_sources')),
-    ('text', 'All text and fonts', ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts', 'font', 'name_keyboard')),
+    ('audio', 'Audio', ('audio', 'sequence_directory', 'sequences', 'pcm_pitch', 'audio_noise', 'timed_sound_sources')),
+    ('text', 'All text and fonts', ('short_texts', 'pointer_texts', 'relative_texts', 'text_reader_registry', 'script_texts', 'font', 'name_keyboard')),
     ('text-pointers', 'Pointer texts', ('pointer_texts',)),
-    ('text-relative', 'Relative text archives', ('relative_texts',)),
+    ('text-relative', 'Relative text archives', ('relative_texts', 'text_reader_registry')),
     ('text-scripts', 'Script text archives', ('script_texts',)),
     ('scripts', 'Event scripts', ('script_archive', 'script_commands', 'script_text_refs',
                                   'auxiliary_script_archive', 'auxiliary_script_commands',
                                   'task_descriptors', 'effect_events')),
-    ('other', 'Other resources', ()),
+    ('other', 'Other resources', ('text_reader_registry',)),
     ('indexed-graphics', 'Indexed graphics', ('indexed_archives', 'palettes', 'ui_palettes', 'unit_palettes')),
     ('transfer-graphics', 'Transfer graphics', ('type3_payloads', 'ui_palettes', 'unit_palettes')),
 )
@@ -2804,10 +3248,84 @@ def viewer_resource_scope(resource_id):
             or resource_id in ('graphics.word-task-obj-animations', 'graphics.layered-obj-animations',
                                'graphics.conditional-compact-obj-catalog')):
         return 'objects'
-    if (resource_id.startswith(('graphics.', 'gameplay.'))
-            or resource_id in ('engine.script-coordinate-paths', 'engine.ui-choice-lists')):
+    if resource_id.startswith('graphics.') or resource_id in ('engine.ui-choice-lists', 'ui.context-templates'):
+        return 'interface'
+    if resource_id.startswith('gameplay.') or resource_id == 'engine.script-coordinate-paths':
         return 'world'
     return 'other'
+
+
+# The menu is rendered on every offline page, so it needs the available view
+# names without loading every topic's projected data. Keep these conditions in
+# step with the corresponding section initializers in view_rom_data.html.
+VIEWER_SECTION_KEYS = {
+    'dimensions': 'dimensions', 'indexed-graphics': 'indexed_archives', 'color-books': 'color_mode_palettes',
+    'bg-descriptors': 'bg_descriptors', 'palette': 'palettes', 'alternate-palettes': 'alternate_palettes',
+    'bg-tiles': 'bg_graphics', 'bg-planes': 'bg_plane_programs', 'bg-transfers': 'bg_transfers',
+    'palette-programs': 'palette_programs', 'blend-programs': 'blend_programs', 'raster-palettes': 'raster_palettes',
+    'terrain-seeds': 'terrain_seeds', 'script-paths': 'script_paths', 'ui-choices': 'ui_choice_lists',
+    'ui-context-templates': 'ui_context_templates', 'transfer-directory': 'transfer_directory',
+    'indexed-tilemap-controls': 'indexed_tilemap_controls',
+    'ui-tiles': 'ui_graphics', 'firaga-transfers': 'firaga_transfer', 'firaga-palette-rows': 'firaga_palette_rows',
+    'signed-map-deltas': 'signed_map_deltas', 'items': 'items', 'item-effects': 'item_effects',
+    'job-names': 'job_names', 'metadata-names': 'metadata_names', 'action-records': 'action_records',
+    'metadata4': 'metadata4', 'metadata14': 'metadata14',
+    'item-links': 'item_links', 'world-records': 'world_records', 'world': 'world_nodes',
+    'world-regions': 'world_region_names', 'audio': 'audio', 'cgb-noise': 'audio_noise',
+    'timed-sounds': 'timed_sound_sources', 'texts': 'short_texts', 'pointer-texts': 'pointer_texts',
+    'text-reader-registry': 'text_reader_registry', 'relative-texts': 'relative_texts',
+    'event-scripts': 'script_archive', 'script-commands': 'script_commands',
+    'auxiliary-scripts': 'auxiliary_script_archive', 'auxiliary-commands': 'auxiliary_script_commands',
+    'effect-events': 'effect_events', 'task-descriptors': 'task_descriptors', 'script-texts': 'script_texts',
+    'font-atlas': 'font', 'name-keyboard': 'name_keyboard', 'sprites': 'sprite_pixels',
+}
+
+
+def viewer_available_sections(payload, titles):
+    """Describe visible sections without putting their content in the navbar."""
+    present = lambda value: value is not None and value is not False
+    available = {section for section, key in VIEWER_SECTION_KEYS.items() if present(payload.get(key))}
+    for section, key in (('progression-records', 'progression_catalogs'), ('mission-records', 'mission_events'),
+                         ('encounters', 'encounters')):
+        if payload.get(key):
+            available.add(section)
+    if any(present(payload.get(key)) for key in ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts')):
+        available.add('text-search')
+    if present(payload.get('equipment_sprites')) or any(payload.get(key) for key in ('battle_sprites', 'script_sprites', 'script39_poses')):
+        available.add('equipment-sprites')
+    extra = payload.get('obj_animation_extra') or {}
+    compact = payload.get('obj_animation_compact') or {}
+    extra_keys = ('word_task', 'layered', 'static_lists', 'soil_evidence', 'constructor_phases',
+                  'firaga_indexed', 'firaga_compact', 'firaga_adjacent', 'firaga_6c12c8')
+    if any(present(value) for value in [payload.get('obj_animation_banks'),
+                                      *(extra.get(key) for key in extra_keys), *compact.values()]):
+        available.add('obj-animations')
+    if (compact.get('compact_catalog') or {}).get('auxiliary') is not None:
+        available.add('compact-catalog-tables')
+    audio = payload.get('audio') or {}
+    if (audio.get('instruments') or {}).get('banks'):
+        available.add('instruments')
+    if present(payload.get('sequences')) and present(payload.get('sequence_directory')):
+        available.add('sequence-audio')
+    transfer = payload.get('type3_payloads') or {}
+    if present(payload.get('obj_graphics')) or present(payload.get('lz_graphics')) or transfer.get('streams') or transfer.get('raw_streams'):
+        available.add('obj-tiles')
+    if present(payload.get('observed_tilemaps')) or present(payload.get('firaga_compact_cells')) or payload.get('extra_tilemaps'):
+        available.add('tilemaps')
+    if (payload.get('compact_cell_bank') or {}).get('records'):
+        available.add('compact-cell-bank')
+    if (payload.get('byte_tilemaps') or {}).get('maps'):
+        available.add('byte-tilemaps')
+    missing = available - titles.keys()
+    if missing:
+        raise ValueError('Missing viewer section titles: ' + ', '.join(sorted(missing)))
+    sections = [{'id': section, 'label': titles[section]} for section in sorted(available)]
+    for section in sections:
+        if section['id'] == 'bg-tiles':
+            section['count'] = len(payload['bg_graphics']['descriptor_graphics'])
+        elif section['id'] == 'terrain-seeds':
+            section['count'] = len(payload['terrain_seeds']['maps'])
+    return sections
 
 
 def split_viewer_template(template):
@@ -2821,9 +3339,30 @@ def split_viewer_template(template):
         return text[:left] + replacement + text[right:]
     template = replace_region(template, '<section id="file-inspector">', '<section id="dimensions"',
                               (scripts / 'viewer_stable_inspector.html').read_text(encoding='utf-8'))
-    return replace_region(template, "{\n  const fileInput = document.getElementById('inspect-file');",
-                          '\nif (data.dimensions) {',
-                          (scripts / 'viewer_stable_inspector.js').read_text(encoding='utf-8'))
+    template = replace_region(template, "{\n  const fileInput = document.getElementById('inspect-file');",
+                              '\nif (data.dimensions) {',
+                              (scripts / 'viewer_stable_inspector.js').read_text(encoding='utf-8'))
+    for marker, name in (('/* WIKI NAVIGATION */', 'viewer_navigation.js'),
+                         ('/* WIKI NAVIGATION CSS */', 'viewer_navigation.css')):
+        if template.count(marker) != 1:
+            raise ValueError('Expected one wiki navigation template marker: ' + marker)
+        template = template.replace(marker, (scripts / name).read_text(encoding='utf-8'))
+    return template
+
+
+def index_viewer_template():
+    """Assemble the small overview without embedding unrelated topic code."""
+    scripts = Path(__file__).resolve().parent
+    template = (scripts / 'viewer_index.html').read_text(encoding='utf-8')
+    for marker, name in (('<!-- FILE INSPECTOR -->', 'viewer_stable_inspector.html'),
+                         ('/* FILE INSPECTOR */', 'viewer_stable_inspector.js'),
+                         ('/* WIKI NAVIGATION */', 'viewer_navigation.js'),
+                         ('/* WIKI NAVIGATION CSS */', 'viewer_navigation.css'),
+                         ('/* INDEX SCRIPT */', 'viewer_index.js')):
+        if template.count(marker) != 1:
+            raise ValueError('Expected one index template marker: ' + marker)
+        template = template.replace(marker, (scripts / name).read_text(encoding='utf-8'))
+    return template
 
 
 RESOURCE_PAGE_LIMIT = 8 * 1024 * 1024
@@ -2835,7 +3374,11 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     known = set(base_keys) | {'resources'} | {key for _, _, keys in WIKI_SCOPES for key in keys}
     if set(data) - known:
         raise ValueError('Unassigned viewer data: ' + ', '.join(sorted(set(data) - known)))
+    titles = dict(re.findall(r'<section id="([^"]+)"[^>]*>\s*<details(?:\s[^>]*)?><summary><h2>([^<]+)</h2>', template))
+    scope_sections = {key: viewer_available_sections({name: data[name] for name in keys}, titles)
+                      for key, _, keys in WIKI_SCOPES}
     template = split_viewer_template(template)
+    index_template = index_viewer_template()
     parts_name = filename + '.parts'
     parts = output / parts_name
     marker = parts / '.ffta-viewer-pages.json'
@@ -2854,10 +3397,12 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     for row in data['resources']:
         scope = viewer_resource_scope(row['id'])
         groups[scope].append(row)
-        if row['id'] in ('text.catalogs', 'text.script-archives'):
+        if row['id'] in ('text.catalogs', 'text.script-archives', 'engine.text-reader-registry'):
             groups['text'].append(row)
-        if row['id'] == 'text.catalogs':
+        if row['id'] in ('text.catalogs', 'engine.text-reader-registry'):
             groups['text-relative'].append(row)
+        if row['id'] == 'graphics.bg-packet-programs':
+            groups['world'].append(row)
         overview.append({**{key: row[key] for key in ('id', 'path', 'format', 'description', 'status')},
                          **({'embedded_view': row['embedded_view']} if 'embedded_view' in row else {}),
                          'viewer_scope': scope})
@@ -2879,16 +3424,16 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
                       'href': quote(filename, safe='') if current == 'index' else '../' + quote(filename, safe='')}]
         for key, label, _ in WIKI_SCOPES:
             href = quote(parts_name, safe='') + '/' + key + '.html' if current == 'index' else key + '.html'
-            page_list.append({'id': key, 'label': label, 'href': href})
+            page_list.append({'id': key, 'label': label, 'href': href, 'sections': scope_sections[key]})
         directory = (quote(parts_name, safe='') + '/files/' if current == 'index' else 'files/')
         result = {'current': current, 'pages': page_list, 'resource_directory': directory}
-        if current in ('world', 'objects') and transfer_asset:
+        if current in ('interface', 'objects') and transfer_asset:
             result['transfer_graphics'] = {'href': transfer_asset['href'], 'key': transfer_asset['key']}
         return result
 
-    def render(payload):
+    def render(payload, page_template=template):
         encoded = json.dumps(payload, ensure_ascii=True).replace('<', '\\u003c')
-        return template.replace('/* DATA */', encoded)
+        return page_template.replace('/* DATA */', encoded)
 
     output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.viewer-pages-', dir=output) as temporary:
@@ -2955,7 +3500,7 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
         (staged_parts / '.ffta-viewer-pages.json').write_text(
             json.dumps({'kind': 'ffta-viewer-pages', 'schema': 1, 'index': filename}) + '\n', encoding='utf-8')
         (staged_parts / '.gitignore').write_text('*\n', encoding='utf-8')
-        (stage / filename).write_text(render({**base, 'resources': overview, 'wiki': pages('index')}), encoding='utf-8')
+        (stage / filename).write_text(render({**base, 'resources': overview, 'wiki': pages('index')}, index_template), encoding='utf-8')
         parts.mkdir(exist_ok=True)
         if resource_files:
             resource_dir.mkdir(exist_ok=True)
@@ -2987,11 +3532,23 @@ def generate(dataset, output, filename='index.html', *, split=False):
     palettes = None
     dimensions = None
     items = None
+    item_sha = None
     item_links = None
+    item_links_sha = None
     item_effects = None
     progression_catalogs = {}
     slot_jobs = None
     job_metadata = None
+    job_metadata_sha = None
+    job_sprite_producers = None
+    job_sprite_producer_sha = None
+    job_sprite_producer_row = None
+    metadata4 = None
+    metadata4_sha = None
+    metadata14 = None
+    metadata14_sha = None
+    action_records = None
+    action_record_sha = None
     slot_job_row = None
     job_metadata_row = None
     world_nodes = None
@@ -3001,11 +3558,13 @@ def generate(dataset, output, filename='index.html', *, split=False):
     sprite_pixels = None
     equipment_sprites = None
     battle_sprites = {}
+    battle_sprite_sha = {}
     script_sprites = {}
     script39_pending = {}
     script39_poses = {}
     unit_palettes = None
     color_mode_palettes = None
+    color_mode_sha = None
     script_texts = None
     script_text_refs = None
     script_archive = None
@@ -3017,6 +3576,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
     pointer_texts = None
     pointer_text_sha = None
     relative_texts = None
+    text_reader_registry = None
     font = None
     font_path = None
     name_keyboard = None
@@ -3024,6 +3584,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
     timed_sound_sources = None
     sequences = None
     pcm_pitch = None
+    audio_noise = None
     bg_descriptors = None
     bg_graphics = None
     bg_transfers = None
@@ -3035,14 +3596,18 @@ def generate(dataset, output, filename='index.html', *, split=False):
     raster_palettes = None
     encounters = {}
     mission_events = {}
+    world_records = None
     terrain_seeds = None
     bg_plane_programs = None
     script_paths = None
     ui_choice_lists = None
+    ui_context_templates = None
     ui_graphics = None
     ui_palettes = None
     obj_graphics = None
     lz_graphics = None
+    transfer_directory = None
+    indexed_tilemap_controls = None
     transfer_lz = None
     transfer_lz_row = None
     type3_payloads = None
@@ -3117,6 +3682,22 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available: decoded LZ77 outputs'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid observed LZ77 data: {error}'
+            elif row['id'] == 'graphics.indexed-tilemap-controls' and row['format'] == 'indexed-tilemap-controls-v1-json':
+                try:
+                    indexed_tilemap_controls = project_indexed_tilemap_controls(json.loads(content))
+                    indexed_tilemap_controls['path'] = row['path']
+                    row['status'] = f"Available: {len(indexed_tilemap_controls['slots'])} indexed tilemap controls"
+                except (ValueError, KeyError, TypeError) as error:
+                    indexed_tilemap_controls = None
+                    row['status'] = f'Invalid indexed tilemap controls: {error}'
+            elif row['id'] == 'graphics.tilemap-transfer-directory' and row['format'] == 'tilemap-transfer-directory-v1-json':
+                try:
+                    transfer_directory = project_transfer_directory(json.loads(content))
+                    transfer_directory['path'] = row['path']
+                    row['status'] = f"Available: {len(transfer_directory['slots'])} transfer selectors"
+                except (ValueError, KeyError, TypeError) as error:
+                    transfer_directory = None
+                    row['status'] = f'Invalid transfer directory: {error}'
             elif row['id'] == 'graphics.tilemap-transfer-lz77' and row['format'] == 'tilemap-transfer-lz77-v1-bin':
                 try:
                     transfer_lz = project_transfer_lz(content, row['sources'])
@@ -3370,6 +3951,23 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid choice list data: {error}'
+            elif row['id'] == 'ui.context-templates' and row['format'] == 'ui-context-templates-v1-json':
+                try:
+                    sources = row.get('sources', [])
+                    if not isinstance(sources, list):
+                        raise ValueError('Invalid UI context source list')
+                    matching = [source for source in sources if isinstance(source, dict)
+                                and source.get('role') == 'ui-context-templates']
+                    if len(matching) > 1:
+                        raise ValueError('Ambiguous UI context sources')
+                    ui_context_templates = project_ui_context_templates(
+                        json.loads(content), source=matching[0] if matching else None,
+                        profile=manifest['profile'], rom_sha256=manifest.get('source_rom_sha256'))
+                    ui_context_templates['path'] = row['path']
+                    row['status'] = 'Available: UI context templates'
+                except (ValueError, KeyError, TypeError) as error:
+                    ui_context_templates = None
+                    row['status'] = f'Invalid UI context data: {error}'
             elif row['id'] == 'graphics.bg-descriptors' and row['format'] == 'bg-descriptors-json-v2':
                 try:
                     bg_descriptors = project_bg_descriptors(json.loads(content))
@@ -3579,11 +4177,21 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 try:
                     color_mode_palettes = project_color_mode_palettes(json.loads(content))
                     color_mode_palettes['path'] = row['path']
+                    color_mode_sha = content_digest
                     row['status'] = 'Available: color fragments' + (' and unit palettes' if unit_palettes else '')
                 except (ValueError, KeyError, TypeError) as error:
                     color_mode_palettes = None
                     if unit_palettes:
                         row['status'] = f'Available for unit sprites; invalid color fragments: {error}'
+            elif row['id'] == 'graphics.unit-obj-property-words' and row['format'] == 'unit-obj-property-words-v1-json':
+                try:
+                    job_sprite_producers = project_job_sprite_producers(json.loads(content))
+                    job_sprite_producer_sha = content_digest
+                    job_sprite_producer_row = row
+                    row['status'] = 'Preview unavailable'
+                except (ValueError, KeyError, TypeError) as error:
+                    job_sprite_producers = None
+                    row['status'] = f'Invalid job sprite references: {error}'
             elif (row['id'] in {f'graphics.unit-obj-script-{mode}' for mode in
                                 ('special-normal', 'special-alternate', 'override',
                                  'registry-special', 'registry-generic')}
@@ -3609,6 +4217,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 try:
                     battle_sprites[mode] = project_equipment_sprites(json.loads(content), alternate=mode == 'alternate')
                     battle_sprites[mode]['path'] = row['path']
+                    battle_sprite_sha[mode] = content_digest
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid battle sprite data: {error}'
@@ -3776,6 +4385,14 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     pointer_text_sha = None
                     relative_texts = None
                     row['status'] = f'Invalid pointer text data: {error}'
+            elif row['id'] == 'engine.text-reader-registry' and row['format'] == 'text-reader-registry-v1-json':
+                try:
+                    text_reader_registry = project_text_reader_registry(json.loads(content))
+                    text_reader_registry['path'] = row['path']
+                    row['status'] = 'Available: text reader callback slots'
+                except (ValueError, KeyError, TypeError, AttributeError) as error:
+                    text_reader_registry = None
+                    row['status'] = f'Invalid text reader registry: {error}'
             elif row['id'] == 'text.script-archives' and row['format'] == 'script-text-v1-json':
                 try:
                     languages = json.loads(content)['languages']
@@ -3872,14 +4489,32 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     sequences = None
                     row['status'] = f'Invalid sequence data: {error}'
             elif row['id'] == 'audio.m4a-driver-tables' and row['format'] == 'audio-driver-tables-v1-json':
+                pcm_pitch = audio_noise = None
                 try:
-                    pcm_pitch = project_audio_pcm_pitch(json.loads(content))
-                    pcm_pitch['path'] = row['path']
-                    row['status'] = ('Available: PCM and CGB pitch tables' if 'cgb_keys' in pcm_pitch
-                                     else 'Available: PCM pitch tables')
-                except (ValueError, KeyError, TypeError) as error:
+                    driver = json.loads(content)
+                except (ValueError, TypeError) as error:
                     pcm_pitch = None
                     row['status'] = f'Invalid PCM pitch tables: {error}'
+                else:
+                    available, errors = [], []
+                    try:
+                        pcm_pitch = project_audio_pcm_pitch(driver)
+                        pcm_pitch['path'] = row['path']
+                        available.append('PCM and CGB pitch tables' if 'cgb_keys' in pcm_pitch else 'PCM pitch tables')
+                    except (ValueError, KeyError, TypeError, AttributeError) as error:
+                        pcm_pitch = None
+                        errors.append('PCM pitch tables: ' + str(error))
+                    try:
+                        audio_noise = project_audio_noise(driver)
+                        if audio_noise:
+                            audio_noise['path'] = row['path']
+                            available.append('CGB noise codes')
+                    except (ValueError, KeyError, TypeError, AttributeError) as error:
+                        audio_noise = None
+                        errors.append('CGB noise table: ' + str(error))
+                    row['status'] = ('Available: ' + ', '.join(available) if available else 'Invalid audio driver tables')
+                    if errors:
+                        row['status'] += '; invalid ' + '; '.join(errors)
             elif row['id'] == 'audio.m4a-tones' and row['format'] == 'audio-tones-v1-json':
                 try:
                     audio_catalog = json.loads(content)
@@ -3957,6 +4592,23 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid script path data: {error}'
+            elif row['id'] == 'gameplay.linked-metadata28' and row['format'] == 'linked-metadata28-v1-json':
+                try:
+                    action_records = project_action_records(json.loads(content))
+                    action_records['path'] = row['path']
+                    action_record_sha = content_digest
+                    row['status'] = 'Available: action source records'
+                except (ValueError, KeyError, TypeError) as error:
+                    action_records = None
+                    row['status'] = f'Invalid action record data: {error}'
+            elif row['id'] == 'gameplay.world-records38' and row['format'] == 'world-records38-v1-json':
+                try:
+                    world_records = project_world_records(json.loads(content))
+                    world_records['path'] = row['path']
+                    row['status'] = 'Available: world records and thresholds'
+                except (ValueError, KeyError, TypeError) as error:
+                    world_records = None
+                    row['status'] = f'Invalid world record data: {error}'
             elif (row['id'] in ('gameplay.mission-records70', 'gameplay.event-records12', 'gameplay.parameter-records27')
                   and row['format'] == row['id'].removeprefix('gameplay.') + '-v1-json'):
                 kind = {'gameplay.mission-records70': 'missions', 'gameplay.event-records12': 'events',
@@ -3993,15 +4645,37 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 try:
                     job_metadata = project_job_metadata(json.loads(content))
                     job_metadata['path'] = row['path']
+                    job_metadata_sha = content_digest
                     job_metadata_row = row
                     row['status'] = 'Preview unavailable'
                 except (ValueError, KeyError, TypeError) as error:
                     job_metadata = None
                     row['status'] = f'Invalid job metadata: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'gameplay.linked-metadata14'
+                  and row['format'] == 'linked-metadata14-v1-json'):
+                try:
+                    metadata14 = project_metadata14(json.loads(content))
+                    metadata14['path'] = row['path']
+                    metadata14_sha = content_digest
+                    row['status'] = 'Available: special-unit source records'
+                except (ValueError, KeyError, TypeError) as error:
+                    metadata14 = None
+                    row['status'] = f'Invalid special-unit metadata: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'gameplay.linked-metadata4'
+                  and row['format'] == 'linked-metadata4-v1-json'):
+                try:
+                    metadata4 = project_metadata4(json.loads(content))
+                    metadata4['path'] = row['path']
+                    metadata4_sha = content_digest
+                    row['status'] = 'Available: two-pair metadata records'
+                except (ValueError, KeyError, TypeError) as error:
+                    metadata4 = None
+                    row['status'] = f'Invalid two-pair metadata: {error}'
             elif row['id'] == 'gameplay.item-links' and row['format'] == 'item-links-v1-json':
                 try:
                     item_links = project_item_links(json.loads(content))
                     item_links['path'] = row['path']
+                    item_links_sha = content_digest
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid item link data: {error}'
@@ -4041,6 +4715,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
                             ):
                                 raise ValueError('Invalid item field ' + name)
                     items = {'records': records, 'path': row['path']}
+                    item_sha = content_digest
                     row['status'] = 'Available'
                 except (ValueError, KeyError, TypeError) as error:
                     row['status'] = f'Invalid item data: {error}'
@@ -4161,6 +4836,22 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 row['status'] = f'Invalid opcode-39 pose links: {error}'
     job_names = project_slot_job_names(slot_jobs, job_metadata, pointer_texts) if slot_jobs else None
     metadata_names = project_metadata_name_references(job_metadata, pointer_texts) if job_metadata else None
+    metadata4_links = link_metadata4(manifest['profile'], metadata4_sha, job_metadata_sha, pointer_text_sha,
+                                     metadata4, job_metadata, metadata_names)
+    metadata14_links = link_metadata14(manifest['profile'], metadata14_sha, job_metadata_sha, pointer_text_sha,
+                                       battle_sprite_sha, metadata14, job_metadata, metadata_names, battle_sprites)
+    special_unit_palettes = project_special_unit_palettes(manifest['profile'], color_mode_sha, color_mode_palettes)
+    job_sprite_links = link_job_sprites(manifest['profile'], job_metadata_sha, job_sprite_producer_sha, pointer_text_sha,
+                                        color_mode_sha, battle_sprite_sha, job_metadata, job_sprite_producers,
+                                        metadata_names, battle_sprites, unit_palettes)
+    if job_sprite_links:
+        job_sprite_producer_row['status'] = 'Available: job sprite references'
+    item_metadata_links = project_item_metadata_links(manifest['profile'], item_links_sha, job_metadata_sha,
+                                                       pointer_text_sha, item_links, metadata_names)
+    item_names = project_item_names(manifest['profile'], item_sha, pointer_text_sha, items, pointer_texts)
+    action_names = project_action_names(manifest['profile'], action_record_sha, pointer_text_sha, action_records, pointer_texts)
+    if text_reader_registry:
+        text_reader_registry = link_text_reader_registry(text_reader_registry, relative_texts)
     world_location_names = project_observed_world_names(manifest['profile'], world_node_sha, pointer_text_sha,
                                                          world_nodes, pointer_texts)
     world_region_names = project_world_region_names(manifest['profile'], pointer_text_sha, pointer_texts)
@@ -4172,11 +4863,15 @@ def generate(dataset, output, filename='index.html', *, split=False):
             job_metadata_row['status'] = 'Available: selected job name references'
     data = {'profile': manifest['profile'], 'extractor': manifest['extractor_revision'],
             'decoder': manifest['decoder_revision'], 'resources': rows, 'palettes': palettes,
-            'dimensions': dimensions, 'items': items, 'item_links': item_links, 'item_effects': item_effects,
+            'dimensions': dimensions, 'items': items, 'item_names': item_names, 'item_links': item_links,
+            'item_metadata_links': item_metadata_links, 'metadata4': metadata4, 'metadata4_links': metadata4_links,
+            'metadata14': metadata14, 'metadata14_links': metadata14_links, 'special_unit_palettes': special_unit_palettes,
+            'item_effects': item_effects,
             'progression_catalogs': progression_catalogs,
-            'job_names': job_names, 'metadata_names': metadata_names, 'encounters': encounters,
-            'mission_events': mission_events, 'terrain_seeds': terrain_seeds, 'bg_plane_programs': bg_plane_programs, 'script_paths': script_paths,
-            'ui_choice_lists': ui_choice_lists,
+            'job_names': job_names, 'metadata_names': metadata_names, 'job_sprite_links': job_sprite_links, 'action_records': action_records,
+            'action_names': action_names, 'encounters': encounters,
+            'mission_events': mission_events, 'world_records': world_records, 'terrain_seeds': terrain_seeds, 'bg_plane_programs': bg_plane_programs, 'script_paths': script_paths,
+            'ui_choice_lists': ui_choice_lists, 'ui_context_templates': ui_context_templates,
             'world_nodes': world_nodes, 'world_roads': world_roads, 'world_location_names': world_location_names,
             'world_region_names': world_region_names,
             'audio': audio, 'short_texts': short_texts, 'sprite_pixels': sprite_pixels,
@@ -4186,13 +4881,16 @@ def generate(dataset, output, filename='index.html', *, split=False):
             'script_archive': script_archive, 'script_commands': script_commands, 'script_text_refs': script_text_refs,
             'auxiliary_script_archive': auxiliary_script_archive, 'auxiliary_script_commands': auxiliary_script_commands,
             'task_descriptors': task_descriptors, 'effect_events': effect_events,
-            'relative_texts': relative_texts, 'sequence_directory': sequence_directory, 'sequences': sequences,
+            'relative_texts': relative_texts, 'text_reader_registry': text_reader_registry,
+            'sequence_directory': sequence_directory, 'sequences': sequences,
             'timed_sound_sources': timed_sound_sources,
-            'pcm_pitch': pcm_pitch,
+            'pcm_pitch': pcm_pitch, 'audio_noise': audio_noise,
             'bg_descriptors': bg_descriptors, 'bg_graphics': bg_graphics, 'bg_transfers': bg_transfers, 'alternate_palettes': alternate_palettes, 'palette_programs': palette_programs,
             'indexed_archives': indexed_archives,
             'blend_programs': blend_programs, 'raster_palettes': raster_palettes,
             'ui_graphics': ui_graphics, 'ui_palettes': ui_palettes, 'obj_graphics': obj_graphics, 'lz_graphics': lz_graphics,
+            'transfer_directory': transfer_directory,
+            'indexed_tilemap_controls': indexed_tilemap_controls,
             'firaga_transfer': firaga_transfer, 'firaga_palette_rows': firaga_palette_rows,
             'obj_animation_banks': obj_animation_banks,
             'obj_animation_extra': obj_animation_extra,

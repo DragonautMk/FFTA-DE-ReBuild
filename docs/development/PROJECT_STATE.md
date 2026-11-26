@@ -1640,10 +1640,72 @@ and normal enablement retain their existing acceptance gates.
   e339 owners. EUR `e340-d339` serves the complete 357-word residual and
   covers page `34`. Wine verifies all 381 original loads, mixed mirrors,
   final state and e339 attachment. The standard CLI verifies and reuses
-  the retained e340 dataset. Fresh creation and live placement remain open.
+  the retained e340 dataset. The recorded Giza travel route uses slot 47
+  and reads four new words with matching state, video, OAM and audio at
+  each frame. All 381 isolated generated loads also use typed reads and
+  match interpreter state and clock on Wine. Fresh creation, live
+  placement and ordinary generated dispatch remain open.
   [E560](../rom_data_graphics.md#e560-european-world-state-task-literal-census)
   [E561](../rom_data_graphics.md#e561-european-world-state-task-literal-runtime)
   [E562](../rom_data_graphics.md#e562-european-world-state-task-cli-verification-and-reuse)
+  [E563](../rom_data_graphics.md#e563-european-world-state-literals-during-giza-travel)
+  [E564](../rom_data_graphics.md#e564-european-world-state-literals-through-generated-code)
+
+- EUR `e341-d340` publishes all seven immediate ten-byte stack copies
+  of the original byte-copy helper and the five unowned source literals.
+  Wine verifies all seven interpreter paths with altered backing,
+  exact stack, state and clock equality, mixed mirrors, raw gaps and
+  e340 attachment. The standard CLI verifies and reuses the retained
+  e341 generation. First creation, generated copies and ordinary
+  dispatch remain open.
+  [E565](../rom_data_runtime.md#e565-european-ten-byte-stack-copy-sources)
+  [E566](../rom_data_runtime.md#e566-european-ten-byte-stack-copies-at-runtime)
+  [E567](../rom_data_runtime.md#e567-european-stack-copy-dataset-verification-and-reuse)
+
+- EUR `e342-d341` serves the remaining 526 payload bytes and 388 literal
+  bytes in the E568 fixed-size, literal-source census. Wine verifies
+  all 99 affected original paths with altered backing, exact state and
+  clock, mirror boundaries, raw gaps and e341 attachment. The standard
+  CLI creates, verifies and reuses all 157 files on Wine. The e342
+  predecessor is retained internally in `qc09ozju`. Ordinary and
+  generated consumers remain open.
+  [E568](../rom_data_runtime.md#e568-european-fixed-size-literal-byte-copy-census)
+  [E569](../rom_data_runtime.md#e569-european-fixed-size-byte-copies-at-runtime)
+  [E570](../rom_data_runtime.md#e570-european-fixed-size-byte-copy-cli-publication)
+
+- EUR `e343-d342` adds the two residual E571 payloads and 52 argument
+  words. Wine verifies 53 literal reads and four complete copy paths
+  with altered backing, plus state, clock, mirror boundaries and e342
+  attachment. The standard Windows CLI creates, verifies and reuses
+  all 157 files on Wine. The e343 reference generation is retained
+  internally in `f4gl9ktu`. Ordinary and generated use remain open.
+  [E571](../rom_data_runtime.md#e571-remaining-european-direct-byte-copy-arguments)
+  [E572](../rom_data_runtime.md#e572-european-direct-byte-copy-argument-bank-at-runtime)
+  [E573](../rom_data_runtime.md#e573-european-direct-byte-copy-cli-publication)
+
+- EUR [E574](../rom_data_runtime.md#e574-european-dynamic-byte-copy-producer-families)
+  classifies the 40 dynamic direct byte-copy setups and bounds one
+  264-byte loop to EWRAM.
+  [E575](../rom_data_runtime.md#e575-european-byte-copy-producer-literals-at-runtime)
+  serves the 84 residual words (336 bytes) in `e344-d343`. Wine
+  verifies all 85 original reads, exact state and clock, mixed mirror
+  boundaries and e343 attachment.
+  [E576](../rom_data_runtime.md#e576-european-byte-copy-producer-literal-cli-publication)
+  verifies standard Windows CLI creation, all 157 files and unchanged
+  reuse on Wine. The e344 reference generation is retained internally in
+  `3i4ioqmk`. The 39 live pointer domains remain in the recovery checklist.
+
+- EUR [E577](../rom_data_runtime.md#e577-european-shared-byte-copy-pointer-producers)
+  traces the seven direct sources of the shared pointer at `030027f4`.
+  [E578](../rom_data_runtime.md#e578-european-shared-slot-literals-at-runtime)
+  serves the 27 residual literal words (108 bytes) in `e345-d344`.
+  Wine verifies all 27 original loads, mixed mirror boundaries and
+  e344 attachment. The dispatcher table and 24 earlier literal owners
+  are preserved.
+  [E579](../rom_data_runtime.md#e579-european-shared-slot-literal-cli-publication)
+  verifies standard CLI creation, all 157 files and unchanged reuse on
+  Wine. The current generation is retained internally in `7sglfxj4`.
+  Live aliases and the loaded payload sources remain in the recovery checklist.
 
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining

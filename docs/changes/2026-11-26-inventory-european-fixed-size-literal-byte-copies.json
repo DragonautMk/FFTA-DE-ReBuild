@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "inventory-european-fixed-size-literal-byte-copies",
+  "title": "Inventory the European fixed-size literal byte-copy bank",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Classify all 181 aligned Thumb BL patterns to the original copy helper. Record the exact 120 direct positive-immediate ROM copies and preserve shared source and literal addresses in the e341 ownership join."
+  ],
+  "validation": [
+    "Wine e568-fixed-byte-copy-source-plan-uqy1fdv4 verifies 590 original instruction halfwords in 12 windows. All seven ten-byte copies are present and fully owned. Ninety-nine affected paths leave 526 bytes in 91 payloads and 388 bytes in 97 literal words. Sixteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Runtime integration, other argument setups, indirect branches, ordinary use, Linux and USA remain pending. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-26-verify-european-stack-copy-dataset-reuse.json"
+  ]
+}

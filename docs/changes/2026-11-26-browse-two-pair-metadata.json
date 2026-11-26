@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-two-pair-metadata",
+  "title": "Browse two-pair metadata and source references",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose all twenty two-pair records, including zero and hole slots, with distinct nonzero-count and leading-walk information.",
+    "Connect authenticated European pair selectors and raw metadata owner indices in both directions, using authenticated localized direct-name references when available."
+  ],
+  "validation": [
+    "Synthetic unit viewer-metadata4-synthetic-udnualg5 passed 54 projection, browser, navigation and regression checks.",
+    "Protected EUR unit viewer-metadata4-real-gz6mz0ix reconstructed 6112 source bytes, checked 40 slots, 26 nonzero selector links and 116 owner links in Chrome, and matched 20 Python/Docker fixture files.",
+    "Published sixteen ignored local wiki pages with guarded recoverable preimages."
+  ],
+  "limitations": [
+    "The links describe stored source references, not evaluated live requirements or redirected names; Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_metadata4_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

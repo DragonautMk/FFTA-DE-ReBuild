@@ -45,7 +45,7 @@ def fixture(work, *, graphic=True, invalid=None):
                      f'sha256="{hashlib.sha256(content).hexdigest()}"\n')
     (dataset / 'manifest.toml').write_text(manifest)
     index = generate(dataset, work / 'view', split=True)
-    return index, index.parent / (index.name + '.parts/world.html')
+    return index, index.parent / (index.name + '.parts/interface.html')
 
 
 def payload(path):
@@ -71,10 +71,13 @@ class BackgroundPlanesProjectionTest(unittest.TestCase):
     def test_scope_and_partial_resource_isolation(self):
         for invalid in (None, 'paired', 'terrain'):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-bg-plane-scope-') as temp:
-                index, world = fixture(Path(temp), invalid=invalid); data = payload(world)
+                index, interface = fixture(Path(temp), invalid=invalid); data = payload(interface)
+                world = payload(interface.with_name('world.html'))
                 self.assertNotIn('bg_plane_programs', payload(index))
                 self.assertEqual(bool(data['bg_plane_programs']), invalid != 'paired')
-                self.assertEqual(bool(data['terrain_seeds']), invalid != 'terrain')
+                self.assertEqual(bool(world['terrain_seeds']), invalid != 'terrain')
+                self.assertNotIn('terrain_seeds', data)
+                self.assertNotIn('bg_plane_programs', world)
                 self.assertTrue(next(r for r in data['resources'] if r['id'] == 'graphics.bg-packet-programs')['status'].startswith('Available'))
 
 

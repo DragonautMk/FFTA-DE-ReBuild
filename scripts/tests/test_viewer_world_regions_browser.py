@@ -86,7 +86,9 @@ class WorldRegionBrowserTest(unittest.TestCase):
                 })()'''))
                 hit = browser.evaluate('''(()=>{
                   const row=[...document.querySelector('#world-region-rows').rows].find(item=>item.cells[0].textContent==='7');
-                  const a=row.cells[3].querySelector('a');a.scrollIntoView({block:'center'});
+                  const a=row.cells[3].querySelector('a');
+                  for(let p=a.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;
+                  a.scrollIntoView({block:'center'});
                   const r=a.getClientRects()[0],x=r.left+r.width/2,y=r.top+r.height/2,e=document.elementFromPoint(x,y);
                   return {x,y,match:e===a||a.contains(e)};
                 })()''')

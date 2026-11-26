@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-ui-context-templates",
+  "title": "Browse extracted UI context templates",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Plot eleven extracted UI context coordinates and browse entry counts, flags and all opaque bytes in the interface wiki scope.",
+    "Link the fifteen documented category selections only for the authenticated European ROM and source bytes; preserve numeric labels and unknown fields elsewhere."
+  ],
+  "validation": [
+    "Synthetic unit viewer-ui-context-synthetic-tre5gvyf passed 45 projection, browser, navigation and regression checks.",
+    "Protected EUR unit viewer-ui-context-real-qfn6g2c9 reconstructed 220 source bytes, matched all fifteen mappings to the existing original-selector oracle, checked Chrome and matched 20 Python/Docker fixture files.",
+    "Published sixteen ignored wiki pages and an updated local resource link with guarded backups."
+  ],
+  "limitations": [
+    "The view does not reconstruct live window sizes, category names or interface behavior; native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_ui_context_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

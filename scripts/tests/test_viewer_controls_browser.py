@@ -200,7 +200,7 @@ class ViewerControlsTest(unittest.TestCase):
             try:
              setup='''(()=>{window.instances=[];window.sources=[];
              class FakeAudioContext {constructor(){this.currentTime=0;this.destination={};instances.push(this)} resume(){return Promise.resolve()} createBuffer(channels,length,rate){return {sampleRate:rate,getChannelData(){return new Float32Array(length)}}} createBufferSource(){const n={buffer:null,playbackRate:{value:1},connect(){},disconnect(){},start(){},stop(){}};sources.push(n);return n} createOscillator(){const n={frequency:{value:0},connect(){},start(){},stop(){}};sources.push(n);return n} createGain(){return {gain:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(){},disconnect(){}}}}
-             window.AudioContext=FakeAudioContext;for(const id of ['audio','sequence-audio','texts','pointer-texts','relative-texts','script-texts','sprites'])document.querySelector('#'+id+' > details').open=true;return 'PASS';})()'''
+             window.AudioContext=FakeAudioContext;for(const id of ['audio','sequence-audio','texts','pointer-texts','relative-texts','script-texts','sprites']){const section=document.querySelector('#'+id);section.closest('details.section-group').open=true;section.querySelector(':scope > details').open=true}return 'PASS';})()'''
              assert browser.evaluate(setup)=='PASS'
              checks='''(async()=>{
               const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change')),wait=async(f,t=4000)=>{let end=Date.now()+t;while(!f()){if(Date.now()>end)throw Error('timeout');await new Promise(r=>setTimeout(r,10))}},delay=()=>new Promise(r=>setTimeout(r,140));

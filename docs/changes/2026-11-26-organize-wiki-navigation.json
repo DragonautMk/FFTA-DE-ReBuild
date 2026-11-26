@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "organize-wiki-navigation",
+  "title": "Organize the extracted-resource wiki navigation",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome"
+  ],
+  "changes": [
+    "Group topic pages and available views into ordered collapsible categories; organize the overview by page and resource family with search and local file inspection.",
+    "Render the overview with a compact separate template while preserving scoped payloads, offline resource links and saved selections."
+  ],
+  "validation": [
+    "Synthetic unit viewer-nav-synthetic-l9qux7c7 passed 61 browser and generator checks.",
+    "Protected local unit viewer-nav-real-1fs0hl6a checked 156 resources and 15 unchanged payloads, Chrome navigation and a 375-pixel viewport; 21 synthetic Python and Docker outputs matched.",
+    "Published the 15 verified ignored local pages with recoverable preimages; the index decreased from 670218 to 94458 bytes."
+  ],
+  "limitations": [
+    "Native Windows and Windows Docker execution remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_index.html",
+    "scripts/viewer_index.js",
+    "scripts/viewer_navigation.js",
+    "scripts/tests/viewer_browser_harness.py",
+    "scripts/tests/test_viewer_navigation_categories_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_text_scopes_browser.py",
+    "scripts/tests/test_viewer_controls_browser.py",
+    "scripts/tests/test_viewer_job_names_browser.py",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "scripts/tests/test_viewer_world_regions_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

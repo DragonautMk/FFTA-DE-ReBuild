@@ -75,7 +75,7 @@ class TransferProjectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-transfer-scope-') as directory:
             index = fixture(Path(directory), split=True); parts = index.parent / (index.name + '.parts')
             self.assertNotIn('bg_transfers', payload(index))
-            self.assertEqual(len(payload(parts / 'world.html')['bg_transfers']['controls']), 3)
+            self.assertEqual(len(payload(parts / 'interface.html')['bg_transfers']['controls']), 3)
             self.assertNotIn('bg_transfers', payload(parts / 'audio.html'))
         with tempfile.TemporaryDirectory(prefix='viewer-transfer-invalid-') as directory:
             bad = catalog(); bad['controls'][0]['frames'][0]['source_tile'] = 20

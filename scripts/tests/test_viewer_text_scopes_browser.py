@@ -72,10 +72,12 @@ class TextScopeBrowserTest(unittest.TestCase):
                     self.fail('Text scope did not load: ' + current)
                 def click_page(current):
                     hit = browser.evaluate('''(()=>{
-                      const a=document.querySelector(SELECTOR);a.scrollIntoView({block:'center'});
+                      const a=document.querySelector(SELECTOR);
+                      for(let p=a.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;
+                      a.scrollIntoView({block:'center'});
                       const r=a.getClientRects()[0],x=r.left+r.width/2,y=r.top+r.height/2,e=document.elementFromPoint(x,y);
                       return {x,y,match:e===a||a.contains(e)};
-                    })()'''.replace('SELECTOR', json.dumps('#wiki-page-links a[href="' + current + '.html"]')))
+                    })()'''.replace('SELECTOR', json.dumps('#wiki-page-links a[href$="/' + current + '.html"]')))
                     self.assertTrue(hit['match'], 'Page link is not clickable: ' + current)
                     point = {'x': hit['x'], 'y': hit['y']}
                     for event in ({'type': 'mouseMoved'}, {'type': 'mousePressed', 'button': 'left', 'clickCount': 1},

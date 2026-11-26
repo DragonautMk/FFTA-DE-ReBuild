@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "inventory-european-remaining-direct-copy-arguments",
+  "title": "Inventory the remaining European direct byte-copy argument setups",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Classify the 53 remaining source/count setups and include the eight earlier RAM-source literal calls in the e342 ownership join. All 13 computed counts are 264. The local slices identify four ROM-copy paths across two payloads and 52 unowned source/count words."
+  ],
+  "validation": [
+    "Wine e571-byte-copy-direct-windows-gr7xv4qr verifies 2,876 exact halfwords across 12 grouped windows and all 16 input guards. It drains Wine. Argument plan wq5etv7t covers 61 cases, passes 11 input guards and yields 216 disjoint unowned bytes. The manifest still covers all 120 earlier fixed ROM calls."
+  ],
+  "limitations": [
+    "Local argument definitions establish per-slice results. Forty dynamic pointer domains, stack producers, runtime publication, other ordinary and generated entries, indirect calls, original BIOS, Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

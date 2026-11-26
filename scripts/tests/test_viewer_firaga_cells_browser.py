@@ -104,7 +104,7 @@ class FiragaCellsProjectionTest(unittest.TestCase):
             with self.subTest(observed=observed), tempfile.TemporaryDirectory(prefix='viewer-firaga-cells-scope-') as directory:
                 index = fixture(Path(directory), observed=observed); parts = index.parent / (index.name + '.parts')
                 self.assertNotIn('firaga_compact_cells', payload(index))
-                self.assertEqual(len(payload(parts / 'world.html')['firaga_compact_cells']['maps']), 10)
+                self.assertEqual(len(payload(parts / 'interface.html')['firaga_compact_cells']['maps']), 10)
                 self.assertNotIn('firaga_compact_cells', payload(parts / 'objects.html'))
 
 
@@ -115,7 +115,7 @@ class FiragaCellsBrowserTest(unittest.TestCase):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-firaga-cells-invalid-') as directory:
                 work = Path(directory)
                 index = fixture(work, invalid_firaga=invalid == 'firaga', invalid_observed=invalid == 'observed')
-                browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+                browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
                 try:
                     actual = browser.evaluate('''(()=>{
                       const row=id=>[...document.querySelector('#rows').rows].find(r=>r.dataset.resourceId===id);
@@ -127,7 +127,7 @@ class FiragaCellsBrowserTest(unittest.TestCase):
 
     def test_frame_order_timing_loop_and_raw_fields(self):
         with tempfile.TemporaryDirectory(prefix='viewer-firaga-cells-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
@@ -161,7 +161,7 @@ class FiragaCellsBrowserTest(unittest.TestCase):
     def test_missing_sequence_frame_stops_without_guessing(self):
         with tempfile.TemporaryDirectory(prefix='viewer-firaga-cells-missing-') as directory:
             work = Path(directory); index = fixture(work, observed=False, missing_frame=True)
-            browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+            browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
             try:
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change'));

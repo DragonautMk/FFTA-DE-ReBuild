@@ -44,7 +44,7 @@ class LocalizedQueuedProjectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-localized-grid-') as directory:
             work = Path(directory); dataset, catalog = fixture(work)
             index = generate(dataset, work / 'view', split=True)
-            world = payload(index.parent / 'index.html.parts/world.html')
+            world = payload(index.parent / 'index.html.parts/interface.html')
             maps = world['extra_tilemaps']['localized_queued']['maps']
             self.assertEqual(len(maps), 30)
             for language in range(5):
@@ -75,7 +75,7 @@ class LocalizedQueuedProjectionTest(unittest.TestCase):
             with self.subTest(profile=profile), tempfile.TemporaryDirectory(prefix='viewer-localized-partial-') as directory:
                 work = Path(directory); dataset, _ = fixture(work, profile=profile, include_queued=include)
                 index = generate(dataset, work / 'view', split=True)
-                world = payload(index.parent / 'index.html.parts/world.html')
+                world = payload(index.parent / 'index.html.parts/interface.html')
                 self.assertNotIn('localized_queued', world['extra_tilemaps'])
                 self.assertTrue(next(row['status'] for row in world['resources']
                                      if row['id'] == 'graphics.dynamic-raw-fragments').startswith('Preview unavailable'))
@@ -87,7 +87,7 @@ class LocalizedQueuedBrowserTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-localized-grid-browser-') as directory:
             work = Path(directory); dataset, _ = fixture(work)
             index = generate(dataset, work / 'view', split=True)
-            browser = Chrome(work, index.parent / 'index.html.parts/world.html')
+            browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change'));

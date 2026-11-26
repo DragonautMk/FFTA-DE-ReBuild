@@ -108,26 +108,26 @@ class ScopeBrowserTest(unittest.TestCase):
                         time.sleep(.05)
                     self.fail('Scope did not load: ' + current)
                 self.assertTrue(browser.evaluate('''(()=>{
-                  const q=s=>document.querySelector(s),row=[...q('#rows').rows].find(r=>r.cells[0].textContent.includes('audio.m4a-tones'));
-                  return !q('#wiki-pages').hidden && q('#wiki-page-links').querySelectorAll('a').length===15 &&
+                  const q=s=>document.querySelector(s),row=q('#rows [data-resource-id="audio.m4a-tones"]');
+                  return !q('#wiki-pages').hidden && data.wiki.pages.length===16 &&
                     typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
                     row.querySelector('a').textContent.includes('Browse Audio') && !q('#tree-load-large');
                 })()'''))
-                browser.click('#rows tr:nth-last-child(3) a')
+                browser.click('#rows [data-resource-id="audio.m4a-tones"] a')
                 wait_for('audio')
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
                   return !q('#audio').hidden && q('#texts').hidden && typeof data.short_texts==='undefined' &&
                     data.resources.length===1 && q('#audio-id').value==='0' && !q('#tree-load-large');
                 })()'''))
-                browser.click('#wiki-page-links a:nth-of-type(8)')
+                browser.click('#wiki-page-links a[href$="/text.html"]')
                 wait_for('text')
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
                   return !q('#texts').hidden && !q('#text-search').hidden && q('#audio').hidden &&
                     typeof data.audio==='undefined' && data.resources.length===1 && q('#text-entry').value==='0';
                 })()'''))
-                browser.click('#wiki-page-links a:nth-of-type(3)')
+                browser.click('#wiki-page-links a[href$="/objects.html"]')
                 wait_for('objects')
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
@@ -135,7 +135,7 @@ class ScopeBrowserTest(unittest.TestCase):
                     typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
                     q('#obj-animation-catalog').options.length===3;
                 })()'''))
-                browser.click('#wiki-page-links a:first-of-type')
+                browser.click('#wiki-page-links > a')
                 wait_for('index')
             finally:
                 browser.close()

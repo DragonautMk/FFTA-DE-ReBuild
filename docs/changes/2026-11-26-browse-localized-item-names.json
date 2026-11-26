@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-localized-item-names",
+  "title": "Browse localized item names",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Follow the original European item property-0 reference into the localized name reader, with filtering, pagination and links to extracted source strings.",
+    "Show recognized names in item and item-effect selectors and encounter equipment links while retaining IDs and original glyphs for unknown characters.",
+    "Require authenticated item and text identities and a unique reader; preserve item records without guessed labels when inputs are missing or unsupported."
+  ],
+  "validation": [
+    "Source unit 3oqgxrxf recorded the conditional original getter-to-reader call. Synthetic unit 675ze1_1 passed 54 projection, browser and regression tests.",
+    "Protected EUR unit 5xhxehqn verified 376 item records, 1880 localized references and 81 glyphs against the ROM, checked Chrome navigation and matched 19 Python/Docker files using the actual extracted inputs. Fifteen ignored wiki pages were published with a recoverable backup.",
+    "Initial unit w97e1kgo stopped on a test-only DOM iteration error; the corrected unit reused its candidate and Docker output."
+  ],
+  "limitations": [
+    "The relation covers the authenticated European source and extracted item records; it does not prove live item availability or other item properties. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_item_names_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_text.md"
+  ]
+}

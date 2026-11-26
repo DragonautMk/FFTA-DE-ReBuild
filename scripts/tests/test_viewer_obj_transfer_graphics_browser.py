@@ -31,9 +31,10 @@ class ObjectTransferGenerationTest(unittest.TestCase):
     def test_only_relevant_scopes_reference_shared_asset(self):
         with tempfile.TemporaryDirectory(prefix='viewer-obj-transfer-scope-') as directory:
             index = fixture(Path(directory)); parts = index.parent / 'index.html.parts'
-            home, world, objects, audio = (payload(path) for path in (index, parts / 'world.html', parts / 'objects.html', parts / 'audio.html'))
+            home, world, interface, objects, audio = (payload(path) for path in (index, parts / 'world.html', parts / 'interface.html', parts / 'objects.html', parts / 'audio.html'))
             self.assertNotIn('transfer_graphics', home['wiki']); self.assertNotIn('transfer_graphics', audio['wiki'])
-            self.assertEqual(world['wiki']['transfer_graphics'], objects['wiki']['transfer_graphics'])
+            self.assertNotIn('transfer_graphics', world['wiki'])
+            self.assertEqual(interface['wiki']['transfer_graphics'], objects['wiki']['transfer_graphics'])
             self.assertNotIn('type3_payloads', objects); self.assertTrue((parts / objects['wiki']['transfer_graphics']['href']).is_file())
         with tempfile.TemporaryDirectory(prefix='viewer-obj-transfer-no-source-') as directory:
             index = fixture(Path(directory), include_type3=False)

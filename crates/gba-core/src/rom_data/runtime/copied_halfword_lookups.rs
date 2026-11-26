@@ -44,10 +44,22 @@ pub(super) struct CopiedHalfwordLookupsResources {
     pair_roots: AtomicU64,
 }
 impl CopiedHalfwordLookupsResources {
+    pub(super) fn fixed_byte_copy_overlaps(&self, index: usize, length: usize) -> bool {
+        self.data
+            .fixed_byte_copies
+            .as_ref()
+            .is_some_and(|bank| bank.overlaps(index, length))
+    }
+
     pub(super) fn source_page(index: usize) -> bool {
         let first = index >> 12;
         let last = index.saturating_add(3) >> 12;
-        (first..=last).any(|page| matches!(page, 0x3 | 0xc | 0xd | 0x1e | 0x8f | 0xd8 | 0xdc | 0xdd | 0xde | 0xe5 | 0xe7 | 0xfa | 0xfb | 0x101 | 0x103 | 0x106 | 0x109 | 0x10d | 0x10e | 0x11d | 0x11f | 0x122 | 0x124 | 0x13f | 0x14c | 0x14d))
+        (first..=last).any(|page| matches!(
+            page,
+            0x3 | 0xc | 0xd | 0x1e | 0x45 | 0x8f | 0xd8 | 0xdc | 0xdd | 0xde |
+            0xe5 | 0xe7 | 0xfa | 0xfb | 0x101 | 0x103 | 0x106 | 0x109 | 0x10d | 0x10e |
+            0x113 | 0x115 | 0x118 | 0x11d | 0x11f | 0x122 | 0x124 | 0x13f | 0x14c | 0x14d
+        ))
     }
 
     pub(super) fn new(
@@ -225,5 +237,6 @@ impl CopiedHalfwordLookupsResources {
             + self.data.initializer_pairs.as_ref().map_or(0, |bank| {
                 bank.pairs.capacity() * std::mem::size_of::<model::initializer_pairs::Pair>()
             })
+            + self.data.fixed_byte_copies.as_ref().map_or(0, |bank| bank.heap_bytes())
     }
 }

@@ -67,7 +67,7 @@ class BlendProjectionTest(unittest.TestCase):
                 return json.JSONDecoder().raw_decode(text.split('const data = ', 1)[1])[0]
             parts = index.parent / (index.name + '.parts')
             self.assertNotIn('blend_programs', payload(index))
-            world = payload(parts / 'world.html')
+            world = payload(parts / 'interface.html')
             self.assertEqual(world['blend_programs']['programs'], catalog()['programs'])
             self.assertNotIn('blend_programs', payload(parts / 'audio.html'))
         with tempfile.TemporaryDirectory(prefix='viewer-blend-invalid-') as directory:

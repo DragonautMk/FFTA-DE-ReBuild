@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "link-job-names-to-battle-sprites",
+  "title": "Link job names to battle sprites",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Connect direct job metadata and localized names to verified normal and alternate battle sprite sources, and open the corresponding animation preview.",
+    "Allow grayscale or an explicitly chosen stored palette nibble and color-mode variant, without inferring live palette state or resolving redirects."
+  ],
+  "validation": [
+    "Synthetic Chrome unit viewer-job-sprites-synthetic-zdg6f3ml passed 52 tests covering source guards, unavailable references, palette pixels and navigation.",
+    "Protected e344/d343 unit viewer-job-sprites-real-1qfq_2b2 reconstructed 6032 metadata bytes, checked 110 normal and 100 alternate links and four redirects, and matched 26 Python/Docker files.",
+    "Published 16 ignored local wiki pages with guarded preimages; preserved unrelated scoped payloads."
+  ],
+  "limitations": [
+    "Stored direct references do not establish live actor composition, palette changes, redirect behavior or native Windows results."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_job_sprite_links_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

@@ -8,11 +8,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 - State: suspended
 - Outcome: partial
-- Selection: VIEWER-TEXT-SCOPES / e340; user paused the goal.
-- Verified: 53 tests `w2vnicj9`; Chrome/Docker `4aktz7x0`; guarded e340 candidate `574prtnv` PASS.
-- Evidence: `out/ffta-text-scopes-e340-ready-rjx1573u`; `brjnqia7` cleanup FAIL on Chrome symlink.
-- Missing: publication; other previews/audio; Windows deferred.
-- Resume: only on request; review preimages and adapt `/tmp/ffta-text-scopes-e340-publish.py` to the out candidate.
+- Verified: e344 wiki, 210 job sprite links, palettes and timed audio PASS.
+- Missing: previews, names, composition, audio; Windows deferred. E345 is available but not published to the viewer.
+- Resume: only on user request; reconcile E345 before selecting viewer work.
 
 ## Running or suspended tasks
 
@@ -64,7 +62,6 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 - INDEXED-DIRECT-ORDINARY: prefix `v89740hr`, legacy 8,820-frame pair `klmjn8sv`, guarded endpoint `0gj2cglj`, 11-frame guarded pair `u75gcclc` PASS; other scenes/consumers open.
 - INDEXED-DS20 waiting: slot65 ancestry unknown; E167 4q2i907e PASS; lower priority, rebuild run-ds20-wine.py if needed.
 - LANGUAGE-GAP partial: E168 controlled Wine mncnsstk and CLI wklf6sch PASS; ordinary 30/35, meaning, Linux/USA open. Sol /root/sol_indexed_ordinary xhigh unconfirmed.
-- E563 paused by user; build 94767 pending at pause. Recovery checklist.
 - Resume: [recovery checklist](ROM_DATA_VALIDATION_RECOVERY_TODO.md), [TODO](ROM_DATA_TODO.md), [inventory](ROM_DATA_INVENTORY.md). Children retain IDs and limits:
   - `ROMDATA-01-PARAMETER-RECORDS27-DYNAMIC-SOURCES`: 59 writer rows js3rbve5, lists negative/inconclusive m1p_8lhy; live domain, saves, aliases open. `docs/rom_data_gameplay.md`.
   - `ROMDATA-04-GAMEPLAY-6E84E0-BYTE00`: text screen 78suaoix no token; generated/indirect sources open; no blind Select. `docs/rom_data_gameplay.md`.
@@ -193,9 +190,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E563 ROMDATA-04-EUR-WORLD-STATE-TASK-LITERALS-GIZA-TRAVEL paused.
-- Last verified result: E562 `yid7rliw` retains e340; E550 `ycsv0f81` pins 33 frames.
-- Remaining work: Typed reads and slots; placement, BIOS, generated, Linux/USA.
-- Errors or blockers: Build waiting on target loop51 I/O; no Wine launch.
-- Next action: On resume, read `/tmp/e563-build-root-3l3m1gaf`/94767 receipt. Wine script `/tmp/e563-run-world-state-travel.sh`.
-- References: recovery checklist E550/E561/E562/E563; ROM_DATA_VALIDATION.md.
+- Task: E580 EUR helper-field source trace suspended by user.
+- Last verified result: E579 pins e345. Read-only E580 locates wrapper call lead `0bce32`.
+- Remaining work: Trace six setter callers and both indexed inputs. Live domains open.
+- Errors or blockers: E580 started no Wine or build process.
+- Next action: Resume only on explicit request.
+- References: ROMDATA-01-EUR-BYTE-COPY-DYNAMIC-POINTER-DOMAINS.

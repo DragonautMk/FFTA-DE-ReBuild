@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 pub mod initializer_bank;
 pub mod initializer_variants;
 pub mod initializer_pairs;
+pub mod stack_byte_copies;
+pub mod fixed_byte_copies;
 
 pub const TABLE_OFFSETS: [u32; 3] = [0x14cf18, 0x14cf20, 0x14d84c];
 pub const ADDITIONAL_ROOTS: [u32; 2] = [0x3658, 0x3680];
@@ -90,6 +92,10 @@ pub struct CopiedHalfwordLookups {
     pub initializer_variants: Option<initializer_variants::VariantBank>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub initializer_pairs: Option<initializer_pairs::PairBank>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub stack_byte_copies: Option<stack_byte_copies::StackByteCopies>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fixed_byte_copies: Option<fixed_byte_copies::FixedByteCopies>,
 }
 
 impl CopiedHalfwordLookups {
@@ -117,6 +123,8 @@ impl CopiedHalfwordLookups {
         if let Some(bank) = &self.initializer_bank { bank.validate()?; }
         if let Some(bank) = &self.initializer_variants { bank.validate()?; }
         if let Some(bank) = &self.initializer_pairs { bank.validate()?; }
+        if let Some(bank) = &self.stack_byte_copies { bank.validate()?; }
+        if let Some(bank) = &self.fixed_byte_copies { bank.validate()?; }
         Ok(())
     }
 
@@ -168,6 +176,8 @@ impl CopiedHalfwordLookups {
         if let Some(bank) = &self.initializer_bank { spans.extend(bank.source_spans()); }
         if let Some(bank) = &self.initializer_variants { spans.extend(bank.source_spans()); }
         if let Some(bank) = &self.initializer_pairs { spans.extend(bank.source_spans()); }
+        if let Some(bank) = &self.stack_byte_copies { spans.extend(bank.source_spans()); }
+        if let Some(bank) = &self.fixed_byte_copies { spans.extend(bank.source_spans()); }
         Ok(spans)
     }
 
@@ -214,6 +224,12 @@ impl CopiedHalfwordLookups {
         if let Some((byte, root)) = self.initializer_pairs.as_ref().and_then(|bank| bank.byte_at(offset)) {
             return Some((byte, if root { 3 } else { 7 }, root));
         }
+        if let Some((byte, root)) = self.stack_byte_copies.as_ref().and_then(|bank| bank.byte_at(offset)) {
+            return Some((byte, if root { 3 } else { 7 }, root));
+        }
+        if let Some((byte, root)) = self.fixed_byte_copies.as_ref().and_then(|bank| bank.byte_at(offset)) {
+            return Some((byte, if root { 3 } else { 7 }, root));
+        }
         for (i, root) in ADDITIONAL_ROOTS.into_iter().enumerate() {
             let Some(n) = offset.checked_sub(root) else {
                 continue;
@@ -231,7 +247,11 @@ impl CopiedHalfwordLookups {
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        if self != &Catalog::from_rom_with_initializers(rom, &[], self.initializer_bank.is_some(), self.initializer_variants.is_some(), self.initializer_pairs.is_some())?.decoded {
+        if self != &Catalog::from_rom_with_initializers(
+            rom, &[], self.initializer_bank.is_some(), self.initializer_variants.is_some(),
+            self.initializer_pairs.is_some(), self.stack_byte_copies.is_some(),
+            self.fixed_byte_copies.as_ref().map(fixed_byte_copies::FixedByteCopies::layout),
+        )?.decoded {
             return Err("Copied halfword lookups differ from authenticated EUR source".into());
         }
         Ok(())
@@ -244,9 +264,15 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
-        Self::from_rom_with_initializers(rom, previous, true, true, true)
+        Self::from_rom_with_initializers(
+            rom, previous, true, true, true, true,
+            Some(fixed_byte_copies::Layout::WithSharedSlotLiterals),
+        )
     }
-    pub(crate) fn from_rom_with_initializers(rom: &[u8], previous: &[Resource], enabled: bool, variants_enabled: bool, pairs_enabled: bool) -> Result<Self, String> {
+    pub(crate) fn from_rom_with_initializers(
+        rom: &[u8], previous: &[Resource], enabled: bool, variants_enabled: bool,
+        pairs_enabled: bool, stack_bytes_enabled: bool, fixed_bytes: Option<fixed_byte_copies::Layout>,
+    ) -> Result<Self, String> {
         if rom.len() != 0x0100_0000 || ffta_rom::digest(rom) != ffta_rom::EUROPE_SHA256 {
             return Err("Copied halfword lookups require the exact EUR ROM; USA pending".into());
         }
@@ -357,7 +383,16 @@ impl Catalog {
         let initializer_bank = if enabled { Some(initializer_bank::InitializerBank::from_rom(rom)?) } else { None };
         let initializer_variants = if variants_enabled { Some(initializer_variants::VariantBank::from_rom(rom)?) } else { None };
         let initializer_pairs = if pairs_enabled { Some(initializer_pairs::PairBank::from_rom(rom)?) } else { None };
-        let decoded = CopiedHalfwordLookups { tables, soil_evidence_table, signed_byte_index_projection, star_cross_tables, initializer_bank, initializer_variants, initializer_pairs };
+        let stack_byte_copies = stack_bytes_enabled
+            .then(|| stack_byte_copies::StackByteCopies::from_rom(rom))
+            .transpose()?;
+        let fixed_byte_copies = fixed_bytes
+            .map(|layout| fixed_byte_copies::FixedByteCopies::from_rom(rom, layout))
+            .transpose()?;
+        let decoded = CopiedHalfwordLookups {
+            tables, soil_evidence_table, signed_byte_index_projection, star_cross_tables,
+            initializer_bank, initializer_variants, initializer_pairs, stack_byte_copies, fixed_byte_copies,
+        };
         let prior = PriorSources::new(previous)?;
         let mut sources = Vec::new();
         for (offset, bytes, role) in decoded.source_spans()? {

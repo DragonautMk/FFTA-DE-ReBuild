@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "serve-european-ten-byte-stack-copies",
+  "title": "Serve the complete European ten-byte stack copy bank",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Extend the e341 copied-halfword lookup packet with seven fixed ten-byte arrays and the five previously unowned pointer words. Preserve the two existing Thumb literal owners and the two raw gaps. Keep e340 attachment compatible."
+  ],
+  "validation": [
+    "Windows cross-build gcjjl32e and Wine e566-stack-byte-copies-wine-r2a5swsy PASS. Seven original helper calls make 77 typed requests with the source and root bytes altered. Exact stack contents, full state and guest clock agree. All 144 mixed mirror checks and both raw gaps pass. e340 attaches and a missing e341 bank is rejected transactionally. Only one resource entry changes. Thirteen input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Standard CLI creation and reuse, generated copy paths, ordinary dispatch, original BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups.rs",
+    "crates/gba-core/src/rom_data/copied_halfword_lookups/stack_byte_copies.rs",
+    "crates/gba-core/src/rom_data/runtime/copied_halfword_lookups.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/stack_byte_copy_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

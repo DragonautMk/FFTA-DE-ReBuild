@@ -80,7 +80,7 @@ class FiragaTransferProjectionTest(unittest.TestCase):
         for invalid in (None, 'transfer', 'palette'):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-firaga-transfer-scope-') as directory:
                 index = fixture(Path(directory), invalid=invalid); parts = index.parent / (index.name + '.parts')
-                home, world, objects = payload(index), payload(parts / 'world.html'), payload(parts / 'objects.html')
+                home, world, objects = payload(index), payload(parts / 'interface.html'), payload(parts / 'objects.html')
                 self.assertNotIn('firaga_transfer', home); self.assertNotIn('firaga_palette_rows', home)
                 self.assertNotIn('firaga_transfer', objects); self.assertNotIn('firaga_palette_rows', objects)
                 self.assertEqual(bool(world['firaga_transfer']), invalid != 'transfer')
@@ -91,7 +91,7 @@ class FiragaTransferProjectionTest(unittest.TestCase):
 class FiragaTransferBrowserTest(unittest.TestCase):
     def test_transfer_lz_palette_and_reverse_links(self):
         with tempfile.TemporaryDirectory(prefix='viewer-firaga-transfer-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=id=>[...q('#rows').rows].find(r=>r.dataset.resourceId===id);
@@ -128,7 +128,7 @@ class FiragaTransferBrowserTest(unittest.TestCase):
                 work = Path(directory)
                 index = fixture(work, include_lz=mode != 'no_lz', include_palette=mode != 'no_palette',
                                 include_transfer=mode != 'no_transfer', invalid=mode.removeprefix('bad_') if mode.startswith('bad_') else None)
-                browser = Chrome(work, index.parent / (index.name + '.parts/world.html'))
+                browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
                 try:
                     self.assertTrue(browser.evaluate('''(mode=>{
                       const q=s=>document.querySelector(s),has=(selector)=>!!q(selector);

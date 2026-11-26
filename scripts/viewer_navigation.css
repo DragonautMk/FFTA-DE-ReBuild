@@ -1,0 +1,29 @@
+/* Shared, keyboard-operable navigation for every offline wiki page. */
+.wiki-navbar { position: sticky; top: 0; z-index: 30; margin: 0 0 1rem; padding: .45rem .65rem; background: #dfeaf0; border: 1px solid #c5d5df; border-radius: .45rem; box-shadow: 0 2px 8px #18213218; }
+.wiki-navbar[hidden] { display: none; }
+#wiki-page-links { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .55rem; }
+#wiki-page-links > a, .wiki-page-category > summary { display: block; padding: .45rem .55rem; border-radius: .3rem; color: #155d7a; font-weight: 600; }
+#wiki-page-links a[aria-current="page"] { font-weight: 700; }
+.wiki-page-category { position: relative; margin: 0; padding: 0; background: transparent; }
+.wiki-page-category > summary { cursor: pointer; list-style: none; white-space: nowrap; }
+.wiki-page-category > summary::-webkit-details-marker { display: none; }
+.wiki-page-category > summary::after { content: ' ▾'; }
+.wiki-page-category[open] > summary, .wiki-page-category > summary:hover, #wiki-page-links > a:hover { background: #cddfe8; }
+.wiki-menu { position: absolute; top: 100%; left: 0; width: max-content; min-width: 14rem; max-width: min(25rem, calc(100vw - 2rem)); max-height: min(70vh, 38rem); overflow: auto; padding: .45rem; background: white; border: 1px solid #b8cad5; border-radius: .4rem; box-shadow: 0 4px 16px #18213230; }
+.wiki-page-category:nth-last-child(-n+2) .wiki-menu { left: auto; right: 0; }
+.wiki-menu ul { list-style: none; margin: 0; padding: 0; }
+.wiki-menu a, .wiki-menu summary { display: block; padding: .42rem .55rem; border-radius: .25rem; overflow-wrap: anywhere; }
+.wiki-menu a:hover, .wiki-menu summary:hover { background: #edf4f7; }
+.wiki-menu summary { cursor: pointer; color: #155d7a; font-weight: 600; }
+.wiki-menu summary::before { content: '▸ '; }
+.wiki-menu details[open] > summary::before { content: '▾ '; }
+.wiki-menu details ul { margin-left: .75rem; border-left: 1px solid #d8e2e8; }
+@media (max-width: 760px) {
+  .wiki-navbar { padding: .3rem; }
+  #wiki-page-links { gap: .1rem; }
+  #wiki-page-links > a, .wiki-page-category > summary { padding: .35rem .4rem; font-size: .9rem; }
+  .wiki-page-category { position: static; }
+  .wiki-menu, .wiki-page-category:nth-last-child(-n+2) .wiki-menu {
+    top: 100%; left: .3rem; right: .3rem; width: auto; max-width: none;
+  }
+}

@@ -632,6 +632,14 @@ mod signed_map_delta_tests;
 mod world_node_dispatch_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod world_state_task_literal_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod stack_byte_copy_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod fixed_byte_copy_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod direct_byte_copy_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod byte_copy_producer_literal_tests;
 #[cfg(test)]
 mod state_initializer_tests;
 #[cfg(test)]

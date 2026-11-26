@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "browse-world-record-mission-links",
+  "title": "Browse world records and mission references",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Browse all fields and 31 raw threshold bytes per world record, with a byte-range visualization.",
+    "Link European mission records to their documented packed-index world records and provide filtered, paginated reverse references while retaining independent partial views."
+  ],
+  "validation": [
+    "Synthetic unit zggmm8of passed 47 projection, Chrome and regression checks, including missing data and profile gating.",
+    "Protected EUR unit mq38y35o reconstructed 31 records and 961 thresholds from the authenticated ROM, checked all 512 mission links in Chrome and matched 20 Python/Docker fixture files. Fifteen ignored local pages were published with a recoverable backup.",
+    "Initial unit swi3tfcl stopped on a test-only DOM iteration error; the corrected unit reused its candidate and Docker output."
+  ],
+  "limitations": [
+    "Stored indices do not establish live use, map location names or the meaning of opaque fields. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_world_records_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

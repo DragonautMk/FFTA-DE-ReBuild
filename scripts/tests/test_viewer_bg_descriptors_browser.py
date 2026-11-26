@@ -48,7 +48,7 @@ def fixture(work, *, extra=True, invalid=False):
             manifest += '[[resources.sources]]\noffset=1000\nlength=264\nrole="descriptor"\nsha256="' + '0' * 64 + '"\n'
     (dataset / 'manifest.toml').write_text(manifest)
     index = generate(dataset, work / 'view', split=True)
-    return index, index.parent / (index.name + '.parts/world.html')
+    return index, index.parent / (index.name + '.parts/interface.html')
 
 
 def payload(path):

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "verify-european-stack-copy-dataset-reuse",
+  "title": "Verify and reuse the European stack copy dataset",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Stage the exact e341 manifest and copied lookup packet over authenticated retained files. Keep the generation available for subsequent runtime checks."
+  ],
+  "validation": [
+    "Internal stage zuua33cz, default Windows build evwkootc and Wine e567-stack-byte-cli-wine-xcsq9618 PASS. The standard CLI verifies 157 files and reuses the generation without changing its file or selector hashes. Eleven input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "First CLI creation, generated copies, ordinary dispatch, real BIOS, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-26-serve-european-ten-byte-stack-copies.json"
+  ]
+}

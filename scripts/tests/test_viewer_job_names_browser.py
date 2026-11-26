@@ -115,7 +115,9 @@ class JobNameBrowserTest(unittest.TestCase):
                 browser.evaluate("document.querySelector('#job-names>details').open=true")
                 href = browser.evaluate("document.querySelector('#job-name-rows tr:first-child a').href")
                 hit = browser.evaluate('''(()=>{
-                  const a=document.querySelector('#job-name-rows tr:first-child a');a.scrollIntoView({block:'center'});
+                  const a=document.querySelector('#job-name-rows tr:first-child a');
+                  for(let p=a.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;
+                  a.scrollIntoView({block:'center'});
                   const r=a.getClientRects()[0],x=r.left+r.width/2,y=r.top+r.height/2,e=document.elementFromPoint(x,y);
                   return {x,y,width:innerWidth,height:innerHeight,hit:e?e.tagName:null,match:e===a||a.contains(e)};
                 })()''')

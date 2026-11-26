@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-26",
+  "slug": "link-item-pairs-to-metadata",
+  "title": "Link item pairs to metadata references",
+  "kind": "added",
+  "platforms": [
+    "Linux and offline Docker"
+  ],
+  "changes": [
+    "Link authenticated European active item-pair selectors to matching metadata rows, with reverse links to pair records and slots.",
+    "Display verified localized metadata and item labels where available; preserve numeric links without names when text is missing and exclude zero, FF and inactive slots."
+  ],
+  "validation": [
+    "Synthetic unit 0uvnwvf9 passed 49 projection, partial-input, browser and regression tests.",
+    "Protected EUR unit 2lo4iet7 reconstructed 225 pair records and 116 metadata rows from the ROM, checked 464 links in both directions and eight FF slots in Chrome, and matched 20 Python/Docker files using the actual extracted inputs. Fifteen ignored wiki pages were published with a recoverable backup."
+  ],
+  "limitations": [
+    "Matching stored selectors do not establish live unit conditions or gameplay outcomes. Other source identities and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_item_metadata_links_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}
