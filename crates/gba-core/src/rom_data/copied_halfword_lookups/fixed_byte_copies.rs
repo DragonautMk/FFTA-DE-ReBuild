@@ -11,6 +11,8 @@ pub const DIRECT_PAYLOAD_ROLE: &str = "direct-byte-copy-data";
 pub const DIRECT_LITERAL_ROLE: &str = "direct-byte-copy-argument";
 pub const PRODUCER_LITERAL_ROLE: &str = "byte-copy-producer-literal";
 pub const SHARED_SLOT_LITERAL_ROLE: &str = "byte-copy-shared-slot-literal";
+pub const CONTEXT_RECORD_LITERAL_ROLE: &str = "byte-copy-context-record-literal";
+pub const SCRATCH_RESTORE_LITERAL_ROLE: &str = "byte-copy-scratch-restore-literal";
 
 // E568 projected against e341. Twenty-one other verified calls already have
 // owners for both their payloads and literals.
@@ -61,12 +63,31 @@ const SHARED_SLOT_LITERAL_READERS: [u32; 27] = [
     0x062ef4, 0x062f28, 0x06af44, 0x06af46, 0x125dd8, 0x125dde, 0x125de0, 0x125de6, 0x125e1a,
 ];
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+// E583 allocation, selection and copy arguments whose words have no e346 owner.
+const CONTEXT_RECORD_LITERAL_READERS: [u32; 46] = [
+    0x025856, 0x025858, 0x025894, 0x03202c, 0x03202e, 0x03209e, 0x0320a0, 0x032134, 0x032136,
+    0x032194, 0x032196, 0x072d8e, 0x0735be, 0x0735c6, 0x0735ca, 0x0735da, 0x073638, 0x07363c,
+    0x073644, 0x073648, 0x07364a, 0x07365c, 0x07cf36, 0x07cf3a, 0x07cf7a, 0x07cf9e, 0x07cfa2,
+    0x07cfe2, 0x07d1d6, 0x07d1e0, 0x07d97e, 0x07da84, 0x0902c6, 0x0902ca, 0x09030a, 0x09032e,
+    0x090332, 0x090372, 0x090540, 0x09087c, 0x09093c, 0x09094a, 0x090fe4, 0x091038, 0x0919f4,
+    0x091a98,
+];
+
+// E586 scratch saves, restores and context allocations whose words are unowned in e347.
+const SCRATCH_RESTORE_LITERAL_READERS: [u32; 22] = [
+    0x03249c, 0x0325ec, 0x0325ee, 0x0326d6, 0x0326da, 0x0326fa, 0x053054, 0x0565bc, 0x057bdc,
+    0x057be0, 0x057cd2, 0x059078, 0x05907c, 0x05916e, 0x05cc0a, 0x062fe8, 0x0671cc, 0x06772a,
+    0x067826, 0x06b028, 0x072962, 0x072ae0,
+];
+
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub(crate) enum Layout {
     FixedSize,
     WithDirectArguments,
     WithProducerLiterals,
     WithSharedSlotLiterals,
+    WithContextRecordLiterals,
+    WithScratchRestoreLiterals,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -115,6 +136,10 @@ pub struct FixedByteCopies {
     producer_literals: Vec<CopySpan>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     shared_slot_literals: Vec<CopySpan>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    context_record_literals: Vec<CopySpan>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    scratch_restore_literals: Vec<CopySpan>,
 }
 
 fn literal_at(rom: &[u8], reader: u32, instruction: u16) -> Option<(u32, u32)> {
@@ -280,16 +305,23 @@ impl FixedByteCopies {
             } else {
                 direct_arguments_from_rom(rom)?
             },
-            producer_literals: if matches!(
-                layout,
-                Layout::WithProducerLiterals | Layout::WithSharedSlotLiterals
-            ) {
+            producer_literals: if layout >= Layout::WithProducerLiterals {
                 producer_literals_from_rom(rom, &PRODUCER_LITERAL_READERS)?
             } else {
                 Vec::new()
             },
-            shared_slot_literals: if layout == Layout::WithSharedSlotLiterals {
+            shared_slot_literals: if layout >= Layout::WithSharedSlotLiterals {
                 producer_literals_from_rom(rom, &SHARED_SLOT_LITERAL_READERS)?
+            } else {
+                Vec::new()
+            },
+            context_record_literals: if layout >= Layout::WithContextRecordLiterals {
+                producer_literals_from_rom(rom, &CONTEXT_RECORD_LITERAL_READERS)?
+            } else {
+                Vec::new()
+            },
+            scratch_restore_literals: if layout >= Layout::WithScratchRestoreLiterals {
+                producer_literals_from_rom(rom, &SCRATCH_RESTORE_LITERAL_READERS)?
             } else {
                 Vec::new()
             },
@@ -338,11 +370,62 @@ impl FixedByteCopies {
                 );
             }
         }
+        if !self.context_record_literals.is_empty() {
+            validate_bank(
+                &self.context_record_literals,
+                (0, 0, CONTEXT_RECORD_LITERAL_READERS.len()),
+            )?;
+            if self.shared_slot_literals.is_empty()
+                || self.context_record_literals.iter().any(|span| {
+                    [
+                        &self.spans,
+                        &self.direct_arguments,
+                        &self.producer_literals,
+                        &self.shared_slot_literals,
+                    ]
+                    .into_iter()
+                    .any(|bank| bank_overlaps(bank, span.offset as usize, 4))
+                })
+            {
+                return Err(
+                    "Missing shared slot words or overlapping byte copy context record literals"
+                        .into(),
+                );
+            }
+        }
+        if !self.scratch_restore_literals.is_empty() {
+            validate_bank(
+                &self.scratch_restore_literals,
+                (0, 0, SCRATCH_RESTORE_LITERAL_READERS.len()),
+            )?;
+            if self.context_record_literals.is_empty()
+                || self.scratch_restore_literals.iter().any(|span| {
+                    [
+                        &self.spans,
+                        &self.direct_arguments,
+                        &self.producer_literals,
+                        &self.shared_slot_literals,
+                        &self.context_record_literals,
+                    ]
+                    .into_iter()
+                    .any(|bank| bank_overlaps(bank, span.offset as usize, 4))
+                })
+            {
+                return Err(
+                    "Missing context record words or overlapping byte copy scratch restore literals"
+                        .into(),
+                );
+            }
+        }
         Ok(())
     }
 
     pub(super) fn layout(&self) -> Layout {
-        if !self.shared_slot_literals.is_empty() {
+        if !self.scratch_restore_literals.is_empty() {
+            Layout::WithScratchRestoreLiterals
+        } else if !self.context_record_literals.is_empty() {
+            Layout::WithContextRecordLiterals
+        } else if !self.shared_slot_literals.is_empty() {
             Layout::WithSharedSlotLiterals
         } else if !self.producer_literals.is_empty() {
             Layout::WithProducerLiterals
@@ -372,6 +455,12 @@ impl FixedByteCopies {
                     span.source_span(SHARED_SLOT_LITERAL_ROLE, SHARED_SLOT_LITERAL_ROLE)
                 }),
             )
+            .chain(self.context_record_literals.iter().map(|span| {
+                span.source_span(CONTEXT_RECORD_LITERAL_ROLE, CONTEXT_RECORD_LITERAL_ROLE)
+            }))
+            .chain(self.scratch_restore_literals.iter().map(|span| {
+                span.source_span(SCRATCH_RESTORE_LITERAL_ROLE, SCRATCH_RESTORE_LITERAL_ROLE)
+            }))
     }
 
     pub(crate) fn overlaps(&self, start: usize, length: usize) -> bool {
@@ -379,6 +468,8 @@ impl FixedByteCopies {
             || bank_overlaps(&self.direct_arguments, start, length)
             || bank_overlaps(&self.producer_literals, start, length)
             || bank_overlaps(&self.shared_slot_literals, start, length)
+            || bank_overlaps(&self.context_record_literals, start, length)
+            || bank_overlaps(&self.scratch_restore_literals, start, length)
     }
 
     pub(super) fn byte_at(&self, offset: u32) -> Option<(u8, bool)> {
@@ -387,6 +478,8 @@ impl FixedByteCopies {
             self.direct_arguments.as_slice(),
             self.producer_literals.as_slice(),
             self.shared_slot_literals.as_slice(),
+            self.context_record_literals.as_slice(),
+            self.scratch_restore_literals.as_slice(),
         ]
         .into_iter()
         .find_map(|spans| {
@@ -405,7 +498,9 @@ impl FixedByteCopies {
         (self.spans.capacity()
             + self.direct_arguments.capacity()
             + self.producer_literals.capacity()
-            + self.shared_slot_literals.capacity())
+            + self.shared_slot_literals.capacity()
+            + self.context_record_literals.capacity()
+            + self.scratch_restore_literals.capacity())
             * std::mem::size_of::<CopySpan>()
             + self
                 .spans

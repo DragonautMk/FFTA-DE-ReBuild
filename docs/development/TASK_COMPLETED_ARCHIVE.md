@@ -29012,3 +29012,741 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: Verified direct job metadata and localized names link to normal and alternate battle sprite previews. Users can select grayscale or a stored palette nibble and variant without asserting live palette state; unavailable or redirected rows remain explicit.
 - Evidence: Synthetic `viewer-job-sprites-synthetic-zdg6f3ml` passed 52 tests. Protected `viewer-job-sprites-real-1qfq_2b2` reconstructed 6,032 source bytes, checked 110 normal and 100 alternate links, four redirects and palette navigation, preserved other scoped payloads and matched 26 Python/Docker files. Sixteen ignored pages published with guarded preimages; backup `out/ffta-job-sprites-before-3d2a1t89`.
 - Limits: Live overrides, redirects, palette state and final actor composition remain open. Broader viewer previews, names and audio remain open; Windows deferred.
+
+### VIEWER-E345-REFRESH
+
+- Outcome: completed
+- Verified criteria: Regenerated private 16-page European wiki with e345/d344, preserved previous views and made the updated extracted resource available in the structured inspector.
+- Evidence: Protected `viewer-e345-refresh-8hmrnt9m` authenticated 156 resources and 27 added source words, preserved existing topic data and 155 older resource pages, verified Chrome navigation and matched 22 Python/Docker files. Guarded publication backup: `out/ffta-e345-before-ozc1yen9`.
+- Limits: Live pointer domains, ordinary/generated copy paths and broader viewer previews remain open; native Windows deferred.
+
+### ROMDATA-01-EUR-BYTE-COPY-HELPER-FIELD-PRODUCERS
+
+- Outcome: completed
+- Verified criteria: The six direct setter calls and three indexed stores are traced to their attested source expressions. A matching nested dispatcher and valid compacted selector bound the constructor's 24 input records to EWRAM. The indexed list constructor uses the existing eleven-template catalog and allocates four bytes per template count. The e345 join covers 210 entries in six switches and 24 literal words. Two complete switches with their roots leave 80 unowned bytes and ten producer words leave another 40.
+- Evidence: Wine `slfj198b`, `ehtmtokr` and `8ajybsq0` attest 8,837, 804 and 1,303 further halfwords. Their 38, 42 and 46 protected inputs pass and Wine drains. Guarded plan `mdd2l_wy` passes 44 input guards. `docs/changes/2026-11-27-trace-european-helper-field-dispatch.json`.
+- Limits: Live selected handles, mode-2 list contents, reachable last writers and aliases, original BIOS, other pointer families, ordinary and generated routes, Linux and USA remain open. The 120-byte bank awaits runtime integration. No performance measurements.
+
+### VIEWER-ENCOUNTER-JOBS
+
+- Outcome: completed
+- Verified criteria: Authenticated encounter selectors link to named job metadata and battle sprites; paginated reverse references open the selected encounter and unit. Missing, fallback and redirected sources remain explicit.
+- Evidence: Synthetic `viewer-encounter-jobs-synthetic-vx2gge9m` passed 51 checks. Protected `viewer-encounter-jobs-real-5cpqf0qy` reconstructed 136,800 template bytes, verified 2,850 references to 101 metadata IDs and their header associations, checked Chrome navigation and matched 27 Python/Docker files. Sixteen ignored pages published with guarded preimages; backup `out/ffta-encounter-jobs-before-20j7vgzj`.
+- Limits: Stored values do not establish live overrides or redirected names; broader viewer previews and names remain open, native Windows deferred.
+
+### VIEWER-AUDIO-SCOPE
+
+- Outcome: completed
+- Verified criteria: Separate waveform/instrument and CGB noise pages load only their required data. Navbar and cross-page bank/song links work, CGB mute persists, and prior noise bookmarks redirect.
+- Evidence: Synthetic `viewer-audio-scope-synthetic-0qmc05ef` passed 52 checks; failed `9x54lx5k` revealed a corrected initialization error. Protected e345 `viewer-audio-scope-real-zor6lsg1` preserved other scoped data, checked playback/navigation in Chrome and matched 24 Python/Docker outputs. Original audio 17,315,942 bytes, samples 9,510,147 and noise 690,337. Eighteen ignored pages published with backup `out/ffta-audio-scope-before-aiww1wpv`.
+- Limits: Song and schedule playback retain their audio/sequence dependencies; live driver timing, broader viewer previews and native Windows remain open.
+
+### ROMDATA-04-EUR-BYTE-COPY-HELPER-FIELD-DISPATCH
+
+- Outcome: completed for the 120-byte E580 residual bank and its controlled original EUR interpreter paths.
+- Verified criteria: In e346-d345 both full switch tables, both root words and ten producer literals are served from their extracted packets. All 18 original dispatches, six guards, ten producer loads, 168 boundary checks and two raw gaps pass with exact state and guest clock equality on each controlled path. The e345 predecessor attaches and incomplete e346 is rejected atomically. The other 154 resource entries match.
+- Evidence: Windows GNU build `5i4bo5p_` and Wine `e581-helper-field-dispatch-wine-x1m7j60t` PASS. All 17 protected inputs pass, the server drains and the shared lease is released. The preserved E158 recovery receipt matches the original failure and its leases are absent. [Guide](../rom_data_runtime.md#e581-european-helper-field-runtime-integration).
+- Limits: Standard CLI publication, 39 live source domains, ordinary/generated routes, original BIOS, Linux and USA remain open. No performance measurements. Primary Terra xhigh setting could not be verified.
+
+### VIEWER-METADATA2
+
+- Outcome: completed
+- Verified criteria: Browse and filter 44 stored byte-pair records, follow authenticated localized metadata links both ways, and inspect the bounded forward and inverse lookup behavior without inferring value meanings.
+- Evidence: Synthetic `viewer-metadata2-synthetic-ug6y7tuw` passed 53 tests. Protected `viewer-metadata2-real-ylvqkc4o` reconstructed all 88 source bytes, checked 44 forward rows, 256 inverse inputs and 44 bidirectional metadata links in Chrome, and matched 25 Python/Docker files. Eighteen ignored pages published with guarded preimages; backup `out/ffta-metadata2-before-1pc1ol2x`.
+- Limits: Stored values and live game state remain unclassified; broader viewer previews and native Windows remain open.
+
+### ROMDATA-02-EUR-BYTE-COPY-HELPER-FIELD-DISPATCH-CLI
+
+- Outcome: completed for standard European e346-d345 CLI publication under Wine.
+- Verified criteria: From an empty root, prepare creates the E581 manifest and both changed packets byte for byte. All 157 file hashes match. Verify accepts the generation and another prepare reuses the same generation with unchanged file set, identities, hashes, modification times and selector.
+- Evidence: Default Windows GNU build `lby9j1c3`, Wine `e582-helper-field-cli-internal-wine-5v5__08d` and internal stage `tjyv_m4d` PASS. Fourteen input guards pass and Wine drains. The first staging attempt `d2vk9wez` stopped on a wrapper argument before Wine. The corrected invocation reused the build. [Guide](../rom_data_runtime.md#e582-european-helper-field-cli-publication).
+- Limits: 39 live pointer domains, ordinary and generated routes, original BIOS, native Linux, USA and native Windows remain open. No performance measurements.
+
+### VIEWER-ITEM-SPRITES
+
+- Outcome: completed
+- Verified criteria: Authenticated normal item equipment selectors link to supported animated sprite previews; the sprite page lists matching localized items with filtering, pagination and reverse navigation.
+- Evidence: Synthetic `viewer-item-sprites-synthetic-_3ilf95_` passed 52 checks; focused final `viewer-item-sprites-final-synthetic-4vczqawj` passed three after a label correction. Protected `viewer-item-sprites-real-acxkc4cz` reconstructed 12,032 item bytes, authenticated 593 sprite source ranges, checked 252 item links and rendered all 61 referenced sprites in Chrome, and matched 24 Python/Docker files. Eighteen ignored pages published with guarded preimages; backup `out/ffta-item-sprites-before-j7qpzr0d`.
+- Limits: Action overrides, live palettes and composition remain separate; broader viewer previews and native Windows remain open.
+
+### VIEWER-E346-REFRESH
+
+- Outcome: completed
+- Verified criteria: authenticated e346/d345 dataset and updated local wiki, with 18 existing topic payloads and 156 previous resource pages preserved.
+- Evidence: protected unit `viewer-e346-refresh-2yew90aq`, Chrome, 24 matching Python/Docker fixture files; guarded publication backup `out/ffta-e346-before-c6jp3v_5`; `docs/changes/2026-11-27-refresh-viewer-e346.json`.
+- Limits: Live pointer behavior, ordinary execution and native Windows remain unverified; broader viewer work remains open.
+
+### ROMDATA-01-EUR-BYTE-COPY-204-CONTEXT-BANK
+
+- Outcome: completed for the static EUR source plan for all 14 direct 204-byte context copies.
+- Verified criteria: Both allocation branches request `0x7264` bytes and publish at `03002818`. The eight work-record copies and six indexed copies fit the matching allocation. Two selector pairs and status loops bound the matching five- and six-slot modes. The 63-word e346 join accounts for 69 original reads and leaves 46 unowned words (184 bytes).
+- Evidence: Wine `e583-204-context-bank-windows-1eob7sxe` attests 4,605 further halfwords with 30 protected inputs and server drain. Expanded plan `qtufl1m9` passes 38 guards and authenticates the incoming source plan, both allocator paths and every selector return load. Seven pinned retained Giza checkpoints have zero context and arena slots. [Guide](../rom_data_runtime.md#e583-european-204-byte-context-record-bank).
+- Limits: The matched allocation and valid selected record are required for the bounds. Smaller arena, alternate index, empty-list guard, live writers and aliases remain in ROMDATA-01-EUR-BYTE-COPY-204-CONTEXT-LIVE. Other families, ordinary/generated use, original BIOS, Linux and USA remain open. Terra xhigh setting unverified. No performance measurements.
+
+### ROMDATA-04-EUR-BYTE-COPY-204-CONTEXT-LITERALS
+
+- Outcome: completed for the 46 E583 residual support words and controlled original EUR interpreter loads.
+- Verified criteria: e347-d346 extracts and serves 184 bytes from the new copied lookup group. All 46 original loads use typed reads with altered backing and matching complete state and guest clock. All 552 boundary checks and one raw gap pass. e346 attaches and incomplete e347 is rejected atomically. The earlier packet groups and other 155 resources match.
+- Evidence: Windows GNU build `1sqsyqmk` and Wine `e584-context-record-literals-wine-rdvwbe4l` PASS. All 14 input guards pass, Wine drains and the lease is released. The unit retains the manifest and packet. [Guide](../rom_data_runtime.md#e584-european-context-record-literals-at-runtime).
+- Limits: Standard CLI publication, live allocation/selector provenance, other pointer families, ordinary and generated routes, original BIOS, native Linux and USA remain open. No performance measurements. Terra xhigh setting unverified.
+
+### ROMDATA-02-EUR-BYTE-COPY-204-CONTEXT-LITERALS-CLI
+
+- Outcome: completed for the European e347-d346 standard CLI lifecycle under Wine.
+- Verified criteria: Prepare from an empty root creates the E584 manifest and copied lookup packet byte for byte. All 157 file hashes match. Verify accepts the generation and another prepare reuses it with the same file set, identities, hashes, modification times and selector.
+- Evidence: Default Windows build `nqyflova`, Wine `e585-context-record-cli-internal-wine-4u4irudf` and internal stage `67w2lo4y` PASS. Thirteen Wine input guards pass and Wine drains. [Guide](../rom_data_runtime.md#e585-european-context-record-cli-publication).
+- Limits: Live allocation and selected record provenance, other pointer families, ordinary and generated routes, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+### ROMDATA-01-EUR-BYTE-COPY-SCRATCH-RESTORES
+
+- Outcome: completed for the static source plan and allocation bounds of the seven direct EUR 80-byte restore sites.
+- Verified criteria: Seven reciprocal saves reuse the IWRAM block at `03000940`. There are six distinct context spans. The e347 join authenticates 57 original literal loads and identifies 22 unowned words (88 bytes).
+- Evidence: Wine `e586-scratch-restore-windows-_yk3qlx6` attests 372 additional halfwords, passes 39 inputs and drains. The final guarded join `1u8w8ztb` passes 39 input guards. Joins `1xhk63aq` and `iph3t5v3` had incorrect size-register and restore-destination-load expectations. The correction reuses the original Wine evidence. [Guide](../rom_data_runtime.md#e586-european-80-byte-scratch-restore-bank).
+- Limits: Eligible allocation size does not establish which object is live or whether the saved bytes survive to each restore. Intervening/alias writers, ordinary and generated paths, original BIOS, Linux and USA remain open. Primary Terra xhigh setting unverified. No performance measurements.
+
+### VIEWER-NAV-SCOPES
+
+- Outcome: completed
+- Verified criteria: Audio views are directly visible in the navbar; world and interface are divided into focused pages with compatible bookmarks and selected encounter links.
+- Evidence: 32 checks `etx2hr3v`, 59/61 checks `qmjj6bfz`, two corrected menu assertions `2e4pbtxq`; protected e346/Chrome/Docker `t43s7_z8`; 21 pages and 29 resource links published with preimages `out/ffta-nav-focused-before-jadbhcjz`; `docs/changes/2026-11-27-focus-wiki-navigation-scopes.json`.
+- Limits: Some preview dependencies are shared across pages. Windows remains deferred; other viewer resources remain open.
+
+### VIEWER-E347-REFRESH
+
+- Outcome: completed
+- Verified criteria: authenticated e347/d346 dataset and updated local wiki, preserving 21 topic payloads and 158 previous resource pages.
+- Evidence: protected unit `viewer-e347-refresh-yod_z36s`, 46 ROM literals, Chrome and 27 matching Python/Docker fixture files; guarded publication backup `out/ffta-e347-before-pc9mcctj`; `docs/changes/2026-11-27-refresh-viewer-e347.json`.
+- Limits: Live pointer behavior, ordinary execution and native Windows remain unverified; broader viewer work remains open. Initial unit `t3y3afqr` used an incorrect JSON enum assumption; corrected verification passed.
+
+### ROMDATA-04-EUR-BYTE-COPY-SCRATCH-RESTORE-LITERALS
+
+- Outcome: completed for all 22 E586 residual words and their controlled original EUR interpreter loads.
+- Verified criteria: e348-d347 extracts and serves the 88 bytes. All 22 original loads use typed reads with altered backing and exact serialized state and guest clock. All 264 mixed mirror reads and the raw gap pass. e347 attaches and incomplete e348 is rejected before replacement. The other 155 resource entries and prior copied lookup groups match.
+- Evidence: Combined Windows build `iffyfyqx` and Wine `e587-scratch-restore-literals-cli-wine-1ai5ud0i` PASS. All 16 input guards pass and the server drains. [Guide](../rom_data_runtime.md#e587-european-scratch-restore-literals-and-cli).
+- Limits: Live allocation and alias writers, save/restore ordering, ordinary/generated routes, BIOS, native Linux and USA remain open. Primary Terra xhigh setting unverified. No performance measurements.
+
+### ROMDATA-02-EUR-BYTE-COPY-SCRATCH-RESTORE-LITERALS-CLI
+
+- Outcome: completed for the standard European e348-d347 CLI lifecycle on Wine.
+- Verified criteria: Prepare from an empty root matches the verified manifest, updated packet and all 157 file hashes. Verify and reuse leave the same generation, file set, identities, hashes, modification times and selector.
+- Evidence: Default CLI from `iffyfyqx` and the same Wine unit `1ai5ud0i` PASS. The exact internal generation is retained in `8x8kiufl`. [Guide](../rom_data_runtime.md#e587-european-scratch-restore-literals-and-cli).
+- Limits: Ordinary use, generated execution, original BIOS, Linux, USA and native Windows remain separate. No performance measurements.
+
+### VIEWER-ITEM-PARAMETERS
+
+- Outcome: completed
+- Verified criteria: 31 bounded records show stored fields; authenticated European item selectors link both ways with localized names and filterable pagination.
+- Evidence: 17 tests `viewer-item-parameters-synthetic-yoolwrlr`; protected e347 unit `viewer-item-parameters-real-4bagrcjs` checked 376 item links, 31 records and source bytes in Chrome; 27 Python/Docker files matched. Published 21 ignored pages with preimages `out/ffta-item-params-before-tuxai27j`; `docs/changes/2026-11-27-browse-item-derived-parameters.json`.
+- Limits: Field meaning, live selection and outside-projection behavior remain unproved; unverified sources have no inferred links. Windows is deferred; broader viewer criteria remain open.
+
+### ROMDATA-01-EUR-BYTE-COPY-COUNTED-MESSAGE-CONTRACT
+
+- Outcome: completed for the two static EUR counted-copy contracts and their identified support words.
+- Verified criteria: Event zero copies 12 or 16 bytes per record from message +4, with the low-u16 count at +0x14. Wrapper and allocator narrowings yield `(92 + stride * count) mod 65536`, with nonwrapping ceilings 5,453 and 4,090. All four literals and one helper vector word are already owned in e348. The encoded entry scan finds the two callback literals and zero direct wrapper references in the scanned encodings.
+- Evidence: `wm8ubq4h` PASS with 24 guards and three retained E574 Wine attestations. Read-only `/root/sol_e588_counted_message_entry` requested as GPT-6.1 Sol xhigh. Its paired-setter scan found no lead and named a conditional stop at `08005a6c` as the prerequisite. Effective settings unverified. [Guide](../rom_data_runtime.md#e588-european-counted-message-copy-contract).
+- Limits: ROMDATA-01-EUR-BYTE-COPY-COUNTED-MESSAGE-PRODUCERS needs a positive-count event-zero record and original producer for each callback. Computed entries, real source/count domains, payload banks, ordinary/generated use, BIOS, Linux and USA remain open. No performance measurements.
+
+### ROMDATA-01-EUR-BYTE-COPY-CACHED-OBJECT-PRODUCERS
+
+- Outcome: completed for the two EUR cached-object setups and their immediate original producer and bounds contracts.
+- Verified criteria: The initializer stores at `02009188`, clears `0x1bd0` bytes and seeds its four-byte tail from `02002fc0`. One local allocation and two writers of `[03002810] + 0xc08` are resolved. The `0x1c10` context allocation fits and the `0x0f68` allocation falls short. Selectors 9 and 10 copy the tail back to EWRAM. The seed and vector are e348-owned. The two guarded tables have 21 targets and 84 unowned bytes, with 33 additional unowned literal words.
+- Evidence: Wine unit `m2fn_94l` PASS, 400 disassembled halfwords, 31 input guards and server drain. Guarded plan `fo895xwa` PASS with 32 guards. [Guide](../rom_data_runtime.md#e589-european-cached-object-copy-bank).
+- Limits: Pointer identity and tail last-writer observations, reachability of the smaller allocation, generated and ordinary execution, BIOS, Linux and USA remain open. No performance measurements.
+
+### VIEWER-AUDIO-REFERENCES
+
+- Outcome: completed
+- Verified criteria: Selected songs expose paginated, candidate-only references to exact timed source rows and slots, preserving flags, distinct source groups and bookmarks.
+- Evidence: Synthetic `gae1ekm7` 11/13; corrected bookmark wait `mkb33kr3` and timed-mix retry `dbdxtwd5` PASS. Protected e347 `5wm8kf2h` checked 1,142 source ranges, 569 rows and 570 candidates, Chrome and 26 Python/Docker files. Published 21 pages with preimages `out/ffta-audio-references-before-evrfn7k2`; `docs/changes/2026-11-27-browse-song-timed-references.json`.
+- Limits: Candidate IDs do not establish live use; original timing and audio fidelity, physical output and Windows remain unverified. Broader viewer work remains open.
+- Subsequent check: Workspace-wide project-memory coverage reported an unrelated concurrent runtime file pending its owner's record; metadata-only validation passed.
+
+### ROMDATA-04-EUR-BYTE-COPY-CACHED-OBJECT-TABLES
+
+- Outcome: completed for the European extracted tables and literal readers, e348 compatibility and default CLI publication on Wine.
+- Verified criteria: `e349-d348` serves 21 destinations and 33 support words across two resources, 216 bytes. Original dispatch reaches each destination and three bypasses. All 33 literal loads, 75 typed requests, identical serialized state and guest clock, 420 mixed mirror reads and two raw gaps pass. e348 attaches and its relabeled incomplete e349 is rejected before replacement. All 154 other resource entries match.
+- Evidence: Windows build `ctkdyxc5` and Wine unit `mdbpggu3` PASS. CLI creation, verification and reuse match all 157 files, identities, hashes and selector. All 17 guards pass and Wine drains. Current generation retained in `ryyko0b0`. [Guide](../rom_data_runtime.md#e590-european-cached-object-tables-and-literals).
+- Limits: Live source provenance and reachability of the smaller allocation, ordinary or generated execution, original BIOS, Linux, USA and native Windows remain open. No performance measurements.
+
+### VIEWER-FRAME-TEMPO
+
+- Outcome: completed
+- Verified criteria: Song and timed-source auditions, timeline and WAV export follow a frame-based tempo model by default; manual and continuous timing remain selectable and the setting survives song changes.
+- Evidence: Synthetic `q1i8siih` passed nine Chrome cases. Protected e347 command `jrgtis9i` authenticated 808 spans and compared 10,604 ticks in 88 cases, including 24 song headers, against 135,025 original Thumb instructions; the command passed but cleanup failed because the temporary root was not a Git repository. Protected recheck `j4qhcysn` passed with reused candidate, fresh driver/browser checks and 26 matching Docker/Python files. Audio page published with preimage and evidence `out/ffta-frame-tempo-before-xbsyxes0`; `docs/changes/2026-11-27-model-frame-based-song-tempo.json`.
+- Limits: Default multiplier and nominal frame cadence assumed; original mixer, live controls, effects, physical output and Windows remain unverified. `9ax5_huz` was interrupted on the external target and retains its lease; do not restart or clear it. The broader viewer remains open.
+
+### VIEWER-FRAME-PCM-ENVELOPE
+
+- Outcome: completed
+- Verified criteria: PCM auditions use frame-held attack/decay/sustain/release levels by default, including song and timed-source playback and WAV export; smooth and no-envelope modes remain selectable across songs.
+- Evidence: Synthetic `0jzed1v3` passed 11 Chrome cases. Protected EUR `bfzbdt8b` authenticated 736 spans and 429 tone words, compared 20,880 levels across 58 distinct PCM envelopes to a no-echo HLE model, rendered offline samples, scheduled a real PCM note and matched 26 Python/Docker files. Published the audio page with preimage and evidence `out/ffta-pcm-envelope-before-cbn5yxdz`; `docs/changes/2026-11-27-model-frame-stepped-pcm-envelope.json`.
+- Limits: Nominal frame phase and zero pseudo-echo are assumed; full original mixer, live channel changes, effects, physical output and Windows remain unverified. The broader viewer remains open.
+
+### ROMDATA-01-EUR-BYTE-COPY-INDEXED-EXCHANGE-SOURCES
+
+- Outcome: completed for the EUR indexed exchange source, bounded physical input model and e349 ownership join.
+- Verified criteria: Both selected callers build into the 1,024-byte context buffer at +0x204 and pass their signed count from +0x20c. Across all 130,472 physical metadata/item input pairs, the zero-mode ceiling is 181 of 256 entries. Two direction lists (6 bytes), two switch tables (72 bytes) and 13 literals (52 bytes) remain unowned in e349.
+- Evidence: Plan `8qonq3tc` PASS with 28 guards and E574 caller evidence. Wine retry `odifpwrw` PASS with 30 guards and server drain. All 1,916 halfwords match the plan. Initial timeout `_25x267l` drained. [Guide](../rom_data_runtime.md#e591-european-indexed-exchange-and-direction-lists).
+- Limits: Active pointers, IDs and following writes remain open. The ceilings are conditional on authenticated inputs and allocation. Extraction, ordinary/generated execution, BIOS, Linux and USA remain open. No performance measurements.
+
+### ROMDATA-04-EUR-BYTE-COPY-INDEXED-EXCHANGE-TABLES
+
+- Outcome: completed for European extracted direction lists, switch targets, support loads and standard CLI on Wine.
+- Verified criteria: `e350-d349` serves 130 new bytes across both direction lists, 18 destinations and 13 support words. Original interpreter checks cover 61 typed reads, five bypasses, full state and guest-clock equality, 204 mixed mirror reads and the unowned two-byte neighbor. e349 attaches and relabeling it as incomplete e350 is rejected before replacement. Other 153 resources match.
+- Evidence: Windows build `glaijg0o` and Wine `bqipxuqu` PASS, 17 guards and server drain. The default CLI creates, verifies and reuses the same 157 files and selector. Current generation retained in `mcafhefi`. [Guide](../rom_data_runtime.md#e592-european-indexed-exchange-tables-at-runtime).
+- Limits: Live buffer identity and metadata domains, ordinary and generated exchange execution, original BIOS, Linux, native Windows and USA remain open. No performance measurements.
+
+### VIEWER-FOCUSED-TEXT
+
+- Outcome: completed
+- Verified criteria: Short texts, fonts and keyboard load on a focused page, with index/navbar/resource links, local and combined search, preserved display settings and compatible existing bookmarks.
+- Evidence: Synthetic `6_2sozr2` passed 29 checks; `qmu47x3h` passed four targeted checks. Protected e347 `oh6bolmr` authenticated 677 source ranges, preserved existing scope payloads and 159 resource pages, checked Chrome and matched 27 Python/Docker outputs. Earlier `fudl9y7t` used a wrong 156-page fixture assumption; the corrected unit reused its candidate. Published 26 files with verified preimages `out/ffta-focused-text-before-txn15ise`; focused page 1,767,222 bytes versus 21,790,688 for combined search. `docs/changes/2026-11-27-focus-short-text-and-font-page.json`.
+- Limits: Combined search still loads its four text projections; glyph/substitution limits and Windows remain open. Four completed duplicate candidates were retired after byte-for-byte replacement checks and host activity review; 685.7 MiB of file blocks, receipts `out/ffta-viewer-duplicates-cleanup-21qvta_0`. Three process details were unreadable (sd-pam/ssh-agent); no claim of global inactivity. The broader viewer remains open.
+
+### ROMDATA-01-EUR-BYTE-COPY-FIVE-BYTE-LIST
+
+- Outcome: completed for the European original producer, directional readers and e350 source ownership.
+- Verified criteria: One 0x98a-byte allocation with 128 five-byte slots, two wrapped cursors and a 16-node registry. The full six-row ROM direction bank, five guarded switch targets and 30 literal words leave 164 bytes to extract.
+- Evidence: Wine `18_slpld` emits all 1,528 halfwords and drains. Corrected plan `1lt3a6fp` passes 18 input guards while reusing the Wine log. [Guide](../rom_data_runtime.md#e593-european-five-byte-list-and-direction-bank).
+- Limits: Live actor and owner slot identity, valid seed and cursor observations, runtime ownership, representative ordinary/generated execution, original BIOS, Linux, USA and native Windows remain open.
+
+### VIEWER-BATTLE-JOB-REFERENCES
+
+- Outcome: completed
+- Verified criteria: Battle sprite sheets show paged, filterable stored job references with verified localized names, retained language and direct links to the exact metadata row.
+- Evidence: Synthetic `5hofjxci` passed 20 checks. Protected e347 `owdfkcg_` authenticated six inputs and five ROM ranges, compared all 210 references, checked shared normal/alternate IDs in Chrome and matched 27 Docker/Python files. Published two ignored pages with preimages and receipts `out/ffta-battle-jobs-before-8iywf1en`.
+- Limits: References may be shared and do not establish live actor, job, palette or scene; unverified names are withheld. Windows and the broader viewer remain open.
+
+### VIEWER-SPLIT-BATTLE-CATALOGS
+
+- Outcome: completed
+- Verified criteria: Normal and alternate battle sprites load on separate navbar pages; existing alternate bookmarks redirect, and changing catalog retains preview and language controls.
+- Evidence: Synthetic `1xee6_cr` passed 19/21 tests; its fixture selected a null animation and a hash-change race affected a separate test. Corrected cases `cm2uwz_2` passed, plus 13 related checks `jz0agsys`. Protected e347 `9ldjwfz9` preserved 20 other scopes and 156 resources, checked Chrome and 28 identical Docker/Python files. Original battle page 18,447,874 bytes, normal 14,028,535 and alternate 5,216,729. Published 23 ignored pages with preimages `out/ffta-battle-split-before-k0hxyj5g`.
+- Limits: Preview accuracy, live roles and the broader wiki remain open; Windows deferred.
+
+### ROMDATA-04-EUR-BYTE-COPY-FIVE-BYTE-LIST-TABLES
+
+- Outcome: completed for European direction bank, state switch and support words on Wine.
+- Verified criteria: `e351-d350` serves 164 bytes from six direction rows, five switch destinations and 30 literal words. Both readers, two bypasses, 69 typed requests, state and clock equality, 384 mixed mirror reads, both neighboring owners and 36 trailing-byte reads pass. e350 attaches and incomplete e351 is refused before replacing it. Other 153 resource entries match.
+- Evidence: Windows build `4wko239g`, Wine `tvct974j` PASS with 17 input guards and server drain. The default CLI creates, verifies and reuses all 157 files. Current generation retained in `j6bvjbkq`. [Guide](../rom_data_runtime.md#e594-european-five-byte-list-tables-at-runtime).
+- Limits: Live seed, cursors, allocation and last writers, original ordinary and generated paths, original BIOS, native Windows, Linux and USA remain in the recovery checklist. Performance validation is deferred.
+
+### VIEWER-EVALUATION-PARAMETERS
+
+- Outcome: completed
+- Verified criteria: Authenticated European evaluation coefficients, bonuses and class thresholds are browseable, with separate diagnostic score and threshold calculators; unauthenticated inputs retain only stored fields.
+- Evidence: Synthetic `hoypkpto` passed 20 tests and 800 independent arithmetic cases. Protected e347 `h0dlklc6` authenticated two ROM ranges and 38 source bytes, checked 1,000 scores and 65 thresholds in Chrome, preserved 21 other scopes and 156 resource entries, and matched 27 Python/Docker files. Published 23 ignored pages with preimages `out/ffta-evaluation-before-u722enjh`.
+- Limits: Live input meanings, class selection and full game evaluation remain unproved; Windows deferred. Five completed viewer copies were retired only after hash-equal preimages and host/lease checks, releasing 628.8 MiB (`out/ffta-evaluation-duplicates-cleanup-42cb5tnd`). Three process details were unreadable (sd-pam/ssh-agent); no global inactivity claim. Parent audio and previews remain open.
+
+### ROMDATA-01-EUR-BYTE-COPY-STACK-PRODUCER-BANKS
+
+- Outcome: completed for the last two European stack producers in the E574 census and their e351 source owners.
+- Verified criteria: Eight scroll fields, all three direct selectors and the two setters; all 230 published palette program headers, 1,135 commands, 25 producer spans, 503 distinct opcode 12 records and both existing switches. Fifteen palette support and list words remain unowned (60 bytes).
+- Evidence: Wine `i952tupg` passes 35 guards and drains. It attests 1,276 new halfwords and matches 90 prior halfwords. Stage `o__h6xjg` retains the result. [Guide](../rom_data_runtime.md#e595-european-scroll-and-palette-stack-producers).
+- Limits: Live IWRAM last writers, palette flag order and dynamic programs, ordinary and generated paths, original BIOS, Linux, USA and native Windows remain open.
+
+### VIEWER-GLOBAL-NAME-SEARCH
+
+- Outcome: completed
+- Verified criteria: The navbar opens a lazily loaded, filterable and paginated localized name index, with direct item, action, verified metadata and exact region links. Missing names and unverified references are excluded.
+- Evidence: Synthetic `ue3v2v_r` passed 26 tests. Protected e347 `1tov3gy3` authenticated four files and three ROM ranges, checked 866 records across four categories and Chrome cross-page navigation, preserved 22 other scope payloads and 156 resources, and matched 28 Python/Docker files including the generated name asset. The asset is 191,135 bytes and loads on demand. Published 23 ignored pages and one ignored asset with preimages `out/ffta-name-search-before-35xegfz8`.
+- Limits: Unknown glyphs remain marked, region placement is conditional, and metadata names do not prove live roles. Native Windows and broader audio/previews remain open.
+
+### ROMDATA-04-EUR-PALETTE-TASK-LITERALS
+
+- Outcome: completed for the 15 European task and counted-list literals on Wine.
+- Verified criteria: e352 serves 60 new bytes. All 15 original loads use typed reads and match the original state and guest clock. The other 155 resources match e351. The 180 mixed mirror reads, e351 compatibility and incomplete e352 rejection pass.
+- Evidence: Windows build `8otaxay3` and Wine `8894ngti` pass. The standard CLI creates, verifies and reuses 157 files. Sixteen guards pass and the server drains. The new generation is retained in `ll6dkegp`. [Guide](../rom_data_runtime.md#e596-european-palette-task-literals-at-runtime).
+- Limits: Live scroll and palette inputs, dynamic program sources, ordinary and generated paths, original BIOS, Linux, USA and native Windows remain in the recovery checklist.
+
+### VIEWER-NAME-INDEX-ALL-NAMES
+
+- Outcome: completed
+- Verified criteria: Every indexed localized string matches the existing viewer's recognized-glyph label and source language selection.
+- Evidence: Protected e347 Chrome unit `8m_fx21h` compared all 4,330 indexed name strings (4,175 world and 155 region) with zero mismatches; receipt `out/ffta-name-search-before-35xegfz8/all-names-result.json`.
+- Limits: Comparison preserves the existing glyph mapping and does not establish unknown glyphs, live roles, placements or Windows behavior; the broader viewer remains open.
+
+### ROMDATA-01-EUR-BIOS-LZ77-DB09C-BANK
+
+- Outcome: completed for the three additional European type-3 tilemap rows and two original list callers.
+- Verified criteria: Authenticates the five-row and six-row alternatives, both two-row paths at `39a710` and the one-row path at `39a728`. All 825 E481 rows and linked inputs are owned in e352. The additional three rows, three descriptors, wrapper, stream and three directory words leave 322 bytes to integrate. The E174 live trace matches its existing row.
+- Evidence: Wine `t889c308` attests 452 additional halfwords, passes 38 guards and drains. Stage `gav7tqyy` retains the source plan. [Guide](../rom_data_runtime.md#e597-european-tilemap-transfer-list-bounds).
+- Limits: Live selection, queued writes, other computed sources and the type-1 producer, original BIOS, Linux, USA and native Windows remain open.
+
+### VIEWER-REFRESH-E352
+
+- Outcome: completed
+- Verified criteria: The ignored local wiki uses the verified EUR e352/d351 generation, with four updated resource files, the existing views and on-demand name search. Old resource links remain available.
+- Evidence: Protected `obqvu6ow` authenticated 3,912 ROM ranges, preserved 22 topic payloads and 156 resource entries, exercised Chrome and matched all 173 generated Python/Docker files. Published 23 pages, four new resource pages and the merged marker with preimages `out/ffta-e352-before-q3wjyxj6`; all 159 previous resource pages remain.
+- Limits: The four updated engine resources have generic inspectors; live meaning and broader previews/audio remain open. Windows deferred. Thirteen PASS viewer copies were retired after matching retained backups and host/lease checks, releasing 1,737.6 MiB (`out/ffta-e352-duplicates-cleanup-xeht96br`). Three process details were unreadable (sd-pam/ssh-agent); no global inactivity claim.
+
+
+### ROMDATA-04-EUR-TILEMAP-COUNTED-TYPE3-LISTS
+
+- Outcome: completed for the counted European type-3 transfer lists on Wine.
+- Verified criteria: e353 serves all 322 E597 residual bytes from two extracted files. The six original list setup paths, one zero-count branch and three original SWI call paths with BIOS HLE pass. The outputs total 2,232 bytes with equal machine states and guest clocks. The 132 mixed mirror reads, e352 attachment and incomplete e353 rejection pass. The other 154 resources match.
+- Evidence: Windows build `524srhho` and Wine `jf_6_agl` pass. The CLI prepares, verifies and reuses 157 files. Sixteen protected inputs pass, the server drains and the lease is released. e353 is retained in `myupox0_`. [Guide](../rom_data_runtime.md#e598-european-counted-type-3-transfers-at-runtime).
+- Limits: Ordinary scene producers, queued writes, generated paths, other computed roots, original BIOS, Linux, USA and native Windows remain open. Primary Terra xhigh setting remains unconfirmed.
+
+### VIEWER-ACTION-SLOT-LINKS
+
+- Outcome: completed
+- Verified criteria: The wiki browses all 211 four-byte records, optional callback source tables and action callback words. Authenticated links follow only the first three documented action selectors, with paginated localized reverse references.
+- Evidence: Synthetic `2q5a0oih` passed 24 tests; `avhywubm` passed the final optional-callback cases. Protected e352 `z15qj5zj` reconstructed all 844 slot bytes, 107 callback words and 93 callback records from six ROM ranges, checked 1,041 references to 194 records and Chrome navigation, preserved 21 other scope payloads and 156 resources, and matched 29 Python/Docker files. Published 23 ignored pages with preimages `out/ffta-action-slots-before-xz84ixn3`.
+- Limits: Source references do not prove live action effects or availability, the fourth inline byte is not linked, and callback addresses are not executed. Windows and the broader audio/previews remain open.
+
+### LOCAL-ARTIFACT-HYGIENE-EXTERNAL-OUT-20261127
+
+- Outcome: completed
+- Verified criteria: copied and reconciled the project's `out` to a separate external ext4 image; the metadata inventory matched. The authenticated cutover bound the copy at the original path and removed the internal original. The disk reported 24 GiB free. Current target and output binds are read-write; their hidden mountpoints are empty and protected. Systemd and udev configuration checks passed.
+- Evidence: user terminal output; host `findmnt`, filesystem identity, free-space and dependency checks; external `FFTARecomp-out-20261127/copy.log`, `reconcile.log` and `reconcile-success`; `docs/changes/2026-11-27-external-output-workstation-mount.json`.
+- Limits: no full byte comparison, reboot or physical reconnect was performed. The external disk is required. The Oct 26 cleanup remains interrupted.
+
+### VIEWER-COND8
+
+- Outcome: completed
+- Verified criteria: All 127 conditional source slots are browsable and filterable. Authenticated European data includes readable predicate descriptions and a fixed-state diagnostic; unverified data remains raw.
+- Evidence: Synthetic `9ba0k1pv` passed 20 tests, including 1,500 independently modeled cases. Protected e352 `apxnqiol` reconstructed all 1,016 source bytes, identified 76 nonzero gates and 105 stored live references, compared 2,032 diagnostic cases, exercised Chrome, preserved 21 other scopes and 156 resources, and matched 27 Python/Docker files. Published 23 ignored pages with preimages `out/ffta-cond8-before-nevc6pr_`.
+- Limits: The diagnostic assumes fixed supplied state; original repeated reads and game-specific meanings are not established. Windows and the broader viewer remain open.
+
+### LOCAL-ARTIFACT-HYGIENE-DISK-AUDIT-20261127
+
+- Outcome: completed
+- Verified criteria: read-only allocation and creation-time audit following the earlier 133 GiB free baseline. The internal disk has about 24 GiB free after the output move. Approximately 69.7 GiB of current recently created file allocations are in another project's mobile build copies; six intermediate directories account for 14.43 GiB. Approximately 22.3 GiB of current recent allocations are in containerd, 10.9 GiB in snapshots and 6.0 GiB in a portable project copy with private data. Root workspace files created after the baseline account for about 3.8 GiB excluding external mounts. Cold-storage duplicate-sharing preview found no candidates.
+- Evidence: live `df`, `findmnt`, `du`, `docker system df`, selected build-result metadata and deduplicated Linux statx birth-time aggregates; temporary `ffta-audit-*-statx.json` reports; current task conversation.
+- Limits: file birth-time allocations are not net growth; copies, deletions and shared links affect the comparison. Some protected snapshot and containerd directories were unreadable, making their aggregates lower bounds. No file content was compared and no user data was deleted. The earlier Oct 26 cleanup and output reconnect after reboot remain open.
+
+
+### ROMDATA-01-EUR-BIOS-LZ77-208CE-CALLER-CENSUS
+
+- Outcome: completed for the known European 080208ce input paths and their state table.
+- Verified criteria: Both callers load state fields +4 and +0x20. The generic writer takes the incoming base and the descriptor-based writer uses the first relative variant word. All 162 variant fields are zero. The 14-entry table and both base words total 64 bytes with zero e353 owners.
+- Evidence: Wine `v7dgs0xl` attests 2,011 halfwords, matches 1,283 prior lines, preserves 18 inputs and drains. The one unaligned entry-pattern hit lies inside an owned halfword stream. [Guide](../rom_data_graphics.md#e599-european-background-relative-lz77-inputs).
+- Limits: `ROMDATA-01-EUR-BIOS-LZ77-208CE-TABLE` still needs an original nonzero variant or generic base. Computed and indirect pointers, LZ77 extents, ordinary execution, Linux, USA and native Windows remain open.
+
+### VIEWER-PACKED-PAIRS
+
+- Outcome: completed
+- Verified criteria: independent indexed and global two-bit matrices, bank/record selection, source bytes and authenticated low/high reader bits; unverified sources remain raw. Scope, navigation and local publication preserved.
+- Evidence: synthetic `viewer-pairs-synthetic-1g0n26br` 13 checks; protected e352 `viewer-pairs-real-k5sw6170` 1,307 ROM bytes, 15,684 matrix cells, Chrome and 28 Python/Docker files PASS; 23-page publication `out/ffta-pairs-before-kvnjoowb`. `docs/changes/2026-11-27-browse-packed-pair-sources.json`.
+- Limits: meanings, owners, live state, other viewer resources, audio fidelity and Windows remain open; no runtime claim.
+
+
+### ROMDATA-04-EUR-BACKGROUND-VARIANT-STATE-DISPATCH
+
+- Outcome: completed for the 14-state European dispatcher on Wine.
+- Verified criteria: e354 serves the 56 destination bytes and eight literal bytes from the existing resources. All 14 selected targets, two out-of-range guards, 44 typed reads, 24 mirror reads, e353 attachment and incomplete e354 rejection pass. The other 154 resources match and the CLI creates, verifies and reuses 157 files.
+- Evidence: Cargo build `c7yntn_u` finishes both binaries. Receipt recovery `1ismmmeo` authenticates them after the staging Git discovery error. Wine `w41te2k6` passes 16 guards and drains. The verified e354 generation is retained in `gd1g_9cz`. [Guide](../rom_data_graphics.md#e600-european-background-variant-state-dispatch).
+- Limits: Ordinary and generated routes, the original LZ77 base and extents, original BIOS, Linux, USA and native Windows remain open. Primary Terra xhigh setting remains unconfirmed.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-V78-20261127
+
+- Outcome: completed
+- Verified criteria: removed only generated intermediates from one completed mobile build after a host activity check, recovering 9.97 GiB. The final package, protected intermediary bundle, source, dependencies and other active builds remained untouched.
+- Evidence: successful original build log, preview and local cleanup receipt `memoriaviva-intermediates-v78-cleanup-20261127.json`; source package identities checked before and after; `df`.
+- Limits: removed intermediate files require recompilation if that historical build is repeated. Other builds, the Oct 26 unit and the output reconnect check remain open.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-V34-20261127
+
+- Outcome: completed
+- Verified criteria: removed only generated intermediates of the completed historical mobile build after a host activity check, recovering 4.89 GiB. Twenty final/protected files, source, dependencies and other active builds were preserved.
+- Evidence: original successful build logs, preview and local cleanup receipt `memoriaviva-intermediates-v34-cleanup-20261127.json`; package identities checked before and after; `df`.
+- Limits: repeating that historical build requires recompilation. Other builds, the Oct 26 unit and the output reconnect check remain open.
+
+
+### ROMDATA-01-EUR-TYPE2-PHYSICAL-BANK-CENSUS
+
+- Outcome: completed for the aligned physical European type-2 rectangle bank.
+- Verified criteria: Full-ROM scan follows nonempty counted lists and bounds every rectangle and row window. All 294 row/copy definitions match E483, including 260 headers, 545 entries and 205 full rectangles. E354 covers all 15,120 bytes once. Its packed type-2 file matches 14,758 authenticated source bytes.
+- Evidence: Wine `l3jzyugd` matches the independent ownership projection, preserves 16 inputs and drains. [Guide](../rom_data_runtime.md#e601-european-physical-type-2-rectangle-bank-census).
+- Limits: Indirect and RAM-built rows, ordinary/generated paths, Linux, USA and native Windows remain open. E483 retains original-reader evidence.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-THREE-BUILDS-20261127
+
+- Outcome: completed
+- Verified criteria: removed only generated intermediates of three completed historical mobile builds after host activity checks, recovering about 3.74 GiB. Each final APK, source, dependencies and other active builds were preserved.
+- Evidence: successful build logs and local `memoriaviva-intermediates-v79-stop`, `v55-rubrica` and `v54-queue` cleanup receipts dated 20261127; package identities checked before and after; `df`.
+- Limits: repeating those historical builds requires recompilation. Other builds, the Oct 26 unit and output reconnect check remain open.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-HISTORICAL-20261127
+
+- Outcome: completed
+- Verified criteria: removed only generated intermediates of 11 independently reviewed completed mobile builds after host activity checks. Final APKs, protected intermediate packages, sources, dependencies and active build trees were preserved. Along with earlier reviewed builds, the operation recovered approximately 27.4 GiB and the internal disk reported 49 GiB free.
+- Evidence: original successful build logs, per-build previews and local `memoriaviva-intermediates-server*` and `brand` cleanup receipts dated 20261127; package identities checked before and after; `df`.
+- Limits: repeating those builds requires recompilation. Active builds and other unreviewed/failed scopes remain preserved. The Oct 26 unit and output reconnect check remain open.
+
+
+### ROMDATA-01-EUR-TYPE45-PHYSICAL-BANK-CENSUS
+
+- Outcome: completed for the aligned physical European type-4 and type-5 stream bank.
+- Verified criteria: The whole-ROM scan matches E484's 136 type-4 and nine type-5 rows and all 137 descriptors. Token parsing matches all 78 E457 extents. E354 owns 12,472 control and encoded bytes once. All 210 raw bank bytes are inter-stream or byte-token alignment.
+- Evidence: Wine `4izg3cjr` matches the independent ownership projection, preserves 25 inputs and drains. The two packed files match their source ranges. [Guide](../rom_data_runtime.md#e602-european-physical-type-4-and-type-5-stream-census).
+- Limits: Mode 3 and other formats, indirect or RAM-built rows, ordinary and generated paths, Linux, USA and native Windows remain open. E484 retains controlled original dispatcher proof.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-NATIVE-FIVE-20261127
+
+- Outcome: completed
+- Verified criteria: removed only native build caches from five completed, host-checked mobile builds and recovered approximately 2.98 GiB. Twenty-five protected packages were inspected; final packages, sources and downloaded dependencies were preserved.
+- Evidence: completed build logs, preview, host activity checks and five `memoriaviva-cxx` cleanup receipts dated 20261127; package identity checks; `df`.
+- Limits: repeating the builds requires recompilation. Active builds and unreviewed or failed scopes remain preserved. The Oct 26 unit and output reconnect check remain open.
+
+### VIEWER-LAZY-TEXT
+
+- Outcome: completed
+- Verified criteria: combined text search loads selected local archive assets on demand, links to focused entries, preserves saved preferences and legacy bookmarks, and reports/retries missing assets. Compact resource rows preserve links to focused source details.
+- Evidence: `viewer-lazy-text-synthetic-ezweg958` 18 tests; e352 `viewer-lazy-text-real-cc544fov` four source hashes, five real search comparisons, 21 unchanged scope payloads, 156 resources, Chrome and 35 Python/Docker files PASS. Search page 21,840,761→773,537 bytes; 23 pages/four assets published with preimages `out/ffta-lazy-text-before-jd_m6y94`. Initial `5o9u6nxj` exposed 5,977,429-byte manifest metadata and was corrected. `docs/changes/2026-11-27-load-combined-text-search-on-demand.json`.
+- Limits: searching all archives loads all four assets on request; partial glyph map, dynamic substitutions, other previews/audio fidelity and Windows remain open.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-NATIVE-HISTORICAL-20261127
+
+- Outcome: completed
+- Verified criteria: removed only native compilation caches from 11 previously reviewed completed mobile builds after host activity checks. Their final APKs, sources, dependencies and active build trees remained preserved. Across 16 reviewed builds and 32 cleanup receipts, approximately 31.22 GiB was recovered; the internal disk reported 53 GiB free.
+- Evidence: build success logs, guarded previews and host checks, 32 local `memoriaviva-intermediates-*` and `memoriaviva-cxx-*` cleanup receipts dated 20261127; package identities checked before and after; `df`.
+- Limits: repeating cleaned builds requires recompilation. Recently active and unreviewed or failed build scopes were not cleaned. Concurrent activity affects disk-free deltas. The Oct 26 unit and output reconnect check remain open.
+
+
+### ROMDATA-01-EUR-CPUFASTSET-DIRECT-BANKS
+
+- Outcome: completed for the local European direct Thumb operand census.
+- Verified criteria: The 91 `0814522c` call patterns yield 48 stack sources, 43 register-fed sources, 53 local destinations and 65 local controls. Of 82 distinct operand words, e354 leaves 65 words and 67 readers outside declared ownership.
+- Evidence: Wine `2g9k5cxn` attests 2,727 halfwords and all destination/control LDRs, passes 19 input guards and drains. [Guide](../rom_data_graphics.md#e603-european-cpufastset-direct-operands).
+- Limits: Register-fed payloads, unresolved controls, indirect and inline calls, ordinary/generated execution, original BIOS, Linux, USA and native Windows remain open.
+
+### VIEWER-REFRESH-E354
+
+- Outcome: completed
+- Verified criteria: regenerate the local wiki from retained verified e354-d353, preserve topic views and prior resource links, expose the newly decoded graphics stream and keep lazy assets working.
+- Evidence: protected `viewer-refresh-e354-real-a7kr8m_o` authenticates 6,453 ROM ranges including 14 new/386 bytes, independently decodes the 246-byte LZ77 input into 448 bytes and checks its Chrome pixels and on-demand catalog. It preserves 21 other topic payloads, 156 entries, 163 old resource pages and lazy name/text assets; all 177 Python/Docker files match. Guarded publication `out/ffta-e354-before-jb_rrx0h`; `docs/changes/2026-11-27-refresh-viewer-e354.json`.
+- Limits: live graphic selection, full composition, additional previews/audio fidelity and native Windows remain open.
+
+
+### ROMDATA-04-EUR-CPUFASTSET-DIRECT-LITERALS
+
+- Outcome: completed for the 65 European direct CpuFastSet operand words on Wine.
+- Verified criteria: E355 serves all 260 source bytes and preserves the other 155 resources and prior literal groups. All 67 original loads, two original SWI call paths through BIOS HLE, 2,688 VRAM bytes, 780 mirror reads, e354 attachment and incomplete e355 rejection pass.
+- Evidence: Windows build `f8hdgz37` and Wine `k_p61bks` PASS. The CLI creates, verifies and reuses 157 files. All 16 inputs pass and the server drains. E355 is retained in `bjcv0w7e`. [Guide](../rom_data_graphics.md#e604-european-cpufastset-literals-at-runtime).
+- Limits: Register-fed sources, other operand domains, ordinary/generated routes, original BIOS, Linux, USA and native Windows remain open. Primary Terra xhigh setting remains unconfirmed.
+
+
+### WINE-E158-HOST-ACCESS
+
+- Outcome: completed for the reported lease and current managed Wine access.
+- Verified criteria: The historical aadspz22 recovery authenticates the failure receipt and prefix owner and records a successful host server drain. Both E158 leases are absent. E158 htdztv4y and E604 k_p61bks passed. The new minimal host Wine smoke dt5zadty passed both input guards, wrote explicit PASS, drained and released its lease. Successful scratch was removed.
+- Evidence: `target/validation/lease-recovery/e158-sparse-ordinary-aadspz22/recovery.json`, `target/validation/units/wine-e158-host-access-dt5zadty/unit-result.json`, and [the Wine runner guide](LOCAL_ARTIFACTS.md#default-lifecycle-for-new-validation).
+- Limits: The sandbox runtime directory is read-only. Automatic review timed out before the first launch and approved the single scoped retry. The previous failure receipt and unrelated leases were preserved. No ROM execution, Linux/USA checks or performance measurements in this verification.
+
+### VIEWER-AUDIO-LFO
+
+- Outcome: completed
+- Verified criteria: bounded tick-based pitch, volume and pan modulation in song, WAV and timed auditions; decoded controls and persistent toggle; existing mute behavior retained.
+- Evidence: `viewer-lfo-synthetic-89w8n4fh` ten tests, including 500 independent tick traces and live/WAV/timed scheduling. Protected e354 `viewer-lfo-real-x3ovsy1g` authenticates 2,693 ranges, four command targets and 20 original instruction halfwords; counts 1,066 commands, checks two real tracks in Chrome and matches 28 Python/Docker files. Twenty-two topic payloads/lazy assets retained; 23 pages published with preimages `out/ffta-lfo-before-f3wpyaxr`. `docs/changes/2026-11-27-preview-sequence-track-modulation.json`.
+- Limits: resolved preview notes stand in for successful live allocation; browser mixing, physical output, additional previews and Windows remain unverified.
+
+
+### ROMDATA-01-EUR-LARGEST-REMAINING-BANKS
+
+- Outcome: completed for ranking e355 physical gaps and proving the largest source-backed bank found there.
+- Verified criteria: E605 reuses the same-ROM e333 code atlas and separates 2,504,912 long uniform bytes from the current residual. In the 179,314-byte leading gap, the original 25-row directory accounts for 147,008 tile bytes and 30,000 map bytes. The descriptor table and two root words add 308 bytes. Both original queued DMA paths are attested. The production ownership CLI confirms zero declared owners for all 177,316 bytes.
+- Evidence: Wine `e605-eur-background-effect-bank-wine-wqdh1ko9`, ten protected inputs, 311 original halfwords and server drain PASS. [Source contract](../rom_data_graphics.md#e605-european-background-effect-graphics-bank).
+- Limits: Extraction, runtime, ordinary message selectors and other large gaps remain open. Linux, USA and native Windows are deferred. No performance measurements. Primary Terra xhigh settings were not independently confirmed.
+
+### LOCAL-ARTIFACT-HYGIENE-MV-OFFLINE-WORKSPACE-20261127
+
+- Outcome: completed
+- Verified criteria: MemoriaViva Android APK and Play AAB use one locked local workspace and reuse the existing SDK, Gradle/Maven inputs, FFmpeg and one npm tree. Both synthetic builds passed without network access. APK identity, test certificate, ARM64 and ZIP alignment passed. Bundletool verified the unsigned AAB, identity and three ABIs. Compact mode removed only generated build outputs, leaving 0.89 GiB in the workspace. A repeat preparation reused the Android project and npm tree after compaction.
+- Evidence: MemoriaViva `bin/build-mobile-android` and `docs/sviluppo-e-test.md`; local logs in `/tmp/mv-android-reuse-validation.gImXzRNi/`; APK/AAB test files retired after validation.
+- Limits: tests used a synthetic backend and did not cover device installation or Play signing. Existing historical build scopes and shared caches were preserved. Oct 26 cleanup and FFTA output reconnect remain separate.
+
+### VIEWER-CGB-SQUARE-ENVELOPE
+
+- Outcome: completed
+- Verified criteria: extracted CGB square attack/decay/sustain/release in live, timed and WAV previews, independent persistent checkbox and mute/PCM compatibility; 23 local pages safely published.
+- Evidence: `docs/changes/2026-11-27-preview-cgb-square-envelopes.json`; synthetic `viewer-cgb-envelope-synthetic-8h613hd5` and protected EUR `viewer-cgb-envelope-real-x_eltxpp` PASS; preimages `out/ffta-cgb-envelope-before-45qx2r6i`.
+- Limits: normalized gain and 64 Hz clock phase approximate; dynamic channel gain/allocation, wave and standalone instrument envelopes, full mixer and physical sound remain unverified. Windows deferred. Parent remains partial.
+
+### VIEWER-LAZY-PCM-WAVES
+
+- Outcome: completed
+- Verified criteria: split audio pages load individual PCM assets on demand, preserving offline playback, WAV, cancellation, retry, selected tracks, focus and existing single-page behavior. Guarded publication updated 23 pages and 277 assets.
+- Evidence: `docs/changes/2026-11-27-load-pcm-waves-on-demand.json`; synthetic `viewer-lazy-pcm-synthetic-qpn83sv1`, focused `viewer-lazy-pcm-extra-7evua0_i` and protected e354 `viewer-lazy-pcm-real-k1e_d1w0` PASS; preimages `out/ffta-lazy-pcm-before-an9r53tb`.
+- Limits: selected song tracks still preload their required PCM waves; full audio fidelity and other viewer resources remain open, native Windows deferred. Parent remains partial.
+
+
+### ROMDATA-04-EUR-BACKGROUND-EFFECT-GRAPHICS
+
+- Outcome: completed for the entire E605 physical bank and controlled EUR/Wine execution.
+- Verified criteria: E356 publishes 177,316 bytes in five source ranges and preserves all 156 earlier resource identities. Original descriptor selection and queues transfer 177,008 payload bytes for all 25 descriptors with inverted ROM backing. The 100 word transfers and 500 halfword rows preserve gaps and edges, with exact guest state and clock equality. All 630 boundary and mirror checks pass. E355 attaches and both invalid candidates leave the active binding intact. Standard CLI creates, verifies and reuses 158 files.
+- Evidence: Build `5nd_54ih`, Wine `q0itfso_` with 16 input guards and server drain, stage `8einoir0`, and [E606](../rom_data_graphics.md#e606-european-background-effect-graphics-at-runtime). Initial build `kzqzvp8s` failed on a legacy budget test call and the corrected build passed.
+- Limits: Controlled original interpreter execution. Ordinary triggers, live selectors, generated paths, Linux, USA, native Windows and other banks remain open. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-LAZY-SPRITE-BLOCKS
+
+- Outcome: completed
+- Verified criteria: split battle and script-actor pages load selected sprite tile blocks on demand; animation, cancellation, retry, palette and existing references remain available. Guarded publication updated 23 pages and 118 assets.
+- Evidence: `docs/changes/2026-11-27-load-sprite-tiles-on-demand.json`; synthetic `viewer-lazy-sprite-synthetic-bjdgcvk4`, protected e354 `viewer-lazy-sprite-real-h8dfovay`, exact pixels `viewer-lazy-sprite-pixels-agydzq3r` PASS; preimages `out/ffta-lazy-sprite-before-bpj8fef5`.
+- Limits: playback loads all blocks in the selected sequence; opcode-39 and other sprite families remain inline, live composition and Windows unverified. Parent remains partial.
+
+
+### ROMDATA-01-EUR-LARGE-GAP-4190C0
+
+- Outcome: completed for the localized indexed OBJ physical bank and its three direct tile companions.
+- Verified criteria: The original five-language table gives 130 bank pairs, and a separate constructor supplies three more with custom tile streams. The source plan bounds all 188 sequences, 4,435 frames, 2,935 object lists and three tile streams. Of 115,349 projected bytes, e356 covers 1,479 across four prior owners, leaving 113,870. The entire 85,128-byte physical gap is classified as 82,086 data bytes and 1,521 two-byte alignment gaps.
+- Evidence: Wine `e607-eur-localized-indexed-obj-bank-wine-p7pw699j` verifies 429 original halfwords, CLI ownership and 12 input guards and drains the server. [E607](../rom_data_obj.md#e607-european-localized-indexed-obj-animation-banks).
+- Limits: Source proof only. Publication, interpreter and generated execution, ordinary selectors and deferred platforms remain on the recovery checklist. No performance measurements. Primary Terra xhigh settings were not independently confirmed.
+
+### VIEWER-E356-BG-EFFECTS
+
+- Outcome: completed
+- Verified criteria: refresh local wiki to verified e356 and browse all 25 background-effect tile blocks/maps with inspectable cells, manual palettes, missing-tile highlighting, optional ordered playback and preserved existing assets.
+- Evidence: `docs/changes/2026-11-27-browse-european-background-effects.json`; synthetic `viewer-bgfx-synthetic-m_6a25g7` and protected EUR `viewer-bgfx-real-ei45gd6n` PASS; guarded preimages `out/ffta-bgfx-before-o76ky4_u`.
+- Limits: tile base is an adjustable assumption, shared tiles and live palette/order/scene are unresolved; Windows deferred. e357 extraction in progress. Parent remains partial.
+
+### VIEWER-E356-EFFECT-SHARED-TILES
+
+- Outcome: completed
+- Verified criteria: Effect maps combine their local tiles with an optional user-selected source and tile base; local priority, flips, palettes, cell details and playback settings are preserved.
+- Evidence: synthetic `viewer-bgfx-shared-synthetic-6b45l8t1` 25 checks; protected e356 `viewer-bgfx-shared-real-12m0726h` compared 614400 RGBA bytes, retained 23 scoped payloads and 169 resource pages, and matched 573 Docker/Python outputs. Published 23 pages with preimages `out/ffta-bgfx-shared-before-gwdwp1dc`. `docs/changes/2026-11-27-combine-background-effect-shared-tiles.json`.
+- Limits: Source, palette and scene pairing are manual and unverified; native Windows and broader viewer work remain open. The initial real check `_i6sque6` incorrectly compared an omitted metadata field; the corrected check passed.
+
+
+### ROMDATA-04-EUR-LOCALIZED-OBJ-ANIMATION-BANKS
+
+- Outcome: completed for E607's entire residual projection and controlled original EUR/Wine paths.
+- Verified criteria: E357 adds a 113,870-byte file with 2,308 spans and preserves all 157 e356 resources. The original setup selects 130 localized descriptors, the timed reader selects all 4,435 frames, and eight draws and three tile uploads pass. The altered-ROM machine reads 48,686 bytes from the resource on those paths. Full state, guest clock, full-span reads and 882 mixed mirror checks pass. E356 attaches and both invalid candidates leave the active binding intact. The CLI creates, verifies and reuses 159 files.
+- Evidence: Corrected Windows build `xx2f77c7`, Wine `ifo9p3mq` with 19 input guards and server drain, and retained stage `ess2dbrn`. Initial Wine `l4iibkq_` created the dataset and reproduced the original renderer culling an off-screen test object. The corrected run centers one object and verifies the same dataset. [E608](../rom_data_obj.md#e608-european-localized-obj-animation-bank-extraction).
+- Limits: Ordinary mode and tile archive use, generated execution, Linux, USA, native Windows and other banks remain open. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-JSON-DEEP-SEARCH
+
+- Outcome: completed
+- Verified criteria: Nested JSON field/value search across file or subtree, bounded pagination, direct navigation, cancellation and file replacement, retaining existing array filters.
+- Evidence: `viewer-deep-json-synthetic-d79ymiyx` 12 tests, protected e356 `viewer-deep-json-real-jnmjkl8b` 128/412 real matches and 573 identical Python/Docker files. Published 170 pages/marker with preimages `out/ffta-deep-json-before-n6plagou`, preserving 23 legacy pages. `docs/changes/2026-11-27-search-nested-extracted-json.json`.
+- Limits: 8 MiB structured file limit, 1000 results, 256 levels and browser number precision; Windows and broader viewer remain open. Synthetic `pyd8t82i` used the wrong Chrome entry page; corrected run passed.
+
+
+### ROMDATA-01-EUR-LARGE-GAP-6CD966
+
+- Outcome: completed
+- Verified criteria: E609 bounds five indexed tile blocks and five dimensioned screen maps. The 72,054-byte gap consists of 71,978 reader-consumed bytes, a 74-byte extra sentinel row and two alignment bytes. Directory and reader literals add 102 bytes.
+- Evidence: Wine `e609-eur-background-screen-banks-wine-6joa2moh` verifies 213 original halfwords, 72,080 unowned e357 bytes, 11 input guards and server drain. First launch `wt2bzfa6` used a relative script path; corrected absolute paths passed. [E609 source contract](../rom_data_graphics.md#e609-european-background-screen-banks).
+- Limits: Runtime attachment, ordinary and translated execution, separate extra-row use, flagged tile 1023 sources and deferred platforms remain open. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-E357-LOCALIZED-OBJ
+
+- Outcome: completed
+- Verified criteria: Reconstruct all 133 e357 localized/direct banks from authenticated extracted owners and preview 188 sequences/4435 frames with existing controls and three decoded graphics sources. Refresh the local wiki and preserve earlier resources/links.
+- Evidence: `viewer-e357-projection-3q5fi0k7` checked 2308 ranges and every index/sequence/list against original source; `viewer-e357-synthetic-faahz7xi` passed 17 tests; `viewer-e357-real-gkaul4s0` checked six real banks and matched 574 Python/Docker files. `viewer-e357-visual-iybqjbhq` matched 349664 RGBA bytes and three independently decoded streams. Published 25 pages/marker with preimages `out/ffta-e357-before-3mxjmdl7`. `docs/changes/2026-11-27-preview-e357-localized-obj-animations.json`.
+- Limits: Graphics/palettes are manually selected; live scene selection, original task timing, unsupported OBJ modes and Windows remain unverified. Broader viewer work remains open.
+
+### VIEWER-E358-SCREEN-BANKS
+
+- Outcome: completed
+- Verified criteria: Five source-authenticated screens show 3157 cells and 65664 tile bytes with manual 4/8-bit decoding, palettes, exact 03FF replacement, flags and source/destination inspection; previous wiki content and links preserved.
+- Evidence: `viewer-e358-synthetic-8tjy9w2q` 19 tests; `viewer-e358-source-visual-8prc_syk` and `viewer-e358-real-6yl44929` checked ten original source ranges, 158 prior resources and 1616384 RGBA bytes; 575 Python/Docker outputs match. Published 25 pages/marker with preimages `out/ffta-e358-before-1nm3r21b`. `docs/changes/2026-11-27-preview-e358-background-screen-banks.json`.
+- Limits: E358 staging `ubj4_m27` failed in separate Wine reader fixture `g1iu0n_6`; source-level viewer checks do not establish runtime acceptance. Actual tile mode, palettes, scene use and Windows remain open. Initial synthetic `5fl81rb9` expected the wrong guard for an overlapping test range; corrected test passed.
+
+
+### ROMDATA-04-EUR-BACKGROUND-SCREEN-BANKS
+
+- Outcome: completed
+- Verified criteria: E610 e358 publishes and serves the entire 72,080-byte E609 projection. Five original map builders, 18 tile DMA chunks, five map DMA uploads, 103,460 managed reads by byte count, 1,260 mixed mirror cases, full state and guest clock pass with altered ROM backing. The excluded row remains raw and has no effect in these cases. The original CLI creation, verification and reuse cover 160 files and preserve all 158 e357 resources. E357 attaches, and two invalid candidates preserve the active binding.
+- Evidence: Build `31sqp8tj`, Wine `01bkwwt1` with 19 guards and server drain, retained stage `ol67qzpt`, and [E610](../rom_data_graphics.md#e610-european-background-screen-banks-at-runtime). Build `xroll0lg` had a test-only digest import error. Wine `g1iu0n_6` reached the cartridge startup because the test used the shared helper's return marker; consultant `/root/sol_screen_upload_escape` identified the exact LR mismatch. The corrected run reuses the original CLI generation.
+- Limits: Live selector provenance, ordinary and translated readers, the extra row's separate consumers, flagged tile 1023 graphics, Linux, USA and native Windows remain open. Sol GPT-6.1 xhigh was requested; effective settings for Sol and Terra were not independently confirmed. No performance measurements.
+
+
+### ROMDATA-01-EUR-LARGE-GAP-1ECCA5
+
+- Outcome: completed
+- Verified criteria: The four physical tone arrays contain 499 records with 285 distinct PCM and eight distinct CGB wave blocks. Two referenced PCM waves account for 30,700 bytes of the 30,707-byte gap, plus seven zero alignment bytes. These arrays project 1,998,547 bytes against e358, including 57,131 bytes without a prior owner.
+- Evidence: Wine `e611-eur-physical-audio-banks-wine-w4i1asx7` authenticates 38 original instructions, 14 guarded inputs and server drain. [E611](../rom_data_audio.md#e611-european-physical-tone-and-direct-wave-banks).
+- Limits: Full keymap and rhythm reachability, other source producers, runtime and ordinary paths, Linux, USA and native Windows remain open. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-LOCALIZED-OBJ-TILE-LINK
+
+- Outcome: completed
+- Verified criteria: Link all 130 localized descriptor spans to their five authenticated language archives and three direct banks to their graphics; offer one-shot or followed selection, retain manual choices and identify missing or previous sources.
+- Evidence: `viewer-obj-tiles-synthetic-s7b5v7zo` passed 20 tests. `viewer-obj-tiles-confirm-gwjxj_ix` independently decoded 459 programs, checked all 130 descriptors and 39232 RGBA bytes, preserved 171 resource pages and matched 575 Python/Docker outputs. `viewer-obj-tiles-direct-yei21d6y` checked 349664 RGBA bytes across three direct previews. Published 23 pages with preimages `out/ffta-obj-tiles-before-bkcsr_sl` and `out/ffta-obj-tiles-confirm-before-tax2dcqq`. `docs/changes/2026-11-27-link-localized-obj-animation-tiles.json`.
+- Limits: Lowest tile ID is an illustrative alignment; actual VRAM base, palette, live scene and Windows remain unverified. Real check `estdv1wg` failed before Docker due to a shadowed script variable; corrected unit passed. E610 subsequently accepted e358, Wine `01bkwwt1`, stage `ol67qzpt`.
+
+
+### ROMDATA-04-EUR-PHYSICAL-AUDIO-BANKS
+
+- Outcome: completed
+- Verified criteria: E612 publishes the 47 residual tone, PCM and CGB ranges (57,131 bytes) to e359 and feeds the guest bus and host MP2K memory view. All 499 original program selectors, eight PCM header and endpoint pairs, eight CGB copies, full payload and 5,922 mixed mirror checks pass with altered ROM backing. Exact state and guest clock match, e358 attaches, and two invalid candidates preserve the active binding. The CLI creates, verifies and reuses 161 files, including all 159 previous resources.
+- Evidence: Windows build `686ug43y`, Wine `hts7ytbp` with 16 input guards and server drain, retained e359 stage `rjvfgtl6` and [E612](../rom_data_audio.md#e612-european-physical-tone-and-direct-wave-runtime).
+- Limits: Full map and rhythm domains, ordinary playback, translated execution, Linux, USA and native Windows remain on the recovery checklist. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-E359-PHYSICAL-AUDIO
+
+- Outcome: completed
+- Verified criteria: Expose all 499 physical tone-bank slots and 70 new records, eight additional PCM and six CGB waves using the existing players, source links, lazy PCM and CGB mute; preserve prior IDs, mappings, topic data and resource pages.
+- Evidence: `viewer-physical-audio-source-ce5fzo52` checked all 499 tone types and words, 285 PCM and eight CGB waves against authenticated source. `viewer-physical-audio-synthetic-39g5oams` passed 14 generator/Chrome checks including the existing navbar and focused pages. `viewer-physical-audio-real-8b9zdtru` verified 47 new source ranges, all 14 new waves in Chrome, 171 prior resource pages and 583 matching Python/Docker files. Published with preimages `out/ffta-e359-audio-before-qpoq280w`. `docs/changes/2026-11-27-browse-physical-audio-banks.json`.
+- Limits: Unproven split/drum key mappings remain unavailable; original music timing and native Windows are not established. Initial runs encountered a missing test module, a stale unused asset and historical resource-marker assumptions; corrected checks passed. Broader viewer exploration remains open.
+
+
+### ROMDATA-01-EUR-PHYSICAL-COMPACT-OBJ-REGION
+
+- Outcome: completed
+- Verified criteria: The 107,838-byte physical region contains 199 complete banks in two sequence formats, with 107,508 source bytes and 330 zero alignment bytes. The original constructor reaches 548 explicit descriptor rows through 222 literal and three dispatched producers. A total of 93,964 projected bytes lack declared owners in e359, and the 14 earlier owners cover 27,643 bytes.
+- Evidence: Wine `e613-eur-physical-compact-obj-region-wine-60aydzm5` verifies 258 original halfwords and ownership, with 12 input guards and server drain. [E613](../rom_data_compact_catalog.md#e613-european-physical-compact-obj-region).
+- Limits: Runtime attachment, the remaining 33 call sites, ordinary and translated selectors, Linux, USA and native Windows remain open. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+### VIEWER-LAZY-MANIFEST
+
+- Outcome: completed
+- Verified criteria: Large manifest source inventories load only on opening details, retain pagination/filtering and retry, and share content-addressed assets; existing page data and links remain available.
+- Evidence: `viewer-lazy-manifest-synthetic-nqzowmmn` passed 15 generator/Chrome tests. Protected e359 `viewer-lazy-manifest-real-irnnffap` compared 19 inventories across 22 pages, checked real text/audio details, preserved 172 resource pages and matched 602 Python/Docker files. The two text pages each shrank by 5,086,424 bytes. Published 23 local pages/19 assets with preimages `out/ffta-lazy-manifest-before-wedid2xj`. `docs/changes/2026-11-27-load-manifest-sources-on-demand.json`.
+- Limits: Loading a large inventory still consumes browser memory; single-page output remains inline. Other previews, names, playback and Windows remain open.
+
+### VIEWER-CONDITIONAL-LOOKUPS
+
+- Outcome: completed
+- Verified criteria: Browse 699 conditional descriptor rows, 33 packed rows, 74 four-byte rows and 35 masks with source offsets, selection, filters and documented links. Unverified sources retain raw fields without inferred links.
+- Evidence: `viewer-conditional-lookups-synthetic-lq4j_4mg` passed 20 projection, Chrome and regression tests. Protected e359 `viewer-conditional-lookups-real-hfdu205d` reconstructed all five tables and pointer words against original source, checked 42 packed references, exercised a Chrome link, preserved 22 scope payloads and 172 resource pages, and matched 602 Python/Docker files. Published 23 pages with preimages `out/ffta-conditional-lookups-before-fwzk6jw3`. `docs/changes/2026-11-27-browse-conditional-descriptor-lookups.json`.
+- Limits: Counts are conditional source bounds; live reachability, field names and native Windows remain open. Other viewer previews and playback remain open.
+
+
+### ROMDATA-04-EUR-PHYSICAL-COMPACT-OBJ-REGION
+
+- Outcome: completed
+- Verified criteria: E614 publishes all 93,964 residual bytes and serves 548 descriptors, 560 sequence counts and 5,045 frame durations/list pointers across 199 banks and both sequence formats. Altered-ROM source reads, 74,592 mixed mirror checks, exact state and guest clock, e359 attachment and invalid candidates pass. The CLI creates, verifies and reuses 162 files, preserving all 160 previous resources.
+- Evidence: Internal Windows build `w_64ogx0`, Wine `ma09qacg` with 19 guards and server drain, retained stage `ymux22v6`, and [E614](../rom_data_compact_catalog.md#e614-european-physical-compact-obj-runtime). External preflight `s82tkg2c` / `lh_0zcu6` waited in the journal; SIGTERM was sent before its Wine lease. Internal `6ti_yt5p` refused the alternate root before launching Wine. The accepted unit uses byte-identical overlay and coordinator scripts rooted in its isolated runner.
+- Limits: Other callers, ordinary invocation, host drawing, translated execution, Linux, USA and native Windows remain open. External preflight termination is tracked separately. No performance measurements. Effective Terra xhigh settings were not independently confirmed.
+
+
+### ROMDATA-01-EUR-PARALLEL-SCREEN-UPDATE-TABLES
+
+- Outcome: completed
+- Verified criteria: E615 authenticated both physical 3,200-byte banks, all 34
+  curves, two twelve-slot directories, 48 grid links and nine reader words.
+  The original update increments before indexing and reads indices 1 through
+  150. Directory/next-curve aliases and the first trailing zero retain their
+  original addresses. One unread padding byte per bank stays unowned.
+- Evidence: Wine `778c93rn` PASS against e360-d359, using 1,020 halfwords
+  pinned in `5yetbvry`. Result SHA256 `79dc4271347449856536a28d6bf02d059e6d0e644066a45e429376851872cddc`.
+  6,434 unowned bytes, 192 bytes under the grid owner, and one four-byte
+  LZ77 word collision under the type-3 owner. The first census failed on that
+  word and its server drained. Final audit preserved both owners and drained.
+- Limits: Ordinary use, translated execution, runtime extraction/attachment,
+  Linux, USA and native Windows are separate criteria. No performance checks.
+
+### VIEWER-E360-COMPACT
+
+- Outcome: completed
+- Verified criteria: Reconstruct and preview 199 physical compact banks (3,135 lists, 13,633 objects, 560 sequences, 5,045 frames) on a separate page; record added/updated UTC times and show local-date badges on section and navigation disclosures.
+- Evidence: `viewer-e360-compact-prior-u5s3iqmf` authenticated 211 prior ranges; `viewer-e360-compact-projection-5hzb8l9e` compared all lists and frames to source. Synthetic `viewer-e360-compact-synthetic-md0max7y` passed 24 tests. Protected `viewer-e360-compact-real-nxxwgbvm` checked 592 e360 ranges, all decoded data, both frame formats and badges in Chrome, preserved 22 scopes and 172 resource pages, and matched 605 Python/Docker outputs. Published 24 pages and new files with preimages `out/ffta-e360-compact-before-cv22fk1j`. `docs/changes/2026-11-27-preview-e360-physical-compact-animations.json`; `docs/changes/2026-11-27-badge-section-change-times.json`.
+- Limits: Graphics/palette selection is manual; original timing, live use and Windows remain open. Badge timestamps require updating the maintained registry when a section changes. Initial synthetic runs exposed two test-fixture assumptions; corrected checks passed.
+
+
+### ROMDATA-05-E614-EXTERNAL-PREFLIGHT-EXIT
+
+- Outcome: completed
+- Verified criteria: The pending E614 pre-Wine child terminated. Session
+  `30198` exited and `s82tkg2c` recorded FAIL with exit -15 and retained
+  diagnostics. PID 838316 no longer appears. The incomplete unit
+  `lh_0zcu6` never published a receipt and holds no unit or Wine-prefix
+  lease.
+- Evidence: `s82tkg2c/unit-result.json` SHA256
+  `83d8e0609ef55243a27fe8b7e0b67f9290880277370320de66ab48792b94cf07`.
+  E614 remains accepted through the internal Wine result `ma09qacg`
+  and dataset stage `ymux22v6`.
+- Limits: Keep the external partial unit for diagnosis. This terminal
+  check establishes only the attempted preflight exit. External
+  storage reliability remains outside the selected acceptance.
+
+### VIEWER-COMPACT-DESCRIPTORS
+
+- Outcome: completed
+- Verified criteria: Browse 548 physical compact descriptors and 219 bank/selector pairs with bidirectional animation links, filters, observed-context names and dated section badges. Unverified sources receive no contextual names.
+- Evidence: `viewer-compact-descriptors-source-vkcs68mc` checked 13,152 descriptor bytes; synthetic `viewer-compact-descriptors-synthetic-1u5n0gxx` passed 27 tests. Protected `viewer-compact-descriptors-real-w3m9wh2t` compared all descriptors with source, exercised a Chrome round trip and contextual labels, preserved 23 scoped payloads and 173 resource pages, and matched 605 Python/Docker files. Published 24 local pages with preimages `out/ffta-compact-descriptors-before-_jrm_zst`. `docs/changes/2026-11-27-browse-physical-compact-descriptors.json`.
+- Limits: Observed context labels are not names or complete animation proofs for every sequence. Other callers, graphics and palette pairings and native Windows remain open.
+
+
+### ROMDATA-04-EUR-PARALLEL-SCREEN-UPDATE-TABLES
+
+- Outcome: completed
+- Verified criteria: European e361-d360 publishes 6,434 bytes from both
+  E615 curve banks and the nine original reader literals, with all 161
+  predecessor resources unchanged. In-place attachment of e360 works.
+  Altered backing exercises both original Thumb initialization/update
+  readers, all 150 update steps per bank and 960 mixed-width mirror
+  boundary reads. Guest state and clock match and both invalid candidates
+  preserve the active binding. The CLI creates, verifies and reuses 163
+  files and the dataset inventory stays identical across reuse.
+- Evidence: Windows build `0lbhqdmu`, reader test `r83uzhez`, explicit ROM
+  verification `9t3yyhoy` and guarded Wine reuse `a5b48qrh`. Final result
+  SHA256 `3593ac26bed0f5efac3aab67c2146ada08bfe72803ec36f16d8afd3440d9125b`
+  and manifest SHA256 `d7bdfc8cfa5dc6fe94c329bb53c291d30af6d18b58ddeed98e51dbb5d0b2b7fc`.
+  The dataset remains under `nchh5s_9/work/resources`. The final 17 guards
+  pass and the internal server drains.
+- Limits: Build `b68jr1zr` test errors E0782 and E0061 were fixed.
+  The first driver omitted the ROM argument during CLI verification.
+  The corrected attempt verified the same dataset and was interrupted by
+  SIGTERM before reuse. Its exact internal prefix lease was archived
+  after confirming the runner and server were absent on the host.
+  Reuse passed against the existing dataset without rerunning the reader
+  test. Ordinary callbacks, translated execution and deferred platforms
+  remain open. No performance checks.
+
+### VIEWER-COMPACT-CROSS-LINKS
+
+- Outcome: completed
+- Verified criteria: Bidirectional links join 212 witnessed and physical sequences in 63 banks only when source roots, frames, list IDs and objects agree; both modified sections have dated badges and retain separate scoped payloads.
+- Evidence: `viewer-compact-crosslinks-synthetic-ymnjg7bz` PASS (31 tests); protected `viewer-compact-crosslinks-real-j5q5lo5i` PASS (1,032 frames and 651 object lists checked against source, Chrome round trip, 23 preserved scopes, 173 resource pages, 605 Python/Docker files). Published 24 ignored pages with preimages `out/ffta-compact-crosslinks-before-tlpkw1i6`; `docs/changes/2026-11-27-link-physical-and-witnessed-compact-sequences.json`.
+- Limits: No automatic graphics or palette pairing, additional scene meaning or native Windows claim. Parent viewer task remains partial.
+
+
+### E617-EUR-POST-TRANSFER-UNIT-BASE-CENSUS
+
+- Outcome: closed
+- Verified criteria: Ruled out the adjacent unit-pixel base for original
+  frame word00 in the bounded physical index region. The 248 directory
+  words have 245 roots. The 12,024 physical index cells point to 4,872
+  distinct bounded sequences and 27,257 frames. Pixel offsets range from
+  0 through `1b7560` and their resolved addresses never enter the gap
+  `897ad4..898a40`.
+- Evidence: Exact European ROM SHA256
+  `8fab1e390cb9d5e695bfdb86e81246892e1aa8c0cb4014db8235ff76538ea632`.
+  Directory `394834..394c14`, cells `371494..394834`, frame writer
+  `080222ce/080222d0`, base helper `080221b4`, source adds
+  `08022374` and `080226c8`. The e361 owner map and byte census
+  confirm the BG relative coincidence at descriptor 19 byte 84 and
+  the Thumb instruction pair at `080d20fc`. Sol
+  `/root/sol_post_transfer_producer` requested GPT-6.1 Sol xhigh,
+  effective settings unconfirmed. The consultant also checked 32,200
+  frame occurrences in the retained e361 unit projections.
+- Limits: Keep ROMDATA-01-EUR-POST-TRANSFER-TILE-REGION open until an
+  original read identifies its load PC or DMA source, count and writer.
+  Other producer domains and live reachability are unproved. This
+  investigation used static source evidence and changed no runtime file.
+
+### VIEWER-E361-CURVES
+
+- Outcome: completed
+- Verified criteria: Updated the local wiki to e361-d360; separate dated Interface page displays both screen-update banks, raw curves, source offsets and selected-step playback, explicitly marking the index-150 alias.
+- Evidence: `viewer-e361-curves-synthetic-pvgvkb0m` PASS (35 tests); protected `viewer-e361-curves-real-43n9ldm9` PASS (5,134 original values, Chrome navigation/playback, 23 preserved scopes, 173 resource pages, 607 Python/Docker files). Published 27 local files with preimages `out/ffta-e361-curves-before-sp3tsw1w`; `docs/changes/2026-11-27-preview-e361-screen-update-curves.json`.
+- Limits: Raw numerical preview does not simulate the complete screen effect, game timing or ordinary callback context. Native Windows remains deferred; parent viewer work remains partial.
+
+
+### ROMDATA-01-EUR-COUNTED-EFFECT-TABLES
+
+- Outcome: completed
+- Verified criteria: Authenticated the full 13-table physical bank at
+  `b4b0f4..b4bc84`, with 1,455 two-byte samples, 13 halfword counts,
+  six indexed roots, seven directly loaded tables and 14 reader literals.
+  The two-byte pair and little-endian halfword readers use the counted
+  payloads. Selected clipped paths use bounded indices and the last sample.
+  Preserve the 24 alignment bytes outside the projection.
+- Evidence: Wine `l_fm3i3u` pins 1,463 halfwords and audits 3,016 unowned
+  bytes against e361. All 11 input guards pass and the server drains.
+  Result SHA256 `e832bfb6625b6460ac239e3f62d62e520b16146c4c70f5b3d6ba1c7b03098a24`.
+  Earlier blend and OBJ owners retain their source boundaries.
+- Limits: Publication, ordinary invocation, translated execution, Linux,
+  USA and native Windows remain separate. No performance measurements.
+
+### VIEWER-E361-GRID
+
+- Outcome: completed
+- Verified criteria: The scoped e361 curve page links both documented 24-row grids to their byte curves, plots and plays the controlled signed-Y formula with stored X, links to source tables and shows a dated update badge; it does not duplicate the object catalog.
+- Evidence: `viewer-e361-grid-synthetic-z5wgg4cl` PASS (38 tests); protected `viewer-e361-grid-real-o3yceyn2` PASS (48 source rows and 7,248 curve values, Chrome playback/source link, 24 preserved scopes, 174 resource pages, 607 Python/Docker files). Published 25 local pages with preimages `out/ffta-e361-grid-before-3ns4jbk9`; `docs/changes/2026-11-27-preview-screen-update-grid-movement.json`.
+- Limits: This controlled numerical preview omits sprites, scaling, live scene state and original timing; step zero is a formula preview. Native Windows is deferred; parent viewer work remains partial. Full project-memory check encountered concurrent E618 files; metadata-only check passed.

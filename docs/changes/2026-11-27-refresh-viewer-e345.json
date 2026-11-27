@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "refresh-viewer-e345",
+  "title": "Refresh extracted-resource wiki to e345",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private local wiki from the retained verified European e345-d344 dataset while preserving existing topic views and older owned resource pages.",
+    "Expose the 27 added shared-slot literal words through the structured inspector and retain the previous e344 dataset for comparison."
+  ],
+  "validation": [
+    "Protected unit viewer-e345-refresh-8hmrnt9m authenticated 156 resource files and all 27 source words, preserved 16 topic pages and 155 resource pages, and checked the updated packet in Chrome.",
+    "All 22 synthetic Python and Docker outputs matched; sixteen ignored pages and the updated resource page were published with guarded preimages."
+  ],
+  "limitations": [
+    "The remaining live pointer domains, ordinary and generated copy paths are not established by this viewer refresh. Native Windows remains deferred."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

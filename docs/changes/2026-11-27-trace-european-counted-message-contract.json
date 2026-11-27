@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-counted-message-contract",
+  "title": "Trace European counted message copy bounds",
+  "kind": "docs",
+  "platforms": [
+    "European profile, retained Wine evidence"
+  ],
+  "changes": [
+    "Verified both original counted byte-copy paths and the shared allocator and event-zero dispatch. The allocation arithmetic supports conditional nonwrapping ceilings of 5,453 and 4,090 records."
+  ],
+  "validation": [
+    "Guarded plan wm8ubq4h reused all three E574 Wine attestations and passed 24 input guards. Four literal words and the copied IWRAM helper vector word all have e348 owners.",
+    "The encoded branch and pointer census found only the two wrapper callback literals. The read-only Sol xhigh request /root/sol_e588_counted_message_entry found no direct entry lead in the paired setters and named an event-zero dispatch capture as the prerequisite. Effective model settings were unverified."
+  ],
+  "limitations": [
+    "The true producers, live counts, payload extents, ordinary and generated paths, original BIOS, native Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

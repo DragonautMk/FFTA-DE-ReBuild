@@ -73,14 +73,14 @@ class TransferDirectoryProjectionTest(unittest.TestCase):
         for invalid in (False, True):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory() as directory:
                 page = fixture(Path(directory), invalid=invalid); parts = page.parent / 'index.html.parts'
-                home, interface, world = map(payload, (page, parts / 'interface.html', parts / 'world.html'))
+                home, interface, world = map(payload, (page, parts / 'interface-maps.html', parts / 'world.html'))
                 row = next(item for item in home['resources'] if item['id'] == 'graphics.tilemap-transfer-directory')
-                self.assertEqual(row['viewer_scope'], 'interface')
+                self.assertEqual(row['viewer_scope'], 'interface-maps')
                 self.assertEqual(row['status'].startswith('Available'), not invalid)
                 self.assertEqual(bool(interface['transfer_directory']), not invalid)
                 self.assertNotIn('transfer_directory', home)
                 self.assertNotIn('transfer_directory', world)
-                menu = next(item for item in home['wiki']['pages'] if item['id'] == 'interface')
+                menu = next(item for item in home['wiki']['pages'] if item['id'] == 'interface-maps')
                 self.assertEqual(any(item['id'] == 'transfer-directory' for item in menu['sections']), not invalid)
 
 
@@ -89,7 +89,7 @@ class TransferDirectoryBrowserTest(unittest.TestCase):
     def test_aliases_empty_rows_and_decoded_tiles(self):
         with tempfile.TemporaryDirectory(prefix='viewer-transfer-directory-') as directory:
             work = Path(directory); page = fixture(work); parts = page.parent / 'index.html.parts'
-            browser = Chrome(work, parts / 'interface.html')
+            browser = Chrome(work, parts / 'interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
@@ -124,7 +124,7 @@ class TransferDirectoryBrowserTest(unittest.TestCase):
     def test_unavailable_lz_has_no_preview_link(self):
         with tempfile.TemporaryDirectory(prefix='viewer-transfer-directory-partial-') as directory:
             work = Path(directory); page = fixture(work, missing_lz=True)
-            browser = Chrome(work, page.parent / 'index.html.parts/interface.html')
+            browser = Chrome(work, page.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertTrue(browser.evaluate("!document.querySelector('#transfer-directory').hidden && !document.querySelector('#transfer-directory-rows').rows[0].querySelector('a') && document.querySelector('#transfer-directory-rows').rows[2].querySelector('a') && document.querySelector('#transfer-directory-rows').textContent.includes('unavailable')"))
             finally:

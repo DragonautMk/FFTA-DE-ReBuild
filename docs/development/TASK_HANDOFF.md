@@ -6,11 +6,11 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Verified: e344 wiki, 210 job sprite links, palettes and timed audio PASS.
-- Missing: previews, names, composition, audio; Windows deferred. E345 is available but not published to the viewer.
-- Resume: only on user request; reconcile E345 before selecting viewer work.
+- Verified: e361 grid movement `o3yceyn2`; curves `43n9ldm9`.
+- Missing: other previews, names/audio; Windows deferred.
+- Resume: select unimplemented viewer work; timestamp added or changed sections.
 
 ## Running or suspended tasks
 
@@ -33,11 +33,11 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
-- E260 owned E248; E302 residual 0 in E275 (`idrflo71`), Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
-- E401 reconciles E291 White Flowers 3,600 code bytes with E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 residual 0 (`3blfucoi`/`dnr49xgd`/`_z04mity`).
-- TARGET-REATTACH: prior bind proved. Internal target active; external read-only.
+- E260 owns E248; E302 e275 `idrflo71` zero residual, Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
+- E401 ties E291 White Flowers 3,600 code bytes to E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 zero residual (`3blfucoi`/`dnr49xgd`/`_z04mity`).
+- TARGET-REATTACH: prior internal fallback/external read-only; both host binds now external rw.
 - E173/E181–E207 PASS (archive); E172 overlap `usda5fn4`.
 - E171/E172 `8bb1ykny`/`ikwqgxwg`, `_5qb5ej3`/`lhle9dmz` PASS; E170 1,068 lower bytes owned (`aqz4qh3s`); 3,600 copied-code bytes and ID362 open.
 - E170-GUI-FAILED-DATASET-CLEANUP: lease retains 114 duplicates; Wine drained, three PIDs unreadable (`2myj8gap/cleanup-observation.json`).
@@ -74,6 +74,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
   - UI context e109: selector/copy catalog, templates 5/2 pairs PASS; full extent/consumers/all 11 records open. docs/rom_data_ui.md; no repeat.
   - ROMDATA-04-COMPACT-CATALOG-ORDINARY: Star Cross and IN-08 Red Spring selector5 PASS. Full 29 roots/selectors/animation/consumers open; aggregate counters; leads303/310/312 excluded. docs/rom_data_compact_catalog.md.
   - `ROMDATA-04-LOOP-COMPACT-CATALOG-ORDINARY`: five-loop source/model/native/CLI PASS; Soil Evidence 6bac28/6c0614, Freezeblink 6babc4, Stardust 6bb574, Blue Screw 6c1e78 selector6 Wine pairs PASS. Other banks, full animation/domain open. docs/rom_data_compact_catalog.md.
+  - `ROMDATA-01-EUR-BIOS-LZ77-208CE-TABLE`: waiting for a nonzero original variant or generic base. E599 `v7dgs0xl` proves known writers; 162 variant words zero.
 
 ### ROMDATA-05-WINE-DBUS-PENDING-CALL
 
@@ -168,13 +169,13 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### LOCAL-ARTIFACT-HYGIENE
 
-- State: suspended
+- State: waiting
 - Outcome: partial
-- Selection: Oct 26 cleanup interrupted; HDD target cutover completed.
-- Verified: copy/reconcile exit 0; bind mounted, source removed; 133 GiB free.
-- Missing: Oct 26 criteria; HDD requires connection; systemd mounts it by UUID.
-- Risks: `rg` guard skipped during cutover; prior host check saw no nested mounts. HDD required.
-- Resume: HDD `README.txt`; Oct 26 archive 2486..2496, `target/local-artifact-cleanup-2026-10-26/applied.json`.
+- Selection: mobile cleanup complete for 16 reviewed builds; v80/v81 excluded.
+- Verified: intermediates/native caches reclaimed 31.22 GiB; 53 GiB free at cleanup.
+- Missing: review recently active builds after owner completion; output reboot check; Oct 26 criteria.
+- Risks: preserve packages, dependencies, failed work and active jobs.
+- Resume: inspect owners before further cleanup; no forced reboot. Oct 26 archive 2486..2496.
 
 ## Blockers, dependencies and shared resources
 
@@ -184,15 +185,17 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 - Nov 3 read-only coverage HTML diff: handle lost, outcome/host status unknown. Do not restart.
 
+- Viewer unit `9ax5_huz` was interrupted on external target; its lease is retained. Do not restart or clear it.
+
 - Preserve unit owners and locks.
 - [History](TASK_COMPLETED_ARCHIVE.md#legacy-handoff-snapshot), TASK_HANDOFF_MIGRATION.json.
 - Godot assessment closed, implementation deferred. AndroidPort is separate. Keep ROM/BIOS, catalogs, saves and recordings private.
 
 ## Final handover
 
-- Task: E580 EUR helper-field source trace suspended by user.
-- Last verified result: E579 pins e345. Read-only E580 locates wrapper call lead `0bce32`.
-- Remaining work: Trace six setter callers and both indexed inputs. Live domains open.
-- Errors or blockers: E580 started no Wine or build process.
-- Next action: Resume only on explicit request.
-- References: ROMDATA-01-EUR-BYTE-COPY-DYNAMIC-POINTER-DOMAINS.
+- Task: E619 suspended by user.
+- Last verified result: E618 l_fm3i3u, 13 tables and 3,016 bytes.
+- Remaining work: e362 reader/CLI validation. Ordinary, translated, Linux/USA open.
+- Errors or blockers: Build last observed running at 19:16:36 UTC.
+- Next action: On user resume inspect pv6sdirf/74260. No e362 Wine run yet.
+- References: ROMDATA-04-EUR-COUNTED-EFFECT-TABLES.

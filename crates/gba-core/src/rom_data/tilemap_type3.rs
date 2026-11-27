@@ -1,8 +1,9 @@
-//! Bounded European type-3 transfers from the E446 and E451 row projections.
+//! Bounded European type-3 transfers from authenticated row projections.
 use super::{
     script39_registry_poses::PriorSources,
     tilemap_transfer_directory::{
-        bytes, descriptor_at, lz77_input_range, projected_row_offsets, row_at, target, ROW_BYTES,
+        bytes, descriptor_at, lz77_input_range, projected_row_offsets, recovered_list_sources,
+        row_at, target, ROW_BYTES,
     },
     Resource,
 };
@@ -16,6 +17,7 @@ pub(super) const LZ77_INPUT_ROLE: &str = "lz77-input";
 pub(super) fn uncovered_ranges(
     rom: &[u8],
     existing: &[Resource],
+    include_recovered_lists: bool,
 ) -> Result<Vec<(Range<u32>, &'static str)>, String> {
     let prior = PriorSources::new(existing)?;
     let mut rows = Vec::new();
@@ -23,7 +25,13 @@ pub(super) fn uncovered_ranges(
     let mut wrappers = BTreeSet::new();
     let mut lz77_roots = BTreeSet::new();
     let mut raw_lengths = BTreeMap::new();
-    for at in projected_row_offsets(rom)? {
+    let mut offsets = projected_row_offsets(rom)?;
+    if include_recovered_lists {
+        for (_, slot) in recovered_list_sources(rom)? {
+            offsets.extend(slot.row_offsets()?);
+        }
+    }
+    for at in offsets {
         if bytes::<1>(rom, at)?[0] != 3 {
             continue;
         }

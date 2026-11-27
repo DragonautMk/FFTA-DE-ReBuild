@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "link-items-to-equipment-sprites",
+  "title": "Link items to equipment sprite previews",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Connect authenticated item equipment selectors to normal sprite animation previews, with paginated localized item references back from each sprite.",
+    "Exclude item zero, unsupported styles, override-only animations and missing or unverified graphics; retain manual palette and live-action limitations."
+  ],
+  "validation": [
+    "Synthetic unit viewer-item-sprites-synthetic-_3ilf95_ passed 52 checks; focused unit viewer-item-sprites-final-synthetic-4vczqawj passed three checks after a label correction.",
+    "Protected e345 unit viewer-item-sprites-real-acxkc4cz reconstructed 12032 item bytes, authenticated 593 sprite source ranges, checked 252 item links and rendered all 61 referenced sprites in Chrome, and matched 24 Python/Docker files.",
+    "Published 18 ignored local wiki pages with guarded preimages and preserved other scoped data."
+  ],
+  "limitations": [
+    "The base sprite does not establish live action overrides, palette state or actor composition; native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_item_sprites_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

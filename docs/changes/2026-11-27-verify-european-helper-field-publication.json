@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "verify-european-helper-field-publication",
+  "title": "Verify European helper field dataset publication",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Verified the default Windows CLI lifecycle for e346-d345 and retained one current local generation."
+  ],
+  "validation": [
+    "Build lby9j1c3 and Wine 5v5__08d passed. A cold prepare matched the E581 manifest, both packets and all 157 file hashes. Verify and prepare reuse preserved the generation, file set, identities, hashes, modification times and selector.",
+    "All 14 Wine input guards passed. The server drained and the shared lease was released. Internal stage tjyv_m4d retains the verified dataset. Staging attempt d2vk9wez stopped on a wrapper argument before Wine and the corrected invocation reused the same build."
+  ],
+  "limitations": [
+    "The 39 live pointer domains, ordinary and generated execution, original BIOS, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-27-serve-european-helper-field-dispatch.json"
+  ]
+}

@@ -92,7 +92,7 @@ class ObservedLzProjectionTest(unittest.TestCase):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-lz-scope-') as directory:
                 index = fixture(Path(directory), invalid=invalid); parts = index.parent / (index.name + '.parts')
                 self.assertNotIn('lz_graphics', payload(index))
-                world, objects = payload(parts / 'interface.html'), payload(parts / 'objects.html')
+                world, objects = payload(parts / 'interface-maps.html'), payload(parts / 'objects.html')
                 self.assertEqual(bool(world['lz_graphics']), not invalid)
                 self.assertEqual(bool(objects['lz_graphics']), not invalid)
                 row = next(r for r in world['resources'] if r['id'] == 'graphics.observed-lz-block')
@@ -103,7 +103,7 @@ class ObservedLzProjectionTest(unittest.TestCase):
 class ObservedLzBrowserTest(unittest.TestCase):
     def test_lz_tiles_4_and_8_bit_and_tilemap_source(self):
         with tempfile.TemporaryDirectory(prefix='viewer-lz-world-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / (index.name + '.parts/interface-maps.html'))
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
@@ -161,7 +161,7 @@ class ObservedLzBrowserTest(unittest.TestCase):
     def test_invalid_lz_does_not_link_to_other_graphics(self):
         with tempfile.TemporaryDirectory(prefix='viewer-lz-invalid-') as directory:
             work = Path(directory); index = fixture(work, invalid=True, graphics=True)
-            browser = Chrome(work, index.parent / (index.name + '.parts/interface.html'))
+            browser = Chrome(work, index.parent / (index.name + '.parts/interface-maps.html'))
             try:
                 self.assertTrue(browser.evaluate('''(()=>{
                   const row=id=>[...document.querySelector('#rows').rows].find(r=>r.dataset.resourceId===id);

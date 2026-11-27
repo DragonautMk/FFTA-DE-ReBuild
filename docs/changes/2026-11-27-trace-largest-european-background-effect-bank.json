@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-largest-european-background-effect-bank",
+  "title": "Authenticate the largest remaining European graphics bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Rank uncovered ranges in the e355 manifest with the existing same-ROM code atlas and separate long uniform runs when selecting the largest source-backed banks.",
+    "Authenticate the original directory, all 25 tile blocks and maps, and both queued DMA source paths. The complete projection accounts for 177,316 unowned bytes."
+  ],
+  "validation": [
+    "Managed Wine wqdh1ko9 verifies 311 original halfwords, 25 complete descriptors, all declared extents, and zero owned bytes using the production ownership CLI. All ten protected inputs pass and the Wine server drains."
+  ],
+  "limitations": [
+    "This is original-reader and source-ownership evidence. Dataset extraction, runtime consumption, live message selection, Linux, USA and native Windows remain on the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/rom_data_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

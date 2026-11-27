@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "link-encounter-templates-to-jobs",
+  "title": "Link encounter templates to named jobs",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Connect authenticated encounter unit-template job selectors to localized metadata names and battle sprite references, with a paginated reverse list back to each encounter.",
+    "Preserve unresolved selectors and source-dependent descriptor fallbacks without asserting live job state, redirected names or character identities."
+  ],
+  "validation": [
+    "Synthetic unit viewer-encounter-jobs-synthetic-vx2gge9m passed 51 tests including source guards, missing data, language selection, pagination and navigation.",
+    "Protected e345/d344 unit viewer-encounter-jobs-real-5cpqf0qy reconstructed 136800 source bytes, verified 2850 template references to 101 metadata IDs and header associations, and matched 27 Python/Docker files.",
+    "Verified Chrome navigation from encounters to jobs, reverse template lists and battle sprites; published 16 ignored local pages with guarded preimages."
+  ],
+  "limitations": [
+    "Stored selectors do not establish live unit overrides or redirected metadata names; native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_encounter_jobs_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

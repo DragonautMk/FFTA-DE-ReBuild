@@ -38,7 +38,7 @@ class ViewerNavigationCategoriesTest(unittest.TestCase):
                   if(qa('#rows [data-resource-id]').length!==1 || !q('#rows > details').open ||
                      !q('#rows > details > details').open || !q('#index-count').textContent.includes('1 of'))throw Error('search');
                   const row=q('#rows [data-resource-id="audio.m4a-tones"]');
-                  if(!row || !row.querySelector('a').textContent.includes('Browse Audio'))throw Error('topic link');
+                  if(!row || !row.querySelector('a').textContent.includes('Browse Waveforms and instruments'))throw Error('topic link');
                   const file=new File(['{"ok":7}'],'wave.json',{type:'application/json'});
                   Object.defineProperty(file,'webkitRelativePath',{value:'dataset/wave.json'});
                   Object.defineProperty(q('#dataset-directory'),'files',{configurable:true,value:[file]});
@@ -69,7 +69,9 @@ class ViewerNavigationCategoriesTest(unittest.TestCase):
                     ![...document.querySelectorAll('#wiki-page-links > details')].some(d=>d.open) &&
                     !!q('#contents a[href="#obj-animations"]');
                 })()'''))
+                browser.evaluate("window.__viewerHashSeen=false; addEventListener('hashchange',()=>window.__viewerHashSeen=true,{once:true})")
                 browser.click('#contents a[href="#obj-animations"]')
+                browser.evaluate("new Promise(resolve=>{if(window.__viewerHashSeen)resolve();else addEventListener('hashchange',resolve,{once:true})})")
                 self.assertTrue(browser.evaluate('''(()=>{
                   const section=document.querySelector('#obj-animations');
                   return section.querySelector(':scope > details').open && section.closest('.section-group').open;

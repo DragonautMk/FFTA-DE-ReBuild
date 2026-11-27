@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-sprite-tiles-on-demand",
+  "title": "Load battle and script sprite tiles on demand",
+  "kind": "performance",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Store battle and script sprite tiles in content-addressed chunks of up to 64 blocks and load the selected pose or animation blocks locally when needed.",
+    "Preserve offline animation, cancellation, retry, frame, palette, loop settings and job links while leaving single-page and opcode-39 pose data compatible."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-sprite-synthetic-bjdgcvk4 passed 26 browser and projection checks including animation cancellation, missing-file retry, job links, palettes, script actors and PCM regressions.",
+    "Protected e354 viewer-lazy-sprite-real-h8dfovay authenticated 10366 ranges in seven source catalogs, reconstructed 7318 catalog blocks, preserved unrelated payloads and existing assets, and matched 147 Python/Docker outputs.",
+    "Focused viewer-lazy-sprite-pixels-agydzq3r matched 46080 RGBA bytes across two real poses. Published 23 ignored pages and 118 assets with guarded preimages out/ffta-lazy-sprite-before-bpj8fef5.",
+    "Normal battle page 14084183 to 6090724 bytes; alternate 5272377 to 2732116 bytes; script actors 13921622 to 6953795 bytes."
+  ],
+  "limitations": [
+    "Animations load every tile block used by the selected sequence. Live composition, other sprite families and native Windows remain unverified or outside this change."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_lazy_sprite_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

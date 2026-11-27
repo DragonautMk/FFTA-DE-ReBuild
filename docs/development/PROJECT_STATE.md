@@ -127,9 +127,10 @@ and normal enablement retain their existing acceptance gates.
   blocks locally at publication, during explicit compaction and at the initial
   low-space admission check. The [storage checklist](STORAGE_CHECKLIST.md)
   keeps current toolchains/dependencies available and failed diagnostics local.
-  The explicitly configured Linux workstation keeps its root `target` on an
-  external ext4 image. UUID-scoped systemd activation preserves the repository
-  path and requires the external disk for builds and validation. See the
+  The explicitly configured Linux workstation keeps its root `target` and
+  `out` on separate external ext4 images. UUID-scoped systemd activation
+  preserves both repository paths and requires the external disk for their
+  contents. Output reconnection after reboot remains untested. See the
   [mount and eject procedure](STORAGE_CHECKLIST.md#external-target-on-linux).
   `cold_storage.py batch --apply` discovers remaining eligible
   completed artifacts automatically, records exclusions/progress and skips
@@ -1704,8 +1705,171 @@ and normal enablement retain their existing acceptance gates.
   are preserved.
   [E579](../rom_data_runtime.md#e579-european-shared-slot-literal-cli-publication)
   verifies standard CLI creation, all 157 files and unchanged reuse on
-  Wine. The current generation is retained internally in `7sglfxj4`.
+  Wine. The e345 reference generation is retained internally in `7sglfxj4`.
   Live aliases and the loaded payload sources remain in the recovery checklist.
+
+- EUR [E580](../rom_data_runtime.md#e580-european-helper-field-producers-and-dispatch-tables)
+  links six setter callers and three indexed writes to the shared helper
+  field. The original UI template catalog is already owned. The e345
+  ownership join identifies two whole switch tables and ten literal
+  words (120 residual bytes).
+  [E581](../rom_data_runtime.md#e581-european-helper-field-runtime-integration)
+  serves both tables and all twelve literal words in `e346-d345`.
+  Wine verifies both complete dispatch ranges and guards, the ten
+  producer reads, mixed boundaries and e345 attachment.
+  [E582](../rom_data_runtime.md#e582-european-helper-field-cli-publication)
+  verifies cold creation, all 157 files and unchanged reuse with the
+  standard Windows CLI on Wine. The e346 reference generation is retained
+  internally in `tjyv_m4d`. The live pointer domains remain in the
+  recovery checklist.
+
+- EUR [E583](../rom_data_runtime.md#e583-european-204-byte-context-record-bank)
+  traces all 14 direct 204-byte context copy sources to the work record
+  or the selected record in a five- or six-slot array. Both ranges fit
+  the matching allocation. The e346 join identifies 46 unowned literal
+  words. [E584](../rom_data_runtime.md#e584-european-context-record-literals-at-runtime)
+  serves the 184 bytes in `e347-d346`. Wine verifies the original
+  literal loads, mixed boundaries and e346 attachment.
+  [E585](../rom_data_runtime.md#e585-european-context-record-cli-publication)
+  verifies the standard CLI lifecycle and all 157 files. The e347
+  reference is retained in `67w2lo4y`. Live allocation and index
+  provenance remain open.
+
+- EUR [E586](../rom_data_runtime.md#e586-european-80-byte-scratch-restore-bank)
+  pairs the seven 80-byte restores with their saves from `03000940`.
+  Six context spans fit their matching allocations. The e347 join
+  identifies 22 unowned literal words.
+  [E587](../rom_data_runtime.md#e587-european-scratch-restore-literals-and-cli)
+  serves all 88 bytes in `e348-d347`. One Wine unit verifies the
+  original loads and CLI lifecycle for all 157 files. The current
+  e348 dataset is retained in `8x8kiufl`. Live allocations, caller-slot
+  aliases and ordinary ordering remain in the recovery checklist.
+
+- EUR [E588](../rom_data_runtime.md#e588-european-counted-message-copy-contract)
+  verifies both counted message copy shapes and their conditional
+  allocation bounds. All five identified support words are owned in
+  e348. The source pointers and counts still need authentic event-zero
+  observations to identify the upstream banks.
+
+- EUR [E589](../rom_data_runtime.md#e589-european-cached-object-copy-bank)
+  verifies both four-byte cached-object copy setups and the two
+  guarded switch banks. The seed and helper vector are owned in
+  e348. The source plan identifies 216 unowned support bytes.
+  [E590](../rom_data_runtime.md#e590-european-cached-object-tables-and-literals)
+  serves all 216 bytes in `e349-d348` and verifies the original
+  readers and standard CLI under Wine. The current dataset is
+  retained in `ryyko0b0`.
+  One context allocation has size `0x0f68`, which falls short
+  of the initializer's `0x1bd0` clear. Its live reachability,
+  the active field writer and the cached tail last writer remain
+  in the recovery checklist.
+
+- EUR [E591](../rom_data_runtime.md#e591-european-indexed-exchange-and-direction-lists)
+  traces both indexed exchanges to a shared 256-entry buffer.
+  All 130,472 physical metadata and item input pairs stay within
+  181 generated entries for the selected mode. The source plan
+  identifies 130 unowned bytes across two direction lists, two
+  switch tables and 13 support words. The Wine disassembly
+  matches the guarded source plan.
+  [E592](../rom_data_runtime.md#e592-european-indexed-exchange-tables-at-runtime)
+  serves those sources in `e350-d349`. Readers, e349 compatibility
+  and standard CLI pass on Wine. The e350 predecessor generation
+  is retained in `mcafhefi`. Live input bounds remain open.
+
+- EUR [E593](../rom_data_runtime.md#e593-european-five-byte-list-and-direction-bank)
+  traces a registered `0x98a`-byte context, a 128-slot five-byte
+  list and a six-row direction bank. The Wine-backed source plan
+  identifies 164 bytes, served in `e351-d350` by
+  [E594](../rom_data_runtime.md#e594-european-five-byte-list-tables-at-runtime).
+  Both readers, state dispatch, e350 attachment and standard CLI pass
+  on Wine. The e351 predecessor is retained in `j6bvjbkq`. Live
+  actor and owner aliasing, seed and cursor observations and ordinary
+  routes remain in the recovery checklist.
+
+- EUR [E595](../rom_data_runtime.md#e595-european-scroll-and-palette-stack-producers)
+  traces the eight scroll-shadow fields and three-component palette stack
+  copy. All 503 published opcode 12 payloads and both command switches
+  already have owners. [E596](../rom_data_runtime.md#e596-european-palette-task-literals-at-runtime)
+  serves the 15 task and list words in `e352-d351`. All original loads,
+  e351 attachment and standard CLI pass on Wine. The e352 predecessor
+  is retained in `ll6dkegp`. Live IWRAM writes and dynamic program
+  inputs remain in the recovery checklist.
+
+- EUR [E597](../rom_data_runtime.md#e597-european-tilemap-transfer-list-bounds)
+  recovers three type-3 rows beyond the E481 tilemap projections. It
+  proves the six-row count at `3a16a0` and the two smaller lists at
+  `39a710` and `39a728`. The e352 source delta is 322 bytes,
+  including one new 246-byte LZ77 input.
+  [E598](../rom_data_runtime.md#e598-european-counted-type-3-transfers-at-runtime)
+  serves the delta in `e353-d352`. Original list setups and decompression
+  through BIOS HLE, e352 attachment and standard CLI pass on Wine.
+  The e353 predecessor is retained in `myupox0_`. Wider computed
+  sources and live selector inputs remain in the recovery checklist.
+
+- EUR [E599](../rom_data_graphics.md#e599-european-background-relative-lz77-inputs)
+  traces the two `080208ce` input paths through shared RAM state.
+  A nonzero original table producer remains open. The associated
+  14-slot state dispatcher is served by
+  [E600](../rom_data_graphics.md#e600-european-background-variant-state-dispatch)
+  in `e354-d353`. All original branches, e353 attachment and standard
+  CLI pass on Wine. The e354 predecessor is retained in `gd1g_9cz`.
+
+- EUR [E603](../rom_data_graphics.md#e603-european-cpufastset-direct-operands)
+  verifies all 91 direct CpuFastSet patterns and identifies 65 residual
+  literal words. [E604](../rom_data_graphics.md#e604-european-cpufastset-literals-at-runtime)
+  serves them in `e355-d354`. Original loads, copy and fill,
+  e354 attachment and CLI pass on Wine. The e355 generation is
+  retained in `bjcv0w7e`. Register-fed sources remain open.
+
+- EUR [E605](../rom_data_graphics.md#e605-european-background-effect-graphics-bank)
+  establishes 25 complete background-effect descriptors, tile blocks
+  and maps from the largest nonuniform e355 gap.
+  [E606](../rom_data_graphics.md#e606-european-background-effect-graphics-at-runtime)
+  publishes and serves the 177,316-byte bank in `e356-d355`. Both original
+  DMA paths, e355 compatibility and the CLI pass on Wine. The e356
+  generation is retained in `8einoir0`. Ordinary invocation and translated
+  execution remain on the recovery checklist.
+
+- EUR [E607](../rom_data_obj.md#e607-european-localized-indexed-obj-animation-banks)
+  establishes 133 localized OBJ bank pairs and three direct tile streams.
+  [E608](../rom_data_obj.md#e608-european-localized-obj-animation-bank-extraction)
+  serves the 113,870 residual bytes in `e357-d356`, retained in
+  `ess2dbrn`. The original controlled readers, e356 attachment and CLI
+  cycle pass on Wine. The original modes, ordinary invocation and
+  translated execution remain on the recovery checklist.
+
+- EUR [E609](../rom_data_graphics.md#e609-european-background-screen-banks)
+  bounds five screen tile blocks and maps. [E610](../rom_data_graphics.md#e610-european-background-screen-banks-at-runtime)
+  serves the 72,080-byte projection in `e358-d357`, retained in
+  `ol67qzpt`. The original controlled map builders and DMA uploads,
+  e357 attachment and CLI lifecycle pass on Wine. The extra physical
+  row, ordinary and translated execution, and deferred platforms
+  remain on the recovery checklist.
+
+- EUR [E611](../rom_data_audio.md#e611-european-physical-tone-and-direct-wave-banks)
+  bounds 499 physical M4A tone records and their direct PCM and CGB
+  waves. [E612](../rom_data_audio.md#e612-european-physical-tone-and-direct-wave-runtime)
+  serves the 57,131 residual bytes in `e359-d358`, retained in
+  `rjvfgtl6`. Original program/sample readers, the host MP2K view,
+  e358 attachment and CLI lifecycle pass on Wine. Keymap and rhythm
+  domains, ordinary playback and translated readers remain open.
+
+- EUR [E613](../rom_data_compact_catalog.md#e613-european-physical-compact-obj-region)
+  establishes 199 physical compact OBJ banks and 548 descriptors.
+  [E614](../rom_data_compact_catalog.md#e614-european-physical-compact-obj-runtime)
+  serves the 93,964-byte residual in `e360-d359`, retained in
+  `ymux22v6` under `stage/e614-validation`. Original readers for
+  both layouts, e359 attachment and CLI lifecycle pass on Wine.
+  Remaining producers, ordinary and translated paths, and host
+  drawing of the residual lists remain open.
+
+- EUR [E615](../rom_data_compact_catalog.md#e615-european-screen-update-curve-banks)
+  bounds both screen-update curve banks through step 150.
+  [E616](../rom_data_compact_catalog.md#e616-european-screen-update-table-runtime)
+  serves their 6,434-byte projection in `e361-d360`, retained in
+  `nchh5s_9/work/resources` and verified by `a5b48qrh`. Controlled
+  original readers, e360 attachment and CLI lifecycle pass under Wine.
+  Ordinary triggers and translated execution remain open.
 
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining
@@ -1778,6 +1942,8 @@ and normal enablement retain their existing acceptance gates.
   356 of 10,750 source bytes in the selected lists and windows. The nominal
   extent is larger for 24 rectangles.
   E483 combines E449 and E452 and covers 294 rows and 205 full rectangles.
+  E601 matches the full aligned EUR scan to those rows and confirms all
+  15,120 bytes have owners in e354. Indirect and RAM-built lists remain open.
   The e307-d306 file claims the 14,758 bytes remaining after earlier
   ownership. Preparation, mirrored bus reads and all 294 original
   reader calls pass in Wine. Ordinary scene use remains open.
@@ -1785,7 +1951,9 @@ and normal enablement retain their existing acceptance gates.
 
 - EUR [E450 type-5 byte streams](../rom_data_runtime.md#e450-european-type-5-byte-stream-bounds)
   bounds seven streams and verifies that all 937 E446 rows are represented in
-  the type-2 through type-5 inventories. E484 serves the residual direct
+  the type-2 through type-5 inventories. E602 matches the full aligned
+  EUR scan for the verified type-4/5 stream formats to E484. E354 owns
+  all 12,472 control and stream bytes. E484 serves the residual direct
   controls for all 145 E445/E446/E451/E458 type-4 and type-5 rows from
   the e308-d307 dataset. All 78 streams keep their earlier owners, and
   controlled calls through the original dispatcher pass in Wine.

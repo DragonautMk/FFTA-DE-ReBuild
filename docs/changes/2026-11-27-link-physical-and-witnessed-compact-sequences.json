@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "link-physical-and-witnessed-compact-sequences",
+  "title": "Link physical and witnessed compact sequences",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Link matching witnessed and physical compact animations in both directions by bank root and selector, with deep links to the selected sequence and existing source references.",
+    "Require matching frame data and source object lists, handle sparse indices, exclude ambiguous matches, and keep the full banks on their existing scoped pages.",
+    "Update dated badges on both affected object animation sections."
+  ],
+  "validation": [
+    "Synthetic viewer-compact-crosslinks-synthetic-ymnjg7bz passed 31 projection, Chrome, badge, scope and regression tests.",
+    "Protected viewer-compact-crosslinks-real-j5q5lo5i checked 212 sequences across 63 banks, 1032 frames and 651 object lists against source, exercised a Chrome round trip, preserved 23 scopes and 173 resource pages, and matched 605 Python/Docker files.",
+    "Published 24 private pages with guarded preimages out/ffta-compact-crosslinks-before-tlpkw1i6."
+  ],
+  "limitations": [
+    "Graphics and palettes are not inferred from matching animation structure. Scene meaning and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_physical_compact.py",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_compact_crosslinks.py",
+    "scripts/tests/test_viewer_compact_crosslinks_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

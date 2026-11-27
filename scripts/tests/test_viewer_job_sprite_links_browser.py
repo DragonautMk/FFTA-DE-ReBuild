@@ -17,7 +17,7 @@ from test_viewer_special_units_browser import battle_catalog, palette_catalog, w
 from viewer_browser_harness import Chrome
 
 
-def fixture(work, *, wrong_identity=False, inconsistent=False, with_palette=True):
+def fixture(work, *, wrong_identity=False, inconsistent=False, with_palette=True, many=False, wrong_text_identity=False):
     dataset, _, metadata = job_fixture(work)
     manifest = dataset / 'manifest.toml'
     text = manifest.read_text()
@@ -26,6 +26,9 @@ def fixture(work, *, wrong_identity=False, inconsistent=False, with_palette=True
     records[0]['bytes_06_1f'][1:6] = [10, 0, 10, 0, 0x53]
     records[1]['routing'] = 255
     records[2]['bytes_06_1f'][1:5] = [255, 255, 10, 0]
+    if many:
+        for record in records[3:45]:
+            record['bytes_06_1f'][1:5] = [10, 0, 10, 0]
     content = json.dumps(metadata).encode()
     (dataset / 'linked-metadata52.json').write_bytes(content)
     text = text.replace(hashlib.sha256(old).hexdigest(), hashlib.sha256(content).hexdigest())
@@ -61,7 +64,8 @@ def fixture(work, *, wrong_identity=False, inconsistent=False, with_palette=True
     with ExitStack() as stack:
         for name, value in {
             'EUROPE_METADATA52_SHA256': hashlib.sha256((dataset / 'linked-metadata52.json').read_bytes()).hexdigest(),
-            'EUROPE_TEXT_CATALOG_SHA256': hashlib.sha256((dataset / 'text-catalogs.json').read_bytes()).hexdigest(),
+            'EUROPE_TEXT_CATALOG_SHA256': ('wrong' if wrong_text_identity else
+                                          hashlib.sha256((dataset / 'text-catalogs.json').read_bytes()).hexdigest()),
             'EUROPE_OBJ_PROPERTY_WORDS_SHA256': 'wrong' if wrong_identity else hashes['graphics.unit-obj-property-words'],
             'EUROPE_COLOR_MODE_SHA256': hashes.get('graphics.color-mode-palettes', 'missing'),
             'EUROPE_BATTLE_SPRITE_SHA256': {mode: hashes['graphics.unit-obj-' + mode + '-battle']
@@ -78,10 +82,14 @@ class JobSpriteProjectionTest(unittest.TestCase):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-job-sprite-project-') as directory:
                 page, producers = fixture(Path(directory), **options)
                 parts = page.parent / 'index.html.parts'
-                world, battle, interface = map(payload, (parts / 'world.html', parts / 'battle.html', parts / 'interface.html'))
+                world, battle, alternate, interface = map(payload, (parts / 'world.html', parts / 'battle.html', parts / 'battle-alternate.html', parts / 'interface.html'))
+                self.assertEqual(set(battle['battle_sprites']), {'normal'})
+                self.assertEqual(set(alternate['battle_sprites']), {'alternate'})
                 links = world['job_sprite_links']
                 if options.get('wrong_identity') or options.get('inconsistent'):
                     self.assertIsNone(links)
+                    self.assertNotIn('battle_job_references', battle)
+                    self.assertNotIn('battle_job_references', alternate)
                 else:
                     self.assertTrue(links['names_verified'])
                     self.assertEqual(links['palette_preview'], options.get('with_palette', True))
@@ -91,6 +99,9 @@ class JobSpriteProjectionTest(unittest.TestCase):
                     self.assertIsNone(links['rows'][1]['palette_nibbles'])
                     self.assertIsNone(links['rows'][2]['normal'])
                     self.assertEqual(links['rows'][2]['alternate'], 10)
+                    self.assertEqual(battle['battle_job_references'], {'links': links, 'names': world['metadata_names']})
+                    self.assertEqual(alternate['battle_job_references'], battle['battle_job_references'])
+                    self.assertNotIn('metadata_names', battle)
                 self.assertNotIn('job_sprite_links', battle)
                 self.assertNotIn('job_sprite_links', interface)
                 duplicate = copy.deepcopy(producers)
@@ -101,6 +112,90 @@ class JobSpriteProjectionTest(unittest.TestCase):
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')
 class JobSpriteBrowserTest(unittest.TestCase):
+    def test_reverse_references_paging_language_and_world_link(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-job-sprite-reverse-') as directory:
+            work = Path(directory)
+            page, _ = fixture(work, many=True)
+            parts = page.parent / 'index.html.parts'
+            browser = Chrome(work, parts / 'battle.html')
+            try:
+                browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
+                  const input=e=>e.dispatchEvent(new Event('input',{bubbles:true}));
+                  if(q('#equipment-job-references').hidden || q('#equipment-job-references').open ||
+                     !q('#equipment-job-page').textContent.includes('43 records') || q('#equipment-job-rows').rows.length!==20 ||
+                     !q('#equipment-job-rows').textContent.includes('Ab d'))throw Error('normal references');
+                  if(!q('#metadata-names').hidden)throw Error('world section leaked into battle');
+                  q('#equipment-job-next').click();q('#equipment-job-next').click();
+                  if(q('#equipment-job-rows').rows.length!==3 || !q('#equipment-job-next').disabled)throw Error('paging');
+                  q('#equipment-job-filter').value='44';input(q('#equipment-job-filter'));
+                  if(q('#equipment-job-rows').rows.length!==1 || q('#equipment-job-rows tr').dataset.metadataId!=='44')throw Error('filter');
+                  q('#equipment-job-filter').value='';input(q('#equipment-job-filter'));
+                  q('#equipment-job-language').value='1';change(q('#equipment-job-language'));
+                  q('#equipment-job-references').open=true;q('#equipment-loop').checked=true;q('#equipment-rate').value='1';
+                  q('#equipment-binding').value='1';change(q('#equipment-binding'));
+                  if(q('#equipment-play').disabled)throw Error('fixture must select a playable binding');
+                  q('#equipment-play').click();q('#equipment-catalog').value='alternate';change(q('#equipment-catalog'));
+                })()''')
+                wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='battle-alternate' && document.querySelector('#equipment-job-page').textContent.includes('44 records')")
+                target = browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s);
+                  if(!q('#equipment-loop').checked || q('#equipment-rate').value!=='1' || q('#equipment-stop').disabled ||
+                     q('#equipment-job-language').value!=='1' || !q('#equipment-job-references').open ||
+                     !q('#equipment-job-rows tr').cells[1].textContent.includes('d') ||
+                     Object.keys(data.battle_sprites).join(',')!=='alternate')throw Error(JSON.stringify({loop:q('#equipment-loop').checked,
+                       rate:q('#equipment-rate').value,stopped:q('#equipment-stop').disabled,language:q('#equipment-job-language').value,
+                       open:q('#equipment-job-references').open,name:q('#equipment-job-rows tr').cells[1].textContent,
+                       keys:Object.keys(data.battle_sprites)}));
+                  return q('#equipment-job-rows tr a').href;
+                })()''')
+                self.assertEqual(target.split('#')[-1], 'metadata-names')
+                browser.command('Page.navigate', {'url': target})
+                wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='world' && document.querySelector('#metadata-name-filter').value==='0'")
+                self.assertTrue(browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s);
+                  return q('#metadata-name-filter-mode').value==='exact-id' && q('#metadata-name-language').value==='1' &&
+                    q('#metadata-name-rows').rows.length===1 && q('#metadata-name-rows tr').dataset.metadataId==='0' &&
+                    q('#metadata-names>details').open;
+                })()'''))
+            finally:
+                browser.close()
+
+    def test_alternate_legacy_bookmarks(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-job-sprite-bookmark-') as directory:
+            work = Path(directory)
+            page, _ = fixture(work)
+            parts = page.parent / 'index.html.parts'
+            browser = Chrome(work, parts / 'world.html')
+            try:
+                target = browser.evaluate("document.querySelector('#metadata-name-rows [data-job-id=\"0\"][data-sprite-mode=\"alternate\"]').href")
+                self.assertIn('/battle-alternate.html?', target)
+                for query in ('sprite_catalog=alternate&sprite_id=10', 'view=equipment-sprites&select=equipment-catalog%3A1'):
+                    browser.command('Page.navigate', {'url': (parts / 'battle.html').as_uri() + '?' + query + '#equipment-sprites'})
+                    wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='battle-alternate' && document.querySelector('#equipment-sprite').value==='10'")
+                    self.assertEqual(browser.evaluate("document.querySelector('#equipment-catalog').value"), 'alternate')
+            finally:
+                browser.close()
+
+    def test_unverified_names_and_invalid_metadata_bookmark(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-job-sprite-unverified-') as directory:
+            work = Path(directory)
+            page, _ = fixture(work, wrong_text_identity=True)
+            parts = page.parent / 'index.html.parts'
+            browser = Chrome(work, parts / 'battle.html')
+            try:
+                target = browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s),row=q('#equipment-job-rows tr');
+                  if(q('#equipment-job-references').hidden || !q('#equipment-job-language-control').hidden ||
+                     row.cells[1].textContent!=='0')throw Error('unverified name');
+                  return row.querySelector('a').href;
+                })()''')
+                browser.command('Page.navigate', {'url': target.replace('metadata_id=0', 'metadata_id=99999')})
+                wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='world'")
+                self.assertEqual(browser.evaluate("document.querySelector('#metadata-name-filter').value"), '')
+            finally:
+                browser.close()
+
     def test_navigation_and_explicit_preview_palette(self):
         with tempfile.TemporaryDirectory(prefix='viewer-job-sprite-browser-') as directory:
             work = Path(directory)

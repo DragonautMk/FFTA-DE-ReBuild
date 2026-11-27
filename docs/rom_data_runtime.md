@@ -8224,6 +8224,27 @@ of the conditional selector, other producers, translated execution,
 Linux, USA and native Windows remain open. Performance measurement
 is deferred.
 
+## E601 European physical type-2 rectangle bank census
+
+The full EUR ROM scan follows every word-aligned type-2 row
+candidate. It checks the list link, every entry in the nonempty
+counted list, the rectangle dimensions and the selected row
+window. The scan allows the nonzero byte count and dimension
+domain and all three physical ROM mirrors. The resulting 294
+rows and each copy specification match the accepted E483 proof.
+They link to 260 distinct headers, 545 entries and 205 full
+rectangles, including all cells of the 19 rectangles with
+partial copy windows.
+
+Wine `l3jzyugd` compares the independently reconstructed ranges
+to `e354-d353`. Every one of the 15,120 bytes has one owner.
+The type-2 transfer file supplies 14,758 bytes, and four existing
+resources supply the other 362. The packed byte ranges match the
+ROM in manifest order. Original reader execution is covered
+by E483. Ordinary and generated paths, RAM-built rows and
+indirect producers remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## E484 European direct tilemap transfer controls
 
 EUR preparation advances to `e308-d307`. The new resource
@@ -8277,6 +8298,28 @@ The six E460 gameplay captures contain no reads of the newly owned
 controls. Ordinary scene use, other producers, translated guest
 execution, Linux, USA and native Windows remain open. Performance
 measurement is deferred.
+
+## E602 European physical type-4 and type-5 stream census
+
+The full EUR ROM scan follows word-aligned type-4 and type-5 rows
+through their descriptor pointers. It checks the verified header
+modes and follows each encoded token until the declared number
+of cells has been read. The results match all 136 type-4 and
+nine type-5 rows in E484, including 137 descriptors and the 78
+distinct E457 streams.
+
+Wine `4izg3cjr` verifies all 2,818 control bytes and 9,654 encoded
+stream bytes against `e354-d353`. Each of these 12,472 bytes has
+one owner. The 210 raw bytes in the stream bank consist of 142
+inter-stream alignment bytes and 68 byte-token alignment bytes.
+Both packed files match the source ranges in manifest order.
+The protected audit passes 25 input guards and the server drains.
+
+E484 retains the original dispatcher proof for these rows.
+Mode 3, other stream formats, indirect and RAM-built rows,
+ordinary and generated execution and deferred platforms remain
+in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 ## E485 European tilemap origin references
 
@@ -8914,8 +8957,8 @@ identities, hashes, modification times and the selector agree before
 and after verification and reuse.
 
 Wine unit `e576-producer-literal-cli-internal-wine-bdfakqb6` passes
-all 13 input guards and drains the server. The current European
-generation is retained under
+all 13 input guards and drains the server. The European e345
+reference generation is retained under
 `out/e576-validation/staging/target/validation/units/e576-e344-internal-stage-3i4ioqmk/work/resources`.
 The unit's `evidence/result.json` identifies the exact dataset
 directory. The 39 live source domains and the deferred runtime and
@@ -9008,3 +9051,629 @@ generation is retained under
 The unit's `evidence/result.json` identifies the exact dataset
 directory. The 39 live source domains and the deferred runtime and
 platform checks remain in the recovery checklist.
+
+## E580 European helper field producers and dispatch tables
+
+The setter at `02a720` stores its argument at offset `0x18` of
+the object in `0200f438`. Three of its six direct calls take the
+first word of the handle at primary context offset `0x4`. The
+call at `097dfa` dereferences a handle from the filtered lookup
+at `09cd5c`. Its callback at `09e2c8` selects a reference using
+record bytes `0xf6` and `0xf7`. The nested dispatcher at `0bbc9c`
+uses the same lookup to populate subcontext offset `0xa0` at
+`0bd7c6`. The call at `0bda30` dereferences that field. The live
+handles and intervening writes remain open.
+
+The call at `0bce32` forwards a word from the list at subcontext
+offset `0xc` through the wrapper at `02a6f8`. The observed
+constructor at `0bb988` scans 24 input records with stride 264
+and compacts pointers to accepted records. Its direct setup uses
+base `02000080`. A live selector inside the compacted count in
+the matching context gives a complete source envelope of
+`[02000080, 02001940)` in EWRAM.
+
+The three indexed stores at `0270a8`, `0297aa` and `0298fc`
+select a four-byte list entry through context field `0x94`.
+The constructor at `028fdc` copies a 20-byte template from
+`394e44..394f20` and allocates four bytes per count at template
+offset `0x4` for the list. All eleven templates already belong to
+`ui.context-templates`. The separate setup at `029240` stores
+the allocation for context field `0x9c`. The local writer scan
+finds 14 other candidates that write indexed entries through
+`0x94`. Mode-specific entries and alias writers still need live
+evidence.
+
+The e345 join checks 210 destination entries in six dispatch
+tables reached by these paths. Four tables already have complete
+owners. The seven-entry table at `096e54` and the eleven-entry
+command table at `097644` leave 80 unowned bytes including the
+two root words. The latter uses commands 7 through 17 and sends
+out-of-range values through the original helper at `09a230`.
+The join also checks 24 producer literal words at 25 original
+loads. Ten unowned words add 40 bytes to the integration plan.
+
+Wine `slfj198b`, `ehtmtokr` and `8ajybsq0` attest 8,837,
+804 and 1,303 additional halfwords. Their 38, 42 and 46 input
+guards pass and Wine drains after each unit. The e345 join
+`mdd2l_wy` passes 44 input guards and retains the per-path plan,
+table extents and source hashes under
+`out/e580-validation/projection/target/validation/units`.
+E581 integrates the 120 bytes. Live source domains, ordinary and
+generated use, original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E581 European helper field runtime integration
+
+The European `e346-d345` dataset adds 72 bytes of E580 destinations
+to `engine.thumb-switch-tables` and 48 bytes of roots and producer
+words to `engine.thumb-pc-literals`. The other 154 resource entries
+match e345.
+
+Wine unit `e581-helper-field-dispatch-wine-x1m7j60t` uses Windows
+build `5i4bo5p_`. It changes backing ROM bytes for each controlled
+interpreter path and verifies all 18 in-range dispatches, six
+out-of-range guards and ten individual producer loads with identical
+complete machine state and guest clock. There are 46 typed requests
+and zero raw requests to the selected ranges across these paths.
+Both adjacent raw words and 168 mixed-width boundary reads across
+the three ROM mirrors pass.
+
+The e345 predecessor attaches. Relabeling it as e346 without the
+new groups is rejected before replacing the attached resources.
+All 17 input guards pass, the Wine server drains and the managed
+prefix lease is released. The unit retains the manifest and both
+new packets under `evidence`.
+
+E582 verifies standard CLI publication. The 39 live source domains,
+ordinary and generated use, original BIOS, Linux and USA remain in
+the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E582 European helper field CLI publication
+
+The default-feature Windows build `lby9j1c3` creates the European
+`e346-d345` generation with `rom-data prepare` from an empty resource
+root under Wine. The manifest and both E581 packets match byte for
+byte. All 157 file hashes match. The standard `rom-data verify`
+command accepts the generation. The second `prepare` reports
+`reused` for the same path, with the same file set, identities,
+hashes, modification times and selector.
+
+Wine unit `e582-helper-field-cli-internal-wine-5v5__08d` passes all
+14 input guards and drains the server. The European e346 reference
+dataset is retained under
+`out/e582-validation/staging/target/validation/units/e582-e346-internal-stage-tjyv_m4d/work/resources`.
+Its `evidence/result.json` identifies the exact generation. The
+first staging attempt `d2vk9wez` stopped on a wrapper argument
+before starting Wine. The corrected invocation reused the same build.
+
+## E583 European 204-byte context record bank
+
+Both branches of `0735b0` request `0x7264` bytes from the arena at
+`03002778`. They publish the result at `03002818` and pass a fill of
+`0x3932` halfwords to `145230`. Five direct calls enter this setup.
+The allocator can return null. The arena slot has nearby constructors
+that request `0xc624` or `0x22e0`, and one clear. The smaller arena
+cannot supply this context. The last live arena and context writers
+still need observation.
+
+Eight direct copies take `0xcc` bytes from the work record at context
+offset `0x2cac`. The other six use `context + 0xc6c + 0xcc * slot`.
+The status halfwords start at `0xc60` and selection uses byte `0xc21`.
+The forward and backward selectors at `07cf34` and `07cf9c` cycle over
+five slots. The selectors at `0902c4` and `09032c` cycle over six slots.
+These cycles require an active record. The backward path also requires
+a valid incoming index. The matching mode initializers write five or
+six status halfwords and the largest record array ends at `0x1134`.
+The array and `[0x2cac, 0x2d78)` work record fit the matching allocation.
+
+The five-slot setup at `07d1e4` forwards the alternate byte at `0xc22`
+unless it equals `0xff`. The six-slot setup writes the first active
+index or the empty-list sentinel at `090544`. Live writers, aliasing and the
+guards before copying still need attribution. A read-only inspection
+of seven retained Giza checkpoints finds zero arena and context roots.
+An ordinary recording with the allocation active is needed.
+
+Wine `1eob7sxe` attests 4,605 new halfwords, passes 30 input guards
+and drains the server. The guarded e346 join `qtufl1m9` checks 63
+literal words at 69 original loads. Seventeen already have owners.
+E584 integrates the 46 residual words (184 bytes). The plan is under
+`out/e583-validation/projection/target/validation/units`.
+The live checks and deferred platforms are in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E584 European context record literals at runtime
+
+The European `e347-d346` dataset adds the 46 E583 allocation,
+selection and copy source words to `engine.copied-halfword-lookups`.
+The extractor follows the authenticated Thumb literal loads. The
+packet owns the 184 bytes as `byte-copy-context-record-literal`.
+The earlier packet groups and the other 155 manifest entries match e346.
+
+Windows build `1sqsyqmk` and Wine `e584-context-record-literals-wine-rdvwbe4l`
+pass. Each of the 46 original instructions makes one typed read with
+its ROM backing altered. Registers, complete serialized state and
+guest clock match the reference for each load. The 552 mixed-width
+boundary checks across three ROM mirrors pass. The adjacent raw word
+at `025874` still reflects its altered backing.
+
+The exact e346 dataset attaches. Relabeling it as e347 without the
+new group is rejected before replacing the attached resources.
+All 14 input guards pass and the Wine server drains. The unit retains
+the new manifest and copied lookup packet. E585 verifies standard CLI
+publication. Live pointer domains, ordinary and generated routes,
+original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E585 European context record CLI publication
+
+The default-feature Windows build `nqyflova` creates `e347-d346` with
+`rom-data prepare` from an empty internal resource root under Wine.
+The manifest and copied lookup packet match E584 byte for byte. All
+157 file hashes match. The standard `rom-data verify` accepts the
+generation, and a second `prepare` reports `reused` for the same path.
+The file set, identities, hashes, modification times and selector match
+before and after verification and reuse.
+
+Wine unit `e585-context-record-cli-internal-wine-4u4irudf` passes all
+13 input guards and drains the server. Internal stage `67w2lo4y`
+retains the verified European generation under
+`out/e585-validation/staging/target/validation/units/e585-e347-internal-stage-67w2lo4y/work/resources`.
+The stage's `evidence/result.json` identifies the exact dataset.
+
+## E586 European 80-byte scratch restore bank
+
+All seven direct restore calls take 80 bytes from a context and write
+them back to `[03000940, 03000990)` in IWRAM. Each has a save call
+that copies the same IWRAM block to the same context offset. The
+seven pairs use six distinct regions. At `0326e2` and `032706`,
+the interval `[0xbb8, 0xc08)` fits the `0x7570` allocation published
+in `03002810`. The original callers run the context constructor
+before these helpers, so the block identity across phases still
+needs live evidence.
+
+Two preview pairs use `[0x2e10, 0x2e60)` at `[0200f428]`. The
+matching allocations require at least `0x2e60` bytes. The third pair
+uses `[0x3398, 0x33e8)` and fits the `0x3404` and `0x9c08` allocations.
+The `0x1d7c` allocation fits neither interval. All four original
+publication sizes and four corresponding slot clears are attested.
+
+The quest view uses `[0x560, 0x5b0)` in the `0x3000` allocation
+at `[0200f44c]`. One setup puts `[0200f454]` in the caller slot
+used by `067732` and `067830`. In that path `[0xb54, 0xba4)` fits
+the `0x3800` allocation. The final pair uses `[0x2c5c, 0x2cac)`
+in the `0x7264` context at `[03002818]`. This interval ends where
+the E583 work record begins.
+
+Wine `_yk3qlx6` attests 372 new halfwords, passes 39 input guards
+and drains the server. The guarded e347 join `1u8w8ztb` verifies the
+14 copy sites and identifies 22 unowned words (88 bytes) among 57
+original literal reads. The first two joins `1xhk63aq` and `iph3t5v3`
+had incorrect register and destination load expectations. The final
+join reuses the same Wine evidence. The plan is under
+`out/e586-validation/projection/target/validation/units`.
+
+E587 integrates the 22 unowned words. Live slot writers, save/restore
+ordering, original BIOS and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E587 European scratch restore literals and CLI
+
+The European `e348-d347` profile adds the 22 E586 support words
+(88 bytes) to `engine.copied-halfword-lookups`. The extractor
+follows the authenticated original Thumb literal loads. The earlier
+packet groups and the other 155 manifest entries match e347.
+
+Windows build `iffyfyqx` supplies the audit test and default CLI.
+Wine `e587-scratch-restore-literals-cli-wine-1ai5ud0i` verifies
+all 22 original loads with the backing ROM words altered. Each load
+uses its typed resource and matches the reference state and guest clock.
+All 264 mixed-width boundary reads across the three ROM mirrors pass.
+The raw word at `032580` reflects the altered backing. The e347
+predecessor attaches, and relabeling it as e348 without the new group
+is rejected before replacement.
+
+Within the same Wine lease, default `rom-data prepare` creates
+`e348-d347` from an empty internal resource root. The manifest,
+copied lookup packet and all 157 file hashes match. `rom-data verify`
+accepts the generation and a second `prepare` reports `reused`.
+The generation, file set, identities, hashes, modification times and
+selector match before and after verification and reuse. All 16 input
+guards pass and Wine drains. The current generation is retained in
+`out/e587-validation/staging/target/validation/units/e587-e348-internal-stage-8x8kiufl/work/resources`.
+
+Live save and restore ordering, context identities, ordinary and
+generated dispatch, original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E588 European counted message copy contract
+
+Wrappers `0068dc` and `006938` store the incoming source at message
+offset `0x4` and the low 16 bits of the count at offset `0x14`.
+They request `u16(64 + stride * count)` bytes through `005bd0`.
+The allocator path at `0059b8` adds `0x1c` and narrows again to u16.
+It forwards the 28-byte message, sets event zero and dispatches at
+`005a6c` through `145c14`, with the callback context at allocation
+offset `0x18`.
+
+The callback at `005f5c` copies 12-byte records to context offset
+`0x34`. The `006270` callback copies 16-byte records to context
+offset `0x30`. Both skip a zero count and iterate while the index is
+below the message count. The allocation request is
+`(92 + stride * count) mod 65536`. The largest nonwrapping counts
+are 5,453 and 4,090. These ceilings describe the allocation arithmetic.
+The original producer must establish the live source and count before
+either can define an extractable bank.
+
+The guarded plan `wm8ubq4h` reuses the three drained E574 Wine
+attestations and passes 24 input guards. All four literal words and
+the first IWRAM helper vector word at `370eb0` already have e348
+owners. The census finds only the wrapper literals for the two
+callbacks. It finds zero direct Thumb branches, matching aligned ARM
+branch patterns, Thumb PC-derived address loads or stored absolute
+words for either wrapper across the scanned encodings.
+
+The read-only Sol consultation `/root/sol_e588_counted_message_entry`
+also checked the paired setters and adjacent helpers for direct
+Thumb calls and absolute pointers. The next prerequisite is an
+authentic positive-count event-zero dispatch for each shape at
+`08005a6c`, selected by callback `08005f5d` or `08006271` in `r3`.
+The message source, count and their producer or last writer identify
+the next bank to investigate. Ordinary reachability, Linux and USA
+remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E589 European cached object copy bank
+
+The initializer at `00887c` publishes the supplied pointer to
+`02009188` and clears `0x1bd0` bytes through `145c10` and the
+IWRAM helper vector at `370eb0`. The matched ROM body at `d96838`
+clears exactly the requested number of bytes. The initializer copies
+four bytes from `02002fc0` into the last field, at object offset
+`0x1bcc`. The reset path clears the cached pointer at `0089ac`.
+The scan found 26 Thumb PC-relative loads of this slot address. Its
+nearby direct stores are the publish and reset. Other aliases remain
+an open criterion.
+
+The `0246a4` state machine requests `0x1bd0` bytes and stores the
+pointer at `0200f390 + 0x5c` in state 0. The state 1 path reloads
+that field and forwards it through `024718` and `0097de`. The
+state 2 completion path frees the stored pointer and clears the field.
+At `033de0`, the zero-bit branch reaches the second initializer
+call at `033e58` with the pointer stored at `[03002810] + 0xc08`.
+Both identified context constructors allocate `0x7570` bytes for
+the parent and write the pointer to the same field. The `0324fe`
+writer stores a successful `0x1c10` allocation that fits the
+initializer. The `03264e` writer stores a `0x0f68` allocation,
+which falls `0xc68` bytes short of the clear if it reaches that
+call. The active constructor and actual field writer at `033de0`
+still require a live observation.
+
+The 11-entry table at `0089dc` dispatches selectors 9 and 10 to
+the two four-byte copies from the object back to `02002fc0`.
+Selector 9 first writes the fixed seed at `6df49e` to the object.
+The initializer, the byte write at `0096f2` and the second fixed-seed
+copy at `00970a` also supply that field. Selector 10 needs a live
+last-writer check. The other guarded table at `009564` has 10
+entries and dispatches through the field-editing routine.
+
+Wine unit `m2fn_94l` verified 400 disassembled halfwords on the
+exact EUR ROM with the retained e348 Windows CLI. All 31 guards
+passed and the server drained. Source plan `fo895xwa` passed 32
+guards and joined 52 support words to the e348 manifest. The four-byte
+seed and helper vector word have existing owners. E589 identified
+84 unowned table bytes and 132 bytes from 33 unowned literal words.
+E590 integrates those sources. Live object identity and bounds, ordinary and
+generated dispatch, original BIOS, Linux and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E590 European cached object tables and literals
+
+The European `e349-d348` dataset serves the 21 switch destinations
+through `engine.thumb-switch-tables` and the 33 support words
+through `engine.thumb-pc-literals`. The table roots are among those
+33 words. The source delta is 216 bytes across the two resources.
+The other 154 resource entries match `e348-d347`.
+
+Windows build `ctkdyxc5` and Wine unit `mdbpggu3` pass. With
+altered backing ROM, one focused interpreter test executes the
+original dispatch instructions for all 21 targets, both
+out-of-range paths and the second table's disabled path. It
+verifies all 33 original literal loads, 75 typed requests,
+identical serialized state and guest clock, 420 mixed-width
+boundary reads across the three ROM mirrors and both adjacent
+raw gaps. The e348 predecessor attaches. Relabeling it as e349
+without the two groups is rejected before replacing its resources.
+
+In the same Wine lease, the default CLI prepares from an empty
+resource root and verifies all 157 files. A second prepare
+reuses the same generation and selector. File identities, hashes
+and modification times match after verify and reuse. All 17
+input guards pass and the server drains. The current dataset is
+retained in
+`out/e590-validation/staging/target/validation/units/e590-e349-internal-stage-ryyko0b0/work/resources`.
+
+The live cached pointer and allocation check, selector 10's last
+writer, ordinary and generated execution, original BIOS, Linux
+and USA remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E591 European indexed exchange and direction lists
+
+At `0c3ac6` the context initializer requests `0x400` bytes and
+stores the returned pointer at context offset `0x204`. It can
+return the callbacks at `0c27c0` and `0c305c`. Both selected
+call sites pass the buffer and zero direction and mode inputs
+to `0b82a4`. They store its count as a halfword at `0x20c` and
+pass that count with signed extension to `0c12c8` along with the
+same buffer pointer. The second caller enters the sorter only
+when the count is positive.
+
+The sorter skips counts below two. Its outer index runs from
+zero through count minus two and the inner index from the next
+entry through count minus one. Three four-byte copies perform
+each exchange through a stack temporary. The builder advances
+four bytes per emitted entry. Within the enumerated paths its
+record writes target the first three bytes.
+
+Source plan `8qonq3tc` joins every pair of the 347 linked metadata
+records and 376 item records already owned in e349. For the
+selected zero-mode input, the 130,472 pairs give ceilings of
+8, 32, 4, 16 and 181 records for geometry modes `0x00` through
+`0x40` in steps of `0x10`. The actor-flag override gives at most
+41 records with the same flag result in both checks. These
+bounds fit the 256-entry buffer. They depend on the intact
+allocation and authenticated input domains. The original
+catalog getters accept unchecked u16 IDs, so the physical
+record counts do not establish live IDs or exclude another
+writer.
+
+The branch loops at `0b8336` and `0b83ba` read four bytes at
+`399568` and two bytes at `39956c` respectively. The bytes at
+`39956e` and `39956f` are outside those loops. The six-entry switch
+at `0b7c28` and the fill vector word already have e349 owners.
+The 13- and five-entry tables at `0bb5ac` and `0c3084` leave
+72 destination bytes. Thirteen further support words leave
+52 bytes. Together with the six direction bytes, the source
+delta to integrate is 130 bytes.
+
+The guarded source plan passed 28 input checks. It reuses E574
+Wine evidence for the sorter and original caller edges and
+authenticates the new paths against the exact EUR ROM. The first
+Wine attempt `_25x267l` timed out at startup and drained. Retry
+`odifpwrw` passes 30 input checks and drains. Its 1,916 halfwords
+match the source plan's disassembly byte for byte. E592 serves the
+identified sources. Live input provenance remains in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E592 European indexed exchange tables at runtime
+
+The European `e350-d349` dataset adds the two direction lists
+to `engine.adjacent-offset-tables`, the 18 switch destinations
+to `engine.thumb-switch-tables` and the 13 support words to
+`engine.thumb-pc-literals`. The delta is 130 bytes. The other
+153 resource entries match `e349-d348`.
+
+Windows build `glaijg0o` and Wine unit `bqipxuqu` pass. A focused
+interpreter check uses altered backing bytes to verify the six
+original direction reads, all 18 switch targets, five guard
+paths and the 13 literal loads. The 61 typed requests have
+matching complete serialized state and guest clock. The two
+neighbor bytes at `39956e` remain raw, and all 204 mixed-width
+boundary checks across the three ROM mirrors pass. The previous
+e349 dataset attaches. Relabeling it as e350 without the three
+groups is rejected before replacing its resources.
+
+The default CLI prepares from an empty root, verifies all 157
+files and reuses the same generation and selector in the same
+Wine lease. The file set, identities, hashes and modification
+times match after verify and reuse. All 17 input guards pass and
+the server drains. The e350 generation is retained in
+`out/e592-validation/staging/target/validation/units/e592-e350-internal-stage-mcafhefi/work/resources`.
+
+The actual array last writer, active metadata inputs, ordinary
+and generated exchange execution, original BIOS, Linux and USA
+remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E593 European five-byte list and direction bank
+
+The original `09a71c` path allocates one `0x98a`-byte context
+and publishes the selected slot at owner offset `0x1c`. The only
+encoded direct registration call passes that field to `14c224`.
+The registry holds up to 16 nodes of 28 bytes at `03005f30`.
+The dispatcher follows the node's context pointer when it calls
+`14c524` at `14c3a6`.
+
+The context reserves 256 seven-byte cells at `0x000..0x700` and
+128 five-byte slots at `0x700..0x980`. Initialization clears the
+list and both cursors at `0x988` and `0x989`. State 2 produces the
+first record with kind 15. State 3 advances both cursors modulo 128
+as it consumes active records and enqueues records of kinds 0–3.
+The call at `14c76c` copies five bytes from the selected list slot
+to cell offset 2. The cell index is `16 * row + column`. The seed
+coordinates come from the source fields at `0xf6` and `0xf7` via
+an actor's context pointer at `+0x3c`. A valid seed coordinate and
+the alias between actor and owner slots remain conditions to
+verify on a live path.
+
+The six four-byte rows at `b946d4..b946ec` occupy the gap between
+the palette-effect dispatch and script archive. The original
+forward reader uses indices 1–4 for the seed and `[kind + 1,
+kind, kind + 2]` for kinds 0–3. The reverse reader skips the seed
+and uses `kind + 1`. Both fetch signed bytes at row offsets 0 and
+1. The source plan preserves the entire physical rows, including
+the two trailing bytes. The guard at `14c564` allows five
+destinations rooted at `14c574`. The prior e350 owners already
+serve the producer's `0x988` literal, allocator stride and related
+words. The delta is 24 direction bytes, 20 destination bytes
+and 30 literal words including the switch root, for 164 bytes.
+
+Wine `18_slpld` captured 1,528 halfwords and drained with all
+30 input guards intact. Its original verdict reflects an incorrect
+expected register at `14cdce`. Corrected plan `1lt3a6fp` reuses
+that log, matches 530 previously attested halfwords and passes all
+18 input guards. The live last writers, original scene and
+platform checks remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E594 European five-byte list tables at runtime
+
+European `e351-d350` serves all six four-byte direction rows through
+`engine.adjacent-offset-tables`, the five state destinations through
+`engine.thumb-switch-tables`, and 30 support words including the
+switch root through `engine.thumb-pc-literals`. These resources add
+164 bytes. The other 153 resource entries match `e350-d349`.
+
+Windows build `4wko239g` and Wine `tvct974j` pass. The original
+Thumb interpreter instructions read all six forward rows and the
+four reverse rows with altered backing bytes. All five switch
+destinations and both bypasses pass with 69 typed requests and
+matching full serialized state and guest clock. The mixed-width
+checks cover 384 reads across the three ROM mirrors, both adjacent
+resource owners and 36 trailing-byte reads. The e350 predecessor
+attaches. Relabeling it as e351 with the older content is rejected
+before replacing the attached resources.
+
+The default CLI prepares from an empty directory, verifies all 157
+files and reuses the same generation and selector under Wine. The
+file identities, hashes and modification times match on reuse. All
+17 input guards pass and the server drains. The e351 generation is
+retained in `out/e594-validation/staging/target/validation/units/e594-e351-internal-stage-j6bvjbkq/work/resources`.
+
+Live owner and actor aliasing, seed and cursor observations, ordinary
+and generated projection and reverse walk, original BIOS, Linux, USA
+and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E595 European scroll and palette stack producers
+
+The scroll getter at `0d84ac` loads the eight halfwords at
+`0300094a..0300095a` into `sp + 0x10` and uses `147dc0` to
+copy the full 16-byte block to `sp`. It reads the signed halfword at index
+`2 * u8(layer) + u8(axis)`. The three encoded direct calls select
+indices 4, 5 and 7. The two setter functions at `00356c` and
+`0035bc` write all eight shadow fields. The eight MMIO addresses
+and both physical address-table copies have existing typed owners.
+The IWRAM values are live and require last-writer evidence in a scene.
+
+The palette task uses two already owned command switches with 12
+setup and 14 update destinations. The update's opcode 12 arm at
+`0d7ef8` loads three little-endian signed components from the
+current program's relative parameter. At `14af68`, the original
+callee stores them at `sp + 0x14`, `+0x16` and `+0x18`. It copies
+the three pointers from `sp + 0x1c` to `sp + 0x8` through the
+12-byte call at `14afa6`. The two processing modes cache or reuse
+the three baseline bytes of a 12-byte row at `03003e68`. They
+write the palette shadow at `03003860`. The original index limit
+is 511 after the unsigned 16-bit end calculation. Task flag bit 1
+selects the cached mode.
+
+The plan verifies all 230 headers, 1,135 command records and 25
+producer spans in the published European palette catalog. Across 51
+programs it authenticates every one of the 503 distinct opcode 12
+records, comprising 3,018 owned parameter bytes. Their start and
+end indices lie within `1..415`. The three counted lists contain
+3, 3 and 2 producer rows, eight bytes each. The e351 join identifies
+15 unowned literal words. Eleven are used by the update, one selects
+the task callback in the list constructor and three address the
+already extracted producer lists. The known payloads and switch
+destinations have owners in e351.
+
+Wine `i952tupg` attests 1,276 new halfwords and matches 90
+previously attested ones. All 35 input guards pass and the server
+drains. E591 covers the third stack copy in the same census. The
+live inputs, other program producers and platform checks remain
+in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E596 European palette task literals at runtime
+
+European `e352-d351` adds all 15 E595 words to
+`engine.thumb-pc-literals`. The 60 bytes cover the update's shadow
+and copy vector operands, the task callback and the three counted
+list roots. The other 155 resource entries and the prior literal
+groups match e351.
+
+Windows build `8otaxay3` and Wine `8894ngti` pass. All 15 original
+Thumb loads make typed reads with altered backing ROM words and
+match the full reference state and guest clock. All 180 mixed-width
+boundary checks pass across the three ROM mirrors. The e351
+predecessor attaches. Relabeling it as e352 with the old content is
+rejected before replacing the attached resources.
+
+The standard CLI prepares from an empty directory, verifies all 157
+files and reuses the same generation and selector. All 16 input
+guards pass in one Wine lease and the server drains. The verified
+e352 generation is retained in
+`out/e596-validation/staging/target/validation/units/e596-e352-internal-stage-ll6dkegp/work/resources`.
+
+Live scroll writers, palette task flag order, dynamic program sources,
+ordinary and generated paths, original BIOS, Linux, USA and native
+Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E597 European tilemap transfer list bounds
+
+The original constructor call at `0e6168` receives one of three
+lists. Two paths select `39a710` with two rows. Another selects
+`39a728` with one row, and another selects `39a734` with one row.
+The type-4 row at `39a71c` and the type-3 row at `39a734` already
+have owners. The type-3 rows at `39a710` and `39a728` use existing
+wrappers and LZ77 streams with distinct, previously unowned
+descriptors. Their streams produce 128 and 1,656 bytes respectively.
+
+The callback at `0fde94` chooses between `3a1614` and `3a16a0`.
+On state zero, original message field `+0x14` selects the latter
+when its signed halfword equals `0x013d`. The caller at `0fdf14`
+passes five rows for `3a1614` and six for `3a16a0`. A nonzero low
+byte at message offset `+0x16` reduces the count to zero in either
+branch. The earlier projection stopped after five rows in both
+lists. The sixth row at `3a16dc` links through `3a1698` and `b34144`
+to 246 LZ77 input bytes at `b34148` that produce 448 bytes.
+
+The source join scans the cited physical row and wrapper format and
+finds 828 structurally matching VRAM rows. All 825 E481 rows and
+their linked inputs have coverage in e352. The three additional
+rows, three descriptors, one wrapper and one stream contribute
+310 bytes. Three list base words add 12 bytes. The E174 Red Spring
+trace still maps to its already owned row and the original direct
+decompression branch. The E509 bounded inputs give no aligned
+type-1 row origin. The type-1 path and other source shapes require
+separate producer evidence.
+
+Wine `t889c308` authenticates 452 new original halfwords, passes 38
+input guards and drains. The recovered list branches establish
+the source extents. Live scene selection and recovery of other
+computed sources remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E598 European counted type-3 transfers at runtime
+
+European `e353-d352` reads the original list base and count pairs to
+extend the type-3 row projection. `graphics.tilemap-type3-transfers`
+adds the three rows, their descriptors and the wrapper and 246-byte
+LZ77 input for the sixth row at `3a16dc`.
+`graphics.tilemap-direct-transfers` adds the three missing base words.
+The two packed files gain 322 source bytes in total. Existing source
+spans in both files and the other 154 resource entries match e352.
+
+Windows build `524srhho` and Wine `jf_6_agl` pass. The controlled
+interpreter test follows six original list setup paths, including
+both counts at `0fdf14`, and the zero-count guard. It observes the
+three new base loads through typed resources with altered backing ROM.
+All three recovered rows run through the original `0db09c` reader and
+SWI wrapper with the emulator's BIOS HLE, producing 2,232 bytes through
+the direct and staged paths. The output hashes, full states, guest
+clocks and 132 mixed-width mirror reads match. The e352 predecessor
+attaches, and relabeling it as e353 is rejected before replacing the
+attached resources.
+
+The standard CLI prepares from an empty root, verifies all 157
+files and reuses the same generation and selector. Sixteen protected
+inputs pass, the Wine server drains and its lease is released.
+The current generation is retained in
+`out/e598-validation/staging/target/validation/units/e598-e353-internal-stage-myupox0_/work/resources`.
+
+The live message and list producers, queued writes, generated dispatch,
+other calculated source banks, original BIOS and deferred platforms
+remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

@@ -266,7 +266,7 @@ impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
         Self::from_rom_with_initializers(
             rom, previous, true, true, true, true,
-            Some(fixed_byte_copies::Layout::WithSharedSlotLiterals),
+            Some(fixed_byte_copies::Layout::WithScratchRestoreLiterals),
         )
     }
     pub(crate) fn from_rom_with_initializers(

@@ -11,7 +11,7 @@ exception that requires the selected disk for builds and validation.
 
 ## Before starting a build or validation
 
-- [ ] Check `df -h target`. Budget peak growth with `validation_unit.py --reserve-gib N`.
+- [ ] Check `df -h . target out`. Budget peak growth with `validation_unit.py --reserve-gib N`.
       The default launch floor is 5 GiB plus the declared growth.
 - [ ] Reuse installed toolchains, dependency downloads, canonical Cargo outputs,
       the shared Wine prefix and one current dataset per ROM/profile. Keep the
@@ -25,39 +25,50 @@ exception that requires the selected disk for builds and validation.
 ## External target on Linux
 
 On the configured workstation, a udev rule matches the external disk's
-filesystem UUID. Systemd mounts the disk, opens its ext4 image and binds the
-image's `target` directory at the root checkout's usual path. The verification
-service checks both filesystem UUIDs and read-write mount options. When the
-disk is absent, the protected empty directory remains at the project path and
-the disk rule does not start a mount job.
+filesystem UUID. Systemd mounts the disk, opens separate ext4 images for
+`target` and `out`, and binds both directories at their usual checkout paths.
+The target verification service checks the disk and target image UUIDs and
+read-write mount options. The output mount depends on the target mount and its
+own image mount; it does not have a separate UUID verification service. When the
+disk is absent, protected empty mountpoints remain at both project paths and the
+disk rule does not start a mount job.
 [systemd device units](https://www.freedesktop.org/software/systemd/man/latest/systemd.device.html)
 
-From the root checkout on the Linux host, check that the bind exposes the
-expected ext4 filesystem with `rw` in its options.
+From the root checkout on the Linux host, check that both binds expose their
+expected ext4 filesystems with `rw` in their options. The two images and the
+outer disk each have their own free-space limit.
 
 ```sh
 workspace_target="$PWD/target"
+workspace_out="$PWD/out"
 target_unit=$(systemd-escape --path --suffix=mount "$workspace_target")
-systemctl status "$target_unit" --no-pager
-findmnt --mountpoint "$workspace_target" -o TARGET,SOURCE,FSTYPE,OPTIONS
+out_unit=$(systemd-escape --path --suffix=mount "$workspace_out")
+systemctl status "$target_unit" "$out_unit" --no-pager
+findmnt --mountpoint "$workspace_target" -o TARGET,SOURCE,UUID,FSTYPE,OPTIONS
+findmnt --mountpoint "$workspace_out" -o TARGET,SOURCE,UUID,FSTYPE,OPTIONS
+df -h . "$workspace_target" "$workspace_out"
 ```
 
 If the disk is attached and the mount failed, check the current boot's journal
-for the mount unit and `ffta-recomp-target-verify.service`. After correcting
-the reported error, start the bind chain with `sudo systemctl start "$target_unit"`.
-The operating system assigns the loop device name dynamically.
+for the mount units and `ffta-recomp-target-verify.service`. After correcting
+the reported error, start the target bind with `sudo systemctl start "$target_unit"`
+and, if necessary, the output bind with `sudo systemctl start "$out_unit"`.
+The operating system assigns loop device names dynamically. Automatic output
+reconnection was configured and inspected but has not been tested after reboot.
 
-Before ejecting the disk, close build and validation processes and stop the
-workspace bind, the ext4 image mount and the outer volume mount in that order.
-Use the installed paths from `systemctl cat "$target_unit"` and the dependency
-units. Stop if an unmount reports the device is busy. A manually attached loop
-without autoclear must be detached after unmounting the image.
+Before ejecting the disk, close build and validation processes, stop the `out`
+bind and then the `target` bind, and stop both ext4 image mounts before the
+outer volume mount. Use `systemctl cat "$target_unit" "$out_unit"` and their
+dependency units to identify the installed paths. Stop if an unmount reports
+the device is busy. A manually attached loop without autoclear must be detached
+after unmounting its image.
 
-The installed configuration consists of the three mount units, the verification
-service, `/etc/udev/rules.d/99-ffta-recomp-target.rules` and
-`/etc/tmpfiles.d/ffta-recomp-target.conf`. To remove the automation, stop the
-mounts in the same order, remove those six configuration files, reload systemd
-with `sudo systemctl daemon-reload` and reload udev rules with
+The installed configuration consists of five mount units, the target
+verification service, target and output udev rules, a target-unit drop-in that
+requests the output mount, and the target tmpfiles entry. To remove the
+automation, stop the mounts in the same order, remove the associated unit,
+drop-in, rule and tmpfiles configuration, reload systemd with
+`sudo systemctl daemon-reload`, and reload udev rules with
 `sudo udevadm control --reload-rules`.
 
 ## When space is low

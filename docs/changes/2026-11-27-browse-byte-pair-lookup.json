@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-byte-pair-lookup",
+  "title": "Browse byte-pair metadata lookups",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose 44 stored European byte-pair metadata records with authenticated links to localized metadata names and reverse references.",
+    "Provide a filter and an original-source lookup preview that retains first-match behavior, the 43-row inverse extent and zero-on-miss result."
+  ],
+  "validation": [
+    "Synthetic unit viewer-metadata2-synthetic-ug6y7tuw passed 53 tests, including source guards, absent catalogs, duplicate values, row 43 and bidirectional links.",
+    "Protected e345 unit viewer-metadata2-real-ylvqkc4o reconstructed all 88 source bytes, checked 44 forward rows, 256 inverse inputs and 44 metadata links in Chrome, and matched 25 Python/Docker files.",
+    "Published 18 ignored local wiki pages with guarded preimages and preserved the unrelated scoped payloads."
+  ],
+  "limitations": [
+    "The stored values do not establish semantic names or live game state; native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_metadata2_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

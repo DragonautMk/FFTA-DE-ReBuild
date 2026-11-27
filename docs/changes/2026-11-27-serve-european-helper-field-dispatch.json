@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-helper-field-dispatch",
+  "title": "Integrate the European helper field dispatch bank",
+  "kind": "added",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Added both E580 switch destination tables and all twelve associated Thumb literal words in e346-d345. Preserved the revision-specific e345 layouts and the other 154 resource entries."
+  ],
+  "validation": [
+    "The two switch specifications and twelve literal bindings match the guarded E580 plan mdd2l_wy. Windows build 5i4bo5p_ passed.",
+    "Wine x1m7j60t passed 18 dispatch paths, six guards, ten producer reads, 168 mixed mirror boundary checks and two raw word checks. It recorded 46 typed reads and exact machine state and clock equality on the controlled paths. The e345 predecessor attached and incomplete e346 was rejected before replacement. All 17 input guards passed and Wine drained."
+  ],
+  "limitations": [
+    "Standard CLI publication, ordinary and generated dispatch, live pointer domains, original BIOS, native Linux and USA remain separate checks. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_node_dispatch_tests.rs",
+    "crates/recomp/src/rom_data/helper_field_dispatch_tests.rs"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

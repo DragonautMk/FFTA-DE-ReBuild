@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-manifest-sources-on-demand",
+  "title": "Load large manifest source inventories on demand",
+  "kind": "performance",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Store large source-range inventories once in content-addressed local assets and load them when manifest details open, retaining metadata, pagination and filtering.",
+    "Share identical inventories across topic pages, support retry after missing or invalid local files, preserve generated-file ownership guards and leave single-page output inline."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-manifest-synthetic-nqzowmmn passed 15 generator and Chrome tests for sharing, lazy loading, filtering, paging, missing and invalid assets, safe rendering and existing navigation.",
+    "Protected e359 viewer-lazy-manifest-real-irnnffap compared all 19 inventories with the manifest across 22 scoped payloads, exercised real text and audio details, retained 172 resource pages and matched 602 Python/Docker files.",
+    "The pointer-text page decreased from 7789195 to 2702771 bytes and the relative-text page from 11950373 to 6863949 bytes; published 23 local pages and 19 assets with guarded preimages out/ffta-lazy-manifest-before-wedid2xj."
+  ],
+  "limitations": [
+    "Opening a large inventory still loads and filters that inventory in browser memory. Single-page output retains inline metadata; native Windows is unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_lazy_manifest_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

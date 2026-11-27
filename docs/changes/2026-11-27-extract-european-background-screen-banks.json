@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-background-screen-banks",
+  "title": "Extract the European background screen banks",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Pack 72,080 authenticated bytes for all five original screen tile and map pairs with the selector directories. Publish them as graphics.background-screen-banks in e358-d357.",
+    "Serve the original tile and map readers from the packed resource while preserving predecessor attachment and the raw extra-row fallback."
+  ],
+  "validation": [
+    "Windows build 31sqp8tj and Wine 01bkwwt1 pass the five screen paths, 18 tile DMA chunks, five map uploads, 1,260 mirror checks, e357 attachment and two invalid candidates. Complete state and guest clock match.",
+    "The standard Wine CLI creates, verifies and reuses 160 files, with all 158 earlier resource files verified, 19 input guards and a drained Wine server. Retained verified stage ol67qzpt."
+  ],
+  "limitations": [
+    "Ordinary selector provenance, translated readers, separate extra-row use, Linux, USA and native Windows remain on the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/background_screen_banks.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/background_screen_bank_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

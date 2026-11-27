@@ -64,7 +64,7 @@ class TransferLzProjectionTest(unittest.TestCase):
         for options in ({}, {'observed': False}, {'bad_source': True}, {'overlap': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-transfer-lz-projection-') as directory:
                 work = Path(directory); index, _, _ = fixture(work, **options)
-                parts = index.parent / 'index.html.parts'; world = payload(parts / 'interface.html'); objects = payload(parts / 'objects.html')
+                parts = index.parent / 'index.html.parts'; world = payload(parts / 'interface-maps.html'); objects = payload(parts / 'objects.html')
                 self.assertNotIn('lz_graphics', payload(index))
                 self.assertEqual(world['lz_graphics'], objects['lz_graphics'])
                 valid = not (options.get('bad_source') or options.get('overlap'))
@@ -82,7 +82,7 @@ class TransferLzBrowserTest(unittest.TestCase):
     def test_tiles_tilemap_and_object_animation_sources(self):
         with tempfile.TemporaryDirectory(prefix='viewer-transfer-lz-browser-') as directory:
             work = Path(directory); index, _, _ = fixture(work); parts = index.parent / 'index.html.parts'
-            browser = Chrome(work, parts / 'interface.html')
+            browser = Chrome(work, parts / 'interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true})),
@@ -115,7 +115,7 @@ class TransferLzBrowserTest(unittest.TestCase):
         for options in ({'observed': False}, {'bad_source': True}, {'overlap': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-transfer-lz-partial-') as directory:
                 work = Path(directory); index, _, _ = fixture(work, **options)
-                browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+                browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
                 try:
                     valid = not (options.get('bad_source') or options.get('overlap'))
                     self.assertEqual(browser.evaluate('''(()=>{

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-palette-task-literals",
+  "title": "Serve European palette task and list literals",
+  "kind": "added",
+  "platforms": [
+    "European ROM, Windows GNU build and Wine runtime"
+  ],
+  "changes": [
+    "Extracted the 15 task and producer-list words in e352-d351 through the Thumb literal resource. The other 155 resources and prior literal groups retain their exact content."
+  ],
+  "validation": [
+    "Windows build 8otaxay3 and Wine 8894ngti pass all 15 original loads with altered backing, full state and guest clock equality, 180 mixed mirror checks, e351 attachment and incomplete e352 rejection.",
+    "The standard CLI creates, verifies and reuses all 157 files. Sixteen input guards pass and the Wine server drains. Stage ll6dkegp retains the verified e352 generation."
+  ],
+  "limitations": [
+    "Live scroll writers, dynamic palette programs and flag order, ordinary and generated paths, original BIOS, Linux, USA and native Windows remain in the recovery checklist. Performance validation is deferred."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data/helper_field_dispatch_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

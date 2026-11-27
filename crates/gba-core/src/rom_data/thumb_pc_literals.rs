@@ -11,6 +11,198 @@ mod world_state_task;
 pub const LITERAL_COUNT: usize = 326;
 pub const SOURCE_ROLE: &str = "thumb-pc-literal";
 
+// E580 helper field producer words and both switch roots, in source order.
+const HELPER_FIELD_LITERALS: [(u32, u32, u16); 12] = [
+    (0x029740, 0x0296fc, 0x4910),
+    (0x029744, 0x029702, 0x4a10),
+    (0x0297bc, 0x029786, 0x4c0d),
+    (0x02a710, 0x02a6fe, 0x4a04),
+    (0x096e54, 0x096e4a, 0x4902),
+    (0x097644, 0x09763c, 0x4901),
+    (0x097d6c, 0x097ccc, 0x4d27),
+    (0x0bce44, 0x0bce08, 0x4a0e),
+    (0x0bce48, 0x0bce1a, 0x490b),
+    (0x0bce4c, 0x0bce20, 0x4b0a),
+    (0x0bd850, 0x0bd79e, 0x4d2c),
+    (0x0bda48, 0x0bda18, 0x4a0b),
+];
+
+const CACHED_OBJECT_LITERALS: [(u32, u32, u16); 33] = [
+    (0x0088d4, 0x008892, 0x4a10),
+    (0x0088d8, 0x008894, 0x4910),
+    (0x0088e0, 0x0088b0, 0x4a0b),
+    (0x0088f4, 0x0088e6, 0x4c03),
+    (0x0089b0, 0x00899c, 0x4804),
+    (0x0089b4, 0x0089aa, 0x4802),
+    (0x0089d8, 0x0089cc, 0x4902),
+    (0x008d60, 0x008d22, 0x4c0f),
+    (0x008d9c, 0x008d64, 0x4c0d),
+    (0x009200, 0x0091be, 0x4810),
+    (0x009204, 0x0091d0, 0x480c),
+    (0x009208, 0x0091e4, 0x4908),
+    (0x00920c, 0x0091e8, 0x4908),
+    (0x009558, 0x00953a, 0x4e07),
+    (0x00955c, 0x00953e, 0x4b07),
+    (0x009560, 0x00954e, 0x4904),
+    (0x009718, 0x0096fe, 0x4806),
+    (0x00971c, 0x009702, 0x4906),
+    (0x0097e8, 0x0097d4, 0x4904),
+    (0x0097ec, 0x0097d6, 0x4a05),
+    (0x0246b8, 0x0246a6, 0x4e04),
+    (0x0246f0, 0x0246c6, 0x480a),
+    (0x024724, 0x024706, 0x4907),
+    (0x024728, 0x024708, 0x4a07),
+    (0x03257c, 0x032492, 0x493a),
+    (0x032580, 0x032498, 0x4d39),
+    (0x03259c, 0x0324f2, 0x492a),
+    (0x0325a0, 0x0324fa, 0x4b29),
+    (0x032664, 0x0325e0, 0x4820),
+    (0x032668, 0x0325e2, 0x4921),
+    (0x03266c, 0x0325e8, 0x4d20),
+    (0x032688, 0x032642, 0x4911),
+    (0x03268c, 0x03264a, 0x4b10),
+];
+
+const INDEXED_EXCHANGE_LITERALS: [(u32, u32, u16); 13] = [
+    (0x0b7bdc, 0x0b7bc8, 0x4a04),
+    (0x0b83a0, 0x0b832e, 0x491c),
+    (0x0b8424, 0x0b83b2, 0x491c),
+    (0x0bb5a8, 0x0bb5a0, 0x4901),
+    (0x0c3080, 0x0c3078, 0x4901),
+    (0x0c3204, 0x0c3142, 0x4b30),
+    (0x0c3b30, 0x0c3a8a, 0x4829),
+    (0x0c3b34, 0x0c3b26, 0x4803),
+    (0x0c3b38, 0x0c3b2c, 0x4802),
+    (0x0c3b8c, 0x0c3b86, 0x4801),
+    (0x0c3bbc, 0x0c3bb8, 0x4800),
+    (0x0c3bc8, 0x0c3bc4, 0x4800),
+    (0x0c3be0, 0x0c3bcc, 0x4804),
+];
+
+const FIVE_BYTE_LIST_LITERALS: [(u32, u32, u16); 30] = [
+    (0x09dd18, 0x09dd04, 0x4a04),
+    (0x14c2a0, 0x14c238, 0x4d19),
+    (0x14c31c, 0x14c2e2, 0x480e),
+    (0x14c334, 0x14c32e, 0x4801),
+    (0x14c444, 0x14c408, 0x480e),
+    (0x14c574, 0x14c56c, 0x4901),
+    (0x14c604, 0x14c58e, 0x4e1d),
+    (0x14c608, 0x14c598, 0x4a1b),
+    (0x14c60c, 0x14c5a0, 0x4c1a),
+    (0x14c610, 0x14c5a6, 0x4d1a),
+    (0x14c614, 0x14c5ac, 0x4819),
+    (0x14c6a4, 0x14c61a, 0x4f22),
+    (0x14c6a8, 0x14c61e, 0x4822),
+    (0x14c6ac, 0x14c628, 0x4a20),
+    (0x14c6b0, 0x14c668, 0x4a11),
+    (0x14c6b4, 0x14c670, 0x4e10),
+    (0x14c730, 0x14c718, 0x4a05),
+    (0x14c798, 0x14c73e, 0x4816),
+    (0x14c8ac, 0x14c79c, 0x4843),
+    (0x14c8b0, 0x14c7c2, 0x483b),
+    (0x14c8b4, 0x14c878, 0x4b0e),
+    (0x14ca08, 0x14c8d6, 0x4c4c),
+    (0x14ca0c, 0x14c8f0, 0x4a46),
+    (0x14cabc, 0x14ca34, 0x4d21),
+    (0x14cc20, 0x14cbfa, 0x4f09),
+    (0x14cc24, 0x14cc00, 0x4c08),
+    (0x14cc28, 0x14cc0c, 0x4a06),
+    (0x14cc8c, 0x14cc7c, 0x4a03),
+    (0x14cc90, 0x14cc84, 0x4902),
+    (0x14cddc, 0x14cdb2, 0x480a),
+];
+
+const PALETTE_TASK_LITERALS: [(u32, u32, u16); 15] = [
+    (0x0d7dc4, 0x0d7dac, 0x4b05),
+    (0x0d7dc8, 0x0d7db0, 0x4905),
+    (0x0d7de0, 0x0d7dce, 0x4804),
+    (0x0d7df8, 0x0d7de6, 0x4804),
+    (0x0d7e2c, 0x0d7dfe, 0x480b),
+    (0x0d7e48, 0x0d7e32, 0x4905),
+    (0x0d7e68, 0x0d7e4e, 0x4806),
+    (0x0d7e9c, 0x0d7e6e, 0x480b),
+    (0x0d7ec4, 0x0d7ea2, 0x4808),
+    (0x0d7edc, 0x0d7eca, 0x4804),
+    (0x0d7ef4, 0x0d7ee2, 0x4804),
+    (0x0d83e8, 0x0d83aa, 0x480f),
+    (0x0ef440, 0x0ef35c, 0x4838),
+    (0x0fa698, 0x0fa646, 0x4814),
+    (0x109d74, 0x109d50, 0x4808),
+];
+
+const BACKGROUND_VARIANT_STATE_LITERALS: [(u32, u32, u16); 2] = [
+    (0x02099c, 0x020988, 0x4e04),
+    (0x0209a0, 0x020994, 0x4902),
+];
+
+const CPU_FAST_SET_LITERALS: [(u32, u32, u16); 65] = [
+    (0x01b300, 0x01b2ec, 0x4a04),
+    (0x01b3ec, 0x01b39a, 0x4a14),
+    (0x01e020, 0x01e006, 0x4a06),
+    (0x01e04c, 0x01e034, 0x4a05),
+    (0x01eae4, 0x01eab4, 0x4a0b),
+    (0x02043c, 0x0203f0, 0x4a12),
+    (0x0204f8, 0x0204c4, 0x4a0c),
+    (0x020620, 0x020610, 0x4903),
+    (0x020624, 0x020612, 0x4a04),
+    (0x0206b4, 0x0206a2, 0x4904),
+    (0x0208bc, 0x020890, 0x4a0a),
+    (0x020978, 0x020904, 0x4a1c),
+    (0x020b8c, 0x020b5c, 0x490b),
+    (0x020b90, 0x020b66, 0x4a0a),
+    (0x023c7c, 0x023bf4, 0x4921),
+    (0x023c8c, 0x023c22, 0x491a),
+    (0x0243cc, 0x0243aa, 0x4908),
+    (0x0328fc, 0x03281e, 0x4937),
+    (0x032904, 0x032836, 0x4933),
+    (0x032914, 0x032856, 0x492f),
+    (0x03291c, 0x032872, 0x492a),
+    (0x032924, 0x03288a, 0x4926),
+    (0x03292c, 0x03289e, 0x4923),
+    (0x03a7b0, 0x03a75a, 0x4a15),
+    (0x03a9c4, 0x03a980, 0x4a10),
+    (0x04fd30, 0x04fbd6, 0x4956),
+    (0x04fd38, 0x04fbec, 0x4952),
+    (0x04fd64, 0x04fd0e, 0x4915),
+    (0x059d78, 0x059cf8, 0x491f),
+    (0x084970, 0x084912, 0x4917),
+    (0x084974, 0x084914, 0x4a17),
+    (0x0855f8, 0x085582, 0x491d),
+    (0x0855fc, 0x085584, 0x4a1d),
+    (0x0856c0, 0x08564c, 0x491c),
+    (0x0856c4, 0x08564e, 0x4a1d),
+    (0x085870, 0x0857ba, 0x492d),
+    (0x085874, 0x0857bc, 0x4a2d),
+    (0x0db530, 0x0db4e6, 0x4a12),
+    (0x0db704, 0x0db6c8, 0x4a0e),
+    (0x0e4eb0, 0x0e4e8c, 0x4908),
+    (0x0e4eb4, 0x0e4e8e, 0x4a09),
+    (0x0e51ec, 0x0e51d0, 0x4906),
+    (0x0e51f0, 0x0e51d2, 0x4a07),
+    (0x0e5254, 0x0e5228, 0x490a),
+    (0x0e5258, 0x0e522a, 0x4a0b),
+    (0x0e5540, 0x0e5518, 0x4909),
+    (0x0e5544, 0x0e551a, 0x4a0a),
+    (0x0e58c4, 0x0e5892, 0x490c),
+    (0x0e58c8, 0x0e5894, 0x4a0c),
+    (0x0e59e8, 0x0e59c6, 0x4908),
+    (0x0e59ec, 0x0e59c8, 0x4a08),
+    (0x0e5cc4, 0x0e5c98, 0x490a),
+    (0x0e5cc8, 0x0e5c9a, 0x4a0b),
+    (0x0e5ea0, 0x0e5e78, 0x4909),
+    (0x0e5ea4, 0x0e5e7a, 0x4a0a),
+    (0x140478, 0x1403a6, 0x4a34),
+    (0x143a30, 0x1438d6, 0x4a56),
+    (0x143cfc, 0x143c9a, 0x4918),
+    (0x143d94, 0x143d48, 0x4912),
+    (0x143e50, 0x143db8, 0x4925),
+    (0x143e70, 0x143e06, 0x491a),
+    (0x143f74, 0x143f10, 0x4918),
+    (0x1440d8, 0x14407c, 0x4916),
+    (0x144360, 0x144318, 0x4911),
+    (0x144458, 0x144412, 0x4911),
+];
+
 // Source offset, original Thumb LDR offset and expected instruction halfword.
 // The guest values are decoded from the authenticated ROM, not embedded here.
 pub const LITERALS: [(u32, u32, u16); LITERAL_COUNT] = [
@@ -3182,21 +3374,22 @@ const CUSTOM_DECODER_ROOTS: [(u32, u32, u16); 31] = [
 
 const LOCALIZED_TEXT_ROOTS_BASE: usize = CUSTOM_DECODER_ROOTS_BASE + CUSTOM_DECODER_ROOTS.len();
 
-pub const SOURCE_PAGES: [usize; 170] = [
-    0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x9, 0xa, 0xb, 0xc, 0xd,
+pub const SOURCE_PAGES: [usize; 178] = [
+    0x0, 0x1, 0x2, 0x3, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd,
     0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b,
     0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
     0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35,
     0x36, 0x37, 0x38, 0x39, 0x3a, 0x3c, 0x3d, 0x43, 0x44, 0x46, 0x4d, 0x4e,
     0x4f, 0x55, 0x59, 0x5a, 0x5b, 0x5c, 0x5e, 0x5f, 0x63, 0x67, 0x69, 0x70, 0x74,
-    0x75, 0x83, 0x89, 0x8d, 0x8e, 0x91, 0x92,
+    0x75, 0x83, 0x84, 0x85, 0x89, 0x8d, 0x8e, 0x91, 0x92,
     0x95, 0x96, 0x97, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa0,
     0xa1, 0xa2, 0xa3, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xb7,
-    0xb8, 0xb9, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xca, 0xcb, 0xcc, 0xcd,
+    0xb8, 0xb9, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc3, 0xca, 0xcb, 0xcc, 0xcd,
     0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd6, 0xd7, 0xd8, 0xd9, 0xda, 0xdb, 0xe0,
-    0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xeb, 0xee, 0xf0, 0x109, 0x125, 0x126, 0x127,
+    0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xeb, 0xee, 0xef, 0xf0, 0xfa, 0x109, 0x125, 0x126, 0x127,
     0x128, 0x129, 0x12a, 0x12b, 0x12c, 0x12e, 0x12f, 0x130, 0x132, 0x133, 0x134, 0x135, 0x137, 0x138,
-    0x139, 0x13a, 0x13b, 0x13c, 0x13f, 0x144, 0x145, 0x146, 0x147, 0x148, 0x149, 0x14a, 0x14b, 0x14c,
+    0x139, 0x13a, 0x13b, 0x13c, 0x13f, 0x140, 0x143, 0x144, 0x145, 0x146, 0x147, 0x148,
+    0x149, 0x14a, 0x14b, 0x14c,
 ];
 
 /// A literal operand and the original PC-relative LDR that can read it.
@@ -3281,6 +3474,20 @@ pub struct ThumbPcLiterals {
     pub world_node_renderer_literals: Vec<LiteralWord>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub world_state_task_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub helper_field_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub cached_object_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub indexed_exchange_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub five_byte_list_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub palette_task_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub background_variant_state_literals: Vec<LiteralWord>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub cpu_fast_set_literals: Vec<LiteralWord>,
 }
 impl ThumbPcLiterals {
     pub fn validate(&self) -> Result<(), String> {
@@ -3513,7 +3720,80 @@ impl ThumbPcLiterals {
         startup_tasks::validate(&self.startup_task_roots)?;
         title_frontend::validate(&self.title_frontend_roots)?;
         world_node_renderer::validate(&self.world_node_renderer_literals)?;
-        world_state_task::validate(&self.world_state_task_literals)
+        world_state_task::validate(&self.world_state_task_literals)?;
+        if !self.helper_field_literals.is_empty()
+            && (self.helper_field_literals.len() != HELPER_FIELD_LITERALS.len()
+                || self.helper_field_literals.iter().zip(HELPER_FIELD_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid helper field literal source, reader or order".into());
+        }
+        if !self.cached_object_literals.is_empty()
+            && (self.cached_object_literals.len() != CACHED_OBJECT_LITERALS.len()
+                || self.cached_object_literals.iter().zip(CACHED_OBJECT_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid cached object literal source, reader or order".into());
+        }
+        if !self.indexed_exchange_literals.is_empty()
+            && (self.indexed_exchange_literals.len() != INDEXED_EXCHANGE_LITERALS.len()
+                || self.indexed_exchange_literals.iter().zip(INDEXED_EXCHANGE_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid indexed exchange literal source, reader or order".into());
+        }
+        if !self.five_byte_list_literals.is_empty()
+            && (self.five_byte_list_literals.len() != FIVE_BYTE_LIST_LITERALS.len()
+                || self.five_byte_list_literals.iter().zip(FIVE_BYTE_LIST_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid five-byte list literal source, reader or order".into());
+        }
+        if !self.palette_task_literals.is_empty()
+            && (self.palette_task_literals.len() != PALETTE_TASK_LITERALS.len()
+                || self.palette_task_literals.iter().zip(PALETTE_TASK_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid palette task literal source, reader or order".into());
+        }
+        let words = &self.background_variant_state_literals;
+        if !words.is_empty()
+            && (words.len() != BACKGROUND_VARIANT_STATE_LITERALS.len()
+                || words.iter().zip(BACKGROUND_VARIANT_STATE_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid background variant state literal source, reader or order".into());
+        }
+        let words = &self.cpu_fast_set_literals;
+        if !words.is_empty()
+            && (words.len() != CPU_FAST_SET_LITERALS.len()
+                || words.iter().zip(CPU_FAST_SET_LITERALS).any(
+                    |(word, (offset, reader, _))| {
+                        word.source_offset != offset || word.reader_offset != reader
+                    },
+                ))
+        {
+            return Err("Invalid CpuFastSet literal source, reader or order".into());
+        }
+        Ok(())
     }
 
     /// Returns a byte of one observed literal without affecting other guest reads.
@@ -3661,14 +3941,47 @@ impl ThumbPcLiterals {
             let bytes = self.world_node_renderer_literals[index].value.to_le_bytes();
             return Some((bytes[(offset & 3) as usize], renderer_base + index));
         }
-        let index = self.world_state_task_literals.binary_search_by_key(&base, |v| v.source_offset).ok()?;
-        let bytes = self.world_state_task_literals[index].value.to_le_bytes();
-        Some((bytes[(offset & 3) as usize], renderer_base + self.world_node_renderer_literals.len() + index))
+        let state_base = renderer_base + self.world_node_renderer_literals.len();
+        if let Ok(index) = self.world_state_task_literals.binary_search_by_key(&base, |v| v.source_offset) {
+            let bytes = self.world_state_task_literals[index].value.to_le_bytes();
+            return Some((bytes[(offset & 3) as usize], state_base + index));
+        }
+        let mut group_base = state_base + self.world_state_task_literals.len();
+        for words in [
+            &self.helper_field_literals,
+            &self.cached_object_literals,
+            &self.indexed_exchange_literals,
+            &self.five_byte_list_literals,
+            &self.palette_task_literals,
+            &self.background_variant_state_literals,
+            &self.cpu_fast_set_literals,
+        ] {
+            if let Ok(index) = words.binary_search_by_key(&base, |v| v.source_offset) {
+                let bytes = words[index].value.to_le_bytes();
+                return Some((bytes[(offset & 3) as usize], group_base + index));
+            }
+            group_base += words.len();
+        }
+        None
     }
 
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        let layout = if !self.world_state_task_literals.is_empty() {
+        let layout = if !self.cpu_fast_set_literals.is_empty() {
+            SourceLayout::CpuFastSet
+        } else if !self.background_variant_state_literals.is_empty() {
+            SourceLayout::BackgroundVariantState
+        } else if !self.palette_task_literals.is_empty() {
+            SourceLayout::PaletteTask
+        } else if !self.five_byte_list_literals.is_empty() {
+            SourceLayout::FiveByteList
+        } else if !self.indexed_exchange_literals.is_empty() {
+            SourceLayout::IndexedExchange
+        } else if !self.cached_object_literals.is_empty() {
+            SourceLayout::CachedObject
+        } else if !self.helper_field_literals.is_empty() {
+            SourceLayout::HelperFieldDispatch
+        } else if !self.world_state_task_literals.is_empty() {
             SourceLayout::WorldStateTask
         } else if !self.world_node_renderer_literals.is_empty() {
             SourceLayout::WorldNodeRenderer
@@ -3711,6 +4024,13 @@ pub(super) enum SourceLayout {
     TitleFrontend,
     WorldNodeRenderer,
     WorldStateTask,
+    HelperFieldDispatch,
+    CachedObject,
+    IndexedExchange,
+    FiveByteList,
+    PaletteTask,
+    BackgroundVariantState,
+    CpuFastSet,
 }
 
 impl Catalog {
@@ -4798,12 +5118,68 @@ impl Catalog {
         } else {
             Vec::new()
         };
+        let helper_field_literals = if layout >= SourceLayout::HelperFieldDispatch {
+            HELPER_FIELD_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let cached_object_literals = if layout >= SourceLayout::CachedObject {
+            CACHED_OBJECT_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let indexed_exchange_literals = if layout >= SourceLayout::IndexedExchange {
+            INDEXED_EXCHANGE_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let five_byte_list_literals = if layout >= SourceLayout::FiveByteList {
+            FIVE_BYTE_LIST_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let palette_task_literals = if layout >= SourceLayout::PaletteTask {
+            PALETTE_TASK_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let background_variant_state_literals = if layout >= SourceLayout::BackgroundVariantState {
+            BACKGROUND_VARIANT_STATE_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
+        let cpu_fast_set_literals = if layout >= SourceLayout::CpuFastSet {
+            CPU_FAST_SET_LITERALS.into_iter()
+                .map(|(offset, reader, opcode)| LiteralWord::from_thumb_load(rom, offset, reader, opcode))
+                .collect::<Result<Vec<_>, _>>()?
+        } else {
+            Vec::new()
+        };
         for (label, words) in [
             ("Localized text", &localized_text_roots),
             ("Startup task", &startup_task_roots),
             ("Title frontend", &title_frontend_roots),
             ("World-node renderer", &world_node_renderer_literals),
             ("World-state task", &world_state_task_literals),
+            ("Helper field", &helper_field_literals),
+            ("Cached object", &cached_object_literals),
+            ("Indexed exchange", &indexed_exchange_literals),
+            ("Five-byte list", &five_byte_list_literals),
+            ("Palette task", &palette_task_literals),
+            ("Background variant state", &background_variant_state_literals),
+            ("CpuFastSet", &cpu_fast_set_literals),
         ] {
             for word in words {
                 let offset = word.source_offset;
@@ -4856,6 +5232,13 @@ impl Catalog {
             title_frontend_roots,
             world_node_renderer_literals,
             world_state_task_literals,
+            helper_field_literals,
+            cached_object_literals,
+            indexed_exchange_literals,
+            five_byte_list_literals,
+            palette_task_literals,
+            background_variant_state_literals,
+            cpu_fast_set_literals,
         };
         decoded.validate()?;
         Ok(Self { decoded, sources })

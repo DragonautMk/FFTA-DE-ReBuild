@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-item-derived-parameters",
+  "title": "Browse item-derived parameter records",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose the 31 bounded item-derived parameter records with source offsets and their stored byte and halfword fields.",
+    "Link authenticated European item selectors to their parameter records and provide a paginated, filterable reverse list with recognized localized item names."
+  ],
+  "validation": [
+    "Protected unit viewer-item-parameters-synthetic-yoolwrlr passed 17 tests covering malformed inputs, source guards, language changes, filtering, bookmarks and item navigation.",
+    "Protected e347 unit viewer-item-parameters-real-4bagrcjs reconstructed 12032 item bytes and 124 parameter bytes against the source ROM, checked 376 item links and 31 records in Chrome, and matched 27 Python and Docker files.",
+    "Published 21 ignored wiki pages with guarded preimages while preserving other topic payloads."
+  ],
+  "limitations": [
+    "The individual parameter semantics, live selector behavior and out-of-projection formatter inputs remain unproved. Other profiles do not acquire inferred item links; native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_item_parameters_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

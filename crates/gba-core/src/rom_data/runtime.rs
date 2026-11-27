@@ -570,6 +570,13 @@ pub struct RuntimeResources {
     tilemap_type2: Option<Box<PackedTilemapFile>>,
     tilemap_direct: Option<Box<PackedTilemapFile>>,
     compact_cell_bank: Option<Box<PackedTilemapFile>>,
+    background_effect_graphics: Option<Box<PackedTilemapFile>>,
+    localized_obj_animation_banks: Option<Box<PackedTilemapFile>>,
+    background_screen_banks: Option<Box<PackedTilemapFile>>,
+    physical_audio_banks: Option<Box<PackedTilemapFile>>,
+    physical_compact_obj_region: Option<Box<PackedTilemapFile>>,
+    screen_update_tables: Option<Box<PackedTilemapFile>>,
+    counted_effect_tables: Option<Box<PackedTilemapFile>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -1021,6 +1028,62 @@ impl RuntimeResources {
                 .ok_or("Missing compact-cell bank resource")?;
             resources.compact_cell_bank = Some(Box::new(PackedTilemapFile::new(file, &resource.sources)?));
         }
+        if let Some(file) = files.background_effect_graphics {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == BACKGROUND_EFFECT_GRAPHICS_ID)
+                .ok_or("Missing background effect graphics resource")?;
+            resources.background_effect_graphics = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.localized_obj_animation_banks {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == LOCALIZED_OBJ_ANIMATION_BANKS_ID)
+                .ok_or("Missing localized OBJ animation resource")?;
+            resources.localized_obj_animation_banks = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.background_screen_banks {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == BACKGROUND_SCREEN_BANKS_ID)
+                .ok_or("Missing background screen bank resource")?;
+            resources.background_screen_banks = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.physical_audio_banks {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == PHYSICAL_AUDIO_BANKS_ID)
+                .ok_or("Missing physical tone bank resource")?;
+            resources.physical_audio_banks = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.physical_compact_obj_region {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == PHYSICAL_COMPACT_OBJ_REGION_ID)
+                .ok_or("Missing physical compact OBJ resource")?;
+            resources.physical_compact_obj_region = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.screen_update_tables {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == SCREEN_UPDATE_TABLES_ID)
+                .ok_or("Missing screen update table resource")?;
+            resources.screen_update_tables = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.counted_effect_tables {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == COUNTED_EFFECT_TABLES_ID)
+                .ok_or("Missing counted effect table resource")?;
+            resources.counted_effect_tables = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1328,6 +1391,13 @@ impl RuntimeResources {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1508,6 +1578,13 @@ impl RuntimeResources {
             + self.tilemap_type2.as_ref().map_or(0, |i| i.resident_bytes())
             + self.tilemap_direct.as_ref().map_or(0, |i| i.resident_bytes())
             + self.compact_cell_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.background_effect_graphics.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.localized_obj_animation_banks.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.background_screen_banks.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.physical_audio_banks.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.physical_compact_obj_region.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.screen_update_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.counted_effect_tables.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1728,6 +1805,32 @@ impl RuntimeResources {
     pub fn compact_cell_bank_bus_bytes(&self) -> Option<u64> {
         self.compact_cell_bank.as_deref().map(PackedTilemapFile::bus_bytes)
     }
+    pub fn background_effect_graphics_bus_bytes(&self) -> Option<u64> {
+        self.background_effect_graphics.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn localized_obj_animation_bank_bus_bytes(&self) -> Option<u64> {
+        self.localized_obj_animation_banks.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn background_screen_bank_bus_bytes(&self) -> Option<u64> {
+        self.background_screen_banks.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn physical_audio_bank_bus_bytes(&self) -> Option<u64> {
+        self.physical_audio_banks.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn physical_compact_obj_bus_bytes(&self) -> Option<u64> {
+        self.physical_compact_obj_region.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn screen_update_table_bus_bytes(&self) -> Option<u64> {
+        self.screen_update_tables.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn counted_effect_table_bus_bytes(&self) -> Option<u64> {
+        self.counted_effect_tables.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
     pub fn palette_programs_stats(&self) -> Option<PaletteProgramStats> {self.palette_programs.as_ref().map(|m|m.stats())}
@@ -1776,11 +1879,15 @@ impl RuntimeResources {
     pub fn map_raster_palettes_stats(&self) -> Option<MapRasterPaletteStats> {self.map_raster_palettes.as_ref().map(|m|m.stats())}
     pub fn auxiliary_commands_stats(&self) -> Option<AuxiliaryCommandStats> {self.auxiliary_scripts.as_ref().map(|m|m.command_stats())}
     pub fn auxiliary_archive_stats(&self) -> Option<AuxiliaryArchiveStats> {self.auxiliary_scripts.as_ref().map(|m|m.archive_stats())}
-    /// Host audio view: typed owners merge at shared boundaries without guest bus clocks.
+    /// Host audio view combines source owners at boundaries without guest bus clocks.
     pub fn audio_host_read<const N:usize>(&self,index:usize,rom:&[u8])->Option<[u8;N]>{
         rom.get(index..index.checked_add(N)?)?;
         let prior=self.audio_directory.as_ref().and_then(|d|d.host_read(index,rom,None));
         let prior = match &self.audio_tones{Some(t)=>t.host_read(index,rom,prior),None=>prior};
+        let prior = match &self.physical_audio_banks {
+            Some(data) => data.host_read(index, rom, prior),
+            None => prior,
+        };
         let prior = match &self.audio_sequences{Some(t)=>t.host_read(index,rom,prior),None=>prior};
         let prior = match &self.audio_extended_dispatch{Some(t)=>t.host_read(index,rom,prior),None=>prior};
         match &self.audio_driver{Some(t)=>t.host_read(index,rom,prior),None=>prior}
@@ -2014,6 +2121,10 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.physical_audio_banks {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_sequences {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2227,6 +2338,30 @@ impl RuntimeResources {
                 None => prior,
             };
             let prior = match &self.compact_cell_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.background_effect_graphics {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.localized_obj_animation_banks {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.background_screen_banks {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.physical_compact_obj_region {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.screen_update_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.counted_effect_tables {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
@@ -2543,6 +2678,13 @@ impl crate::MemMap {
                 || resources.tilemap_type2.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.tilemap_direct.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.compact_cell_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.background_effect_graphics.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.localized_obj_animation_banks.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.background_screen_banks.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.physical_audio_banks.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.physical_compact_obj_region.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.screen_update_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.counted_effect_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.copied_halfword_lookups.as_ref().is_some_and(|data| data.fixed_byte_copy_overlaps(index, 4))
         })
             || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97

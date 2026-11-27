@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-evaluation-parameters",
+  "title": "Browse and explore evaluation parameters",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Show European evaluation source coefficients, bonus fields and class thresholds in a collapsible wiki section with source offsets and opaque bytes.",
+    "Offer authenticated-source diagnostic score and threshold calculators using documented 32-bit arithmetic and signed low-16 behavior; withhold calculations for unverified input."
+  ],
+  "validation": [
+    "Synthetic unit hoypkpto passed 20 checks, including 800 independently calculated arithmetic cases, boundary values, validation guards and cross-page navigation.",
+    "Protected e347 unit h0dlklc6 authenticated two ROM ranges and 38 bytes, compared 1000 scores and 65 threshold cases in Chrome, preserved 21 other scopes and 156 resource entries, and matched 27 Python/Docker files.",
+    "Published 23 ignored local wiki pages with guarded preimages and evidence in out/ffta-evaluation-before-u722enjh."
+  ],
+  "limitations": [
+    "Live inputs, semantic names, class selection and complete game evaluation remain unproved; native Windows is deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_evaluation_parameters_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

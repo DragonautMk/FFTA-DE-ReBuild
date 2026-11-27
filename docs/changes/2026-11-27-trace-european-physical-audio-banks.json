@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-physical-audio-banks",
+  "title": "Authenticate the European physical tone and direct wave banks",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound all 499 physical records in four European M4A banks through song headers and original program selection. Trace 285 PCM and eight CGB waves.",
+    "Account for the 30,707-byte gap as 30,700 bytes in two PCM waves and seven alignment bytes. Identify 57,131 bytes outside the existing typed owners."
+  ],
+  "validation": [
+    "Wine w4i1asx7 authenticates 38 original instructions and audits 1,998,547 distinct bytes against e358. All 14 input guards pass and the server drains."
+  ],
+  "limitations": [
+    "Full map and rhythm key domains, other wave producers, publication, ordinary playback, Linux, USA and native Windows remain on the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_audio.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

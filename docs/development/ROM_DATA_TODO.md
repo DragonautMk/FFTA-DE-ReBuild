@@ -45,10 +45,13 @@ Linux checks as pending. Completed Linux checks remain historical without
 repeating them for new integrations. Equivalence evidence remains necessary,
 including guest clock, actual file use and native/save/Load compatibility.
 Updated extraction priority: **investigate complete resource banks and types**
-through their original directories, readers and validated boundaries. Prefer a
-source-backed whole-bank extraction over adding isolated observed resources.
-Preserve aliases and existing owners, and distinguish a verified directory from
-a claim that all indirect callers or related banks have been found.
+through their original directories, readers and validated boundaries. Prefer
+the largest source-backed banks still missing from the current dataset. Rank
+them by distinct unowned payload bytes. Treat physical gaps as leads until
+original readers establish the asset type and bounds, and account separately
+for executable code and long homogeneous spans. Preserve aliases and existing
+owners. Track unverified indirect callers and related banks in the recovery
+checklist.
 
 Order: **inventory → extraction and decoding → startup preparation → direct
 consumption → verification → mods → extended changes**. Creating files the game
@@ -121,6 +124,25 @@ profiles. Inventory distinguishes known sources from unverified boundaries/
 catalogs/languages; it does not claim a complete game resource catalog.
 EUR/USA verification is complete for the first family; regional and language
 catalogs of other families remain to be identified and verified.
+
+**ROMDATA-01-EUR-PHYSICAL-COMPACT-OBJ-REGION scoped EUR/Wine:** E613
+bounds 199 complete consecutive animation banks and 548 associated
+descriptors. It authenticates both sequence formats and identifies
+93,964 unowned bytes against e359. Publication and the remaining
+producer, scene and platform checks are on the recovery checklist.
+[Evidence](../rom_data_compact_catalog.md#e613-european-physical-compact-obj-region).
+
+**ROMDATA-01-EUR-PARALLEL-SCREEN-UPDATE-TABLES scoped EUR/Wine:** E615
+authenticates both copies of the 17-curve bank and each twelve-slot
+directory, including the shared bytes read at step 150. The e360 audit
+identifies 6,434 unowned bytes. Ordinary use and deferred platform
+checks remain on the recovery checklist.
+[Evidence](../rom_data_compact_catalog.md#e615-european-screen-update-curve-banks).
+
+**ROMDATA-01-EUR-COUNTED-EFFECT-TABLES scoped EUR/Wine:** E618 bounds
+all 13 physical tables at `b4b0f4..b4bc84` through original literal
+and indexed readers. It authenticates 3,016 unowned bytes against e361.
+[Evidence](../rom_data_graphics.md#e618-european-counted-effect-tables).
 
 **ROMDATA-01-CONTEXT-3AE42C ordinary return to English (2026-11-17):**
 After French was selected, the title route returns to English and publishes
@@ -1533,6 +1555,33 @@ Direct consumption is now connected in 04; normal enablement awaits gate 05.
 ## ROMDATA-04 — Direct runtime use of extracted data
 
 **Dependencies:** ROMDATA-01/02/03. **Core of the main objective.**
+
+**ROMDATA-04-EUR-PARALLEL-SCREEN-UPDATE-TABLES scoped EUR/Wine:** E616
+publishes both E615 banks and their reader literals in e361. Both
+original callbacks' controlled readers pass all 150 update steps
+against altered backing. e360 attachment and CLI creation,
+verification and reuse pass.
+[Evidence](../rom_data_compact_catalog.md#e616-european-screen-update-table-runtime).
+
+**ROMDATA-04-EUR-PHYSICAL-COMPACT-OBJ-REGION scoped EUR/Wine:** E614 serves
+the complete 93,964-byte E613 projection in e360. Original descriptor,
+sequence and frame readers cover both physical formats. Complete state
+and guest clock, e359 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_compact_catalog.md#e614-european-physical-compact-obj-runtime).
+
+**ROMDATA-04-EUR-PHYSICAL-AUDIO-BANKS scoped EUR/Wine:** E612 serves all
+57,131 residual tone and wave bytes in e359 with the earlier owners.
+Original selection across 499 programs, PCM and CGB reads, the host
+MP2K view, e358 attachment and CLI lifecycle pass. Keymap and rhythm
+domains, ordinary playback and deferred platforms remain open.
+[Evidence](../rom_data_audio.md#e612-european-physical-tone-and-direct-wave-runtime).
+
+**ROMDATA-04-EUR-BACKGROUND-SCREEN-BANKS scoped EUR/Wine:** E610 serves all
+five indexed tile blocks and screen maps in the 72,080-byte e358 projection.
+Original map construction and tile/map DMA, state and guest clock, e357
+attachment and CLI lifecycle pass. Ordinary and translated execution,
+and deferred platforms remain on the recovery checklist.
+[Evidence](../rom_data_graphics.md#e610-european-background-screen-banks-at-runtime).
 
 **ROMDATA-04-WHITE-FLOWERS-ISOLATED-VALUES scoped EUR/Wine:** E291 serves 20
 halfwords and one byte. Original readers, outside fallback, 700 altered-source

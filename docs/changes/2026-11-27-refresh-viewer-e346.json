@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "refresh-viewer-e346",
+  "title": "Refresh extracted-resource wiki to e346",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private local wiki from the verified European e346-d345 dataset while retaining all topic views and existing owned resource pages.",
+    "Expose the updated switch tables and helper-field literals in the structured inspector; retain the previous e345 dataset for comparison."
+  ],
+  "validation": [
+    "Protected unit viewer-e346-refresh-2yew90aq authenticated 156 resources, verified two switch tables and 18 entries plus 12 literals against the source ROM, and inspected both updated resources in Chrome.",
+    "All 18 topic payloads and 156 earlier resource pages were preserved; 24 synthetic Python and Docker outputs matched and publication retained guarded preimages."
+  ],
+  "limitations": [
+    "Live pointer behavior, ordinary execution and native Windows remain unverified by this viewer refresh."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

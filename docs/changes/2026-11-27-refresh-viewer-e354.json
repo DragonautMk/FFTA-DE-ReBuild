@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "refresh-viewer-e354",
+  "title": "Refresh the extracted-resource wiki to e354",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private wiki from the verified European e354-d353 generation, updating two transfer graphics and two engine resources while preserving existing views and links.",
+    "Expose the newly decoded 448-byte graphics payload in the transfer preview and on-demand tilemap catalog."
+  ],
+  "validation": [
+    "Protected viewer-refresh-e354-real-a7kr8m_o authenticated 6453 ROM source ranges, including 14 new ranges and 386 bytes; independently decoded the new LZ77 stream and checked preview pixels in Chrome.",
+    "All 177 full-generation Python and Docker files matched; 21 other topic payloads, lazy name and text assets, and 163 previous resource pages were preserved.",
+    "Published 23 ignored wiki pages, four new resource pages, one transfer asset and the ownership marker with verified preimages out/ffta-e354-before-jb_rrx0h."
+  ],
+  "limitations": [
+    "Live graphics source selection, complete scene composition and native Windows remain unverified."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

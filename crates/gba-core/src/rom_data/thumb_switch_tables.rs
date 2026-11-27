@@ -59,8 +59,16 @@ pub const WHITE_FLOWERS_RESIDUAL_TABLE_COUNT: usize = 42;
 pub const WHITE_FLOWERS_MIXED_TABLE_COUNT: usize = 47;
 const PRE_TITLE_ADDITIONAL_TABLE_COUNT: usize = 50;
 const TITLE_ADDITIONAL_TABLE_COUNT: usize = 52;
-pub const ADDITIONAL_TABLE_COUNT: usize = 53;
-pub const ADDITIONAL_DESTINATION_COUNT: usize = 1732;
+pub const WORLD_NODE_ADDITIONAL_TABLE_COUNT: usize = 53;
+pub const ADDITIONAL_TABLE_COUNT: usize = 55;
+const CACHED_OBJECT_ADDITIONAL_TABLE_COUNT: usize =
+    ADDITIONAL_TABLE_COUNT + CACHED_OBJECT_TABLES.len();
+const INDEXED_EXCHANGE_ADDITIONAL_TABLE_COUNT: usize =
+    CACHED_OBJECT_ADDITIONAL_TABLE_COUNT + INDEXED_EXCHANGE_TABLES.len();
+const FIVE_BYTE_LIST_ADDITIONAL_TABLE_COUNT: usize =
+    INDEXED_EXCHANGE_ADDITIONAL_TABLE_COUNT + FIVE_BYTE_LIST_TABLES.len();
+const BACKGROUND_VARIANT_STATE_TABLE_COUNT: usize = FIVE_BYTE_LIST_ADDITIONAL_TABLE_COUNT + 1;
+pub const ADDITIONAL_DESTINATION_COUNT: usize = 1750;
 pub const ADDITIONAL_SOURCE_ROLE: &str = "thumb-switch-destinations";
 
 #[derive(Clone, Copy, Debug)]
@@ -152,7 +160,73 @@ pub const ADDITIONAL_TABLES: [AdditionalTableSpec; ADDITIONAL_TABLE_COUNT] = [
         code_sha256: "6b075ee1a4a01b0e0b9b5260c3ec520d8fd318bc99ae9408fd8de1a63aee82f3",
         source_sha256: "66eaa68630ec19b1f97cb4f51bfca0cca228e289c203f103e0f4c908d234591d",
     },
+    AdditionalTableSpec {
+        root: 0x096e54, count: 7, code_start: 0x096e42, guard: 0x096e42,
+        reader: 0x096e48, mov: 0x096e50,
+        code_sha256: "26b5a299cdce9790b0b2298bf5d60ac2767f244aec27a776956c81fb57d23db2",
+        source_sha256: "b6b0e5b1043ef0b02f02525d9e402e296375976a6838acfcf2f944386c8102a7",
+    },
+    AdditionalTableSpec {
+        root: 0x097644, count: 11, code_start: 0x097630, guard: 0x097632,
+        reader: 0x09763a, mov: 0x097642,
+        code_sha256: "125aed9f652116fd437a6d17ddec07bb474a9264504c7efabc8cc40cb649e226",
+        source_sha256: "a8a3ded6d5ef15cce36209b4a2e58a08e1616dc7e880a9f796388a7744333b18",
+    },
 ];
+
+const CACHED_OBJECT_TABLES: [AdditionalTableSpec; 2] = [
+    AdditionalTableSpec {
+        root: 0x0089d8, count: 11, code_start: 0x0089c4, guard: 0x0089c4,
+        reader: 0x0089ca, mov: 0x0089d2,
+        code_sha256: "6201f77e0713fbefa6c2cc45f9aff6515c219c96efe02b76a6a16e6e20af8b97",
+        source_sha256: "48281e2051e39651e47e30cd3590f775ac615c6ab29619535d42d1b755fe8f28",
+    },
+    AdditionalTableSpec {
+        root: 0x009560, count: 10, code_start: 0x009532, guard: 0x009546,
+        reader: 0x00954c, mov: 0x009554,
+        code_sha256: "81eb2a5a25027e4bfdffbb4184d710a68807213dadf49497589cc92fbdda8c69",
+        source_sha256: "522c09f62603832e3aa7848f375a19f033f5a98d1d287adc8e5739da9589e0ec",
+    },
+];
+
+const INDEXED_EXCHANGE_TABLES: [AdditionalTableSpec; 2] = [
+    AdditionalTableSpec {
+        root: 0x0bb5a8, count: 13, code_start: 0x0bb594, guard: 0x0bb59a,
+        reader: 0x0bb59e, mov: 0x0bb5a6,
+        code_sha256: "197082f65db72e44dc6f136436369a0b3515267b3c887e3ff54cb2782c25f45a",
+        source_sha256: "d836079ef0bdc27240d1ded73ee80d9e99ea31605c9dab26af04129973179838",
+    },
+    AdditionalTableSpec {
+        root: 0x0c3080, count: 5, code_start: 0x0c306e, guard: 0x0c3070,
+        reader: 0x0c3076, mov: 0x0c307e,
+        code_sha256: "e6f6bcfb935b7f796dabda420bdf11ebd6bfdc4c0411e8268b82f15c5e7931a4",
+        source_sha256: "174191e84754b314d8867b119c8affd5c326be7001b2f8ed71a09711aa714722",
+    },
+];
+
+const FIVE_BYTE_LIST_TABLES: [AdditionalTableSpec; 1] = [AdditionalTableSpec {
+    root: 0x14c574, count: 5, code_start: 0x14c560, guard: 0x14c564,
+    reader: 0x14c56c, mov: 0x14c572,
+    code_sha256: "7846e24df016cb34720f49d3ea4b7394ab7f7d0dcade3c89dc096c7d43efa2ec",
+    source_sha256: "f48521eee7fdec77cf13e582c85adf7395f2c2f8c919d50e2ddb139e83c76fac",
+}];
+
+const BACKGROUND_VARIANT_STATE_TABLE: AdditionalTableSpec = AdditionalTableSpec {
+    root: 0x0209a0,
+    count: 14,
+    code_start: 0x02097c,
+    guard: 0x02098c,
+    reader: 0x020992,
+    mov: 0x02099a,
+    code_sha256: "0df1b059f0ad5e88765a397df4354acb020d177fd77c84c806f8509daac6cc61",
+    source_sha256: "45064df4daee4c578eb674782e84c3c210551c9d13fa9323a7dbaf05655b29a1",
+};
+
+pub(super) fn additional_table_specs() -> impl Iterator<Item = &'static AdditionalTableSpec> {
+    ADDITIONAL_TABLES.iter().chain(&CACHED_OBJECT_TABLES).chain(&INDEXED_EXCHANGE_TABLES)
+        .chain(&FIVE_BYTE_LIST_TABLES)
+        .chain(std::iter::once(&BACKGROUND_VARIANT_STATE_TABLE))
+}
 
 /// Even target address used by the original Thumb `MOV pc` instruction.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -206,11 +280,16 @@ impl ThumbSwitchTables {
             WHITE_FLOWERS_MIXED_TABLE_COUNT,
             PRE_TITLE_ADDITIONAL_TABLE_COUNT,
             TITLE_ADDITIONAL_TABLE_COUNT,
+            WORLD_NODE_ADDITIONAL_TABLE_COUNT,
             ADDITIONAL_TABLE_COUNT,
+            CACHED_OBJECT_ADDITIONAL_TABLE_COUNT,
+            INDEXED_EXCHANGE_ADDITIONAL_TABLE_COUNT,
+            FIVE_BYTE_LIST_ADDITIONAL_TABLE_COUNT,
+            BACKGROUND_VARIANT_STATE_TABLE_COUNT,
         ].contains(&self.additional_tables.len()) {
             return Err("Invalid additional EUR Thumb switch-table count".into());
         }
-        for (table, spec) in self.additional_tables.iter().zip(ADDITIONAL_TABLES) {
+        for (table, spec) in self.additional_tables.iter().zip(additional_table_specs()) {
             if table.root_offset != spec.root || table.table_offset != spec.start()
                 || table.destinations.len() != spec.count
                 || table.destinations.iter().any(|d| d.address & 1 != 0
@@ -247,7 +326,12 @@ impl ThumbSwitchTables {
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
         let layout = match self.additional_tables.len() {
-            ADDITIONAL_TABLE_COUNT => SourceLayout::WorldNodeRenderer,
+            BACKGROUND_VARIANT_STATE_TABLE_COUNT => SourceLayout::BackgroundVariantState,
+            FIVE_BYTE_LIST_ADDITIONAL_TABLE_COUNT => SourceLayout::FiveByteList,
+            INDEXED_EXCHANGE_ADDITIONAL_TABLE_COUNT => SourceLayout::IndexedExchange,
+            CACHED_OBJECT_ADDITIONAL_TABLE_COUNT => SourceLayout::CachedObject,
+            ADDITIONAL_TABLE_COUNT => SourceLayout::HelperFieldDispatch,
+            WORLD_NODE_ADDITIONAL_TABLE_COUNT => SourceLayout::WorldNodeRenderer,
             TITLE_ADDITIONAL_TABLE_COUNT => SourceLayout::TitleFrontend,
             _ => SourceLayout::Legacy,
         };
@@ -267,11 +351,16 @@ pub(super) enum SourceLayout {
     Legacy,
     TitleFrontend,
     WorldNodeRenderer,
+    HelperFieldDispatch,
+    CachedObject,
+    IndexedExchange,
+    FiveByteList,
+    BackgroundVariantState,
 }
 
 impl Catalog {
     pub fn from_rom(rom: &[u8], previous: &[Resource]) -> Result<Self, String> {
-        Self::from_rom_with_layout(rom, previous, SourceLayout::WorldNodeRenderer)
+        Self::from_rom_with_layout(rom, previous, SourceLayout::HelperFieldDispatch)
     }
 
     pub(super) fn from_rom_with_layout(
@@ -287,7 +376,12 @@ impl Catalog {
         let additional_count = match layout {
             SourceLayout::Legacy => PRE_TITLE_ADDITIONAL_TABLE_COUNT,
             SourceLayout::TitleFrontend => TITLE_ADDITIONAL_TABLE_COUNT,
-            SourceLayout::WorldNodeRenderer => ADDITIONAL_TABLE_COUNT,
+            SourceLayout::WorldNodeRenderer => WORLD_NODE_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::HelperFieldDispatch => ADDITIONAL_TABLE_COUNT,
+            SourceLayout::CachedObject => CACHED_OBJECT_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::IndexedExchange => INDEXED_EXCHANGE_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::FiveByteList => FIVE_BYTE_LIST_ADDITIONAL_TABLE_COUNT,
+            SourceLayout::BackgroundVariantState => BACKGROUND_VARIANT_STATE_TABLE_COUNT,
         };
         let mut sources = Vec::with_capacity(TABLE_COUNT + additional_count);
         for spec in TABLES {
@@ -332,7 +426,7 @@ impl Catalog {
             tables.push(table);
         }
         let mut additional_tables = Vec::with_capacity(additional_count);
-        for spec in ADDITIONAL_TABLES.into_iter().take(additional_count) {
+        for spec in additional_table_specs().take(additional_count) {
             if ffta_rom::digest(&rom[spec.code_start as usize..spec.mov as usize + 2]) != spec.code_sha256
                 || half(spec.mov) != 0x4687 || word(spec.root) != 0x0800_0000 + spec.start() {
                 return Err("Additional Thumb switch reader or root fingerprint mismatch".into());

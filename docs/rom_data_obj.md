@@ -4152,6 +4152,99 @@ save/Load remain open. Forty-five updated older revision-sensitive fixtures,
 Linux, USA and native Windows remain to be checked. No performance comparison
 was made.
 
+## E607 European localized indexed OBJ animation banks
+
+The original setup at `080ac400` enters the localized path for modes
+above 1. Two readers index the same descriptor directory at `398e94`
+with the live language byte at `02001f6e`. The address is the base
+plus 336 times the language and 12 times the mode. The adjacent table
+at `399524` has an independent reader at `080acd14`, establishing
+five physical blocks of 28 descriptors. Slots 0 and 1 are zero
+in each block. The other 130 descriptors give sequence and object
+directory addresses, a tile offset in 32-byte units and a tile byte
+count. Original setup selects the first sequence and also reads the
+tile fields to queue a transfer from working RAM. Initialization of
+that RAM follows the already owned language-selected archive
+directory at `71e658`.
+
+The separate constructor at `08095480` chooses one triple of roots
+for languages 2 and 4 and a shared default for other language values.
+It uses the custom decoder at `080054a0` for the tile streams at
+`430c5c`, `4537d0` and `476214`, then queues their decoded bytes
+for transfer. The stream extents are 1,040, 884 and 853 encoded
+bytes. The decoded sizes are 1,984, 1,856 and 1,920 bytes. The
+constructor stores each selected sequence and object directory in
+the same context layout used by the localized setup.
+
+The timed reader at `080ac640` reads a sequence count, selects a
+four-byte frame and resolves the list ID through the relative object
+directory. The direct task follows `080accf4` to that reader and
+passes the current list to `08001f6c`, whose consumer at `08001500`
+reads the count and six-byte OBJ entries. The 133 root pairs contain
+188 sequences, 4,435 frames, 2,935 lists and 12,395 objects. The
+physical projection preserves 45 zero-frame sequences and 130 empty
+lists. All frame list IDs resolve within their bank. In the original
+`4190c0..42dd48` gap, 82,086 bytes have an identified data role.
+The other 3,042 bytes are zero alignment halfwords between records.
+
+Protected Wine unit `e607-eur-localized-indexed-obj-bank-wine-p7pw699j`
+attests 429 original halfwords and verifies ownership against e356.
+The full projection spans 115,349 bytes. Existing owners cover
+1,479 bytes across the Firaga bank, static OBJ lists, custom UI
+graphics and Thumb literals. The remaining 113,870 bytes form
+2,308 role-specific ranges, or 1,986 ranges after merging adjoining
+roles. All 12 input guards pass and the server drains. The source
+plan SHA-256 is
+`93e55772d8bbddac4a598d6475c9c1bf152043bda49f25cfe6a3aeb26d970cdb`.
+
+The audit establishes the physical extent and original readers used by
+[E608](#e608-european-localized-obj-animation-bank-extraction). Live
+mode reachability and other platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E608 European localized OBJ animation bank extraction
+
+European `e357-d356` adds `graphics.localized-obj-animation-banks`.
+The file `localized-obj-animation-banks.bin` concatenates the E607
+residual spans in physical address order. The corresponding source
+entries identify selector words, descriptors, relative u32 indices,
+sequence records, OBJ lists and the two previously uncovered custom
+tile streams. A span's file position is the sum of the lengths of
+its preceding entries. The manifest and the four existing owners
+together describe the full physical projection.
+
+The extractor uses the indexed OBJ decoder for every directory pair.
+It verifies each sequence count, frame-to-list link and list extent.
+The custom LZ decoder determines the encoded tile stream extents.
+Runtime attachment authenticates the file and binds those source
+lanes to the original address space. The original task retains
+its language and mode arithmetic, frame and duration updates,
+OBJ drawing and DMA. The neighboring alignment bytes stay in ROM.
+
+Wine unit `ifo9p3mq` passes with all 113,870 new source bytes
+inverted in the managed machine. The original readers consume 48,686
+bytes from the new file across 130 descriptor selections, all 4,435
+frame selections, 188 sequence-end checks, eight OBJ draws and three
+custom tile decompressions and VRAM transfers. State and guest clock
+match the raw-ROM comparison. Full-range reads and 882 mixed-width
+checks across the three ROM mirrors pass. The e356 predecessor
+attaches, and a relabeled predecessor and a damaged bank with a
+matching edited manifest both preserve the active binding on rejection.
+
+The first Wine unit, `l4iibkq_`, created e357 and then stopped at an
+off-screen OBJ draw fixture. The corrected test centers the first
+object of the selected list and reuses the authenticated candidate.
+Windows build `xx2f77c7` and Wine verification and reuse pass. All
+157 earlier resources preserve their files and manifest entries.
+The runner drains the Wine server after checking 19 protected inputs.
+Stage `ess2dbrn` retains the 159-file generation with manifest
+SHA-256 `3cd519ab1b75113f9242c929d3f41a6bf9dbab3d5ed3f2107e63f8eb71f3f98c`
+and bank SHA-256
+`f51a8ffcfd7045418d6198ff5595ee29890e738bf46b7f425e49bf3d363e4645`.
+The interpreter proof uses controlled contexts. Ordinary mode selection,
+the registry's live tile archive path, generated execution, Linux,
+USA and native Windows remain open.
+
 ## E313 Firaga compact OBJ source plan
 
 Protected static unit `e313-firaga-compact-obj-source-plan-retry-nj96f9zl`

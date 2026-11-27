@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-background-relative-lz77-inputs",
+  "title": "Trace European background relative LZ77 inputs",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Trace both original callers to the shared RAM base and selector and authenticate both known base writers.",
+    "Identify the complete 14-entry state dispatch and its two missing literal words, totaling 64 bytes in e353."
+  ],
+  "validation": [
+    "Wine v7dgs0xl attests 2,011 halfwords, matches 1,283 retained E509 and E511 lines, preserves 18 inputs and drains."
+  ],
+  "limitations": [
+    "The LZ77 bank still needs a proven nonzero original variant or generic table base. Indirect producers, live execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

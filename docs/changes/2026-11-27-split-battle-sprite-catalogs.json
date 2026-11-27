@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "split-battle-sprite-catalogs",
+  "title": "Load battle sprite catalogs on separate wiki pages",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Place normal and alternate battle actors on separate navbar pages and load only the selected sprite catalog.",
+    "Redirect existing alternate bookmarks and carry available sprite, frame, playback, palette and job-reference settings when switching catalogs."
+  ],
+  "validation": [
+    "Synthetic unit 1xee6_cr passed 19 of 21 tests; corrected null-animation and asynchronous hash-change checks passed in cm2uwz_2, followed by 13 related checks in jz0agsys.",
+    "Protected e347 unit 9ldjwfz9 preserved 20 other scope payloads and 156 resource entries, checked Chrome navigation and settings, and matched 28 Python/Docker files on synthetic input.",
+    "The former 18447874-byte battle page became 14028535 bytes for normal and 5216729 for alternate; 23 ignored pages were published with preimages in out/ffta-battle-split-before-k0hxyj5g."
+  ],
+  "limitations": [
+    "Sprite preview timing, live actor composition and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/tests/test_viewer_job_sprite_links_browser.py",
+    "scripts/tests/test_viewer_special_units_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_navigation_categories_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

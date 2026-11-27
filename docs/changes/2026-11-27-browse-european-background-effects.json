@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-european-background-effects",
+  "title": "Browse European background effect maps and tiles",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose all 25 extracted background effect tile blocks and 30-by-20 maps with inspectable cells, manual palettes, missing-tile highlighting, looping and a manual sequence preview.",
+    "Refresh the private split wiki from the verified e356 dataset, adding the effect resource and updating the Thumb literal resource while retaining existing topic data and lazy assets."
+  ],
+  "validation": [
+    "Synthetic viewer-bgfx-synthetic-m_6a25g7 passed 24 tests covering source guards, 4bpp pixels and flips, palettes, missing tiles, playback, focus, bookmarks and single-page compatibility; an initial test import path was corrected.",
+    "Protected viewer-bgfx-real-ei45gd6n authenticated 3377 ROM ranges, all 147008 tile bytes and 15000 map cells, and matched 460800 independently reconstructed RGBA bytes across three real Chrome previews.",
+    "Matched 573 full-generation Python/Docker files; published 23 ignored wiki pages, two new resource pages and ownership marker with verified preimages out/ffta-bgfx-before-o76ky4_u, retaining 167 previous resource pages."
+  ],
+  "limitations": [
+    "Tile ID 82 assumes a 0x06008000 character base; lower shared tiles and live palette, sequence and scene composition are not established. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_background_effects_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-physical-audio-banks",
+  "title": "Extract the European physical tone and direct wave banks",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 57,131 tone and direct wave bytes left by the existing typed catalog in physical-tone-banks.bin for e359-d358.",
+    "Route guest reads and the host MP2K memory view through the verified ranges while keeping all earlier owners."
+  ],
+  "validation": [
+    "Windows build 686ug43y and Wine hts7ytbp pass 499 original program loads, eight PCM header and interpolation pairs, eight CGB copies, full payload guest and host reads, 5,922 mixed mirror checks, full state and guest clock, e358 attachment and two invalid-candidate checks.",
+    "The CLI creates, verifies and reuses the same 161 files and preserves all 159 previous resources. All 16 input guards pass and the Wine server drains. Retained stage rjvfgtl6."
+  ],
+  "limitations": [
+    "Remaining keymap and rhythm domains, ordinary playback, translated readers, Linux, USA and native Windows are tracked in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/physical_audio_banks.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/runtime/packed_tilemap_file.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/physical_audio_bank_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_audio.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_audio.md"
+  ]
+}

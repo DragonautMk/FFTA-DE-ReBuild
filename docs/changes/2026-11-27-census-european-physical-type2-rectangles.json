@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "census-european-physical-type2-rectangles",
+  "title": "Verify the European physical type-2 rectangle bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows CLI on Wine"
+  ],
+  "changes": [
+    "Join the entire aligned physical type-2 row shape to the accepted E483 reader plan and e354 resource owners.",
+    "Confirm the complete 205-rectangle bank, 260 list headers and 545 entries, including the cells outside sampled windows."
+  ],
+  "validation": [
+    "Wine l3jzyugd matches all 294 E483 rows and copies, owns all 15,120 byte lanes exactly once, verifies 14,758 packed source bytes, preserves 16 inputs and drains."
+  ],
+  "limitations": [
+    "Indirect and RAM-built rows, ordinary/generated routes, Linux, USA and native Windows remain in the recovery checklist."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

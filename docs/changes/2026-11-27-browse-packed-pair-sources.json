@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-packed-pair-sources",
+  "title": "Browse indexed and global packed pair sources",
+  "kind": "added",
+  "platforms": [
+    "Local offline viewer"
+  ],
+  "changes": [
+    "Expose independent indexed and global packed-pair matrices with source bytes, record selection and authenticated reader bit modes."
+  ],
+  "validation": [
+    "Synthetic viewer-pairs-synthetic-1g0n26br passed 13 tests; protected e352 viewer-pairs-real-k5sw6170 compared 1307 ROM bytes and 15684 matrix cells, exercised Chrome and matched 28 Docker/Python outputs.",
+    "Published 23 ignored wiki pages with verified preimages under out/ffta-pairs-before-kvnjoowb, preserving 21 other topic payloads and 156 resources."
+  ],
+  "limitations": [
+    "Pair meanings, live state and native Windows behavior remain unverified; unverified sources expose only stored pairs."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_packed_pairs_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

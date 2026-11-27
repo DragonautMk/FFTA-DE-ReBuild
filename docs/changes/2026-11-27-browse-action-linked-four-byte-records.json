@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-action-linked-four-byte-records",
+  "title": "Browse action-linked four-byte records",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose 211 physical four-byte records and the optional callback source tables and words in a collapsible wiki view.",
+    "Link the first three source-proven action selectors to physical records, with synchronized localized names, filtering and paginated reverse references."
+  ],
+  "validation": [
+    "Synthetic unit 2q5a0oih passed 24 checks; targeted unit avhywubm passed three checks including missing callback sources and authentication guards.",
+    "Protected e352 unit z15qj5zj reconstructed 844 record bytes, 107 callback words and 93 callback records across six ROM ranges; it checked all 1041 action references to 194 records and exercised Chrome navigation.",
+    "Preserved 21 other scope payloads and 156 resources, matched 29 Python/Docker files using authenticated inputs, and published 23 ignored pages with guarded preimages."
+  ],
+  "limitations": [
+    "Stored references do not prove live action effects or availability; the fourth inline byte is not interpreted, callbacks are not executed, and native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_action_slots_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

@@ -102,6 +102,13 @@ pub mod tilemap_stream_bank;
 mod tilemap_type3;
 mod tilemap_type2;
 pub mod compact_cell_bank;
+mod background_effect_graphics;
+mod localized_obj_animation_banks;
+mod background_screen_banks;
+mod physical_audio_banks;
+mod physical_compact_obj_region;
+mod screen_update_tables;
+mod counted_effect_tables;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -167,8 +174,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 345;
-pub const DECODER_REV: u32 = 344;
+pub const EXTRACTOR_REV: u32 = 362;
+pub const DECODER_REV: u32 = 361;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -212,6 +219,23 @@ const PRE_FIXED_BYTE_COPIES_REVISION: (u32, u32) = (341, 340);
 const PRE_DIRECT_COPY_ARGUMENTS_REVISION: (u32, u32) = (342, 341);
 const PRE_COPY_PRODUCER_LITERALS_REVISION: (u32, u32) = (343, 342);
 const PRE_SHARED_SLOT_LITERALS_REVISION: (u32, u32) = (344, 343);
+const PRE_HELPER_FIELD_DISPATCH_REVISION: (u32, u32) = (345, 344);
+const PRE_CONTEXT_RECORD_LITERALS_REVISION: (u32, u32) = (346, 345);
+const PRE_SCRATCH_RESTORE_LITERALS_REVISION: (u32, u32) = (347, 346);
+const PRE_CACHED_OBJECT_REVISION: (u32, u32) = (348, 347);
+const PRE_INDEXED_EXCHANGE_REVISION: (u32, u32) = (349, 348);
+const PRE_FIVE_BYTE_LIST_REVISION: (u32, u32) = (350, 349);
+const PRE_PALETTE_TASK_REVISION: (u32, u32) = (351, 350);
+const PRE_RECOVERED_TILEMAP_LISTS_REVISION: (u32, u32) = (352, 351);
+const PRE_BACKGROUND_VARIANT_STATE_REVISION: (u32, u32) = (353, 352);
+const PRE_CPU_FAST_SET_LITERALS_REVISION: (u32, u32) = (354, 353);
+const PRE_BACKGROUND_EFFECT_GRAPHICS_REVISION: (u32, u32) = (355, 354);
+const PRE_LOCALIZED_OBJ_ANIMATION_BANKS_REVISION: (u32, u32) = (356, 355);
+const PRE_BACKGROUND_SCREEN_BANKS_REVISION: (u32, u32) = (357, 356);
+const PRE_PHYSICAL_AUDIO_BANKS_REVISION: (u32, u32) = (358, 357);
+const PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION: (u32, u32) = (359, 358);
+const PRE_SCREEN_UPDATE_TABLES_REVISION: (u32, u32) = (360, 359);
+const PRE_COUNTED_EFFECT_TABLES_REVISION: (u32, u32) = (361, 360);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -698,6 +722,35 @@ pub const COMPACT_CELL_BANK_ID: &str = "graphics.compact-cell-bank";
 pub const COMPACT_CELL_BANK_FILE: &str = "compact-cell-bank.bin";
 pub const COMPACT_CELL_BANK_FORMAT: &str = "compact-cell-bank-v1-bin";
 pub const MAX_COMPACT_CELL_BANK_FILE_BYTES: u64 = 32 * 1024;
+pub const BACKGROUND_EFFECT_GRAPHICS_ID: &str = "graphics.background-effect-graphics";
+pub const BACKGROUND_EFFECT_GRAPHICS_FILE: &str = "background-effect-graphics.bin";
+pub const BACKGROUND_EFFECT_GRAPHICS_FORMAT: &str = "background-effect-graphics-v1-bin";
+pub const MAX_BACKGROUND_EFFECT_GRAPHICS_FILE_BYTES: u64 = background_effect_graphics::PACKED_BYTES;
+pub const LOCALIZED_OBJ_ANIMATION_BANKS_ID: &str = "graphics.localized-obj-animation-banks";
+pub const LOCALIZED_OBJ_ANIMATION_BANKS_FILE: &str = "localized-obj-animation-banks.bin";
+pub const LOCALIZED_OBJ_ANIMATION_BANKS_FORMAT: &str = "localized-obj-animation-banks-v1-bin";
+pub const MAX_LOCALIZED_OBJ_ANIMATION_BANKS_FILE_BYTES: u64 =
+    localized_obj_animation_banks::PACKED_BYTES;
+pub const BACKGROUND_SCREEN_BANKS_ID: &str = "graphics.background-screen-banks";
+pub const BACKGROUND_SCREEN_BANKS_FILE: &str = "background-screen-banks.bin";
+pub const BACKGROUND_SCREEN_BANKS_FORMAT: &str = "background-screen-banks-v1-bin";
+pub const MAX_BACKGROUND_SCREEN_BANKS_FILE_BYTES: u64 = background_screen_banks::PACKED_BYTES;
+pub const PHYSICAL_AUDIO_BANKS_ID: &str = "audio.physical-tone-banks";
+pub const PHYSICAL_AUDIO_BANKS_FILE: &str = "physical-tone-banks.bin";
+pub const PHYSICAL_AUDIO_BANKS_FORMAT: &str = "physical-tone-banks-v1-bin";
+pub const MAX_PHYSICAL_AUDIO_BANKS_FILE_BYTES: u64 = physical_audio_banks::PACKED_BYTES;
+pub const PHYSICAL_COMPACT_OBJ_REGION_ID: &str = "graphics.physical-compact-obj-banks";
+pub const PHYSICAL_COMPACT_OBJ_REGION_FILE: &str = "physical-compact-obj-banks.bin";
+pub const PHYSICAL_COMPACT_OBJ_REGION_FORMAT: &str = "physical-compact-obj-banks-v1-bin";
+pub const MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES: u64 = physical_compact_obj_region::PACKED_BYTES;
+pub const SCREEN_UPDATE_TABLES_ID: &str = "graphics.screen-update-tables";
+pub const SCREEN_UPDATE_TABLES_FILE: &str = "screen-update-tables.bin";
+pub const SCREEN_UPDATE_TABLES_FORMAT: &str = "screen-update-tables-v1-bin";
+pub const MAX_SCREEN_UPDATE_TABLES_FILE_BYTES: u64 = screen_update_tables::PACKED_BYTES;
+pub const COUNTED_EFFECT_TABLES_ID: &str = "graphics.counted-effect-tables";
+pub const COUNTED_EFFECT_TABLES_FILE: &str = "counted-effect-tables.bin";
+pub const COUNTED_EFFECT_TABLES_FORMAT: &str = "counted-effect-tables-v1-bin";
+pub const MAX_COUNTED_EFFECT_TABLES_FILE_BYTES: u64 = counted_effect_tables::PACKED_BYTES;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -1112,6 +1165,13 @@ pub struct Extraction {
     pub tilemap_type2: Option<Vec<u8>>,
     pub tilemap_direct: Option<Vec<u8>>,
     pub compact_cell_bank: Option<Vec<u8>>,
+    pub background_effect_graphics: Option<Vec<u8>>,
+    pub localized_obj_animation_banks: Option<Vec<u8>>,
+    pub background_screen_banks: Option<Vec<u8>>,
+    pub physical_audio_banks: Option<Vec<u8>>,
+    pub physical_compact_obj_region: Option<Vec<u8>>,
+    pub screen_update_tables: Option<Vec<u8>>,
+    pub counted_effect_tables: Option<Vec<u8>>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1274,6 +1334,13 @@ pub struct BaseFiles<'a> {
     pub tilemap_type2: Option<&'a [u8]>,
     pub tilemap_direct: Option<&'a [u8]>,
     pub compact_cell_bank: Option<&'a [u8]>,
+    pub background_effect_graphics: Option<&'a [u8]>,
+    pub localized_obj_animation_banks: Option<&'a [u8]>,
+    pub background_screen_banks: Option<&'a [u8]>,
+    pub physical_audio_banks: Option<&'a [u8]>,
+    pub physical_compact_obj_region: Option<&'a [u8]>,
+    pub screen_update_tables: Option<&'a [u8]>,
+    pub counted_effect_tables: Option<&'a [u8]>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1311,7 +1378,19 @@ impl Extraction {
             | PRE_SIGNED_MAP_DELTAS_REVISION | PRE_WORLD_NODE_RENDERER_REVISION
             | PRE_WORLD_STATE_TASK_REVISION | PRE_STACK_BYTE_COPIES_REVISION
             | PRE_FIXED_BYTE_COPIES_REVISION | PRE_DIRECT_COPY_ARGUMENTS_REVISION
-            | PRE_COPY_PRODUCER_LITERALS_REVISION | PRE_SHARED_SLOT_LITERALS_REVISION) => previous,
+            | PRE_COPY_PRODUCER_LITERALS_REVISION | PRE_SHARED_SLOT_LITERALS_REVISION
+            | PRE_HELPER_FIELD_DISPATCH_REVISION | PRE_CONTEXT_RECORD_LITERALS_REVISION
+            | PRE_SCRATCH_RESTORE_LITERALS_REVISION | PRE_CACHED_OBJECT_REVISION
+            | PRE_INDEXED_EXCHANGE_REVISION | PRE_FIVE_BYTE_LIST_REVISION
+            | PRE_PALETTE_TASK_REVISION | PRE_RECOVERED_TILEMAP_LISTS_REVISION
+            | PRE_BACKGROUND_VARIANT_STATE_REVISION | PRE_CPU_FAST_SET_LITERALS_REVISION
+            | PRE_BACKGROUND_EFFECT_GRAPHICS_REVISION
+            | PRE_LOCALIZED_OBJ_ANIMATION_BANKS_REVISION
+            | PRE_BACKGROUND_SCREEN_BANKS_REVISION
+            | PRE_PHYSICAL_AUDIO_BANKS_REVISION
+            | PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION
+            | PRE_SCREEN_UPDATE_TABLES_REVISION
+            | PRE_COUNTED_EFFECT_TABLES_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2205,7 +2284,18 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.iwram_memory_helpers = Some(metadata);
-            let metadata = adjacent_offset_tables::Catalog::from_rom(rom, &result.manifest.resources)?;
+            let indexed_exchange = revision > PRE_INDEXED_EXCHANGE_REVISION;
+            let five_byte_list = revision > PRE_FIVE_BYTE_LIST_REVISION;
+            let layout = if five_byte_list {
+                adjacent_offset_tables::SourceLayout::FiveByteList
+            } else if indexed_exchange {
+                adjacent_offset_tables::SourceLayout::IndexedExchange
+            } else {
+                adjacent_offset_tables::SourceLayout::Legacy
+            };
+            let metadata = adjacent_offset_tables::Catalog::from_rom_with_layout(
+                rom, &result.manifest.resources, layout,
+            )?;
             result.manifest.coverage.push(ADJACENT_OFFSET_TABLES_ID.into());
             result.manifest.resources.push(Resource {
                 id: ADJACENT_OFFSET_TABLES_ID.into(), path: ADJACENT_OFFSET_TABLES_FILE.into(),
@@ -2231,7 +2321,20 @@ impl Extraction {
             result.indexed_words_3959 = Some(metadata);
             let title_frontend = revision > PRE_TITLE_FRONTEND_REVISION;
             let world_node_renderer = revision > PRE_WORLD_NODE_RENDERER_REVISION;
-            let layout = if world_node_renderer {
+            let helper_field_dispatch = revision > PRE_HELPER_FIELD_DISPATCH_REVISION;
+            let cached_object = revision > PRE_CACHED_OBJECT_REVISION;
+            let background_variant_state = revision > PRE_BACKGROUND_VARIANT_STATE_REVISION;
+            let layout = if background_variant_state {
+                thumb_switch_tables::SourceLayout::BackgroundVariantState
+            } else if five_byte_list {
+                thumb_switch_tables::SourceLayout::FiveByteList
+            } else if indexed_exchange {
+                thumb_switch_tables::SourceLayout::IndexedExchange
+            } else if cached_object {
+                thumb_switch_tables::SourceLayout::CachedObject
+            } else if helper_field_dispatch {
+                thumb_switch_tables::SourceLayout::HelperFieldDispatch
+            } else if world_node_renderer {
                 thumb_switch_tables::SourceLayout::WorldNodeRenderer
             } else if title_frontend {
                 thumb_switch_tables::SourceLayout::TitleFrontend
@@ -2248,7 +2351,21 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_switch_tables = Some(metadata);
-            let layout = if revision > PRE_WORLD_STATE_TASK_REVISION {
+            let layout = if revision > PRE_CPU_FAST_SET_LITERALS_REVISION {
+                thumb_pc_literals::SourceLayout::CpuFastSet
+            } else if background_variant_state {
+                thumb_pc_literals::SourceLayout::BackgroundVariantState
+            } else if revision > PRE_PALETTE_TASK_REVISION {
+                thumb_pc_literals::SourceLayout::PaletteTask
+            } else if five_byte_list {
+                thumb_pc_literals::SourceLayout::FiveByteList
+            } else if indexed_exchange {
+                thumb_pc_literals::SourceLayout::IndexedExchange
+            } else if cached_object {
+                thumb_pc_literals::SourceLayout::CachedObject
+            } else if helper_field_dispatch {
+                thumb_pc_literals::SourceLayout::HelperFieldDispatch
+            } else if revision > PRE_WORLD_STATE_TASK_REVISION {
                 thumb_pc_literals::SourceLayout::WorldStateTask
             } else if world_node_renderer {
                 thumb_pc_literals::SourceLayout::WorldNodeRenderer
@@ -2275,7 +2392,11 @@ impl Extraction {
                 dependencies: vec![], sources: metadata.sources.clone(),
             });
             result.thumb_pc_literals = Some(metadata);
-            let fixed_bytes = if revision > PRE_SHARED_SLOT_LITERALS_REVISION {
+            let fixed_bytes = if revision > PRE_SCRATCH_RESTORE_LITERALS_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithScratchRestoreLiterals)
+            } else if revision > PRE_CONTEXT_RECORD_LITERALS_REVISION {
+                Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithContextRecordLiterals)
+            } else if revision > PRE_SHARED_SLOT_LITERALS_REVISION {
                 Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithSharedSlotLiterals)
             } else if revision > PRE_COPY_PRODUCER_LITERALS_REVISION {
                 Some(copied_halfword_lookups::fixed_byte_copies::Layout::WithProducerLiterals)
@@ -2532,8 +2653,11 @@ impl Extraction {
                 });
                 result.tilemap_transfer_lz77 = Some(encoded);
             }
+            let recovered_tilemap_lists = revision > PRE_RECOVERED_TILEMAP_LISTS_REVISION;
             if revision >= PRE_TILEMAP_TYPE2_REVISION {
-                let ranges = tilemap_type3::uncovered_ranges(rom, &result.manifest.resources)?;
+                let ranges = tilemap_type3::uncovered_ranges(
+                    rom, &result.manifest.resources, recovered_tilemap_lists,
+                )?;
                 let (encoded, sources) = pack_encoded_sources(rom, ranges);
                 result.manifest.coverage.push(TILEMAP_TYPE3_ID.into());
                 result.manifest.resources.push(Resource {
@@ -2585,7 +2709,7 @@ impl Extraction {
                 )?;
                 if revision > PRE_PROJECTED_TILEMAP_DIRECTORIES_REVISION {
                     ranges.extend(tilemap_transfer_directory::uncovered_projected_controls(
-                        rom, &result.manifest.resources,
+                        rom, &result.manifest.resources, recovered_tilemap_lists,
                     )?);
                     ranges.sort_unstable_by_key(|(span, _)| span.start);
                     if ranges.windows(2).any(|pair| pair[0].0.end > pair[1].0.start) {
@@ -2620,6 +2744,131 @@ impl Extraction {
                     sources,
                 });
                 result.compact_cell_bank = Some(encoded);
+            }
+            if revision > PRE_BACKGROUND_EFFECT_GRAPHICS_REVISION {
+                let ranges = background_effect_graphics::source_ranges(
+                    rom, &result.manifest.resources,
+                )?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(BACKGROUND_EFFECT_GRAPHICS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: BACKGROUND_EFFECT_GRAPHICS_ID.into(),
+                    path: BACKGROUND_EFFECT_GRAPHICS_FILE.into(),
+                    format: BACKGROUND_EFFECT_GRAPHICS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.background_effect_graphics = Some(encoded);
+            }
+            if revision > PRE_LOCALIZED_OBJ_ANIMATION_BANKS_REVISION {
+                let ranges = localized_obj_animation_banks::source_ranges(
+                    rom, &result.manifest.resources,
+                )?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(LOCALIZED_OBJ_ANIMATION_BANKS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: LOCALIZED_OBJ_ANIMATION_BANKS_ID.into(),
+                    path: LOCALIZED_OBJ_ANIMATION_BANKS_FILE.into(),
+                    format: LOCALIZED_OBJ_ANIMATION_BANKS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        OBJ_STATIC_LISTS_ID,
+                        FIRAGA_INDEXED_OBJ_BANK_ID,
+                        THUMB_PC_LITERALS_ID,
+                        UI_CUSTOM_GRAPHICS_ID,
+                        INDEXED_GRAPHICS_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.localized_obj_animation_banks = Some(encoded);
+            }
+            if revision > PRE_BACKGROUND_SCREEN_BANKS_REVISION {
+                let ranges = background_screen_banks::source_ranges(rom, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(BACKGROUND_SCREEN_BANKS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: BACKGROUND_SCREEN_BANKS_ID.into(),
+                    path: BACKGROUND_SCREEN_BANKS_FILE.into(),
+                    format: BACKGROUND_SCREEN_BANKS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.background_screen_banks = Some(encoded);
+            }
+            if revision > PRE_PHYSICAL_AUDIO_BANKS_REVISION {
+                let ranges = physical_audio_banks::uncovered_ranges(rom, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(PHYSICAL_AUDIO_BANKS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: PHYSICAL_AUDIO_BANKS_ID.into(),
+                    path: PHYSICAL_AUDIO_BANKS_FILE.into(),
+                    format: PHYSICAL_AUDIO_BANKS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [AUDIO_DIRECTORY_ID, AUDIO_TONES_ID]
+                        .into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.physical_audio_banks = Some(encoded);
+            }
+            if revision > PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION {
+                let ranges = physical_compact_obj_region::uncovered_ranges(
+                    rom, &result.manifest.resources,
+                )?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(PHYSICAL_COMPACT_OBJ_REGION_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: PHYSICAL_COMPACT_OBJ_REGION_ID.into(),
+                    path: PHYSICAL_COMPACT_OBJ_REGION_FILE.into(),
+                    format: PHYSICAL_COMPACT_OBJ_REGION_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        OBJ_STATIC_LISTS_ID,
+                        COMPACT_OBJ_ANIMATIONS_ID,
+                        SECONDARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        TERTIARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        QUATERNARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        QUINARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        SENARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        SEPTENARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        OCTONARY_COMPACT_OBJ_ANIMATIONS_ID,
+                        COMPACT_OBJ_CATALOG_ID,
+                        FIRAGA_COMPACT_OBJ_BANK_ID,
+                        FIRAGA_ADJACENT_COMPACT_OBJ_BANK_ID,
+                        FIRAGA_6C12C8_OBJ_BANK_ID,
+                        THUMB_PC_LITERALS_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.physical_compact_obj_region = Some(encoded);
+            }
+            if revision > PRE_SCREEN_UPDATE_TABLES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, screen_update_tables::SOURCES);
+                result.manifest.coverage.push(SCREEN_UPDATE_TABLES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: SCREEN_UPDATE_TABLES_ID.into(),
+                    path: SCREEN_UPDATE_TABLES_FILE.into(),
+                    format: SCREEN_UPDATE_TABLES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![COMPACT_OBJ_CATALOG_ID.into()],
+                    sources,
+                });
+                result.screen_update_tables = Some(encoded);
+            }
+            if revision > PRE_COUNTED_EFFECT_TABLES_REVISION {
+                let ranges = counted_effect_tables::source_ranges(rom)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(COUNTED_EFFECT_TABLES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: COUNTED_EFFECT_TABLES_ID.into(),
+                    path: COUNTED_EFFECT_TABLES_FILE.into(),
+                    format: COUNTED_EFFECT_TABLES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.counted_effect_tables = Some(encoded);
             }
             result.tilemap_transfer_directory = Some(metadata);
             (result.manifest.extractor_revision, result.manifest.decoder_revision) = revision;
@@ -2813,6 +3062,13 @@ impl Extraction {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4325,6 +4581,104 @@ impl Extraction {
             (None, None) => {}
             _ => return Err("Missing or unexpected compact-cell bank file".into()),
         }
+        match (&self.background_effect_graphics, files.background_effect_graphics) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Background effect graphics file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == BACKGROUND_EFFECT_GRAPHICS_ID)
+                    .ok_or("Missing background effect graphics resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected background effect graphics file".into()),
+        }
+        match (&self.localized_obj_animation_banks, files.localized_obj_animation_banks) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Localized OBJ animation file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == LOCALIZED_OBJ_ANIMATION_BANKS_ID)
+                    .ok_or("Missing localized OBJ animation resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected localized OBJ animation file".into()),
+        }
+        match (&self.background_screen_banks, files.background_screen_banks) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Background screen bank file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == BACKGROUND_SCREEN_BANKS_ID)
+                    .ok_or("Missing background screen bank resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected background screen bank file".into()),
+        }
+        match (&self.physical_audio_banks, files.physical_audio_banks) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Physical tone bank file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == PHYSICAL_AUDIO_BANKS_ID)
+                    .ok_or("Missing physical tone bank resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected physical tone bank file".into()),
+        }
+        match (&self.physical_compact_obj_region, files.physical_compact_obj_region) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Physical compact OBJ file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == PHYSICAL_COMPACT_OBJ_REGION_ID)
+                    .ok_or("Missing physical compact OBJ resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected physical compact OBJ file".into()),
+        }
+        match (&self.screen_update_tables, files.screen_update_tables) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Screen update table file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == SCREEN_UPDATE_TABLES_ID)
+                    .ok_or("Missing screen update table resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected screen update table file".into()),
+        }
+        match (&self.counted_effect_tables, files.counted_effect_tables) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Counted effect table file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == COUNTED_EFFECT_TABLES_ID)
+                    .ok_or("Missing counted effect table resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected counted effect table file".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -5195,6 +5549,13 @@ impl Extraction {
             + usize::from(self.tilemap_type2.is_some())
             + usize::from(self.tilemap_direct.is_some())
             + usize::from(self.compact_cell_bank.is_some())
+            + usize::from(self.background_effect_graphics.is_some())
+            + usize::from(self.localized_obj_animation_banks.is_some())
+            + usize::from(self.background_screen_banks.is_some())
+            + usize::from(self.physical_audio_banks.is_some())
+            + usize::from(self.physical_compact_obj_region.is_some())
+            + usize::from(self.screen_update_tables.is_some())
+            + usize::from(self.counted_effect_tables.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -5405,6 +5766,13 @@ mod tests {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5568,6 +5936,13 @@ mod tests {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5741,6 +6116,13 @@ mod tests {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5903,6 +6285,13 @@ mod tests {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

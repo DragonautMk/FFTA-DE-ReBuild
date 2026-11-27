@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-indexed-exchange-tables",
+  "title": "Serve European indexed exchange tables and directions",
+  "kind": "changed",
+  "platforms": [
+    "European ROM, Windows on Wine"
+  ],
+  "changes": [
+    "The e350-d349 generation serves both direction lists, 18 original switch destinations and 13 support words. It owns exactly 130 new bytes across the adjacent offsets, Thumb switch and Thumb literal resources.",
+    "The two bytes following the direction lists keep their raw source, and the other 153 resource entries match e349-d348."
+  ],
+  "validation": [
+    "Windows build glaijg0o and Wine bqipxuqu verify six direction reads, 18 targets, five guards, 13 original literal loads, 61 typed requests and 204 boundary checks with identical state and clock. e349 attaches and incomplete relabeled e350 is rejected. All 17 guards pass and Wine drains.",
+    "The default CLI creates, verifies and reuses all 157 files. The verified e350 generation is retained in mcafhefi."
+  ],
+  "limitations": [
+    "The actual array writer, live inputs, ordinary and generated use, original BIOS, native Linux and USA remain in the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/adjacent_offset_tables.rs",
+    "crates/gba-core/src/rom_data/runtime/adjacent_offset_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_switch_tables.rs",
+    "crates/gba-core/src/rom_data/thumb_pc_literals.rs",
+    "crates/gba-core/src/rom_data/runtime/thumb_pc_literals.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/helper_field_dispatch_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

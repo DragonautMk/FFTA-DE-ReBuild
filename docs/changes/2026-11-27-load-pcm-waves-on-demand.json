@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-pcm-waves-on-demand",
+  "title": "Load individual PCM waves on demand",
+  "kind": "performance",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Generate shared content-addressed PCM wave assets for split audio pages and load only the selected waveform or the waves used by a selected song or timed preview.",
+    "Keep offline browsing, instrument and WAV playback, cancellation, focus, retry and single-page compatibility while avoiding embedded sample arrays in the two audio topic pages."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-pcm-synthetic-qpn83sv1 passed 18 tests; an earlier run caught and fixed a timing regression in instrument WAV export. Focused viewer-lazy-pcm-extra-7evua0_i passed instrument play/WAV, cancellation, focus and missing-song-asset retry.",
+    "Protected e354 viewer-lazy-pcm-real-k1e_d1w0 checked all 277 PCM assets against authenticated data, a real selected track in Chrome, unchanged unrelated payloads and lazy assets, and 305 matching Python/Docker files.",
+    "Published 23 ignored wiki pages and 277 assets with guarded preimages out/ffta-lazy-pcm-before-an9r53tb. Song page 17407826 to 9081309 bytes; sample page 9601540 to 1275023 bytes."
+  ],
+  "limitations": [
+    "Selected song previews still load the PCM waves for all selected tracks, including tracks that may be unmuted live. Native Windows and physical audio are unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_lazy_pcm_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

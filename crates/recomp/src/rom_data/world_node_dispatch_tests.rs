@@ -10,7 +10,7 @@ use gba_core::{
     ffta_rom::{digest, EUROPE_SHA256},
     rom_data::{
         read_audit::{Reader, Service, TraceCapture, TraceFilter},
-        thumb_switch_tables::ADDITIONAL_TABLE_COUNT,
+        thumb_switch_tables::WORLD_NODE_ADDITIONAL_TABLE_COUNT,
         Extraction,
     },
     Bus, Machine,
@@ -289,7 +289,7 @@ fn european_world_node_renderer_reads_its_complete_dispatch_bank() {
     assert_eq!(stats.additional_source_bytes, 20);
     assert_eq!(
         stats.additional_destinations_mask,
-        1 << (ADDITIONAL_TABLE_COUNT - 1)
+        1 << (WORLD_NODE_ADDITIONAL_TABLE_COUNT - 1)
     );
     for (offset, typed) in [
         (0x032e10, true),

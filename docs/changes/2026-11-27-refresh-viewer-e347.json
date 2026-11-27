@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "refresh-viewer-e347",
+  "title": "Refresh extracted-resource wiki to e347",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private local wiki from the verified European e347-d346 dataset while preserving focused topic views and older owned resource pages.",
+    "Expose the 46 added context-record literal words in the structured inspector and retain the previous e346 dataset for comparison."
+  ],
+  "validation": [
+    "Protected unit viewer-e347-refresh-yod_z36s authenticated 156 resources and all 46 source words, preserved 21 topic payloads and 158 prior resource pages, and checked the updated inspector in Chrome.",
+    "All 27 synthetic Python and Docker outputs matched; 21 ignored pages and the updated resource page were published with guarded preimages."
+  ],
+  "limitations": [
+    "Live pointer domains, ordinary and generated copy paths and native Windows remain unverified by this viewer refresh."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

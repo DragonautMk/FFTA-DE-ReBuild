@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-screen-update-grid-movement",
+  "title": "Preview screen-update grid movement",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Join 48 compact grid rows to their documented screen-update curve pointers, validating table extents and rejecting missing or inconsistent links.",
+    "Plot stored X and the controlled reader Y formula for each step, show row values, allow selecting its curve, and link to the existing source table and animation references.",
+    "Reuse table rows during playback and update the section timestamp badge without moving the complete object catalog into the curve page."
+  ],
+  "validation": [
+    "Synthetic viewer-e361-grid-synthetic-z5wgg4cl passed 38 projection, Chrome, badge and regression tests.",
+    "Protected viewer-e361-grid-real-o3yceyn2 compared 48 rows and 7248 curve values with source, exercised Chrome playback and the source link, preserved 24 scoped payloads and 174 resource pages, and matched 607 Python/Docker files.",
+    "Published 25 private pages with guarded preimages out/ffta-e361-grid-before-3ns4jbk9."
+  ],
+  "limitations": [
+    "The controlled numerical preview omits sprites, scaling, original timing and live scene state; step zero is a formula preview. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_screen_update_curves.py",
+    "scripts/tests/test_viewer_screen_update_grids.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

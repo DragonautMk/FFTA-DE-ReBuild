@@ -86,7 +86,7 @@ class Type2RectangleProjectionTest(unittest.TestCase):
         for options in ({}, {'prior': False}, {'palette': False}, {'bad_hash': True}, {'missing': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-type2-projection-') as directory:
                 index = fixture(Path(directory), **options); parts = index.parent / 'index.html.parts'
-                home, world, audio = payload(index), payload(parts / 'interface.html'), payload(parts / 'audio.html')
+                home, world, audio = payload(index), payload(parts / 'interface-maps.html'), payload(parts / 'audio.html')
                 self.assertNotIn('extra_tilemaps', home); self.assertNotIn('extra_tilemaps', audio)
                 valid = not (options.get('bad_hash') or options.get('missing'))
                 self.assertEqual('type2_rectangles' in world['extra_tilemaps'], valid)
@@ -100,7 +100,7 @@ class Type2RectangleProjectionTest(unittest.TestCase):
 class Type2RectangleBrowserTest(unittest.TestCase):
     def test_windows_palette_fragments_and_existing_map_links(self):
         with tempfile.TemporaryDirectory(prefix='viewer-type2-browser-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change'));

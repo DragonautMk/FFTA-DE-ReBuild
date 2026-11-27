@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "model-frame-stepped-pcm-envelope",
+  "title": "Model frame-stepped PCM envelopes in audio previews",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Hold extracted PCM envelope levels for nominal mixer frames, applying release at the next update; retain the prior smooth approximation as an option.",
+    "Use the same envelope scheduling for song and timed-source auditions and WAV exports, while preserving settings across song changes and keeping CGB and sine routes independent."
+  ],
+  "validation": [
+    "Synthetic Chrome unit 0jzed1v3 passed 11 tests covering frame and smooth envelopes, manual and frame tempo, playback, timed sources, mutes and WAV export.",
+    "Protected e347 unit bfzbdt8b authenticated 736 source spans and 429 tone words; compared 20880 levels from 58 PCM envelopes in 232 no-echo HLE-model cases; checked real Chrome offline samples, one extracted PCM note and 26 identical Python/Docker files.",
+    "Published the ignored audio page with a guarded preimage and saved validation evidence."
+  ],
+  "limitations": [
+    "Nominal frames and zero pseudo-echo are assumed; original mixing, live channel changes, effects, physical audio and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_fidelity_browser.py",
+    "scripts/tests/test_viewer_pcm_frame_envelope_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "crates/gba-core/src/mp2k.rs"
+  ]
+}

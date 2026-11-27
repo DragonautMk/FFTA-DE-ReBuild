@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "external-output-workstation-mount",
+  "title": "Keep workstation outputs on external storage",
+  "kind": "changed",
+  "platforms": [
+    "Linux"
+  ],
+  "changes": [
+    "Moved the selected workstation output directory to a separate ext4 image on the external disk and preserved its checkout path through a systemd bind mount.",
+    "Documented independent free-space limits, mount dependencies, recovery and ejection for both external directories."
+  ],
+  "validation": [
+    "Initial copy and reconciliation exited successfully; a metadata inventory reported no differences before cutover. The active bind, filesystem identity, read-write options and automatic mount dependencies were inspected.",
+    "The source was removed after cutover; the internal disk reported 24 GiB free. Systemd unit syntax and the udev rule passed configuration checks."
+  ],
+  "limitations": [
+    "The comparison did not read every file byte; reboot and physical disconnect or reconnect were not tested."
+  ],
+  "files": [
+    "docs/development/STORAGE_CHECKLIST.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/development/STORAGE_CHECKLIST.md"
+  ]
+}

@@ -7,6 +7,21 @@
   <div id="tree" hidden>
     <p id="tree-path"></p>
     <p>JSON numbers use browser precision; check the raw file when exact values matter.</p>
+    <details id="tree-search"><summary>Search JSON structure</summary>
+      <p>Search field names and scalar values at any nested level. Results open
+      directly in the structure below; matching is case-insensitive.</p>
+      <label>Search <input id="tree-search-query" type="search" maxlength="256"></label>
+      <label>Scope <select id="tree-search-scope"><option value="file">Entire file</option><option value="current">Current entry</option></select></label>
+      <button type="button" id="tree-search-find">Find matches</button>
+      <button type="button" id="tree-search-cancel" disabled>Cancel search</button>
+      <p id="tree-search-status" role="status">Enter a field name or value.</p>
+      <div id="tree-search-results" hidden>
+        <button type="button" id="tree-search-prev">Previous matches</button>
+        <button type="button" id="tree-search-next">Next matches</button>
+        <span id="tree-search-position"></span>
+        <div style="overflow-x:auto"><table><thead><tr><th>Path</th><th>Match</th><th>Value</th><th>Open</th></tr></thead><tbody id="tree-search-rows"></tbody></table></div>
+      </div>
+    </details>
     <button type="button" id="tree-up">Parent</button>
     <button type="button" id="tree-prev">Previous entries</button>
     <button type="button" id="tree-next">Next entries</button>

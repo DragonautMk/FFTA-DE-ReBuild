@@ -78,7 +78,7 @@ class CompactCellProjectionTest(unittest.TestCase):
         for options in ({}, {'bad_hash': True}, {'missing': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-compact-bank-') as directory:
                 index = fixture(Path(directory), **options); parts = index.parent / 'index.html.parts'
-                home, world, audio = payload(index), payload(parts / 'interface.html'), payload(parts / 'audio.html')
+                home, world, audio = payload(index), payload(parts / 'interface-maps.html'), payload(parts / 'audio.html')
                 self.assertNotIn('compact_cell_bank', home); self.assertNotIn('compact_cell_bank', audio)
                 self.assertEqual(bool(world['compact_cell_bank']), not options)
                 if not options: self.assertIn('1 invalid records', world['resources'][0]['status'])
@@ -88,7 +88,7 @@ class CompactCellProjectionTest(unittest.TestCase):
 class CompactCellBrowserTest(unittest.TestCase):
     def test_playback_focus_palette_and_persistent_controls(self):
         with tempfile.TemporaryDirectory(prefix='viewer-compact-bank-browser-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change')),
@@ -123,6 +123,6 @@ class CompactCellBrowserTest(unittest.TestCase):
     def test_invalid_or_missing_bank_is_independent(self):
         for options in ({'bad_hash': True}, {'missing': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-compact-bank-partial-') as directory:
-                work = Path(directory); index = fixture(work, **options); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+                work = Path(directory); index = fixture(work, **options); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
                 try: self.assertTrue(browser.evaluate("document.querySelector('#compact-cell-bank').hidden && !document.querySelector('#obj-tiles').hidden"))
                 finally: browser.close()

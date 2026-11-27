@@ -151,6 +151,53 @@ pub(super) fn projected_row_offsets(rom: &[u8]) -> Result<BTreeSet<u32>, String>
     Ok(offsets)
 }
 
+/// The original count and base pair travel together through each branch.
+pub(super) fn recovered_list_sources(rom: &[u8]) -> Result<Vec<(u32, Slot)>, String> {
+    for (start, end, fingerprint) in [
+        (
+            0x0e6098,
+            0x0e616c,
+            "e126eee2e2965e4000507ed14b023397a3ec50bae1faced0430a9aaee5e1e1cb",
+        ),
+        (
+            0x0fdecc,
+            0x0fdf20,
+            "43a96114749cfd31d4b514d2cf3814972547c96742ff1bbc1f899c5158c36b8f",
+        ),
+    ] {
+        let instructions = rom.get(start..end).ok_or("Truncated tilemap list reader")?;
+        if ffta_rom::digest(instructions) != fingerprint {
+            return Err("Tilemap list branch fingerprint mismatch".into());
+        }
+    }
+
+    [
+        (0x0e6098, 0x39a710, 2),
+        (0x0e60dc, 0x39a710, 2),
+        (0x0e6104, 0x39a728, 1),
+        (0x0e6128, 0x39a734, 1),
+        (0x0fdefc, 0x3a1614, 5),
+        (0x0fdf08, 0x3a16a0, 6),
+    ]
+    .into_iter()
+    .map(|(reader, base, row_count)| {
+        let (offset, row_pointer) = directory_sources::literal(rom, reader)?;
+        if row_pointer != ROM_BASE + base {
+            return Err(format!(
+                "Invalid recovered tilemap list base at {offset:#x}"
+            ));
+        }
+        Ok((
+            offset,
+            Slot {
+                row_pointer,
+                row_count,
+            },
+        ))
+    })
+    .collect()
+}
+
 pub(super) fn descriptor_at(
     rom: &[u8],
     source_offset: u32,

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e357-localized-obj-animations",
+  "title": "Preview localized European object animations",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Reconstruct 130 localized descriptor banks and three direct OBJ banks from authenticated e357 source ranges and prior extracted owners, without reading the ROM during viewer generation.",
+    "Expose 188 sequences and 4435 frames in the existing offline animation player with language/mode labels, frame selection, looping and three manually selectable decoded direct graphics streams.",
+    "Refresh the private scoped wiki to e357 with its new resource inspector while retaining previous resource links and lazy assets."
+  ],
+  "validation": [
+    "Protected viewer-e357-projection-3q5fi0k7 compared 2308 new source ranges and every reconstructed index, sequence and OBJ list against the authenticated original source.",
+    "Synthetic viewer-e357-synthetic-faahz7xi passed 17 tests including source guards, custom graphics decoding, resource links, looping, empty sequences and persistent controls.",
+    "Protected viewer-e357-real-gkaul4s0 checked six real banks in Chrome, preserved the prior 157 resources and 169 resource pages, and matched 574 Python/Docker generated files.",
+    "Protected viewer-e357-visual-iybqjbhq independently decoded three custom graphics streams and matched 349664 RGBA bytes across three complete browser previews.",
+    "Published 23 scoped pages, one new resource page and ownership marker with verified preimages out/ffta-e357-before-3mxjmdl7."
+  ],
+  "limitations": [
+    "Language/mode labels do not establish character names or live scene use; graphics and palette choices are manual, original task timing and unsupported OBJ modes remain unverified, and native Windows is deferred."
+  ],
+  "files": [
+    "scripts/viewer_localized_obj.py",
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_localized_obj.py",
+    "scripts/tests/test_viewer_localized_obj_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_obj.md"
+  ]
+}

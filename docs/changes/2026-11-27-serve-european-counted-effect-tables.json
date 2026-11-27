@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-counted-effect-tables",
+  "title": "Add European counted effect table extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR implementation"
+  ],
+  "changes": [
+    "Stage e362-d361 support for the 3,016-byte E618 projection with counted source bounds, directory checks, original guest addresses and e361 compatibility."
+  ],
+  "validation": [
+    "The independent E618 source audit l_fm3i3u passes under Wine. E619 Windows build pv6sdirf was still running when the user paused the goal. The e362 reader and CLI checks had not started."
+  ],
+  "limitations": [
+    "Runtime acceptance, ordinary and translated paths, Linux, USA and native Windows are pending."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/counted_effect_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/screen_update_table_tests.rs",
+    "crates/recomp/src/rom_data/counted_effect_table_tests.rs",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

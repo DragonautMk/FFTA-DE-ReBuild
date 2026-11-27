@@ -441,6 +441,80 @@ scope. It leaves complete sequence export, driver LUTs, unselected bank/sample
 records, wider scenes, other asset families, GUI/archive/mod gates and new
 Linux/USA/native Windows checks open. No performance or space campaign ran.
 
+## E611 European physical tone and direct wave banks
+
+The e358 audio directory authenticates the same four tone bank pointers
+in all nonempty European song headers. The bank bases at `14d9fc`,
+`14df78`, `14e578` and `14eb6c` delimit the first three physical
+arrays. The final array ends at `14f160`, before the first repeated
+keymap values. The first keymap uses a biased pointer at `14f154`,
+inside the last 12-byte tone. The four intervals contain 117, 128,
+127 and 127 complete records. These are physical records, including
+entries outside the earlier sequence-derived program and note set.
+
+The original program reader at `081483e4` takes a byte operand and
+copies three words from the current bank at 12 times that selector.
+Across the physical arrays, 445 type-00 and one type-08 PCM record
+point to 285 distinct wave headers. Each header bounds its signed
+samples. The interpolation reads at `081481e0` and `081481e4` establish
+the extra endpoint for 284 waves. The exclusive type-08 source uses
+its declared length. Nine CGB wave records point to eight distinct
+16-byte blocks at `14f47c..14f4fc`. The original copy at `081497b4`
+through `081497c8` reads each as four words. The physical tone census
+also includes eight map tones and one rhythm tone. Their full key
+domains stay open.
+
+The two PCM waves at `1ecca8` and `1f1b9c` account for 30,700
+bytes of the 30,707-byte gap. The remaining seven bytes are zero
+alignment before and between the aligned wave starts. The full census
+projects 1,998,547 bytes against e358. The existing tone and directory
+resources own 1,941,416 of those bytes, including their four-byte
+WaveData alias. The uncovered projection contains 840 bytes in 70
+tone records, 56,195 bytes across eight PCM waves and 96 bytes across
+six CGB waves.
+
+Wine unit `e611-eur-physical-audio-banks-wine-w4i1asx7` authenticates
+38 original instructions and verifies the 57,131-byte ownership delta.
+All 14 input guards pass and the server drains. Its
+`evidence/result.json` SHA-256 is
+`5d09d6aee19838ccde9c88e0777bc2a7f0d7d50933767e0b4be4d1d817524f4f`.
+The [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md)
+tracks the remaining note-map and rhythm domains, ordinary playback
+and deferred platforms.
+
+## E612 European physical tone and direct wave runtime
+
+European `e359-d358` publishes `audio.physical-tone-banks` as
+`physical-tone-banks.bin`. The file concatenates the 47 uncovered E611
+ranges in manifest order. The authenticated excerpt contains 840
+tone bytes, 56,195 PCM bytes and 96 CGB bytes. The directory and
+sequence-derived tone catalog remain its dependencies and retain
+their existing ranges. The original guest bus and the host MP2K
+memory view use the same new source ranges, merging partial reads
+with the earlier owners or ROM bytes as appropriate.
+
+Windows build `686ug43y` and focused Wine unit `hts7ytbp` pass.
+With the 57,131 managed bytes inverted in the ROM backing, the
+original program reader selects all 499 physical records. Eight
+previously unowned PCM headers and their final interpolation pairs
+match the raw-ROM machine, as do all eight original CGB copies.
+These paths read 992 bytes from the new binding. The guest bus and
+MP2K memory view match for every newly owned byte and across 5,922
+mixed-width guest and host reads around source edges and ROM mirrors.
+Complete state and guest clock match. The e358 predecessor attaches
+and two invalid candidates leave the live binding intact.
+
+The standard CLI creates, verifies and reuses the same 161 files.
+All 159 earlier resources retain their manifest entries and file
+hashes. All 16 input guards pass and the Wine server drains. Stage
+`e612-e359-stage-rjvfgtl6` retains the verified generation. Its manifest
+and bank SHA-256 values are
+`039e0600257627495240ad0881a2649869781cfe3966c6682b2b16e300eec094`
+and
+`3392672622ea356b714d365cd1b057552376c58f8f3bb413fcdf4e50a535a413`.
+Ordinary playback, translated readers, and Linux, USA and native
+Windows checks remain in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## Producer-bounded sequence instructions and driver tables
 
 `audio_sequences::Catalog::from_rom` extends the existing bounded source graph

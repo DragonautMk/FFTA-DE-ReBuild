@@ -87,9 +87,9 @@ class UiContextProjectionTest(unittest.TestCase):
         for invalid in (False, True):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory() as directory:
                 page=fixture(Path(directory), invalid=invalid); parts=page.parent/(page.name+'.parts')
-                home, interface, other = map(parse_page, (page, parts/'interface.html', parts/'other.html'))
+                home, interface, other = map(parse_page, (page, parts/'interface-ui.html', parts/'other.html'))
                 row=home['resources'][0]
-                self.assertEqual(row['viewer_scope'],'interface')
+                self.assertEqual(row['viewer_scope'],'interface-ui')
                 self.assertEqual(row['status'].startswith('Available:'), not invalid)
                 self.assertEqual(bool(interface['ui_context_templates']), not invalid)
                 self.assertNotIn('ui_context_templates', other)
@@ -102,8 +102,8 @@ class UiContextBrowserTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-ui-context-') as directory:
             work=Path(directory); page=fixture(work); browser=Chrome(work,page)
             try:
-                browser.click('#wiki-page-links a[href$="/interface.html#ui-context-templates"]')
-                wait_for(browser,"typeof data !== 'undefined' && data.wiki.current === 'interface' && location.hash === '#ui-context-templates'")
+                browser.click('#wiki-page-links a[href$="/interface-ui.html#ui-context-templates"]')
+                wait_for(browser,"typeof data !== 'undefined' && data.wiki.current === 'interface-ui' && location.hash === '#ui-context-templates'")
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
                   const section=q('#ui-context-templates'), templates=q('#ui-context-template'), category=q('#ui-context-category');
@@ -125,7 +125,7 @@ class UiContextBrowserTest(unittest.TestCase):
                 })()''').split('#')[-1], 'ui-context-templates')
                 bookmark=browser.evaluate("document.querySelector('#ui-context-templates > details > p > a').href")
                 browser.command('Page.navigate', {'url':bookmark})
-                wait_for(browser,"typeof data !== 'undefined' && data.wiki.current==='interface' && document.querySelector('#ui-context-template').value==='6'")
+                wait_for(browser,"typeof data !== 'undefined' && data.wiki.current==='interface-ui' && document.querySelector('#ui-context-template').value==='6'")
                 self.assertTrue(browser.evaluate("document.querySelector('#ui-context-category').value==='2' && document.querySelector('#ui-context-templates>details').open"))
             finally:
                 browser.close()
@@ -133,7 +133,7 @@ class UiContextBrowserTest(unittest.TestCase):
     def test_unknown_source_has_no_category_mapping(self):
         with tempfile.TemporaryDirectory(prefix='viewer-ui-context-unknown-') as directory:
             work=Path(directory); page=fixture(work, known=False)
-            browser=Chrome(work,page.parent/(page.name+'.parts/interface.html'))
+            browser=Chrome(work,page.parent/(page.name+'.parts/interface-ui.html'))
             try:
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);
                   return !q('#ui-context-templates').hidden && q('#ui-context-category-control').hidden &&

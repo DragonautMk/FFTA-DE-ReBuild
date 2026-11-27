@@ -177,6 +177,13 @@ impl ThumbPcLiteralsResources {
                 + data.title_frontend_roots.len()
                 + data.world_node_renderer_literals.len()
                 + data.world_state_task_literals.len()
+                + data.helper_field_literals.len()
+                + data.cached_object_literals.len()
+                + data.indexed_exchange_literals.len()
+                + data.five_byte_list_literals.len()
+                + data.palette_task_literals.len()
+                + data.background_variant_state_literals.len()
+                + data.cpu_fast_set_literals.len()
         {
             return Err("Thumb literal source count mismatch".into());
         }
@@ -217,6 +224,13 @@ impl ThumbPcLiteralsResources {
             .chain(&data.title_frontend_roots)
             .chain(&data.world_node_renderer_literals)
             .chain(&data.world_state_task_literals)
+            .chain(&data.helper_field_literals)
+            .chain(&data.cached_object_literals)
+            .chain(&data.indexed_exchange_literals)
+            .chain(&data.five_byte_list_literals)
+            .chain(&data.palette_task_literals)
+            .chain(&data.background_variant_state_literals)
+            .chain(&data.cpu_fast_set_literals)
             .zip(sources)
         {
             if source.offset != literal.source_offset
@@ -710,5 +724,12 @@ impl ThumbPcLiteralsResources {
             + self.data.title_frontend_roots.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.world_node_renderer_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
             + self.data.world_state_task_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.helper_field_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.cached_object_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.indexed_exchange_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.five_byte_list_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.palette_task_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.background_variant_state_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
+            + self.data.cpu_fast_set_literals.capacity() * std::mem::size_of::<model::LiteralWord>()
     }
 }

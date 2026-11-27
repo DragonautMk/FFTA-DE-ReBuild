@@ -69,11 +69,12 @@ class TextReaderRegistryProjectionTest(unittest.TestCase):
                 index = parse_page(page)
                 projection = parse_page(parts / 'text-relative.html')['text_reader_registry']
                 self.assertEqual([row['reader_index'] for row in projection['rows']], [None, 1, 1, None, None])
-                for scope in ('other', 'text', 'text-relative'):
+                for scope in ('other', 'text-relative'):
                     data = parse_page(parts / (scope + '.html'))
                     self.assertEqual(data['text_reader_registry'], projection)
                     self.assertIn('engine.text-reader-registry', [row['id'] for row in data['resources']])
                 self.assertNotIn('relative_texts', parse_page(parts / 'other.html'))
+                self.assertNotIn('text_reader_registry', parse_page(parts / 'text.html'))
                 self.assertNotIn('text_reader_registry', parse_page(parts / 'audio.html'))
                 row = next(row for row in index['resources'] if row['id'] == 'engine.text-reader-registry')
                 self.assertEqual(row['viewer_scope'], 'other')

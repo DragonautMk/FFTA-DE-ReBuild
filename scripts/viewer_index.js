@@ -1,4 +1,15 @@
 // Keep the overview small: group index entries without loading topic payloads.
+{
+  const format = new Intl.DateTimeFormat('en-GB', {year:'numeric', month:'short', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZoneName:'short'});
+  Object.entries(data.section_updates || {}).forEach(([identity, change]) => {
+    const section = document.getElementById(identity), summary = section && section.querySelector(':scope > details > summary');
+    if (!summary || !change || !['added', 'updated'].includes(change.kind) || !Number.isFinite(Date.parse(change.at))) return;
+    const badge = document.createElement('time'); badge.className = 'wiki-update-badge'; badge.dateTime = change.at;
+    badge.title = change.at; badge.textContent = (change.kind === 'added' ? 'Added ' : 'Updated ') + format.format(new Date(change.at));
+    summary.append(' ', badge);
+  });
+}
 const indexRows = document.getElementById('rows'), indexSearch = document.getElementById('search');
 const openScopes = new Set(), openFamilies = new Set();
 const pageById = new Map(data.wiki.pages.map(page => [page.id, page]));

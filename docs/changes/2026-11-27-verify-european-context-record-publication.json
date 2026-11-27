@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "verify-european-context-record-publication",
+  "title": "Verify European context record dataset publication",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Verified the standard Windows CLI lifecycle for e347-d346 and retained one current local generation."
+  ],
+  "validation": [
+    "Windows build nqyflova and Wine 4u4irudf passed. Cold prepare matched the E584 manifest, copied lookup packet and all 157 file hashes. Verify and prepare reuse preserved the same file set, identities, hashes, modification times and selector.",
+    "All 13 Wine input guards passed and the server drained. Stage 67w2lo4y retains the verified dataset."
+  ],
+  "limitations": [
+    "Live pointer domains, ordinary and generated execution, original BIOS, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-27-serve-european-context-record-literals.json"
+  ]
+}

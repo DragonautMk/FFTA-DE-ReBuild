@@ -1213,3 +1213,149 @@ servers drained. The selected continuation does not establish exact scene PCs,
 all callers or guest index domains, other scenes, earlier save history or real
 BIOS. Linux, USA and native Windows remain open. No performance comparison
 was made.
+
+## E613 European physical compact OBJ region
+
+The consecutive banks from `6b3428` through exclusive end `6cd966`
+contain 199 complete animation banks. The first bank is named by the
+Firaga descriptor at `39cbdc`, one of six rows reached through the
+count and pointer tables at `39cc78` and `39cc6c`. The original
+literal reader at `08123f4a` independently names the last bank at
+`6ccdec`. The following aligned bank starts at `6cd968` and holds
+[E609 background tiles](rom_data_graphics.md#e609-european-background-screen-banks).
+
+The four-byte header separates the list and sequence directories.
+The first relative offset in each directory gives the directory size
+for this physical layout. All directory entries lead to consecutive
+counted records with the original alignment. The original layout
+readers at `08010866`, `08010ca8` and `08010e50` distinguish the two
+sequence formats. The 198 banks with flags `000c` use two-byte
+sequence offsets and byte list/duration pairs. Bank `6bb838` has flags
+`0004` and uses four-byte sequence offsets and halfword list/duration
+pairs. Both formats use two-byte list offsets for these flags.
+
+The region contains 3,135 OBJ lists, 13,633 objects, 560 sequences
+and 5,045 frames. All frame list references fit their bank. The
+physical sweep accounts for 107,838 bytes as 107,508 source bytes
+and 330 zero alignment bytes. The original guest indexing applies.
+
+The original constructor at `080d9ba8` forwards the count and base
+pointer to callback `080d88fc`, which advances by 24 bytes per
+descriptor. The instruction census finds 258 direct calls. It
+resolves 222 with straight-line literal bases and immediate
+counts, plus three indexed producers for the first bank and
+the wide sequence bank. Those producers name 548 distinct
+descriptor rows and 219 bank/selector pairs across 107 banks.
+The remaining 33 caller sites need live pointer or count evidence.
+
+Wine unit `e613-eur-physical-compact-obj-region-wine-60aydzm5` checks
+258 original halfwords and compares the 121,607-byte projection
+to e359. It finds 27,643 bytes with earlier owners and 93,964
+unowned bytes, including 80,054 in the animation banks and 12,984
+in descriptors. The selector tables and pointer literals add 926
+unowned bytes. All 12 input guards pass and the server drains.
+The retained `evidence/result.json` SHA-256 is
+`2e4a1695e773b5e0897cb1506712a650c4adc321a34e60293155f75d83d98dbc`.
+The other producers, ordinary and translated readers, and deferred
+platforms are in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E614 European physical compact OBJ runtime
+
+European `e360-d359` publishes the 592 residual E613 ranges as
+`graphics.physical-compact-obj-banks` in `physical-compact-obj-banks.bin`.
+The extractor checks the full physical bank layout and binds the
+original descriptor arrays and literals. All 14 earlier owners keep
+their source ranges and all 160 earlier resources retain their
+manifest entries and file hashes. The original guest readers use
+the source file for the covered byte lanes. The e359 predecessor
+retains its own resource layout.
+
+Windows build `w_64ogx0` and Wine `ma09qacg` pass. The focused test
+inverts all 93,964 covered bytes of the ROM backing and compares
+the 548 descriptor readers, 560 sequence counts and 5,045 frame
+durations and list pointers. It checks every packed byte and 74,592
+mixed-width mirror reads. Original paths read 37,058 bytes from
+the binding and match the complete state and guest clock. The e359
+predecessor attaches and two invalid candidates preserve the active
+binding.
+
+The standard CLI creates, verifies and reuses 162 files. The Wine
+unit passes 19 input guards and drains the server. Verified stage
+`e614-e360-stage-ymux22v6` is under `stage/e614-validation`, with
+manifest SHA-256
+`5a2df09a06fc6af28c013040e5caf18d2b8d3b36ae53828067d954cf6a292521`
+and file SHA-256
+`975eadd350ac4295d2ac32a59251e7c8a1f074401e446168fa978075b8ca861e`.
+The build and verification used internal storage after the external
+journal blocked the original preflight. The isolated prefix ran the
+same verified Bluetooth overlay with its own lease. Ordinary
+invocation, translated execution, host drawing of the residual lists,
+and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E615 European screen-update curve banks
+
+Callbacks `0811a024` and `0811b6ac` read parallel 3,200-byte banks
+starting at `3a8e3c` and `3aa1c4`. Each holds four 150-halfword
+curves and a twelve-word pointer directory. Slots 1, 2, 7 and 8
+point to the four curves. The following thirteen 150-byte curves
+are addressed by the 24 rows of the corresponding grid. The first
+callback also reads the first byte curve through a direct literal.
+Both copies have matching curve values and distinct ROM addresses.
+
+The countdown reaches zero before update. The callback increments
+before reading, then checks for a value above 149. Initialization
+reads scale index 0 and updates read indices 1 through 150. Index
+150 aliases the next curve or the beginning of the scale directory.
+The last byte curve reads the first trailing zero at index 150.
+The second trailing byte in each bank is outside the source ranges.
+The original grid rows normalize their axis modes to 0, 1, 2, 6
+and 7. Directory slot 8 is present in the physical layout.
+
+Wine source unit `778c93rn` checks 1,020 original halfwords and 61
+aligned references. Its e360 audit identifies 6,398 bank bytes and
+36 literal bytes without owners. All 48 grid pointer words retain
+their previous owner. The first census `5yetbvry` found one additional
+aligned value at `b24ffc`. The passing audit verifies it lies within
+an intact type-3 LZ77 input and preserves that owner. Both Wine
+servers drained. The passing `evidence/result.json` SHA-256 is
+`79dc4271347449856536a28d6bf02d059e6d0e644066a45e429376851872cddc`.
+The ordinary callback triggers, translated execution and deferred
+platforms are in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E616 European screen-update table runtime
+
+European `e361-d360` adds `graphics.screen-update-tables` in
+`screen-update-tables.bin`. Its ten source ranges preserve both
+curve banks and all nine reader literals. The grid rows stay in
+`graphics.conditional-compact-obj-catalog`. All 161 e360 resource
+entries and files are identical. The runtime serves the bytes at
+their original guest addresses and retains e360 attachment support.
+
+Windows build `0lbhqdmu` and the controlled Wine reader test in
+`r83uzhez` pass. The test inverts all 6,434 covered ROM bytes in
+memory and executes the original initialization and update reads
+for both copies. It covers 48 grid links, all twelve directory
+slots, all 150 update steps per copy and 960 mixed-width mirror
+boundary accesses. The original instructions consume 56,558
+managed bytes. Complete guest state and clock match, and two
+invalid attachments preserve the active binding.
+
+The CLI creates, verifies and reuses 163 files. The retained
+generation is `generation-blvbLM` in `nchh5s_9/work/resources`
+under `stage/e616-validation/staging`. The first driver omitted
+the ROM argument for `verify`. Its correction verified the dataset
+in `9t3yyhoy` before the process was interrupted. Host checks found
+the runner and Wine server had exited. The internal prefix lease was
+archived with that unit. `a5b48qrh` reused the same generation,
+retained the earlier reader and verification evidence, passed 17
+input guards and drained Wine. The result SHA-256 is
+`3593ac26bed0f5efac3aab67c2146ada08bfe72803ec36f16d8afd3440d9125b`.
+The manifest SHA-256 is
+`d7bdfc8cfa5dc6fe94c329bb53c291d30af6d18b58ddeed98e51dbb5d0b2b7fc`
+and the resource SHA-256 is
+`41b933c8c7e0a60aa69e0a59a79e015bc1fd651d1a9a621f30e7d986e4d66101`.
+Ordinary and translated execution and deferred platform tests are
+in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-helper-field-dispatch",
+  "title": "Trace the European helper field and both unowned dispatch tables",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Verified all six direct helper setter calls and three indexed writes. Traced the nested list to 24 EWRAM input records under a valid selector and identified the existing 11-template bank used when allocating the indexed list.",
+    "Joined six switch tables containing 210 entries against e345. Two complete tables with 18 entries and both root words leave 80 unowned bytes. Ten unowned producer words add 40 bytes."
+  ],
+  "validation": [
+    "Wine slfj198b, ehtmtokr and 8ajybsq0 pass with 8,837, 804 and 1,303 added halfwords and 38, 42 and 46 input guards. Each Wine server drains. Guarded e345 join mdd2l_wy passes all 44 input guards."
+  ],
+  "limitations": [
+    "Runtime integration, exact live selected handles and mode-2 list entries, aliases and remaining pointer families, ordinary and generated dispatch, original BIOS, Linux and USA remain open. No performance measurement."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/development/TASK_HANDOFF.md"
+  ]
+}

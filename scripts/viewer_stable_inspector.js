@@ -16,7 +16,13 @@
   const treeFilter = document.getElementById('tree-filter'), treeFilterApply = document.getElementById('tree-filter-apply');
   const treeFilterCancel = document.getElementById('tree-filter-cancel'), treeFilterClear = document.getElementById('tree-filter-clear');
   const treeFilterStatus = document.getElementById('tree-filter-status'), treeFilters = new Map();
+  const deepQuery = document.getElementById('tree-search-query'), deepScope = document.getElementById('tree-search-scope');
+  const deepFind = document.getElementById('tree-search-find'), deepCancel = document.getElementById('tree-search-cancel');
+  const deepStatus = document.getElementById('tree-search-status'), deepResults = document.getElementById('tree-search-results');
+  const deepPrev = document.getElementById('tree-search-prev'), deepNext = document.getElementById('tree-search-next');
+  const deepPosition = document.getElementById('tree-search-position'), deepRows = document.getElementById('tree-search-rows');
   let treeFilterGeneration = 0;
+  let deepGeneration = 0, deepMatches = [], deepPage = 0;
   const chunkSize = 16384;
   const treeLimit = 8 * 1024 * 1024, pageSize = 100;
   let file = null, fileLabel = '', fromDirectory = false, offset = 0, request = 0, fileGeneration = 0, root, path = [], page = 0;
@@ -80,6 +86,98 @@
     for (const key of path) value = value[key];
     return value;
   }
+  function deepPath(keys) {
+    let result = '$';
+    for (const key of keys) {
+      const shortened = typeof key === 'string' && key.length > 120 ? key.slice(0, 120) + '…' : key;
+      result += '[' + JSON.stringify(shortened) + ']';
+      if (result.length > 2048) return result.slice(0, 2048) + '…';
+    }
+    return result;
+  }
+  function deepValue(value) {
+    if (value !== null && typeof value === 'object') return Array.isArray(value) ? 'Array (' + value.length + ')' : 'Object';
+    if (typeof value === 'string' && value.length > 160) return JSON.stringify(value.slice(0, 160)) + '…';
+    if (typeof value === 'number' && !Number.isFinite(value)) return String(value) + ' (outside browser range)';
+    return JSON.stringify(value) + (typeof value === 'number' && Number.isInteger(value) && !Number.isSafeInteger(value)
+      ? ' (precision may be lost)' : '');
+  }
+  function cancelDeepSearch() { deepGeneration++; deepCancel.disabled = true; }
+  function drawDeepResults() {
+    const start = deepPage * 25, end = Math.min(deepMatches.length, start + 25);
+    deepResults.hidden = !deepMatches.length; deepPrev.disabled = deepPage === 0; deepNext.disabled = end >= deepMatches.length;
+    deepPosition.textContent = (start + 1) + '–' + end + ' of ' + deepMatches.length + ' matches';
+    deepRows.replaceChildren();
+    for (let index = start; index < end; index++) {
+      const match = deepMatches[index], row = deepRows.insertRow();
+      row.insertCell().textContent = deepPath(match.path); row.insertCell().textContent = match.kind;
+      row.insertCell().textContent = match.value;
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Open';
+      button.setAttribute('aria-label', 'Open ' + deepPath(match.path));
+      button.addEventListener('click', () => {
+        cancelTreeFilter(); path = match.path.slice(); page = 0; drawTree();
+        treeNavigationStatus.textContent = 'Opened search result ' + (index + 1) + '.';
+      });
+      row.insertCell().append(button);
+    }
+  }
+  async function searchTree() {
+    if (root === undefined) return;
+    const needle = deepQuery.value.trim().toLowerCase();
+    if (!needle) { deepStatus.textContent = 'Enter a field name or value.'; return; }
+    cancelDeepSearch();
+    const generation = deepGeneration, owner = root, startPath = deepScope.value === 'current' ? path.slice() : [];
+    let start = owner;
+    for (const key of startPath) start = start[key];
+    const alive = () => generation === deepGeneration && owner === root;
+    const matches = [], traversal = [], current = startPath.slice(), limit = 1000, depthLimit = 256;
+    let visited = 0, skipped = 0, limited = false;
+    function add(keys, value, keyMatch, valueMatch) {
+      matches.push({path: keys.slice(), kind: keyMatch && valueMatch ? 'Field and value' : keyMatch ? 'Field' : 'Value', value: deepValue(value)});
+      if (matches.length >= limit) limited = true;
+    }
+    function frame(value) { return {value, index: 0, keys: Array.isArray(value) ? null : Object.keys(value)}; }
+    function scalar(value) { return value === null || typeof value !== 'object'; }
+    async function pause() {
+      deepStatus.textContent = 'Searching: ' + visited + ' entries inspected.';
+      await new Promise(resolve => setTimeout(resolve, 0)); return alive();
+    }
+    deepCancel.disabled = false;
+    if (!(await pause())) return;
+    if (scalar(start)) {
+      if (String(start).toLowerCase().includes(needle)) add(current, start, false, true);
+    } else traversal.push(frame(start));
+    while (traversal.length && !limited) {
+      const top = traversal[traversal.length - 1], length = top.keys ? top.keys.length : top.value.length;
+      if (top.index >= length) { traversal.pop(); if (traversal.length) current.pop(); continue; }
+      const key = top.keys ? top.keys[top.index++] : top.index++, child = top.value[key];
+      current.push(key); visited++;
+      const keyMatch = !!top.keys && key.toLowerCase().includes(needle);
+      const valueMatch = scalar(child) && String(child).toLowerCase().includes(needle);
+      if (keyMatch || valueMatch) add(current, child, keyMatch, valueMatch);
+      if (!scalar(child) && !limited) {
+        if (traversal.length >= depthLimit) { skipped++; current.pop(); }
+        else traversal.push(frame(child));
+      } else current.pop();
+      if (visited % 1024 === 0 && !(await pause())) return;
+    }
+    if (!alive()) return;
+    deepCancel.disabled = true; deepMatches = matches; deepPage = 0; drawDeepResults();
+    deepStatus.textContent = matches.length + ' matches in ' + visited + ' inspected entries.'
+      + (limited ? ' Reached the 1,000-match limit; refine the search.' : '')
+      + (skipped ? ' Skipped ' + skipped + ' nested structures beyond 256 levels; search inside them separately.' : '');
+  }
+  deepFind.addEventListener('click', searchTree);
+  deepCancel.addEventListener('click', () => { cancelDeepSearch(); deepStatus.textContent = 'Search cancelled. Previous results remain.'; });
+  function deepSearchChanged() {
+    if (!deepCancel.disabled) { cancelDeepSearch(); deepStatus.textContent = 'Search cancelled. Previous results remain.'; }
+    else if (deepMatches.length) deepStatus.textContent = 'Previous results remain. Find matches to search the new query or scope.';
+  }
+  deepQuery.addEventListener('input', deepSearchChanged);
+  deepScope.addEventListener('change', deepSearchChanged);
+  deepQuery.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); searchTree(); } });
+  deepPrev.addEventListener('click', () => { if (deepPage > 0) { deepPage--; drawDeepResults(); } });
+  deepNext.addEventListener('click', () => { if ((deepPage + 1) * 25 < deepMatches.length) { deepPage++; drawDeepResults(); } });
   function cancelTreeFilter() {
     treeFilterGeneration++; treeFilterCancel.disabled = true;
   }
@@ -295,6 +393,8 @@
   }
   function selectFile(selected, directory = false, label = '') {
     cancelTreeFilter(); treeFilters.clear(); treeFilter.value = '';
+    cancelDeepSearch(); deepMatches = []; deepPage = 0; deepQuery.value = ''; deepResults.hidden = true; deepRows.replaceChildren();
+    deepStatus.textContent = 'Enter a field name or value.';
     file = selected || null; fileLabel = label || (file ? file.name : ''); fromDirectory = directory && !!file;
     offset = 0; request++; fileGeneration++; root = undefined;
     cancelSearch(); lastMatch = -1; lastQuery = ''; findStatus.textContent = 'Search starts at the beginning of the selected file.';

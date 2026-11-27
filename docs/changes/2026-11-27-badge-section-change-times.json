@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "badge-section-change-times",
+  "title": "Show stable timestamps on changed viewer sections",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Record actual UTC added or updated times by scope and section in a maintained registry, preserving them across wiki regeneration.",
+    "Show local date and time badges on affected section disclosures, sidebar links and parent navbar or category menus, retaining the exact UTC value in the time element.",
+    "Support both split and single-page viewers and document the required registry update for future section changes."
+  ],
+  "validation": [
+    "Synthetic viewer-e360-compact-synthetic-md0max7y passed 24 tests including timestamp stability, topic and index badges, a narrow mobile viewport and existing navigation.",
+    "Protected viewer-e360-compact-real-nxxwgbvm verified two dated sections in Chrome and matched 605 Python/Docker outputs; published with preimages out/ffta-e360-compact-before-cv22fk1j."
+  ],
+  "limitations": [
+    "Section change timestamps must be recorded when sections are added or modified; browser display uses the local time zone. Native Windows is unverified."
+  ],
+  "files": [
+    "scripts/viewer_section_updates.json",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_navigation.css",
+    "scripts/viewer_index.js",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_section_badges_browser.py",
+    "scripts/tests/test_viewer_physical_compact_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

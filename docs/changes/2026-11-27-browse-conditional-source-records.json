@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-conditional-source-records",
+  "title": "Browse conditional source records",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Show and filter 127 physical conditional records, including their gate, context, stored keys and source offsets.",
+    "For authenticated European data, explain documented flag/counter predicates and provide a fixed-state diagnostic that handles bypasses and shared keys; unverified sources remain raw."
+  ],
+  "validation": [
+    "Synthetic unit 9ba0k1pv passed 20 checks including 1500 independent predicate cases, source guards, navigation and filtering.",
+    "Protected e352 unit apxnqiol reconstructed 1016 ROM bytes, checked 76 nonzero gates and 105 stored live references, compared 2032 diagnostic cases in Chrome, and preserved 21 other scopes and 156 resources.",
+    "Matched 27 Python/Docker files using authenticated data and published 23 ignored wiki pages with guarded preimages."
+  ],
+  "limitations": [
+    "The diagnostic assumes fixed supplied values; repeated live queries and game-specific meanings are not modeled. Native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_conditional_records8_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

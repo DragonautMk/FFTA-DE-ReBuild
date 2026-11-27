@@ -11,7 +11,8 @@ use gba_core::{
     ffta_rom::{digest, EUROPE_SHA256},
     rom_data::{
         copied_halfword_lookups::fixed_byte_copies::{
-            PRODUCER_LITERAL_ROLE, SHARED_SLOT_LITERAL_ROLE,
+            CONTEXT_RECORD_LITERAL_ROLE, PRODUCER_LITERAL_ROLE, SCRATCH_RESTORE_LITERAL_ROLE,
+            SHARED_SLOT_LITERAL_ROLE,
         },
         read_audit::Service,
         Extraction, SourceRange,
@@ -81,6 +82,40 @@ fn european_byte_copy_shared_slot_literals_use_extracted_sources() {
         source_words: 51,
         added_words: 27,
         readers: 27,
+    });
+}
+
+#[test]
+#[ignore = "requires the exact EUR ROM, retained e346 files and the E583 context record plan"]
+fn european_byte_copy_context_record_literals_use_extracted_sources() {
+    verify_bank(LiteralBankCase {
+        revision: (347, 346),
+        predecessor: (346, 345),
+        predecessor_manifest_sha256:
+            "3eabaf0171fc7f97b044f49ed25ff0f0524c8427ad8c181a23f30a654fd1dd2b",
+        plan_sha256: "c4bf515484c6830fefc8bf2e9165e20de43568305217c969eb307a522b680eb7",
+        role: CONTEXT_RECORD_LITERAL_ROLE,
+        raw_gap: 0x025874,
+        source_words: 63,
+        added_words: 46,
+        readers: 46,
+    });
+}
+
+#[test]
+#[ignore = "requires the exact EUR ROM, retained e347 files and the E586 scratch restore plan"]
+fn european_byte_copy_scratch_restore_literals_use_extracted_sources() {
+    verify_bank(LiteralBankCase {
+        revision: (348, 347),
+        predecessor: (347, 346),
+        predecessor_manifest_sha256:
+            "1f4a4762a79e1a49d2a4842aea443a016af880074751f678d79564838c2ea171",
+        plan_sha256: "98e2c3437de269de489fbf300e4a9f4e72b19cdb47828cb4d343987bb9d2c3ce",
+        role: SCRATCH_RESTORE_LITERAL_ROLE,
+        raw_gap: 0x032580,
+        source_words: 57,
+        added_words: 22,
+        readers: 22,
     });
 }
 

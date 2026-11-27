@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-combined-text-search-on-demand",
+  "title": "Load combined text search archives on demand",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Reduce the combined text search page and load only the requested archive assets when a search starts; retain cancellable search, focused entry links, preferences and legacy bookmarks.",
+    "Keep full source-range metadata in focused resource pages and provide direct links from the compact search index."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-text-synthetic-ezweg958 passed 18 checks covering loading, cancellation, retries, navigation and preferences.",
+    "Protected e352 viewer-lazy-text-real-cc544fov authenticated four source files, matched five searches against the previous page and 35 Python/Docker outputs; the page decreased from 21840761 to 773537 bytes.",
+    "Published 23 ignored pages and four new assets with verified preimages out/ffta-lazy-text-before-jd_m6y94; 21 other scope payloads and 156 resources were preserved."
+  ],
+  "limitations": [
+    "All-archive searches still load all four assets when requested. The recognized glyph map remains partial, dynamic substitutions are not executed and Windows is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_text_scopes_browser.py",
+    "scripts/tests/test_viewer_text_registry_browser.py",
+    "scripts/tests/test_viewer_lazy_text_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-conditional-descriptor-lookups",
+  "title": "Browse conditional descriptors and linked lookup tables",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Expose 699 conditional descriptor rows, 33 packed lookup rows, 74 independent four-byte rows and 35 property-selected masks in a collapsible wiki view.",
+    "Provide bank selection, filtering, pagination, source offsets and bit-field reconstruction, with authenticated type-5 descriptor links to the documented packed slice.",
+    "Keep unverified inputs browsable without inferred links, and preserve existing resources, lazy assets and scope navigation."
+  ],
+  "validation": [
+    "Synthetic viewer-conditional-lookups-synthetic-lq4j_4mg passed 20 projection, Chrome, navigation and regression tests.",
+    "Protected e359 viewer-conditional-lookups-real-hfdu205d reconstructed all five tables and their pointer words against original source bytes, checked 42 packed references, exercised a link in Chrome and matched 602 Python/Docker files.",
+    "Preserved 22 scoped payloads and 172 resource pages; published 23 local pages with guarded preimages out/ffta-conditional-lookups-before-fwzk6jw3."
+  ],
+  "limitations": [
+    "Descriptor counts are conditional source bounds, not global selector limits or proof of ordinary reachability. Unknown field meanings and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_conditional_lookups.py",
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_conditional_lookups.py",
+    "scripts/tests/test_viewer_conditional_lookups_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

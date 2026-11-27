@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "sections": {
+    "interface-curves": {
+      "screen-update-curves": {"kind": "updated", "at": "2026-11-27T19:08:01Z"}
+    },
+    "world": {
+      "conditional-lookups": {"kind": "added", "at": "2026-11-27T17:57:50Z"}
+    },
+    "objects": {
+      "obj-animations": {"kind": "updated", "at": "2026-11-27T18:46:44Z"}
+    },
+    "objects-physical": {
+      "obj-animations": {"kind": "updated", "at": "2026-11-27T18:46:44Z"},
+      "physical-compact-descriptors": {"kind": "added", "at": "2026-11-27T18:30:24Z"}
+    }
+  }
+}

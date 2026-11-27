@@ -28,6 +28,18 @@ table { border-collapse:collapse; width:100%; } td,th { text-align:left; padding
 <p id="info"></p>
 <p>Choose a page or expand a category to browse the local extraction.</p>
 <main>
+<section id="wiki-name-search" hidden>
+  <details><summary><h2>Search recognized names</h2></summary>
+    <p>Search source-linked item, action, job metadata and region names. Unknown glyphs appear as �; live roles and availability may differ.</p>
+    <label>Name or ID <input id="wiki-name-query" type="search" placeholder="Search names or record IDs"></label>
+    <label>Language ID <select id="wiki-name-language"></select></label>
+    <label>Category <select id="wiki-name-kind"><option value="all">All categories</option><option value="item">Items</option><option value="action">Action-linked records</option><option value="job">Job metadata</option><option value="region">Region references</option></select></label>
+    <p><button type="button" id="wiki-name-prev">Previous</button>
+      <span id="wiki-name-status" role="status">Open to load the local name index.</span>
+      <button type="button" id="wiki-name-next">Next</button></p>
+    <table><thead><tr><th>Category</th><th>Record ID</th><th>Localized name</th></tr></thead><tbody id="wiki-name-rows"></tbody></table>
+  </details>
+</section>
 <section id="resource-index">
   <details open><summary><h2>Resource index</h2></summary>
   <label>Search <input id="search" type="search" placeholder="Name, ID, file or format"></label>
@@ -51,6 +63,7 @@ const directoryStatus = document.getElementById('dataset-status');
 document.getElementById('info').textContent = data.profile + ' · extractor ' + data.extractor + ' · decoder ' + data.decoder;
 /* WIKI NAVIGATION */
 /* INDEX SCRIPT */
+/* NAME SEARCH */
 /* FILE INSPECTOR */
 document.body.dataset.indexReady = 'true';
 </script>

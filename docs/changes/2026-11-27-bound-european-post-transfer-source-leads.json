@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "bound-european-post-transfer-source-leads",
+  "title": "Bound European post-transfer source leads",
+  "kind": "docs",
+  "platforms": [
+    "EUR source census"
+  ],
+  "changes": [
+    "Reconcile the 3,948-byte gap against the background transfer and unit OBJ owners. Trace the original pixel-base and frame offset readers and preserve the gap as an open resource lead."
+  ],
+  "validation": [
+    "Exact EUR census covers 248 directory words, 12,024 index cells, 4,872 sequences and 27,257 frames. All frame offsets resolve at or above the adjacent unit pixel base. The existing e361 projections also contain zero wrapped gap references."
+  ],
+  "limitations": [
+    "A live original reader or the original DMA source, count and writer is required to assign this region. Static evidence only. No new runtime test."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

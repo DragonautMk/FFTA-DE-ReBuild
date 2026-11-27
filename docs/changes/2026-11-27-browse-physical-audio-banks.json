@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-physical-audio-banks",
+  "title": "Play additional physical audio waveforms and programs",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Join the authenticated physical tone-bank source to the existing instruments without renumbering prior tone IDs, wave IDs or program positions; expose 499 physical program slots.",
+    "Make eight additional PCM waves, six CGB waves and 70 physical tone records available through existing lazy loading, playback, source links and shared CGB mute controls.",
+    "Refresh the ignored local wiki to the retained e359 extraction while preserving earlier topic pages, resource links and lazy assets."
+  ],
+  "validation": [
+    "Protected viewer-physical-audio-source-ce5fzo52 compared tone types and words in all 499 slots, 285 PCM waves and eight CGB waves against authenticated source bytes.",
+    "Synthetic viewer-physical-audio-synthetic-39g5oams passed 14 tests covering waveform playback, instrument programs, mute, lazy loading, navbar links, focused pages and bookmarks.",
+    "Protected viewer-physical-audio-real-8b9zdtru checked 47 new source ranges, exercised eight new PCM and six new CGB waves in Chrome, preserved 171 prior resource pages and matched 583 Python and Docker files.",
+    "Published the private local wiki with guarded preimages out/ffta-e359-audio-before-qpoq280w. Earlier checks exposed an incorrect module name, an unused historical asset and an overly strict resource-marker comparison; corrected checks passed."
+  ],
+  "limitations": [
+    "New split or drum programs retain only documented mappings; unverified key mappings are not inferred. Original music timing and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_physical_audio.py",
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_physical_audio.py",
+    "scripts/tests/test_viewer_physical_audio_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

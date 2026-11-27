@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-physical-compact-obj-region",
+  "title": "Extract the European physical compact OBJ banks",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish all 592 residual E613 ranges in e360-d359, joining 199 physical banks to their authenticated descriptors, selector tables and reader literals.",
+    "Serve the original guest byte lanes from a packed resource with all 14 earlier owners and e359 attachment."
+  ],
+  "validation": [
+    "Windows build w_64ogx0 and Wine ma09qacg pass 548 original descriptor readers, 560 sequence counts, 5,045 frame durations and list pointers, full source and 74,592 mixed mirror reads, exact state and guest clock, e359 attachment and invalid candidates.",
+    "The CLI creates, verifies and reuses 162 files with all 160 earlier resource files intact, 19 input guards and a drained Wine server. Retained stage ymux22v6."
+  ],
+  "limitations": [
+    "Ordinary invocation, translated readers, host drawing, additional caller paths, Linux, USA and native Windows remain in recovery. The external preflight waited on the journal and its terminal status remains a separate checklist item. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/physical_compact_obj_region.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/physical_compact_obj_region_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

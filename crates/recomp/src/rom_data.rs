@@ -122,6 +122,15 @@ use gba_core::rom_data::{
     TILEMAP_TYPE2_ID, TILEMAP_TYPE2_FILE, MAX_TILEMAP_TYPE2_FILE_BYTES,
     TILEMAP_DIRECT_ID, TILEMAP_DIRECT_FILE, MAX_TILEMAP_DIRECT_FILE_BYTES,
     COMPACT_CELL_BANK_ID, COMPACT_CELL_BANK_FILE, MAX_COMPACT_CELL_BANK_FILE_BYTES,
+    BACKGROUND_EFFECT_GRAPHICS_FILE, BACKGROUND_EFFECT_GRAPHICS_ID, MAX_BACKGROUND_EFFECT_GRAPHICS_FILE_BYTES,
+    LOCALIZED_OBJ_ANIMATION_BANKS_FILE, LOCALIZED_OBJ_ANIMATION_BANKS_ID,
+    MAX_LOCALIZED_OBJ_ANIMATION_BANKS_FILE_BYTES,
+    BACKGROUND_SCREEN_BANKS_FILE, BACKGROUND_SCREEN_BANKS_ID, MAX_BACKGROUND_SCREEN_BANKS_FILE_BYTES,
+    PHYSICAL_AUDIO_BANKS_FILE, PHYSICAL_AUDIO_BANKS_ID, MAX_PHYSICAL_AUDIO_BANKS_FILE_BYTES,
+    PHYSICAL_COMPACT_OBJ_REGION_FILE, PHYSICAL_COMPACT_OBJ_REGION_ID,
+    MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES,
+    SCREEN_UPDATE_TABLES_FILE, SCREEN_UPDATE_TABLES_ID, MAX_SCREEN_UPDATE_TABLES_FILE_BYTES,
+    COUNTED_EFFECT_TABLES_FILE, COUNTED_EFFECT_TABLES_ID, MAX_COUNTED_EFFECT_TABLES_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -640,6 +649,8 @@ mod fixed_byte_copy_tests;
 mod direct_byte_copy_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod byte_copy_producer_literal_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod helper_field_dispatch_tests;
 #[cfg(test)]
 mod state_initializer_tests;
 #[cfg(test)]
@@ -1058,6 +1069,20 @@ mod tilemap_origin_tests;
 mod tilemap_directory_sources_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod compact_cell_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod background_effect_graphics_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod localized_obj_animation_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod background_screen_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod physical_audio_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod physical_compact_obj_region_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod screen_update_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod counted_effect_table_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -2024,6 +2049,13 @@ struct Dataset {
     tilemap_type2_bytes: Option<Vec<u8>>,
     tilemap_direct_bytes: Option<Vec<u8>>,
     compact_cell_bank_bytes: Option<Vec<u8>>,
+    background_effect_graphics_bytes: Option<Vec<u8>>,
+    localized_obj_animation_banks_bytes: Option<Vec<u8>>,
+    background_screen_banks_bytes: Option<Vec<u8>>,
+    physical_audio_banks_bytes: Option<Vec<u8>>,
+    physical_compact_obj_region_bytes: Option<Vec<u8>>,
+    screen_update_table_bytes: Option<Vec<u8>>,
+    counted_effect_table_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2190,6 +2222,13 @@ impl Dataset {
             tilemap_type2: self.tilemap_type2_bytes.as_deref(),
             tilemap_direct: self.tilemap_direct_bytes.as_deref(),
             compact_cell_bank: self.compact_cell_bank_bytes.as_deref(),
+            background_effect_graphics: self.background_effect_graphics_bytes.as_deref(),
+            localized_obj_animation_banks: self.localized_obj_animation_banks_bytes.as_deref(),
+            background_screen_banks: self.background_screen_banks_bytes.as_deref(),
+            physical_audio_banks: self.physical_audio_banks_bytes.as_deref(),
+            physical_compact_obj_region: self.physical_compact_obj_region_bytes.as_deref(),
+            screen_update_tables: self.screen_update_table_bytes.as_deref(),
+            counted_effect_tables: self.counted_effect_table_bytes.as_deref(),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2458,6 +2497,73 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         .any(|id| id == COMPACT_CELL_BANK_ID)
         .then(|| read_bounded(&path.join(COMPACT_CELL_BANK_FILE), MAX_COMPACT_CELL_BANK_FILE_BYTES))
         .transpose()?;
+    let background_effect_graphics_bytes = manifest.coverage.iter()
+        .any(|id| id == BACKGROUND_EFFECT_GRAPHICS_ID)
+        .then(|| read_bounded(
+            &path.join(BACKGROUND_EFFECT_GRAPHICS_FILE), MAX_BACKGROUND_EFFECT_GRAPHICS_FILE_BYTES,
+        ))
+        .transpose()?;
+    let localized_obj_animation_banks_bytes = manifest.coverage.iter()
+        .any(|id| id == LOCALIZED_OBJ_ANIMATION_BANKS_ID)
+        .then(|| read_bounded(
+            &path.join(LOCALIZED_OBJ_ANIMATION_BANKS_FILE), MAX_LOCALIZED_OBJ_ANIMATION_BANKS_FILE_BYTES,
+        ))
+        .transpose()?;
+    let background_screen_banks_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == BACKGROUND_SCREEN_BANKS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(BACKGROUND_SCREEN_BANKS_FILE),
+                MAX_BACKGROUND_SCREEN_BANKS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let physical_audio_banks_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == PHYSICAL_AUDIO_BANKS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(PHYSICAL_AUDIO_BANKS_FILE),
+                MAX_PHYSICAL_AUDIO_BANKS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let physical_compact_obj_region_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == PHYSICAL_COMPACT_OBJ_REGION_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(PHYSICAL_COMPACT_OBJ_REGION_FILE),
+                MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let screen_update_table_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == SCREEN_UPDATE_TABLES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(SCREEN_UPDATE_TABLES_FILE),
+                MAX_SCREEN_UPDATE_TABLES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let counted_effect_table_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == COUNTED_EFFECT_TABLES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(COUNTED_EFFECT_TABLES_FILE),
+                MAX_COUNTED_EFFECT_TABLES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2642,6 +2748,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         tilemap_type2_bytes.as_ref().map_or(0, Vec::len),
         tilemap_direct_bytes.as_ref().map_or(0, Vec::len),
         compact_cell_bank_bytes.as_ref().map_or(0, Vec::len),
+        background_effect_graphics_bytes.as_ref().map_or(0, Vec::len),
+        localized_obj_animation_banks_bytes.as_ref().map_or(0, Vec::len),
+        background_screen_banks_bytes.as_ref().map_or(0, Vec::len),
+        physical_audio_banks_bytes.as_ref().map_or(0, Vec::len),
+        physical_compact_obj_region_bytes.as_ref().map_or(0, Vec::len),
+        screen_update_table_bytes.as_ref().map_or(0, Vec::len),
+        counted_effect_table_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -3099,6 +3212,13 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         tilemap_type2_bytes,
         tilemap_direct_bytes,
         compact_cell_bank_bytes,
+        background_effect_graphics_bytes,
+        localized_obj_animation_banks_bytes,
+        background_screen_banks_bytes,
+        physical_audio_banks_bytes,
+        physical_compact_obj_region_bytes,
+        screen_update_table_bytes,
+        counted_effect_table_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3265,6 +3385,13 @@ fn check_dataset_budget(
     tilemap_type2: usize,
     tilemap_direct: usize,
     compact_cell_bank: usize,
+    background_effect_graphics: usize,
+    localized_obj_animation_banks: usize,
+    background_screen_banks: usize,
+    physical_audio_banks: usize,
+    physical_compact_obj_region: usize,
+    screen_update_tables: usize,
+    counted_effect_tables: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3419,6 +3546,13 @@ fn check_dataset_budget(
         || tilemap_type2 as u64 > MAX_TILEMAP_TYPE2_FILE_BYTES
         || tilemap_direct as u64 > MAX_TILEMAP_DIRECT_FILE_BYTES
         || compact_cell_bank as u64 > MAX_COMPACT_CELL_BANK_FILE_BYTES
+        || background_effect_graphics as u64 > MAX_BACKGROUND_EFFECT_GRAPHICS_FILE_BYTES
+        || localized_obj_animation_banks as u64 > MAX_LOCALIZED_OBJ_ANIMATION_BANKS_FILE_BYTES
+        || background_screen_banks as u64 > MAX_BACKGROUND_SCREEN_BANKS_FILE_BYTES
+        || physical_audio_banks as u64 > MAX_PHYSICAL_AUDIO_BANKS_FILE_BYTES
+        || physical_compact_obj_region as u64 > MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES
+        || screen_update_tables as u64 > MAX_SCREEN_UPDATE_TABLES_FILE_BYTES
+        || counted_effect_tables as u64 > MAX_COUNTED_EFFECT_TABLES_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3579,6 +3713,13 @@ fn check_dataset_budget(
         .saturating_add(tilemap_type2)
         .saturating_add(tilemap_direct)
         .saturating_add(compact_cell_bank)
+        .saturating_add(background_effect_graphics)
+        .saturating_add(localized_obj_animation_banks)
+        .saturating_add(background_screen_banks)
+        .saturating_add(physical_audio_banks)
+        .saturating_add(physical_compact_obj_region)
+        .saturating_add(screen_update_tables)
+        .saturating_add(counted_effect_tables)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -3801,7 +3942,12 @@ fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<
     if dataset.observed_tilemap_row.is_some() {eprintln!("ROM_DATA runtime=decoded resource={OBSERVED_TILEMAP_ROW_ID} file={} rows=9",dataset.manifest.resources[119].sha256);}
     if dataset.dma_register_directories.is_some() {eprintln!("ROM_DATA runtime=decoded resource={DMA_REGISTER_DIRECTORIES_ID} file={} directories=2",dataset.manifest.resources[120].sha256);}
     if dataset.iwram_memory_helpers.is_some() {eprintln!("ROM_DATA runtime=decoded resource={IWRAM_MEMORY_HELPERS_ID} file={} helpers=3",dataset.manifest.resources[121].sha256);}
-    if dataset.adjacent_offset_tables.is_some() {eprintln!("ROM_DATA runtime=decoded resource={ADJACENT_OFFSET_TABLES_ID} file={} tables=5",dataset.manifest.resources[122].sha256);}
+    if let Some(data) = &dataset.adjacent_offset_tables {
+        let tables = gba_core::rom_data::adjacent_offset_tables::TABLE_COUNT
+            + usize::from(data.direction_offsets.is_some()) * gba_core::rom_data::adjacent_offset_tables::DIRECTION_OFFSETS.len()
+            + usize::from(data.five_byte_list_directions.is_some());
+        eprintln!("ROM_DATA runtime=decoded resource={ADJACENT_OFFSET_TABLES_ID} file={} tables={tables}", dataset.manifest.resources[122].sha256);
+    }
     if let Some(data)=&dataset.indexed_records16 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_RECORDS16_ID} file={} records={}",dataset.manifest.resources[123].sha256,data.records.len());}
     if let Some(data)=&dataset.indexed_words_3959 {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_WORDS_3959_ID} file={} records={} soil_e3838_records={}",dataset.manifest.resources[124].sha256,data.records.len(),data.soil_e3838_records.len());}
     if let Some(data)=&dataset.thumb_switch_tables {eprintln!("ROM_DATA runtime=decoded resource={THUMB_SWITCH_TABLES_ID} file={} tables={} additional={}",dataset.manifest.resources[125].sha256,data.tables.len(),data.additional_tables.len());}
@@ -3873,6 +4019,48 @@ fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<
         eprintln!(
             "ROM_DATA runtime=encoded resource={COMPACT_CELL_BANK_ID} source_bytes={}",
             bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.background_effect_graphics_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={BACKGROUND_EFFECT_GRAPHICS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.localized_obj_animation_banks_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={LOCALIZED_OBJ_ANIMATION_BANKS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.background_screen_banks_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={BACKGROUND_SCREEN_BANKS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.physical_audio_banks_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={PHYSICAL_AUDIO_BANKS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.physical_compact_obj_region_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={PHYSICAL_COMPACT_OBJ_REGION_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.screen_update_table_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={SCREEN_UPDATE_TABLES_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.counted_effect_table_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={COUNTED_EFFECT_TABLES_ID} source_bytes={}",
+            bytes.len(),
         );
     }
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
@@ -4057,7 +4245,19 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.observed_tilemap_row_stats() {eprintln!("ROM_DATA_USE resource={OBSERVED_TILEMAP_ROW_ID} dataset={} bus_reads={} source_bytes={} transfer_source_bytes={} list_source_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.transfer_source_bytes,i.list_source_bytes);}
         if let Some(i)=resources.dma_register_directories_stats() {eprintln!("ROM_DATA_USE resource={DMA_REGISTER_DIRECTORIES_ID} dataset={} bus_reads={} directory_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.directory_bytes);}
         if let Some(i)=resources.iwram_memory_helpers_stats() {eprintln!("ROM_DATA_USE resource={IWRAM_MEMORY_HELPERS_ID} dataset={} bus_reads={} helper_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.helper_bytes);}
-        if let Some(i)=resources.adjacent_offset_tables_stats() {eprintln!("ROM_DATA_USE resource={ADJACENT_OFFSET_TABLES_ID} dataset={} bus_reads={} table_bytes={:?}",resources.dataset_sha256(),i.bus_reads,i.table_bytes);}
+        if let Some(i) = resources.adjacent_offset_tables_stats() {
+            let directions = if i.direction_bytes != [0, 0] {
+                format!(" direction_bytes={:?}", i.direction_bytes)
+            } else {
+                String::new()
+            };
+            let list_directions = if i.five_byte_list_direction_bytes != 0 {
+                format!(" five_byte_list_direction_bytes={}", i.five_byte_list_direction_bytes)
+            } else {
+                String::new()
+            };
+            eprintln!("ROM_DATA_USE resource={ADJACENT_OFFSET_TABLES_ID} dataset={} bus_reads={} table_bytes={:?}{directions}{list_directions}", resources.dataset_sha256(), i.bus_reads, i.table_bytes);
+        }
         if let Some(i)=resources.indexed_records16_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_RECORDS16_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask);}
         if let Some(i)=resources.indexed_words_3959_stats() {eprintln!("ROM_DATA_USE resource={INDEXED_WORDS_3959_ID} dataset={} bus_reads={} source_bytes={} fields_mask={} record_mask={:?} soil_e3838_source_bytes={} soil_e3838_record_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.fields_mask,i.record_mask,i.soil_e3838_source_bytes,i.soil_e3838_record_mask);}
         if let Some(i)=resources.thumb_switch_tables_stats() {eprintln!("ROM_DATA_USE resource={THUMB_SWITCH_TABLES_ID} dataset={} bus_reads={} source_bytes={} roots_mask={} destinations_mask={} additional_source_bytes={} additional_destinations_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.roots_mask,i.destinations_mask,i.additional_source_bytes,i.additional_destinations_mask);}
@@ -4563,6 +4763,13 @@ fn write_dataset_inner(
     let tilemap_type2_data = source.tilemap_type2.clone();
     let tilemap_direct_data = source.tilemap_direct.clone();
     let compact_cell_bank_data = source.compact_cell_bank.clone();
+    let background_effect_graphics_data = source.background_effect_graphics.clone();
+    let localized_obj_animation_banks_data = source.localized_obj_animation_banks.clone();
+    let background_screen_banks_data = source.background_screen_banks.clone();
+    let physical_audio_banks_data = source.physical_audio_banks.clone();
+    let physical_compact_obj_region_data = source.physical_compact_obj_region.clone();
+    let screen_update_table_data = source.screen_update_tables.clone();
+    let counted_effect_table_data = source.counted_effect_tables.clone();
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4735,6 +4942,27 @@ fn write_dataset_inner(
     if let Some(bytes) = &compact_cell_bank_data {
         files.push(bytes);
     }
+    if let Some(bytes) = &background_effect_graphics_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &localized_obj_animation_banks_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &background_screen_banks_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &physical_audio_banks_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &physical_compact_obj_region_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &screen_update_table_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &counted_effect_table_data {
+        files.push(bytes);
+    }
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -4896,6 +5124,13 @@ fn write_dataset_inner(
         tilemap_type2_data.as_ref().map_or(0, Vec::len),
         tilemap_direct_data.as_ref().map_or(0, Vec::len),
         compact_cell_bank_data.as_ref().map_or(0, Vec::len),
+        background_effect_graphics_data.as_ref().map_or(0, Vec::len),
+        localized_obj_animation_banks_data.as_ref().map_or(0, Vec::len),
+        background_screen_banks_data.as_ref().map_or(0, Vec::len),
+        physical_audio_banks_data.as_ref().map_or(0, Vec::len),
+        physical_compact_obj_region_data.as_ref().map_or(0, Vec::len),
+        screen_update_table_data.as_ref().map_or(0, Vec::len),
+        counted_effect_table_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -5065,6 +5300,27 @@ fn write_dataset_inner(
     }
     if let Some(bytes) = &compact_cell_bank_data {
         write(&path.join(COMPACT_CELL_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &background_effect_graphics_data {
+        write(&path.join(BACKGROUND_EFFECT_GRAPHICS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &localized_obj_animation_banks_data {
+        write(&path.join(LOCALIZED_OBJ_ANIMATION_BANKS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &background_screen_banks_data {
+        write(&path.join(BACKGROUND_SCREEN_BANKS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &physical_audio_banks_data {
+        write(&path.join(PHYSICAL_AUDIO_BANKS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &physical_compact_obj_region_data {
+        write(&path.join(PHYSICAL_COMPACT_OBJ_REGION_FILE), bytes)?;
+    }
+    if let Some(bytes) = &screen_update_table_data {
+        write(&path.join(SCREEN_UPDATE_TABLES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &counted_effect_table_data {
+        write(&path.join(COUNTED_EFFECT_TABLES_FILE), bytes)?;
     }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
@@ -5461,6 +5717,13 @@ mod tests {
             tilemap_type2: None,
             tilemap_direct: None,
             compact_cell_bank: None,
+            background_effect_graphics: None,
+            localized_obj_animation_banks: None,
+            background_screen_banks: None,
+            physical_audio_banks: None,
+            physical_compact_obj_region: None,
+            screen_update_tables: None,
+            counted_effect_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5788,8 +6051,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

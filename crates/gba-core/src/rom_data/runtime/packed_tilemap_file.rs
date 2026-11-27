@@ -73,6 +73,25 @@ impl PackedTilemapFile {
         rom: &[u8],
         prior: Option<[u8; N]>,
     ) -> Option<[u8; N]> {
+        self.read(index, rom, prior, true)
+    }
+
+    pub(super) fn host_read<const N: usize>(
+        &self,
+        index: usize,
+        rom: &[u8],
+        prior: Option<[u8; N]>,
+    ) -> Option<[u8; N]> {
+        self.read(index, rom, prior, false)
+    }
+
+    fn read<const N: usize>(
+        &self,
+        index: usize,
+        rom: &[u8],
+        prior: Option<[u8; N]>,
+        count_guest_bytes: bool,
+    ) -> Option<[u8; N]> {
         if !self.overlaps(index, N) {
             return prior;
         }
@@ -89,7 +108,9 @@ impl PackedTilemapFile {
                     .map_or_else(|| rom[address], |bytes| bytes[lane]),
             }
         });
-        self.bus_bytes.fetch_add(added, Ordering::Relaxed);
+        if count_guest_bytes {
+            self.bus_bytes.fetch_add(added, Ordering::Relaxed);
+        }
         Some(bytes)
     }
 

@@ -71,14 +71,15 @@ class NoiseProjectionTest(unittest.TestCase):
                 if mode == 'bad-noise': value['noise_codes']['entries'].pop()
                 if mode == 'legacy': del value['noise_codes']
                 index = fixture(Path(directory), value); parts = index.parent / 'index.html.parts'
-                audio, home = payload(parts / 'audio.html'), payload(index)
+                audio, noise, home = payload(parts / 'audio.html'), payload(parts / 'audio-noise.html'), payload(index)
                 self.assertNotIn('audio_noise', home)
+                self.assertNotIn('audio_noise', audio)
                 row = audio['resources'][0]
                 if mode in ('both', 'noise-only'):
-                    self.assertEqual(audio['audio_noise'], {**table, 'path': 'driver.json'})
+                    self.assertEqual(noise['audio_noise'], {**table, 'path': 'driver.json'})
                     self.assertIn('CGB noise codes', row['status'])
                 else:
-                    self.assertIsNone(audio['audio_noise'])
+                    self.assertIsNone(noise['audio_noise'])
                 self.assertEqual(audio['pcm_pitch'] is not None, mode != 'noise-only')
                 if mode == 'noise-only': self.assertIn('invalid PCM pitch', row['status'])
                 if mode == 'bad-noise': self.assertIn('invalid CGB noise', row['status'])

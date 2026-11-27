@@ -56,6 +56,7 @@ class ViewerSequenceTempoTest(unittest.TestCase):
                     createOscillator(){const n={frequency:{value:0},connect(){},start(t){this.started=t},stop(t){this.stopped=t}};sources.push(n);return n}
                   }
                   window.AudioContext=FakeContext;q('#sequence-audio>details').open=true;
+                  q('#sequence-frame-tempo').checked=false;change(q('#sequence-frame-tempo'));
                   q('#sequence-track').value='1';change(q('#sequence-track'));
                   if(!q('#sequence-use-tempo').checked || !q('#sequence-status').textContent.includes('2 changes') ||
                      !q('#sequence-timeline-detail').textContent.includes('seconds'))throw Error('cross-track tempo');

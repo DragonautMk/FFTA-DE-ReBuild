@@ -28,7 +28,7 @@ impl ThumbSwitchTablesResources {
         let last = index.saturating_add(3) >> 12;
         model::TABLES.iter().any(|spec| first <= (spec.end() as usize - 1) >> 12
             && last >= spec.root as usize >> 12)
-            || model::ADDITIONAL_TABLES.iter().any(|spec| first <= (spec.end() as usize - 1) >> 12
+            || model::additional_table_specs().any(|spec| first <= (spec.end() as usize - 1) >> 12
                 && last >= spec.start() as usize >> 12)
     }
 
@@ -42,7 +42,7 @@ impl ThumbSwitchTablesResources {
                 return Err("Thumb switch source binding mismatch".into());
             }
         }
-        for ((table, spec), source) in data.additional_tables.iter().zip(model::ADDITIONAL_TABLES)
+        for ((table, spec), source) in data.additional_tables.iter().zip(model::additional_table_specs())
             .zip(&sources[model::TABLE_COUNT..]) {
             let bytes = table.destination_bytes();
             if source.offset != spec.start() || source.length as usize != bytes.len()

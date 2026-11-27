@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-background-effect-graphics",
+  "title": "Serve the complete European background effect graphics bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 25 background effect descriptors, tile blocks and tilemaps with both original root words as one 177,316-byte e356 resource.",
+    "Bind the authenticated file to its original source addresses so the guest DMA queue reads the extracted tiles and maps. Retain e355 attachment."
+  ],
+  "validation": [
+    "Windows build 5nd_54ih and Wine q0itfso_ pass. All 25 selectors exercise 100 word transfers and 500 halfword rows with altered source backing, exact state and clock, 630 mirror boundary reads, e355 attachment and two transactional rejections.",
+    "The CLI creates, verifies and reuses 158 files and preserves the hashes of all 156 earlier resources. Sixteen protected inputs pass. The Wine server drains and stage 8einoir0 retains the current dataset."
+  ],
+  "limitations": [
+    "Ordinary invocation, live selector bounds, translated execution, Linux, USA and native Windows remain on the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/background_effect_graphics.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/background_effect_graphics_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

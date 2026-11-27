@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-physical-compact-obj-region",
+  "title": "Authenticate the complete European compact OBJ region",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the contiguous region of 199 animation banks, including the wide sequence layout, through the original constructor and list and sequence readers.",
+    "Trace 548 descriptor rows to 222 literal and three indexed producer paths. Distinguish 107,508 physical source bytes from 330 alignment bytes."
+  ],
+  "validation": [
+    "Wine 60aydzm5 verifies 258 original halfwords and audits a 121,607-byte projection against e359. It identifies 93,964 unowned bytes while preserving 14 prior owners. All 12 input guards pass and the server drains."
+  ],
+  "limitations": [
+    "Publication, 33 remaining callers, ordinary and translated execution and Linux, USA and native Windows remain on the recovery checklist. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

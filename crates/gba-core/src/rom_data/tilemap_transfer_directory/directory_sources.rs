@@ -1,7 +1,7 @@
 //! Sources of the bounded European transfer-list argument projections.
 mod base_readers;
 
-use super::{aligned_target, bytes, projected_row_offsets, target, Slot, ROW_BYTES};
+use super::{aligned_target, bytes, projected_row_offsets, recovered_list_sources, target, Slot, ROW_BYTES};
 use crate::rom_data::{script39_registry_poses::PriorSources, Resource};
 use std::{collections::BTreeSet, ops::Range};
 
@@ -40,7 +40,7 @@ const TABLE_ALIAS_READERS: &[(u32, u32)] = &[
 ];
 const FIXED_BASE_READERS: [u32; 3] = [0x0faa74, 0x1087ec, 0x109562];
 
-fn literal(rom: &[u8], reader: u32) -> Result<(u32, u32), String> {
+pub(super) fn literal(rom: &[u8], reader: u32) -> Result<(u32, u32), String> {
     let opcode = u16::from_le_bytes(bytes(rom, reader)?);
     if opcode & 0xf800 != 0x4800 {
         return Err(format!(
@@ -86,6 +86,7 @@ fn table_slots(
 pub(in crate::rom_data) fn uncovered_ranges(
     rom: &[u8],
     existing: &[Resource],
+    include_recovered_lists: bool,
 ) -> Result<Vec<(Range<u32>, &'static str)>, String> {
     let rows = projected_row_offsets(rom)?;
     let mut ranges = Vec::new();
@@ -96,6 +97,11 @@ pub(in crate::rom_data) fn uncovered_ranges(
     {
         let at = list_pointer(rom, reader, &rows)?;
         ranges.push((at..at + 4, "directory-base-literal"));
+    }
+    if include_recovered_lists {
+        for (offset, _) in recovered_list_sources(rom)? {
+            ranges.push((offset..offset + 4, "directory-base-literal"));
+        }
     }
     for &(pointer_reader, count_reader, slots) in COUNTED_TABLES {
         let (pointer_literal, pointer) = literal(rom, pointer_reader)?;

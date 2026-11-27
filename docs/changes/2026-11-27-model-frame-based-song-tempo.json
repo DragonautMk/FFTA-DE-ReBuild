@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "model-frame-based-song-tempo",
+  "title": "Model frame-based song tempo in the resource viewer",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Model the European driver tempo accumulator at the nominal GBA frame cadence, including initial state, same-frame tick carry and cross-track tempo changes.",
+    "Use frame timing by default for song and timed-source auditions and WAV exports, with the prior continuous estimate and manual rate still selectable."
+  ],
+  "validation": [
+    "Synthetic unit viewer-frame-tempo-synthetic-q1i8siih passed nine Chrome tests for both timing modes, audio scheduling, WAV, timed sources, mutes and existing source links.",
+    "Protected e347 command jrgtis9i authenticated 808 source spans and compared 10604 ticks in 88 scenarios, including 24 song headers, with 135025 original Thumb instructions; its command passed but temporary-root cleanup failed.",
+    "Recheck j4qhcysn passed using the retained candidate, rechecked driver/browser behavior and matched 26 Python and Docker fixture files; the local audio page was published with a guarded preimage."
+  ],
+  "limitations": [
+    "The model assumes the initial 256/256 tempo multiplier and nominal frame cadence. Live multiplier changes, full mixer/effects, physical audio and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_tempo_browser.py",
+    "scripts/tests/test_viewer_sequence_frame_tempo_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

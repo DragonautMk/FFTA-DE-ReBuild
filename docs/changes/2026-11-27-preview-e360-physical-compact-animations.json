@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e360-physical-compact-animations",
+  "title": "Preview complete physical compact object animations",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Reconstruct 199 physical compact object banks from the e360 residual ranges and 13 previously authenticated owners, including both narrow and wide sequence formats.",
+    "Expose 3135 object lists, 13633 objects, 560 sequences and 5045 frames on a separate offline page using the existing playback, loop and manual graphics controls.",
+    "Refresh the private local wiki to e360 while preserving prior scopes, resource inspectors and lazy assets."
+  ],
+  "validation": [
+    "Protected viewer-e360-compact-prior-u5s3iqmf authenticated 211 prior source ranges and 27454 bytes. Viewer-e360-compact-projection-5hzb8l9e compared all reconstructed lists and frames against original source bytes.",
+    "Synthetic viewer-e360-compact-synthetic-md0max7y passed 24 projection, playback, timestamp badge and navigation tests.",
+    "Protected viewer-e360-compact-real-nxxwgbvm compared all 592 e360 source ranges and every list and sequence against source, exercised both formats in Chrome, preserved 22 old scopes and 172 resource pages, and matched 605 Python/Docker files.",
+    "Published the 24-page private wiki and new files with guarded preimages out/ffta-e360-compact-before-cv22fk1j."
+  ],
+  "limitations": [
+    "Graphics and palettes remain manually selected; live scene use, original timing and native Windows are unverified."
+  ],
+  "files": [
+    "scripts/viewer_physical_compact.py",
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_physical_compact.py",
+    "scripts/tests/test_viewer_physical_compact_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

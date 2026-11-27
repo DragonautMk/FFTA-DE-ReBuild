@@ -51,11 +51,23 @@ class ScopePartitionTest(unittest.TestCase):
             self.assertNotIn('PRIVATE_TEST_MARKER', page.read_text())
             self.assertEqual(len(home['resources']), len(data['resources']))
             audio = parse_page(parts / 'audio.html')
+            samples = parse_page(parts / 'audio-samples.html')
+            noise = parse_page(parts / 'audio-noise.html')
             text = parse_page(parts / 'text.html')
             objects = parse_page(parts / 'objects.html')
-            self.assertEqual(audio['audio'], data['audio'])
+            self.assertEqual(samples['audio'], audio['audio'])
+            deferred = audio['audio']['waves'][0]
+            self.assertNotIn('samples', deferred)
+            self.assertEqual(deferred['sample_count'], len(data['audio']['waves'][0]['samples']))
+            asset = (parts / deferred['samples_asset']['href']).read_text()
+            stored = json.JSONDecoder().raw_decode(asset.split(' = ', 2)[-1])[0]
+            self.assertEqual(stored['key'], deferred['samples_asset']['key'])
+            self.assertEqual(stored['samples'], data['audio']['waves'][0]['samples'])
+            self.assertNotIn('sequences', samples)
+            self.assertNotIn('audio', noise)
             self.assertNotIn('short_texts', audio)
-            self.assertEqual(text['short_texts'], data['short_texts'])
+            self.assertNotIn('short_texts', text)
+            self.assertTrue((parts / text['text_search_sources']['short']['href']).is_file())
             self.assertNotIn('audio', text)
             self.assertEqual(objects['obj_animation_banks'], data['obj_animation_banks'])
             self.assertEqual(objects['obj_animation_extra'], data['obj_animation_extra'])
@@ -66,6 +78,7 @@ class ScopePartitionTest(unittest.TestCase):
             self.assertNotIn('tree-load-large', (parts / 'text.html').read_text())
             self.assertTrue((parts / '.gitignore').is_file())
             self.assertEqual(viewer_resource_scope('graphics.unit-obj-normal-battle'), 'battle')
+            self.assertEqual(viewer_resource_scope('graphics.unit-obj-alternate-battle'), 'battle-alternate')
             self.assertEqual(viewer_resource_scope('graphics.unit-obj-script-override'), 'script-actors')
             self.assertEqual(viewer_resource_scope('graphics.layered-obj-animations'), 'objects')
             self.assertEqual(viewer_resource_scope('graphics.obj-dimensions'), 'actors')
@@ -109,12 +122,12 @@ class ScopeBrowserTest(unittest.TestCase):
                     self.fail('Scope did not load: ' + current)
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=q('#rows [data-resource-id="audio.m4a-tones"]');
-                  return !q('#wiki-pages').hidden && data.wiki.pages.length===16 &&
+                  return !q('#wiki-pages').hidden && data.wiki.pages.length===23 &&
                     typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
-                    row.querySelector('a').textContent.includes('Browse Audio') && !q('#tree-load-large');
+                    row.querySelector('a').textContent.includes('Browse Waveforms and instruments') && !q('#tree-load-large');
                 })()'''))
                 browser.click('#rows [data-resource-id="audio.m4a-tones"] a')
-                wait_for('audio')
+                wait_for('audio-samples')
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
                   return !q('#audio').hidden && q('#texts').hidden && typeof data.short_texts==='undefined' &&
@@ -124,8 +137,9 @@ class ScopeBrowserTest(unittest.TestCase):
                 wait_for('text')
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
-                  return !q('#texts').hidden && !q('#text-search').hidden && q('#audio').hidden &&
-                    typeof data.audio==='undefined' && data.resources.length===1 && q('#text-entry').value==='0';
+                  return q('#texts').hidden && !q('#text-search').hidden && q('#audio').hidden &&
+                    typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
+                    !!data.text_search_sources.short && data.resources.length===1;
                 })()'''))
                 browser.click('#wiki-page-links a[href$="/objects.html"]')
                 wait_for('objects')

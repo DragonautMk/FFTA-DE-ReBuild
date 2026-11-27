@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-lz77-transfer-list-bounds",
+  "title": "Trace the remaining European type-3 tilemap lists",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Verified the full six-row variant and both new small list paths through the original call arguments. The whole-ROM traversal for the verified VRAM row shape locates three source-backed rows beyond the 825 retained type-3 projections.",
+    "Identified 322 unowned bytes in e352, including three new rows and descriptors, three list base words and one wrapped 246-byte LZ77 stream. Both other links reuse their existing streams."
+  ],
+  "validation": [
+    "Wine t889c308 attests 452 new halfwords, authenticates the E481 and E174 joins, passes 38 input guards and drains."
+  ],
+  "limitations": [
+    "Other computed and type-1 source producers, live list selection and queued writes, original BIOS, native Windows, Linux and USA remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

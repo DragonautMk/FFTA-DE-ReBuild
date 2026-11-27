@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "focus-short-text-and-font-page",
+  "title": "Separate short texts and fonts into a focused wiki page",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a focused short-text, font and name-keyboard page, with navbar, index and resource-page links routed to it.",
+    "Keep the existing all-archive search page and bookmarks available, and retain shared text display preferences between pages."
+  ],
+  "validation": [
+    "Synthetic unit 6_2sozr2 passed 29 browser and generator checks; focused unit qmu47x3h passed four checks including index routing and local text search.",
+    "Protected e347 unit oh6bolmr authenticated 677 source ranges, preserved existing topic payloads and 159 resource pages, checked Chrome navigation and matched 27 Python/Docker files; the first unit fudl9y7t used an incorrect resource-page count.",
+    "Published 22 topic/index pages, three updated resource pages and the ownership marker with verified compressed preimages; the focused page is 1767222 bytes versus 21790688 for combined search."
+  ],
+  "limitations": [
+    "Combined search intentionally loads all four text projections; recognized glyphs and substitutions retain their documented limits. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_text_scopes_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

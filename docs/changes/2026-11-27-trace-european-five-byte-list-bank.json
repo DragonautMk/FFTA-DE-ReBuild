@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-five-byte-list-bank",
+  "title": "Trace the European five-byte list direction bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Traced the registered 0x98a-byte context and the full 128-slot list. Identified a six-row direction bank, five switch destinations and 30 Thumb literal words totaling 164 unowned bytes."
+  ],
+  "validation": [
+    "Wine 18_slpld captured all 1,528 disassembly halfwords, kept 30 input guards intact and drained. Plan 1lt3a6fp corrects one expected instruction operand and passes with 18 guards using the retained Wine log."
+  ],
+  "limitations": [
+    "Live owner and actor pointer identity, valid seed and cursor observations, ordinary and generated paths, original BIOS, native Windows, Linux and USA remain in the recovery checklist."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

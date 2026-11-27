@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-cpufastset-operands",
+  "title": "Trace European CpuFastSet direct operands",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Census all 91 direct Thumb patterns to the CpuFastSet wrapper and classify the available source, destination and control facts.",
+    "Identify 65 unowned operand words and 67 original readers in e354 while preserving 17 earlier words."
+  ],
+  "validation": [
+    "Wine 2g9k5cxn authenticates 2,727 halfwords, passes 19 guards and drains."
+  ],
+  "limitations": [
+    "43 register-fed source arguments, other operand domains, ordinary/generated execution, original BIOS, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

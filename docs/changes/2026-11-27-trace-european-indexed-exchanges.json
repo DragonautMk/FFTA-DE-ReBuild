@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-indexed-exchanges",
+  "title": "Trace European indexed record exchanges",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Traced both indexed exchange callers to a 1,024-byte buffer and the same immediate producer. Exhaustive source-domain enumeration of 130,472 input pairs gives a ceiling of 181 four-byte records for the selected mode.",
+    "Identified the exact four- and two-byte direction lists, two residual switch destination tables and 13 unowned literal words. The source delta is 130 bytes."
+  ],
+  "validation": [
+    "Guarded source plan 8qonq3tc passed 28 input checks with the exact EUR ROM and retained E574 Wine evidence.",
+    "Wine retry odifpwrw passed 30 input guards and drained. The 1,916 disassembled halfwords match the retained source plan byte for byte."
+  ],
+  "limitations": [
+    "Initial Wine attempt _25x267l timed out and drained. The retry used the same executable staged on the internal disk.",
+    "Extraction, live metadata IDs and buffer writers, generated and ordinary use, Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

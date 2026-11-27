@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-localized-obj-animation-banks",
+  "title": "Serve the complete European localized OBJ animation bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish a 113,870-byte e357 asset file for the full E607 residual, including five-language descriptors, relative OBJ banks and two custom tile streams. Preserve the 1,479 bytes served by the four earlier owners.",
+    "Bind the authenticated file to the original ROM ranges so the guest uses the selected directory, sequence, draw and DMA paths. Preserve e356 attachment."
+  ],
+  "validation": [
+    "Windows build xx2f77c7 and Wine ifo9p3mq pass. The original controlled paths verify 130 table selections, 4,435 frames, eight draws and three uploads with altered backing and exact state and guest clock.",
+    "All 113,870 full-range bytes, 882 mixed mirror checks, e356 attachment and two atomic rejections pass. The CLI creation from l4iibkq_ and the corrected verification and reuse preserve 157 previous resources. All 19 protected inputs pass and the server drains."
+  ],
+  "limitations": [
+    "The first draw fixture positioned the direct list outside the viewport. The corrected check centers its first object and uses the same e357 content. Live mode and archive use, ordinary and generated readers, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/localized_obj_animation_banks.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/localized_obj_animation_bank_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_obj.md"
+  ],
+  "references": [
+    "docs/rom_data_obj.md"
+  ]
+}

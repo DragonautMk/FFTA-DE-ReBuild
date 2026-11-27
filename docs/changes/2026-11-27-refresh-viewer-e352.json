@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "refresh-viewer-e352",
+  "title": "Refresh the extracted-resource wiki to e352",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Regenerate the private local wiki from the verified European e352-d351 generation, updating four engine resources while preserving previous resource links and existing topic views."
+  ],
+  "validation": [
+    "Protected unit obqvu6ow authenticated 3912 source ROM ranges, preserved 22 topic payloads and 156 resource entries, and exercised the updated file inspector and lazy name search in Chrome.",
+    "All 173 full-generation Python and Docker files matched. Published 23 ignored wiki pages, four new resource pages and the ownership marker with guarded preimages; 159 previous resource pages remain."
+  ],
+  "limitations": [
+    "The updated engine resources use generic file inspectors; live engine semantics and native Windows remain unverified."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

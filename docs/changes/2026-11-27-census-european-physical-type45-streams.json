@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "census-european-physical-type45-streams",
+  "title": "Verify the European physical type-4 and type-5 tilemap bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR Windows CLI on Wine"
+  ],
+  "changes": [
+    "Scan every aligned physical EUR type-4 and type-5 candidate that matches the verified stream modes and token bounds.",
+    "Reconcile all 145 rows, 137 descriptors and 78 streams against the accepted E457 and E484 plans. Verify the 210 alignment bytes separately from the required data."
+  ],
+  "validation": [
+    "Wine 4izg3cjr agrees with the independent ownership join for 12,472 managed and 210 alignment bytes. The two packed files match their source spans. All 25 guards pass and the server drains."
+  ],
+  "limitations": [
+    "Mode 3, other formats, indirect or RAM-built lists, ordinary/generated paths, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": []
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e361-screen-update-curves",
+  "title": "Preview European screen-update curves",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the local wiki to e361-d360 and add a separately loaded Interface page for both source-backed screen-update curve banks.",
+    "Plot and list four 16-bit scale and thirteen 8-bit row curves per bank; support selected-step playback and looping, and identify the index-150 source alias.",
+    "Add a dated section badge and expose the new page through the Interface navbar while retaining the existing scoped content."
+  ],
+  "validation": [
+    "Synthetic viewer-e361-curves-synthetic-pvgvkb0m passed 35 projection, source-guard, Chrome, badge, navigation and regression tests.",
+    "Protected viewer-e361-curves-real-43n9ldm9 checked 5134 values against the original source, exercised Chrome navigation and playback, preserved 23 scoped payloads and 173 resource pages, and matched 607 Python/Docker files.",
+    "Published 27 private files with guarded preimages out/ffta-e361-curves-before-sp3tsw1w."
+  ],
+  "limitations": [
+    "The graph is a raw numerical preview; it does not establish a complete screen effect, actual timing or ordinary callback context. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_screen_update_curves.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

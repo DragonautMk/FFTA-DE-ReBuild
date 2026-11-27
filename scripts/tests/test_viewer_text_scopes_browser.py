@@ -35,18 +35,25 @@ class TextScopePartitionTest(unittest.TestCase):
             index, original = scoped_text_fixture(Path(directory)); parts = index.parent / 'index.html.parts'
             home = parse_page(index)
             scopes = {name: parse_page(parts / (name + '.html'))
-                      for name in ('text', 'text-pointers', 'text-relative', 'text-scripts')}
+                      for name in ('text', 'text-short', 'text-pointers', 'text-relative', 'text-scripts')}
             for key in ('short_texts', 'pointer_texts', 'relative_texts', 'script_texts'):
-                self.assertEqual(scopes['text'][key], original[key])
-            for scope, own in (('text-pointers', 'pointer_texts'), ('text-relative', 'relative_texts'),
+                self.assertNotIn(key, scopes['text'])
+            self.assertEqual(set(scopes['text']['text_search_sources']), {'short', 'pointer', 'relative', 'script'})
+            for asset in scopes['text']['text_search_sources'].values():
+                self.assertTrue((parts / asset['href']).is_file())
+            for scope, own in (('text-short', 'short_texts'), ('text-pointers', 'pointer_texts'), ('text-relative', 'relative_texts'),
                                ('text-scripts', 'script_texts')):
                 self.assertEqual(scopes[scope][own], original[own])
                 for other in {'short_texts', 'pointer_texts', 'relative_texts', 'script_texts'} - {own}:
                     self.assertNotIn(other, scopes[scope])
             index_rows = {row['id']: row for row in home['resources']}
+            self.assertEqual(index_rows['text.short-strings']['viewer_scope'], 'text-short')
             self.assertEqual(index_rows['text.catalogs']['viewer_scope'], 'text-pointers')
             self.assertEqual(index_rows['text.script-archives']['viewer_scope'], 'text-scripts')
-            self.assertEqual(viewer_resource_scope('text.short-strings'), 'text')
+            self.assertEqual(viewer_resource_scope('text.short-strings'), 'text-short')
+            self.assertEqual(viewer_resource_scope('font.complete-bank'), 'text-short')
+            self.assertEqual(viewer_resource_scope('text.name-keyboard'), 'text-short')
+            self.assertEqual([row['id'] for row in scopes['text-short']['resources']], ['text.short-strings'])
             self.assertEqual([row['id'] for row in scopes['text-pointers']['resources']], ['text.catalogs'])
             self.assertEqual([row['id'] for row in scopes['text-relative']['resources']], ['text.catalogs'])
             self.assertEqual([row['id'] for row in scopes['text-scripts']['resources']], ['text.script-archives'])
@@ -92,14 +99,54 @@ class TextScopeBrowserTest(unittest.TestCase):
                   for(const id of ['pointer-pin','pointer-hide-commands','pointer-normal-font']){q('#'+id).checked=true;change(q('#'+id));}
                   return true;
                 })()'''))
-                for page, prefix in (('text-relative', 'relative'), ('text-scripts', 'script'), ('text', 'text')):
+                for page, prefix in (('text-relative', 'relative'), ('text-scripts', 'script'),
+                                     ('text-short', 'text')):
                     click_page(page); wait_for(page)
                     self.assertTrue(browser.evaluate('''(()=>{
                       const q=s=>document.querySelector(s),p=PREFIX;
                       return q('#'+p+'-pin').checked && q('#'+p+'-hide-commands').checked && q('#'+p+'-normal-font').checked &&
                         q('#'+p+'-language').selectedOptions[0].textContent==='1' &&
-                        (p!=='text' || (q('#text-search-scope').options.length===5 && q('#text-search-scope-note').hidden));
+                        (p!=='text' || (q('#text-search-scope').options.length===2 && !q('#text-search-scope-note').hidden &&
+                          typeof data.pointer_texts==='undefined' && typeof data.relative_texts==='undefined' &&
+                          typeof data.script_texts==='undefined'));
                     })()'''.replace('PREFIX', json.dumps(prefix))))
+                    if page == 'text-short':
+                        browser.evaluate('''(()=>{const q=s=>document.querySelector(s);
+                          q('#text-search-query').value='b d';q('#text-search-language').value='1';
+                          q('#text-search-form').requestSubmit()})()''')
+                        end = time.monotonic() + 10
+                        while time.monotonic() < end:
+                            if browser.evaluate("document.querySelector('#text-search-status').textContent.startsWith('Searched')"):
+                                break
+                            time.sleep(.05)
+                        else:
+                            self.fail('Short-text search did not finish')
+                        self.assertTrue(browser.evaluate('''(()=>{
+                          const q=s=>document.querySelector(s);
+                          return q('#text-search-rows').rows.length===1 &&
+                            q('#text-search-rows').rows[0].cells[1].textContent==='Ab d�' &&
+                            q('#text-search-all-link').href.endsWith('/text.html#text-search');
+                        })()'''))
+                click_page('text'); wait_for('text')
+                self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);
+                  return !q('#text-search').hidden && q('#text-search-scope').options.length===5 &&
+                    q('#text-search-scope-note').hidden && !q('#text-search-lazy-note').hidden &&
+                    typeof globalThis.__FFTA_TEXT_SEARCH__==='undefined';})()'''))
+                browser.evaluate('''(()=>{const q=s=>document.querySelector(s);
+                  q('#text-search-query').value='b d';q('#text-search-language').value='1';
+                  q('#text-search-form').requestSubmit()})()''')
+                end = time.monotonic() + 20
+                while time.monotonic() < end:
+                    if browser.evaluate("document.querySelector('#text-search-status').textContent.startsWith('Searched')"):
+                        break
+                    time.sleep(.05)
+                else:
+                    self.fail('Combined text search did not finish')
+                self.assertTrue(browser.evaluate("document.querySelector('#text-search-rows').rows.length===4"))
+                browser.evaluate("document.querySelector('#text-search>details').open=true")
+                browser.click('#text-search-rows a')
+                wait_for('text-short')
+                self.assertTrue(browser.evaluate("document.querySelector('#text-pin').checked && document.querySelector('#text-entry').value==='1'"))
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change'));
                   q('#text-pin').checked=false;change(q('#text-pin'));
@@ -110,6 +157,36 @@ class TextScopeBrowserTest(unittest.TestCase):
                 self.assertTrue(browser.evaluate("!document.querySelector('#pointer-pin').checked && "
                                                  "!document.querySelector('#pointer-hide-commands').checked && "
                                                  "!document.querySelector('#pointer-normal-font').checked"))
+            finally:
+                browser.close()
+
+    def test_index_opens_focused_short_text_page(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-short-text-index-') as directory:
+            work = Path(directory); index, _ = scoped_text_fixture(work)
+            browser = Chrome(work, index)
+            try:
+                self.assertTrue(browser.evaluate('''(()=>{
+                  const row=document.querySelector('#rows [data-resource-id="text.short-strings"]');
+                  return !!row && [...row.querySelectorAll('a')].some(a=>
+                    a.href.endsWith('/text-short.html') && a.textContent.includes('Short texts and fonts'));
+                })()'''))
+                browser.click('#rows [data-resource-id="text.short-strings"] a')
+                end = time.monotonic() + 20
+                while time.monotonic() < end:
+                    try:
+                        if browser.evaluate("document.readyState==='complete' && data.wiki.current==='text-short'"):
+                            break
+                    except (RuntimeError, OSError):
+                        pass
+                    time.sleep(.05)
+                else:
+                    self.fail('Focused short-text page did not load')
+                self.assertTrue(browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s);
+                  return !q('#texts').hidden && !q('#text-search').hidden &&
+                    typeof data.pointer_texts==='undefined' && typeof data.relative_texts==='undefined' &&
+                    typeof data.script_texts==='undefined' && !q('#text-search-scope-note').hidden;
+                })()'''))
             finally:
                 browser.close()
 

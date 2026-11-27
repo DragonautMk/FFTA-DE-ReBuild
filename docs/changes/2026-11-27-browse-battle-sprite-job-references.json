@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-battle-sprite-job-references",
+  "title": "Browse job references from battle sprites",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Show paginated, filterable direct metadata references for each normal or alternate battle sprite, with verified localized names and links to the exact world metadata row.",
+    "Keep the compact reverse lookup inside the battle scope without loading the world page; retain language and sprite preview settings across catalog changes."
+  ],
+  "validation": [
+    "Synthetic unit 5hofjxci passed 20 checks, including shared references, pagination, name verification, language persistence and cross-page navigation.",
+    "Protected e347 unit owdfkcg_ authenticated six input files and five ROM ranges, checked all 210 direct references, exercised real shared sprites in Chrome and matched 27 Python/Docker files on a synthetic dataset.",
+    "Published two ignored local pages with guarded preimages and evidence in out/ffta-battle-jobs-before-8iywf1en."
+  ],
+  "limitations": [
+    "A stored sprite reference may be shared and does not establish a live actor, job, palette or scene; unauthenticated names are withheld. Native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/tests/test_viewer_job_sprite_links_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

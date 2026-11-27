@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-context-record-bank",
+  "title": "Trace the European 204-byte context record bank",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Traced both context allocation paths, the five- and six-slot selectors and all 14 direct 204-byte copies. Eight source the work record and six source the selected record."
+  ],
+  "validation": [
+    "Wine 1eob7sxe attested 4,605 new halfwords with 30 input guards and server drain. The e346 join qtufl1m9 passed 38 guards and identified 46 unowned words at 46 original reads among 63 words and 69 original reads. The expanded join includes each selector return read and both allocation paths.",
+    "Seven pinned Giza checkpoints lack a live context or arena. Their snapshot hashes and payload checksums were verified before interpreting the root fields."
+  ],
+  "limitations": [
+    "Array bounds are conditional on the matching live allocation and valid record selection. Live writers, aliases, the empty-list guard, ordinary and generated execution, original BIOS, native Linux and USA remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

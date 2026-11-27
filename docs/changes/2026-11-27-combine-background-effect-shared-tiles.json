@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "combine-background-effect-shared-tiles",
+  "title": "Combine background effect maps with manually selected tiles",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Allow a background effect preview to fill otherwise missing cells from a manually selected extracted background, interface, object, archive or decompressed tile source at a chosen base tile ID.",
+    "Keep local effect tiles authoritative on overlaps, display the resolved source and cell counts, preserve controls across playback, and identify the combination as an unverified manual preview."
+  ],
+  "validation": [
+    "Synthetic viewer-bgfx-shared-synthetic-6b45l8t1 passed 25 tests, including tile priority, independent sources, flips, per-cell palettes, missing tiles, input guards and playback persistence.",
+    "Protected viewer-bgfx-shared-real-12m0726h compared 614400 RGBA bytes across four real Chrome previews with an independent decoder and matched 573 full Python/Docker output files.",
+    "Preserved 23 scoped data payloads, 169 existing resource pages and lazy assets; published 23 ignored wiki pages with verified preimages out/ffta-bgfx-shared-before-gwdwp1dc.",
+    "The initial real check viewer-bgfx-shared-real-_i6sque6 failed by comparing a source-only metadata field absent from the projection; the corrected check compared the retained fields."
+  ],
+  "limitations": [
+    "Manual source, base and palette combinations do not establish the original scene; native Windows and broader viewer resources remain open."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_background_effects_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

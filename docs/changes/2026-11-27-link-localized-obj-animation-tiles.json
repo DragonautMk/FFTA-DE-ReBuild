@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "link-localized-obj-animation-tiles",
+  "title": "Link localized object animations to their extracted graphics",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Associate 130 localized animation banks with the language-selected decoded tile archive and descriptor ranges, and link three direct banks to their documented graphics streams.",
+    "Add one-shot linked tile selection and an optional follow setting; identify retained previous sources, disable following on manual overrides, and mark missing sources without displaying stale tiles.",
+    "Update the local wiki to use the verified e358 generation after its corrected separate runtime and CLI checks passed."
+  ],
+  "validation": [
+    "Synthetic viewer-obj-tiles-synthetic-s7b5v7zo passed 20 tests covering source guards, linked ranges, playback, following, previous-source indication, manual overrides, missing graphics and other viewer controls.",
+    "Protected viewer-obj-tiles-confirm-gwjxj_ix independently decoded all 459 programs in five language archives, checked all 130 descriptor ranges, compared 39232 RGBA bytes in Chrome and matched 575 Python/Docker output files.",
+    "Protected viewer-obj-tiles-direct-yei21d6y independently decoded three direct streams and compared 349664 RGBA bytes across three Chrome previews.",
+    "Published 23 private wiki pages with guarded preimages out/ffta-obj-tiles-before-bkcsr_sl and out/ffta-obj-tiles-confirm-before-tax2dcqq; retained 171 resource pages and lazy assets.",
+    "Initial real check estdv1wg passed browser pixel checks but failed before Docker because a script loop shadowed a path variable; the corrected check passed. The earlier e358 runtime fixture failed before its corrected Wine unit 01bkwwt1 and retained stage ol67qzpt passed."
+  ],
+  "limitations": [
+    "The lowest referenced object tile is an illustrative alignment, not a proven live VRAM base; the palette, live scene composition, ordinary selector behavior and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_localized_obj.py",
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_localized_obj.py",
+    "scripts/tests/test_viewer_localized_obj_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/rom_data_obj.md"
+  ]
+}

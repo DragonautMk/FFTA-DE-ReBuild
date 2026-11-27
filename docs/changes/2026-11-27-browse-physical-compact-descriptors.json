@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-physical-compact-descriptors",
+  "title": "Link physical compact descriptors to animations",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Reconstruct 548 source-backed compact descriptors from the e360 resource and earlier authenticated owners, preserving their ten halfwords and 219 bank/selector pairs.",
+    "Add a filterable, paginated descriptor section with links to physical animations and reverse links from each matching animation.",
+    "Show documented observed context names only for the authenticated European source and scope selector-specific names to their witnessed selectors; update section badges."
+  ],
+  "validation": [
+    "Protected viewer-compact-descriptors-source-vkcs68mc reconstructed and compared all 548 descriptors against 13152 original source bytes.",
+    "Synthetic viewer-compact-descriptors-synthetic-1u5n0gxx passed 27 projection, Chrome, context, badge, navigation and regression tests.",
+    "Protected viewer-compact-descriptors-real-w3m9wh2t checked every descriptor, exercised a two-way Chrome link, preserved 23 scoped payloads and 173 resource pages, and matched 605 Python/Docker files.",
+    "Published 24 private pages with guarded preimages out/ffta-compact-descriptors-before-_jrm_zst."
+  ],
+  "limitations": [
+    "Context labels describe documented observations, not names or full animation proof for every sequence. Other callers, graphics pairing and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_physical_compact.py",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_physical_compact.py",
+    "scripts/tests/test_viewer_physical_compact_browser.py",
+    "scripts/tests/test_viewer_section_badges_browser.py",
+    "scripts/tests/test_viewer_compact_descriptors_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

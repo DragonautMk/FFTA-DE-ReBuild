@@ -19,7 +19,7 @@ class WorldRegionProjectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-world-regions-projection-') as directory:
             index, digests = generate_fixture(Path(directory))
             parts = index.parent / 'index.html.parts'
-            world, text = payload(parts / 'world.html'), payload(parts / 'text.html')
+            world, text = payload(parts / 'world-map.html'), payload(parts / 'text.html')
             regions = world['world_region_names']
             self.assertEqual([(row['region_index'], row['name_index']) for row in regions['regions']],
                              [(i, 718 + i) for i in range(31)])
@@ -51,7 +51,7 @@ class WorldRegionBrowserTest(unittest.TestCase):
     def test_filter_placement_language_and_source_navigation(self):
         with tempfile.TemporaryDirectory(prefix='viewer-world-regions-browser-') as directory:
             work = Path(directory); index, _ = generate_fixture(work)
-            browser = Chrome(work, index.parent / 'index.html.parts/world.html')
+            browser = Chrome(work, index.parent / 'index.html.parts/world-map.html')
             try:
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s), change=e=>e.dispatchEvent(new Event('change')),
@@ -128,7 +128,7 @@ class WorldRegionBrowserTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-world-regions-unknown-') as directory:
             work = Path(directory); dataset, _ = fixture(work)
             index = view_rom_data.generate(dataset, work / 'view', split=True)
-            browser = Chrome(work, index.parent / 'index.html.parts/world.html')
+            browser = Chrome(work, index.parent / 'index.html.parts/world-map.html')
             try:
                 self.assertTrue(browser.evaluate("document.querySelector('#world-regions').hidden && "
                                                  "document.querySelector('#world-regions-navigation').hidden"))

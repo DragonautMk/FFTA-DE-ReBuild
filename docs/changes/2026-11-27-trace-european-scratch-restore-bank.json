@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-scratch-restore-bank",
+  "title": "Trace the European 80-byte scratch restore bank",
+  "kind": "docs",
+  "platforms": [
+    "Windows under Wine, European profile"
+  ],
+  "changes": [
+    "Matched each of the seven E574 restores to its save from 03000940. The six distinct context spans fit the listed matching allocation sizes."
+  ],
+  "validation": [
+    "Wine _yk3qlx6 authenticated 372 further halfwords with 39 input guards and server drain. The guarded e347 plan 1u8w8ztb verified all 14 copy sites and found 22 unowned words among 57 original literal loads.",
+    "Initial joins 1xhk63aq and iph3t5v3 had incorrect preview register and restore destination load expectations. The corrected join reused the exact Wine evidence."
+  ],
+  "limitations": [
+    "Actual allocation writers, caller-slot aliases, save-to-restore ordering, original BIOS, ordinary and generated execution, native Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

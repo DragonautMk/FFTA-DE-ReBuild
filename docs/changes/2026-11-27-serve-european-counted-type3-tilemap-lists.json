@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-counted-type3-tilemap-lists",
+  "title": "Serve European counted type-3 tilemap lists",
+  "kind": "fixed",
+  "platforms": [
+    "EUR Windows (Wine)"
+  ],
+  "changes": [
+    "Include the sixth row of the alternate original transfer list and two additional type-3 rows in the extracted tilemap banks.",
+    "Own 322 source bytes across the existing direct and type-3 transfer resources in e353-d352 while preserving e352-d351 attachment."
+  ],
+  "validation": [
+    "Windows build 524srhho and Wine jf_6_agl PASS. Six list setups, the zero-count guard and three original SWI call paths through BIOS HLE preserve the full state and guest clock with altered backing.",
+    "Verified 2,232 output bytes, 132 mixed-width mirror reads and atomic rejection of incomplete e353. The CLI creates, verifies and reuses 157 files under one drained Wine lease. Current generation retained in myupox0_."
+  ],
+  "limitations": [
+    "Ordinary gameplay producers, queued writes, generated paths, other computed sources, original BIOS, Linux, USA and native Windows remain in the recovery checklist. Performance measurement is deferred.",
+    "The primary Terra xhigh setting remains unconfirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory.rs",
+    "crates/gba-core/src/rom_data/tilemap_transfer_directory/directory_sources.rs",
+    "crates/gba-core/src/rom_data/tilemap_type3.rs",
+    "crates/recomp/src/rom_data/tilemap_type3_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/changes/2026-11-27-trace-european-lz77-transfer-list-bounds.json"
+  ]
+}

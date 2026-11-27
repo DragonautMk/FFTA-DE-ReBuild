@@ -97,7 +97,7 @@ class TilemapStreamProjectionTest(unittest.TestCase):
                         {'bad_byte': True}, {'byte_only': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-stream-projection-') as directory:
                 work = Path(directory); index = fixture(work, **options); parts = index.parent / 'index.html.parts'
-                world = payload(parts / 'interface.html')
+                world = payload(parts / 'interface-maps.html')
                 self.assertNotIn('byte_tilemaps', payload(index)); self.assertNotIn('byte_tilemaps', payload(parts / 'audio.html'))
                 half = not (options.get('invalid_bank') or options.get('byte_only'))
                 byte = not any(options.get(key) for key in ('invalid_bank', 'invalid_direct', 'bad_byte')) and options.get('include_direct', True)
@@ -109,7 +109,7 @@ class TilemapStreamProjectionTest(unittest.TestCase):
 class TilemapStreamBrowserTest(unittest.TestCase):
     def test_halfword_and_byte_views_and_source_links(self):
         with tempfile.TemporaryDirectory(prefix='viewer-stream-browser-') as directory:
-            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+            work = Path(directory); index = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=q('[data-resource-id="graphics.tilemap-stream-bank"]');
@@ -135,7 +135,7 @@ class TilemapStreamBrowserTest(unittest.TestCase):
         for options in ({'include_direct': False}, {'invalid_bank': True}, {'invalid_direct': True},
                         {'bad_byte': True}, {'byte_only': True}):
             with self.subTest(options=options), tempfile.TemporaryDirectory(prefix='viewer-stream-partial-') as directory:
-                work = Path(directory); index = fixture(work, **options); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+                work = Path(directory); index = fixture(work, **options); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
                 try:
                     actual = browser.evaluate('''(()=>{
                       const q=s=>document.querySelector(s),row=q('[data-resource-id="graphics.tilemap-stream-bank"]');

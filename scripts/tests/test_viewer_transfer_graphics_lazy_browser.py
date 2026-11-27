@@ -59,7 +59,7 @@ class TransferGraphicsGenerationTest(unittest.TestCase):
     def test_scope_and_content_addressed_asset_ownership(self):
         with tempfile.TemporaryDirectory(prefix='viewer-lazy-transfer-') as directory:
             work = Path(directory); index, dataset = fixture(work); parts = index.parent / 'index.html.parts'
-            home, world, transfer = payload(index), payload(parts / 'interface.html'), payload(parts / 'transfer-graphics.html')
+            home, world, transfer = payload(index), payload(parts / 'interface-maps.html'), payload(parts / 'transfer-graphics.html')
             self.assertNotIn('type3_payloads', world); self.assertNotIn('transfer_graphics', home['wiki'])
             self.assertEqual(len(transfer['type3_payloads']['streams']), 1)
             asset = world['wiki']['transfer_graphics']; path = parts / asset['href']
@@ -71,14 +71,14 @@ class TransferGraphicsGenerationTest(unittest.TestCase):
             self.assertEqual(path.read_text(), 'user file')
         with tempfile.TemporaryDirectory(prefix='viewer-lazy-transfer-none-') as directory:
             work = Path(directory); index, _ = fixture(work, include_type3=False)
-            self.assertNotIn('transfer_graphics', payload(index.parent / 'index.html.parts/interface.html')['wiki'])
+            self.assertNotIn('transfer_graphics', payload(index.parent / 'index.html.parts/interface-maps.html')['wiki'])
 
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')
 class TransferGraphicsBrowserTest(unittest.TestCase):
     def test_shared_loading_pixels_and_bookmark(self):
         with tempfile.TemporaryDirectory(prefix='viewer-lazy-transfer-browser-') as directory:
-            work = Path(directory); index, _ = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+            work = Path(directory); index, _ = fixture(work); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);return !q('#tilemap-load-transfer').hidden &&
                   !q('#compact-cell-load-transfer').hidden && typeof globalThis.__FFTA_TYPE3_PAYLOADS__==='undefined' &&
@@ -116,8 +116,8 @@ class TransferGraphicsBrowserTest(unittest.TestCase):
     def test_missing_and_wrong_asset_are_reported_and_retryable(self):
         with tempfile.TemporaryDirectory(prefix='viewer-lazy-transfer-missing-') as directory:
             work = Path(directory); index, _ = fixture(work); parts = index.parent / 'index.html.parts'
-            asset = parts / payload(parts / 'interface.html')['wiki']['transfer_graphics']['href']; saved = asset.read_bytes(); asset.unlink()
-            browser = Chrome(work, parts / 'interface.html')
+            asset = parts / payload(parts / 'interface-maps.html')['wiki']['transfer_graphics']['href']; saved = asset.read_bytes(); asset.unlink()
+            browser = Chrome(work, parts / 'interface-maps.html')
             try:
                 browser.evaluate("document.querySelector('#tilemap-load-transfer').click()")
                 wait_for(browser, "document.querySelector('#tilemap-transfer-load-status').textContent.includes('could not be opened')")
@@ -140,6 +140,6 @@ class TransferGraphicsBrowserTest(unittest.TestCase):
                 self.assertEqual(browser.evaluate("document.querySelectorAll('script[data-transfer-graphics]').length"), 0)
             finally: browser.close()
         with tempfile.TemporaryDirectory(prefix='viewer-lazy-transfer-none-') as directory:
-            work = Path(directory); index, _ = fixture(work, include_type3=False); browser = Chrome(work, index.parent / 'index.html.parts/interface.html')
+            work = Path(directory); index, _ = fixture(work, include_type3=False); browser = Chrome(work, index.parent / 'index.html.parts/interface-maps.html')
             try: self.assertTrue(browser.evaluate("document.querySelector('#compact-cell-load-transfer').hidden && document.querySelector('#tilemap-load-transfer').hidden"))
             finally: browser.close()

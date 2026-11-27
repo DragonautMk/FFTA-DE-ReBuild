@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "focus-wiki-navigation-scopes",
+  "title": "Expose audio views and focus wiki pages",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Show available audio players and catalogs directly in the ordered navbar menu, without a second disclosure level.",
+    "Separate world maps and terrain from gameplay, and divide background, interface control and tilemap views into focused pages while preserving old bookmarks and selected encounter links.",
+    "Keep required graphics dependencies on the corresponding pages and update resource-page destinations and regression fixtures."
+  ],
+  "validation": [
+    "Unit viewer-nav-focused-regression-etx2hr3v passed 32 checks; 59 additional checks passed in viewer-nav-focused-extra-qmjj6bfz, and the two stale menu assertions passed after correction in viewer-nav-focused-extra-fixes-2e4pbtxq.",
+    "Protected European unit viewer-nav-focused-real-t43s7_z8 preserved all topic data and 156 resource entries, exercised eight pages in Chrome, and matched 27 Python and Docker fixture files.",
+    "Published 21 local pages and 29 updated resource links with guarded preimages; the wrapped-link click diagnostic confirmed both text lines were clickable."
+  ],
+  "limitations": [
+    "The pages retain the shared graphics needed by their previews, so some source data is present on more than one focused page. Native Windows and Windows Docker remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_focused_scopes_browser.py",
+    "scripts/tests/test_viewer_navbar_split_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_bg_planes_browser.py",
+    "scripts/tests/test_viewer_compact_cell_bank_browser.py",
+    "scripts/tests/test_viewer_firaga_cells_browser.py",
+    "scripts/tests/test_viewer_firaga_transfer_browser.py",
+    "scripts/tests/test_viewer_indexed_tilemap_controls_browser.py",
+    "scripts/tests/test_viewer_localized_queued_browser.py",
+    "scripts/tests/test_viewer_obj_transfer_graphics_browser.py",
+    "scripts/tests/test_viewer_observed_lz_browser.py",
+    "scripts/tests/test_viewer_signed_map_deltas_browser.py",
+    "scripts/tests/test_viewer_source_grids_browser.py",
+    "scripts/tests/test_viewer_tilemap_stream_bank_browser.py",
+    "scripts/tests/test_viewer_transfer_directory_browser.py",
+    "scripts/tests/test_viewer_transfer_graphics_lazy_browser.py",
+    "scripts/tests/test_viewer_transfer_lz_browser.py",
+    "scripts/tests/test_viewer_type2_rectangles_browser.py",
+    "scripts/tests/test_viewer_ui_context_browser.py",
+    "scripts/tests/test_viewer_ui_rectangles_browser.py",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "scripts/tests/test_viewer_world_regions_browser.py",
+    "scripts/tests/test_viewer_world_road_playback_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

@@ -190,6 +190,75 @@ for the generic RAM-fed arguments and its complete source extents are
 still required. Indirect and computed dispatch and ordinary runtime
 reachability remain open.
 
+## E599 European background relative LZ77 inputs
+
+Two original callers at `08020bba` and `08020be2` reach the reader
+at `08020830`. They load the table base and selector from offsets
+`+4` and `+0x20` of the state at `020080c4`. The reader tests the
+selected relative word for zero, then adds a nonzero word to the
+table base. A tag-`0x10` stream reaches the WRAM LZ77 wrapper at
+`080208ce`. The first nonzero relative word also determines the
+index of the word containing a second offset and its flag bits.
+
+The generic initializer at `08021028` stores its incoming base at
+`08021104`. Its direct wrapper at `08021738` has no direct Thumb
+call or encoded entry address in the selected EUR image. The
+descriptor-based initializer stores a second base at `0802137e`
+from the variant program's first relative word. All 162 records in
+the authenticated background descriptor bank have zero at variant
+field `+0x50`. E353 owns that entire bank. A verified original
+nonzero variant or an independently traced generic base is needed
+to establish LZ77 input bounds.
+
+The state reader at `0802097c` accepts state values 0–13 and loads
+one destination from `080209a4`. Cases 7 and 8 lead to the two
+relative input calls. The 14 destinations and the two original
+literal words at `0802099c` and `080209a0` account for 64 bytes
+without an owner in e353.
+
+Wine `v7dgs0xl` authenticates 2,011 halfwords, including 1,283
+matching the retained E509 and E511 windows. The source scan
+finds both direct calls to `08020830` and zero aligned mirror
+words naming that entry. The unaligned byte sequence at
+`af3e1e` is inside an owned halfword stream. All 18 input
+guards pass and Wine drains. The bounded source proof leaves
+constructed and indirect inputs, live execution and actual LZ77
+extents in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E600 European background variant state dispatch
+
+European `e354-d353` serves the complete 14-entry state table at
+`080209a4` from `engine.thumb-switch-tables`. The state pointer
+and table base at `0802099c` and `080209a0` belong to
+`engine.thumb-pc-literals`. Both resources retain their existing
+formats and gain 64 source bytes in total. The other 154 resource
+entries and all earlier data in the two updated files match e353.
+
+Wine `w41te2k6` runs the original dispatcher with controlled state
+bytes and altered ROM backing. It verifies all 14 destinations and
+the existing rejection branch for states 14 and 255. Each case
+matches the full machine state and guest clock. The trace records
+44 reads served by the extracted resources. The 24 mixed-width
+mirror and owner-boundary checks also pass. E353 attaches and an
+incomplete dataset labeled e354 leaves the attached resources in place.
+
+The standard CLI prepares from an empty root, verifies all 157 files
+and reuses the same generation and selector. All 16 protected inputs
+pass and the Wine server drains. The current e354 generation is
+retained in
+`out/e600-validation/staging/target/validation/units/e600-e354-stage-gd1g_9cz/work/resources`.
+
+Both Windows artifacts compiled in `c7yntn_u`. The unit's final Git
+check stopped at the external `out` mount boundary. Recovery
+`1ismmmeo` authenticates both executables, Cargo results and source
+preimages. The staging check used Git discovery across filesystems
+for that invocation.
+
+Ordinary entry, generated execution, a source-backed LZ77 base,
+original BIOS and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## E512 European halfword copy source banks
 
 The original loop at `080369e8` reads and writes one halfword per
@@ -314,6 +383,225 @@ The results describe the local fallthrough instruction sequences.
 The call group's original entry paths, bank boundaries between the
 transfers, source roles and runtime consumption require separate proof.
 Register-fed, indirect, ARM and inline SWI calls remain open.
+
+## E603 European CpuFastSet direct operands
+
+The exact EUR ROM has one aligned `SWI 0x0c; BX LR` entry at
+`0814522c` and 91 direct Thumb BL patterns to it. The census
+also recovers the 765 E516 CpuSet patterns as a separate control.
+Local instruction windows trace 48 source arguments to the stack.
+The other 43 take their source through registers or memory and
+still require caller-specific dataflow. The same windows resolve
+53 destination arguments and 65 control arguments.
+
+The known destinations and controls depend on 82 distinct PC-relative
+words. E354 owns 17 of them. The other 65 words cover 260 bytes and
+67 original loads. Two controls at `0208bc` and `020978` each have
+two readers. The set includes clear controls and destinations for
+the background and tilemap loaders, as well as the structured upload
+groups near `032826` and `143ca2`.
+
+Wine `2g9k5cxn` authenticates 2,727 halfwords, passes 19 input
+guards and drains. The proof establishes the local literal group.
+Register-fed inputs, operands outside the verified windows,
+indirect and inline SWIs, original BIOS and deferred platforms
+remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E604 European CpuFastSet literals at runtime
+
+European `e355-d354` adds the 65 E603 destination and control
+words to `engine.thumb-pc-literals`. The runtime serves 260
+additional source bytes from the extracted file. The other
+155 resources and the earlier literal groups match e354.
+
+Windows build `f8hdgz37` and Wine `k_p61bks` pass. The test
+observes all 67 original loads with altered backing words and
+compares full machine state and guest clock. It follows the
+original stack fill at `080e51d4` and RAM copy at `08032826`
+through the BIOS HLE wrapper. The two paths produce 64 and
+2,624 VRAM bytes with preserved adjacent bytes. All 780 mirror
+and mixed-width boundary checks pass. E354 attaches, and
+labeling it e355 without the new group preserves the active
+binding when attachment is rejected.
+
+The standard CLI creates, verifies and reuses all 157 files
+in a single Wine lease. Sixteen protected inputs pass and the
+server drains. The current e355 generation is retained in
+`out/e604-validation/staging/target/validation/units/e604-e355-stage-bjcv0w7e/work/resources`.
+
+Other register-fed sources, live operand domains, ordinary and
+generated dispatch, original BIOS and deferred platforms are
+tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E605 European background-effect graphics bank
+
+The E605 audit ranks uncovered physical ranges against the exact
+`e355-d354` manifest. It reuses candidate instruction ranges from the
+retained e333 atlas for the same ROM. The manifest declares 12,054,776
+distinct source bytes. After also accounting for candidate code and
+header bytes, 4,554,564 bytes remain unclassified. Of those, 2,504,912
+belong to contiguous zero or FF runs of at least 4 KiB. Separating
+those runs leaves the largest physical lead at `d6abc6..d96838`
+(179,314 bytes), followed by `4190c0..42dd48` (85,128) and
+`6cd966..6df2dc` (72,054). Classification of the three ranges
+depends on their original consumers.
+
+At `0812f9dc` the original task reads a message byte at offset 4.
+It stores the corresponding 12-byte row from `3ad318` at task offset
+4. The independently read successor table starts at `3ad444`, so
+the physical directory contains 25 rows. Each row contains a relative
+tile offset, a tile byte count and an absolute tilemap pointer.
+At `0812fa56` the original task adds the offset to `d6b4c8`.
+It uses `08000b14` to queue four 32-bit DMA transfers of one quarter
+of the recorded length to consecutive destinations from `06008a40`.
+The tilemap path starting at `0812faf0` loads the pointer from the
+same row and queues 20 rows of 30 halfwords through `08000be4`,
+with 60-byte source and 64-byte destination strides. The original
+queue executor advances the two addresses after each row.
+
+The lengths describe 4,594 tiles in 25 contiguous blocks
+(`d6b4c8..d8f308`, 147,008 bytes). The 25 maps occupy
+`d8f308..d96838` (30,000 bytes) with 600 entries each. The map tile
+indices fit the loaded tiles and lower shared indices. A separate
+original IWRAM-copy reader names the following source at `d96838`.
+The 2,306 bytes preceding the tile bank remain outside this source
+projection.
+
+Wine unit `e605-eur-background-effect-bank-wine-wqdh1ko9` passes
+all ten input guards and drains the server. The Windows CLI
+disassembles 311 original halfwords and confirms that all 177,316
+selected bytes have zero declared owners in e355. That total includes
+the 177,008 payload bytes, 300 descriptor bytes and two root words.
+The retained `evidence/result.json` records all rows and hashes.
+Its SHA-256 is
+`0e60cf7c8cc721e7feb28ee22e3d30a70f645274f308b97e99f03e740eea8afb`.
+The source proof establishes the physical bounds used by
+[E606](#e606-european-background-effect-graphics-at-runtime). The live
+message range and ordinary invocation remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E606 European background-effect graphics at runtime
+
+European `e356-d355` publishes `graphics.background-effect-graphics`
+as `background-effect-graphics.bin`. The file concatenates five
+authenticated ranges in manifest order. The first eight bytes hold
+the directory and tile base pointers. The next 300 bytes are the
+25 descriptors, followed by 147,008 bytes of packed 4-bit tiles and
+30,000 bytes of little-endian tilemap entries.
+
+Each 12-byte descriptor contains a relative tile offset, a tile byte
+count and an absolute ROM tilemap pointer. Subtract the map bank's
+ROM address, `08d8f308`, from that pointer to find the offset within
+the tilemap section. Each map has 20 rows of 30 halfwords. The
+original DMA queue reads those values with a 60-byte source stride
+and a 64-byte VRAM stride.
+
+The runtime binds the file only to the source ranges in its manifest.
+The original task selects its descriptor and programs the tile and
+map DMA jobs. Reads crossing a range boundary resolve each lane
+through its corresponding resource or the original ROM. The e355
+predecessor has its own authenticated resource layout.
+
+Windows build `5nd_54ih` passes after updating the older dataset budget
+test call. Wine `q0itfso_` runs one focused test on all 25 descriptors
+with the 177,316 covered ROM bytes inverted in the managed machine.
+The original queue executes 100 word DMA transfers and 500 halfword
+rows. It copies all 177,008 payload bytes, preserves VRAM edges and row
+padding, and matches the raw-ROM machine's complete state and guest
+clock. The bank served 177,508 byte reads including descriptor and root
+reads. The test passes 630 mixed-width reads across all three ROM
+mirrors, and completes the original descriptor lookup prefix for
+selectors 25 and 255. It attaches e355 and rejects both a relabeled e355
+and a coherently rehashed damaged bank without replacing the active
+binding.
+
+The standard Windows CLI creates, verifies and reuses the same 158
+files on Wine. The 156 previous resource entries and their files keep
+their hashes. All 16 input guards pass and the Wine server drains.
+The current e356 dataset is retained in stage `8einoir0`, with
+manifest SHA-256
+`9f902514991d3a1600fcf4478901b4dc8928f46baf0191dcf47c42de05bf0c01`
+and bank SHA-256
+`36c1009e8774d84930f1bbabcb544fdad0b10a8c1f93a37ba73738c15a7d493b`.
+Ordinary invocation, translated execution and the live selector
+domain remain open, along with Linux, USA and native Windows checks.
+
+## E609 European background screen banks
+
+The parent at `08124080` forwards its state byte to the task at
+`0812346c`. The child saves the byte at offset 8. At `081235ea`
+the child uses it to index five tile pointers at `3ac770` and five
+halfword byte counts at `3ac784`. The 65,664 tile bytes occupy
+`6cd968..6dd9e8` with an exclusive end. The task queues up to 4,096
+bytes per invocation through the original word DMA producer at
+`08000b14`, advancing the source and VRAM cursors from `06000000`.
+
+The original map builder at `0812365c` uses the pointer at `3ac790`
+and the width and height bytes in the corresponding four-byte record
+at `3ac7a4`. In order, the dimensions are 15 × 38, 18 × 32,
+37 × 23, 16 × 50 and 18 × 20. The builder clears a 4,096-byte WRAM
+buffer with CPUSet and reads 3,157 source halfwords. Columns 0–31 go
+into the first 32-wide area and columns 32–36 into the area 1,024
+halfwords later. The equality check clears exactly 1,131 occurrences
+of `03ff`. Two `23ff` cells retain their original high bits and tile
+index. The task submits the entire buffer to `06006000` through
+the halfword DMA producer at `08000ad0`.
+
+The consumed maps occupy `6dd9e8..6de982` and `6de9cc..6df2dc`.
+The intervening 74 bytes are a full row of `03ff` following the third
+map's 23 declared rows. This reader never reaches the extra row.
+The start of the residual has two zero alignment bytes after the
+preceding compact catalog. Combined with those 76 excluded bytes,
+the 71,978 consumed payload bytes account for all 72,054 bytes in
+the selected gap. The pointers, counts, dimensions and eight reader
+literals add 102 bytes to the source projection.
+
+Wine unit `e609-eur-background-screen-banks-wine-6joa2moh` authenticates
+213 original halfwords and verifies that e357 declares no owner for any
+of the 72,080 projected bytes. All 11 input guards pass and the Wine
+server drains. Its `evidence/result.json` SHA-256 is
+`2c3a4dfd022fd7e10af01b6fc32437526940610dfa2833b85f5e57d77624e65c`.
+The remaining reader, scene and platform criteria are in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E610 European background screen banks at runtime
+
+European `e358-d357` adds `graphics.background-screen-banks`.
+Use `recomp rom-data prepare ROM MANAGED_ROOT` with the authenticated
+European ROM to produce `background-screen-banks.bin`. Its ten
+manifest ranges concatenate 32 bytes of reader literals, 70 bytes of
+selector directories, 65,664 bytes of tiles and 6,314 bytes of maps.
+Absolute pointers and little-endian entries keep their original values.
+The mapper uses each range's ROM offset and length from the manifest
+when supplying bytes from the file. The e357 manifest still selects
+its original resource layout.
+
+Windows build `31sqp8tj` and focused Wine unit `01bkwwt1` pass. The
+test inverts all 72,080 managed bytes in the ROM backing and runs the
+original selector and map builder for each pair. It executes 18 tile
+DMA chunks and five map uploads. All five WRAM maps and VRAM uploads,
+including the placement of both flagged `23ff` cells, match the original
+outputs. It compares the complete state and guest clock, verifies 1,260
+mixed-width reads across all ROM mirrors, and records 103,460 managed
+bytes read by the original paths. The extra row uses the ROM backing
+and its alteration leaves the selected reader results intact. The test
+attaches e357 and rejects two invalid candidates while preserving the
+active resource binding.
+
+The Wine CLI creates, verifies and reuses the 160-file generation.
+All 158 e357 resource entries and files retain their hashes. All 19
+input guards pass and the Wine server drains. The e358 generation is
+retained in `e610-e358-stage-ol67qzpt`, with manifest SHA-256
+`851592063fbc6c74a914675641c2e4621d0e9c58efd18bc223b70deacf298a1b`
+and bank SHA-256
+`22a9cb97c3a55a4d727799e2fa60e80c084d3bde745253177d01b76a6ed5d573`.
+The first Wine unit `g1iu0n_6` created this generation and found a wrong
+return address in the DMA test fixture. The corrected test reuses the
+same generation. Live selector provenance, ordinary scenes, translated
+execution, the extra row's other possible uses and deferred platforms
+remain in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 ## E517 European VRAM loader CPUSet sources
 
@@ -2369,6 +2657,57 @@ windows-cli-summary.json, build/logs/candidate and source/protected hashes.
 New Linux/USA, broader scenes/GUI/archives and native Windows remain pending.
 No performance/profile/startup/RSS or space optimization campaign was run.
 
+
+## E617 European post-transfer source investigation
+
+The e361 owner map leaves `897ad4..898a40` unassigned. Background
+transfer block 33 ends at `897ad4`, using the maximum referenced
+offset plus transfer size. The existing unit OBJ pixel base at
+`898a40` comes from original helper `080221b4`. The aligned word at
+`080d20fc` consists of two Thumb instructions. The apparent relative
+word `766984` begins at the selector fields of BG descriptor 19.
+
+Original instructions `080222ce` and `080222d0` copy frame word00
+to the task's byte offset 32. Both `08022374` and `080226c8` add it
+to the pixel base. A static census of the 248 directory words and
+12,024 physical index cells resolves 4,872 sequences and 27,257
+frames. Their pixel offsets span 0 through `1b7560`. Every resolved
+ROM address starts at or above `898a40`. The Sol consultation
+also resolved 32,200 frame occurrences in the retained e361 unit
+projections.
+
+An original load PC or DMA source, count and writer are required to
+establish the remaining region's ownership and boundaries. The
+static result covers the inspected directory and readers. Further
+producer domains and runtime validation remain open.
+[Recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E618 European counted effect tables
+
+The physical bank at `b4b0f4..b4bc84` holds 13 tables. Each starts
+with a little-endian halfword count followed by that many two-byte
+samples. The following table starts at the next four-byte boundary.
+The 13 counts total 1,455 samples. The bank occupies 2,936 source
+bytes and 24 alignment bytes. The existing blend resource ends
+at `b4b0f2` and the OBJ animation index begins at `b4bc84`.
+
+Seven tables have direct Thumb literal roots. The six-word directory
+at `3a7db4` selects the other six. Original readers `081131c0` and
+`08113332` use the directory and copy the two source bytes in reversed
+order into their destination halfwords. The edge animation at
+`080e9e06` initializes its interpolated index from count 41 and
+advances it before reading the samples. Other readers consume
+the samples as little-endian halfwords or add a byte bias during
+the copy. Four clipped paths share the 240-sample table at
+`b4b864` and use its first or last sample at the clipping boundaries.
+
+Wine `l_fm3i3u` verifies 1,463 original halfwords and audits the
+2,936 payload bytes, 24 directory bytes and 56 literal bytes
+against e361. It finds 3,016 unowned bytes across 26 ranges.
+All 11 input guards pass and the server drains. The result SHA-256 is
+`e832bfb6625b6460ac239e3f62d62e520b16146c4c70f5b3d6ba1c7b03098a24`.
+Ordinary invocation and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 ## Other raw UI palette sources
 

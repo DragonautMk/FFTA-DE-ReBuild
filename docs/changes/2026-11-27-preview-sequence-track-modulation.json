@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-sequence-track-modulation",
+  "title": "Preview sequence pitch, volume and pan modulation",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Apply the extracted speed, delay, depth and target commands as a bounded tick-based modulation during song playback, WAV export and timed sound auditions.",
+    "Expose and preserve a modulation toggle and list the decoded controls while retaining existing track and CGB mute behavior."
+  ],
+  "validation": [
+    "Synthetic viewer-lfo-synthetic-89w8n4fh passed ten tests including 500 independently modeled traces, live/WAV/timed scheduling and existing audio regressions.",
+    "Protected e354 viewer-lfo-real-x3ovsy1g authenticated 2693 source ranges, four command targets and 20 original instruction halfwords; checked 1066 modulation commands and two real tracks in Chrome, and matched 28 Python/Docker files.",
+    "Published 23 ignored wiki pages with verified preimages out/ffta-lfo-before-f3wpyaxr while preserving 22 topic payloads and lazy assets."
+  ],
+  "limitations": [
+    "The preview assumes resolved notes are allocated; browser pitch, volume, pan, full mixing and physical output are approximate or unverified. Native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_sequence_modulation_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

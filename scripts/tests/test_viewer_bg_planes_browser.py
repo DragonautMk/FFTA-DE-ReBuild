@@ -72,7 +72,7 @@ class BackgroundPlanesProjectionTest(unittest.TestCase):
         for invalid in (None, 'paired', 'terrain'):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-bg-plane-scope-') as temp:
                 index, interface = fixture(Path(temp), invalid=invalid); data = payload(interface)
-                world = payload(interface.with_name('world.html'))
+                world = payload(interface.with_name('world-map.html'))
                 self.assertNotIn('bg_plane_programs', payload(index))
                 self.assertEqual(bool(data['bg_plane_programs']), invalid != 'paired')
                 self.assertEqual(bool(world['terrain_seeds']), invalid != 'terrain')

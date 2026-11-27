@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "split-audio-topics",
+  "title": "Split audio topics into lighter pages",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Provide separate offline waveform/instrument and CGB noise topics; keep songs and timed sounds with their playback dependencies and expose each topic in the navbar.",
+    "Open instrument-bank song references on the song page, preserve the shared CGB mute, and redirect old audio noise bookmarks."
+  ],
+  "validation": [
+    "Synthetic unit viewer-audio-scope-synthetic-0qmc05ef passed 52 tests covering audio playback, cross-page navigation, mute state, legacy bookmarks and prior controls. Initial unit 9x54lx5k found an initialization error that was fixed.",
+    "Protected e345 unit viewer-audio-scope-real-zor6lsg1 preserved existing scoped data, exercised noise playback and bank-to-song navigation in Chrome, and matched 24 Python/Docker outputs.",
+    "The earlier audio page was 17315942 bytes; waveform/instrument and noise pages are 9510147 and 690337 bytes. Eighteen ignored wiki pages were published with guarded preimages."
+  ],
+  "limitations": [
+    "Song and scheduled playback still load their waveform and sequence dependencies; original audio timing and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/tests/test_viewer_audio_scopes_browser.py",
+    "scripts/tests/test_viewer_scoped_browser.py",
+    "scripts/tests/test_viewer_navbar_split_browser.py",
+    "scripts/tests/test_viewer_navigation_categories_browser.py",
+    "scripts/tests/test_viewer_cgb_noise_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

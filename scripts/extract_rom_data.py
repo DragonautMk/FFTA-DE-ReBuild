@@ -10,6 +10,10 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DESCRIPTIONS = {
+    'physical-tone-banks.bin': 'European physical instrument tones and additional PCM/CGB waves',
+    'physical-compact-obj-banks.bin': 'European physical compact object animation banks',
+    'localized-obj-animation-banks.bin': 'European localized object animation indices, frames, layouts and graphics',
+    'background-effect-graphics.bin': 'European background effect tiles and tilemaps',
     'tilemap-transfer-lz77.bin': 'Compressed European tilemap transfer inputs',
     'tilemap-stream-bank.bin': 'Encoded European halfword and byte tilemap streams',
     'tilemap-direct-transfers.bin': 'European direct tilemap transfer references',

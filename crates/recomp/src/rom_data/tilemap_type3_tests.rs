@@ -1,8 +1,10 @@
 //! Validate the complete E481 transfer projection with the EUR ROM under Wine.
 use super::{
-    attach_from_directory,
+    attach_dataset, attach_from_directory,
     bank_ownership::Plan,
-    parse, preparation,
+    direct_byte_copy_tests::{capture, flip, same_state},
+    indexed_reader_bank_tests::{execute_until, initialize},
+    parse, preparation, read_dataset,
     tilemap_transfer_directory_tests::{check_stream_bus_reads, replay_pair},
     Extraction, Manifest, MANIFEST_FILE, TILEMAP_TYPE3_FILE, TILEMAP_TYPE3_ID,
 };
@@ -14,11 +16,271 @@ use gba_core::{
     },
     Bus, Machine,
 };
+use serde::Deserialize;
 use serde_json::Value;
-use std::{fs, ops::Range, path::PathBuf};
+use std::{fs, ops::Range, path::PathBuf, sync::Arc};
 
 const MIRRORS: [u32; 3] = [0x0800_0000, 0x0a00_0000, 0x0c00_0000];
 const ALIAS: Range<usize> = 0x3abd78..0x3abd7c;
+
+#[derive(Deserialize)]
+struct RecoveredTransferPlan {
+    list_roots: Vec<RecoveredList>,
+    required_spans: Vec<RecoveredSpan>,
+    new_rows: Vec<RecoveredRow>,
+}
+
+#[derive(Deserialize)]
+struct RecoveredList {
+    reader: u32,
+    base: u32,
+    count: u32,
+}
+
+#[derive(Deserialize)]
+struct RecoveredSpan {
+    offset: u32,
+    length: u32,
+    role: String,
+}
+
+#[derive(Deserialize)]
+struct RecoveredRow {
+    row: u32,
+    descriptor: u32,
+    wrapper: u32,
+    caller: u32,
+    stream: RecoveredStream,
+}
+
+#[derive(Deserialize)]
+struct RecoveredStream {
+    encoded_length: u64,
+    decoded_length: usize,
+    decoded_sha256: String,
+}
+
+#[test]
+#[ignore = "requires the exact EUR ROM, E597 source plan and e352/e353 generations"]
+fn european_counted_type3_lists_feed_original_loaders() {
+    const REVISION: (u32, u32) = (353, 352);
+    const BASE: u32 = 0x0800_0000;
+    const CONTEXT: u32 = 0x0200_0100;
+    const MESSAGE: u32 = 0x0200_0200;
+    const DIRECT_DESTINATION: u32 = 0x0200_2000;
+    const STAGED_DESTINATION: u32 = 0x0200_4000;
+
+    let rom = fs::read(input("FFTA_STATE_TEST_ROM")).unwrap();
+    assert_eq!(digest(&rom), gba_core::ffta_rom::EUROPE_SHA256);
+    let plan = fs::read(input("FFTA_COUNTED_TYPE3_PLAN")).unwrap();
+    assert_eq!(
+        digest(&plan),
+        "3bb9b890fa4cc1c1c7e00da55e0813df7ab35d4bb99bdf4c423544d8a37b9994"
+    );
+    let plan: RecoveredTransferPlan = serde_json::from_slice(&plan).unwrap();
+    assert_eq!(
+        (
+            plan.list_roots.len(),
+            plan.new_rows.len(),
+            plan.required_spans.len()
+        ),
+        (6, 3, 11)
+    );
+
+    let previous_dir = input("FFTA_STATE_TEST_DATASET");
+    assert_eq!(
+        digest(&fs::read(previous_dir.join("manifest.toml")).unwrap()),
+        "3698b35187950c4b3df75a5d122e62db7f5c60741e7b2c9e193bc6348a0b5aca"
+    );
+    let mut previous = read_dataset(&previous_dir).unwrap();
+    assert_eq!(
+        (
+            previous.manifest.extractor_revision,
+            previous.manifest.decoder_revision
+        ),
+        (352, 351)
+    );
+    let current = read_dataset(&input("FFTA_COUNTED_TYPE3_DATASET")).unwrap();
+    assert_eq!(
+        (
+            current.manifest.extractor_revision,
+            current.manifest.decoder_revision
+        ),
+        REVISION
+    );
+    let mut managed = Machine::new(rom.clone());
+    attach_dataset(&mut managed, &previous).unwrap();
+    let prior = managed.bus.rom_resources().unwrap().clone();
+    let new_stream = 0xb34148;
+    flip(&mut managed, new_stream, 1);
+    assert_eq!(
+        managed.bus.read8(BASE + new_stream),
+        !rom[new_stream as usize]
+    );
+    flip(&mut managed, new_stream, 1);
+    (
+        previous.manifest.extractor_revision,
+        previous.manifest.decoder_revision,
+    ) = REVISION;
+    assert!(attach_dataset(&mut managed, &previous).is_err());
+    assert!(Arc::ptr_eq(&prior, managed.bus.rom_resources().unwrap()));
+    attach_dataset(&mut managed, &current).unwrap();
+    let owner = managed.bus.rom_resources().unwrap().clone();
+    let mut raw = Machine::new(rom);
+    let initial = raw.save_state().unwrap();
+    let source_bytes: u32 = plan.required_spans.iter().map(|span| span.length).sum();
+    assert_eq!(source_bytes, 322);
+
+    let typed_ranges: Vec<_> = plan
+        .required_spans
+        .iter()
+        .filter(|span| span.role != "lz77-input")
+        .map(|span| (span.offset, span.offset + span.length))
+        .collect();
+    let mut list_setups = 0;
+    let mut typed_directory_loads = 0;
+    for list in &plan.list_roots {
+        let variant = list.reader >= 0x0fdefc;
+        let entry = BASE + if variant { 0x0fdecc } else { list.reader };
+        let stop = BASE + if variant { 0x0fdf14 } else { 0x0e6168 };
+        for machine in [&mut raw, &mut managed] {
+            machine.load_state(&initial).unwrap();
+            initialize(machine, entry);
+            if variant {
+                machine.cpu.regs[4] = CONTEXT;
+                machine.cpu.regs[5] = MESSAGE;
+                machine
+                    .bus
+                    .write16(MESSAGE + 0x14, if list.count == 6 { 0x13d } else { 0 });
+            } else {
+                machine.cpu.regs[5] = CONTEXT;
+            }
+        }
+        for span in &plan.required_spans {
+            flip(&mut managed, span.offset, span.length);
+        }
+        execute_until(&mut raw, stop, 64);
+        let trace = capture(&managed, typed_ranges.clone(), 8);
+        execute_until(&mut managed, stop, 64);
+        let report = trace.finish();
+        assert_eq!(report.dropped_requests, 0);
+        for event in &report.events {
+            assert_eq!(event.key.service, Service::Typed);
+            assert_eq!(event.key.instruction.unwrap().pc, BASE + list.reader);
+        }
+        typed_directory_loads += report.matched_requests;
+        for span in &plan.required_spans {
+            flip(&mut managed, span.offset, span.length);
+        }
+        assert_eq!(&managed.cpu.regs[1..3], &[BASE + list.base, list.count]);
+        same_state(&raw, &managed, entry);
+        list_setups += 1;
+    }
+    assert_eq!(typed_directory_loads, 3);
+
+    for machine in [&mut raw, &mut managed] {
+        machine.load_state(&initial).unwrap();
+        initialize(machine, BASE + 0x0fdecc);
+        machine.cpu.regs[4] = CONTEXT;
+        machine.cpu.regs[5] = MESSAGE;
+        machine.bus.write16(MESSAGE + 0x14, 0x13d);
+        machine.bus.write16(MESSAGE + 0x16, 1);
+        execute_until(machine, BASE + 0x0fdf14, 64);
+        assert_eq!(&machine.cpu.regs[1..3], &[BASE + 0x3a16a0, 0]);
+    }
+    same_state(&raw, &managed, BASE + 0x0fdecc);
+
+    let mut decoded_output_bytes = 0;
+    for row in &plan.new_rows {
+        let list = plan
+            .list_roots
+            .iter()
+            .find(|list| row.row >= list.base && row.row < list.base + 12 * list.count)
+            .unwrap();
+        let index = (row.row - list.base) / 12;
+        assert_eq!(list.base + 12 * index, row.row);
+        for machine in [&mut raw, &mut managed] {
+            machine.load_state(&initial).unwrap();
+            initialize(machine, BASE + 0x0db09c);
+            machine.cpu.regs[0] = CONTEXT;
+            machine.bus.write32(CONTEXT, BASE + list.base);
+            machine.bus.write8(CONTEXT + 7, index as u8);
+            machine.bus.write32(CONTEXT + 0x20, STAGED_DESTINATION);
+            machine.bus.write32(CONTEXT + 0x24, DIRECT_DESTINATION);
+        }
+        for span in &plan.required_spans {
+            flip(&mut managed, span.offset, span.length);
+        }
+        execute_until(&mut raw, BASE + 0x0db17c, 128);
+        let before = owner.tilemap_type3_stats().unwrap();
+        let trace = capture(&managed, typed_ranges.clone(), 32);
+        execute_until(&mut managed, BASE + 0x0db17c, 128);
+        let report = trace.finish();
+        assert_eq!(report.dropped_requests, 0);
+        assert!(report
+            .events
+            .iter()
+            .all(|event| event.key.service == Service::Typed));
+        for offset in [row.row, row.descriptor] {
+            assert!(report
+                .events
+                .iter()
+                .any(|event| event.key.read.physical_offset == offset));
+        }
+        if row.row == 0x3a16dc {
+            assert!(report
+                .events
+                .iter()
+                .any(|event| event.key.read.physical_offset == row.wrapper));
+        }
+        let after = owner.tilemap_type3_stats().unwrap();
+        assert_eq!(after.lz77_calls - before.lz77_calls, 1);
+        assert_eq!(
+            after.lz77_input_bytes - before.lz77_input_bytes,
+            row.stream.encoded_length
+        );
+        let destination = match row.caller {
+            0x0db160 => STAGED_DESTINATION,
+            0x0db16e => DIRECT_DESTINATION,
+            caller => panic!("Unexpected type-3 producer {caller:#x}"),
+        };
+        let first = (destination - 0x0200_0000) as usize;
+        assert_eq!(
+            digest(&managed.bus.ewram[first..first + row.stream.decoded_length]),
+            row.stream.decoded_sha256
+        );
+        decoded_output_bytes += row.stream.decoded_length;
+        for span in &plan.required_spans {
+            flip(&mut managed, span.offset, span.length);
+        }
+        same_state(&raw, &managed, BASE + 0x0db09c);
+    }
+
+    for span in &plan.required_spans {
+        flip(&mut managed, span.offset, span.length);
+    }
+    let mut mirror_checks = 0;
+    for mirror in MIRRORS {
+        for span in &plan.required_spans {
+            for offset in [span.offset - 1, span.offset + span.length - 1] {
+                let address = mirror + offset;
+                assert_eq!(managed.bus.read16(address), raw.bus.read16(address));
+                assert_eq!(managed.bus.read32(address), raw.bus.read32(address));
+                mirror_checks += 2;
+            }
+        }
+    }
+    fs::write(
+        input("FFTA_COUNTED_TYPE3_WORK").join("test-result.json"),
+        serde_json::to_vec_pretty(&serde_json::json!({
+            "status": "PASS", "revision": REVISION, "source_bytes": source_bytes,
+            "list_setups": list_setups, "zero_count_cases": 1, "typed_directory_loads": typed_directory_loads,
+            "original_swi_cases": plan.new_rows.len(), "decoded_output_bytes": decoded_output_bytes,
+            "mixed_mirror_checks": mirror_checks, "full_state_and_clock_equal": true,
+            "predecessor_attach": true, "missing_spans_rejected": true,
+        })).unwrap(),
+    ).unwrap();
+}
 
 fn input(name: &str) -> PathBuf {
     PathBuf::from(std::env::var_os(name).unwrap_or_else(|| panic!("Missing {name}")))

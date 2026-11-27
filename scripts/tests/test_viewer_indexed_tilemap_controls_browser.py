@@ -59,14 +59,14 @@ class IndexedTilemapProjectionTest(unittest.TestCase):
         for invalid in (False, True):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory() as directory:
                 page = fixture(Path(directory), invalid=invalid); parts = page.parent / 'index.html.parts'
-                home, interface, world = map(payload, (page, parts / 'interface.html', parts / 'world.html'))
+                home, interface, world = map(payload, (page, parts / 'interface-maps.html', parts / 'world.html'))
                 row = next(item for item in home['resources'] if item['id'] == 'graphics.indexed-tilemap-controls')
-                self.assertEqual(row['viewer_scope'], 'interface')
+                self.assertEqual(row['viewer_scope'], 'interface-maps')
                 self.assertEqual(row['status'].startswith('Available'), not invalid)
                 self.assertEqual(bool(interface['indexed_tilemap_controls']), not invalid)
                 self.assertNotIn('indexed_tilemap_controls', home)
                 self.assertNotIn('indexed_tilemap_controls', world)
-                menu = next(item for item in home['wiki']['pages'] if item['id'] == 'interface')
+                menu = next(item for item in home['wiki']['pages'] if item['id'] == 'interface-maps')
                 self.assertEqual(any(item['id'] == 'indexed-tilemap-controls' for item in menu['sections']), not invalid)
 
 
@@ -75,7 +75,7 @@ class IndexedTilemapBrowserTest(unittest.TestCase):
     def test_forward_reverse_and_partial_links(self):
         with tempfile.TemporaryDirectory(prefix='viewer-indexed-maps-') as directory:
             work = Path(directory); page = fixture(work); parts = page.parent / 'index.html.parts'
-            browser = Chrome(work, parts / 'interface.html')
+            browser = Chrome(work, parts / 'interface-maps.html')
             try:
                 self.assertEqual(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s);
@@ -101,13 +101,13 @@ class IndexedTilemapBrowserTest(unittest.TestCase):
     def test_missing_and_ambiguous_maps_do_not_link(self):
         with tempfile.TemporaryDirectory(prefix='viewer-indexed-missing-') as directory:
             work = Path(directory); page = fixture(work, invalid_bank=True)
-            browser = Chrome(work, page.parent / 'index.html.parts/interface.html')
+            browser = Chrome(work, page.parent / 'index.html.parts/interface-maps.html')
             try:
                 self.assertTrue(browser.evaluate("!document.querySelector('#indexed-tilemap-slot-0 a') && !!document.querySelector('#indexed-tilemap-slot-1 a')"))
             finally:
                 browser.close()
         with tempfile.TemporaryDirectory(prefix='viewer-indexed-ambiguous-') as directory:
-            work = Path(directory); page = fixture(work); target = page.parent / 'index.html.parts/interface.html'
+            work = Path(directory); page = fixture(work); target = page.parent / 'index.html.parts/interface-maps.html'
             text = target.read_text(); start = text.index('const data = ') + len('const data = ')
             data, length = json.JSONDecoder().raw_decode(text[start:])
             data['extra_tilemaps']['stream_bank']['maps'].append(copy.deepcopy(data['extra_tilemaps']['stream_bank']['maps'][0]))

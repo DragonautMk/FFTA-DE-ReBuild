@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "extract-european-screen-update-tables",
+  "title": "Serve both European screen-update banks from extracted data",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 6,434 authenticated bytes in e361-d360 and bind both whole curve banks and nine reader literals at their original guest addresses. Preserve the grid owner, terminal aliases and e360 attachment."
+  ],
+  "validation": [
+    "Windows build 0lbhqdmu passes. Wine r83uzhez compares 48 grid links, every directory slot, all 150 steps per bank and 960 boundary reads after altering the ROM backing. Guest state and clock match and two invalid attachments preserve the live binding.",
+    "Wine a5b48qrh reconciles CLI creation, verification and immutable reuse of 163 files. It passes 17 input guards and drains Wine while reusing the reader test. The interrupted verifier's internal lease was archived after host checks."
+  ],
+  "limitations": [
+    "Controlled original readers only. Ordinary callbacks, translated execution, Linux, USA and native Windows remain on the recovery checklist. No performance checks."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/screen_update_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/screen_update_table_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_compact_catalog.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

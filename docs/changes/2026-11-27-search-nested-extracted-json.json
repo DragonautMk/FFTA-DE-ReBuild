@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "search-nested-extracted-json",
+  "title": "Search nested fields in extracted resource pages",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add cancellable, bounded case-insensitive searching of nested JSON field names and values across the full file or the selected subtree, with paginated results opening directly at their source paths.",
+    "Retain the existing array filter and lazy scoped resources; clear results on file replacement and indicate when a changed query leaves previous results displayed."
+  ],
+  "validation": [
+    "Synthetic viewer-deep-json-synthetic-d79ymiyx passed 12 tests including nested paths, scope, limits, cancellation, replacement, offline resource pages, navigation and prior filters.",
+    "Protected e356 viewer-deep-json-real-jnmjkl8b verified 128 and 412 matches in two real resources against independent traversal, preserving all 23 scoped payloads and matching 573 Python/Docker outputs.",
+    "Published 23 scoped pages, 146 resource pages and the ownership marker with preimages out/ffta-deep-json-before-n6plagou; retained 23 older resource pages and lazy assets.",
+    "Initial synthetic pyd8t82i used a resource page as the Chrome harness entry and failed to initialize; the corrected test navigated from the index."
+  ],
+  "limitations": [
+    "Structured search is limited to JSON files at most 8 MiB, 1000 matches and 256 nesting levels; browser numeric precision and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/tests/test_viewer_json_deep_search_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

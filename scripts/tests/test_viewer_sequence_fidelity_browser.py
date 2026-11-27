@@ -64,6 +64,8 @@ class ViewerSequenceFidelityTest(unittest.TestCase):
                     createOscillator(){throw Error('expected PCM')}
                   }
                   window.AudioContext=FakeContext;q('#sequence-audio>details').open=true;
+                  q('#sequence-use-tempo').checked=false;change(q('#sequence-use-tempo'));
+                  q('#sequence-frame-envelope').checked=false;change(q('#sequence-frame-envelope'));
                   q('#sequence-rate').value='10';q('#sequence-rate').dispatchEvent(new Event('input'));
                   const rows=[...q('#sequence-note-rows').rows];
                   if(rows.length!==2 || rows[0].cells[1].textContent!=='0' || rows[0].cells[2].textContent!=='5' ||

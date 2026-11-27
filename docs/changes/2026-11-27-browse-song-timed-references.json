@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-song-timed-references",
+  "title": "Browse candidate timed sound references for songs",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Show a collapsible, paginated list of nonzero timed sound words whose low 12 bits match the selected song directory ID, retaining source groups and raw flags.",
+    "Open and highlight the exact timed source row and slot, with copyable bookmarks and preserved existing playback controls."
+  ],
+  "validation": [
+    "Synthetic Chrome unit gae1ekm7 passed 11 of 13 cases; the corrected bookmark test passed mkb33kr3 and the timed-mix startup retry passed dbdxtwd5.",
+    "Protected e347 unit 5wm8kf2h authenticated 1142 source ranges, 569 rows and 570 candidate words across 284 IDs, exercised Chrome navigation, and matched 26 Python and Docker files.",
+    "Published 21 ignored wiki pages with guarded preimages while preserving existing scope payloads and resources."
+  ],
+  "limitations": [
+    "Candidate IDs do not establish live use; original scheduler behavior, exact audio fidelity, physical output and native Windows remain unverified."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_audio_references_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

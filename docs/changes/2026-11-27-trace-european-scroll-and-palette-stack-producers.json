@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-scroll-and-palette-stack-producers",
+  "title": "Trace European scroll and palette stack producers",
+  "kind": "docs",
+  "platforms": [
+    "European ROM, Windows CLI on Wine"
+  ],
+  "changes": [
+    "Traced eight scroll-shadow halfwords, all three direct getter selectors and the original palette command stack pointer vector. Authenticated all 230 published program headers, 1,135 commands, 25 producers and 503 signed component payloads.",
+    "Joined both palette switches and every selected literal to e351. Fifteen words (60 bytes) remain for the palette update, callback and list roots."
+  ],
+  "validation": [
+    "Wine i952tupg passes. It attests 1,276 new and 90 matched prior halfwords, passes 35 input guards and drains."
+  ],
+  "limitations": [
+    "Live scroll last writers, dynamic palette program provenance, both live task flag branches, original gameplay and generated execution, BIOS, Linux, USA and native Windows remain in the recovery checklist."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": []
+}

@@ -151,17 +151,21 @@ class SpecialUnitBrowserTest(unittest.TestCase):
                   q('#metadata14-variant').value='2';change(q('#metadata14-variant'));
                   if(!q('#metadata14-palette-detail').textContent.includes('source index 1') ||
                      !q('#metadata14-palette-detail').textContent.includes('destination bank 1'))throw Error('palette decoding');
-                  const target=q('#metadata14-sprites [data-sprite-mode="normal"]');
+                  const target=q('#metadata14-sprites [data-sprite-mode="normal"]'), alternate=q('#metadata14-sprites [data-sprite-mode="alternate"]');
                   if(!target || !target.href.includes('special_variant=2') || !target.href.includes('special_index=1'))throw Error('sprite link');
-                  return target.href;
+                  if(!alternate || !alternate.href.includes('/battle-alternate.html?'))throw Error('alternate sprite scope');
+                  return {normal:target.href,alternate:alternate.href};
                 })()''')
-                browser.command('Page.navigate', {'url': link})
+                browser.command('Page.navigate', {'url': link['normal']})
                 wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='battle' && document.querySelector('#equipment-sprite').value==='10'")
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),pixel=[...q('#equipment-pose').getContext('2d').getImageData(0,0,1,1).data].join(',');
                   return q('#equipment-catalog').value==='normal' && q('#equipment-frame').value==='1' &&
                     q('#equipment-palette').value==='special:2:1' && pixel==='0,0,255,255' && q('#equipment-sprites>details').open;
                 })()'''))
+                browser.command('Page.navigate', {'url': link['alternate']})
+                wait_for(browser, "typeof data !== 'undefined' && data.wiki.current==='battle-alternate' && document.querySelector('#equipment-sprite').value==='10'")
+                self.assertEqual(browser.evaluate("document.querySelector('#equipment-palette').value"), 'special:2:1')
             finally:
                 browser.close()
 

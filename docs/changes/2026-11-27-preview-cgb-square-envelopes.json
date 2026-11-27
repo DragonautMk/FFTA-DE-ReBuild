@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-cgb-square-envelopes",
+  "title": "Preview stored CGB square envelopes",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Apply extracted CGB square attack, decay, sustain and release to song, timed-source and WAV previews with a bounded normalized 64 Hz approximation.",
+    "Preserve the independent square-envelope checkbox across song changes and reloads, while retaining existing CGB and track mutes and PCM settings."
+  ],
+  "validation": [
+    "Synthetic viewer-cgb-envelope-synthetic-8h613hd5 passed 14 tests including actual WAV rendering, timed and live audio, late starts, persisted settings and regression checks; an initial incomplete fixture failed and was corrected.",
+    "Protected e354 viewer-cgb-envelope-real-x_eltxpp authenticated 2693 source ranges, 16 original driver halfwords and four CGB square tone words; two real tracks passed Chrome playback checks and 28 Python/Docker files matched.",
+    "Published 23 ignored pages with verified preimages out/ffta-cgb-envelope-before-45qx2r6i; preserved the 22 scoped payloads and lazy assets."
+  ],
+  "limitations": [
+    "Hardware clock phase, live gain and channel allocation, CGB wave and standalone instrument envelopes, full mixer effects and physical audio are approximate or unverified. Native Windows remains deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_cgb_square_envelope_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

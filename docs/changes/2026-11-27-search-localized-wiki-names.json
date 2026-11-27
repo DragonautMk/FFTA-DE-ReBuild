@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "search-localized-wiki-names",
+  "title": "Search localized wiki names across resource pages",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a navbar search for source-linked item, action, job metadata and region names with language and category filters, pagination and direct record links.",
+    "Generate a compact private name index in the ignored companion directory and load it only when the search panel opens; omit unverified references and preserve unknown glyphs as markers."
+  ],
+  "validation": [
+    "Synthetic unit ue3v2v_r passed 26 tests covering source gates, lazy loading, language selection, paging and item/action/job/region navigation.",
+    "Protected e347 unit 1tov3gy3 authenticated four source files and three ROM ranges, indexed 866 records, exercised four Chrome routes and preserved 22 scope payloads and 156 resources.",
+    "A real authenticated item/text fixture produced 28 identical Python/Docker files including the 191135-byte name asset; 23 ignored pages and the asset were published with guarded preimages.",
+    "Protected e347 Chrome unit 8m_fx21h compared all 4330 indexed language strings against the existing viewer labels with zero mismatches."
+  ],
+  "limitations": [
+    "Unknown glyphs remain marked; metadata names and conditional region references do not establish live roles or placements. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_index.html",
+    "scripts/viewer_name_search.js",
+    "scripts/viewer_navigation.js",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_name_search_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

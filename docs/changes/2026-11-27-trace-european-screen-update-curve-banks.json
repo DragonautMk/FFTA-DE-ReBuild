@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-screen-update-curve-banks",
+  "title": "Authenticate both European screen-update curve banks",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound 34 curves, two pointer directories, 48 grid links and nine reader literals. Preserve the original terminal step 150 aliases."
+  ],
+  "validation": [
+    "Wine 778c93rn audits 1,020 original halfwords and 61 direct references against e360. It identifies 6,434 unowned bytes, preserves both earlier owners and drains the server. The earlier census 5yetbvry is retained with its LZ77 word collision."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary callbacks, translated execution, Linux, USA and native Windows remain on the recovery checklist."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e358-background-screen-banks",
+  "title": "Browse European background screen maps",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Project five authenticated European screen tile blocks and their 3157 map cells into a collapsible offline viewer with cell provenance and 4-bit or 8-bit manual tile and palette interpretation.",
+    "Model the original map builder replacing only exact 0x03FF entries with 0x0000 while retaining flagged entries, and exclude the extra row outside the declared third screen.",
+    "Refresh the private scoped wiki with the independently source-checked e358 candidate while preserving prior resources, existing links and lazy assets."
+  ],
+  "validation": [
+    "Synthetic viewer-e358-synthetic-8tjy9w2q passed 19 checks including pixels, flips, palettes, tile depths, exact replacement, navigation, source guards and prior viewer behavior; initial 5fl81rb9 expected the wrong guard for an overlapping test range.",
+    "Protected viewer-e358-source-visual-8prc_syk and viewer-e358-real-6yl44929 checked all 72080 new source bytes and compared 1616384 RGBA bytes across ten independent Chrome previews.",
+    "The real unit compared all 158 previous resources and matched 575 Python/Docker output files; published 23 wiki pages, one resource page and the ownership marker with verified preimages out/ffta-e358-before-1nm3r21b."
+  ],
+  "limitations": [
+    "The e358 candidate is independently source-authenticated for this viewer; separate Wine runtime test g1iu0n_6 failed in its reader fixture and remains unaccepted. Original tile depth, palettes and scene use are not established; native Windows is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_background_screen_banks_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}
