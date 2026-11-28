@@ -6,13 +6,12 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROMDATA-VIEWER-PALETTE
 
-- State: active
+- State: suspended
 - Outcome: partial
-- Selection: VIEWER-E377-INLINE-TEXT.
-- Verified: e377 `sognrooh` PASS; 35 strings, six shared, glyph pairs.
-- Deliver: scoped decoded text, fallback, settings and badges; Chrome/ROM/Docker.
-- Missing: parent audio/names, timing/composition and Windows.
-- Resume: decode proven sources, test and guarded publish; stop at PASS. Risk: encoding/fallback.
+- Selection: VIEWER-E377-INLINE-TEXT, paused by user.
+- Verified: e377 `sognrooh`, text/fallback/settings and 20 synthetic tests `0q1ifj65` PASS.
+- Missing: real proof, publication, memory/checks; parent audio/names, timing/composition and Windows.
+- Resume: only on request. `/tmp/ffta-e377-inline-real.py` unrun; wiki e376. Code: `scripts/viewer_inline_ui.py` and its test.
 
 ## Running or suspended tasks
 
@@ -35,7 +34,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
 - E260 owns E248; E302 e275 `idrflo71` zero residual, Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - E401 ties E291 White Flowers 3,600 code bytes to E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 zero residual (`3blfucoi`/`dnr49xgd`/`_z04mity`).
@@ -195,9 +194,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E651 source census for EUR 080d80e0 rectangles.
-- Last verified result: e377 sognrooh PASS. E626 lists 67 calls.
-- Remaining work: Bound residual banks and attest original inputs on Wine.
-- Errors or blockers: Resolve indirect inputs and preserve earlier owners.
-- Next action: Trace profiles, rank full bank extents, audit ownership.
-- References: E626/E649. Ordinary, translated and ports open.
+- Task: E651 EUR rectangle census suspended by user.
+- Last verified result: e377 PASS. Static census 67 calls, 50 rectangles.
+- Remaining work: Wine attestation and ownership, then managed runtime.
+- Errors or blockers: Paused. No E651 Wine run or build launched.
+- Next action: On resume verify the 860-byte candidate on managed Wine.
+- References: stage/e651-validation/proof.py. Ordinary and ports open.
