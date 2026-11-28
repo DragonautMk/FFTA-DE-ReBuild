@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-indexed-compact-obj-bank",
+  "title": "Trace the European indexed compact OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM through Wine"
+  ],
+  "changes": [
+    "Trace six counted descriptor lists and their parameter tables to six complete previously owned compact OBJ banks."
+  ],
+  "validation": [
+    "Wine s78334a2 attests 512 reader halfwords. Source unit 07odgpr4 verifies 20 descriptors and 357 physical lists and joins 12,097 bytes against e384. It identifies 606 unowned bytes. All 23 input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Runtime publication, live selector domains, ordinary and translated execution, native Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

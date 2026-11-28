@@ -649,13 +649,11 @@ changing another agent's selected goal.
   leave 424 unowned bytes. All 120 lists and 20 sequences in the six
   child banks have owners in e383.
   [Evidence](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank).
-- [ ] **ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK** publishes all three
-  setup spans and verifies the original count and child argument
-  readers with altered backing. Check the linked bank and rectangle
-  owners, guest equivalence and predecessor attachment.
-  E665 stages the implementation for e384. At the requested pause,
-  build `u4v8yayu` had no terminal receipt and the Wine check had
-  yet to start. Reconcile the existing build before launch on resume.
+- [x] **ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK** passes its scoped
+  EUR/Wine proof in E665 `ele8cbkv`. e384 serves 424 bytes. Original
+  count and child readers, linked owners, guest state and clock, e383
+  attachment and CLI reuse pass. Stage `lcbjyc24` retains 183 files.
+  [Evidence](../rom_data_compact_catalog.md#e665-european-compact-obj-setups-at-runtime).
 - [ ] **ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK-ORDINARY** verifies
   both original callers' live selector domains, complete scheduling,
   rendering and translated execution.
@@ -664,6 +662,24 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-05-COMPACT-OBJ-SETUP-BANK-USA** authenticates the
   regional setups and linked banks before testing. Native Windows
   remains open.
+- [x] **ROMDATA-01-EUR-INDEXED-COMPACT-OBJ-BANK** passes its scoped
+  source proof in E666 `07odgpr4`. Six counted lists with 20
+  descriptors and their parameter tables contribute 606 unowned
+  bytes. All six descendant banks are owned in e384.
+  [Evidence](../rom_data_compact_catalog.md#e666-european-indexed-compact-obj-bank).
+- [ ] **ROMDATA-04-EUR-INDEXED-COMPACT-OBJ-BANK** publishes the
+  seven source spans and verifies both original selectors, descriptor
+  and parameter consumers, prior owners, guest equivalence and e384
+  attachment with altered backing. E667 stages these spans for e385.
+  Windows build `hfft9uyv` passes. Wine validation is pending.
+- [ ] **ROMDATA-04-EUR-INDEXED-COMPACT-OBJ-BANK-ORDINARY** establishes
+  live selector domains, complete scheduling, rendering and translated
+  execution for both original callers.
+- [ ] **ROMDATA-05-EUR-INDEXED-COMPACT-OBJ-BANK-LINUX** repeats the
+  source, publication and affected reader checks on native Linux.
+- [ ] **ROMDATA-05-INDEXED-COMPACT-OBJ-BANK-USA** authenticates the
+  regional descriptor tables, banks and readers. Native Windows is
+  also pending.
 - [x] **ROMDATA-01-EUR-QUEUED-MATRIX-SOURCES** passes its scoped proof
   in E653 `uhq5u4zf`. Wine `tuz9kwhe` attests two seven-row maps,
   a four-row initializer and 13 original source literals. The e378

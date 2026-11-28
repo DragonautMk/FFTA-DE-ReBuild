@@ -194,9 +194,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E665 EUR compact OBJ setup publication paused by user.
-- Last verified result: E664 q9vmouo1 PASS and drained. e383 still current.
-- Remaining work: e384 build receipt and Wine readers, attachment and CLI. E655, ordinary/translated and ports open.
-- Errors or blockers: Build u4v8yayu receipt running, handle 52448 unavailable. Preserve its lease.
-- Next action: Only on resume, reconcile the existing build before any restart or Wine launch.
-- References: stage/e665-validation; compact catalog guide; recovery checklist.
+- Task: E667 EUR indexed OBJ runtime paused by user.
+- Last verified result: E666 Wine 07odgpr4 and E667 build hfft9uyv PASS.
+- Remaining work: e385 Wine readers/CLI. E655, live/translated and ports open.
+- Errors or blockers: None within E667. The shared Wine lease is free.
+- Next action: On resume, verify hfft9uyv binaries and run the protected Wine stage.
+- References: stage/e667-validation; compact catalog guide; recovery checklist.

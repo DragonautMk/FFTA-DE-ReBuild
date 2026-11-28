@@ -18,9 +18,19 @@ const SETUP_SOURCES: [(Range<u32>, &str); 3] = [
     (0x0e66e8..0x0e66ec, "compact-obj-setup-literal"),
     (SETUP_START..SETUP_END, "compact-obj-setup-records"),
 ];
+const INDEXED_SOURCES: [(Range<u32>, &str); 7] = [
+    (0x0e76d4..0x0e76e4, "indexed-obj-reader-literals"),
+    (0x0e7868..0x0e787c, "indexed-obj-reader-literals"),
+    (0x0e7880..0x0e7884, "indexed-obj-reader-literals"),
+    (0x0e7948..0x0e794c, "indexed-obj-reader-literals"),
+    (0x39b5b8..0x39b7b9, "indexed-obj-descriptors-and-selectors"),
+    (0x39b7c8..0x39b7ce, "indexed-obj-parameters"),
+    (0x39b7d0..0x39b7fb, "indexed-obj-parameters"),
+];
 const PACKED_BYTES: u64 = 93_964;
 const SETUP_BYTES: u64 = (SETUP_END - SETUP_START) as u64 + 8;
-pub(super) const MAX_PACKED_BYTES: u64 = PACKED_BYTES + SETUP_BYTES;
+const INDEXED_BYTES: u64 = 606;
+pub(super) const MAX_PACKED_BYTES: u64 = PACKED_BYTES + SETUP_BYTES + INDEXED_BYTES;
 
 fn zero_bytes(rom: &[u8], range: Range<u32>) -> bool {
     rom.get(range.start as usize..range.end as usize)
@@ -225,11 +235,58 @@ fn verify_setups(rom: &[u8], banks: &BTreeMap<u32, usize>) -> Result<(), String>
     Ok(())
 }
 
+fn verify_indexed_descriptors(rom: &[u8], banks: &BTreeMap<u32, usize>) -> Result<(), String> {
+    let literals = [
+        (0x0e76d4, 0x39b7b3),
+        (0x0e76d8, 0x39b7a4),
+        (0x0e76dc, 0x39b7d0),
+        (0x0e76e0, 0x39b7f8),
+        (0x0e7868, 0x39b7b0),
+        (0x0e786c, 0x39b798),
+        (0x0e7870, 0x39b7bc),
+        (0x0e7874, 0xb47d44),
+        (0x0e7878, 0x39b7cb),
+        (0x0e7880, 0x39b7c8),
+        (0x0e7948, 0x39b7b6),
+    ];
+    for (at, target) in literals {
+        if word(rom, at)? != ROM_BASE + target {
+            return Err("Invalid indexed compact OBJ reader literal".into());
+        }
+    }
+    let starts = [
+        0x39b5b8, 0x39b5e8, 0x39b660, 0x39b6c0, 0x39b708, 0x39b750, 0x39b798,
+    ];
+    let counts = [2u8, 5, 4, 3, 3, 3];
+    let roots = [0x6b5cf8, 0x6b6448, 0x6b6e4c, 0x6b5358, 0x6b551c, 0x6b5828];
+    if rom.get(0x39b7b0..0x39b7b6) != Some(counts.as_slice()) {
+        return Err("Invalid indexed compact OBJ descriptor counts".into());
+    }
+    for (index, ((&start, &count), &root)) in
+        starts[..6].iter().zip(&counts).zip(&roots).enumerate()
+    {
+        if word(rom, 0x39b798 + 4 * index as u32)? != ROM_BASE + start
+            || starts[index + 1] - start != DESCRIPTOR_BYTES * u32::from(count)
+        {
+            return Err("Invalid indexed compact OBJ descriptor directory".into());
+        }
+        for at in (start..starts[index + 1]).step_by(DESCRIPTOR_BYTES as usize) {
+            let sequence = usize::from(half(rom, at + 4)?);
+            if word(rom, at)? != ROM_BASE + root || !banks.get(&root).is_some_and(|&n| sequence < n)
+            {
+                return Err("Invalid indexed compact OBJ descriptor selection".into());
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Preserve earlier owners while publishing the physical banks and setup data.
 pub(super) fn uncovered_ranges(
     rom: &[u8],
     resources: &[Resource],
     include_setups: bool,
+    include_indexed: bool,
 ) -> Result<Vec<(Range<u32>, &'static str)>, String> {
     let mut bank_ranges = Vec::new();
     let banks = physical_banks(rom, &mut bank_ranges)?;
@@ -300,6 +357,16 @@ pub(super) fn uncovered_ranges(
             ranges.push((range, role));
         }
         packed_bytes += SETUP_BYTES;
+    }
+    if include_indexed {
+        verify_indexed_descriptors(rom, &banks)?;
+        for (range, role) in INDEXED_SOURCES {
+            if prior.uncovered(range.clone()) != [range.clone()] {
+                return Err("Unexpected indexed compact OBJ source owner".into());
+            }
+            ranges.push((range, role));
+        }
+        packed_bytes += INDEXED_BYTES;
     }
     ranges.sort_unstable_by_key(|(range, _)| range.start);
     if ranges

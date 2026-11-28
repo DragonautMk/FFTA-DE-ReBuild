@@ -1101,6 +1101,8 @@ mod physical_compact_obj_region_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod compact_obj_setup_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
+mod indexed_compact_obj_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod screen_update_table_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod counted_effect_table_tests;

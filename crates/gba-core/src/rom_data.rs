@@ -193,8 +193,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 384;
-pub const DECODER_REV: u32 = 383;
+pub const EXTRACTOR_REV: u32 = 385;
+pub const DECODER_REV: u32 = 384;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -277,6 +277,7 @@ const PRE_WORLD_MAP_LABELS_REVISION: (u32, u32) = (380, 379);
 const PRE_FLASH_AND_DIVISION_TABLES_REVISION: (u32, u32) = (381, 380);
 const PRE_LOCALIZED_TEXT_IDS_REVISION: (u32, u32) = (382, 381);
 const PRE_COMPACT_OBJ_SETUP_BANK_REVISION: (u32, u32) = (383, 382);
+const PRE_INDEXED_COMPACT_OBJ_BANK_REVISION: (u32, u32) = (384, 383);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -1567,7 +1568,8 @@ impl Extraction {
             | PRE_WORLD_MAP_LABELS_REVISION
             | PRE_FLASH_AND_DIVISION_TABLES_REVISION
             | PRE_LOCALIZED_TEXT_IDS_REVISION
-            | PRE_COMPACT_OBJ_SETUP_BANK_REVISION) => previous,
+            | PRE_COMPACT_OBJ_SETUP_BANK_REVISION
+            | PRE_INDEXED_COMPACT_OBJ_BANK_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2996,6 +2998,7 @@ impl Extraction {
             if revision > PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION {
                 let ranges = physical_compact_obj_region::uncovered_ranges(
                     rom, &result.manifest.resources, revision > PRE_COMPACT_OBJ_SETUP_BANK_REVISION,
+                    revision > PRE_INDEXED_COMPACT_OBJ_BANK_REVISION,
                 )?;
                 let (encoded, sources) = pack_encoded_sources(rom, ranges);
                 result.manifest.coverage.push(PHYSICAL_COMPACT_OBJ_REGION_ID.into());

@@ -322,6 +322,19 @@ and rectangle companion. Two literals and the setup table account
 for 424 unowned bytes.
 [Evidence](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank).
 
+**ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK** passes its scoped EUR/Wine
+proof in E665. e384 serves the complete setup table and literals.
+Original count and child argument readers, prior owners, e383
+attachment, guest state and CLI reuse pass with altered backing.
+[Evidence](../rom_data_compact_catalog.md#e665-european-compact-obj-setups-at-runtime).
+
+**ROMDATA-01-EUR-INDEXED-COMPACT-OBJ-BANK** passes its scoped
+source proof in E666. Six counted descriptor lists and their
+parameter tables connect to six complete existing animation banks
+with 357 OBJ lists and 24 sequences. The e384 join identifies 606
+unowned bytes in seven spans.
+[Evidence](../rom_data_compact_catalog.md#e666-european-indexed-compact-obj-bank).
+
 **ROMDATA-01-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E635 bounds
 all 248 directory entries and 36,072 physical cells, including the
 4,934 referenced sequences and their complete OBJ list and pixel

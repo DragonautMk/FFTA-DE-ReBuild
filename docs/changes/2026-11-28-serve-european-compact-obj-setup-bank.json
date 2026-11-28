@@ -2,7 +2,7 @@
   "schema": 1,
   "date": "2026-11-28",
   "slug": "serve-european-compact-obj-setup-bank",
-  "title": "Stage the European compact OBJ setups for runtime",
+  "title": "Serve the European compact OBJ setup bank",
   "kind": "changed",
   "platforms": [
     "European ROM through Wine"
@@ -12,10 +12,12 @@
     "Add a focused check for the original reader and child constructor inputs, previous dataset attachment, and source tampering."
   ],
   "validation": [
-    "E664 q9vmouo1 verified the full source bank under Wine. E665 formatting and whitespace checks passed. The Windows CLI compiled."
+    "E664 q9vmouo1 verified the source bank under Wine. Windows build q_1y_cux and Wine ele8cbkv pass all setup and child reader checks, 288 mixed boundary accesses, previous attachment, rejection checks and full guest state and clock.",
+    "The CLI creates, verifies and reuses 183 files with 181 other resources unchanged. Stage lcbjyc24 retains the verified e384 dataset. The Wine server drains and all 17 protected input guards pass.",
+    "The interrupted cotxdxxq Wine prefix lease was recovered after host process and 17 input checks and a successful server drain. Its lease and receipt are preserved in stage/e665-validation/recovery/cotxdxxq."
   ],
   "limitations": [
-    "The E665 Windows build unit had no terminal receipt at the user-requested pause. The Wine test and CLI lifecycle, ordinary use, translated execution, Linux, USA and native Windows remain pending."
+    "Live selector domains, complete ordinary scheduling and rendering, translated execution, native Linux, USA and native Windows remain pending."
   ],
   "files": [
     "crates/gba-core/src/rom_data.rs",

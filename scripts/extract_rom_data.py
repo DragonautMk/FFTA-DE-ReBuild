@@ -13,7 +13,7 @@ DESCRIPTIONS = {
     'localized-inline-ui.bin': 'European localized interface text, shared strings and threshold glyphs',
     'screen-effect-motion.bin': 'European screen effect schedules, motion records and scanline profiles',
     'physical-tone-banks.bin': 'European physical instrument tones and additional PCM/CGB waves',
-    'physical-compact-obj-banks.bin': 'European physical compact object animation banks and setup records',
+    'physical-compact-obj-banks.bin': 'European physical compact object banks, setup records and indexed descriptors',
     'localized-obj-animation-banks.bin': 'European localized object animation indices, frames, layouts and graphics',
     'background-effect-graphics.bin': 'European background effect tiles and tilemaps',
     'tilemap-transfer-lz77.bin': 'Compressed European tilemap transfer inputs',

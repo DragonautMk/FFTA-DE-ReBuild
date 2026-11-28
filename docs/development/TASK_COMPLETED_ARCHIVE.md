@@ -30373,3 +30373,19 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: Eight physical setup rows and two literals round-trip. Both direct call sites, eleven child uses and all six descendant banks are attested. e383 owns 4,648 of 5,072 projected bytes. The three setup spans account for 424 unowned bytes.
 - Evidence: `stage/e614-validation/wine/target/validation/units/e664-eur-compact-obj-setup-source-wine-q9vmouo1`, Wine PASS and server drained. Proof `fc02fbbcdfa663786970943bfd9d827a8d097249a8698a0fc727fd36fb2dbd92`. Read-only preflight `9dc0wsjb` stopped before the shared lease.
 - Limits: Original live selector producers, runtime attachment, ordinary and translated paths, Linux, USA and native Windows remain open.
+
+
+### E665-EUR-COMPACT-OBJ-SETUP-RUNTIME
+
+- Outcome: completed
+- Verified criteria: European e384 adds 424 setup bytes, preserves e383 attachment and 181 other resources, and passes original readers, child headers, boundaries, altered backing, full state/clock and CLI creation/verification/reuse on Wine.
+- Evidence: Build `q_1y_cux`, Wine `ele8cbkv`, retained stage `lcbjyc24`, result SHA-256 `1bf9f2a6302eeab534a348a5c7df012fc20e653c603ffb266379df53d657e43c`, [guide](../rom_data_compact_catalog.md#e665-european-compact-obj-setups-at-runtime). All 17 guards pass and server drains.
+- Limits: Original live selector domains, complete scheduling and rendering, translated execution, native Linux, USA and native Windows remain open. Interrupted `cotxdxxq` has a preserved recovery receipt and prefix lease after host checks and a successful drain.
+
+
+### E666-EUR-INDEXED-COMPACT-OBJ-BANK-SOURCE
+
+- Outcome: completed
+- Verified criteria: Six original counted descriptor lists and related parameter arrays connect 20 records to six complete previously owned banks with 357 lists and 24 sequences. The e384 join identifies 606 unowned bytes and preserves 11,491 owned bytes.
+- Evidence: Original readers `s78334a2`; Wine source `07odgpr4` PASS, 23 protected input guards pass and server drains. Source SHA-256 `98e53feb08523ff1a8891d0719e5ff8018bddd71c483d815912e932681a1d90a`, [guide](../rom_data_compact_catalog.md#e666-european-indexed-compact-obj-bank).
+- Limits: Runtime consumption, live index domains, complete ordinary and translated execution, native Linux, USA and native Windows remain open.

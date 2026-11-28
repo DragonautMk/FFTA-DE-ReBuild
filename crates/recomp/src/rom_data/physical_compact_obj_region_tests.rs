@@ -1,11 +1,11 @@
 //! Compare the original descriptor and animation readers for all E613 banks.
 use super::{
-    attach_dataset,
+    PHYSICAL_COMPACT_OBJ_REGION_ID, attach_dataset,
     direct_byte_copy_tests::{flip, input, same_state},
     indexed_reader_bank_tests::{execute_until, initialize},
-    read_dataset, PHYSICAL_COMPACT_OBJ_REGION_ID,
+    read_dataset,
 };
-use gba_core::{ffta_rom::digest, rom_data::SourceRange, Bus, Machine};
+use gba_core::{Bus, Machine, ffta_rom::digest, rom_data::SourceRange};
 use serde::Deserialize;
 use std::{collections::BTreeSet, fs, sync::Arc};
 
@@ -67,7 +67,7 @@ fn descriptors(plan: &Plan) -> BTreeSet<u32> {
         .collect()
 }
 
-fn descriptor_reader(machine: &mut Machine, rom: &[u8], at: u32) {
+pub(super) fn descriptor_reader(machine: &mut Machine, rom: &[u8], at: u32) {
     initialize(machine, 0x080d_89c6);
     machine.cpu.regs[6] = BASE + at;
     execute_until(machine, 0x080d_8a14, 80);
@@ -217,12 +217,14 @@ fn european_physical_compact_obj_region_feeds_original_readers() {
     let mut raw = Machine::new(rom.clone());
     let mut managed = Machine::new(rom.clone());
     attach_dataset(&mut managed, &previous).unwrap();
-    assert!(managed
-        .bus
-        .rom_resources()
-        .unwrap()
-        .physical_compact_obj_bus_bytes()
-        .is_none());
+    assert!(
+        managed
+            .bus
+            .rom_resources()
+            .unwrap()
+            .physical_compact_obj_bus_bytes()
+            .is_none()
+    );
     attach_dataset(&mut managed, &dataset).unwrap();
     let owner = managed.bus.rom_resources().unwrap().clone();
     (

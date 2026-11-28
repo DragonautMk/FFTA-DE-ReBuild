@@ -163,6 +163,26 @@ Documentation: [rom_data_text.md](docs/rom_data_text.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-inline-ui-text.json)
 
+## 2026-11-28 — Trace the European indexed compact OBJ bank
+
+Type: docs. Platforms: European ROM through Wine.
+
+**Changes**
+
+- Trace six counted descriptor lists and their parameter tables to six complete previously owned compact OBJ banks.
+
+**Validation**
+
+- Wine s78334a2 attests 512 reader halfwords. Source unit 07odgpr4 verifies 20 descriptors and 357 physical lists and joins 12,097 bytes against e384. It identifies 606 unowned bytes. All 23 input guards pass and Wine drains.
+
+**Limitations**
+
+- Runtime publication, live selector domains, ordinary and translated execution, native Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-indexed-compact-obj-bank.json)
+
 ## 2026-11-28 — Trace the European Flash and division tables
 
 Type: docs. Platforms: EUR / Windows GNU through Wine.
@@ -388,6 +408,28 @@ Documentation: [rom_data_text.md](docs/rom_data_text.md), [ROM_DATA_VALIDATION_R
 
 [Change record](docs/changes/2026-11-28-serve-european-localized-inline-ui-text.json)
 
+## 2026-11-28 — Stage the European indexed compact OBJ bank for runtime
+
+Type: changed. Platforms: European ROM through Wine.
+
+**Changes**
+
+- Stage the complete E666 indexed descriptor and parameter bank in the existing physical compact OBJ resource for e385 while retaining e384 extraction compatibility.
+- Exercise both original selectors, 20 descriptors, existing child banks and the callback copying both parameter records.
+
+**Validation**
+
+- E666 source and ownership proof 07odgpr4 passes on Wine. E667 Windows build hfft9uyv passes all 50 protected input guards.
+- Wine disassembly units ksqs3w1r and a5y3_kam attest the descriptor and parameter callbacks.
+
+**Limitations**
+
+- The E667 Wine reader and CLI lifecycle checks, ordinary and translated execution, native Linux, USA and native Windows remain pending. The user paused the task after the build.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-indexed-compact-obj-bank.json)
+
 ## 2026-11-28 — Serve the original European full-screen map
 
 Type: added. Platforms: EUR / Wine.
@@ -450,7 +492,7 @@ Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALI
 
 [Change record](docs/changes/2026-11-28-serve-european-direct-rectangle-bank.json)
 
-## 2026-11-28 — Stage the European compact OBJ setups for runtime
+## 2026-11-28 — Serve the European compact OBJ setup bank
 
 Type: changed. Platforms: European ROM through Wine.
 
@@ -461,11 +503,13 @@ Type: changed. Platforms: European ROM through Wine.
 
 **Validation**
 
-- E664 q9vmouo1 verified the full source bank under Wine. E665 formatting and whitespace checks passed. The Windows CLI compiled.
+- E664 q9vmouo1 verified the source bank under Wine. Windows build q_1y_cux and Wine ele8cbkv pass all setup and child reader checks, 288 mixed boundary accesses, previous attachment, rejection checks and full guest state and clock.
+- The CLI creates, verifies and reuses 183 files with 181 other resources unchanged. Stage lcbjyc24 retains the verified e384 dataset. The Wine server drains and all 17 protected input guards pass.
+- The interrupted cotxdxxq Wine prefix lease was recovered after host process and 17 input checks and a successful server drain. Its lease and receipt are preserved in stage/e665-validation/recovery/cotxdxxq.
 
 **Limitations**
 
-- The E665 Windows build unit had no terminal receipt at the user-requested pause. The Wine test and CLI lifecycle, ordinary use, translated execution, Linux, USA and native Windows remain pending.
+- Live selector domains, complete ordinary scheduling and rendering, translated execution, native Linux, USA and native Windows remain pending.
 
 Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 

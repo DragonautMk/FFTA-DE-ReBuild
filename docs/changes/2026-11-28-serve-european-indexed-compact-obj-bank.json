@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-indexed-compact-obj-bank",
+  "title": "Stage the European indexed compact OBJ bank for runtime",
+  "kind": "changed",
+  "platforms": [
+    "European ROM through Wine"
+  ],
+  "changes": [
+    "Stage the complete E666 indexed descriptor and parameter bank in the existing physical compact OBJ resource for e385 while retaining e384 extraction compatibility.",
+    "Exercise both original selectors, 20 descriptors, existing child banks and the callback copying both parameter records."
+  ],
+  "validation": [
+    "E666 source and ownership proof 07odgpr4 passes on Wine. E667 Windows build hfft9uyv passes all 50 protected input guards.",
+    "Wine disassembly units ksqs3w1r and a5y3_kam attest the descriptor and parameter callbacks."
+  ],
+  "limitations": [
+    "The E667 Wine reader and CLI lifecycle checks, ordinary and translated execution, native Linux, USA and native Windows remain pending. The user paused the task after the build."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/physical_compact_obj_region.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/physical_compact_obj_region_tests.rs",
+    "crates/recomp/src/rom_data/indexed_compact_obj_bank_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

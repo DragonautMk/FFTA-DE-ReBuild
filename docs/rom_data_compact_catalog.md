@@ -1387,8 +1387,74 @@ The sandbox preflight `9dc0wsjb` stopped at the read-only runtime
 directory before acquiring the shared Wine lease. The passing proof
 SHA-256 is `fc02fbbcdfa663786970943bfd9d827a8d097249a8698a0fc727fd36fb2dbd92`.
 
-E665 stages the three setup spans in the existing packed resource
-for `e384-d383`. Build and Wine acceptance are pending. The live
-setup indices, ordinary and translated paths and deferred platforms
-are tracked in the
+The live setup indices, ordinary and translated paths and deferred
+platforms are tracked in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E665 European compact OBJ setups at runtime
+
+European `e384-d383` adds the three setup spans to the existing
+physical compact OBJ resource. The original child banks and the
+rectangle directory keep their existing owners. The other 181
+resource files and their metadata are byte-identical to `e383-d382`.
+The previous dataset remains attachable through its original revision.
+
+Windows build `q_1y_cux` and Wine `ele8cbkv` pass. With setup,
+child-header and rectangle backing altered, the original readers
+cover all eight setup counts, 11 active child argument sets and six
+rectangle inputs. The check includes 288 mixed-width mirror and
+boundary accesses, the adjacent raw halfword and two invalid
+attachments. Complete guest state and clock match. The CLI creates,
+verifies and reuses all 183 files. All 17 input guards pass and the
+Wine server drains. The verified dataset is retained in stage
+`lcbjyc24` with manifest SHA-256
+`a322361de04e9df09c736a35a28b04945b716a9a4788e3d6656e4284a7e08e47`
+and resource SHA-256
+`eea81ae898c0c2495e3f22c45773aa20aeb49e967c71cd04196a313ff1af1ef6`.
+
+The first Wine unit `cotxdxxq` was interrupted after creation and
+verification. Host process checks found no owner, the server drained
+and all 17 protected inputs matched. Its prefix lease and recovery
+receipt remain under `stage/e665-validation/recovery/cotxdxxq`.
+The live producer domains, complete scheduling and rendering,
+translated execution and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E666 European indexed compact OBJ bank
+
+The original calls at `080e7656` and `080e7812` pass counted
+24-byte compact OBJ descriptors to `080d9ba8`. Six pointer slots at
+`39b798` select the lists beginning at `39b5b8`. The six physical
+counts at `39b7b0` are 2, 5, 4, 3, 3 and 3. Their 20 descriptors
+select six compact animation banks. Each descriptor round-trips
+all fields and its sequence index is within its selected physical
+bank. The original callers obtain indices from live task data, so
+their full producer domains remain open.
+
+The same reader window selects three delay bytes at `39b7b6`,
+two three-byte parameter arrays at `39b7c8`, two 20-byte parameter
+records at `39b7d0` and three further bytes at `39b7f8`. Eleven
+original literal words identify these sources and the already
+extracted blend and palette sources. Two adjacent literal words
+retain their audio-directory owner. The preceding map sources and
+the selected palette and tilemap stream keep their prior owners.
+
+Wine `s78334a2` attests 512 original halfwords. Source audit
+`07odgpr4` joins the complete six child banks to `e384-d383`.
+Their 357 OBJ lists contain 1,432 objects, and their 24 sequences
+contain 584 frames. Existing owners cover all 11,308 child bytes and
+183 companion bytes. The seven new spans contain 606 unowned bytes.
+All 23 input guards pass and Wine drains. The source proof SHA-256
+is `98e53feb08523ff1a8891d0719e5ff8018bddd71c483d815912e932681a1d90a`.
+
+Runtime publication, the live index producers, complete scheduling,
+translated execution and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E667 European indexed compact OBJ runtime in progress
+
+The seven E666 spans are staged in the existing physical compact OBJ
+resource for `e385-d384`. The preceding `e384-d383` extraction path
+remains available. Windows build `hfft9uyv` passes with all 50 input
+guards. Wine acceptance of the original descriptor readers, parameter
+callback, predecessor attachment and CLI lifecycle is pending.

@@ -2041,8 +2041,17 @@ and normal enablement retain their existing acceptance gates.
 - EUR [E664](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank)
   connects the eight setup records at `39ac9c` to six complete
   descendant OBJ banks and the existing rectangle directory.
-  Wine identifies 424 unowned setup and literal bytes. Publication,
-  live index producers and translated execution remain open.
+  [E665](../rom_data_compact_catalog.md#e665-european-compact-obj-setups-at-runtime)
+  serves the 424 setup and literal bytes in `e384-d383`, retained
+  in `lcbjyc24`. Wine verifies the original readers, state and clock,
+  e383 attachment and CLI reuse. Live index producers and translated
+  execution remain open.
+
+- EUR [E666](../rom_data_compact_catalog.md#e666-european-indexed-compact-obj-bank)
+  ties six indexed descriptor lists to complete previously owned OBJ
+  banks. Wine identifies 606 unowned descriptor, parameter and
+  literal bytes. Runtime publication and live index producers remain
+  open.
 
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining
