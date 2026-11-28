@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-queued-matrix-sources",
+  "title": "Trace the European queued matrix sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound two seven-row language maps and a four-row initializer used by original queued copies. Track the 16 remaining computed-source leads in the 39-call census."
+  ],
+  "validation": [
+    "Wine tuz9kwhe attests 817 original halfwords and reports 924 unowned bytes across ten spans against e378-d377. Protected reconciliation uhq5u4zf normalizes the interval representations and passes all 23 input guards using the retained Wine outputs."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary staging, translated execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

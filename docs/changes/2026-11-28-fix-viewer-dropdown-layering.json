@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "fix-viewer-dropdown-layering",
+  "title": "Keep viewer navigation menus visible across wrapped layouts",
+  "kind": "fixed",
+  "platforms": [
+    "Linux Chrome"
+  ],
+  "changes": [
+    "Raise the open wiki category above other navigation rows and prevent the generic open-summary margin from resizing the navbar.",
+    "Fit the open menu within the viewport on open and resize, including short mobile screens. Preserve existing category, link, outside-click and Escape behavior.",
+    "Publish the navigation-only CSS and JavaScript update to the 47 existing local e378-d377 wiki pages with verified preimages. Preserve each page payload and all unrelated viewer work."
+  ],
+  "validation": [
+    "A synthetic Chrome fixture reproduced the Audio menu below subsequent rows and a 16-pixel navbar expansion at 900 pixels. The corrected unit viewer-navbar-final-fgaujl71 passes six focused tests for index and topic pages, wrapped layouts, horizontal and vertical viewport bounds, resize, keyboard Escape and audio deep links.",
+    "Independently verified that all 47 published wiki pages match their preimages after only the intended CSS and JavaScript replacements. Both viewer templates embed the updated navigation sources."
+  ],
+  "limitations": [
+    "Chrome tests used synthetic viewer data. The existing generated wiki was verified bytewise; physical touch devices and native Windows were not exercised."
+  ],
+  "files": [
+    "scripts/viewer_navigation.css",
+    "scripts/viewer_navigation.js",
+    "scripts/tests/test_viewer_navbar_stacking_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/development/TASK_HANDOFF.md",
+    "docs/development/TASK_COMPLETED_ARCHIVE.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "scripts/viewer_navigation.css",
+    "scripts/viewer_navigation.js"
+  ]
+}

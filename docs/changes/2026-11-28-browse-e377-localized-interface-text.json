@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-e377-localized-interface-text",
+  "title": "Browse the European localized interface text",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the private wiki to e377-d376 and add a separate, dated page for localized interface text, shared strings and threshold glyphs.",
+    "Show physical and selected source offsets, support the language-3 fallback, and reuse pinned language, command visibility and font settings."
+  ],
+  "validation": [
+    "Synthetic viewer-e377-inline-synthetic-0q1ifj65 passed 20 tests. Protected viewer-e377-inline-real-eyawuvhz compared 886 bytes in 41 spans, 48 font glyphs and 35 language selections.",
+    "Preserved 44 prior topic payloads and 189 resource pages and matched 1120 Python and Docker files. Updated 48 local files with verified preimages in out/ffta-e377-inline-before-gcjk3mxj."
+  ],
+  "limitations": [
+    "The ordinary route and screen identities remain open. Native Windows validation is deferred."
+  ],
+  "files": [
+    "scripts/viewer_inline_ui.py",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_inline_ui.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_text.md"
+  ]
+}

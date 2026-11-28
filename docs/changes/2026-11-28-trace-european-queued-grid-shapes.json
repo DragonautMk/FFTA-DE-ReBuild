@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-queued-grid-shapes",
+  "title": "Trace the European queued grid shapes",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Windows GNU through Wine"
+  ],
+  "changes": [
+    "Follow the 32-row queue to its staging allocation and identify all eight shape records and three original table literals."
+  ],
+  "validation": [
+    "Wine 2bxsvzw_ attests 645 original halfwords and joins 44 unowned bytes against e379. Protected inputs and server drain pass."
+  ],
+  "limitations": [
+    "The event-zero descriptor writer, live flags, runtime publication, ordinary and translated use, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

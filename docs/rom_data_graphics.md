@@ -2792,6 +2792,63 @@ Live selector producers, ordinary use, translated execution, Linux,
 USA and native Windows remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
+## E651 European direct rectangle census
+
+The 67 direct call patterns to `080d80e0` include 58 literal-fed
+call sites with 64 source routes and eight indexed call sites.
+The counted path at `080db3aa` uses the existing
+[type-2 bank](rom_data_runtime.md#e601-european-physical-type-2-rectangle-bank-census).
+The direct paths identify 50 distinct rectangles with 1,854 physical
+cells, six directories with 34 slots, and five row-selector sources.
+The 71 PC-relative words preserve both direct and indexed arguments.
+
+The six directories use adjacent source boundaries, including the
+separate selector at `39fa40` and palettes at `3a4a50`. The original
+constructor at `080f6ba0..080f6bbe` supplies eight selector values to
+`39fa20`. Its eight physical pointers all select the seven-row
+rectangle at `ae8c64`, and its companion array selects the input row.
+Other tables include the six eight-byte records at `39ae3c` and the
+five physical pointers at `3a4a3c`.
+
+Wine `jtmuwp4o` verifies 364 original halfwords and checks ownership
+against `e377-d376`. Seven existing resources own 3,417 bytes of the
+4,277-byte projection. The 66 remaining spans contain 860 bytes. They
+include 504 bytes for 12 rectangles, 108 directory bytes, eight
+row-selector bytes and 60 original literal words. All 17 input guards
+pass and the Wine server drains. The source proof SHA-256 is
+`59b7c6586e4a4327e5628b7c5e0ceeeb0bc8128c519a5c769aedea726eb26214`.
+Runtime publication, ordinary producer domains, translated execution
+and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E652 European direct rectangle bank at runtime
+
+Dataset `e378-d377` stores the 66 E651 spans in `direct-rectangle-bank.bin`
+as `graphics.direct-rectangle-bank`. The seven other owners complete
+the direct rectangle projection. The cartridge bus maps all 860 new
+bytes at their original addresses, including pointer words and row selectors.
+
+Windows GNU build `g6f4utlg` and Wine `pabgc3t3` pass the scoped
+comparison. The test alters all 860 backing bytes in its managed ROM
+copy. It executes 71 original literal loads, copies all 240 cells of the
+12 new rectangles, and invokes the six-row caller at `080dc888`.
+Original code also copies rows for all 21 slots in the four new
+directories and eight alternate-source cases. Both map buffers retain
+their guard bytes. The original code reads 1,522 bytes from the new
+owner. All 6,336 boundary and mirror comparisons pass, and complete
+guest state and clock match.
+
+The Wine CLI creates, verifies and reuses all 180 files, with all 178
+e377 resources byte-exact. e377 still attaches. The loader rejects
+both an incomplete e378 attachment and an altered file with its digest
+recomputed. All 17 Wine input guards pass and the server drains. The
+retained stage is `e652-e378-stage-gdwi0fkb`, with manifest SHA-256
+`3a5c334c162494ea8aa178b508380740cdfdb32ec6723d2257124f47a0e2aa2f`.
+
+Ordinary reachability, wider producer and selector domains, translated
+execution, Linux, USA and native Windows remain on the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## Other raw UI palette sources
 
 [EUR e20raw UI palettes](rom_data_ui_palettes.md) add a separate21-bank source

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "include-localized-interface-text-in-archive-search",
+  "title": "Find localized interface text across archives",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add localized interface text to the combined search through an 11298-byte on-demand companion. Links open physical strings and highlighted shared rows.",
+    "Retain the saved language-3 fallback preference when following a link to the physical entry. Add dated badges to the affected disclosures."
+  ],
+  "validation": [
+    "viewer-inline-global-synthetic-vfwvz5wm passed 18 tests. The earlier fq35xrv6 run showed that shared-row navigation needed an explicit highlight.",
+    "Protected viewer-inline-global-real-08eq1ynm compared all 41 search entries, checked the language-3 filter and result link, preserved prior payloads and matched 1121 Python and Docker files.",
+    "Updated 47 ignored wiki files with verified preimages in out/ffta-inline-global-before-b7mlvmnf."
+  ],
+  "limitations": [
+    "Recognition follows the existing European glyph mapping. Native Windows validation is deferred."
+  ],
+  "files": [
+    "view_rom_data.html",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_inline_ui.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

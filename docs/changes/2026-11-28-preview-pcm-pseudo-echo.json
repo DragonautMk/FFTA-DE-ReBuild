@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "preview-pcm-pseudo-echo",
+  "title": "Preview the stored PCM pseudo-echo tail",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Docker"
+  ],
+  "changes": [
+    "Authenticate the European PCM echo callbacks and retain the stored level and length on subsequent notes. Add a dated disclosure, song links and a persistent comparison toggle for frame-stepped song playback, timed audition and WAV export."
+  ],
+  "validation": [
+    "The initial synthetic unit 9uj6p28d passed 14 tests. Focused retry na0g75oy corrected the page-ready wait and passed actual live, timed and WAV checks and setting persistence.",
+    "Real unit _g7ic8r6 verified the original field transfer and four commands. Songs 114 and 116 produced different PCM samples at 400 manual ticks per second and identical samples at song tempo. All 1,123 Python and Docker files matched.",
+    "Updated 47 ignored local pages with verified preimages in out/ffta-viewer-pcm-echo-before-q2v7o6l2. The 191 resource pages match."
+  ],
+  "limitations": [
+    "Short PCM samples can finish before the tail starts. Physical output and exact live mixing remain unverified. Native Windows stays deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "view_rom_data.html",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_pcm_echo_browser.py",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

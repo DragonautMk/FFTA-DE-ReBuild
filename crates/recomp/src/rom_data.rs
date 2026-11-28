@@ -146,6 +146,9 @@ use gba_core::rom_data::{
     SAVE_CRC32_TABLE_FILE, SAVE_CRC32_TABLE_ID, MAX_SAVE_CRC32_TABLE_FILE_BYTES,
     SCREEN_EFFECT_MOTION_FILE, SCREEN_EFFECT_MOTION_ID, MAX_SCREEN_EFFECT_MOTION_FILE_BYTES,
     LOCALIZED_INLINE_UI_FILE, LOCALIZED_INLINE_UI_ID, MAX_LOCALIZED_INLINE_UI_FILE_BYTES,
+    DIRECT_RECTANGLE_BANK_FILE, DIRECT_RECTANGLE_BANK_ID, MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES,
+    QUEUED_MATRIX_SOURCES_FILE, QUEUED_MATRIX_SOURCES_ID, MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES,
+    MENU_SELECTION_BANKS_FILE, MENU_SELECTION_BANKS_ID, MAX_MENU_SELECTION_BANKS_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -1128,6 +1131,14 @@ mod save_crc32_table_tests;
 mod screen_effect_motion_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod localized_inline_ui_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod direct_rectangle_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod queued_matrix_sources_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod menu_selection_banks_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod world_map_labels_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -2116,6 +2127,9 @@ struct Dataset {
     save_crc32_table_bytes: Option<Vec<u8>>,
     screen_effect_motion_bytes: Option<Vec<u8>>,
     localized_inline_ui_bytes: Option<Vec<u8>>,
+    direct_rectangle_bank_bytes: Option<Vec<u8>>,
+    queued_matrix_sources_bytes: Option<Vec<u8>>,
+    menu_selection_banks_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2304,6 +2318,9 @@ impl Dataset {
             save_crc32_table: self.save_crc32_table_bytes.as_deref(),
             screen_effect_motion: self.screen_effect_motion_bytes.as_deref(),
             localized_inline_ui: self.localized_inline_ui_bytes.as_deref(),
+            direct_rectangle_bank: self.direct_rectangle_bank_bytes.as_deref(),
+            queued_matrix_sources: self.queued_matrix_sources_bytes.as_deref(),
+            menu_selection_banks: self.menu_selection_banks_bytes.as_deref(),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2804,6 +2821,39 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
             )
         })
         .transpose()?;
+    let direct_rectangle_bank_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == DIRECT_RECTANGLE_BANK_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(DIRECT_RECTANGLE_BANK_FILE),
+                MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let queued_matrix_sources_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == QUEUED_MATRIX_SOURCES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(QUEUED_MATRIX_SOURCES_FILE),
+                MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let menu_selection_banks_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == MENU_SELECTION_BANKS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(MENU_SELECTION_BANKS_FILE),
+                MAX_MENU_SELECTION_BANKS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -3010,6 +3060,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         save_crc32_table_bytes.as_ref().map_or(0, Vec::len),
         screen_effect_motion_bytes.as_ref().map_or(0, Vec::len),
         localized_inline_ui_bytes.as_ref().map_or(0, Vec::len),
+        direct_rectangle_bank_bytes.as_ref().map_or(0, Vec::len),
+        queued_matrix_sources_bytes.as_ref().map_or(0, Vec::len),
+        menu_selection_banks_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -3489,6 +3542,9 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         save_crc32_table_bytes,
         screen_effect_motion_bytes,
         localized_inline_ui_bytes,
+        direct_rectangle_bank_bytes,
+        queued_matrix_sources_bytes,
+        menu_selection_banks_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3677,6 +3733,9 @@ fn check_dataset_budget(
     save_crc32_table: usize,
     screen_effect_motion: usize,
     localized_inline_ui: usize,
+    direct_rectangle_bank: usize,
+    queued_matrix_sources: usize,
+    menu_selection_banks: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3853,6 +3912,9 @@ fn check_dataset_budget(
         || save_crc32_table as u64 > MAX_SAVE_CRC32_TABLE_FILE_BYTES
         || screen_effect_motion as u64 > MAX_SCREEN_EFFECT_MOTION_FILE_BYTES
         || localized_inline_ui as u64 > MAX_LOCALIZED_INLINE_UI_FILE_BYTES
+        || direct_rectangle_bank as u64 > MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES
+        || queued_matrix_sources as u64 > MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES
+        || menu_selection_banks as u64 > MAX_MENU_SELECTION_BANKS_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -4035,6 +4097,9 @@ fn check_dataset_budget(
         .saturating_add(save_crc32_table)
         .saturating_add(screen_effect_motion)
         .saturating_add(localized_inline_ui)
+        .saturating_add(direct_rectangle_bank)
+        .saturating_add(queued_matrix_sources)
+        .saturating_add(menu_selection_banks)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -4465,6 +4530,24 @@ fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<
     if let Some(bytes) = &dataset.localized_inline_ui_bytes {
         println!(
             "ROM_DATA runtime=encoded resource={LOCALIZED_INLINE_UI_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.direct_rectangle_bank_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={DIRECT_RECTANGLE_BANK_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.queued_matrix_sources_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={QUEUED_MATRIX_SOURCES_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.menu_selection_banks_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={MENU_SELECTION_BANKS_ID} source_bytes={}",
             bytes.len()
         );
     }
@@ -5190,6 +5273,9 @@ fn write_dataset_inner(
     let save_crc32_table_data = source.save_crc32_table.clone();
     let screen_effect_motion_data = source.screen_effect_motion.clone();
     let localized_inline_ui_data = source.localized_inline_ui.clone();
+    let direct_rectangle_bank_data = source.direct_rectangle_bank.clone();
+    let queued_matrix_sources_data = source.queued_matrix_sources.clone();
+    let menu_selection_banks_data = source.menu_selection_banks.clone();
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -5428,6 +5514,15 @@ fn write_dataset_inner(
     if let Some(bytes) = &localized_inline_ui_data {
         files.push(bytes);
     }
+    if let Some(bytes) = &direct_rectangle_bank_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &queued_matrix_sources_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &menu_selection_banks_data {
+        files.push(bytes);
+    }
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -5611,6 +5706,9 @@ fn write_dataset_inner(
         save_crc32_table_data.as_ref().map_or(0, Vec::len),
         screen_effect_motion_data.as_ref().map_or(0, Vec::len),
         localized_inline_ui_data.as_ref().map_or(0, Vec::len),
+        direct_rectangle_bank_data.as_ref().map_or(0, Vec::len),
+        queued_matrix_sources_data.as_ref().map_or(0, Vec::len),
+        menu_selection_banks_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -5846,6 +5944,15 @@ fn write_dataset_inner(
     }
     if let Some(bytes) = &localized_inline_ui_data {
         write(&path.join(LOCALIZED_INLINE_UI_FILE), bytes)?;
+    }
+    if let Some(bytes) = &direct_rectangle_bank_data {
+        write(&path.join(DIRECT_RECTANGLE_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &queued_matrix_sources_data {
+        write(&path.join(QUEUED_MATRIX_SOURCES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &menu_selection_banks_data {
+        write(&path.join(MENU_SELECTION_BANKS_FILE), bytes)?;
     }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
@@ -6264,6 +6371,9 @@ mod tests {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -6591,8 +6701,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

@@ -121,9 +121,9 @@ class InlineBrowserTest(unittest.TestCase):
                 target=browser.evaluate("document.querySelector('[data-resource-id=\"text.localized-inline-ui\"] a').href")
                 browser.command('Page.navigate',{'url':target})
                 wait_for(browser,"data.wiki.current==='text-inline-ui' && !document.querySelector('#inline-ui-text').hidden")
+                timestamps = {key: change['at'] for key, change in viewer.viewer_section_updates()['text-inline-ui'].items()}
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
-                  if(q('#inline-ui-text>details>summary time').dateTime!=='2026-11-28T00:23:43Z'||
-                     !['search','languages','shared','thresholds'].every(id=>q('#inline-ui-'+id+'>summary time').dateTime==='2026-11-28T00:23:43Z')||
+                  if(!Object.entries(TIMESTAMPS).every(([id,at])=>q('#'+id+(id==='inline-ui-text'?'>details':'')+'>summary time').dateTime===at)||
                      q('#inline-directory').options.length!==7||q('#inline-language').options.length!==5||
                      q('#inline-language-rows').rows.length!==5||q('#inline-shared-rows').rows.length!==6||q('#inline-threshold-rows').rows.length!==6)
                     throw Error('initial');
@@ -141,10 +141,64 @@ class InlineBrowserTest(unittest.TestCase):
                   if(!row||!q('#inline-search-status').textContent.includes('matches'))throw Error('search');
                   row.querySelector('button').click();
                   return !q('#inline-fallback').checked&&q('#inline-language').value==='3'&&q('#inline-directory').value==='1'&&
-                    q('#inline-source').textContent.includes('selected 0x39529D')&&q('#inline-pin').checked;})()'''))
+                    q('#inline-source').textContent.includes('selected 0x39529D')&&q('#inline-pin').checked;})()'''.replace('TIMESTAMPS', json.dumps(timestamps))))
                 target=(index.parent/'index.html.parts/text-short.html').as_uri();browser.command('Page.navigate',{'url':target})
                 wait_for(browser,"data.wiki.current==='text-short' && document.querySelector('#text-language').value==='3'")
                 self.assertTrue(browser.evaluate("document.querySelector('#text-pin').checked && document.querySelector('#text-hide-commands').checked && document.querySelector('#text-normal-font').checked"))
+            finally:
+                browser.close()
+
+    def test_combined_search_loads_inline_entries_and_opens_exact_sources(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-inline-global-') as directory:
+            work = Path(directory)
+            index = fixture(work)
+            search_page = index.parent / 'index.html.parts/text.html'
+            data = parse_page(search_page)
+            self.assertNotIn('inline_ui', data)
+            self.assertEqual(data['text_search_sources']['inline']['languages'], ['0','1','2','3','4'])
+            browser = Chrome(work, search_page)
+            try:
+                self.assertTrue(browser.evaluate("typeof globalThis.__FFTA_TEXT_SEARCH__ === 'undefined'"))
+                browser.evaluate('''(() => {
+                  const q = id => document.getElementById(id);
+                  q('text-search-scope').value = 'inline';
+                  q('text-search-language').value = '3';
+                  q('text-search-query').value = 'BBB';
+                  q('text-search-form').requestSubmit();
+                })()''')
+                wait_for(browser, "document.querySelector('#text-search-status').textContent.startsWith('Searched 7 entries')")
+                self.assertTrue(browser.evaluate('''(() => {
+                  const assets = globalThis.__FFTA_TEXT_SEARCH__;
+                  const data = assets.inline.payload;
+                  const physical = data.directories.flatMap(directory => directory.entries);
+                  return Object.keys(assets).join() === 'inline' && physical.length === 35 && data.shared.length === 6 &&
+                    data.glyphs.every(glyph => Object.keys(glyph).join() === 'index') &&
+                    physical.every(entry => !Object.hasOwn(entry, 'bytes'));
+                })()'''))
+                physical_link = browser.evaluate('''[...document.querySelectorAll('#text-search-rows a')]
+                  .find(link => link.textContent.includes('language 3 · 0x39529D')).href''')
+                browser.command('Page.navigate', {'url': physical_link})
+                wait_for(browser, "data.wiki.current === 'text-inline-ui' && document.getElementById('inline-directory').value === '1'")
+                self.assertTrue(browser.evaluate('''(() => {
+                  const q = id => document.getElementById(id);
+                  return q('inline-language').value === '3' && !q('inline-fallback').checked &&
+                    q('inline-source').textContent.includes('selected 0x39529D') &&
+                    document.querySelector('#inline-ui-text > details').open &&
+                    q('inline-search-all').querySelector('a').href.endsWith('/text.html#text-search');
+                })()'''))
+                browser.command('Page.navigate', {'url': search_page.as_uri()})
+                wait_for(browser, "data.wiki.current === 'text'")
+                browser.evaluate('''(() => {
+                  const q = id => document.getElementById(id);
+                  q('text-search-scope').value = 'inline';
+                  q('text-search-query').value = 'CCCCC';
+                  q('text-search-form').requestSubmit();
+                })()''')
+                wait_for(browser, "document.querySelector('#text-search-status').textContent.includes('41 entries · 1 matches')")
+                shared_link = browser.evaluate("document.querySelector('#text-search-rows a').href")
+                browser.command('Page.navigate', {'url': shared_link})
+                wait_for(browser, "!!document.querySelector('#inline-shared-1[aria-current=true]')")
+                self.assertTrue(browser.evaluate("document.getElementById('inline-ui-shared').open && document.getElementById('inline-fallback').checked"))
             finally:
                 browser.close()
 

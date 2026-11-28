@@ -23,6 +23,18 @@ show the latest relevant change; the single-page view uses the newest matching
 section timestamp. The index supports its own scope. Only visible sections are
 badged, and generated data remains private.
 
+## Wiki navigation
+
+Open category menus stay above the other navigation rows without changing the
+bar's height. Menus adjust to the viewport when opened or resized. Escape
+closes the current menu and returns focus to its category.
+
+On 28 November 2026, six focused Chrome tests covered wrapped index and topic
+pages, desktop widths, a short mobile viewport, keyboard closing and the
+existing audio link. The local e378-d377 wiki was updated across 47 navigation
+pages. Verified preimages are retained under `out/ffta-viewer-nav-before-uhlnkrwz`
+and `out/ffta-viewer-menu-fit-before-gk31h8qe`.
+
 ## Build the first view
 
 - [x] Generate an offline HTML page from a chosen folder containing
@@ -113,9 +125,10 @@ from `scripts/viewer_stable_inspector.html` and `.js`; the suspended large-JSON
 prototype remains in the legacy single-page template and is not in the scoped
 wiki.
 
-The current local European wiki uses the verified e376-d375 dataset and includes
-its separately scoped screen-effect motion explorer. The dataset and generated
-pages remain private; see the e376 entry below for validation and limits.
+The current local European wiki uses the verified e380-d379 dataset. The
+Interface navbar includes Menu selection banks, Queued matrix sources and
+Direct rectangle bank. Audio includes a driver reference and the PCM
+pseudo-echo comparison. The dataset and generated pages are private.
 
 The earlier European wiki refresh used extractor 334 / decoder 333. Protected
 unit `n4iol0rn` built the source-authenticated core audio exporter, retained the
@@ -1539,6 +1552,20 @@ prototype only when the paused viewer task is requested again.
   unresolved glyph IDs inline. The preview uses grayscale for glyph color indices.
   EUR data and Linux Chrome checks passed in `rom-data-viewer-text-q0apycln`.
   [Text format](../rom_data_text.md)
+- [x] **Localized interface text and e377 refresh.** A separate Text and scripts
+  page presents 35 physical language entries in seven directories, six shared
+  strings and six level threshold glyphs. The language-3 fallback can be toggled
+  to inspect the physical entry. Recognized text search opens the matching
+  source. Language pinning, command visibility and normal-font preferences
+  carry across text views. The five sections have dated badges.
+  Synthetic unit `viewer-e377-inline-synthetic-0q1ifj65` passed 20 tests.
+  Protected unit `viewer-e377-inline-real-eyawuvhz` compared 886 bytes in 41
+  source spans, 48 referenced glyphs and all 35 selections in Linux Chrome.
+  It preserved 44 earlier topic payloads and 189 resource pages and matched
+  1,120 Python and Docker files. Applied 48 local files with verified preimages
+  in `out/ffta-e377-inline-before-gcjk3mxj`. Scene identification and the
+  ordinary route into these screens remain open. Native Windows is deferred.
+  [Source and reader evidence](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime)
 - [x] **Font glyph atlas.** Browse every slot in `font-bank.json` in pages or
   find an exact glyph ID. Display the full 16×16 slot, including pixels outside
   the recorded variable width, using grayscale indices rather than an inferred
@@ -1692,6 +1719,25 @@ prototype only when the paused viewer task is requested again.
   each archive; Docker unit `rom-data-viewer-text-search-docker-3uu3oerp`
   matched the validated Python output. The ignored local page retains its
   previous data and the verified file inspector. Windows remains unverified.
+- [x] **Find localized interface text across archives.** Combined text search
+  opens the exact physical entry or highlights its shared row. Language filters
+  apply to localized entries. The all-languages scope also searches the six
+  shared strings. A direct link to the guarded language-3 entry opens the stored
+  text for that visit and keeps the saved fallback preference.
+  The 11,298-byte search companion contains token streams, source offsets and
+  glyph IDs. The reading page contains the original bytes and glyph images.
+  The search loads its companion only when selected. Both disclosures show
+  their update dates.
+  Synthetic unit `viewer-inline-global-synthetic-vfwvz5wm` passed 18 tests.
+  The earlier `fq35xrv6` attempt found a shared-row focus problem. The corrected
+  view marks and scrolls to the matching row without relying on focus.
+  Protected e377 `viewer-inline-global-real-08eq1ynm` confirmed all 41 indexed
+  entries, the seven language-3 selections, the physical result link and
+  isolation of the search payload. It compared 45 prior topic payloads,
+  preserved 190 resource pages and matched 1,121 Python and Docker files.
+  Applied 47 local files with preimages in `out/ffta-inline-global-before-b7mlvmnf`.
+  The existing European Unicode subset governs text matches. Native Windows
+  remains deferred.
 - [x] **Text reader registry.** Browse and filter stored callback slots by
   index or address. Unique Thumb-address matches link to extracted relative
   archives, which link back to all matching slots; null, invalid, missing and
@@ -2094,6 +2140,38 @@ prototype only when the paused viewer task is requested again.
   `out/ffta-queued-ui-before-gcm5mb6p`. Scene, palette and live row bounds remain
   unverified; native Windows remains deferred.
   [Source and readers](../rom_data_ui_graphics.md#e633-european-queued-ui-map-runtime)
+- [x] **Queued matrix sources and e379 refresh.** A dated Interface page shows
+  three physical matrices and six language readers. The five saved-language
+  choices use the verified European names. French selects a distinct 26×7
+  matrix. Paths with verified source rows open and highlight those rows.
+  The initializer contributes four 18-cell rows to a seven-row task buffer.
+  The preview keeps the stored source pitch and the queue's destination pitch
+  visible. Graphics and palettes load on request.
+  Synthetic `viewer-e379-matrix-synthetic-m1yn0o2a` passed 16 tests, including
+  single-page and earlier rectangle behavior. The preceding `btoz3h1z` test
+  caught the bank's date appearing on an unrelated legacy tilemap.
+  Protected `viewer-e379-matrix-real-_63_v8x_` authenticated all 10 spans, 436
+  cells and 13 literals. Chrome verified all five languages, every row route
+  and the actual Audio navbar. The refresh preserved the 46 earlier topic
+  payloads and 191 resource pages and matched 1,125 Python and Docker files.
+  Published 50 local pages and files with verified preimages in
+  `out/ffta-viewer-e379-matrix-before-3ahmx4r2`. Scene names and palette pairings
+  remain open. Native Windows stays deferred.
+  [Source and readers](../rom_data_ui_graphics.md#e654-european-queued-matrices-at-runtime)
+- [x] **Menu selection banks and e380 refresh.** The dated Interface page
+  browses 101 physical rows in 13 banks. It shows decoded dispatch, numeric,
+  pattern and label fields beside the raw selected row. Valid one-based
+  selectors open and highlight the exact row. The 30 stored reader words
+  link to their target banks.
+  Synthetic `viewer-e380-menu-synthetic-u5bseb8v` passed 11 tests. Protected
+  `viewer-e380-menu-real-avqahzp3` checked all 728 source bytes, 101 rows, 30
+  words and 13 selector links in Chrome, including the copied selection
+  bookmark. It preserved all 47 earlier topic payloads and 192 resource
+  pages and matched 1,127 Python and Docker outputs. Published 51 local files
+  with verified preimages in `out/ffta-viewer-e380-menu-before-j284o046`.
+  Live menu identities and the full selector domains remain open. Native
+  Windows stays deferred.
+  [Source and readers](../rom_data_ui_graphics.md#e657-european-menu-selection-banks-at-runtime)
 - [x] **Map-height digits and e368 refresh.** That refresh used verified
   e368-d367 and added a separately loaded, dated Interface page for ten
   map-height digit sources. It joins the nine new sources with the earlier
@@ -2153,6 +2231,20 @@ prototype only when the paused viewer task is requested again.
   the test script was corrected. Published 34 private files with preimages
   `out/ffta-direct-rectangles-before-b3pw5aos`. Native Windows remains deferred.
   [Source and readers](../rom_data_graphics.md#e627-european-direct-rectangle-runtime)
+- [x] **Direct rectangle bank and e378 refresh.** The Interface navbar opens a
+  dated page for the 12 new rectangles and the two type-2 rectangles used by
+  its directories. Browse the stored cells, all 21 indexed slots and 60 reader
+  words. Each slot opens its target grid and highlights the copied source row.
+  The optional tile graphics and palettes load on request. The preview uses
+  source addresses while screen identities and palette associations remain open.
+  Synthetic `viewer-e378-rectangles-synthetic-4eneaec6` passed 18 tests. Protected
+  `viewer-e378-rectangles-real-9ed0o2li` matched all 66 source spans and 860 bytes
+  to the E651 census. Linux Chrome checked all 14 grids, 21 slot links and 60
+  words. The refresh preserved 45 prior topic payloads and 190 resource pages
+  and matched all 1,123 Python and Docker outputs. Published 49 local files with
+  verified preimages in `out/ffta-e378-rectangles-before-o7siwtlp`. Native
+  Windows remains deferred.
+  [Source and readers](../rom_data_graphics.md#e652-european-direct-rectangle-bank-at-runtime)
 - [x] **Event-to-script links and e366 refresh.** That refresh used verified
   e366-d365 and linked authenticated European event rows to their stored script
   keys. Each key lists matching event rows and counts of stored mission
@@ -2998,9 +3090,10 @@ prototype only when the paused viewer task is requested again.
   Linux Chrome. Physical audio output remains unverified.
 - [x] **Frame-stepped PCM envelope.** The default PCM audition holds each
   extracted attack, decay, sustain and release level for a nominal mixer frame.
-  A note-off takes effect at the next frame update; pseudo-echo and live channel
-  changes are not modeled. The setting applies to live songs, timed-source
-  auditions and WAV exports, including late starts. A separate checkbox restores
+  A note-off takes effect at the next frame update. The original preview
+  covered the envelope before the pseudo-echo extension below. The setting
+  applies to live songs, timed-source auditions and WAV exports, including late
+  starts. A separate checkbox restores
   the earlier smooth interpolation and remains selected across songs.
   Synthetic Chrome unit `0jzed1v3` passed 11 audio and regression tests,
   including manual and frame tempo, both envelope modes, timed playback and
@@ -3012,6 +3105,22 @@ prototype only when the paused viewer task is requested again.
   local audio page was published with preimage and evidence at
   `out/ffta-pcm-envelope-before-cbn5yxdz`. The original mixer's gain, channel
   allocation, effects, live echo, physical output and Windows remain unverified.
+- [x] **PCM pseudo-echo preview.** The European song player interprets selectors
+  8 and 9 when both callback words and their source digest match. Subsequent PCM
+  notes retain the stored tail level and length. The dated disclosure links to
+  songs 114 and 116, and the note and parameter lists show their values. The
+  saved toggle applies to frame-stepped song and timed auditions and WAV export.
+  The real e378 proof `viewer-pcm-echo-real-_g7ic8r6` checked both original
+  callback prefixes, the note reader's field transfer and all four commands.
+  Both real WAVs contain changed samples at a manual 400 ticks per second.
+  At song tempo their waves finish before the tail and the PCM samples match.
+  The proof compared all 47 scope payloads, preserved 191 resource pages and
+  matched all 1,123 Python and Docker files. Published 47 local pages with
+  verified preimages in `out/ffta-viewer-pcm-echo-before-q2v7o6l2`.
+  Synthetic `9uj6p28d` passed 14 checks. Its page-reload assertion ran before
+  the DOM loaded. The focused retry `na0g75oy` passed the full comparison,
+  including live and timed scheduling, actual WAV samples and retained settings.
+  The live mixer and physical output remain unverified. Windows is deferred.
 - [x] **CGB square envelope preview.** Song, timed-source and WAV previews
   optionally apply extracted square-channel attack, decay, sustain and release
   with a 64 Hz approximation and a normalized 15-level peak. The checkbox is
@@ -3180,6 +3289,24 @@ prototype only when the paused viewer task is requested again.
   note and the live Web Audio gain after rendering began, plus track and song
   changes in Linux Chrome. Physical audio and the original game's CGB output
   remain unverified.
+- [x] **Audio driver reference.** A dated Audio page displays 49 base clock
+  lengths, the 36 original command words and 12 extended selectors. The
+  wait and note columns show their shared clock index. The command table
+  labels the observed instructions and the B9 and CD RAM patches. The two
+  authenticated PCM echo selectors link to songs 114 and 116. The player
+  links back to the reference. The focused payload carries the small tables
+  and links, so song instructions and samples load through the player.
+  Synthetic `viewer-audio-driver-synthetic-31jxr8js` passed 13 tests. Protected
+  `viewer-audio-driver-real-45cbcwlf` matched 241 bytes in five source spans
+  and checked all rows plus the two live player routes in Chrome. Its final
+  inventory check detected the intentional back-link change on the extended
+  dispatch file page. `viewer-audio-driver-reconcile-b4my0s7l` verified that
+  single field and all 1,128 Python and Docker outputs using the retained
+  copies. It preserved 192 resource pages byte for byte. Published 52 local
+  files with verified preimages in `out/ffta-audio-driver-before-783nrp8c`.
+  The reference covers physical words and source-backed command labels.
+  Exact live driver behavior and Windows viewer checks remain open.
+  [Driver source evidence](../rom_data_audio.md#producer-bounded-sequence-instructions-and-driver-tables)
 - [ ] **Complete song playback.** Reproduce original instruments, driver timing,
   mixing and effects before describing a synthesized audition as playback of
   the original song.

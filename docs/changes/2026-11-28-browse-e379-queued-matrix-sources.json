@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-e379-queued-matrix-sources",
+  "title": "Browse e379 queued matrix sources in the wiki",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Docker"
+  ],
+  "changes": [
+    "Refresh the local wiki to e379-d378 and add a dated Interface page for three queued matrices. Label the five verified European language choices and highlight the source rows used by original readers.",
+    "Keep source and destination pitches visible. Load optional tile graphics and palettes on demand."
+  ],
+  "validation": [
+    "Synthetic unit m1yn0o2a passed 16 checks after correcting the legacy badge scope. Real unit _63_v8x_ authenticated 924 bytes in ten spans, all 436 cells and 13 literals and exercised all language routes, the actual Audio navbar and deferred graphics in Chrome.",
+    "Matched 1,125 Python and Docker outputs, preserved 46 previous topic payloads and 191 resource pages and published 50 ignored local files with verified preimages in out/ffta-viewer-e379-matrix-before-3ahmx4r2."
+  ],
+  "limitations": [
+    "Original scene names and palette pairings remain unverified. Windows viewer validation stays deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_queued_matrix_sources.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

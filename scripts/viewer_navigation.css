@@ -5,7 +5,9 @@
 #wiki-page-links > a, .wiki-page-category > summary { display: block; padding: .45rem .55rem; border-radius: .3rem; color: #155d7a; font-weight: 600; }
 #wiki-page-links a[aria-current="page"] { font-weight: 700; }
 .wiki-page-category { position: relative; margin: 0; padding: 0; background: transparent; }
+.wiki-page-category[open] { z-index: 1; }
 .wiki-page-category > summary { cursor: pointer; list-style: none; white-space: normal; }
+.wiki-page-category[open] > summary { margin-bottom: 0; }
 .wiki-page-category > summary::-webkit-details-marker { display: none; }
 .wiki-page-category > summary::after { content: ' ▾'; }
 .wiki-page-category[open] > summary, .wiki-page-category > summary:hover, #wiki-page-links > a:hover { background: #cddfe8; }
@@ -25,6 +27,6 @@
   #wiki-page-links > a, .wiki-page-category > summary { padding: .35rem .4rem; font-size: .9rem; }
   .wiki-page-category { position: static; }
   .wiki-menu, .wiki-page-category:nth-last-child(-n+2) .wiki-menu {
-    top: 100%; left: .3rem; right: .3rem; width: auto; max-width: none;
+    top: 100%; left: .3rem; right: .3rem; width: auto; min-width: 0; max-width: none;
   }
 }

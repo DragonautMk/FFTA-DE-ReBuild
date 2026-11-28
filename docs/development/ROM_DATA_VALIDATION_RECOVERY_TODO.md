@@ -295,6 +295,27 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-05-DIRECT-RECTANGLE-DIRECTORY-USA:** authenticate the
   regional directory, extents and callers before USA validation. Native
   Windows remains separate.
+- [x] **ROMDATA-01-EUR-DIRECT-RECTANGLE-BANK** passes its scoped source
+  proof in E651 `jtmuwp4o`. The census covers 67 direct calls, 50
+  physical rectangles, six directories and their selected operands.
+  e377 already owns 3,417 bytes. The remaining 860 bytes span 12
+  rectangles, four directories, one row-selector array and 60 words.
+  [Evidence](../rom_data_graphics.md#e651-european-direct-rectangle-census).
+- [x] **ROMDATA-04-EUR-DIRECT-RECTANGLE-BANK** passes its scoped EUR/Wine
+  proof in E652 `pabgc3t3`. It covers the 71 literal loads, all 12
+  new rectangles, 21 directory slots and eight alternate-source inputs
+  with altered backing. Full state, clock, e377 attachment and CLI
+  lifecycle pass. Stage `gdwi0fkb` retains 180 verified files.
+  [Evidence](../rom_data_graphics.md#e652-european-direct-rectangle-bank-at-runtime).
+- [ ] **ROMDATA-04-EUR-DIRECT-RECTANGLE-BANK-ORDINARY** requires a
+  confirmed ordinary path to the new reads, wider producer and selector
+  domains, and translated execution. The E601 counted producer retains
+  its existing ordinary and RAM-built input criteria.
+- [ ] **ROMDATA-05-EUR-DIRECT-RECTANGLE-BANK-LINUX** repeats the
+  selected publication, attachment and original row copy checks on Linux.
+- [ ] **ROMDATA-05-DIRECT-RECTANGLE-BANK-USA** authenticates the
+  regional source extents and callers before verification. Native Windows
+  remains open.
 - [x] **ROMDATA-01-EUR-B543A8-TILEMAP-BANK scoped EUR/Wine:** E628
   `stqxruch` bounds all 31 tilemaps with 855 distinct cells and 40
   directory slots. The e366 audit identifies 1,902 unowned bytes,
@@ -521,16 +542,94 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-05-SCREEN-CURVE-BANK-USA:** authenticate the regional
   banks and readers before USA validation. Native Windows is pending.
 - [ ] **ROMDATA-01-EUR-QUEUED-MAP-PRODUCERS:** the aligned branch
-  census identifies 39 direct calls to `08000be4` within Thumb branch
-  range, including the seven E632 calls. Trace computed source values
-  at the remaining unresolved calls, particularly `02de76..03037a`,
-  `051e12`, `052202`, `052302` and `12fb0a`, to their writers and
-  prove the full source and row domains before extending the bank.
+  census identifies 39 direct calls to `08000be4`. E653 bounds three
+  source matrices, identifies eight task-buffer paths and traces
+  `12fb0a` to a map pointer in the existing background-effect descriptor.
+  E655 traces the 32-row `006622` transfer to allocated staging RAM.
+  The 15 other ancestry leads are `02e1e2`, `02e258`, `02e2a2`,
+  `02e2c8`, `051e12`, `052202`, `052302`, `12bf56`, `12d490`,
+  `12d4c4`, `12d540`, `12d570`, `12d5d2`, `12d604` and `12d638`.
+  Trace their source values and row domains to original writers.
+- [x] **ROMDATA-01-EUR-QUEUED-GRID-SHAPES** passes its scoped
+  source proof in E655 `2bxsvzw_`. Eight original grid records and
+  three reader literals contribute 44 unowned bytes against e379.
+  [Evidence](../rom_data_ui_graphics.md#e655-european-queued-grid-shapes).
+- [ ] **ROMDATA-04-EUR-QUEUED-GRID-SHAPES** publishes the complete
+  table and its three literals. Verify the original allocation,
+  render dimensions and both queue paths with altered backing.
+- [ ] **ROMDATA-01-EUR-QUEUED-GRID-DESCRIPTORS** identifies the live
+  source at the E588 event-zero callback and the flags and immutable
+  inputs feeding the staging buffer. Verify ordinary and translated
+  paths after establishing the producer and bounds.
+- [ ] **ROMDATA-05-EUR-QUEUED-GRID-SHAPES-LINUX** repeats the source
+  and ownership checks. Repeat the affected runtime checks when ready.
+- [ ] **ROMDATA-05-QUEUED-GRID-SHAPES-USA** authenticates the regional
+  table and readers before testing. Native Windows remains open.
+- [x] **ROMDATA-01-EUR-MENU-SELECTION-BANKS** passes its scoped
+  proof in E656 `hwoyyk2k`. The original 32 reads identify 13 table
+  sources and 30 pointer words, with 728 unowned bytes in e379.
+  [Evidence](../rom_data_ui_graphics.md#e656-european-menu-selection-banks).
+- [x] **ROMDATA-04-EUR-MENU-SELECTION-BANKS** passes its scoped
+  EUR/Wine proof in E657 `sjms_oc_`. e380 serves all 728 bytes.
+  Original readers, 28 pair matches, neighboring words, state and
+  clock, e379 attachment and CLI reuse pass with altered backing.
+  Stage `vjtb2m5a` retains 182 verified files.
+  [Evidence](../rom_data_ui_graphics.md#e657-european-menu-selection-banks-at-runtime).
+- [ ] **ROMDATA-04-EUR-MENU-SELECTION-BANKS-ORDINARY** establishes
+  the live producers and index domains for the matching, entry,
+  special-label and numeric paths. Verify ordinary and translated
+  execution from the actual menus.
+- [ ] **ROMDATA-05-EUR-MENU-SELECTION-BANKS-LINUX** repeats the
+  source check and affected original-reader and CLI tests.
+- [ ] **ROMDATA-05-MENU-SELECTION-BANKS-USA** authenticates the
+  regional bank and original readers before testing. Native Windows
+  remains open.
+- [x] **ROMDATA-01-EUR-WORLD-MAP-LABEL-TABLES** passes the scoped
+  E658 source proof in Wine `6778uuyd`. Five 30-entry rows in each
+  selection table partition all 1,218 already-owned archive programs.
+  Eight variant slots select seven complete OBJ lists. The e380 join
+  identifies 628 unowned bytes, including six reader words.
+  [Evidence](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists).
+- [ ] **ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES** serves the ten
+  source spans and preserves the existing indexed archives. Verify
+  both original selection paths, the counted OBJ drawing, state and
+  clock with altered backing. Preserve source reads outside the
+  identified physical rows.
+- [ ] **ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES-ORDINARY** traces
+  live context identity and the writer of the first reader's view
+  byte at `0x8c`. Exercise ordinary and translated paths through
+  label decoding, placement and drawing.
+- [ ] **ROMDATA-05-EUR-WORLD-MAP-LABEL-TABLES-LINUX** repeats the
+  source proof and affected runtime checks on Linux.
+- [ ] **ROMDATA-05-WORLD-MAP-LABEL-TABLES-USA** authenticates the
+  regional tables and readers before testing. Native Windows stays open.
+- [x] **ROMDATA-01-EUR-QUEUED-MATRIX-SOURCES** passes its scoped proof
+  in E653 `uhq5u4zf`. Wine `tuz9kwhe` attests two seven-row maps,
+  a four-row initializer and 13 original source literals. The e378
+  join finds 924 unowned bytes across ten spans.
+  [Evidence](../rom_data_ui_graphics.md#e653-european-queued-matrix-sources).
+- [x] **ROMDATA-04-EUR-QUEUED-MATRIX-SOURCES** passes its scoped
+  EUR/Wine proof in E654 `oe5aqd3x`. It verifies 30 original
+  language selections, both full-map DMAs, the two tail copies and
+  the initializer followed by the original seven-row DMA on altered
+  backing. State, clock, e378 attachment and CLI lifecycle pass.
+  Stage `w6058qkm` retains 181 files.
+  [Evidence](../rom_data_ui_graphics.md#e654-european-queued-matrices-at-runtime).
+- [ ] **ROMDATA-04-EUR-QUEUED-MATRIX-SOURCES-ORDINARY** requires
+  reachable language, task and copy paths in gameplay and translated
+  execution, including the staging before the seven-row DMA.
+- [ ] **ROMDATA-05-EUR-QUEUED-MATRIX-SOURCES-LINUX** repeats publication,
+  predecessor attachment and the original copy checks on Linux.
+- [ ] **ROMDATA-05-QUEUED-MATRIX-SOURCES-USA** first authenticates the
+  regional sources and reader domains. Native Windows remains open.
 - [ ] **ROMDATA-01-EUR-CARTRIDGE-TAIL-SOURCES:** establish an original
   consumer for `fe0000..fe4000` and classify the vector and other code
   before assigning any resource ownership. The apparent entry pointers
   at `169273` and `2de54c` lie within PCM samples. Resolve the pointer
-  area at `fff000` independently before adding a resource.
+  area at `fff000` independently before adding a resource. E653 finds
+  aligned address-shaped values for the high-tail leads in existing
+  PCM, packet and transfer payloads. Original pointer fields remain
+  unverified.
 
 - [x] **ROMDATA-04-EUR-TWO-WORD-INITIALIZERS scoped EUR/Wine:** E545
   `x24m4_a0` authenticates 16 selected load/store patterns. Wine

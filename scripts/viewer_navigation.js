@@ -1,10 +1,10 @@
 // Every offline page carries small menu metadata, not other pages' data.
 if (data.wiki) {
   const groups = [
-    ['Audio', ['audio', 'audio-samples', 'audio-noise']],
+    ['Audio', ['audio', 'audio-samples', 'audio-noise', 'audio-driver']],
     ['Characters and animation', ['actors', 'battle', 'battle-alternate', 'objects', 'objects-physical', 'physical-unit-sprites', 'script-actors']],
     ['Graphics', ['indexed-graphics', 'indexed-attributes', 'transfer-graphics']],
-    ['Interface', ['interface', 'interface-curves', 'interface-motion-curves', 'interface-effect-motion', 'interface-effects', 'interface-fixed-maps', 'interface-full-screen', 'interface-height', 'interface-indexed-ui', 'interface-layouts', 'interface-maps', 'interface-planes', 'interface-queued-maps', 'interface-rectangles', 'interface-screen-palettes', 'interface-ui']],
+    ['Interface', ['interface', 'interface-curves', 'interface-motion-curves', 'interface-effect-motion', 'interface-effects', 'interface-fixed-maps', 'interface-full-screen', 'interface-height', 'interface-indexed-ui', 'interface-layouts', 'interface-maps', 'interface-menu-selection', 'interface-planes', 'interface-queued-maps', 'interface-queued-matrices', 'interface-rectangle-bank', 'interface-rectangles', 'interface-screen-palettes', 'interface-ui']],
     ['Text and scripts', ['scripts', 'text', 'text-short', 'text-inline-ui', 'text-pointers', 'text-relative', 'text-scripts']],
     ['World and other data', ['other', 'checksums', 'selection-groups', 'selection-tables', 'task-cycles', 'world', 'world-encounters', 'world-map', 'world-metadata16']]
   ];
@@ -71,10 +71,26 @@ if (data.wiki) {
     } else entries.forEach(page => addPage(list, page, entries.length === 1));
     menu.append(list); details.append(menu); container.append(details);
   });
+  function fitMenu(category) {
+    const menu = category.querySelector(':scope > .wiki-menu');
+    menu.style.transform = '';
+    const bounds = menu.getBoundingClientRect();
+    const margin = 8;
+    let horizontal = Math.max(0, margin - bounds.left);
+    horizontal += Math.min(0, window.innerWidth - margin - bounds.right - horizontal);
+    let vertical = Math.min(0, window.innerHeight - margin - bounds.bottom);
+    vertical += Math.max(0, margin - bounds.top - vertical);
+    if (horizontal || vertical) menu.style.transform = `translate(${horizontal}px, ${vertical}px)`;
+  }
   navigation.addEventListener('toggle', event => {
     if (!event.target.matches('.wiki-page-category') || !event.target.open) return;
     container.querySelectorAll(':scope > details').forEach(details => { if (details !== event.target) details.open = false; });
+    fitMenu(event.target);
   }, true);
+  window.addEventListener('resize', () => {
+    const open = container.querySelector(':scope > .wiki-page-category[open]');
+    if (open) fitMenu(open);
+  });
   navigation.addEventListener('click', event => {
     if (event.target.closest('a')) container.querySelectorAll(':scope > details').forEach(details => { details.open = false; });
   });

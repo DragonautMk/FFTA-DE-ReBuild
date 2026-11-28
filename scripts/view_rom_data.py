@@ -460,6 +460,92 @@ def project_queued_ui_maps(content, sources):
     return {'maps': maps, 'paths': paths, 'destination_stride': 64}
 
 
+def project_queued_matrix_sources(content, sources):
+    """Read the three E653 matrices and their original selector literals."""
+    initializer = 0x3ba048
+    language_map, french_map = 0x437194, 0x448278
+    geometry = ((initializer, 18, 4), (language_map, 26, 7), (french_map, 26, 7))
+    # The two entry-only observations establish source selection. The other
+    # call sites have bounded source-row evidence from the queue or copy reader.
+    readers = (
+        (0x02f2d4, 0x02f33c, 0x02f328, 'Queue two rows', 0, 2),
+        (0x02f6e0, 0x02f7c8, 0x02f732, 'Queue two rows', 3, 2),
+        (0x02f9a0, 0x02faa4, 0x02fa86, 'Read the row edge', 2, 1),
+        (0x02fbc2, 0x02fc3c, None, 'Select a source', None, None),
+        (0x0300d4, 0x0300f8, 0x030134, 'Copy the last two rows', 5, 2),
+        (0x03026c, 0x0303b4, None, 'Select a source', None, None),
+    )
+    segments = project_binary_segments(content, sources)
+    expected = ([(0x02df28, 'queue_literals', 4)]
+                + [(literal, 'queue_literals', 8) for _, literal, _, _, _, _ in readers]
+                + [(offset, 'queue_cells', width * rows * 2) for offset, width, rows in geometry])
+    if [(offset, role, len(raw)) for offset, role, raw in segments] != expected:
+        raise ValueError('Unexpected queued matrix sources')
+    literals = b''.join(raw for _, _, raw in segments[:7])
+    targets = (initializer,) + (language_map, french_map) * len(readers)
+    if struct.unpack('<13I', literals) != tuple(0x08000000 + offset for offset in targets):
+        raise ValueError('Invalid queued matrix source pointers')
+    maps = [{'kind': label, 'source_offset': offset, 'cell_offset': offset, 'width': width, 'height': rows,
+             'cells': list(struct.unpack(f'<{width * rows}H', segment[2]))}
+            for (offset, width, rows), segment, label in zip(geometry, segments[7:],
+                ('Task initializer', 'Language IDs 0 and 2–4', 'French source'), strict=True)]
+    paths = [{'reader_offset': reader, 'literal_offset': literal, 'use_offset': call, 'action': action,
+              'first_row': first, 'row_count': count}
+             for reader, literal, call, action, first, count in readers]
+    initializer_path = {'reader_offset': 0x02defa, 'literal_offset': 0x02df28, 'use_offset': 0x02df02,
+                        'task_start': 916, 'queued_start': 808, 'queue_offset': 0x02e0a0, 'task_first_row': 3}
+    return {'maps': maps, 'paths': paths, 'initializer': initializer_path, 'destination_stride': 64,
+            'languages': ['English', 'French', 'German', 'Italian', 'Spanish']}
+
+
+def project_menu_selection_banks(content, sources):
+    """Project the E656 tables and their reader words from the packed owner."""
+    layouts = (
+        (0x39576c, 5, 36, 'menu-row', '36-byte menu rows'),
+        (0x395820, 5, 8, 'menu-row', '8-byte menu rows'),
+        (0x395848, 1, 8, 'menu-row', '8-byte menu rows'),
+        (0x395850, 1, 8, 'menu-row', '8-byte menu rows'),
+        (0x395858, 1, 8, 'menu-row', '8-byte menu rows'),
+        (0x395860, 5, 4, 'numeric', 'Numeric adjustment rows'),
+        (0x395874, 9, 8, 'label', 'Menu label byte pairs'),
+        (0x3958bc, 5, 4, 'pattern', 'Menu pattern rows'),
+        (0x3958d0, 6, 4, 'pattern', 'Menu pattern rows'),
+        (0x3958e8, 8, 4, 'pattern', 'Menu pattern rows'),
+        (0x395908, 28, 4, 'pattern', 'Menu pattern rows'),
+        (0x395978, 22, 2, 'high-bit', 'High-bit lookup values'),
+        (0x395a1c, 5, 8, 'selector', 'Menu row selectors'),
+    )
+    literal_layout = (
+        (0x03bd94, (0x3958e8,)), (0x03bddc, (0x395978,)), (0x03be30, (0x3958d0,)),
+        (0x03be70, (0x395978,)), (0x03beb8, (0x3958bc,)), (0x03bef8, (0x395978,)),
+        (0x03bf40, (0x395908,)), (0x03bfec, (0x395978,)), (0x03c2f4, (0x395908,)),
+        (0x03c32c, (0x3958bc,)), (0x03c354, (0x3958d0,)), (0x03c37c, (0x3958e8,)),
+        (0x03c3b4, (0x3958d0,)), (0x03c3dc, (0x3958e8,)), (0x03c414, (0x3958e8,)),
+        (0x03e040, (0x39576c,)), (0x03e068, (0x395848,)), (0x03e090, (0x395850,)),
+        (0x03e0b8, (0x395858,)), (0x03e0f8, (0x395820,)), (0x03e2f8, (0x395874,)),
+        (0x03ea10, (0x395a1c, 0x395820, 0x39576c, 0x395848, 0x395850, 0x395858)),
+        (0x03eb58, (0x395858,)), (0x0497a0, (0x395860,)), (0x0498dc, (0x395860,)),
+    )
+    segments = project_binary_segments(content, sources)
+    expected = ([(offset, 'menu-selection-literal', 4 * len(targets)) for offset, targets in literal_layout]
+                + [(0x39576c, 'menu-selection-tables', 568), (0x395a1c, 'menu-row-selectors', 40)])
+    if [(offset, role, len(raw)) for offset, role, raw in segments] != expected:
+        raise ValueError('Unexpected menu selection sources')
+    tables = []
+    for offset, count, stride, role, label in layouts:
+        base, _, raw = segments[-1] if role == 'selector' else segments[-2]
+        start = offset - base
+        rows = [list(raw[at:at + stride]) for at in range(start, start + count * stride, stride)]
+        tables.append({'source_offset': offset, 'role': role, 'label': label, 'stride': stride, 'rows': rows})
+    literals = []
+    for (offset, targets), (_, _, raw) in zip(literal_layout, segments[:-2], strict=True):
+        expected_words = tuple(0x08000000 + target for target in targets)
+        if struct.unpack(f'<{len(targets)}I', raw) != expected_words:
+            raise ValueError('Invalid menu selection reader words')
+        literals.extend({'source_offset': offset + index * 4, 'target': target} for index, target in enumerate(targets))
+    return {'tables': tables, 'literals': literals, 'selector_targets': [0x395820, 0x39576c, 0x395848, 0x395850, 0x395858]}
+
+
 def project_map_height_digits(content, sources, prior_content=None, prior_sources=None):
     """Join the EUR digit bank with the separately owned digit-five transfer."""
     segments = project_binary_segments(content, sources)
@@ -558,6 +644,76 @@ def project_direct_rectangle_directory(content, sources):
                      'presets': list(segments[2][2][index * 4:index * 4 + 4])})
     return {'maps': maps, 'preset_offset': 0x3ac9e4,
             'identical_copies': all(segment[2] == segments[4][2] for segment in segments[5:])}
+
+
+def project_direct_rectangle_bank(content, sources, type2):
+    """Decode the E651 grids and the four directories owned by e378."""
+    shapes = {
+        0xae6f60: (12, 1), 0xae6f7c: (12, 1), 0xae7478: (15, 2), 0xae7684: (6, 1),
+        0xae787c: (3, 5), 0xae7b94: (6, 1), 0xae7ba4: (6, 1), 0xae7bb4: (6, 1),
+        0xae7bc4: (6, 1), 0xae8648: (15, 6), 0xae8754: (15, 2), 0xae8c64: (3, 7),
+    }
+    prior_shapes = {0xae7674: (6, 1), 0xae7994: (3, 7)}
+    directory_layout = (
+        (0x39ae3c, 6, 8, 0x0e651a, (0x0e652c,)),
+        (0x39bcb4, 2, 4, 0x0e83a0, (0x0e83b4,)),
+        (0x39fa20, 8, 4, 0x0f6bf6, (0x0f6c0e,)),
+        (0x3a4a3c, 5, 4, 0x108edc, (0x108ef0, 0x108f04, 0x108f18)),
+    )
+    selector_base = 0x39fa40
+    lengths = {(offset, 'rectangle_cells'): 2 + width * height * 2
+               for offset, (width, height) in shapes.items()}
+    lengths.update({(offset, 'rectangle_directories'): count * stride
+                    for offset, count, stride, _, _ in directory_layout})
+    lengths[(selector_base, 'rectangle_row_selectors')] = 8
+    segments = project_binary_segments(content, sources)
+    records, literals = {}, []
+    for offset, role, raw in segments:
+        if role == 'reader_literals':
+            if offset % 4 or len(raw) % 4 or not 0x0dc8a4 <= offset < offset + len(raw) <= 0x122684:
+                raise ValueError('Invalid direct rectangle literal range')
+            literals.extend({'source_offset': offset + index * 4, 'value': value}
+                            for index, (value,) in enumerate(struct.iter_unpack('<I', raw)))
+        elif lengths.get((offset, role)) == len(raw):
+            records[offset] = raw
+        else:
+            raise ValueError('Unexpected direct rectangle bank source')
+    if len(records) != len(lengths) or len(segments) != 66 or len(literals) != 60:
+        raise ValueError('Incomplete direct rectangle bank')
+
+    maps = []
+    for offset, (width, height) in shapes.items():
+        raw = records[offset]
+        if raw[:2] != bytes((height, width)):
+            raise ValueError('Invalid direct rectangle bank dimensions')
+        maps.append({'kind': 'Direct rectangle bank', 'source_offset': offset, 'cell_offset': offset + 2,
+                     'width': width, 'height': height, 'cells': list(struct.unpack(f'<{width * height}H', raw[2:]))})
+    if type2:
+        for item in type2['maps']:
+            offset = item['source_offset']
+            if prior_shapes.get(offset) == (item['width'], item['height']):
+                maps.append({'kind': 'Shared type-2 rectangle', 'path': type2['path'],
+                             'source_offset': offset, 'cell_offset': offset + 2,
+                             'width': item['width'], 'height': item['height'], 'cells': item['cells']})
+    dimensions = {**shapes, **prior_shapes}
+    directories = []
+    for offset, count, stride, reader, calls in directory_layout:
+        raw, slots = records[offset], []
+        for index in range(count):
+            start = index * stride
+            pointer, = struct.unpack_from('<I', raw, start)
+            target = pointer - 0x08000000
+            row, row_source = 0, None
+            if stride == 8:
+                row, row_source = raw[start + 4], offset + start + 4
+            elif offset + len(raw) == selector_base:
+                row, row_source = records[selector_base][index], selector_base + index
+            if target not in dimensions or row >= dimensions[target][1]:
+                raise ValueError('Invalid direct rectangle directory target or row')
+            slots.append({'source_offset': offset + start, 'pointer': pointer, 'target': target,
+                          'row': row, 'row_source': row_source, 'extra_bytes': list(raw[start:start + stride][5:])})
+        directories.append({'source_offset': offset, 'reader_offset': reader, 'calls': list(calls), 'slots': slots})
+    return {'maps': maps, 'directories': directories, 'literals': sorted(literals, key=lambda word: word['source_offset'])}
 
 
 def project_fixed_screen_maps(content, sources):
@@ -1341,8 +1497,60 @@ def project_text_program(program):
     return {'source_offset': source, 'header': header, 'units': projected}
 
 
-def project_audio_sequences(catalog):
-    clocks = catalog['driver']['clocks']
+def audio_table_source_matches(sources, offset, role, raw):
+    digest = hashlib.sha256(raw).hexdigest()
+    return sum(isinstance(source, dict) and source.get('offset') == offset and source.get('length') == len(raw)
+               and source.get('role') == role and source.get('sha256') == digest for source in sources) == 1
+
+
+def project_audio_driver_reference(driver, sources):
+    """Keep the original clocks and command table available without the track graph."""
+    result = {}
+    tables = (
+        ('clocks', 'clock_source_offset', 0x370d04, 49, 1, 'clocks'),
+        ('commands', 'command_source_offset', 0x370a90, 36, 4, 'commands'),
+        ('extended8_9', 'extended_source_offset', 0x370d58, 2, 4, 'extended8-9'),
+    )
+    for key, offset_key, offset, count, width, role in tables:
+        values = driver.get(key)
+        if (driver.get(offset_key) != offset or not isinstance(values, list) or len(values) != count
+                or any(type(value) is not int or not 0 <= value < 1 << (8 * width) for value in values)):
+            continue
+        raw = b''.join(value.to_bytes(width, 'little') for value in values)
+        if not audio_table_source_matches(sources, offset, 'audio/driver/' + role, raw):
+            continue
+        if key == 'extended8_9':
+            result['extensions'] = [{'selector': index + 8, 'source_offset': offset + index * 4, 'callback': word}
+                                    for index, word in enumerate(values)]
+        else:
+            result[key] = {'source_offset': offset, 'values': values}
+    return result
+
+
+def project_audio_extended_reference(catalog, sources):
+    """Check the two physical fragments owned separately from selectors 8 and 9."""
+    base = 0x370d38
+    selectors = (*range(8), 10, 11)
+    entries = catalog['entries']
+    if catalog['source_offset'] != base or not isinstance(entries, list) or len(entries) != len(selectors):
+        raise ValueError('Invalid audio extension table')
+    result = []
+    for selector, entry in zip(selectors, entries, strict=True):
+        word = entry['callback']
+        if (type(entry['selector']) is not int or entry['selector'] != selector or type(word) is not int
+                or not 0x08000000 <= word < 0x09000000 or not word & 1):
+            raise ValueError('Invalid audio extension selector or pointer')
+        result.append({'selector': selector, 'source_offset': base + selector * 4, 'callback': word})
+    for start, part, label in ((base, result[:8], 'slots-0-7'), (base + 40, result[8:], 'slots-10-11')):
+        raw = b''.join(entry['callback'].to_bytes(4, 'little') for entry in part)
+        if not audio_table_source_matches(sources, start, 'audio/extended-dispatch/' + label, raw):
+            raise ValueError('Invalid audio extension source span')
+    return result
+
+
+def project_audio_sequences(catalog, *, echo_sources=()):
+    driver = catalog['driver']
+    clocks = driver['clocks']
     tracks, instructions = catalog['tracks'], catalog['instructions']
     if (not isinstance(clocks, list) or len(clocks) != 49
             or any(type(value) is not int or not 0 <= value <= 255 for value in clocks)
@@ -1401,7 +1609,16 @@ def project_audio_sequences(catalog):
             raise ValueError('Invalid sequence track')
         track_keys.add((track['directory_header'], track['track_index']))
         projected_tracks.append({key: track[key] for key in ('id', 'directory_header', 'track_index', 'entry')})
-    return {'clocks': clocks, 'tracks': projected_tracks, 'instructions': projected}
+    result = {'clocks': clocks, 'tracks': projected_tracks, 'instructions': projected}
+    # In EUR, these callbacks write the level and length that the note reader
+    # copies from track bytes 0x1e/0x1f into PCM channel bytes 0x0c/0x0d.
+    echo_offset = 0x370d58
+    words = driver.get('extended8_9')
+    if (driver.get('extended_source_offset') == echo_offset and words == [0x08149f69, 0x08149f75]
+            and all(type(word) is int for word in words)):
+        if audio_table_source_matches(echo_sources, echo_offset, 'audio/driver/extended8-9', struct.pack('<2I', *words)):
+            result['pcm_echo'] = True
+    return result
 
 
 def project_audio_instruments(catalog):
@@ -4064,9 +4281,12 @@ WIKI_SCOPES = (
     ('interface-effect-motion', 'Screen effect motion', ('screen_effect_motion',)),
     ('interface-effects', 'Counted effect tables', ('counted_effect_tables',)),
     ('interface-queued-maps', 'Queued UI maps', ('queued_ui_maps',)),
+    ('interface-queued-matrices', 'Queued matrix sources', ('queued_matrix_sources',)),
+    ('interface-menu-selection', 'Menu selection banks', ('menu_selection_banks',)),
     ('interface-height', 'Map-height digits', ('map_height_digits',)),
     ('interface-indexed-ui', 'Indexed UI tilemaps', ('indexed_ui_tilemaps',)),
     ('interface-rectangles', 'Direct rectangles and presets', ('direct_rectangle_directory',)),
+    ('interface-rectangle-bank', 'Direct rectangle bank', ('direct_rectangle_bank',)),
     ('interface-fixed-maps', 'Fixed-width screen maps', ('fixed_screen_maps',)),
     ('interface-full-screen', 'Full-screen map', ('full_screen_map',)),
     ('interface-layouts', 'Localized screen layouts', ('localized_layout_tables',)),
@@ -4086,6 +4306,7 @@ WIKI_SCOPES = (
     ('audio', 'Song sequences and timed sounds', ('audio', 'sequence_directory', 'sequences', 'pcm_pitch', 'timed_sound_sources')),
     ('audio-samples', 'Waveforms and instruments', ('audio', 'sequence_directory', 'pcm_pitch')),
     ('audio-noise', 'CGB noise', ('audio_noise',)),
+    ('audio-driver', 'Audio driver reference', ('audio_driver_reference',)),
     ('text', 'Search all text archives', ('short_texts', 'pointer_texts', 'relative_texts', 'text_reader_registry', 'script_texts', 'font', 'name_keyboard')),
     ('text-short', 'Short texts and fonts', ('short_texts', 'font', 'name_keyboard')),
     ('text-inline-ui', 'Localized interface text', ('inline_ui',)),
@@ -4153,12 +4374,18 @@ def viewer_resource_scope(resource_id):
         return 'world-encounters'
     if resource_id == 'graphics.queued-ui-maps':
         return 'interface-queued-maps'
+    if resource_id == 'graphics.queued-matrix-sources':
+        return 'interface-queued-matrices'
+    if resource_id == 'gameplay.menu-selection-banks':
+        return 'interface-menu-selection'
     if resource_id == 'graphics.map-height-digits':
         return 'interface-height'
     if resource_id == 'graphics.indexed-ui-tilemaps':
         return 'interface-indexed-ui'
     if resource_id == 'graphics.direct-rectangle-directory':
         return 'interface-rectangles'
+    if resource_id == 'graphics.direct-rectangle-bank':
+        return 'interface-rectangle-bank'
     if resource_id == 'graphics.localized-layout-tables':
         return 'interface-layouts'
     if resource_id == 'graphics.fixed-screen-maps':
@@ -4202,6 +4429,8 @@ def viewer_resource_scope(resource_id):
         return 'script-actors'
     if resource_id in ('audio.m4a-tones', 'audio.physical-tone-banks'):
         return 'audio-samples'
+    if resource_id == 'audio.m4a-extended-dispatch':
+        return 'audio-driver'
     if resource_id.startswith('audio.'):
         return 'audio'
     if resource_id in ('text.short-strings', 'font.complete-bank', 'text.name-keyboard'):
@@ -4259,9 +4488,14 @@ VIEWER_SECTION_KEYS = {
     'grouped-selection-pools': 'grouped_selection_tables',
     'grouped-selection-weights': 'grouped_selection_tables',
     'queued-ui-paths': 'queued_ui_maps',
+    'queued-matrix-paths': 'queued_matrix_sources',
+    'menu-selection-rows': 'menu_selection_banks', 'menu-selection-links': 'menu_selection_banks',
+    'menu-selection-readers': 'menu_selection_banks',
     'map-height-digits': 'map_height_digits',
     'indexed-ui-directories': 'indexed_ui_tilemaps',
     'direct-rectangle-presets': 'direct_rectangle_directory',
+    'direct-rectangle-bank-slots': 'direct_rectangle_bank',
+    'direct-rectangle-bank-literals': 'direct_rectangle_bank',
     'localized-layouts': 'localized_layout_tables', 'localized-layout-objects': 'localized_layout_tables',
     'localized-layout-transitions': 'localized_layout_tables',
     'ui-tiles': 'ui_graphics', 'firaga-transfers': 'firaga_transfer', 'firaga-palette-rows': 'firaga_palette_rows',
@@ -4311,13 +4545,19 @@ def viewer_available_sections(payload, titles):
         available.add('instruments')
     if present(payload.get('sequences')) and present(payload.get('sequence_directory')):
         available.add('sequence-audio')
+    driver = payload.get('audio_driver_reference') or {}
+    for section, key in (('audio-driver-clocks', 'clocks'), ('audio-driver-commands', 'commands'),
+                         ('audio-driver-extensions', 'extensions')):
+        if driver.get(key):
+            available.add(section)
     transfer = payload.get('type3_payloads') or {}
     if present(payload.get('obj_graphics')) or present(payload.get('lz_graphics')) or transfer.get('streams') or transfer.get('raw_streams'):
         available.add('obj-tiles')
     if (present(payload.get('observed_tilemaps')) or present(payload.get('firaga_compact_cells'))
             or payload.get('extra_tilemaps') or present(payload.get('fixed_screen_maps')) or present(payload.get('full_screen_map'))
-            or present(payload.get('direct_rectangle_directory')) or present(payload.get('indexed_ui_tilemaps'))
-            or present(payload.get('queued_ui_maps'))):
+            or present(payload.get('direct_rectangle_directory')) or present(payload.get('direct_rectangle_bank'))
+            or present(payload.get('indexed_ui_tilemaps'))
+            or present(payload.get('queued_ui_maps')) or present(payload.get('queued_matrix_sources'))):
         available.add('tilemaps')
     if (payload.get('compact_cell_bank') or {}).get('records'):
         available.add('compact-cell-bank')
@@ -4451,7 +4691,7 @@ def split_sequence_instructions(sequences):
     instructions, roots = sequences['instructions'], {}
     for track in sequences['tracks']:
         roots.setdefault(track['directory_header'], []).append(track['entry'])
-    assets, references = {}, {}
+    assets, references, echo_headers = {}, {}, []
     for header, entries in roots.items():
         pending, visited = list(entries), set()
         while pending:
@@ -4466,6 +4706,9 @@ def split_sequence_instructions(sequences):
             if instruction['code'][0] in ('jump', 'pattern'):
                 pending.append(instruction['code'][1])
         payload = [[index, instructions[index]] for index in sorted(visited)]
+        if sequences.get('pcm_echo') and any(item['code'][0] == 'extended' and item['code'][1] in (8, 9)
+                                             for _, item in payload):
+            echo_headers.append(header)
         encoded = json.dumps(payload, ensure_ascii=True, separators=(',', ':')).replace('<', '\\u003c')
         fingerprint = hashlib.sha256(encoded.encode('utf-8')).hexdigest()
         href = 'sequence-instructions-' + fingerprint + '.js'
@@ -4475,6 +4718,8 @@ def split_sequence_instructions(sequences):
         references[str(header)] = {'href': href, 'key': fingerprint, 'count': len(payload)}
     view = {**{key: value for key, value in sequences.items() if key != 'instructions'},
             'instructions': [], 'instruction_count': len(instructions), 'instruction_assets': references}
+    if echo_headers:
+        view['pcm_echo_headers'] = echo_headers
     return assets, view
 
 
@@ -4526,7 +4771,8 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     # These focused map pages share the same optional rendering inputs.
     # Keep the cells on each page but load graphics and palettes only on request.
     map_graphics_asset = None
-    if (any(data.get(key) for key in ('fixed_screen_maps', 'full_screen_map', 'direct_rectangle_directory', 'indexed_ui_tilemaps', 'queued_ui_maps'))
+    if (any(data.get(key) for key in ('fixed_screen_maps', 'full_screen_map', 'direct_rectangle_directory',
+                                     'direct_rectangle_bank', 'indexed_ui_tilemaps', 'queued_ui_maps', 'queued_matrix_sources'))
             and any(data.get(key) is not None for key in ('bg_graphics', 'ui_graphics', 'palettes', 'ui_palettes'))):
         graphics = {key: data.get(key) for key in ('bg_graphics', 'ui_graphics', 'palettes', 'ui_palettes')}
         encoded = json.dumps(graphics, ensure_ascii=True, separators=(',', ':')).replace('<', '\\u003c')
@@ -4557,7 +4803,7 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
         sprite_views[family] = catalogs
     text_assets, text_sources = [], {}
     for name, key in (('short_texts', 'short'), ('pointer_texts', 'pointer'),
-                      ('relative_texts', 'relative'), ('script_texts', 'script')):
+                      ('relative_texts', 'relative'), ('script_texts', 'script'), ('inline_ui', 'inline')):
         value = data.get(name)
         if value is None:
             continue
@@ -4565,6 +4811,17 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
             languages = {str(item['language_id']) for item in value['languages']}
         elif key == 'script':
             languages = {str(item['id']) for item in value['languages']}
+        elif key == 'inline':
+            languages = {str(index) for directory in value['directories'] for index, _ in enumerate(directory['entries'])}
+            # The search needs glyph IDs, token streams and source offsets. The
+            # bitmaps and encoded bytes stay on the dedicated reading page.
+            def searchable(entry):
+                return {field: entry[field] for field in ('source_offset', 'units')}
+
+            value = {'directories': [{'entries': [searchable(entry) for entry in directory['entries']]}
+                                     for directory in value['directories']],
+                     'shared': [searchable(entry) for entry in value['shared']],
+                     'glyphs': [{'index': glyph['index']} for glyph in value['glyphs']]}
         else:
             languages = {str(index) for catalog in value['catalogs'] for index, _ in enumerate(catalog['languages'])}
         encoded = json.dumps(value, ensure_ascii=True, separators=(',', ':')).replace('<', '\\u003c')
@@ -4586,6 +4843,13 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
             payload['audio'] = audio_view
         if 'sequences' in payload:
             payload['sequences'] = sequence_view
+        if key == 'audio-driver' and payload.get('audio_driver_reference'):
+            echo_headers = set((sequence_view or {}).get('pcm_echo_headers', ()))
+            if echo_headers:
+                songs = [{'id': song['id'], 'option': index} for index, song in
+                         enumerate((data.get('sequence_directory') or {}).get('songs', ()))
+                         if song['header_id'] in echo_headers]
+                payload['audio_driver_reference'] = {**payload['audio_driver_reference'], 'echo_songs': songs}
         if key in ('battle', 'battle-alternate'):
             mode = 'normal' if key == 'battle' else 'alternate'
             payload['battle_sprites'] = {mode: sprite_views['battle_sprites'][mode]} if mode in sprite_views['battle_sprites'] else {}
@@ -4631,12 +4895,14 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
             source = data['mission_text_candidates']
             payload['mission_text_reference'] = {'reader_index': source['reader_index'], 'count': len(source['rows'])}
         map_keys = {'interface-fixed-maps': 'fixed_screen_maps', 'interface-full-screen': 'full_screen_map', 'interface-rectangles': 'direct_rectangle_directory',
-                    'interface-indexed-ui': 'indexed_ui_tilemaps', 'interface-queued-maps': 'queued_ui_maps'}
+                    'interface-rectangle-bank': 'direct_rectangle_bank', 'interface-indexed-ui': 'indexed_ui_tilemaps',
+                    'interface-queued-maps': 'queued_ui_maps', 'interface-queued-matrices': 'queued_matrix_sources'}
         if key in map_keys and payload.get(map_keys[key]) and map_graphics_asset:
             payload['fixed_map_graphics_asset'] = {name: map_graphics_asset[name] for name in ('href', 'key')}
         return payload
 
     optional_scopes = {'objects-physical': ('physical_obj_animations', 'graphics.physical-compact-obj-banks'),
+                       'audio-driver': ('audio_driver_reference', 'audio.m4a-extended-dispatch'),
                        'checksums': ('save_crc32_table', 'engine.save-crc32-table'),
                        'interface-full-screen': ('full_screen_map', 'graphics.full-screen-map'),
                        'interface-motion-curves': ('screen_curve_bank', 'graphics.screen-curve-bank'),
@@ -4652,9 +4918,12 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
                        'selection-groups': ('grouped_selection_tables', 'gameplay.grouped-selection-tables'),
                        'interface-effects': ('counted_effect_tables', 'graphics.counted-effect-tables'),
                        'interface-queued-maps': ('queued_ui_maps', 'graphics.queued-ui-maps'),
+                       'interface-queued-matrices': ('queued_matrix_sources', 'graphics.queued-matrix-sources'),
+                       'interface-menu-selection': ('menu_selection_banks', 'gameplay.menu-selection-banks'),
                        'interface-height': ('map_height_digits', 'graphics.map-height-digits'),
                        'interface-indexed-ui': ('indexed_ui_tilemaps', 'graphics.indexed-ui-tilemaps'),
                        'interface-rectangles': ('direct_rectangle_directory', 'graphics.direct-rectangle-directory'),
+                       'interface-rectangle-bank': ('direct_rectangle_bank', 'graphics.direct-rectangle-bank'),
                        'interface-fixed-maps': ('fixed_screen_maps', 'graphics.fixed-screen-maps'),
                        'interface-layouts': ('localized_layout_tables', 'graphics.localized-layout-tables'),
                        'interface-curves': ('screen_update_curves', 'graphics.screen-update-tables')}
@@ -4673,12 +4942,18 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     for section in scope_sections.get('interface-rectangles', []):
         if section['id'] == 'tilemaps':
             section['label'] = 'Direct rectangle cells'
+    for section in scope_sections.get('interface-rectangle-bank', []):
+        if section['id'] == 'tilemaps':
+            section['label'] = 'Bank rectangle cells'
     for section in scope_sections.get('interface-indexed-ui', []):
         if section['id'] == 'tilemaps':
             section['label'] = 'Indexed UI map cells'
     for section in scope_sections.get('interface-queued-maps', []):
         if section['id'] == 'tilemaps':
             section['label'] = 'Queued UI map cells'
+    for section in scope_sections.get('interface-queued-matrices', []):
+        if section['id'] == 'tilemaps':
+            section['label'] = 'Queued matrix cells'
     sample_sections = {section['id'] for section in scope_sections['audio-samples']}
     scope_sections['audio'] = [section for section in scope_sections['audio'] if section['id'] not in sample_sections]
     for key, sections in scope_sections.items():
@@ -4736,7 +5011,7 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
     for row in data['resources']:
         scope = viewer_resource_scope(row['id'])
         groups[scope].append(row)
-        if row['id'] in ('text.short-strings', 'font.complete-bank', 'text.name-keyboard',
+        if row['id'] in ('text.short-strings', 'text.localized-inline-ui', 'font.complete-bank', 'text.name-keyboard',
                          'text.catalogs', 'text.script-archives', 'engine.text-reader-registry'):
             groups['text'].append(row)
         if row['id'] in ('text.catalogs', 'engine.text-reader-registry'):
@@ -4748,6 +5023,11 @@ def write_split_viewer(data, output, filename, template, resource_files=()):
             groups['interface-maps'].append(row)
         if row['id'] == 'audio.m4a-tones':
             groups['audio'].append(row)
+        if row['id'] == 'audio.m4a-sequences':
+            driver = data.get('audio_driver_reference') or {}
+            if (driver.get('clocks') or driver.get('commands')
+                    or any(entry['selector'] in (8, 9) for entry in driver.get('extensions', []))):
+                groups['audio-driver'].append(row)
         if row['id'] in ('audio.m4a-directory', 'audio.m4a-driver-tables'):
             groups['audio-samples'].append(row)
         if row['id'] == 'audio.m4a-driver-tables':
@@ -5047,6 +5327,8 @@ def generate(dataset, output, filename='index.html', *, split=False):
     sequences = None
     pcm_pitch = None
     audio_noise = None
+    audio_driver_reference = {}
+    audio_extended_reference = []
     bg_descriptors = None
     bg_graphics = None
     bg_transfers = None
@@ -5083,11 +5365,15 @@ def generate(dataset, output, filename='index.html', *, split=False):
     background_effect_graphics = None
     background_screen_banks = None
     queued_ui_maps = None
+    queued_matrix_sources = None
+    menu_selection_banks = None
     map_height_digits = None
     map_height_pending = None
     map_height_prior = None
     indexed_ui_tilemaps = None
     direct_rectangle_directory = None
+    direct_rectangle_bank = None
+    direct_rectangle_bank_pending = None
     fixed_screen_maps = None
     full_screen_map = None
     full_screen_row = None
@@ -5300,6 +5586,24 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 except (ValueError, KeyError, TypeError, struct.error) as error:
                     queued_ui_maps = None
                     row['status'] = f'Invalid queued UI maps: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.queued-matrix-sources'
+                  and row['format'] == 'queued-matrix-sources-v1-bin'):
+                try:
+                    queued_matrix_sources = project_queued_matrix_sources(content, row['sources'])
+                    queued_matrix_sources['path'] = row['path']
+                    row['status'] = 'Available: queued matrix cells and language selectors'
+                except (ValueError, KeyError, TypeError, struct.error) as error:
+                    queued_matrix_sources = None
+                    row['status'] = f'Invalid queued matrix sources: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'gameplay.menu-selection-banks'
+                  and row['format'] == 'menu-selection-banks-v1-bin'):
+                try:
+                    menu_selection_banks = project_menu_selection_banks(content, row['sources'])
+                    menu_selection_banks['path'] = row['path']
+                    row['status'] = 'Available: menu rows, linked selectors and reader words'
+                except (ValueError, KeyError, TypeError, struct.error) as error:
+                    menu_selection_banks = None
+                    row['status'] = f'Invalid menu selection banks: {error}'
             elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.map-height-digits'
                   and row['format'] == 'map-height-digits-v1-bin'):
                 map_height_pending = (content, row)
@@ -5322,6 +5626,9 @@ def generate(dataset, output, filename='index.html', *, split=False):
                 except (ValueError, KeyError, TypeError, struct.error) as error:
                     direct_rectangle_directory = None
                     row['status'] = f'Invalid direct rectangle directory: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.direct-rectangle-bank'
+                  and row['format'] == 'direct-rectangle-bank-v1-bin'):
+                direct_rectangle_bank_pending = (content, row)
             elif (manifest['profile'] == 'europe' and row['id'] == 'graphics.fixed-screen-maps'
                   and row['format'] == 'fixed-screen-maps-v1-bin'):
                 try:
@@ -6179,12 +6486,24 @@ def generate(dataset, output, filename='index.html', *, split=False):
                                      if timed_sound_sources else f'Invalid audio directory: {error}')
             elif row['id'] == 'audio.m4a-sequences' and row['format'] == 'audio-sequences-v1-json':
                 try:
-                    sequences = project_audio_sequences(json.loads(content))
+                    echo_sources = (row.get('sources') or ()) if manifest['profile'] == 'europe' else ()
+                    catalog = json.loads(content)
+                    sequences = project_audio_sequences(catalog, echo_sources=echo_sources)
                     sequences['path'] = row['path']
                     row['status'] = 'Available for sequence preview'
+                    if echo_sources:
+                        audio_driver_reference = project_audio_driver_reference(catalog['driver'], echo_sources)
                 except (ValueError, KeyError, TypeError) as error:
                     sequences = None
                     row['status'] = f'Invalid sequence data: {error}'
+            elif (manifest['profile'] == 'europe' and row['id'] == 'audio.m4a-extended-dispatch'
+                  and row['format'] == 'audio-extended-dispatch-v1-json'):
+                try:
+                    audio_extended_reference = project_audio_extended_reference(json.loads(content), row.get('sources') or ())
+                    row['status'] = 'Available: ten extended dispatch words'
+                except (ValueError, KeyError, TypeError) as error:
+                    audio_extended_reference = []
+                    row['status'] = f'Invalid audio extension reference: {error}'
             elif row['id'] == 'audio.m4a-driver-tables' and row['format'] == 'audio-driver-tables-v1-json':
                 pcm_pitch = audio_noise = None
                 try:
@@ -6603,6 +6922,14 @@ def generate(dataset, output, filename='index.html', *, split=False):
                     row['status'] += f" ({len(projected['unresolved'])} unresolved entries, {len(projected['errors'])} incomplete sources)"
         except (ValueError, KeyError, TypeError) as error:
             row['status'] = f'Invalid type-2 transfer data: {error}'
+    if direct_rectangle_bank_pending:
+        content, row = direct_rectangle_bank_pending
+        try:
+            direct_rectangle_bank = project_direct_rectangle_bank(content, row['sources'], extra_tilemaps.get('type2_rectangles'))
+            direct_rectangle_bank['path'] = row['path']
+            row['status'] = 'Available: direct rectangle cells, directory slots and reader words'
+        except (ValueError, KeyError, TypeError, struct.error) as error:
+            row['status'] = f'Invalid direct rectangle bank: {error}'
     if tilemap_bank:
         if tilemap_bank['maps']:
             extra_tilemaps['stream_bank'] = {'path': tilemap_bank_row['path'], 'maps': tilemap_bank['maps']}
@@ -6849,6 +7176,9 @@ def generate(dataset, output, filename='index.html', *, split=False):
     event_script_links = project_event_script_links(manifest['profile'], mission_event_sha.get('events'),
                                                     mission_event_sha.get('missions'), script_archive_sha,
                                                     mission_events, script_archive)
+    if audio_extended_reference:
+        audio_driver_reference['extensions'] = sorted(audio_driver_reference.get('extensions', []) + audio_extended_reference,
+                                                      key=lambda entry: entry['selector'])
     data = {'profile': manifest['profile'], 'extractor': manifest['extractor_revision'],
             'section_updates': viewer_section_updates(),
             'decoder': manifest['decoder_revision'], 'resources': rows, 'palettes': palettes,
@@ -6881,6 +7211,7 @@ def generate(dataset, output, filename='index.html', *, split=False):
             'sequence_directory': sequence_directory, 'sequences': sequences,
             'timed_sound_sources': timed_sound_sources,
             'pcm_pitch': pcm_pitch, 'audio_noise': audio_noise,
+            'audio_driver_reference': audio_driver_reference or None,
             'bg_descriptors': bg_descriptors, 'bg_graphics': bg_graphics, 'bg_transfers': bg_transfers, 'alternate_palettes': alternate_palettes, 'palette_programs': palette_programs,
             'indexed_archives': indexed_archives, 'indexed_tile_attributes': indexed_tile_attributes,
             'blend_programs': blend_programs, 'raster_palettes': raster_palettes,
@@ -6901,9 +7232,12 @@ def generate(dataset, output, filename='index.html', *, split=False):
             'background_effect_graphics': background_effect_graphics,
             'background_screen_banks': background_screen_banks,
             'queued_ui_maps': queued_ui_maps,
+            'queued_matrix_sources': queued_matrix_sources,
+            'menu_selection_banks': menu_selection_banks,
             'map_height_digits': map_height_digits,
             'indexed_ui_tilemaps': indexed_ui_tilemaps,
             'direct_rectangle_directory': direct_rectangle_directory,
+            'direct_rectangle_bank': direct_rectangle_bank,
             'fixed_screen_maps': fixed_screen_maps, 'full_screen_map': full_screen_map, 'save_crc32_table': save_crc32_table,
             'localized_layout_tables': localized_layout_tables,
             'screen_update_curves': screen_update_curves, 'screen_curve_bank': screen_curve_bank,
@@ -6921,6 +7255,8 @@ def generate(dataset, output, filename='index.html', *, split=False):
         raise ValueError('Output filename must be a simple filename')
     if split:
         return write_split_viewer(data, output, filename, template, resource_files)
+    if queued_matrix_sources is None:
+        data['section_updates'].pop('interface-queued-matrices', None)
     data['compact_witnessed_links'] = project_witnessed_links(obj_animation_compact.get('compact_catalog'),
                                                                physical_obj_animations)
     encoded = json.dumps(data, ensure_ascii=True).replace('<', '\\u003c')

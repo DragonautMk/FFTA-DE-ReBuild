@@ -592,6 +592,9 @@ pub struct RuntimeResources {
     save_crc32_table: Option<Box<PackedTilemapFile>>,
     screen_effect_motion: Option<Box<PackedTilemapFile>>,
     localized_inline_ui: Option<Box<PackedTilemapFile>>,
+    direct_rectangle_bank: Option<Box<PackedTilemapFile>>,
+    queued_matrix_sources: Option<Box<PackedTilemapFile>>,
+    menu_selection_banks: Option<Box<PackedTilemapFile>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -1219,6 +1222,30 @@ impl RuntimeResources {
                 PackedTilemapFile::new(file, &resource.sources)?,
             ));
         }
+        if let Some(file) = files.direct_rectangle_bank {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == DIRECT_RECTANGLE_BANK_ID)
+                .ok_or("Missing direct rectangle bank")?;
+            resources.direct_rectangle_bank = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.queued_matrix_sources {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == QUEUED_MATRIX_SOURCES_ID)
+                .ok_or("Missing queued matrix sources")?;
+            resources.queued_matrix_sources = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.menu_selection_banks {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == MENU_SELECTION_BANKS_ID)
+                .ok_or("Missing menu selection bank")?;
+            resources.menu_selection_banks = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1548,6 +1575,9 @@ impl RuntimeResources {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1750,6 +1780,9 @@ impl RuntimeResources {
             + self.save_crc32_table.as_ref().map_or(0, |i| i.resident_bytes())
             + self.screen_effect_motion.as_ref().map_or(0, |i| i.resident_bytes())
             + self.localized_inline_ui.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.direct_rectangle_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.queued_matrix_sources.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.menu_selection_banks.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -2051,6 +2084,15 @@ impl RuntimeResources {
     }
     pub fn localized_inline_ui_bus_bytes(&self) -> Option<u64> {
         self.localized_inline_ui.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn direct_rectangle_bank_bus_bytes(&self) -> Option<u64> {
+        self.direct_rectangle_bank.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn queued_matrix_sources_bus_bytes(&self) -> Option<u64> {
+        self.queued_matrix_sources.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn menu_selection_banks_bus_bytes(&self) -> Option<u64> {
+        self.menu_selection_banks.as_deref().map(PackedTilemapFile::bus_bytes)
     }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
@@ -2646,6 +2688,18 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.direct_rectangle_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.queued_matrix_sources {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.menu_selection_banks {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2981,6 +3035,9 @@ impl crate::MemMap {
                 || resources.save_crc32_table.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.screen_effect_motion.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.localized_inline_ui.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.direct_rectangle_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.queued_matrix_sources.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.menu_selection_banks.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.copied_halfword_lookups.as_ref().is_some_and(|data| data.fixed_byte_copy_overlaps(index, 4))
         })
             || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97

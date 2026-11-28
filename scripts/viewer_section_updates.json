@@ -1,11 +1,15 @@
 {
   "schema": 1,
   "sections": {
+    "text": {
+      "text-search": {"kind": "updated", "at": "2026-11-28T08:05:48Z"},
+      "resource-index": {"kind": "updated", "at": "2026-11-28T08:05:48Z"}
+    },
     "text-inline-ui": {
-      "inline-ui-text": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
-      "inline-ui-search": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-text": {"kind": "updated", "at": "2026-11-28T08:05:48Z"},
+      "inline-ui-search": {"kind": "updated", "at": "2026-11-28T08:05:48Z"},
       "inline-ui-languages": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
-      "inline-ui-shared": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-shared": {"kind": "updated", "at": "2026-11-28T08:05:48Z"},
       "inline-ui-thresholds": {"kind": "added", "at": "2026-11-28T00:23:43Z"}
     },
     "interface-effect-motion": {
@@ -61,6 +65,17 @@
       "queued-ui-paths": {"kind": "added", "at": "2026-11-27T21:34:37Z"},
       "tilemaps": {"kind": "added", "at": "2026-11-27T21:34:37Z"}
     },
+    "interface-queued-matrices": {
+      "queued-matrix-paths": {"kind": "added", "at": "2026-11-28T08:47:23Z"},
+      "tilemaps": {"kind": "added", "at": "2026-11-28T08:47:23Z"},
+      "resource-index": {"kind": "added", "at": "2026-11-28T08:47:23Z"}
+    },
+    "interface-menu-selection": {
+      "menu-selection-rows": {"kind": "added", "at": "2026-11-28T08:57:54Z"},
+      "menu-selection-links": {"kind": "added", "at": "2026-11-28T08:57:54Z"},
+      "menu-selection-readers": {"kind": "added", "at": "2026-11-28T08:57:54Z"},
+      "resource-index": {"kind": "added", "at": "2026-11-28T08:57:54Z"}
+    },
     "interface-height": {
       "map-height-digits": {"kind": "added", "at": "2026-11-27T21:26:37Z"}
     },
@@ -72,14 +87,29 @@
       "direct-rectangle-presets": {"kind": "added", "at": "2026-11-27T21:00:00Z"},
       "tilemaps": {"kind": "updated", "at": "2026-11-27T21:18:03Z"}
     },
+    "interface-rectangle-bank": {
+      "direct-rectangle-bank-slots": {"kind": "added", "at": "2026-11-28T08:19:08Z"},
+      "direct-rectangle-bank-literals": {"kind": "added", "at": "2026-11-28T08:19:08Z"},
+      "tilemaps": {"kind": "added", "at": "2026-11-28T08:19:08Z"},
+      "resource-index": {"kind": "added", "at": "2026-11-28T08:19:08Z"}
+    },
     "interface-layouts": {
       "localized-layouts": {"kind": "added", "at": "2026-11-27T20:38:18Z"},
       "localized-layout-objects": {"kind": "added", "at": "2026-11-27T20:38:18Z"},
       "localized-layout-transitions": {"kind": "added", "at": "2026-11-27T20:38:18Z"}
     },
     "audio": {
-      "sequence-audio": {"kind": "updated", "at": "2026-11-27T23:18:26Z"},
-      "timed-sounds": {"kind": "updated", "at": "2026-11-27T23:18:26Z"}
+      "sequence-audio": {"kind": "updated", "at": "2026-11-28T09:07:34Z"},
+      "sequence-pcm-echo": {"kind": "added", "at": "2026-11-28T08:34:19Z"},
+      "sequence-resolved-notes": {"kind": "updated", "at": "2026-11-28T08:34:19Z"},
+      "sequence-control-list": {"kind": "updated", "at": "2026-11-28T08:34:19Z"},
+      "timed-sounds": {"kind": "updated", "at": "2026-11-28T08:34:19Z"}
+    },
+    "audio-driver": {
+      "audio-driver-clocks": {"kind": "added", "at": "2026-11-28T09:07:34Z"},
+      "audio-driver-commands": {"kind": "added", "at": "2026-11-28T09:07:34Z"},
+      "audio-driver-extensions": {"kind": "added", "at": "2026-11-28T09:07:34Z"},
+      "resource-index": {"kind": "added", "at": "2026-11-28T09:07:34Z"}
     },
     "interface-fixed-maps": {
       "tilemaps": {"kind": "updated", "at": "2026-11-27T21:18:03Z"}
@@ -93,7 +123,7 @@
     },
     "index": {
       "wiki-name-search": {"kind": "updated", "at": "2026-11-27T21:42:54Z"},
-      "resource-index": {"kind": "updated", "at": "2026-11-27T22:33:35Z"},
+      "resource-index": {"kind": "updated", "at": "2026-11-28T09:07:34Z"},
       "file-inspector": {"kind": "updated", "at": "2026-11-27T23:57:52Z"},
       "inspect-values": {"kind": "added", "at": "2026-11-27T23:57:52Z"}
     },

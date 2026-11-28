@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-direct-rectangle-bank",
+  "title": "Trace the European direct rectangle bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Account for the 67 original copy call patterns, 50 direct rectangles, six indexed directories and their source operands. Reuse the existing counted type-2 proof."
+  ],
+  "validation": [
+    "Wine jtmuwp4o verifies 364 original halfwords and checks 4,277 distinct bytes against e377-d376. The 66 unowned spans contain 860 bytes, including 12 rectangles. All 17 guards and the Wine server drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary producer domains, translated execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

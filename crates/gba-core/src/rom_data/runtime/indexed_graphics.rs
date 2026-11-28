@@ -130,6 +130,7 @@ impl IndexedGraphicsResources {
                 for cell in &mut cells { cell.field = 11; }
             } else if (data.vram_selectors.is_some() && model::vram_selectors::is_source_start(*offset))
                 || (data.world_map_lookups.is_some() && model::world_map_lookups::is_source_start(*offset))
+                || (data.world_map_labels.is_some() && model::world_map_labels::is_source_start(*offset))
             {
                 for cell in &mut cells {
                     cell.field = 0;

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-e378-direct-rectangle-bank",
+  "title": "Browse the European direct rectangle bank in the wiki",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Docker"
+  ],
+  "changes": [
+    "Refresh the private local wiki to e378-d377. Add a dated Interface page for 12 newly extracted cell rectangles, two linked type-2 grids, 21 directory slots and 60 reader words.",
+    "Open the selected rectangle at the copied source row. Keep tile graphics and palettes available on demand."
+  ],
+  "validation": [
+    "Synthetic unit 4eneaec6 passed 18 tests. Protected e378 unit 9ed0o2li matched 66 source spans and all cells, slots and words, exercised the navbar and previews in Chrome, preserved 45 topic payloads and 190 resource pages and matched 1,123 Python and Docker outputs.",
+    "Published 49 ignored local files with verified preimages in out/ffta-e378-rectangles-before-o7siwtlp."
+  ],
+  "limitations": [
+    "Original screen names and the graphics and palette pairings remain unverified. Windows viewer validation is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_direct_rectangle_bank.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

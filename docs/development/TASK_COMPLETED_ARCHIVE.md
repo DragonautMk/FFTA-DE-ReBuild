@@ -30205,3 +30205,123 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified: Windows GNU build `138cvd_f` and Wine `_dnd1r25` PASS. Altered backing verifies 29 loads, 40 language lookups, five guarded choices, 41 expansions, 18 glyph cases, 3,936 mixed boundary checks and full state/clock equality. Both invalid attachments are rejected and e376 attaches. The CLI creates, verifies and reuses all 179 files with 177 predecessor resources unchanged. All 17 Wine guards and server drain pass.
 - Limits: Controlled language byte and reader entry. Ordinary rendered use, translated execution, Linux, USA and native Windows remain open. No performance measurements. Terra xhigh unconfirmed.
 - Evidence: Stage `sognrooh` retains the dataset and manifest hash. [Guide](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime) and [change record](../changes/2026-11-28-serve-european-localized-inline-ui-text.json).
+
+### E651 European direct rectangle source census
+
+- State: completed
+- Outcome: Wine `jtmuwp4o` identifies 860 new source bytes in 66 spans against e377.
+- Verified: 67 original calls, 50 physical rectangles, six directories and the row selectors. Four directories, 12 rectangles, one selector array and 60 literal words contribute new bytes. Seven existing owners cover the other 3,417 bytes. All 17 guards and the Wine server drain pass.
+- Limits: The counted type-2 path reuses E601. Ordinary producer domains, translated execution, managed publication and deferred platforms remain open.
+- Evidence: [source guide](../rom_data_graphics.md#e651-european-direct-rectangle-census) and [change record](../changes/2026-11-28-trace-european-direct-rectangle-bank.json).
+
+### VIEWER-E377-INLINE-TEXT
+
+- Outcome: completed
+- Verified criteria: Separate dated page for all seven localized directories, 35 physical strings, six shared strings, six thresholds, the guarded fallback and shared text settings. Local wiki updated to e377-d376.
+- Evidence: `0q1ifj65` PASS (20 tests) and `viewer-e377-inline-real-eyawuvhz` PASS (41 spans, 886 bytes, 48 glyphs, 35 Chrome choices, 44 earlier topic payloads, 189 resource pages, 1,120 matching Python/Docker files). Applied 48 files with verified preimages in `out/ffta-e377-inline-before-gcjk3mxj`. `docs/changes/2026-11-28-browse-e377-localized-interface-text.json`.
+- Limits: The ordinary route and scene identities remain open. Native Windows validation is deferred.
+
+### E652 European direct rectangle bank at runtime
+
+- State: completed
+- Outcome: e378-d377 serves all 860 bytes of the E651 residual.
+- Verified: Windows GNU build `g6f4utlg` and Wine `pabgc3t3` PASS. Altered backing verifies 71 loads, all 12 complete rectangles, the six-row caller, 21 directory slots with 31 copies, eight alternate cases and 6,336 boundary comparisons. Full guest state and clock match. e377 attaches and both invalid attachments are rejected. The CLI creates, verifies and reuses 180 files with 178 earlier resources unchanged. All 17 guards and Wine server drain pass.
+- Limits: Controlled original execution. Ordinary reachability, translated execution, wider producer domains and deferred platforms remain open. No performance measurements. Terra xhigh unconfirmed.
+- Evidence: Stage `gdwi0fkb` retains the dataset. [Guide](../rom_data_graphics.md#e652-european-direct-rectangle-bank-at-runtime) and [change record](../changes/2026-11-28-serve-european-direct-rectangle-bank.json).
+
+### VIEWER-INLINE-GLOBAL-SEARCH
+
+- Outcome: completed
+- Verified criteria: The combined text search loads the localized interface archive on demand and links to the exact physical entry or shared row. Language filters and the saved fallback preference work. Relevant disclosures are dated.
+- Evidence: `viewer-inline-global-synthetic-vfwvz5wm` PASS (18 tests), after `fq35xrv6` exposed a shared-row focus problem. `viewer-inline-global-real-08eq1ynm` PASS (41 entries, seven language-3 selections, 11,298-byte companion, 45 prior topics, 190 resource pages, 1,121 matching Python and Docker files). Applied 47 ignored files with verified preimages in `out/ffta-inline-global-before-b7mlvmnf`. `docs/changes/2026-11-28-include-localized-interface-text-in-archive-search.json`.
+- Limits: Recognition uses the existing European glyph subset. Local Chrome checks used the available 6.2 Sol session, without claiming Terra/xhigh. Native Windows validation is deferred.
+
+### E653 European queued matrix sources
+
+- State: completed
+- Outcome: Source scope complete for three maps, 436 cells, 13 literal words and 924 unowned bytes against e378.
+- Verified: Wine `tuz9kwhe` attests 817 original halfwords and reports the exact ownership. The server drains. The first verifier's list versus tuple comparison stops after those outputs. `uhq5u4zf` verifies the retained evidence with all 23 guards and completes the proof without another Wine run.
+- Limits: Sixteen other ancestry leads, runtime, ordinary staging, translated execution and deferred platforms remain open.
+- Evidence: [source guide](../rom_data_ui_graphics.md#e653-european-queued-matrix-sources) and [change record](../changes/2026-11-28-trace-european-queued-matrix-sources.json).
+
+### VIEWER-E378-DIRECT-RECTANGLES
+
+- Outcome: completed
+- Verified criteria: Dedicated dated Interface page in local e378-d377 for 12 new grids, two linked grids, 21 directory slots with highlighted copy rows and 60 reader words. Map graphics load on request.
+- Evidence: E651 jtmuwp4o and stage gdwi0fkb authenticate 66 spans. Synthetic 4eneaec6 passes 18 tests. Real 9ed0o2li checks source and Chrome, preserves 45 topic payloads and 190 resource pages and matches 1,123 Python/Docker files. Applied 49 ignored local files with preimages in out/ffta-e378-rectangles-before-o7siwtlp. See docs/changes/2026-11-28-browse-e378-direct-rectangle-bank.json.
+- Limits: Original screen identities and palette pairings remain open. Windows viewer verification is deferred. The parent preview, audio and naming criteria remain open.
+
+### E654 European queued matrices at runtime
+
+- State: completed
+- Outcome: e379-d378 serves all 924 source bytes from E653.
+- Verified: Windows GNU build `yk73m09a` and Wine `oe5aqd3x` PASS. Altered backing verifies 30 language selections, original queue suffixes, both full maps, 104 tail cells and the 144-byte initializer through the seven-row DMA. Complete state and clock match. e378 attaches and both invalid candidates are rejected. The CLI creates, verifies and reuses 181 files while preserving 179 earlier resources. All 17 guards and Wine server drain pass.
+- Limits: Controlled task RAM and copy entry points. Ordinary staging, translated execution, remaining queue producers and deferred platforms stay open. No performance measurements. Terra xhigh unconfirmed.
+- Evidence: Stage `w6058qkm` retains the verified dataset. [Guide](../rom_data_ui_graphics.md#e654-european-queued-matrices-at-runtime) and [change record](../changes/2026-11-28-serve-european-queued-matrix-sources.json).
+
+### VIEWER-NAV-OVERLAP
+
+- Outcome: completed
+- Verified criteria: Category menus remain above wrapped navbar rows, opening does not change bar height and the open menu fits the viewport on opening or resizing. Escape, audio links and mobile layout pass focused checks. The current e378-d377 wiki was updated with navigation-only edits to 47 pages.
+- Evidence: [Change record](../changes/2026-11-28-fix-viewer-dropdown-layering.json) and [viewer guide](ROM_DATA_VIEWER_TODO.md). Synthetic Chrome regression reproduced before the fix; six final checks PASS in viewer-navbar-final-fgaujl71. Published pages and preimages independently verified.
+- Limits: Chrome tests use synthetic data; existing wiki publication is verified bytewise. Native Windows and physical touch remain untested. Other viewer scopes stay open.
+
+### E655 European queued grid shape sources
+
+- State: completed
+- Outcome: Scoped 32-row source classification and shape bank verified against e379-d378.
+- Verified: The original callback prepares an allocated staging buffer. Eight shape records and three reader literals account for 44 unowned bytes. Wine `2bxsvzw_` attests 645 original halfwords. The protected join and Wine drain pass.
+- Limits: E588 live input descriptors and used flags remain unresolved. Runtime, ordinary and translated use, Linux, USA and native Windows are pending. Terra xhigh unconfirmed.
+- Evidence: [Source guide](../rom_data_ui_graphics.md#e655-european-queued-grid-shapes) and [change record](../changes/2026-11-28-trace-european-queued-grid-shapes.json).
+
+### VIEWER-PCM-ECHO
+
+- Outcome: completed
+- Verified criteria: Dated PCM pseudo-echo disclosure, note/command values and links to songs 114 and 116. Saved toggle controls frame-stepped song/timed playback and WAV export.
+- Evidence: e378 real _g7ic8r6 checks callback words, note allocation and four commands. Both WAVs change at manual 400 ticks per second and match at song tempo. Initial synthetic 9uj6p28d passes 14, with focused reload-timing correction pass na0g75oy. Corrected real harness accounts for inherited opcodes and default-song loading. Python/Docker match 1,123 files. Published 47 local pages and verified 191 resource pages. Preimages in out/ffta-viewer-pcm-echo-before-q2v7o6l2. See docs/changes/2026-11-28-preview-pcm-pseudo-echo.json.
+- Limits: At song tempo these samples end before the tail. Exact live mixing, speakers and deferred Windows remain open. Other preview and naming criteria remain active.
+
+### E656 European menu selection bank sources
+
+- State: completed
+- Outcome: 13 physical tables and 30 pointer words bounded in the selected EUR source group.
+- Verified: Wine `hwoyyk2k` attests 1,415 halfwords and 32 reader sites. The guarded e379 join finds 728 unowned bytes in 27 spans and confirms the owner of the 120-byte intervening table. All 14 guards and Wine drain pass.
+- Limits: Live index domains, publication, ordinary and translated execution, Linux, USA and native Windows remain open. Terra xhigh unconfirmed.
+- Evidence: [Source guide](../rom_data_ui_graphics.md#e656-european-menu-selection-banks) and [change record](../changes/2026-11-28-trace-european-menu-selection-banks.json).
+
+### VIEWER-E379-QUEUED-MATRICES
+
+- Outcome: completed
+- Verified criteria: Focused dated e379 Interface page for three matrices, six reader paths, five named languages, source-row highlights and on-demand graphics. Earlier local scopes remain accessible.
+- Evidence: E653 uhq5u4zf and e379 stage w6058qkm authenticate ten spans. Synthetic m1yn0o2a passes 16 after correcting the legacy badge. Real _63_v8x_ verifies 436 cells, 13 literals and all language routes in Chrome. Compared 46 old topics, preserved 191 resource pages and matched 1,125 Python/Docker files. Published 50 local files with preimages under out/ffta-viewer-e379-matrix-before-3ahmx4r2. See docs/changes/2026-11-28-browse-e379-queued-matrix-sources.json.
+- Limits: Scene names and original tile and palette pairings remain open. Native Windows is deferred. Other parent previews and audio remain active.
+
+### E657 European menu selection banks at runtime
+
+- State: completed
+- Outcome: e380-d379 publishes and serves the 13 original tables and their reader literals, 728 bytes across 27 spans.
+- Verified: Windows GNU build `u3uiazeh` and Wine `sjms_oc_` PASS. The original 32 pointer loads, field readers, all 28 pair matches and no-match loops read the extracted bank with altered backing. All 30 neighboring indexed words, 2,592 boundary checks and complete state and clock match. e379 attaches and both invalid candidates are rejected. CLI creates, verifies and reuses 182 files, preserving 180 earlier resources. All 17 Wine guards pass and the server drains.
+- Limits: Controlled original reader entries. Ordinary menu triggers, live domains, translated execution, Linux, USA and native Windows remain open. Terra xhigh unconfirmed. Performance deferred.
+- Evidence: Stage `vjtb2m5a` retains verified e380. [Guide](../rom_data_ui_graphics.md#e657-european-menu-selection-banks-at-runtime) and [change record](../changes/2026-11-28-serve-european-menu-selection-banks.json).
+
+### VIEWER-E380-MENU-SELECTION
+
+- Outcome: completed
+- Verified criteria: Dated Interface page for all 13 menu banks, 101 physical rows, five selector descriptors and 30 reader words. Selector and pointer links open the source, with raw bytes and a selection bookmark.
+- Evidence: E656 hwoyyk2k and stage vjtb2m5a authenticate 27 spans. Synthetic u5bseb8v passes 11. Real avqahzp3 confirms all decoded fields, 13 selector links and bookmark in Chrome, preserves 47 earlier topics and 192 resource pages and matches 1,127 Python/Docker files. Published 51 local files with verified preimages under out/ffta-viewer-e380-menu-before-j284o046. See docs/changes/2026-11-28-browse-e380-menu-selection-banks.json.
+- Limits: Live menu identities, full selector domains, further previews, official names and deferred Windows remain open.
+
+### E658 European world-map label tables and OBJ lists
+
+- State: completed
+- Outcome: Both selection tables, all eight variant slots and seven counted OBJ lists bounded.
+- Verified: 150 slices partition all 1,218 programs in the existing five language archives. Wine `6778uuyd` attests 499 original halfwords and finds 628 unowned bytes alongside 35,714 existing source bytes. All 13 guards and Wine drain pass.
+- Limits: First reader's seven-bit view index has an unresolved live producer. Runtime publication, ordinary and translated execution, Linux, USA and native Windows remain open. Terra xhigh unconfirmed.
+- Evidence: [Source guide](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists) and [change record](../changes/2026-11-28-trace-european-world-map-label-tables.json).
+
+### VIEWER-AUDIO-DRIVER-REFERENCE
+
+- Outcome: completed
+- Verified criteria: Dated Audio page for 49 clock values, 36 stored command words and 12 extended selectors. Player links reach both authenticated PCM echo songs and return to the reference. Separate scope carries the small tables.
+- Evidence: Synthetic 31jxr8js passes 13. Real 45cbcwlf checks five hashed spans and both live player routes. Its final marker guard detected the intended scope back-link change. Reconciliation b4my0s7l checks that one field, 49 scope payloads, 192 other resource pages and 1,128 matching Python/Docker outputs without repeating Chrome. Published 52 local files with verified preimages at out/ffta-audio-driver-before-783nrp8c. See docs/changes/2026-11-28-browse-audio-driver-reference.json.
+- Limits: Live mixer, physical audio, deferred Windows, other previews and official names remain open.

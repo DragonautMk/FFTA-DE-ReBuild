@@ -14,7 +14,7 @@ h1 { margin-bottom: .3rem; } a { color: #155d7a; }
 .sidebar li { margin: .45rem 0; }
 .sidebar button { display: block; width: 100%; margin: .35rem 0; text-align: left; }
 .wiki-page-category, .section-group { margin: .65rem 0; padding: .65rem; background: #eaf0f4; border-radius: .4rem; }
-.timed-reference-row { outline: 2px solid #155d7a; }
+.timed-reference-row, #inline-shared-rows tr[aria-current="true"] { outline: 2px solid #155d7a; }
 .timed-reference-word { background: #fff1bc; }
 .wiki-page-category ul, #contents ul { margin: .5rem 0; padding-left: 1.2rem; }
 .section-group > summary { font-weight: 650; }
@@ -68,6 +68,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
 .tilemap-grid table { width:auto; }
 .tilemap-grid td, .tilemap-grid th { padding:.1rem; }
 .tilemap-grid button { font:12px monospace; padding:.25rem; }
+#tilemap-cells .copy-source-row :is(th, td), #menu-selection-values tr[aria-current="true"] td { background: #dcebf2; }
 /* WIKI NAVIGATION CSS */
 </style>
 </head>
@@ -863,6 +864,35 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <tbody id="queued-ui-path-rows"></tbody></table>
   </details>
 </section>
+<section id="queued-matrix-paths" hidden>
+  <details><summary><h2>Queued matrix source paths</h2></summary>
+  <label>Saved language <select id="queued-matrix-language"></select></label>
+  <p>Choose a matrix to inspect its cells. A marked row identifies the portion used by that reader. Rows start at zero.</p>
+  <p id="queued-matrix-staging"></p>
+  <div class="tilemap-grid"><table><thead><tr><th>Original operation</th><th>Entry</th><th>Use</th><th>Pointer source</th>
+    <th>Matrix</th><th>Source rows</th><th>Source pitch</th></tr></thead><tbody id="queued-matrix-path-rows"></tbody></table></div>
+  </details>
+</section>
+<section id="menu-selection-rows" hidden>
+  <details><summary><h2>Menu bank rows</h2></summary>
+  <label>Bank <select id="menu-selection-bank"></select></label>
+  <label>Row <select id="menu-selection-row"></select></label>
+  <p id="menu-selection-source"></p>
+  <p>Stored bytes <code id="menu-selection-raw"></code></p>
+  <div class="tilemap-grid"><table><thead><tr id="menu-selection-fields"></tr></thead><tbody id="menu-selection-values"></tbody></table></div>
+  </details>
+</section>
+<section id="menu-selection-links" hidden>
+  <details><summary><h2>Menu row selectors</h2></summary>
+  <p>Stored selector values start at 1. Select a linked value to inspect its physical row. Zero leaves the entry unselected.</p>
+  <div class="tilemap-grid"><table><thead><tr id="menu-selection-link-fields"></tr></thead><tbody id="menu-selection-link-values"></tbody></table></div>
+  </details>
+</section>
+<section id="menu-selection-readers" hidden>
+  <details><summary><h2>Menu reader words</h2></summary>
+  <table><thead><tr><th>Word source</th><th>Stored pointer</th><th>Target bank</th></tr></thead><tbody id="menu-selection-reader-values"></tbody></table>
+  </details>
+</section>
 <section id="map-height-digits" hidden>
   <details><summary><h2>Map-height digits</h2></summary>
   <p>The original display selects decimal digits for heights 0–99 and clears the
@@ -900,6 +930,23 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <tbody id="direct-rectangle-preset-rows"></tbody></table>
   </details>
 </section>
+<section id="direct-rectangle-bank-slots" hidden>
+  <details><summary><h2>Rectangle directory slots</h2></summary>
+  <p>Choose a slot's pointer to open the source rectangle and highlight the copied row. Row numbers start at zero.</p>
+  <label>Directory <select id="direct-rectangle-bank-directory"></select></label>
+  <p id="direct-rectangle-bank-reader"></p>
+  <div class="tilemap-grid"><table><thead><tr><th>Slot</th><th>Entry offset</th><th>Stored pointer</th>
+    <th>Copied row</th><th>Row source</th><th>Extra bytes</th></tr></thead>
+    <tbody id="direct-rectangle-bank-slot-rows"></tbody></table></div>
+  </details>
+</section>
+<section id="direct-rectangle-bank-literals" hidden>
+  <details><summary><h2>Rectangle reader words</h2></summary>
+  <p>These words are stored at PC-relative reader locations. Linked words point to a rectangle on this page.</p>
+  <table><thead><tr><th>Source offset</th><th>Stored word</th></tr></thead>
+    <tbody id="direct-rectangle-bank-word-rows"></tbody></table>
+  </details>
+</section>
 <section id="tilemaps" hidden>
   <details><summary><h2>Tilemap and rectangle explorer</h2></summary>
   <p>Choose extracted cells and optionally interpret them as 4-bit background
@@ -927,12 +974,15 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="direct-rectangle-note" hidden>Each rectangle has a two-byte height/width header;
   its 15×16 halfword cells follow. The original task was verified copying row zero;
   the shared helper was checked separately for the remaining rows.</p>
+  <p id="direct-rectangle-bank-note" hidden>Each rectangle starts with its height and width in bytes, followed by
+  its 16-bit cells. Two linked grids come from the type-2 transfers when that source is available.</p>
   <p id="indexed-ui-note" hidden>Three direct maps are selected by the language-byte
   branch; the others are selected through the directories. The caller controls
   the tile addend, graphics and palette. These previews do not identify a scene.</p>
   <p id="queued-ui-note" hidden>The five maps are physical source rectangles.
   The live-height map's 16 available rows are an inspection bound, not a claim
   about the original task's live row count.</p>
+  <p id="queued-matrix-note" hidden>These three stored matrices provide two language-dependent 26×7 layouts and four 18-cell initialization rows.</p>
   <label>Map or rectangle <select id="tilemap-id"></select></label>
   <div id="queued-ui-row-controls" hidden>
     <label>Source rows to preview <input type="number" id="queued-ui-rows" min="1" max="16" step="1" value="16" style="width:5rem"></label>
@@ -1853,6 +1903,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   bends, envelopes and effects remain approximate. The trace has safety limits.</p>
   <label>Song ID <select id="sequence-song"></select></label>
   <button type="button" id="sequence-retry-load" hidden>Retry loading song data</button>
+  <p id="sequence-driver-navigation" hidden><a>Open the audio driver reference</a></p>
   <p id="sequence-instrument-navigation" hidden><a id="sequence-instrument-open" href="#instruments">Open this song's instrument bank</a></p>
   <details id="sequence-timed-references" hidden><summary>Possible timed sound references</summary>
     <p>Nonzero sound words whose low 12 bits match this directory ID are candidates.
@@ -1881,8 +1932,13 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <label id="sequence-fixed-rate-control" hidden>Assumed fixed-PCM mixer rate (Hz) <input id="sequence-fixed-rate" type="number" min="1000" max="96000" value="15768" style="width:7rem"></label>
   <label><input id="sequence-envelope" type="checkbox" checked> Apply extracted PCM envelope</label>
   <label><input id="sequence-frame-envelope" type="checkbox" checked> Use frame-by-frame PCM envelope</label>
-  <p>The frame envelope holds each level until the next mixer frame. Disable it
-  for a smoother approximation; echo and live mixer state are not reproduced.</p>
+  <p>The frame envelope holds each level until the next mixer frame. The smooth setting interpolates those levels.</p>
+  <details id="sequence-pcm-echo" hidden><summary>PCM pseudo-echo</summary>
+    <label><input id="sequence-use-pcm-echo" type="checkbox" checked> Apply the stored PCM echo tail</label>
+    <p>Some tracks set a level and duration for a quiet tail on subsequent PCM notes. The tail uses the frame-by-frame PCM envelope. Short samples can finish before it starts.</p>
+    <p id="sequence-pcm-echo-songs" hidden>Open a song with echo commands <span></span></p>
+    <p id="sequence-pcm-echo-status" role="status"></p>
+  </details>
   <label><input id="sequence-cgb-envelope" type="checkbox" checked> Apply extracted CGB square envelope</label>
   <p>Square-wave attack, decay, sustain and release use an approximate 64 Hz
   clock and normalized gain. Wave-channel envelopes, channel allocation and
@@ -1914,7 +1970,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <div id="sequence-playhead" hidden aria-hidden="true" style="position:absolute;top:0;bottom:0;width:2px;background:#c23616;pointer-events:none"></div>
   </div>
   <p id="sequence-timeline-detail"></p>
-  <details><summary>Resolved notes</summary>
+  <details id="sequence-resolved-notes"><summary>Resolved notes</summary>
     <p>Keys, velocities and program IDs are from the extracted track. Unsupported
     or unavailable voices are labeled as a sine fallback.</p>
     <button type="button" id="sequence-note-prev">Previous</button>
@@ -1923,7 +1979,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <table><thead><tr><th>Track</th><th>Start tick</th><th>End tick</th><th>Key</th><th>Velocity</th><th>Program</th><th>Wave</th></tr></thead><tbody id="sequence-note-rows"></tbody></table>
   </details>
   <details id="sequence-control-list"><summary>Track parameter changes</summary>
-    <p>Decoded volume, pan, key shift, bend, bend range and tuning commands in the selected tracks.</p>
+    <p>Decoded volume, pan, pitch, modulation and PCM echo commands in the selected tracks.</p>
     <button type="button" id="sequence-control-prev">Previous</button>
     <button type="button" id="sequence-control-next">Next</button>
     <span id="sequence-control-page"></span>
@@ -1936,6 +1992,28 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
     <table><thead><tr><th>Track</th><th>Tick</th><th>Source offset</th><th>Instruction and operands</th></tr></thead><tbody id="sequence-rows"></tbody></table>
   </details>
 </details></section>
+<section id="audio-driver-clocks" hidden>
+  <details><summary><h2>Audio clock lengths</h2></summary>
+  <p>Wait and note opcodes share this table of base lengths in ticks. A note extension can change the gate length.</p>
+  <div class="tilemap-grid"><table><thead><tr><th>Index</th><th>Ticks</th><th>Wait opcode</th><th>Note opcode</th><th>Source</th></tr></thead>
+    <tbody id="audio-driver-clock-rows"></tbody></table></div>
+  </details>
+</section>
+<section id="audio-driver-commands" hidden>
+  <details><summary><h2>Stored audio command words</h2></summary>
+  <p>The game copies this table into RAM and patches slots B9 and CD during initialization. The final six words belong to the copied block after the command slots.</p>
+  <div class="tilemap-grid"><table><thead><tr><th>Slot</th><th>Opcode</th><th>Stored word</th><th>Source</th><th>Recognized use</th></tr></thead>
+    <tbody id="audio-driver-command-rows"></tbody></table></div>
+  </details>
+</section>
+<section id="audio-driver-extensions" hidden>
+  <details><summary><h2>Extended audio selectors</h2></summary>
+  <p>Command CD reads a selector byte and uses the corresponding stored pointer. The table preserves the pointer words including the Thumb bit.</p>
+  <p id="audio-driver-echo-songs" hidden>Open a song using the PCM echo selectors <span></span></p>
+  <div class="tilemap-grid"><table><thead><tr><th>Selector</th><th>Stored pointer</th><th>Source</th><th>Recognized use</th></tr></thead>
+    <tbody id="audio-driver-extension-rows"></tbody></table></div>
+  </details>
+</section>
 <section id="text-search" hidden>
   <details><summary><h2>Search recognized text</h2></summary>
   <p>Search the visually matched European Latin glyphs in the text archives.
@@ -1989,6 +2067,7 @@ td, th { text-align: left; padding: .5rem; border-bottom: 1px solid #ddd; vertic
   <p id="inline-source"></p><div id="inline-preview" class="text-preview"></div>
   <details id="inline-ui-search"><summary>Search recognized text</summary>
     <p>Searches the recognized character subset in the 35 physical entries and six shared strings. Unknown glyphs are not guessed.</p>
+    <p id="inline-search-all" hidden><a href="#text-search">Search all text archives</a></p>
     <label>Text <input id="inline-search-query" type="search" maxlength="128"></label>
     <button type="button" id="inline-search-find">Find matches</button><p id="inline-search-status" role="status"></p>
     <div style="overflow-x:auto"><table><thead><tr><th>Source</th><th>Recognized preview</th><th>Open</th></tr></thead><tbody id="inline-search-rows"></tbody></table></div>
@@ -2454,7 +2533,9 @@ const resourceViews = {
   'gameplay.world-nodes': 'world', 'gameplay.world-roads': 'world', 'audio.m4a-tones': ['audio', 'instruments'],
   'audio.physical-tone-banks': ['audio', 'instruments'],
   'graphics.script39-registry-poses': 'equipment-sprites', 'graphics.script39-special-poses': 'equipment-sprites',
-  'audio.m4a-directory': ['sequence-audio', 'timed-sounds'], 'audio.m4a-sequences': 'sequence-audio',
+  'audio.m4a-directory': ['sequence-audio', 'timed-sounds'],
+  'audio.m4a-sequences': ['sequence-audio', 'audio-driver-clocks', 'audio-driver-commands', 'audio-driver-extensions'],
+  'audio.m4a-extended-dispatch': 'audio-driver-extensions',
   'audio.m4a-driver-tables': ['sequence-audio', 'cgb-noise'],
   'text.short-strings': 'texts', 'text.catalogs': ['pointer-texts', 'relative-texts'], 'text.script-archives': 'script-texts',
   'text.localized-inline-ui': 'inline-ui-text',
@@ -2495,9 +2576,12 @@ resourceViews['gameplay.selection-byte-tables'] = 'selection-byte-tables';
 resourceViews['gameplay.grouped-selection-tables'] = ['grouped-selection-pools', 'grouped-selection-weights'];
 resourceViews['graphics.fixed-screen-maps'] = 'tilemaps';
 resourceViews['graphics.direct-rectangle-directory'] = ['tilemaps', 'direct-rectangle-presets'];
+resourceViews['graphics.direct-rectangle-bank'] = ['tilemaps', 'direct-rectangle-bank-slots', 'direct-rectangle-bank-literals'];
 resourceViews['graphics.indexed-ui-tilemaps'] = ['tilemaps', 'indexed-ui-directories'];
 resourceViews['graphics.map-height-digits'] = 'map-height-digits';
 resourceViews['graphics.queued-ui-maps'] = ['tilemaps', 'queued-ui-paths'];
+resourceViews['graphics.queued-matrix-sources'] = ['tilemaps', 'queued-matrix-paths'];
+resourceViews['gameplay.menu-selection-banks'] = ['menu-selection-rows', 'menu-selection-links', 'menu-selection-readers'];
 resourceViews['graphics.localized-layout-tables'] = ['localized-layouts', 'localized-layout-objects', 'localized-layout-transitions'];
 resourceViews['graphics.physical-compact-obj-banks'] = ['obj-animations', 'physical-compact-descriptors'];
 ['', '-secondary', '-tertiary', '-quaternary', '-quinary', '-senary', '-septenary', '-octonary'].forEach(suffix => {
@@ -2686,7 +2770,7 @@ function renderRows() {
       if (data.wiki && data.wiki.current === 'text') {
         const destinations = {texts:'text-short', 'font-atlas':'text-short', 'name-keyboard':'text-short',
           'pointer-texts':'text-pointers', 'relative-texts':'text-relative',
-          'text-reader-registry':'text-relative', 'script-texts':'text-scripts'};
+          'text-reader-registry':'text-relative', 'script-texts':'text-scripts', 'inline-ui-text':'text-inline-ui'};
         const page = data.wiki.pages.find(page => page.id === destinations[target]);
         if (item.status.startsWith('Available') && page && (page.sections || []).some(section => section.id === target)) {
           const link = document.createElement('a'), href = new URL(page.href, location.href);
@@ -2763,9 +2847,12 @@ function renderRows() {
           || (['grouped-selection-pools', 'grouped-selection-weights'].includes(target) && !data.grouped_selection_tables)
           || (['localized-layouts', 'localized-layout-objects', 'localized-layout-transitions'].includes(target) && !data.localized_layout_tables)
           || (target === 'direct-rectangle-presets' && !data.direct_rectangle_directory)
+          || (['direct-rectangle-bank-slots', 'direct-rectangle-bank-literals'].includes(target) && !data.direct_rectangle_bank)
           || (target === 'indexed-ui-directories' && !data.indexed_ui_tilemaps)
           || (target === 'map-height-digits' && !data.map_height_digits)
           || (target === 'queued-ui-paths' && !data.queued_ui_maps)
+          || (target === 'queued-matrix-paths' && !data.queued_matrix_sources)
+          || (['menu-selection-rows', 'menu-selection-links', 'menu-selection-readers'].includes(target) && !data.menu_selection_banks)
           || (target === 'raster-palettes' && !data.raster_palettes)
           || (target === 'palette-programs' && !data.palette_programs)
           || (target === 'blend-programs' && !data.blend_programs)
@@ -2779,8 +2866,10 @@ function renderRows() {
           || (target === 'background-effects' && !data.background_effect_graphics)
           || (target === 'background-screens' && !data.background_screen_banks)
           || (target === 'tilemaps' && (item.id === 'graphics.queued-ui-maps' ? !data.queued_ui_maps
+              : item.id === 'graphics.queued-matrix-sources' ? !data.queued_matrix_sources
               : item.id === 'graphics.indexed-ui-tilemaps' ? !data.indexed_ui_tilemaps
               : item.id === 'graphics.direct-rectangle-directory' ? !data.direct_rectangle_directory
+              : item.id === 'graphics.direct-rectangle-bank' ? !data.direct_rectangle_bank
               : item.id === 'graphics.full-screen-map' ? !data.full_screen_map
               : item.id === 'graphics.fixed-screen-maps' ? !data.fixed_screen_maps
               : item.id === 'graphics.firaga-compact-cells'
@@ -2797,6 +2886,10 @@ function renderRows() {
           || (target === 'instruments' && !(data.audio && data.audio.instruments && data.audio.instruments.banks.length))
           || (target === 'timed-sounds' && !data.timed_sound_sources)
           || (target === 'sequence-audio' && (!data.sequences || !data.sequence_directory))) continue;
+      const driverView = {'audio-driver-clocks': 'clocks', 'audio-driver-commands': 'commands', 'audio-driver-extensions': 'extensions'}[target];
+      if (driverView && !(data.audio_driver_reference && data.audio_driver_reference[driverView])) continue;
+      if (target === 'audio-driver-extensions' && item.id === 'audio.m4a-extended-dispatch'
+          && !data.audio_driver_reference.extensions.some(entry => entry.selector !== 8 && entry.selector !== 9)) continue;
       const link = document.createElement('a'); link.href = '#' + target; link.textContent = 'Open view';
       if (target === 'indexed-graphics') link.addEventListener('click', () => {
         const selected = data.indexed_archives.families.findIndex(family => family.resource_id === item.id);
@@ -2834,8 +2927,10 @@ function renderRows() {
         const sequence = document.getElementById('firaga-cell-sequence');
         sequence.value = '0'; sequence.dispatchEvent(new Event('change'));
       });
-      if (target === 'tilemaps' && item.id === 'graphics.full-screen-map') link.addEventListener('click', () => {
-        const index = findTilemapBySource(0x3b53fc);
+      const gridSource = {'graphics.full-screen-map': data.full_screen_map, 'graphics.direct-rectangle-bank': data.direct_rectangle_bank,
+                          'graphics.queued-matrix-sources': data.queued_matrix_sources}[item.id];
+      if (target === 'tilemaps' && gridSource) link.addEventListener('click', () => {
+        const index = findTilemapBySource(gridSource.maps[0].source_offset);
         if (index >= 0) { const map = document.getElementById('tilemap-id'); map.value = String(index); map.dispatchEvent(new Event('change')); }
       });
       const extraTilemap = {'graphics.firaga-copied-matrices': 'firaga_matrices',
@@ -7627,6 +7722,7 @@ if (data.inline_ui) {
   const glyphId = unit => unit.kind === 'glyph' ? unit.index : null;
   const control = unit => '[control ' + hex(unit.value, 2) + ']';
   const fallbackKey = 'ffta-viewer-inline-fallback-v1';
+  let selectedShared = -1;
   try { const saved = localStorage.getItem(fallbackKey); if (saved === 'false') fallback.checked = false; } catch (_) {}
   for (let id = 0; id < 5; id++) language.add(new Option(id, id));
   source.directories.forEach((item, index) => directory.add(new Option(hex(item.source_offset), index)));
@@ -7668,6 +7764,7 @@ if (data.inline_ui) {
     sharedRows.replaceChildren();
     source.shared.forEach((entry, position) => {
       const row = sharedRows.insertRow(); row.id = 'inline-shared-' + position;
+      if (position === selectedShared) row.setAttribute('aria-current', 'true');
       row.insertCell().textContent = position; row.insertCell().textContent = hex(entry.source_offset);
       addPreview(row.insertCell(), entry); row.insertCell().textContent = raw(entry);
     });
@@ -7678,35 +7775,49 @@ if (data.inline_ui) {
       row.insertCell().textContent = hex(entry.source_offset); addPreview(row.insertCell(), entry); row.insertCell().textContent = raw(entry);
     });
   }
+  function openStoredEntry(offset) {
+    const shared = source.shared.findIndex(entry => entry.source_offset === offset);
+    if (shared !== -1) {
+      selectedShared = shared;
+      sharedRows.querySelector('[aria-current="true"]')?.removeAttribute('aria-current');
+      const row = sharedRows.rows[shared];
+      row.setAttribute('aria-current', 'true');
+      section.querySelector('details').open = true;
+      document.getElementById('inline-ui-shared').open = true;
+      const reveal = () => requestAnimationFrame(() => row.scrollIntoView({block: 'nearest'}));
+      if (document.readyState === 'complete') reveal();
+      else window.addEventListener('load', reveal, {once: true});
+      return;
+    }
+    for (let index = 0; index < source.directories.length; index++) {
+      const id = source.directories[index].entries.findIndex(entry => entry.source_offset === offset);
+      if (id === -1) continue;
+      if (index === source.fallback.directory && id === source.fallback.language_id) fallback.checked = false;
+      directory.value = String(index);
+      language.value = String(id);
+      language.dispatchEvent(new Event('change', {bubbles: true}));
+      section.querySelector('details').open = true;
+      return;
+    }
+  }
   function findMatches() {
     const needle = searchQuery.value.trim().toLocaleLowerCase(); searchRows.replaceChildren();
     if (!needle) { searchStatus.textContent = 'Enter recognized text to search.'; return; }
     const matches = [];
-    source.directories.forEach((group, index) => group.entries.forEach((entry, languageId) => {
+    source.directories.forEach(group => group.entries.forEach((entry, languageId) => {
       const label = recognized(entry);
-      if (label.toLocaleLowerCase().includes(needle)) matches.push({entry, label, index, languageId});
+      if (label.toLocaleLowerCase().includes(needle)) matches.push({entry, label, languageId});
     }));
-    source.shared.forEach((entry, index) => {
+    source.shared.forEach(entry => {
       const label = recognized(entry);
-      if (label.toLocaleLowerCase().includes(needle)) matches.push({entry, label, shared: index});
+      if (label.toLocaleLowerCase().includes(needle)) matches.push({entry, label});
     });
     matches.forEach(match => {
       const row = searchRows.insertRow(); row.insertCell().textContent = hex(match.entry.source_offset)
-        + (match.shared === undefined ? ' · language ID ' + match.languageId : ' · shared');
+        + (match.languageId === undefined ? ' · shared' : ' · language ID ' + match.languageId);
       row.insertCell().textContent = match.label;
       const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Open';
-      button.addEventListener('click', () => {
-        if (match.shared !== undefined) {
-          document.getElementById('inline-ui-shared').open = true;
-          document.getElementById('inline-shared-' + match.shared).scrollIntoView({block:'nearest'});
-        } else {
-          if (fallback.checked && match.index === source.fallback.directory && match.languageId === source.fallback.language_id) {
-            fallback.checked = false; fallback.dispatchEvent(new Event('change', {bubbles:true}));
-          }
-          directory.value = String(match.index); language.value = String(match.languageId);
-          language.dispatchEvent(new Event('change', {bubbles:true}));
-        }
-      });
+      button.addEventListener('click', () => openStoredEntry(match.entry.source_offset));
       row.insertCell().append(button);
     });
     searchStatus.textContent = matches.length + ' matches in recognized text.';
@@ -7716,7 +7827,17 @@ if (data.inline_ui) {
   fallback.addEventListener('change', () => { try { localStorage.setItem(fallbackKey, String(fallback.checked)); } catch (_) {} draw(); });
   document.getElementById('inline-search-find').addEventListener('click', findMatches);
   searchQuery.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); findMatches(); } });
+  const searchPage = data.wiki?.pages.find(page => page.id === 'text');
+  if (searchPage) {
+    const footer = document.getElementById('inline-search-all');
+    const target = new URL(searchPage.href, location.href);
+    target.hash = 'text-search';
+    footer.querySelector('a').href = target.href;
+    footer.hidden = false;
+  }
   registerTextSettings('inline', language, draw); draw();
+  const openOffset = new URLSearchParams(location.search).get('inline_source');
+  if (openOffset !== null && /^\d+$/.test(openOffset)) openStoredEntry(Number(openOffset));
 }
 if (data.short_texts) {
   document.getElementById('texts').hidden = false;
@@ -8257,10 +8378,12 @@ if (data.script_texts) {
 {
   const lazySources = data.text_search_sources || {};
   const sources = [
-    {key:'short', label:'Short texts', section:'texts', value:data.short_texts, asset:lazySources.short, page:'text-short'},
+    {key:'short', label:'Short texts', section:'texts', value:data.short_texts, asset:lazySources.short, page:'text-short', typedUnits:true},
     {key:'pointer', label:'Pointer text catalogs', section:'pointer-texts', value:data.pointer_texts, asset:lazySources.pointer, page:'text-pointers'},
     {key:'relative', label:'Relative text archives', section:'relative-texts', value:data.relative_texts, asset:lazySources.relative, page:'text-relative'},
-    {key:'script', label:'Script text archives', section:'script-texts', value:data.script_texts, asset:lazySources.script, page:'text-scripts'}
+    {key:'script', label:'Script text archives', section:'script-texts', value:data.script_texts, asset:lazySources.script, page:'text-scripts'},
+    {key:'inline', label:'Localized interface text', section:'inline-ui-text', value:data.wiki ? null : data.inline_ui,
+      asset:lazySources.inline, page:'text-inline-ui', typedUnits:true}
   ].filter(source => source.value || source.asset);
   if (sources.length) {
     const section = document.getElementById('text-search'), form = document.getElementById('text-search-form');
@@ -8285,6 +8408,7 @@ if (data.script_texts) {
         source.glyphs = new Set(source.value.glyphs.map(glyph => glyph.index));
         if (source.key === 'short') source.value.languages.forEach(item => languages.add(String(item.language_id)));
         else if (source.key === 'script') source.value.languages.forEach(item => languages.add(String(item.id)));
+        else if (source.key === 'inline') source.value.directories.forEach(group => group.entries.forEach((_, id) => languages.add(String(id))));
         else source.value.catalogs.forEach(catalog => catalog.languages.forEach((_, index) => languages.add(String(index))));
       }
     });
@@ -8338,6 +8462,15 @@ if (data.script_texts) {
                   yield {source, language:item.id, li, bi, ei, units:bank.programs[ei].units};
               }
             }
+          } else if (source.key === 'inline') {
+            for (const directory of value.directories) {
+              for (const [id, entry] of directory.entries.entries()) {
+                if (includesLanguage(id)) yield {source, language:id, offset:entry.source_offset, units:entry.units};
+              }
+            }
+            if (!selectedLanguage) {
+              for (const entry of value.shared) yield {source, language:null, offset:entry.source_offset, units:entry.units};
+            }
           } else {
             for (let ri = 0; ri < value.catalogs.length; ri++) {
               const catalog = value.catalogs[ri];
@@ -8370,9 +8503,14 @@ if (data.script_texts) {
       }
       function matchTarget(match) {
         const page = data.wiki && data.wiki.pages.find(item => item.id === match.source.page);
-        if (!page) return null;
-        const target = new URL(page.href, location.href), key = match.source.key;
+        const key = match.source.key;
+        if (!page && (data.wiki || key !== 'inline')) return null;
+        const target = new URL(page ? page.href : location.pathname, location.href);
         target.searchParams.set('view', match.source.section); target.hash = match.source.section;
+        if (key === 'inline') {
+          target.searchParams.set('inline_source', match.offset);
+          return target.href;
+        }
         const selections = key === 'short' ? [['text-language', match.li], ['text-entry', match.ei]]
           : key === 'script' ? [['script-language', match.li], ['script-bank', match.bi], ['script-entry', match.ei]]
           : [[key + '-reader', match.ri], [key + '-language', match.li], [key + '-entry', match.ei]];
@@ -8388,11 +8526,17 @@ if (data.script_texts) {
         pageLabel.textContent = 'Page ' + (page + 1) + ' of ' + pages + ' · ' + matches.length + ' matches';
         matches.slice(page * pageSize, (page + 1) * pageSize).forEach(match => {
           const row = rows.insertRow(), name = row.insertCell(), link = document.createElement('a');
-          link.href = match.source.asset ? matchTarget(match) : '#' + match.source.section;
-          link.textContent = match.source.label + ' · language ' + match.language
-            + (match.ri === undefined ? '' : ' · reader 0x' + match.source.value.catalogs[match.ri].reader.toString(16).toUpperCase())
-            + (match.bi === undefined ? '' : ' · bank ' + match.bi) + ' · entry ' + match.ei;
-          if (!match.source.asset) link.addEventListener('click', () => openMatch(match));
+          const linked = match.source.asset || match.source.key === 'inline';
+          link.href = linked ? matchTarget(match) : '#' + match.source.section;
+          if (match.source.key === 'inline') {
+            const type = match.language === null ? 'shared' : 'language ' + match.language;
+            link.textContent = match.source.label + ' · ' + type + ' · 0x' + match.offset.toString(16).toUpperCase();
+          } else {
+            link.textContent = match.source.label + ' · language ' + match.language
+              + (match.ri === undefined ? '' : ' · reader 0x' + match.source.value.catalogs[match.ri].reader.toString(16).toUpperCase())
+              + (match.bi === undefined ? '' : ' · bank ' + match.bi) + ' · entry ' + match.ei;
+          }
+          if (!linked) link.addEventListener('click', () => openMatch(match));
           name.append(link);
           row.insertCell().textContent = match.snippet;
         });
@@ -8436,7 +8580,7 @@ if (data.script_texts) {
               while (current.index < match.units.length && units < 8000) {
                 if (units && units % 128 === 0 && performance.now() >= deadline) break;
                 const unit = match.units[current.index++]; units++;
-                const index = match.source.key === 'short' ? (unit.kind === 'glyph' ? unit.index : null)
+                const index = match.source.typedUnits ? (unit.kind === 'glyph' ? unit.index : null)
                   : (typeof unit === 'number' ? unit : null);
                 if (index === null) current.pendingSpace = current.hasGlyph;
                 else {
@@ -9781,15 +9925,22 @@ function approximatePcmEnvelope(word, gateSeconds, limitSeconds) {
   }
   return {points, duration: time};
 }
-// The PCM mixer holds its integer envelope level for a frame. This models the
-// attack/decay/sustain/release path with no pseudo-echo or live channel changes.
-function framePcmEnvelope(word, gateSeconds, limitSeconds) {
+// The PCM mixer holds its integer envelope level for a frame. Copy the note's
+// echo settings at note-on and hold their level after release or zero decay.
+function framePcmEnvelope(word, gateSeconds, limitSeconds, echoVolume = 0, echoFrames = 0) {
   const step = 280896 / 16777216, attack = word & 255, decay = (word >>> 8) & 255;
   const sustain = (word >>> 16) & 255, release = (word >>> 24) & 255;
   const gate = Math.max(0, Math.min(gateSeconds, limitSeconds));
   let value = attack, phase = value === 255 ? 2 : 3;
   const points = [[0, value / 255]];
   if (!gate || !value) return {points, duration: 0, stepped: true};
+  const echo = echoFrames > 0 ? echoVolume : 0;
+  function holdEcho(frame) {
+    const finish = (frame + echoFrames) * step;
+    points.push([frame * step, echo / 255]);
+    if (finish < limitSeconds) points.push([finish, 0]);
+    return {points, duration: Math.min(finish, limitSeconds), stepped: true};
+  }
   // A note-off between frames affects the next mixer update. The small
   // tolerance keeps frame-aligned values stable after floating-point subtraction.
   const gateFrame = Math.max(1, Math.ceil(gate / step - 1e-9));
@@ -9799,6 +9950,7 @@ function framePcmEnvelope(word, gateSeconds, limitSeconds) {
     else break;
     const time = frame * step;
     if (time >= limitSeconds) return {points, duration: limitSeconds, stepped: true};
+    if (echo && phase === 1 && !value) return holdEcho(frame);
     points.push([time, value / 255]);
     if (phase === 1 && !value) return {points, duration: time, stepped: true};
   }
@@ -9806,7 +9958,9 @@ function framePcmEnvelope(word, gateSeconds, limitSeconds) {
   for (let frame = gateFrame; ; frame++) {
     const time = frame * step;
     if (time >= limitSeconds) return {points, duration: limitSeconds, stepped: true};
-    value = Math.floor(value * release / 256); points.push([time, value / 255]);
+    value = Math.floor(value * release / 256);
+    if (echo && value <= echo) return holdEcho(frame);
+    points.push([time, value / 255]);
     if (!value) return {points, duration: time, stepped: true};
   }
 }
@@ -9889,16 +10043,21 @@ function schedulePcmEnvelope(parameter, envelope, amplitude, intended, begin, en
   if (cutoff > first) parameter.linearRampToValueAtTime(amplitude * envelopeValueAt(envelope.points, cutoff - intended), cutoff);
   parameter.linearRampToValueAtTime(0, end);
 }
-function sequencePlaybackEvents(notes, seconds, envelopeEnabled, steppedEnvelope = false, cgbEnvelopeEnabled = false) {
+function sequencePlaybackEvents(notes, seconds, envelopeEnabled, steppedEnvelope = false, cgbEnvelopeEnabled = false,
+                                pcmEchoEnabled = false) {
   const events = notes.map(note => {
     const begin = note.startSeconds, gate = note.endSeconds - note.startSeconds;
     const cutoff = Number.isFinite(note.soundEnd) ? Math.min(seconds, note.soundEnd) : seconds;
     let envelope = null;
     if (note.sample && Number.isInteger(note.envelope)) {
-      if (envelopeEnabled && note.sample.kind.startsWith('pcm'))
-        envelope = (steppedEnvelope ? framePcmEnvelope : approximatePcmEnvelope)(note.envelope, gate, Math.max(0, cutoff - begin));
-      else if (cgbEnvelopeEnabled && note.sample.kind === 'cgb-square')
+      if (envelopeEnabled && note.sample.kind.startsWith('pcm')) {
+        const limit = Math.max(0, cutoff - begin);
+        envelope = steppedEnvelope
+          ? framePcmEnvelope(note.envelope, gate, limit, pcmEchoEnabled ? note.echoVolume : 0, note.echoFrames)
+          : approximatePcmEnvelope(note.envelope, gate, limit);
+      } else if (cgbEnvelopeEnabled && note.sample.kind === 'cgb-square') {
         envelope = approximateCgbSquareEnvelope(note.envelope, gate, Math.max(0, cutoff - begin));
+      }
     }
     return {...note, envelope, audioEnd: Math.min(cutoff, envelope ? begin + envelope.duration : note.endSeconds)};
   });
@@ -10391,9 +10550,71 @@ if (data.audio && data.audio.instruments && data.audio.instruments.banks.length)
   });
   chooseBank();
 }
+if (data.audio_driver_reference) {
+  const driver = data.audio_driver_reference;
+  const hex = (value, width) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  function appendRow(body, columns) {
+    const row = body.insertRow(); columns.forEach(value => { row.insertCell().textContent = value; });
+  }
+  if (driver.clocks) {
+    document.getElementById('audio-driver-clocks').hidden = false;
+    const body = document.getElementById('audio-driver-clock-rows');
+    driver.clocks.values.forEach((ticks, index) => {
+      appendRow(body, [index, ticks, hex(0x80 + index, 2), hex(0xcf + index, 2), hex(driver.clocks.source_offset + index, 6)]);
+    });
+  }
+  if (driver.commands) {
+    document.getElementById('audio-driver-commands').hidden = false;
+    const body = document.getElementById('audio-driver-command-rows');
+    const names = {0xb1: 'End track', 0xb2: 'Jump', 0xb3: 'Call pattern', 0xb4: 'Return from pattern',
+                   0xbb: 'Tempo', 0xbd: 'Select instrument', 0xcd: 'Extended command', 0xce: 'End tied note'};
+    driver.commands.values.forEach((word, index) => {
+      const command = 0xb1 + index, decoded = decodeSequenceControl(command, 0);
+      const name = names[command] || (decoded && decoded.name) || '—';
+      const label = command === 0xb9 ? 'Patched in RAM' : command === 0xcd ? name + ' · patched in RAM' : name;
+      appendRow(body, [index, command <= 0xce ? hex(command, 2) : '—', hex(word, 8),
+                       hex(driver.commands.source_offset + index * 4, 6), label]);
+    });
+  }
+  if (driver.extensions) {
+    document.getElementById('audio-driver-extensions').hidden = false;
+    const body = document.getElementById('audio-driver-extension-rows');
+    driver.extensions.forEach(item => {
+      const echoLevel = item.selector === 8 && item.callback === 0x08149f69;
+      const echoLength = item.selector === 9 && item.callback === 0x08149f75;
+      appendRow(body, [item.selector, hex(item.callback, 8), hex(item.source_offset, 6),
+                       echoLevel ? 'PCM echo level' : echoLength ? 'PCM echo length' : '—']);
+    });
+    const songs = document.getElementById('audio-driver-echo-songs');
+    const player = data.wiki && data.wiki.pages.find(page => page.id === 'audio' &&
+      page.sections.some(section => section.id === 'sequence-audio'));
+    if (player && driver.echo_songs && driver.echo_songs.length) {
+      driver.echo_songs.forEach(song => {
+        const href = new URL(player.href, location.href), link = document.createElement('a');
+        href.hash = 'sequence-audio'; href.searchParams.set('view', 'sequence-audio');
+        href.searchParams.append('select', 'sequence-song:' + song.option);
+        link.href = href.href; link.textContent = 'Song ' + song.id; songs.querySelector('span').append(' ', link);
+      });
+      songs.hidden = false;
+    } else if (data.sequences && data.sequences.pcm_echo && data.sequence_directory) {
+      const link = document.createElement('a'); link.href = '#sequence-audio'; link.textContent = 'Song player';
+      songs.replaceChildren(link); songs.hidden = false;
+    }
+  }
+}
 let startTimedSoundMix = null, stopTimedSoundMix = null, waitForSelectedSong = null;
 if (data.sequences && data.sequence_directory) {
   document.getElementById('sequence-audio').hidden = false;
+  const driverTopics = ['audio-driver-clocks', 'audio-driver-commands', 'audio-driver-extensions'];
+  const driverPage = data.wiki && data.wiki.pages.find(item => item.id === 'audio-driver');
+  const driverSection = driverTopics.find(id => driverPage ? driverPage.sections.some(section => section.id === id)
+    : !document.getElementById(id).hidden);
+  if (driverSection) {
+    const navigation = document.getElementById('sequence-driver-navigation');
+    const href = new URL(driverPage ? driverPage.href : location.href, location.href);
+    href.search = ''; href.hash = driverSection;
+    navigation.querySelector('a').href = href.href; navigation.hidden = false;
+  }
   const song = document.getElementById('sequence-song'), track = document.getElementById('sequence-track');
   const rate = document.getElementById('sequence-rate'), play = document.getElementById('sequence-play');
   const duration = document.getElementById('sequence-duration');
@@ -10405,12 +10626,17 @@ if (data.sequences && data.sequence_directory) {
   const fixedRate = document.getElementById('sequence-fixed-rate');
   const useEnvelope = document.getElementById('sequence-envelope');
   const frameEnvelope = document.getElementById('sequence-frame-envelope');
+  const echoSupported = data.sequences.pcm_echo === true;
+  const echoStorageKey = 'ffta.viewer.sequence.pcmEcho', useEcho = document.getElementById('sequence-use-pcm-echo');
+  const echoStatus = document.getElementById('sequence-pcm-echo-status');
+  document.getElementById('sequence-pcm-echo').hidden = !echoSupported;
   const useCgbEnvelope = document.getElementById('sequence-cgb-envelope'), cgbEnvelopeStorageKey = 'ffta.viewer.sequence.cgbSquareEnvelope';
   const muteCgb = document.getElementById('sequence-mute-cgb'), muteStorageKey = 'ffta.viewer.sequence.muteCgb';
   const trackMixer = document.getElementById('sequence-track-mixer'), trackMuteList = document.getElementById('sequence-track-mutes');
   try { muteCgb.checked = localStorage.getItem(muteStorageKey) === '1'; } catch (_) {}
   try { if (localStorage.getItem(modulationStorageKey) === '0') useModulation.checked = false; } catch (_) {}
   try { if (localStorage.getItem(cgbEnvelopeStorageKey) === '0') useCgbEnvelope.checked = false; } catch (_) {}
+  try { if (localStorage.getItem(echoStorageKey) === '0') useEcho.checked = false; } catch (_) {}
   const stop = document.getElementById('sequence-stop'), status = document.getElementById('sequence-status');
   const download = document.getElementById('sequence-download'), exportStatus = document.getElementById('sequence-export-status');
   const canvas = document.getElementById('sequence-notes'), context = canvas.getContext('2d');
@@ -10485,6 +10711,20 @@ if (data.sequences && data.sequence_directory) {
   const catalogFilter = document.getElementById('sequence-catalog-filter'), catalogRows = document.getElementById('sequence-catalog-rows');
   const catalogPrevious = document.getElementById('sequence-catalog-prev'), catalogNext = document.getElementById('sequence-catalog-next');
   const catalogStatus = document.getElementById('sequence-catalog-status'), songDirectory = data.sequence_directory.songs;
+  const echoHeaders = new Set(data.sequences.pcm_echo_headers || []), echoSongs = document.getElementById('sequence-pcm-echo-songs');
+  if (echoSupported && echoHeaders.size) {
+    const buttons = echoSongs.querySelector('span');
+    songDirectory.forEach((entry, index) => {
+      if (!echoHeaders.has(entry.header_id)) return;
+      const button = document.createElement('button');
+      button.type = 'button'; button.textContent = 'Song ' + entry.id;
+      button.addEventListener('click', () => {
+        if (song.value !== String(index)) { song.value = String(index); song.dispatchEvent(new Event('change', {bubbles: true})); }
+      });
+      buttons.append(' ', button);
+    });
+    echoSongs.hidden = buttons.childElementCount === 0;
+  }
   let catalogPage = 0, catalogMatches = songDirectory.map((item, index) => index);
   function drawSongCatalog() {
     const pageSize = 25, first = catalogPage * pageSize;
@@ -10644,9 +10884,19 @@ if (data.sequences && data.sequence_directory) {
     if (steps >= maxSteps && tick < limit) limited = true;
     return {changes, limited};
   }
+  function describeTrackCommand(code) {
+    if (code[0] === 'parameter') {
+      const decoded = decodeSequenceControl(code[1], code[2]);
+      if (decoded) return {command: code[1], ...decoded};
+    }
+    if (echoSupported && code[0] === 'extended' && (code[1] === 8 || code[1] === 9))
+      return {command: 0xcd, name: code[1] === 8 ? 'PCM echo level' : 'PCM echo length (frames)', value: code[2]};
+    return null;
+  }
   function buildTrace(root, limit, maxSteps, maxNotes) {
     const executed = [], events = [], stack = [], activeTies = new Map();
     let id = root, tick = 0, key = null, velocity = 96, program = null, skipped = 0, reason = 'time limit';
+    let echoVolume = 0, echoFrames = 0;
     while (tick < limit && executed.length < maxSteps && events.length < maxNotes) {
       const instruction = data.sequences.instructions[id];
       if (!instruction) { reason = 'missing successor'; break; }
@@ -10660,7 +10910,7 @@ if (data.sequences && data.sequence_directory) {
         if (code[3] !== null) velocity = code[3];
         if (key !== null) {
           const duration = (data.sequences.clocks[code[1]] + (code[4] || 0)) & 255;
-          const event = {key, velocity, program, start: tick, end: duration ? tick + duration : null};
+          const event = {key, velocity, program, start: tick, end: duration ? tick + duration : null, echoVolume, echoFrames};
           events.push(event);
           if (!duration) {
             if (!activeTies.has(key)) activeTies.set(key, []);
@@ -10682,6 +10932,9 @@ if (data.sequences && data.sequence_directory) {
         reason = 'track end'; break;
       } else if (kind === 'parameter' && code[1] === 0xbd) {
         program = code[2];
+      } else if (echoSupported && kind === 'extended' && (code[1] === 8 || code[1] === 9)) {
+        if (code[1] === 8) echoVolume = code[2];
+        else echoFrames = code[2];
       } else if (kind === 'parameter' && code[1] === 0xbb && useTempo.checked) {
         // The shared tempo pass already accounts for this command.
       } else if (kind === 'parameter' && useTrackControls.checked && decodeSequenceControl(code[1], code[2])) {
@@ -10720,6 +10973,8 @@ if (data.sequences && data.sequence_directory) {
                            note.program === null ? '—' : note.program,
                            label + (note.isCgb && muteCgb.checked ? ' · muted' : '')
                              + (mutedTracks.has(note.track) ? ' · track muted' : '')
+                             + (note.sample && note.sample.kind.startsWith('pcm') && note.echoVolume && note.echoFrames
+                               ? ' · echo level ' + note.echoVolume + ' for ' + note.echoFrames + ' frames' : '')
                              + (note.sample && Number.isInteger(note.sample.register) ? ' · base register 0x' + note.sample.register.toString(16).toUpperCase() : '')]) {
         row.insertCell().textContent = value;
       }
@@ -10740,6 +10995,10 @@ if (data.sequences && data.sequence_directory) {
   function drawNotes(seconds) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     drawNotePage();
+    if (echoSupported) {
+      const count = notes.filter(note => note.sample && note.sample.kind.startsWith('pcm') && note.echoVolume && note.echoFrames).length;
+      echoStatus.textContent = count + (count === 1 ? ' resolved PCM note has' : ' resolved PCM notes have') + ' echo settings in this preview.';
+    }
     if (!notes.length) { noteDetail.textContent = ''; context.fillStyle = '#40515d'; context.fillText('No resolved notes in this preview.', 12, 24); return; }
     const lowest = Math.min(...notes.map(note => note.key)), highest = Math.max(...notes.map(note => note.key));
     noteDetail.textContent = 'Timeline: 0–' + seconds + ' seconds · extracted keys ' + lowest + '–' + highest + '.';
@@ -10756,6 +11015,7 @@ if (data.sequences && data.sequence_directory) {
     stopSequence(preserveTimedLoad === true); sequenceProgress.reset(); page = 0; notePage = 0; controlPage = 0;
     trace = []; notes = []; controls = []; modulation = []; modulationLimited = 0;
     frameTempo.disabled = !useTempo.checked; frameEnvelope.disabled = !useEnvelope.checked;
+    useEcho.disabled = !useEnvelope.checked || !frameEnvelope.checked || voice.value !== 'pcm';
     useModulation.disabled = !useTrackControls.checked;
     if (!selectedReady) {
       status.textContent = selectedLoadMessage; play.disabled = true; updateDownload();
@@ -10806,9 +11066,8 @@ if (data.sequences && data.sequence_directory) {
     trace = trace.filter(item => Number.isFinite(timing.timeAt(item.tick)) && timing.timeAt(item.tick) <= seconds);
     trace.sort((a, b) => a.tick - b.tick || a.track - b.track);
     controls = trace.flatMap(item => {
-      const decoded = item.code[0] === 'parameter' ? decodeSequenceControl(item.code[1], item.code[2]) : null;
-      return decoded ? [{track: item.track, tick: item.tick, time: timing.timeAt(item.tick),
-                         command: item.code[1], ...decoded}] : [];
+      const decoded = describeTrackCommand(item.code);
+      return decoded ? [{track: item.track, tick: item.tick, time: timing.timeAt(item.tick), ...decoded}] : [];
     });
     notes = notes.filter(note => {
       note.startSeconds = timing.timeAt(note.start);
@@ -10905,11 +11164,11 @@ if (data.sequences && data.sequence_directory) {
           const track = route++, result = buildTrace(trackItem.entry, tickLimit, maxSteps, maxNotes);
           if (['instruction or note limit', 'pattern stack limit', 'missing successor', 'no successor'].includes(result.reason)) limited++;
           result.executed.forEach(item => {
-            const decoded = item.code[0] === 'parameter' ? decodeSequenceControl(item.code[1], item.code[2]) : null;
+            const decoded = describeTrackCommand(item.code);
             const time = timing.timeAt(item.tick);
             if (decoded && Number.isFinite(time) && time <= seconds)
               mixControls.push({track, sourceTrack: trackItem.track_index, tick: item.tick,
-                time: event.offset + time, command: item.code[1], ...decoded});
+                time: event.offset + time, ...decoded});
           });
           if (useTrackControls.checked && useModulation.checked) {
             const lfo = sequenceLfoSteps(result.executed, result.events, timing, seconds, Math.max(1, Math.floor(100000 / trackCount)));
@@ -10998,6 +11257,10 @@ if (data.sequences && data.sequence_directory) {
   frameTempo.addEventListener('change', prepareSequence);
   useEnvelope.addEventListener('change', prepareSequence);
   frameEnvelope.addEventListener('change', prepareSequence);
+  useEcho.addEventListener('change', () => {
+    try { localStorage.setItem(echoStorageKey, useEcho.checked ? '1' : '0'); } catch (_) {}
+    prepareSequence();
+  });
   useCgbEnvelope.addEventListener('change', () => {
     try { localStorage.setItem(cgbEnvelopeStorageKey, useCgbEnvelope.checked ? '1' : '0'); } catch (_) {}
     prepareSequence();
@@ -11108,7 +11371,7 @@ if (data.sequences && data.sequence_directory) {
         }
       }
       const {events, mixScale} = sequencePlaybackEvents(playbackNotes, seconds, selectedVoice === 'pcm' && useEnvelope.checked,
-        frameEnvelope.checked, selectedVoice === 'pcm' && useCgbEnvelope.checked);
+        frameEnvelope.checked, selectedVoice === 'pcm' && useCgbEnvelope.checked, echoSupported && useEcho.checked);
       let cursor = 0, late = 0;
       function scheduleWindow() {
         if (request !== generation) return;
@@ -11202,7 +11465,7 @@ if (data.sequences && data.sequence_directory) {
     const selectedModulationLimits = modulationLimited;
     const selectedControls = mergeSequenceControls(controls, modulation).map(item => ({...item}));
     const {events, mixScale} = sequencePlaybackEvents(notes, seconds, selectedVoice === 'pcm' && useEnvelope.checked,
-      frameEnvelope.checked, selectedVoice === 'pcm' && useCgbEnvelope.checked);
+      frameEnvelope.checked, selectedVoice === 'pcm' && useCgbEnvelope.checked, echoSupported && useEcho.checked);
     const renderEnd = Math.max(0, ...events.map(note => note.audioEnd > note.startSeconds ? note.audioEnd : 0));
     if (!renderEnd) { exportStatus.textContent = 'No audible note durations in this preview.'; return; }
     exporting = true; updateDownload(); exportStatus.textContent = 'Rendering the selected mix…';
@@ -13228,8 +13491,91 @@ if (data.map_height_digits) {
   inspect.addEventListener('change', drawInspection); value.addEventListener('input', drawPreview); colors.addEventListener('change', drawPreview);
   drawInspection(); drawPreview();
 }
-if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_maps || data.full_screen_map || data.direct_rectangle_directory || data.indexed_ui_tilemaps || data.queued_ui_maps || Object.keys(data.extra_tilemaps || {}).length) {
-  document.getElementById('tilemaps').hidden = false;
+if (data.menu_selection_banks) {
+  const catalog = data.menu_selection_banks;
+  const section = document.getElementById('menu-selection-rows'); section.hidden = false;
+  document.getElementById('menu-selection-links').hidden = false;
+  document.getElementById('menu-selection-readers').hidden = false;
+  const bank = document.getElementById('menu-selection-bank'), rowPicker = document.getElementById('menu-selection-row');
+  const fields = document.getElementById('menu-selection-fields'), values = document.getElementById('menu-selection-values');
+  const source = document.getElementById('menu-selection-source'), raw = document.getElementById('menu-selection-raw');
+  const indices = new Map(catalog.tables.map((table, index) => [table.source_offset, index]));
+  const hex = (value, width = 1) => '0x' + value.toString(16).toUpperCase().padStart(width, '0');
+  const halfword = (row, offset) => hex(row[offset] + row[offset + 1] * 256, 4);
+  const interpretations = {
+    'menu-row': {labels: ['Dispatch halfword', 'Entry halfword'], values: row => [halfword(row, 2), halfword(row, 4)]},
+    'numeric': {labels: ['Scale byte', 'Scale term', 'Secondary byte'], values: row => [row[1], 100 + row[1], row[2]]},
+    'label': {labels: ['Label byte 0', 'Label byte 1'], values: row => row.slice(0, 2)},
+    'pattern': {labels: ['Pattern byte 0', 'Pattern byte 1', 'Dispatch halfword'],
+                values: row => [row[0], row[1], halfword(row, 2)]},
+    'high-bit': {labels: ['Lookup halfword'], values: row => [halfword(row, 0)]},
+    'selector': {labels: ['Selector bytes 1–5'], values: row => [row.slice(1, 6).join(', ')]},
+  };
+  function headings(row, labels) {
+    row.replaceChildren(...labels.map(label => {
+      const cell = document.createElement('th'); cell.scope = 'col'; cell.textContent = label; return cell;
+    }));
+  }
+  function selectRow() {
+    const table = catalog.tables[Number(bank.value)], index = Number(rowPicker.value);
+    for (const row of values.rows) row.removeAttribute('aria-current');
+    values.rows[index].setAttribute('aria-current', 'true');
+    source.textContent = table.label + ' · ' + table.rows.length + ' rows of ' + table.stride + ' bytes · row ' +
+      index + ' at ' + hex(table.source_offset + index * table.stride);
+    raw.textContent = table.rows[index].map(byte => hex(byte, 2)).join(' ');
+  }
+  function selectBank() {
+    const table = catalog.tables[Number(bank.value)], interpretation = interpretations[table.role];
+    headings(fields, ['Row', 'Source offset', ...interpretation.labels]);
+    rowPicker.replaceChildren(); values.replaceChildren();
+    table.rows.forEach((bytes, index) => {
+      const row = values.insertRow(), jump = document.createElement('button');
+      jump.type = 'button'; jump.textContent = String(index); jump.setAttribute('aria-label', 'Inspect row ' + index);
+      jump.addEventListener('click', () => { rowPicker.value = String(index); rowPicker.dispatchEvent(new Event('change', {bubbles: true})); });
+      row.insertCell().append(jump);
+      [hex(table.source_offset + index * table.stride), ...interpretation.values(bytes)]
+        .forEach(value => { row.insertCell().textContent = value; });
+      rowPicker.add(new Option('Row ' + index, index));
+    });
+    selectRow();
+  }
+  function linkToRow(cell, label, offset, index) {
+    const bankIndex = indices.get(offset);
+    const link = document.createElement('a'); link.href = '#menu-selection-rows'; link.textContent = label;
+    link.addEventListener('click', () => {
+      bank.value = String(bankIndex); bank.dispatchEvent(new Event('change', {bubbles: true}));
+      rowPicker.value = String(index); rowPicker.dispatchEvent(new Event('change', {bubbles: true}));
+      const group = section.closest('.section-group');
+      if (group) group.open = true;
+      section.querySelector('details').open = true;
+    });
+    cell.append(link);
+  }
+  catalog.tables.forEach((table, index) => bank.add(new Option(table.label + ' · ' + hex(table.source_offset), index)));
+  bank.addEventListener('change', selectBank); rowPicker.addEventListener('change', selectRow);
+  selectBank();
+  const selectors = catalog.tables.find(table => table.role === 'selector');
+  const selectorRows = document.getElementById('menu-selection-link-values');
+  headings(document.getElementById('menu-selection-link-fields'), ['Descriptor offset', ...catalog.selector_targets.map(offset => hex(offset))]);
+  selectors.rows.forEach((bytes, index) => {
+    const row = selectorRows.insertRow(); row.insertCell().textContent = hex(selectors.source_offset + index * selectors.stride);
+    catalog.selector_targets.forEach((offset, field) => {
+      const cell = row.insertCell(), value = bytes[field + 1], target = catalog.tables[indices.get(offset)];
+      if (value > 0 && value <= target.rows.length) {
+        linkToRow(cell, String(value), offset, value - 1);
+        cell.querySelector('a').title = 'Stored selector ' + value + ' opens physical row ' + (value - 1);
+      } else cell.textContent = value;
+    });
+  });
+  const readerRows = document.getElementById('menu-selection-reader-values');
+  catalog.literals.forEach(word => {
+    const row = readerRows.insertRow(); row.insertCell().textContent = hex(word.source_offset);
+    row.insertCell().textContent = hex(0x08000000 + word.target, 8);
+    linkToRow(row.insertCell(), hex(word.target), word.target, 0);
+  });
+}
+if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_maps || data.full_screen_map || data.direct_rectangle_directory || data.direct_rectangle_bank || data.indexed_ui_tilemaps || data.queued_ui_maps || data.queued_matrix_sources || Object.keys(data.extra_tilemaps || {}).length) {
+  const tilemapSection = document.getElementById('tilemaps'); tilemapSection.hidden = false;
   if (data.fixed_screen_maps) {
     document.getElementById('fixed-screen-map-note').hidden = false;
     if (data.wiki && data.wiki.current === 'interface-fixed-maps')
@@ -13245,6 +13591,12 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
     if (data.wiki && data.wiki.current === 'interface-rectangles')
       document.querySelector('#tilemaps > details > summary h2').textContent = 'Direct rectangle cells';
   }
+  const directBank = data.direct_rectangle_bank;
+  if (directBank) {
+    document.getElementById('direct-rectangle-bank-note').hidden = false;
+    if (data.wiki && data.wiki.current === 'interface-rectangle-bank')
+      document.querySelector('#tilemaps > details > summary h2').textContent = 'Bank rectangle cells';
+  }
   if (data.indexed_ui_tilemaps) {
     document.getElementById('indexed-ui-note').hidden = false;
     if (data.wiki && data.wiki.current === 'interface-indexed-ui')
@@ -13254,6 +13606,12 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
     document.getElementById('queued-ui-note').hidden = false;
     if (data.wiki && data.wiki.current === 'interface-queued-maps')
       document.querySelector('#tilemaps > details > summary h2').textContent = 'Queued UI map cells';
+  }
+  const queuedMatrices = data.queued_matrix_sources;
+  if (queuedMatrices) {
+    document.getElementById('queued-matrix-note').hidden = false;
+    if (data.wiki && data.wiki.current === 'interface-queued-matrices')
+      document.querySelector('#tilemaps > details > summary h2').textContent = 'Queued matrix cells';
   }
   const map = document.getElementById('tilemap-id'), graphics = document.getElementById('tilemap-graphics');
   const lzOffset = document.getElementById('tilemap-lz-offset');
@@ -13281,6 +13639,15 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
   if (data.indexed_ui_tilemaps) data.indexed_ui_tilemaps.maps.forEach(item => maps.push({...item, path: data.indexed_ui_tilemaps.path}));
   const queuedUiStart = maps.length;
   if (data.queued_ui_maps) data.queued_ui_maps.maps.forEach(item => maps.push({...item, path: data.queued_ui_maps.path}));
+  const bankMapIndices = new Map();
+  if (directBank) directBank.maps.forEach(item => {
+    const existing = item.path ? maps.findIndex(entry => entry.source_offset === item.source_offset && entry.path === item.path) : -1;
+    if (existing >= 0) { bankMapIndices.set(item.source_offset, existing); return; }
+    bankMapIndices.set(item.source_offset, maps.length);
+    maps.push({...item, path: item.path || directBank.path});
+  });
+  const queuedMatrixStart = maps.length;
+  if (queuedMatrices) queuedMatrices.maps.forEach(item => maps.push({...item, path: queuedMatrices.path}));
   findTilemapBySource = offset => {
     const matches = maps.flatMap((item, index) => item.source_offset === offset ? [index] : []);
     return matches.length === 1 ? matches[0] : -1;
@@ -13318,6 +13685,17 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
   maps.forEach((item, index) => {
     map.add(new Option(item.kind + ' · ' + hex(item.source_offset) + ' · ' + item.width + '×' + item.height, index));
   });
+  function openStoredRows(index, firstRow = null, count = 1) {
+    map.value = String(index); map.dispatchEvent(new Event('change', {bubbles: true}));
+    if (firstRow !== null) {
+      for (let row = firstRow; row < firstRow + count; row++) table.rows[row].classList.add('copy-source-row');
+      table.rows[firstRow].setAttribute('aria-current', 'true');
+      showCell(firstRow * maps[index].width);
+    }
+    const group = tilemapSection.closest('.section-group');
+    if (group) group.open = true;
+    tilemapSection.querySelector('details').open = true;
+  }
   if (data.queued_ui_maps) {
     const catalog = data.queued_ui_maps, section = document.getElementById('queued-ui-paths'); section.hidden = false;
     const body = document.getElementById('queued-ui-path-rows');
@@ -13335,6 +13713,36 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
       [item.width + '×' + item.height + (item.queued_ui_live ? ' · live rows' : ''), item.width * 2, catalog.destination_stride]
         .forEach(value => { row.insertCell().textContent = value; });
     });
+  }
+  if (queuedMatrices) {
+    const section = document.getElementById('queued-matrix-paths'); section.hidden = false;
+    const language = document.getElementById('queued-matrix-language'), rows = document.getElementById('queued-matrix-path-rows');
+    const initializer = queuedMatrices.initializer, initialRows = queuedMatrices.maps[0].height;
+    document.getElementById('queued-matrix-staging').textContent = 'The initializer supplies task rows ' + initializer.task_first_row + '–' +
+      (initializer.task_first_row + initialRows - 1) + ' at byte offset +' + initializer.task_start + '. The seven-row queue at ' +
+      hex(initializer.queue_offset) + ' starts at task offset +' + initializer.queued_start +
+      ' and uses a ' + queuedMatrices.destination_stride + '-byte destination pitch.';
+    queuedMatrices.languages.forEach((name, id) => language.add(new Option(name + ' · ID ' + id, id)));
+    function drawPaths() {
+      const localized = language.value === '1' ? 2 : 1;
+      rows.replaceChildren();
+      const paths = [{...initializer, action: 'Initialize task rows', first_row: 0, row_count: initialRows}, ...queuedMatrices.paths];
+      paths.forEach((path, index) => {
+        const mapIndex = index === 0 ? 0 : localized, item = queuedMatrices.maps[mapIndex];
+        const row = rows.insertRow(), literal = path.literal_offset + (index > 0 && localized === 2 ? 4 : 0);
+        [path.action, hex(path.reader_offset), path.use_offset === null ? '—' : hex(path.use_offset), hex(literal)]
+          .forEach(value => { row.insertCell().textContent = value; });
+        const link = document.createElement('a'); link.href = '#tilemaps'; link.textContent = hex(item.source_offset);
+        link.title = 'Stored pointer ' + hex(0x08000000 + item.source_offset, 8);
+        link.addEventListener('click', () => openStoredRows(queuedMatrixStart + mapIndex, path.first_row, path.row_count));
+        row.insertCell().append(link);
+        row.insertCell().textContent = path.first_row === null ? '—' : path.row_count === 1 ? path.first_row
+          : path.first_row + '–' + (path.first_row + path.row_count - 1);
+        row.insertCell().textContent = item.width * 2 + ' bytes';
+      });
+    }
+    language.addEventListener('change', drawPaths);
+    drawPaths();
   }
   if (data.indexed_ui_tilemaps) {
     const catalog = data.indexed_ui_tilemaps, section = document.getElementById('indexed-ui-directories');
@@ -13375,6 +13783,46 @@ if (data.observed_tilemaps || data.firaga_compact_cells || data.fixed_screen_map
         cell.title = 'Stored byte at ' + hex(directory.preset_offset + index * 4 + slot) + ' → byte + 80';
       });
     });
+  }
+  if (directBank) {
+    const slots = document.getElementById('direct-rectangle-bank-slots');
+    const literals = document.getElementById('direct-rectangle-bank-literals');
+    const directory = document.getElementById('direct-rectangle-bank-directory');
+    const reader = document.getElementById('direct-rectangle-bank-reader');
+    const slotRows = document.getElementById('direct-rectangle-bank-slot-rows');
+    const wordRows = document.getElementById('direct-rectangle-bank-word-rows');
+    slots.hidden = false; literals.hidden = false;
+    function appendTarget(cell, word, sourceRow = null) {
+      const index = bankMapIndices.get(word - 0x08000000), label = hex(word, 8);
+      if (index === undefined) { cell.textContent = label; return; }
+      const link = document.createElement('a'); link.href = '#tilemaps'; link.textContent = label;
+      link.addEventListener('click', () => openStoredRows(index, sourceRow));
+      cell.append(link);
+    }
+    function showDirectory() {
+      const selected = directBank.directories[Number(directory.value)];
+      reader.textContent = 'Reader at ' + hex(selected.reader_offset) + ' · copy calls at ' +
+        selected.calls.map(offset => hex(offset)).join(', ');
+      slotRows.replaceChildren();
+      selected.slots.forEach((slot, index) => {
+        const row = slotRows.insertRow();
+        row.insertCell().textContent = index;
+        row.insertCell().textContent = hex(slot.source_offset);
+        appendTarget(row.insertCell(), slot.pointer, slot.row);
+        row.insertCell().textContent = slot.row;
+        row.insertCell().textContent = slot.row_source === null ? 'Reader default' : hex(slot.row_source);
+        row.insertCell().textContent = slot.extra_bytes.map(value => hex(value, 2)).join(' ') || '—';
+      });
+    }
+    directBank.directories.forEach((item, index) => {
+      directory.add(new Option(hex(item.source_offset) + ' · ' + item.slots.length + ' slots', index));
+    });
+    directBank.literals.forEach(item => {
+      const row = wordRows.insertRow(); row.insertCell().textContent = hex(item.source_offset);
+      appendTarget(row.insertCell(), item.value);
+    });
+    directory.addEventListener('change', showDirectory);
+    showDirectory();
   }
   if (firaga) firaga.sequence.forEach((item, index) => entries.add(new Option(index + ' · frame ' + item.frame_index, index)));
   keepSelectFocus(play, document.getElementById('tilemaps'));
@@ -14078,14 +14526,17 @@ if (data.byte_tilemaps && data.byte_tilemaps.maps.length) {
     section.querySelectorAll('details[id] > summary').forEach(summary => appendUpdate(summary, updates[summary.parentElement.id]));
   });
   const categories = [
-    ['Audio', ['audio', 'cgb-noise', 'instruments', 'sequence-audio', 'timed-sounds']],
+    ['Audio', ['audio', 'cgb-noise', 'instruments', 'sequence-audio', 'timed-sounds', 'audio-driver-clocks',
+      'audio-driver-commands', 'audio-driver-extensions']],
     ['Conditions and flags', ['conditional-lookups', 'conditional-records8', 'metadata12', 'metadata16', 'global-pair-flags']],
     ['Other data', ['crc32-table']],
     ['Characters and animation', ['dimensions', 'sprites', 'equipment-sprites', 'obj-animations', 'physical-compact-descriptors', 'compact-catalog-tables', 'compact-cell-bank']],
     ['Graphics and palettes', ['indexed-graphics', 'indexed-attributes', 'color-books', 'bg-descriptors', 'palette', 'screen-palettes', 'alternate-palettes',
       'bg-tiles', 'bg-planes', 'bg-transfers', 'palette-programs', 'blend-programs', 'raster-palettes',
       'transfer-directory', 'indexed-tilemap-controls', 'obj-tiles', 'firaga-transfers', 'firaga-palette-rows', 'background-effects', 'background-screens', 'screen-update-curves', 'screen-motion-curves', 'screen-effect-motion', 'counted-effect-tables', 'queued-ui-paths', 'indexed-ui-directories', 'direct-rectangle-presets', 'tilemaps', 'byte-tilemaps']],
-    ['Interface', ['ui-choices', 'ui-context-templates', 'ui-tiles', 'localized-layouts', 'localized-layout-objects', 'localized-layout-transitions', 'map-height-digits']],
+    ['Interface', ['ui-choices', 'ui-context-templates', 'ui-tiles', 'localized-layouts', 'localized-layout-objects', 'localized-layout-transitions', 'map-height-digits',
+      'direct-rectangle-bank-slots', 'direct-rectangle-bank-literals', 'queued-matrix-paths',
+      'menu-selection-rows', 'menu-selection-links', 'menu-selection-readers']],
     ['Items and progression', ['items', 'item-effects', 'item-parameters', 'evaluation-parameters', 'item-links', 'job-names', 'metadata-names', 'metadata2', 'metadata4', 'metadata14', 'action-records', 'linked-records4', 'progression-records']],
     ['Text and scripts', ['text-search', 'texts', 'inline-ui-text', 'pointer-texts', 'text-reader-registry', 'relative-texts', 'script-texts',
       'event-scripts', 'script-commands', 'auxiliary-scripts', 'auxiliary-commands', 'effect-events', 'task-descriptors', 'font-atlas', 'name-keyboard']],

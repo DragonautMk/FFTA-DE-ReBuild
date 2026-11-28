@@ -3,6 +3,26 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-28 — Trace the European world-map label tables and OBJ lists
+
+Type: docs. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Bind the five language and node tables to all 1218 existing indexed programs, and verify the eight variant slots and seven counted OBJ lists.
+
+**Validation**
+
+- Wine 6778uuyd attests 499 original halfwords and separates 628 unowned source bytes from 35714 already owned bytes against e380. All 13 guards pass and the server drains.
+
+**Limitations**
+
+- The first reader live index domain, runtime publication, ordinary and translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-world-map-label-tables.json)
+
 ## 2026-11-28 — Trace the European screen-effect motion tables
 
 Type: docs. Platforms: EUR / Wine.
@@ -43,6 +63,66 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-save-crc32-table.json)
 
+## 2026-11-28 — Trace the European queued matrix sources
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound two seven-row language maps and a four-row initializer used by original queued copies. Track the 16 remaining computed-source leads in the 39-call census.
+
+**Validation**
+
+- Wine tuz9kwhe attests 817 original halfwords and reports 924 unowned bytes across ten spans against e378-d377. Protected reconciliation uhq5u4zf normalizes the interval representations and passes all 23 input guards using the retained Wine outputs.
+
+**Limitations**
+
+- Runtime publication, ordinary staging, translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-queued-matrix-sources.json)
+
+## 2026-11-28 — Trace the European queued grid shapes
+
+Type: docs. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Follow the 32-row queue to its staging allocation and identify all eight shape records and three original table literals.
+
+**Validation**
+
+- Wine 2bxsvzw_ attests 645 original halfwords and joins 44 unowned bytes against e379. Protected inputs and server drain pass.
+
+**Limitations**
+
+- The event-zero descriptor writer, live flags, runtime publication, ordinary and translated use, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-queued-grid-shapes.json)
+
+## 2026-11-28 — Trace the European menu selection banks
+
+Type: docs. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Bound 13 original tables through their menu readers, row matchers and selector descriptors. Preserve the intervening indexed words.
+
+**Validation**
+
+- Wine hwoyyk2k verifies 1415 original halfwords and 728 unowned bytes across 27 spans. All 14 guards and Wine server drain pass.
+
+**Limitations**
+
+- Runtime publication, live index domains, ordinary and translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-menu-selection-banks.json)
+
 ## 2026-11-28 — Trace the European localized inline UI text bank
 
 Type: docs. Platforms: EUR / Wine.
@@ -62,6 +142,26 @@ Type: docs. Platforms: EUR / Wine.
 Documentation: [rom_data_text.md](docs/rom_data_text.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-inline-ui-text.json)
+
+## 2026-11-28 — Trace the European direct rectangle bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Account for the 67 original copy call patterns, 50 direct rectangles, six indexed directories and their source operands. Reuse the existing counted type-2 proof.
+
+**Validation**
+
+- Wine jtmuwp4o verifies 364 original halfwords and checks 4,277 distinct bytes against e377-d376. The 66 unowned spans contain 860 bytes, including 12 rectangles. All 17 guards and the Wine server drain pass.
+
+**Limitations**
+
+- Runtime publication, ordinary producer domains, translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-direct-rectangle-bank.json)
 
 ## 2026-11-28 — Serve the European screen-effect motion tables
 
@@ -126,6 +226,47 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
 
 [Change record](docs/changes/2026-11-28-serve-european-save-crc32-table.json)
 
+## 2026-11-28 — Serve the European queued matrix sources
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish two seven-row language maps, one four-row initializer and the 13 reader literal words as graphics.queued-matrix-sources in e379-d378.
+
+**Validation**
+
+- Windows GNU build yk73m09a and Wine oe5aqd3x pass with all 924 backing bytes altered. Thirty language selections, the 104-cell tail copies, the initializer, five DMA cases, 960 boundary checks, destination guards, complete state and clock match.
+- The CLI creates, verifies and reuses 181 files. All 179 previous resources match, e378 attaches, and both invalid attachments are rejected. All 17 Wine guards pass and the server drains. Stage w6058qkm retains the dataset.
+
+**Limitations**
+
+- Ordinary staging, translated execution, the remaining producers, Linux, USA and native Windows stay on the recovery checklist. No performance measurements were made. Primary Terra xhigh settings could not be independently confirmed.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-queued-matrix-sources.json)
+
+## 2026-11-28 — Serve European menu selection banks from extracted data
+
+Type: added. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Publish the 13 original menu tables and reader literals as a 728-byte resource in e380-d379. Bind all physical ranges at their original guest addresses, preserve the adjacent indexed-word owner and keep e379 attachable.
+
+**Validation**
+
+- Windows GNU u3uiazeh and Wine sjms_oc_ PASS. Original readers cross all 13 tables, all 32 source pointer reads and all 28 pair matches with altered backing. 2592 mixed and mirrored checks, complete state and clock, both invalid attachment guards, 180 previous resource hashes and the 182-file prepare, verify and reuse cycle pass. Wine drains, stage vjtb2m5a retains e380.
+
+**Limitations**
+
+- Uses controlled original reader entries. Ordinary menu triggers, live index domains, translated dispatch, Linux, USA and native Windows are pending.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-menu-selection-banks.json)
+
 ## 2026-11-28 — Serve the European localized inline UI text bank
 
 Type: added. Platforms: EUR / Wine.
@@ -167,6 +308,49 @@ Type: added. Platforms: EUR / Wine.
 Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-28-serve-european-full-screen-map.json)
+
+## 2026-11-28 — Serve the European direct rectangle bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 860 missing bytes as graphics.direct-rectangle-bank in e378-d377. Map all 66 source spans at the original addresses and retain the seven previous owners.
+
+**Validation**
+
+- Windows GNU build g6f4utlg and Wine pabgc3t3 pass. Altered backing yields matching copies for all 12 rectangles, all 21 new directory slots and eight alternate inputs. All 71 literal reads, 6,336 boundary checks, destination guards, complete state and clock match.
+- The CLI creates, verifies and reuses 180 files. All 178 e377 resources match byte for byte, e377 attaches and the two invalid attachments are rejected. All 17 Wine guards and the server drain pass. Stage gdwi0fkb retains the dataset.
+
+**Limitations**
+
+- Ordinary routes, translated execution, wider producer domains, Linux, USA and native Windows are tracked on the recovery checklist. No performance measurements were made. Primary Terra xhigh settings could not be independently confirmed.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-direct-rectangle-bank.json)
+
+## 2026-11-28 — Preview the stored PCM pseudo-echo tail
+
+Type: added. Platforms: Linux Chrome, Docker.
+
+**Changes**
+
+- Authenticate the European PCM echo callbacks and retain the stored level and length on subsequent notes. Add a dated disclosure, song links and a persistent comparison toggle for frame-stepped song playback, timed audition and WAV export.
+
+**Validation**
+
+- The initial synthetic unit 9uj6p28d passed 14 tests. Focused retry na0g75oy corrected the page-ready wait and passed actual live, timed and WAV checks and setting persistence.
+- Real unit _g7ic8r6 verified the original field transfer and four commands. Songs 114 and 116 produced different PCM samples at 400 manual ticks per second and identical samples at song tempo. All 1,123 Python and Docker files matched.
+- Updated 47 ignored local pages with verified preimages in out/ffta-viewer-pcm-echo-before-q2v7o6l2. The 191 resource pages match.
+
+**Limitations**
+
+- Short PCM samples can finish before the tail starts. Physical output and exact live mixing remain unverified. Native Windows stays deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-28-preview-pcm-pseudo-echo.json)
 
 ## 2026-11-28 — Preview the full-screen initializer colors
 
@@ -283,6 +467,52 @@ Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.m
 
 [Change record](docs/changes/2026-11-28-inspect-binary-values-in-the-split-wiki.json)
 
+## 2026-11-28 — Find localized interface text across archives
+
+Type: changed. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add localized interface text to the combined search through an 11298-byte on-demand companion. Links open physical strings and highlighted shared rows.
+- Retain the saved language-3 fallback preference when following a link to the physical entry. Add dated badges to the affected disclosures.
+
+**Validation**
+
+- viewer-inline-global-synthetic-vfwvz5wm passed 18 tests. The earlier fq35xrv6 run showed that shared-row navigation needed an explicit highlight.
+- Protected viewer-inline-global-real-08eq1ynm compared all 41 search entries, checked the language-3 filter and result link, preserved prior payloads and matched 1121 Python and Docker files.
+- Updated 47 ignored wiki files with verified preimages in out/ffta-inline-global-before-b7mlvmnf.
+
+**Limitations**
+
+- Recognition follows the existing European glyph mapping. Native Windows validation is deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
+
+[Change record](docs/changes/2026-11-28-include-localized-interface-text-in-archive-search.json)
+
+## 2026-11-28 — Keep viewer navigation menus visible across wrapped layouts
+
+Type: fixed. Platforms: Linux Chrome.
+
+**Changes**
+
+- Raise the open wiki category above other navigation rows and prevent the generic open-summary margin from resizing the navbar.
+- Fit the open menu within the viewport on open and resize, including short mobile screens. Preserve existing category, link, outside-click and Escape behavior.
+- Publish the navigation-only CSS and JavaScript update to the 47 existing local e378-d377 wiki pages with verified preimages. Preserve each page payload and all unrelated viewer work.
+
+**Validation**
+
+- A synthetic Chrome fixture reproduced the Audio menu below subsequent rows and a 16-pixel navbar expansion at 900 pixels. The corrected unit viewer-navbar-final-fgaujl71 passes six focused tests for index and topic pages, wrapped layouts, horizontal and vertical viewport bounds, resize, keyboard Escape and audio deep links.
+- Independently verified that all 47 published wiki pages match their preimages after only the intended CSS and JavaScript replacements. Both viewer templates embed the updated navigation sources.
+
+**Limitations**
+
+- Chrome tests used synthetic viewer data. The existing generated wiki was verified bytewise; physical touch devices and native Windows were not exercised.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [viewer_navigation.css](scripts/viewer_navigation.css), [viewer_navigation.js](scripts/viewer_navigation.js).
+
+[Change record](docs/changes/2026-11-28-fix-viewer-dropdown-layering.json)
+
 ## 2026-11-28 — Browse sixteen-byte linked records
 
 Type: added. Platforms: Linux Chrome, Linux Docker.
@@ -306,6 +536,94 @@ Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.m
 
 [Change record](docs/changes/2026-11-28-browse-linked-metadata16-records.json)
 
+## 2026-11-28 — Browse the e380 menu selection banks in the wiki
+
+Type: added. Platforms: Linux Chrome, Docker.
+
+**Changes**
+
+- Refresh the local wiki to e380-d379. Add a dated Interface page for 101 physical menu rows, their decoded fields, the five selector descriptors and 30 reader words.
+- Link stored selector values to their physical rows and retain raw bytes and shareable selection bookmarks.
+
+**Validation**
+
+- Synthetic unit u5bseb8v passed 11 tests. Real unit avqahzp3 checked 728 bytes in 27 source spans, all rows and reader words, 13 selector links and the saved query in Chrome.
+- Compared 47 earlier topic payloads and 192 prior resource pages and matched 1,127 Python and Docker outputs. Published 51 ignored local files with verified preimages in out/ffta-viewer-e380-menu-before-j284o046.
+
+**Limitations**
+
+- Live menu identities, full selector domains and native Windows remain open.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-browse-e380-menu-selection-banks.json)
+
+## 2026-11-28 — Browse e379 queued matrix sources in the wiki
+
+Type: added. Platforms: Linux Chrome, Docker.
+
+**Changes**
+
+- Refresh the local wiki to e379-d378 and add a dated Interface page for three queued matrices. Label the five verified European language choices and highlight the source rows used by original readers.
+- Keep source and destination pitches visible. Load optional tile graphics and palettes on demand.
+
+**Validation**
+
+- Synthetic unit m1yn0o2a passed 16 checks after correcting the legacy badge scope. Real unit _63_v8x_ authenticated 924 bytes in ten spans, all 436 cells and 13 literals and exercised all language routes, the actual Audio navbar and deferred graphics in Chrome.
+- Matched 1,125 Python and Docker outputs, preserved 46 previous topic payloads and 191 resource pages and published 50 ignored local files with verified preimages in out/ffta-viewer-e379-matrix-before-3ahmx4r2.
+
+**Limitations**
+
+- Original scene names and palette pairings remain unverified. Windows viewer validation stays deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-browse-e379-queued-matrix-sources.json)
+
+## 2026-11-28 — Browse the European direct rectangle bank in the wiki
+
+Type: added. Platforms: Linux Chrome, Docker.
+
+**Changes**
+
+- Refresh the private local wiki to e378-d377. Add a dated Interface page for 12 newly extracted cell rectangles, two linked type-2 grids, 21 directory slots and 60 reader words.
+- Open the selected rectangle at the copied source row. Keep tile graphics and palettes available on demand.
+
+**Validation**
+
+- Synthetic unit 4eneaec6 passed 18 tests. Protected e378 unit 9ed0o2li matched 66 source spans and all cells, slots and words, exercised the navbar and previews in Chrome, preserved 45 topic payloads and 190 resource pages and matched 1,123 Python and Docker outputs.
+- Published 49 ignored local files with verified preimages in out/ffta-e378-rectangles-before-o7siwtlp.
+
+**Limitations**
+
+- Original screen names and the graphics and palette pairings remain unverified. Windows viewer validation is deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-browse-e378-direct-rectangle-bank.json)
+
+## 2026-11-28 — Browse the European localized interface text
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the private wiki to e377-d376 and add a separate, dated page for localized interface text, shared strings and threshold glyphs.
+- Show physical and selected source offsets, support the language-3 fallback, and reuse pinned language, command visibility and font settings.
+
+**Validation**
+
+- Synthetic viewer-e377-inline-synthetic-0q1ifj65 passed 20 tests. Protected viewer-e377-inline-real-eyawuvhz compared 886 bytes in 41 spans, 48 font glyphs and 35 language selections.
+- Preserved 44 prior topic payloads and 189 resource pages and matched 1120 Python and Docker files. Updated 48 local files with verified preimages in out/ffta-e377-inline-before-gcjk3mxj.
+
+**Limitations**
+
+- The ordinary route and screen identities remain open. Native Windows validation is deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_text.md](docs/rom_data_text.md).
+
+[Change record](docs/changes/2026-11-28-browse-e377-localized-interface-text.json)
+
 ## 2026-11-28 — Browse and calculate CRC32 locally
 
 Type: added. Platforms: Linux Chrome, Linux Docker.
@@ -328,6 +646,28 @@ Type: added. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_runtime.md](docs/rom_data_runtime.md).
 
 [Change record](docs/changes/2026-11-28-browse-e375-crc32-table.json)
+
+## 2026-11-28 — Browse the extracted audio driver tables
+
+Type: added. Platforms: Linux Chrome, Docker.
+
+**Changes**
+
+- Add a dated Audio driver page for 49 clock lengths, 36 stored command words and 12 extension selectors. Check each source span and keep the scope compact.
+- Label source-backed commands and link the PCM echo selectors to the two playable songs. Link the song player and embedded extension file back to the driver reference.
+
+**Validation**
+
+- Synthetic unit 31jxr8js passed 13 tests. Real unit 45cbcwlf checked 241 bytes and all displayed rows, opened both song routes and started their PCM playback in Chrome. Its final resource comparison detected the intended back-link change.
+- Recovery unit b4my0s7l verified the one back-link change, retained all other resource pages and confirmed 1,128 Python and Docker outputs match. Published 52 ignored local files with verified preimages in out/ffta-audio-driver-before-783nrp8c.
+
+**Limitations**
+
+- Live driver behavior, physical audio and Windows viewer checks remain open.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-28-browse-audio-driver-reference.json)
 
 ## 2026-11-28 — Bound the original European 30-by-20 screen-map source
 

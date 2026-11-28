@@ -901,6 +901,197 @@ Live row bounds, ordinary triggers, translated readers, Linux, USA
 and native Windows remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
+## E653 European queued matrix sources
+
+Six original paths select `448278` when the saved language byte is
+1 and `437194` otherwise. Each physical map contains seven rows of 26
+halfwords with a 52-byte source pitch. The original queue calls at
+`0802f328` and `0802f732` use two-row slices starting at rows zero
+and three. The edge reader at `0802fa86` uses row two, and the loop at
+`08030134` copies all 52 cells in rows five and six into the task
+buffer. The neighboring indexed archives independently bound both maps
+at `437300` and `4483e4`.
+
+The original copy at `0802df02` takes 144 bytes from `3ba048`.
+It writes four 18-cell rows at task offset 916. The seven-row queue
+at `0802e0a0` starts at task offset 808, so the initializer supplies its
+last four rows before further task edits. The existing Firaga matrix
+ends at `3ba048`, and the next observed tilemap begins at `3ba0d8`.
+
+Wine `tuz9kwhe` attested 817 original halfwords and reported 924
+unowned bytes against e378. The first verifier stopped after the Wine
+outputs because one interval list used lists and the other used tuples.
+Protected reconciliation `uhq5u4zf` checks the original outputs and
+passes all 23 input guards without repeating the Wine commands. The
+source result SHA-256 is
+`ce81038f7df560e187098905ebc20c79aa47914f166efebb89c559efe3f8ad75`.
+The three maps account for 436 cells and 872 bytes. The 13 literal
+words bring the complete projection to 924 bytes across ten spans.
+Sixteen call sites in the 39-call census still need source ancestry.
+The recovery checklist tracks ordinary and translated use, the
+remaining producers and deferred platform checks.
+
+## E654 European queued matrices at runtime
+
+`e379-d378` publishes the 924 E653 bytes as
+`graphics.queued-matrix-sources` in `queued-matrix-sources.bin`.
+The cartridge bus maps the three source blocks and their original
+literal words at the original addresses. The manifest links the
+existing Firaga copied matrices for the adjacent initializer.
+
+Windows GNU build `yk73m09a` and Wine `oe5aqd3x` pass. The test
+alters all 924 source bytes in the managed ROM copy. It exercises the
+six original selectors with all five saved language IDs. The two
+source choices reach the original two-row queue argument suffix, and
+both complete maps pass DMA through the original queue helper.
+The original CPU loop copies 104 cells from the last two rows across
+both maps. The original initializer copies its 144 bytes into task RAM
+and the original queued transfer reads the resulting seven-row map
+with its first three rows supplied by the fixture.
+
+All destination guards, 960 mixed and mirrored boundary checks,
+complete guest state and clock match. The original paths read 1,436
+managed bytes. The e378 predecessor still attaches and both invalid
+attachments are rejected. The Wine CLI creates, verifies and reuses
+181 files with all 179 previous resources byte-exact. All 17 Wine
+input guards pass and the server drains. Stage `w6058qkm` retains the
+dataset with manifest SHA-256
+`13bcba7fe32e9fa0eba10d32c8f67f91f3e10813dc142f4bc07c3556db58fb78`.
+
+Ordinary task preparation, translated execution, native Linux, the
+USA ROM and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E655 European queued grid shapes
+
+The `006270` callback copies 16-byte descriptors from the event-zero
+message into its context at offset `0x30`. On the later preparation
+event it reads the selected descriptor's flags, obtains the allocation
+size from `370e90` and stores the allocator result at context offset
+`0x8`. The resize helper at `006910` uses the same allocator and field.
+The fill and render paths write cells into that buffer before the
+32-row queue call at `006622`. Its four halfword shapes cover one,
+two horizontal, two vertical or four 32-by-32 screen blocks. Each
+block transfers 32 halfwords per row with a 64-byte destination
+pitch and a source pitch of twice the shape's width. The byte branch
+at `00666c` instead submits linear chunks from the same buffer.
+
+The table at `370e90..370eb0` contains eight records of two dimension
+bytes and one little-endian allocation size. Four shapes have two
+bytes per cell and four have one. The original reads through literals
+`006358`, `0064b0` and `006628` select the allocation size, dimensions
+and DMA source pitch. The table ends at the existing IWRAM helper vector.
+The 32 table bytes and 12 literal bytes are unowned in `e379-d378`.
+
+Wine `2bxsvzw_` attests 645 original halfwords, passes the ownership
+join and drains its server. The source result SHA-256 is
+`1927cc6c1e7e3f614c84a5e681d989c966c0512b5933dfac064d7fe3d59a1193`.
+E588's accepted event-zero copy establishes the incoming descriptor
+shape. Its live writer, the flag modes actually used and the immutable
+inputs to rendering still require original producer evidence.
+Publication, runtime use and deferred checks are in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E656 European menu selection banks
+
+The interval `39576c..3959a4` contains 12 separately rooted tables.
+The original handlers near `03e02e` and `03e908` select five
+36-byte rows at one root and eight 8-byte rows at four roots. The
+entry builder at `03e8cc` uses five 8-byte descriptors at
+`395a1c..395a44`. Their nonzero selector fields refer to those
+five banks with one-based indices. The existing E219 indexed words
+occupy the intervening `3959a4..395a1c`, and the indexed tilemap
+directories start at `395a44`.
+
+The original matching loops at `03c2bc` and `03c308` establish
+28, five, six and eight rows at `395908`, `3958bc`, `3958d0` and
+`3958e8` respectively. Four earlier dispatch branches read the
+halfword at offset 2 of the selected four-byte row. The high-bit
+cases use the separate 22-halfword physical table at `395978`.
+The label selector at `03e1c6` reads byte pairs from 8-byte rows at
+`395874`, and the numerical handlers at `04974c` and `04989c`
+read fields of four-byte rows at `395860`. The rooted neighbors
+bound the physical tables. Live indices from task state still
+require producer evidence.
+
+Wine `hwoyyk2k` attests 1,415 original halfwords and matches 32
+reader sites to 30 distinct pointer words. The 13 physical tables
+and their pointer words account for 728 unowned bytes in 27 spans
+against e379. The join confirms the existing owner of all 120
+intervening bytes. All 14 guards pass and Wine drains.
+Source result SHA-256
+`a1e4ddfb37ad91fffa049632d19211c79025aecd141ba328f65c0363b97e2c48`.
+Runtime publication, ordinary paths and deferred platforms are
+tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E657 European menu selection banks at runtime
+
+`e380-d379` publishes the 728 E656 bytes as
+`gameplay.menu-selection-banks` in `menu-selection-banks.bin`.
+The cartridge bus serves all 27 original spans, including the
+descriptor and pointer words. The intervening indexed words keep
+their independent owner. `e379-d378` still attaches.
+
+Windows GNU build `u3uiazeh` and Wine `sjms_oc_` pass. With the
+backing bytes altered, the original readers load all 32 pointers,
+exercise selected fields in all 13 tables, match all 28 pairs and
+traverse the complete no-match loops. The original code also reads
+the high-bit values, label pairs and numerical adjustments. It
+fetches 3,051 managed bytes in these cases. All 30 neighboring
+indexed words and 2,592 mixed and mirrored boundary checks pass.
+Complete state and guest clock match, and both invalid attachments
+leave the active dataset in place.
+
+The Wine CLI creates, verifies and reuses 182 files. Each of the
+180 earlier resources matches e379 byte-for-byte. All 17 input
+guards pass and the Wine server drains. Stage `vjtb2m5a` retains
+the dataset with manifest SHA-256
+`085955893b3fdf27f8f06571f085a35bab8fb5339e0eb0608c447e5679746af0`.
+
+Ordinary menu triggers and live index domains, translated execution,
+Linux, USA and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E658 European world-map label tables and OBJ lists
+
+The two world-map label handlers near `037b7c` and `037ddc` read
+the saved language byte at `02001f6e`. The byte table at
+`395ae4..395b7a` contains five 30-entry rows of variant indices.
+The parallel table at `395b7a..395ca6` contains five rows of
+30 halfwords. The original callers halve the selected halfword
+to obtain the starting program and add five to the variant index
+to obtain the requested count. Both use the original indexed
+decoder at `00537c`.
+
+The 150 slices partition all 1,218 programs in the five archives
+selected by `3955d8`. The 35,686 archive bytes, their directory
+and both archive root words retain their existing
+`graphics.indexed-archives` owner. The two zero bytes at
+`395ca6..395ca8` precede the independently owned world-node bank.
+
+The variant selects one of the eight pointers at
+`39573c..39575c`. Slots 6 and 7 share the final list. The parent
+field at offset `0x678` supplies the original draw wrapper at
+`001f6c`. Its renderer at `001500` reads a halfword count and
+advances by six bytes per OBJ entry. The seven physical lists
+contain 18 entries and exactly fill `3956c2..39573c`.
+
+Wine `6778uuyd` attests 499 original halfwords and joins the
+complete selected source. The two language tables, variant
+directory, OBJ lists and six reader literal words contribute
+628 unowned bytes across ten spans against e380. All 13 guards
+pass and the server drains. The source result SHA-256 is
+`390af148ec21ea0c9403dcd15216ae3fc2c2a5819dda4424cb3704e9334f6c79`.
+
+The second path uses the original bounded node helper at
+`03784c`, which returns zero or a one-based index through 30.
+The first path forms its index from the view byte at offset
+`0x8c` and masks it to seven bits. Its live writer and domain,
+runtime publication, ordinary and translated use and deferred
+platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## E643 European fixed 30-by-20 screen-map source
 
 The original caller at `0804f894` invokes the loader at `0804fd68`.

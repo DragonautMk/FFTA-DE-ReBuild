@@ -4,14 +4,14 @@
 
 English-first. [Resume](MEMORY_WORKFLOW.md).
 
+
 ### ROMDATA-VIEWER-PALETTE
 
-- State: suspended
+- State: active
 - Outcome: partial
-- Selection: VIEWER-E377-INLINE-TEXT, paused by user.
-- Verified: e377 `sognrooh`, text/fallback/settings and 20 synthetic tests `0q1ifj65` PASS.
-- Missing: real proof, publication, memory/checks; parent audio/names, timing/composition and Windows.
-- Resume: only on request. `/tmp/ffta-e377-inline-real.py` unrun; wiki e376. Code: `scripts/viewer_inline_ui.py` and its test.
+- Verified: local e380 menu and audio driver avqahzp3/b4my0s7l PASS.
+- Missing: more previews, exact audio, official resource names and Windows.
+- Resume: check E659/e381 staging for localized world-map label preview.
 
 ## Running or suspended tasks
 
@@ -34,7 +34,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
 - E260 owns E248; E302 e275 `idrflo71` zero residual, Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - E401 ties E291 White Flowers 3,600 code bytes to E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 zero residual (`3blfucoi`/`dnr49xgd`/`_z04mity`).
@@ -194,9 +194,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E651 EUR rectangle census suspended by user.
-- Last verified result: e377 PASS. Static census 67 calls, 50 rectangles.
-- Remaining work: Wine attestation and ownership, then managed runtime.
-- Errors or blockers: Paused. No E651 Wine run or build launched.
-- Next action: On resume verify the 860-byte candidate on managed Wine.
-- References: stage/e651-validation/proof.py. Ordinary and ports open.
+- Task: E659 EUR e381 world-map label runtime.
+- Last verified result: E658 PASS; typed indexed-archive extension prepared.
+- Remaining work: Build foxfdoz3, then one Wine check.
+- Errors or blockers: None. Preserve e380, archives and boundary reads.
+- Next action: Poll 7831; verify 300 selections, OBJ draw and reuse.
+- References: E658. Live/translated and Linux/USA remain open.

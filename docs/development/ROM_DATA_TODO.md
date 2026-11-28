@@ -232,6 +232,56 @@ selectors, shared fallback, string expander and glyph thresholds match.
 e376 attachment and the CLI lifecycle pass.
 [Evidence](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime).
 
+**ROMDATA-01-EUR-DIRECT-RECTANGLE-BANK** passes its scoped source
+proof in E651. The census accounts for 50 physical rectangles and
+six indexed directories. The ownership join against e377 identifies
+860 new bytes across 66 spans. The already audited counted type-2
+path retains its owners.
+[Evidence](../rom_data_graphics.md#e651-european-direct-rectangle-census).
+
+**ROMDATA-04-EUR-DIRECT-RECTANGLE-BANK** passes its scoped EUR/Wine
+proof in E652. e378 supplies the 860-byte residual. The original
+literal loads, all new rectangle cells, selected row copies, e377
+attachment and the CLI lifecycle pass.
+[Evidence](../rom_data_graphics.md#e652-european-direct-rectangle-bank-at-runtime).
+
+**ROMDATA-01-EUR-QUEUED-MATRIX-SOURCES** passes its scoped source proof
+in E653. Two seven-row language maps and the four-row queue initializer
+contribute 436 cells and 13 original source words. The ownership join
+finds 924 unowned bytes against e378.
+[Evidence](../rom_data_ui_graphics.md#e653-european-queued-matrix-sources).
+
+**ROMDATA-04-EUR-QUEUED-MATRIX-SOURCES** passes its scoped EUR/Wine
+proof in E654. e379 serves both language maps and the initializer.
+Original selection, CPU copies, DMA, predecessor attachment and the
+CLI lifecycle pass with the selected backing altered.
+[Evidence](../rom_data_ui_graphics.md#e654-european-queued-matrices-at-runtime).
+
+**ROMDATA-01-EUR-QUEUED-GRID-SHAPES** passes its scoped source
+proof in E655. The 32-row queue consumes a mutable staging buffer.
+Eight shape records and three literal words contribute 44 unowned
+bytes against e379. The live descriptor producer and publication
+remain open. [Evidence](../rom_data_ui_graphics.md#e655-european-queued-grid-shapes).
+
+**ROMDATA-01-EUR-MENU-SELECTION-BANKS** passes its scoped source
+proof in E656. The original menu, matching and arithmetic readers
+identify 13 physical tables and 30 pointer words, with 728 unowned
+bytes in e379. The intervening indexed words retain their owner.
+[Evidence](../rom_data_ui_graphics.md#e656-european-menu-selection-banks).
+
+**ROMDATA-04-EUR-MENU-SELECTION-BANKS** passes its scoped EUR/Wine
+proof in E657. e380 serves the 728 bytes to the original readers
+with altered backing. State and guest clock match and e379 remains
+attachable. The CLI publishes, verifies and reuses 182 files.
+[Evidence](../rom_data_ui_graphics.md#e657-european-menu-selection-banks-at-runtime).
+
+**ROMDATA-01-EUR-WORLD-MAP-LABEL-TABLES** passes its scoped source
+proof in E658. The 150 language and node rows partition 1,218
+existing archive programs. Both selection tables and all eight
+variant slots, including the seven counted OBJ lists, contribute
+628 unowned bytes with their reader literals.
+[Evidence](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists).
+
 **ROMDATA-01-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E635 bounds
 all 248 directory entries and 36,072 physical cells, including the
 4,934 referenced sequences and their complete OBJ list and pixel

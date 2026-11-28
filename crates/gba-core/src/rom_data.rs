@@ -124,6 +124,9 @@ mod full_screen_map;
 mod save_crc32_table;
 mod screen_effect_motion;
 mod localized_inline_ui;
+mod direct_rectangle_bank;
+mod queued_matrix_sources;
+mod menu_selection_banks;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -189,8 +192,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 377;
-pub const DECODER_REV: u32 = 376;
+pub const EXTRACTOR_REV: u32 = 381;
+pub const DECODER_REV: u32 = 380;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -266,6 +269,10 @@ const PRE_FULL_SCREEN_MAP_REVISION: (u32, u32) = (373, 372);
 const PRE_SAVE_CRC32_TABLE_REVISION: (u32, u32) = (374, 373);
 const PRE_SCREEN_EFFECT_MOTION_REVISION: (u32, u32) = (375, 374);
 const PRE_LOCALIZED_INLINE_UI_REVISION: (u32, u32) = (376, 375);
+const PRE_DIRECT_RECTANGLE_BANK_REVISION: (u32, u32) = (377, 376);
+const PRE_QUEUED_MATRIX_SOURCES_REVISION: (u32, u32) = (378, 377);
+const PRE_MENU_SELECTION_BANKS_REVISION: (u32, u32) = (379, 378);
+const PRE_WORLD_MAP_LABELS_REVISION: (u32, u32) = (380, 379);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -841,6 +848,18 @@ pub const LOCALIZED_INLINE_UI_ID: &str = "text.localized-inline-ui";
 pub const LOCALIZED_INLINE_UI_FILE: &str = "localized-inline-ui.bin";
 pub const LOCALIZED_INLINE_UI_FORMAT: &str = "localized-inline-ui-v1-bin";
 pub const MAX_LOCALIZED_INLINE_UI_FILE_BYTES: u64 = localized_inline_ui::PACKED_BYTES;
+pub const DIRECT_RECTANGLE_BANK_ID: &str = "graphics.direct-rectangle-bank";
+pub const DIRECT_RECTANGLE_BANK_FILE: &str = "direct-rectangle-bank.bin";
+pub const DIRECT_RECTANGLE_BANK_FORMAT: &str = "direct-rectangle-bank-v1-bin";
+pub const MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES: u64 = direct_rectangle_bank::PACKED_BYTES;
+pub const QUEUED_MATRIX_SOURCES_ID: &str = "graphics.queued-matrix-sources";
+pub const QUEUED_MATRIX_SOURCES_FILE: &str = "queued-matrix-sources.bin";
+pub const QUEUED_MATRIX_SOURCES_FORMAT: &str = "queued-matrix-sources-v1-bin";
+pub const MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES: u64 = queued_matrix_sources::PACKED_BYTES;
+pub const MENU_SELECTION_BANKS_ID: &str = "gameplay.menu-selection-banks";
+pub const MENU_SELECTION_BANKS_FILE: &str = "menu-selection-banks.bin";
+pub const MENU_SELECTION_BANKS_FORMAT: &str = "menu-selection-banks-v1-bin";
+pub const MAX_MENU_SELECTION_BANKS_FILE_BYTES: u64 = menu_selection_banks::PACKED_BYTES;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -1277,6 +1296,9 @@ pub struct Extraction {
     pub save_crc32_table: Option<Vec<u8>>,
     pub screen_effect_motion: Option<Vec<u8>>,
     pub localized_inline_ui: Option<Vec<u8>>,
+    pub direct_rectangle_bank: Option<Vec<u8>>,
+    pub queued_matrix_sources: Option<Vec<u8>>,
+    pub menu_selection_banks: Option<Vec<u8>>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1461,6 +1483,9 @@ pub struct BaseFiles<'a> {
     pub save_crc32_table: Option<&'a [u8]>,
     pub screen_effect_motion: Option<&'a [u8]>,
     pub localized_inline_ui: Option<&'a [u8]>,
+    pub direct_rectangle_bank: Option<&'a [u8]>,
+    pub queued_matrix_sources: Option<&'a [u8]>,
+    pub menu_selection_banks: Option<&'a [u8]>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1525,7 +1550,11 @@ impl Extraction {
             | PRE_FULL_SCREEN_MAP_REVISION
             | PRE_SAVE_CRC32_TABLE_REVISION
             | PRE_SCREEN_EFFECT_MOTION_REVISION
-            | PRE_LOCALIZED_INLINE_UI_REVISION) => previous,
+            | PRE_LOCALIZED_INLINE_UI_REVISION
+            | PRE_DIRECT_RECTANGLE_BANK_REVISION
+            | PRE_QUEUED_MATRIX_SOURCES_REVISION
+            | PRE_MENU_SELECTION_BANKS_REVISION
+            | PRE_WORLD_MAP_LABELS_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2136,7 +2165,9 @@ impl Extraction {
             result.manifest.coverage.push(WORLD_RECORDS38_ID.into());
             result.manifest.resources.push(Resource {id:WORLD_RECORDS38_ID.into(),path:WORLD_RECORDS38_FILE.into(),format:WORLD_RECORDS38_FORMAT.into(),sha256:String::new(),dependencies:vec![],sources:metadata.sources.clone()});
             result.world_records38 = Some(metadata);
-            let indexed_layout = if revision > PRE_WORLD_MAP_LOOKUPS_REVISION {
+            let indexed_layout = if revision > PRE_WORLD_MAP_LABELS_REVISION {
+                indexed_graphics::SourceLayout::WorldMapLabels
+            } else if revision > PRE_WORLD_MAP_LOOKUPS_REVISION {
                 indexed_graphics::SourceLayout::WorldMapLookups
             } else if revision > PRE_INDEXED_VRAM_SELECTORS_REVISION {
                 indexed_graphics::SourceLayout::VramSelectors
@@ -3223,6 +3254,53 @@ impl Extraction {
                 });
                 result.localized_inline_ui = Some(encoded);
             }
+            if revision > PRE_DIRECT_RECTANGLE_BANK_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, direct_rectangle_bank::SOURCES);
+                result.manifest.coverage.push(DIRECT_RECTANGLE_BANK_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: DIRECT_RECTANGLE_BANK_ID.into(),
+                    path: DIRECT_RECTANGLE_BANK_FILE.into(),
+                    format: DIRECT_RECTANGLE_BANK_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![
+                        DIRECT_RECTANGLE_DIRECTORY_ID.into(),
+                        OBSERVED_TILEMAP_ID.into(),
+                        TILEMAP_TYPE2_ID.into(),
+                        SOIL_REMAINING_RECTANGLES_ID.into(),
+                        FIRAGA_PALETTE_ROWS_ID.into(),
+                        THUMB_PC_LITERALS_ID.into(),
+                        COPIED_HALFWORD_LOOKUPS_ID.into(),
+                    ],
+                    sources,
+                });
+                result.direct_rectangle_bank = Some(encoded);
+            }
+            if revision > PRE_QUEUED_MATRIX_SOURCES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, queued_matrix_sources::SOURCES);
+                result.manifest.coverage.push(QUEUED_MATRIX_SOURCES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: QUEUED_MATRIX_SOURCES_ID.into(),
+                    path: QUEUED_MATRIX_SOURCES_FILE.into(),
+                    format: QUEUED_MATRIX_SOURCES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![FIRAGA_COPIED_MATRICES_ID.into()],
+                    sources,
+                });
+                result.queued_matrix_sources = Some(encoded);
+            }
+            if revision > PRE_MENU_SELECTION_BANKS_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, menu_selection_banks::SOURCES);
+                result.manifest.coverage.push(MENU_SELECTION_BANKS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: MENU_SELECTION_BANKS_ID.into(),
+                    path: MENU_SELECTION_BANKS_FILE.into(),
+                    format: MENU_SELECTION_BANKS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.menu_selection_banks = Some(encoded);
+            }
             result.tilemap_transfer_directory = Some(metadata);
             (result.manifest.extractor_revision, result.manifest.decoder_revision) = revision;
         } else {
@@ -3437,6 +3515,9 @@ impl Extraction {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5257,6 +5338,48 @@ impl Extraction {
             (None, None) => {}
             _ => return Err("Missing or unexpected localized inline UI text".into()),
         }
+        match (&self.direct_rectangle_bank, files.direct_rectangle_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Direct rectangle bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == DIRECT_RECTANGLE_BANK_ID)
+                    .ok_or("Missing direct rectangle bank in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected direct rectangle bank".into()),
+        }
+        match (&self.queued_matrix_sources, files.queued_matrix_sources) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Queued matrix sources differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == QUEUED_MATRIX_SOURCES_ID)
+                    .ok_or("Missing queued matrix sources in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected queued matrix sources".into()),
+        }
+        match (&self.menu_selection_banks, files.menu_selection_banks) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Menu selection bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == MENU_SELECTION_BANKS_ID)
+                    .ok_or("Missing menu selection bank in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected menu selection bank".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -6149,6 +6272,9 @@ impl Extraction {
             + usize::from(self.save_crc32_table.is_some())
             + usize::from(self.screen_effect_motion.is_some())
             + usize::from(self.localized_inline_ui.is_some())
+            + usize::from(self.direct_rectangle_bank.is_some())
+            + usize::from(self.queued_matrix_sources.is_some())
+            + usize::from(self.menu_selection_banks.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -6381,6 +6507,9 @@ mod tests {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6566,6 +6695,9 @@ mod tests {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6761,6 +6893,9 @@ mod tests {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6945,6 +7080,9 @@ mod tests {
             save_crc32_table: None,
             screen_effect_motion: None,
             localized_inline_ui: None,
+            direct_rectangle_bank: None,
+            queued_matrix_sources: None,
+            menu_selection_banks: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

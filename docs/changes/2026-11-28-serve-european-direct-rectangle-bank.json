@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-direct-rectangle-bank",
+  "title": "Serve the European direct rectangle bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 860 missing bytes as graphics.direct-rectangle-bank in e378-d377. Map all 66 source spans at the original addresses and retain the seven previous owners."
+  ],
+  "validation": [
+    "Windows GNU build g6f4utlg and Wine pabgc3t3 pass. Altered backing yields matching copies for all 12 rectangles, all 21 new directory slots and eight alternate inputs. All 71 literal reads, 6,336 boundary checks, destination guards, complete state and clock match.",
+    "The CLI creates, verifies and reuses 180 files. All 178 e377 resources match byte for byte, e377 attaches and the two invalid attachments are rejected. All 17 Wine guards and the server drain pass. Stage gdwi0fkb retains the dataset."
+  ],
+  "limitations": [
+    "Ordinary routes, translated execution, wider producer domains, Linux, USA and native Windows are tracked on the recovery checklist. No performance measurements were made. Primary Terra xhigh settings could not be independently confirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/direct_rectangle_bank.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/direct_rectangle_bank_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

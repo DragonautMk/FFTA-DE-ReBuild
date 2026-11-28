@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 pub mod additional;
 pub mod reader_banks;
 pub mod vram_selectors;
+pub mod world_map_labels;
 pub mod world_map_lookups;
 
 pub const GROUPS: [u32; 4] = [0x71e57c, 0x71e61c, 0x71e630, 0x71e658];
@@ -374,6 +375,8 @@ pub struct IndexedGraphics {
     pub vram_selectors: Option<vram_selectors::VramSelectors>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub world_map_lookups: Option<world_map_lookups::WorldMapLookups>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub world_map_labels: Option<world_map_labels::WorldMapLabels>,
 }
 impl IndexedGraphics {
     pub fn source_spans(&self) -> Result<Vec<SourceSpan>, String> {
@@ -494,6 +497,12 @@ impl IndexedGraphics {
             }
             spans.extend(lookups.source_spans()?);
         }
+        if let Some(labels) = &self.world_map_labels {
+            if self.world_map_lookups.is_none() {
+                return Err(invalid());
+            }
+            spans.extend(labels.source_spans()?);
+        }
         spans.sort_by_key(|v| v.0);
         for pair in spans.windows(2) {
             if pair[0].0 as usize + pair[0].1.len() > pair[1].0 as usize {
@@ -513,7 +522,9 @@ impl IndexedGraphics {
     }
     pub fn verify_source(&self, rom: &[u8]) -> Result<(), String> {
         self.validate()?;
-        let layout = if self.world_map_lookups.is_some() {
+        let layout = if self.world_map_labels.is_some() {
+            SourceLayout::WorldMapLabels
+        } else if self.world_map_lookups.is_some() {
             SourceLayout::WorldMapLookups
         } else if self.vram_selectors.is_some() {
             SourceLayout::VramSelectors
@@ -535,6 +546,7 @@ pub(crate) enum SourceLayout {
     ReaderBanks,
     VramSelectors,
     WorldMapLookups,
+    WorldMapLabels,
 }
 
 pub struct Catalog {
@@ -543,7 +555,7 @@ pub struct Catalog {
 }
 impl Catalog {
     pub fn from_rom(rom: &[u8]) -> Result<Self, String> {
-        Self::from_rom_with_layout(rom, SourceLayout::WorldMapLookups)
+        Self::from_rom_with_layout(rom, SourceLayout::WorldMapLabels)
     }
 
     pub(crate) fn from_rom_with_layout(rom: &[u8], layout: SourceLayout) -> Result<Self, String> {
@@ -585,6 +597,7 @@ impl Catalog {
             contexts, groups, archives, color_archives: None, white_flowers: None,
             white_flowers_direct: None, additional: None, reader_banks: None, vram_selectors: None,
             world_map_lookups: None,
+            world_map_labels: None,
         };
         let source: Vec<u8> = decoded.source_spans()?
             .iter()
@@ -655,6 +668,9 @@ impl Catalog {
         }
         if layout >= SourceLayout::WorldMapLookups {
             decoded.world_map_lookups = Some(world_map_lookups::WorldMapLookups::from_rom(rom)?);
+        }
+        if layout >= SourceLayout::WorldMapLabels {
+            decoded.world_map_labels = Some(world_map_labels::WorldMapLabels::from_rom(rom));
         }
         let spans = decoded.source_spans()?;
         let sources = spans

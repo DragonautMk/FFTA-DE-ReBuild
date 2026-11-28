@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-audio-driver-reference",
+  "title": "Browse the extracted audio driver tables",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Docker"
+  ],
+  "changes": [
+    "Add a dated Audio driver page for 49 clock lengths, 36 stored command words and 12 extension selectors. Check each source span and keep the scope compact.",
+    "Label source-backed commands and link the PCM echo selectors to the two playable songs. Link the song player and embedded extension file back to the driver reference."
+  ],
+  "validation": [
+    "Synthetic unit 31jxr8js passed 13 tests. Real unit 45cbcwlf checked 241 bytes and all displayed rows, opened both song routes and started their PCM playback in Chrome. Its final resource comparison detected the intended back-link change.",
+    "Recovery unit b4my0s7l verified the one back-link change, retained all other resource pages and confirmed 1,128 Python and Docker outputs match. Published 52 ignored local files with verified preimages in out/ffta-audio-driver-before-783nrp8c."
+  ],
+  "limitations": [
+    "Live driver behavior, physical audio and Windows viewer checks remain open."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_audio_driver_reference.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

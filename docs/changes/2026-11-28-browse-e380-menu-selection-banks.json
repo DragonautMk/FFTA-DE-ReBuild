@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-e380-menu-selection-banks",
+  "title": "Browse the e380 menu selection banks in the wiki",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Docker"
+  ],
+  "changes": [
+    "Refresh the local wiki to e380-d379. Add a dated Interface page for 101 physical menu rows, their decoded fields, the five selector descriptors and 30 reader words.",
+    "Link stored selector values to their physical rows and retain raw bytes and shareable selection bookmarks."
+  ],
+  "validation": [
+    "Synthetic unit u5bseb8v passed 11 tests. Real unit avqahzp3 checked 728 bytes in 27 source spans, all rows and reader words, 13 selector links and the saved query in Chrome.",
+    "Compared 47 earlier topic payloads and 192 prior resource pages and matched 1,127 Python and Docker outputs. Published 51 ignored local files with verified preimages in out/ffta-viewer-e380-menu-before-j284o046."
+  ],
+  "limitations": [
+    "Live menu identities, full selector domains and native Windows remain open."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/extract_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_menu_selection_banks.py",
+    "view_rom_data.html",
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

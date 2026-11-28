@@ -1985,6 +1985,35 @@ and normal enablement retain their existing acceptance gates.
   CLI lifecycle pass on Wine. The ordinary path from language choice to
   these rendered screens and translated execution remain open.
 
+- EUR [E651](../rom_data_graphics.md#e651-european-direct-rectangle-census)
+  follows the original rectangle copy census and identifies 860 bytes
+  outside e377, across 12 physical rectangles and their reader data.
+  [E652](../rom_data_graphics.md#e652-european-direct-rectangle-bank-at-runtime)
+  serves the residual in `e378-d377`, retained in `gdwi0fkb`. Original
+  row copies with altered backing, e377 attachment and the CLI lifecycle
+  pass on Wine. Ordinary producer domains and translated execution
+  remain open.
+
+- EUR [E653](../rom_data_ui_graphics.md#e653-european-queued-matrix-sources)
+  bounds two full seven-row language maps and the four-row initializer
+  of a separate queued matrix. The e378 source join yields 924 bytes.
+  [E654](../rom_data_ui_graphics.md#e654-european-queued-matrices-at-runtime)
+  serves the bank in `e379-d378`, retained in `w6058qkm`. Original
+  language selection, staging and DMA with altered backing pass on
+  Wine. [E655](../rom_data_ui_graphics.md#e655-european-queued-grid-shapes)
+  traces `006622` to staging RAM and bounds its 44 bytes of shape
+  data and literals. Publication, the live descriptor producer,
+  ordinary use, translated execution and 15 other queue ancestries
+  remain open.
+
+- EUR [E656](../rom_data_ui_graphics.md#e656-european-menu-selection-banks)
+  verifies 13 original tables and 30 pointer words near `39576c`.
+  [E657](../rom_data_ui_graphics.md#e657-european-menu-selection-banks-at-runtime)
+  serves their 728 unowned bytes in `e380-d379`, retained in
+  `vjtb2m5a`. Wine passes the original readers, altered backing,
+  e379 attachment and CLI reuse. Ordinary index producers and
+  translated execution remain open.
+
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining
   calls copy executable support and two copy 52 unowned initializer
