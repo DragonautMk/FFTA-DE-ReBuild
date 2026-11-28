@@ -1359,3 +1359,36 @@ and the resource SHA-256 is
 `41b933c8c7e0a60aa69e0a59a79e015bc1fd651d1a9a621f30e7d986e4d66101`.
 Ordinary and translated execution and deferred platform tests are
 in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E664 European compact OBJ setup bank
+
+The original setup at `080e64d4` selects a 52-byte record at
+`39ac9c + 52 * index`. The eight physical records end at `39ae3c`.
+Each record starts with a child count and three reserved bytes.
+Four 12-byte child slots carry a sequence selector, a flag byte,
+two coordinate deltas, a halfword argument and an animation bank
+pointer. The 11 active slots select eight distinct bank and sequence
+pairs. All 21 inactive slots round-trip as zero bytes.
+
+The two direct call sites are `080e6754` and `081248a4`. The count
+readers at `080e6534` and `080e66c0` bound the inner loop. The argument
+reader at `080e6652` sends each selected child to `080d97d0`. The
+separate call to `080d80e0` uses the existing six-record rectangle
+directory at `39ae3c`. Both setup pointers at `0e65dc` and `0e66e8`
+are unowned in e383.
+
+Wine `q9vmouo1` verifies 549 original instruction halfwords and
+joins all six child banks to e383. Their complete directories have
+120 OBJ lists with 577 objects and 20 sequences with 275 frames.
+The 4,596 child bytes and 52 rectangle companion bytes have existing
+owners. The two literals and the 416-byte setup table leave 424
+bytes to publish. All 17 input guards pass and the server drains.
+The sandbox preflight `9dc0wsjb` stopped at the read-only runtime
+directory before acquiring the shared Wine lease. The passing proof
+SHA-256 is `fc02fbbcdfa663786970943bfd9d827a8d097249a8698a0fc727fd36fb2dbd92`.
+
+E665 stages the three setup spans in the existing packed resource
+for `e384-d383`. Build and Wine acceptance are pending. The live
+setup indices, ordinary and translated paths and deferred platforms
+are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

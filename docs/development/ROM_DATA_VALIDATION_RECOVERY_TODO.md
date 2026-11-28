@@ -590,11 +590,13 @@ changing another agent's selected goal.
   Eight variant slots select seven complete OBJ lists. The e380 join
   identifies 628 unowned bytes, including six reader words.
   [Evidence](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists).
-- [ ] **ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES** serves the ten
-  source spans and preserves the existing indexed archives. Verify
-  both original selection paths, the counted OBJ drawing, state and
-  clock with altered backing. Preserve source reads outside the
-  identified physical rows.
+- [x] **ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES** passes its scoped
+  EUR/Wine proof in E659 `hawsy1fk`. e381 serves all 628 bytes
+  through the existing indexed resource. Both original selectors
+  cover 150 cases each. Five original decodes, seven lists with 18
+  shadow OAM entries, the raw boundary, state and clock, e380
+  attachment and CLI reuse pass. Stage `gi448653` retains 182 files.
+  [Evidence](../rom_data_ui_graphics.md#e659-european-world-map-labels-at-runtime).
 - [ ] **ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES-ORDINARY** traces
   live context identity and the writer of the first reader's view
   byte at `0x8c`. Exercise ordinary and translated paths through
@@ -603,6 +605,65 @@ changing another agent's selected goal.
   source proof and affected runtime checks on Linux.
 - [ ] **ROMDATA-05-WORLD-MAP-LABEL-TABLES-USA** authenticates the
   regional tables and readers before testing. Native Windows stays open.
+- [x] **ROMDATA-01-EUR-FLASH-AND-DIVISION-TABLES** passes its scoped
+  source proof in E660 `8lnsrbyn`. The four Flash descriptors,
+  their three physical timer tables, the 256-entry division table
+  and the reader literals contribute 536 unowned bytes against e381.
+  [Evidence](../rom_data_runtime.md#e660-european-flash-configurations-and-division-bit-lengths).
+- [x] **ROMDATA-04-EUR-FLASH-AND-DIVISION-TABLES** passes its scoped
+  EUR/Wine proof in E661 `nf5isxeo`. e382 serves all 536 bytes.
+  Flash identification, four controlled selector cases, 12 timer
+  tuples, three normalization readers and 12 signed divisions pass
+  with altered backing. Backup bytes, neighboring owners, e381
+  attachment and CLI reuse pass. Stage `izglzzpx` retains 183 files.
+  [Evidence](../rom_data_runtime.md#e661-european-flash-and-division-tables-at-runtime).
+- [ ] **ROMDATA-04-EUR-FLASH-AND-DIVISION-ORDINARY** verifies the
+  actual startup device path, physical save compatibility, timer
+  phase writers, Load/Undo and translated division callers.
+- [ ] **ROMDATA-05-EUR-FLASH-AND-DIVISION-LINUX** repeats the source
+  check and affected attachment, Flash and arithmetic checks.
+- [ ] **ROMDATA-05-FLASH-AND-DIVISION-USA** authenticates the regional
+  descriptors, helper and tables. Native Windows stays open.
+- [x] **ROMDATA-01-EUR-LOCALIZED-TEXT-ID-TABLE** passes the scoped
+  source proof in E662 `3ntrurud`. Seven original readers identify
+  351 halfwords at `6e9d8a`. The e382 join finds 730 unowned bytes
+  including the literal words. All 347 nonzero IDs map to selector 23.
+  [Evidence](../rom_data_gameplay.md#e662-european-localized-text-id-table).
+- [x] **ROMDATA-04-EUR-LOCALIZED-TEXT-ID-TABLE** passes its scoped
+  EUR/Wine proof in E663 `vpkxtzkm`. e383 serves all 730 bytes.
+  The 2,362 original read cases, 351 resolutions, raw boundary,
+  complete state and clock, e382 attachment and CLI reuse pass.
+  Stage `fyae8o78` retains 183 verified files.
+  [Evidence](../rom_data_gameplay.md#e663-european-localized-text-ids-at-runtime).
+- [ ] **ROMDATA-04-EUR-LOCALIZED-TEXT-ID-TABLE-ORDINARY** verifies
+  the actual selected contexts, live index domains, rendering and
+  translated dispatch. Obtain producer evidence for the neighboring
+  `6e9cb6` candidate before extending the source.
+- [ ] **ROMDATA-05-EUR-LOCALIZED-TEXT-ID-TABLE-LINUX** repeats
+  affected source, catalog and publication checks.
+- [ ] **ROMDATA-05-LOCALIZED-TEXT-ID-TABLE-USA** authenticates the
+  regional bank and original readers before testing. Native Windows
+  stays open.
+- [x] **ROMDATA-01-EUR-COMPACT-OBJ-SETUP-BANK** passes its scoped
+  source proof in E664 `q9vmouo1`. Eight setup records and two words
+  leave 424 unowned bytes. All 120 lists and 20 sequences in the six
+  child banks have owners in e383.
+  [Evidence](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank).
+- [ ] **ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK** publishes all three
+  setup spans and verifies the original count and child argument
+  readers with altered backing. Check the linked bank and rectangle
+  owners, guest equivalence and predecessor attachment.
+  E665 stages the implementation for e384. At the requested pause,
+  build `u4v8yayu` had no terminal receipt and the Wine check had
+  yet to start. Reconcile the existing build before launch on resume.
+- [ ] **ROMDATA-04-EUR-COMPACT-OBJ-SETUP-BANK-ORDINARY** verifies
+  both original callers' live selector domains, complete scheduling,
+  rendering and translated execution.
+- [ ] **ROMDATA-05-EUR-COMPACT-OBJ-SETUP-BANK-LINUX** repeats the
+  source, publication and affected reader checks on native Linux.
+- [ ] **ROMDATA-05-COMPACT-OBJ-SETUP-BANK-USA** authenticates the
+  regional setups and linked banks before testing. Native Windows
+  remains open.
 - [x] **ROMDATA-01-EUR-QUEUED-MATRIX-SOURCES** passes its scoped proof
   in E653 `uhq5u4zf`. Wine `tuz9kwhe` attests two seven-row maps,
   a four-row initializer and 13 original source literals. The e378

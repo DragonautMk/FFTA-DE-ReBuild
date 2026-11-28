@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-compact-obj-setup-bank",
+  "title": "Stage the European compact OBJ setups for runtime",
+  "kind": "changed",
+  "platforms": [
+    "European ROM through Wine"
+  ],
+  "changes": [
+    "Add the eight compact OBJ setup records and two reader literals to the existing physical compact OBJ resource for e384 while keeping the e383 extraction contract available.",
+    "Add a focused check for the original reader and child constructor inputs, previous dataset attachment, and source tampering."
+  ],
+  "validation": [
+    "E664 q9vmouo1 verified the full source bank under Wine. E665 formatting and whitespace checks passed. The Windows CLI compiled."
+  ],
+  "limitations": [
+    "The E665 Windows build unit had no terminal receipt at the user-requested pause. The Wine test and CLI lifecycle, ordinary use, translated execution, Linux, USA and native Windows remain pending."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/physical_compact_obj_region.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/compact_obj_setup_tests.rs",
+    "scripts/extract_rom_data.py"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -282,6 +282,46 @@ variant slots, including the seven counted OBJ lists, contribute
 628 unowned bytes with their reader literals.
 [Evidence](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists).
 
+**ROMDATA-04-EUR-WORLD-MAP-LABEL-TABLES** passes its scoped
+EUR/Wine proof in E659. e381 serves the two selector tables and
+counted OBJ lists through the existing indexed resource. Both
+original handlers, five decoder calls, all seven lists, e380
+attachment and the CLI lifecycle pass with altered backing.
+[Evidence](../rom_data_ui_graphics.md#e659-european-world-map-labels-at-runtime).
+
+**ROMDATA-01-EUR-FLASH-AND-DIVISION-TABLES** passes its scoped
+source proof in E660. The Flash directory, four descriptors and
+12 timer tuples contribute 268 unowned bytes including the root.
+The signed division table and its three original literals add
+another 268 bytes against e381. [Evidence](../rom_data_runtime.md#e660-european-flash-configurations-and-division-bit-lengths).
+
+**ROMDATA-04-EUR-FLASH-AND-DIVISION-TABLES** passes its scoped
+EUR/Wine proof in E661. e382 serves all eight source spans to
+the original descriptor and timer readers and signed division
+helper. With altered backing, the in-memory Flash ID query,
+state and clock, e381 attachment and CLI reuse pass.
+[Evidence](../rom_data_runtime.md#e661-european-flash-and-division-tables-at-runtime).
+
+**ROMDATA-01-EUR-LOCALIZED-TEXT-ID-TABLE** passes its scoped
+source proof in E662. All 351 physical slots and seven original
+reader literals account for 730 unowned bytes against e382.
+The 347 nonzero slots exhaust the existing catalog selector 23.
+[Evidence](../rom_data_gameplay.md#e662-european-localized-text-id-table).
+
+**ROMDATA-04-EUR-LOCALIZED-TEXT-ID-TABLE** passes its scoped
+EUR/Wine proof in E663. e383 serves all eight source spans.
+The seven original readers, range resolution, the raw boundary
+and e382 attachment pass with altered backing. The CLI verifies
+and reuses all 183 files.
+[Evidence](../rom_data_gameplay.md#e663-european-localized-text-ids-at-runtime).
+
+**ROMDATA-01-EUR-COMPACT-OBJ-SETUP-BANK** passes its scoped source
+proof in E664. The eight complete setup records reach six existing
+child banks with 120 lists and 20 sequences. e383 owns the children
+and rectangle companion. Two literals and the setup table account
+for 424 unowned bytes.
+[Evidence](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank).
+
 **ROMDATA-01-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E635 bounds
 all 248 directory entries and 36,072 physical cells, including the
 4,934 referenced sequences and their complete OBJ list and pixel

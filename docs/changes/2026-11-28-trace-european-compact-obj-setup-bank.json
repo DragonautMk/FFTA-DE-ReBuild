@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-compact-obj-setup-bank",
+  "title": "Trace the European compact OBJ setup bank",
+  "kind": "docs",
+  "platforms": [
+    "European ROM through Wine"
+  ],
+  "changes": [
+    "Bound eight original compact OBJ setups, two pointer words, and all six linked physical child banks."
+  ],
+  "validation": [
+    "E664 q9vmouo1 attests 549 original instruction halfwords. The e383 ownership audit covers 5,072 bytes, with 424 new setup bytes and 4,648 bytes under existing owners. All 17 preservation guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Runtime publication, live producer domains, ordinary and translated execution, Linux, USA and native Windows remain open. Initial sandbox preflight 9dc0wsjb stopped before the shared Wine lease."
+  ],
+  "files": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_compact_catalog.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

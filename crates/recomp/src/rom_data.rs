@@ -149,6 +149,7 @@ use gba_core::rom_data::{
     DIRECT_RECTANGLE_BANK_FILE, DIRECT_RECTANGLE_BANK_ID, MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES,
     QUEUED_MATRIX_SOURCES_FILE, QUEUED_MATRIX_SOURCES_ID, MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES,
     MENU_SELECTION_BANKS_FILE, MENU_SELECTION_BANKS_ID, MAX_MENU_SELECTION_BANKS_FILE_BYTES,
+    FLASH_AND_DIVISION_TABLES_FILE, FLASH_AND_DIVISION_TABLES_ID, MAX_FLASH_AND_DIVISION_TABLES_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -1098,6 +1099,8 @@ mod physical_audio_bank_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod physical_compact_obj_region_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
+mod compact_obj_setup_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod screen_update_table_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod counted_effect_table_tests;
@@ -1138,7 +1141,11 @@ mod queued_matrix_sources_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod menu_selection_banks_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
+mod flash_and_division_tables_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
 mod world_map_labels_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod localized_text_ids_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -2130,6 +2137,7 @@ struct Dataset {
     direct_rectangle_bank_bytes: Option<Vec<u8>>,
     queued_matrix_sources_bytes: Option<Vec<u8>>,
     menu_selection_banks_bytes: Option<Vec<u8>>,
+    flash_and_division_tables_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2321,6 +2329,7 @@ impl Dataset {
             direct_rectangle_bank: self.direct_rectangle_bank_bytes.as_deref(),
             queued_matrix_sources: self.queued_matrix_sources_bytes.as_deref(),
             menu_selection_banks: self.menu_selection_banks_bytes.as_deref(),
+            flash_and_division_tables: self.flash_and_division_tables_bytes.as_deref(),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2854,6 +2863,17 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
             )
         })
         .transpose()?;
+    let flash_and_division_tables_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == FLASH_AND_DIVISION_TABLES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(FLASH_AND_DIVISION_TABLES_FILE),
+                MAX_FLASH_AND_DIVISION_TABLES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -3063,6 +3083,7 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         direct_rectangle_bank_bytes.as_ref().map_or(0, Vec::len),
         queued_matrix_sources_bytes.as_ref().map_or(0, Vec::len),
         menu_selection_banks_bytes.as_ref().map_or(0, Vec::len),
+        flash_and_division_tables_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -3545,6 +3566,7 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         direct_rectangle_bank_bytes,
         queued_matrix_sources_bytes,
         menu_selection_banks_bytes,
+        flash_and_division_tables_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3736,6 +3758,7 @@ fn check_dataset_budget(
     direct_rectangle_bank: usize,
     queued_matrix_sources: usize,
     menu_selection_banks: usize,
+    flash_and_division_tables: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3915,6 +3938,7 @@ fn check_dataset_budget(
         || direct_rectangle_bank as u64 > MAX_DIRECT_RECTANGLE_BANK_FILE_BYTES
         || queued_matrix_sources as u64 > MAX_QUEUED_MATRIX_SOURCES_FILE_BYTES
         || menu_selection_banks as u64 > MAX_MENU_SELECTION_BANKS_FILE_BYTES
+        || flash_and_division_tables as u64 > MAX_FLASH_AND_DIVISION_TABLES_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -4100,6 +4124,7 @@ fn check_dataset_budget(
         .saturating_add(direct_rectangle_bank)
         .saturating_add(queued_matrix_sources)
         .saturating_add(menu_selection_banks)
+        .saturating_add(flash_and_division_tables)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -4551,6 +4576,12 @@ fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<
             bytes.len()
         );
     }
+    if let Some(bytes) = &dataset.flash_and_division_tables_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={FLASH_AND_DIVISION_TABLES_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
     if let Some(data)=&dataset.world_records38 {eprintln!("ROM_DATA runtime=decoded resource={WORLD_RECORDS38_ID} file={} records={}",dataset.manifest.resources[81].sha256,data.records.len());}
     if let Some(data)=&dataset.parameter_records27 {eprintln!("ROM_DATA runtime=decoded resource={PARAMETER_RECORDS27_ID} file={} records={}",dataset.manifest.resources[80].sha256,data.records.len());}
@@ -4707,7 +4738,13 @@ pub fn report_usage(machine: &gba_core::Machine) {
         if let Some(i)=resources.conditional_item_parameters_stats() {
             eprintln!("ROM_DATA_USE resource={CONDITIONAL_ITEM_PARAMETERS_ID} dataset={} bus_reads={} source_bytes={} byte00={} byte01={} value02_bytes={} record_mask={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.byte00,i.byte01,i.value02_bytes,i.record_mask);
         }
-        if let Some(i)=resources.range_lookup_stats() {eprintln!("ROM_DATA_USE resource={RANGE_LOOKUP_ID} dataset={} bus_reads={} source_bytes={} records_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.records_used);}
+        if let Some(stats) = resources.range_lookup_stats() {
+            eprintln!(
+                "ROM_DATA_USE resource={RANGE_LOOKUP_ID} dataset={} bus_reads={} source_bytes={} records_used={} text_id_bytes={}",
+                resources.dataset_sha256(), stats.bus_reads, stats.source_bytes, stats.records_used,
+                stats.text_id_bytes
+            );
+        }
         if let Some(i)=resources.tilemap_geometry_stats() {eprintln!("ROM_DATA_USE resource={TILEMAP_GEOMETRY_ID} dataset={} bus_reads={} source_bytes={} groups_used={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.groups_used);}
         if let Some(i)=resources.script39_registry_pose_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT39_REGISTRY_POSES_ID} dataset={} bus_reads={} source_bytes={} index_bytes={} sequence_bytes={} pixel_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.index_bytes,i.sequence_bytes,i.pixel_bytes);}
         if let Some(i)=resources.script39_special_pose_stats() {eprintln!("ROM_DATA_USE resource={SCRIPT39_SPECIAL_POSES_ID} dataset={} bus_reads={} source_bytes={} index_bytes={} sequence_bytes={} object_bytes={} pixel_bytes={}",resources.dataset_sha256(),i.bus_reads,i.source_bytes,i.index_bytes,i.sequence_bytes,i.object_bytes,i.pixel_bytes);}
@@ -5276,6 +5313,7 @@ fn write_dataset_inner(
     let direct_rectangle_bank_data = source.direct_rectangle_bank.clone();
     let queued_matrix_sources_data = source.queued_matrix_sources.clone();
     let menu_selection_banks_data = source.menu_selection_banks.clone();
+    let flash_and_division_tables_data = source.flash_and_division_tables.clone();
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -5523,6 +5561,9 @@ fn write_dataset_inner(
     if let Some(bytes) = &menu_selection_banks_data {
         files.push(bytes);
     }
+    if let Some(bytes) = &flash_and_division_tables_data {
+        files.push(bytes);
+    }
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -5709,6 +5750,7 @@ fn write_dataset_inner(
         direct_rectangle_bank_data.as_ref().map_or(0, Vec::len),
         queued_matrix_sources_data.as_ref().map_or(0, Vec::len),
         menu_selection_banks_data.as_ref().map_or(0, Vec::len),
+        flash_and_division_tables_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -5953,6 +5995,9 @@ fn write_dataset_inner(
     }
     if let Some(bytes) = &menu_selection_banks_data {
         write(&path.join(MENU_SELECTION_BANKS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &flash_and_division_tables_data {
+        write(&path.join(FLASH_AND_DIVISION_TABLES_FILE), bytes)?;
     }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
@@ -6374,6 +6419,7 @@ mod tests {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -6701,8 +6747,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

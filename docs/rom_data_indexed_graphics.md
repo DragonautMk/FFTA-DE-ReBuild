@@ -1,5 +1,10 @@
 # Indexed graphics archives
 
+European e381 extends the typed resource with the 150 world-map
+label selectors and their seven counted OBJ lists. Each selector
+still resolves into one of the five existing language archives.
+[Original-reader verification](rom_data_ui_graphics.md#e659-european-world-map-labels-at-runtime).
+
 E435 identifies three additional five-language indexed groups at `39554c`,
 `3955d8` and `397d94`, with 1,588 programs declared by their 15 source headers.
 The last group's archives begin at selected structures plus `b4`. Full source

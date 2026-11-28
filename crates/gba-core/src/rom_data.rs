@@ -127,6 +127,7 @@ mod localized_inline_ui;
 mod direct_rectangle_bank;
 mod queued_matrix_sources;
 mod menu_selection_banks;
+mod flash_and_division_tables;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -192,8 +193,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 381;
-pub const DECODER_REV: u32 = 380;
+pub const EXTRACTOR_REV: u32 = 384;
+pub const DECODER_REV: u32 = 383;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -273,6 +274,9 @@ const PRE_DIRECT_RECTANGLE_BANK_REVISION: (u32, u32) = (377, 376);
 const PRE_QUEUED_MATRIX_SOURCES_REVISION: (u32, u32) = (378, 377);
 const PRE_MENU_SELECTION_BANKS_REVISION: (u32, u32) = (379, 378);
 const PRE_WORLD_MAP_LABELS_REVISION: (u32, u32) = (380, 379);
+const PRE_FLASH_AND_DIVISION_TABLES_REVISION: (u32, u32) = (381, 380);
+const PRE_LOCALIZED_TEXT_IDS_REVISION: (u32, u32) = (382, 381);
+const PRE_COMPACT_OBJ_SETUP_BANK_REVISION: (u32, u32) = (383, 382);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -779,7 +783,7 @@ pub const MAX_PHYSICAL_AUDIO_BANKS_FILE_BYTES: u64 = physical_audio_banks::PACKE
 pub const PHYSICAL_COMPACT_OBJ_REGION_ID: &str = "graphics.physical-compact-obj-banks";
 pub const PHYSICAL_COMPACT_OBJ_REGION_FILE: &str = "physical-compact-obj-banks.bin";
 pub const PHYSICAL_COMPACT_OBJ_REGION_FORMAT: &str = "physical-compact-obj-banks-v1-bin";
-pub const MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES: u64 = physical_compact_obj_region::PACKED_BYTES;
+pub const MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES: u64 = physical_compact_obj_region::MAX_PACKED_BYTES;
 pub const SCREEN_UPDATE_TABLES_ID: &str = "graphics.screen-update-tables";
 pub const SCREEN_UPDATE_TABLES_FILE: &str = "screen-update-tables.bin";
 pub const SCREEN_UPDATE_TABLES_FORMAT: &str = "screen-update-tables-v1-bin";
@@ -860,6 +864,10 @@ pub const MENU_SELECTION_BANKS_ID: &str = "gameplay.menu-selection-banks";
 pub const MENU_SELECTION_BANKS_FILE: &str = "menu-selection-banks.bin";
 pub const MENU_SELECTION_BANKS_FORMAT: &str = "menu-selection-banks-v1-bin";
 pub const MAX_MENU_SELECTION_BANKS_FILE_BYTES: u64 = menu_selection_banks::PACKED_BYTES;
+pub const FLASH_AND_DIVISION_TABLES_ID: &str = "engine.flash-and-division-tables";
+pub const FLASH_AND_DIVISION_TABLES_FILE: &str = "flash-and-division-tables.bin";
+pub const FLASH_AND_DIVISION_TABLES_FORMAT: &str = "flash-and-division-tables-v1-bin";
+pub const MAX_FLASH_AND_DIVISION_TABLES_FILE_BYTES: u64 = flash_and_division_tables::PACKED_BYTES;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -1299,6 +1307,7 @@ pub struct Extraction {
     pub direct_rectangle_bank: Option<Vec<u8>>,
     pub queued_matrix_sources: Option<Vec<u8>>,
     pub menu_selection_banks: Option<Vec<u8>>,
+    pub flash_and_division_tables: Option<Vec<u8>>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1486,6 +1495,7 @@ pub struct BaseFiles<'a> {
     pub direct_rectangle_bank: Option<&'a [u8]>,
     pub queued_matrix_sources: Option<&'a [u8]>,
     pub menu_selection_banks: Option<&'a [u8]>,
+    pub flash_and_division_tables: Option<&'a [u8]>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1554,7 +1564,10 @@ impl Extraction {
             | PRE_DIRECT_RECTANGLE_BANK_REVISION
             | PRE_QUEUED_MATRIX_SOURCES_REVISION
             | PRE_MENU_SELECTION_BANKS_REVISION
-            | PRE_WORLD_MAP_LABELS_REVISION) => previous,
+            | PRE_WORLD_MAP_LABELS_REVISION
+            | PRE_FLASH_AND_DIVISION_TABLES_REVISION
+            | PRE_LOCALIZED_TEXT_IDS_REVISION
+            | PRE_COMPACT_OBJ_SETUP_BANK_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2286,7 +2299,9 @@ impl Extraction {
             result.manifest.coverage.push(CONDITIONAL_ITEM_PARAMETERS_ID.into());
             result.manifest.resources.push(Resource { id: CONDITIONAL_ITEM_PARAMETERS_ID.into(), path: CONDITIONAL_ITEM_PARAMETERS_FILE.into(), format: CONDITIONAL_ITEM_PARAMETERS_FORMAT.into(), sha256: String::new(), dependencies: vec![ITEM_RECORDS_ID.into()], sources: metadata.sources.clone() });
             result.conditional_item_parameters = Some(metadata);
-            let metadata = range_lookup::Catalog::from_rom(rom)?;
+            let metadata = range_lookup::Catalog::from_rom_with_text_ids(
+                rom, revision > PRE_LOCALIZED_TEXT_IDS_REVISION,
+            )?;
             result.manifest.coverage.push(RANGE_LOOKUP_ID.into());
             result.manifest.resources.push(Resource { id: RANGE_LOOKUP_ID.into(), path: RANGE_LOOKUP_FILE.into(), format: RANGE_LOOKUP_FORMAT.into(), sha256: String::new(), dependencies: vec![], sources: metadata.sources.clone() });
             result.range_lookup = Some(metadata);
@@ -2980,7 +2995,7 @@ impl Extraction {
             }
             if revision > PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION {
                 let ranges = physical_compact_obj_region::uncovered_ranges(
-                    rom, &result.manifest.resources,
+                    rom, &result.manifest.resources, revision > PRE_COMPACT_OBJ_SETUP_BANK_REVISION,
                 )?;
                 let (encoded, sources) = pack_encoded_sources(rom, ranges);
                 result.manifest.coverage.push(PHYSICAL_COMPACT_OBJ_REGION_ID.into());
@@ -3301,6 +3316,19 @@ impl Extraction {
                 });
                 result.menu_selection_banks = Some(encoded);
             }
+            if revision > PRE_FLASH_AND_DIVISION_TABLES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, flash_and_division_tables::SOURCES);
+                result.manifest.coverage.push(FLASH_AND_DIVISION_TABLES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: FLASH_AND_DIVISION_TABLES_ID.into(),
+                    path: FLASH_AND_DIVISION_TABLES_FILE.into(),
+                    format: FLASH_AND_DIVISION_TABLES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.flash_and_division_tables = Some(encoded);
+            }
             result.tilemap_transfer_directory = Some(metadata);
             (result.manifest.extractor_revision, result.manifest.decoder_revision) = revision;
         } else {
@@ -3518,6 +3546,7 @@ impl Extraction {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -5380,6 +5409,20 @@ impl Extraction {
             (None, None) => {}
             _ => return Err("Missing or unexpected menu selection bank".into()),
         }
+        match (&self.flash_and_division_tables, files.flash_and_division_tables) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Flash and division tables differ from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == FLASH_AND_DIVISION_TABLES_ID)
+                    .ok_or("Missing Flash and division tables in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected Flash and division tables".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -6275,6 +6318,7 @@ impl Extraction {
             + usize::from(self.direct_rectangle_bank.is_some())
             + usize::from(self.queued_matrix_sources.is_some())
             + usize::from(self.menu_selection_banks.is_some())
+            + usize::from(self.flash_and_division_tables.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -6510,6 +6554,7 @@ mod tests {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6698,6 +6743,7 @@ mod tests {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6896,6 +6942,7 @@ mod tests {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -7083,6 +7130,7 @@ mod tests {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

@@ -2014,6 +2014,36 @@ and normal enablement retain their existing acceptance gates.
   e379 attachment and CLI reuse. Ordinary index producers and
   translated execution remain open.
 
+- EUR [E658](../rom_data_ui_graphics.md#e658-european-world-map-label-tables-and-obj-lists)
+  ties 150 world-map label selections and seven counted OBJ lists
+  to five existing archives. [E659](../rom_data_ui_graphics.md#e659-european-world-map-labels-at-runtime)
+  serves the 628 added bytes in `e381-d380`, retained in
+  `gi448653`. Both original selectors, five decodes, drawing,
+  e380 attachment and CLI reuse pass on Wine. Live index domains
+  and ordinary/translated execution remain open.
+
+- EUR [E660](../rom_data_runtime.md#e660-european-flash-configurations-and-division-bit-lengths)
+  bounds the Flash chip/timer data and original signed division table.
+  [E661](../rom_data_runtime.md#e661-european-flash-and-division-tables-at-runtime)
+  serves 536 bytes in `e382-d381`, retained in `izglzzpx`. The
+  in-memory Flash ID query, timer and signed arithmetic readers,
+  e381 attachment and CLI reuse pass on Wine. Save lifecycle and
+  ordinary/translated execution remain open.
+
+- EUR [E662](../rom_data_gameplay.md#e662-european-localized-text-id-table)
+  bounds the 351-slot menu text ID table at `6e9d8a` against the
+  original catalog resolver. [E663](../rom_data_gameplay.md#e663-european-localized-text-ids-at-runtime)
+  serves its 730 source bytes through the existing range resource
+  in `e383-d382`, retained in `fyae8o78`. Wine verifies all seven
+  original readers, catalog resolution, e382 attachment and CLI
+  reuse. Ordinary index producers and translated execution remain open.
+
+- EUR [E664](../rom_data_compact_catalog.md#e664-european-compact-obj-setup-bank)
+  connects the eight setup records at `39ac9c` to six complete
+  descendant OBJ banks and the existing rectangle directory.
+  Wine identifies 424 unowned setup and literal bytes. Publication,
+  live index producers and translated execution remain open.
+
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining
   calls copy executable support and two copy 52 unowned initializer

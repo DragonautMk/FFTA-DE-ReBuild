@@ -1930,6 +1930,59 @@ created from numeric patterns or the neighboring boundary. Reopen this partial
 inventory only when a producer bound or another ownership proof is available.
 Private static evidence stays under `target/rom-data-adjacent-halfword/`.
 
+### E662 European localized text ID table
+
+The separate table at `6e9d8a..6ea048` contains 351 little-endian
+halfwords. The original readers at `04d3de`, `0540d2` and
+`054c28` pass the selected value to `01abfc`, whose helper
+`01abc0` resolves the catalog selector and index. Four other
+original readers use the same root. The reader at `04da4a`
+stores the value in a 20-byte menu record. The readers at
+`051044` and `068ad4` return the selected value plus one,
+narrowed to 16 bits.
+
+The three nonzero runs cover all 347 identifiers in the original
+selector 23 interval, `1209..1555` inclusive, with the order
+preserved. The zero slots at indices 0, 178, 264 and 350 are also
+preserved. The original range resolver maps zero through selector
+16. The range descriptors at `37140c..371464` already have an
+owner. The following unit-template bank begins at `6ea048`.
+
+Wine `3ntrurud` attests 306 original halfwords and verifies the
+702 table bytes and seven four-byte literals as unowned against
+e382. All 13 input guards pass and the server drains. Source
+result SHA-256
+`d85d1b1106e9bedcfee11fafb837da2a6cbb6059ad281389da2585154f662b14`.
+Live index producers, the separate table at `6e9cb6`, runtime
+use and deferred platform checks remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+### E663 European localized text IDs at runtime
+
+`e383-d382` adds the 351 halfwords and seven original reader
+words to `engine.bounded-range-lookup` as a typed optional field.
+The original 11 descriptors retain their values and source range.
+The adjusted resource supplies all 730 E662 bytes at the original
+addresses and the e382 layout still attaches.
+
+Windows GNU build `l4dfgvna` and Wine `vpkxtzkm` pass. With the
+selected ROM backing altered, six original reader prefixes cover
+all 351 slots. The byte-index reader covers all 256 of its physical
+indices. The original resolver selects catalog 23 for the 347
+nonzero IDs and catalog 16 for the four zero slots. Complete state
+and guest clock match. All 768 mixed and mirrored boundary checks
+pass, and the neighboring raw read reflects the altered backing.
+Both invalid attachments leave the current resources in place.
+
+The Wine CLI creates, verifies and reuses 183 files. All 181
+other resources are byte-identical to e382. All 17 input guards
+pass, the server drains and stage `fyae8o78` retains e383 with
+manifest SHA-256
+`b722d6cb959de89bc42398c1e709004d0e07431373311884398cabf6ed583cea`.
+Ordinary producer, rendering and translated checks, Linux, USA
+and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## Trade parameters source contract
 
 Original selectorD0744 truncates its input to u8, accepts physical IDs2..6 and

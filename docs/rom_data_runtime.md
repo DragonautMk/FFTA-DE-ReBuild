@@ -2451,6 +2451,12 @@ No performance measurement was made.
 
 ## European bounded range lookup
 
+E663 extends the European resource with the 351-slot localized
+text ID table. The original descriptor statistics and e382
+attachment are preserved. New ID and literal reads are reported
+as `text_id_bytes`.
+[Original-reader verification](rom_data_gameplay.md#e663-european-localized-text-ids-at-runtime).
+
 EUR schema 1/e161-d160 adds `engine.bounded-range-lookup`, an independent
 11-record source at `37140c..371464`. Original routine `01abc0` scans the
 eight-byte records in order, compares the low 16 bits of its input to the
@@ -9727,6 +9733,69 @@ The current generation is retained in
 The live message and list producers, queued writes, generated dispatch,
 other calculated source banks, original BIOS and deferred platforms
 remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E660 European Flash configurations and division bit lengths
+
+The original startup at `000348` invokes Flash identification at
+`145760`. Its reader at `145778` follows the four-pointer directory
+at `370830`. The first three descriptors have distinct device IDs.
+The fourth has ID zero and terminates the search. The selected
+44-byte record supplies four callback pointers, a timer-table
+pointer and chip settings. The selector stores the settings pointer
+at `0200f370` and the timer-table pointer at `0200f380`. The latter
+feeds `145384`, which reads three halfwords at six-byte stride
+and writes the countdown, timer reload and control values.
+Three physical tables provide four timer tuples each. Two
+descriptors share the table at `370868`.
+
+The original signed division helper at `145c44` has three
+normalization paths at `145cc2`, `145da6` and `145f1a`.
+Each shifts its selected word by 0, 8, 16 or 24 bits to index the
+same byte table at `370990`. All 256 entries equal the bit length
+of the corresponding byte. The original code adds the selected
+shift and subtracts from 32. The neighboring M4A command table
+starts at `370a90` and retains its own source.
+
+Wine `8lnsrbyn` attests 402 original halfwords. The e381 ownership
+join finds 268 unowned Flash bytes and 268 unowned division bytes,
+including their original literals. All 13 input guards pass and
+the server drains. The source result SHA-256 is
+`16ebc8550f2295c993a31912aa03908bd6774d2eb0245329037661a7f38522f2`.
+Adjacent support words still need independent readers. Runtime,
+save lifecycle, translated use and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E661 European Flash and division tables at runtime
+
+`e382-d381` publishes all 536 E660 bytes in
+`flash-and-division-tables.bin` as
+`engine.flash-and-division-tables`. The bus supplies the original
+Flash descriptors and timer rows and the full 256-byte division
+table at their original addresses.
+
+Windows GNU build `sjbeggdr` and Wine `nf5isxeo` pass. With the
+selected ROM backing altered, the original Flash ID query selects
+the emulated device's descriptor. Four controlled selector entries
+exercise the three chip IDs and fallback. Twelve original timer
+initializations write the expected countdown, reload and control.
+The in-memory backup bytes are identical before and after the
+Flash checks. Three original normalization readers cover 3,063
+byte and shift cases, and 12 signed 64-bit divisions match the
+expected quotients.
+
+The original paths read 15,776 managed bytes. All 768 mixed and
+mirrored boundary checks pass, including the existing M4A command
+table and the raw gap beside the Flash descriptors. Complete
+guest state and clock match. The e381 dataset attaches and
+both invalid attachments leave the active resources in place.
+The CLI creates, verifies and reuses 183 files with all 181
+earlier resources byte-identical. All 17 guards pass and Wine
+drains. Stage `izglzzpx` retains e382 with manifest SHA-256
+`15259202f4de1c7445070f130e2a5c752fe9189d2e51550b61b6741d8e9ec927`.
+
+Full startup, save and Load/Undo lifecycle, live timer phase
+writers, translated callers and deferred platforms remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 ## E645 European save CRC32 table source

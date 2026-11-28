@@ -1,7 +1,7 @@
 //! Complete physical EUR compact OBJ banks and their bounded descriptors.
 use super::{
-    script39_registry_poses::{half, word, PriorSources},
     Resource,
+    script39_registry_poses::{PriorSources, half, word},
 };
 use std::{collections::BTreeMap, ops::Range};
 
@@ -11,7 +11,16 @@ const CONSTRUCTOR: i32 = 0x0d9ba8;
 const BANKS: Range<u32> = 0x6b3428..0x6cd966;
 const WIDE_BANK: u32 = 0x6bb838;
 const DESCRIPTOR_BYTES: u32 = 24;
-pub(super) const PACKED_BYTES: u64 = 93_964;
+const SETUP_START: u32 = 0x39ac9c;
+const SETUP_END: u32 = 0x39ae3c;
+const SETUP_SOURCES: [(Range<u32>, &str); 3] = [
+    (0x0e65dc..0x0e65e0, "compact-obj-setup-literal"),
+    (0x0e66e8..0x0e66ec, "compact-obj-setup-literal"),
+    (SETUP_START..SETUP_END, "compact-obj-setup-records"),
+];
+const PACKED_BYTES: u64 = 93_964;
+const SETUP_BYTES: u64 = (SETUP_END - SETUP_START) as u64 + 8;
+pub(super) const MAX_PACKED_BYTES: u64 = PACKED_BYTES + SETUP_BYTES;
 
 fn zero_bytes(rom: &[u8], range: Range<u32>) -> bool {
     rom.get(range.start as usize..range.end as usize)
@@ -188,10 +197,39 @@ fn merge(mut ranges: Vec<Range<u32>>) -> Vec<Range<u32>> {
     merged
 }
 
-/// Preserve earlier owners while publishing all the remaining E613 ranges.
+fn verify_setups(rom: &[u8], banks: &BTreeMap<u32, usize>) -> Result<(), String> {
+    if word(rom, 0x0e65dc)? != ROM_BASE + SETUP_START
+        || word(rom, 0x0e66e8)? != ROM_BASE + SETUP_START + 4
+    {
+        return Err("Invalid compact OBJ setup literals".into());
+    }
+    let setups = rom
+        .get(SETUP_START as usize..SETUP_END as usize)
+        .ok_or("Missing compact OBJ setup records")?;
+    for (row, count) in setups.chunks_exact(52).zip([1, 2, 1, 1, 2, 1, 1, 2]) {
+        let end = 4 + 12 * usize::from(count);
+        if row[..4] != [count, 0, 0, 0] || row[end..].iter().any(|&byte| byte != 0) {
+            return Err("Invalid compact OBJ setup record extent".into());
+        }
+        for child in row[4..end].chunks_exact(12) {
+            let root = u32::from_le_bytes(child[8..12].try_into().unwrap()).wrapping_sub(ROM_BASE);
+            if child[1] > 1
+                || !banks
+                    .get(&root)
+                    .is_some_and(|&sequences| usize::from(child[0]) < sequences)
+            {
+                return Err("Invalid compact OBJ setup bank or sequence".into());
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Preserve earlier owners while publishing the physical banks and setup data.
 pub(super) fn uncovered_ranges(
     rom: &[u8],
     resources: &[Resource],
+    include_setups: bool,
 ) -> Result<Vec<(Range<u32>, &'static str)>, String> {
     let mut bank_ranges = Vec::new();
     let banks = physical_banks(rom, &mut bank_ranges)?;
@@ -252,6 +290,17 @@ pub(super) fn uncovered_ranges(
             );
         }
     }
+    let mut packed_bytes = PACKED_BYTES;
+    if include_setups {
+        verify_setups(rom, &banks)?;
+        for (range, role) in SETUP_SOURCES {
+            if prior.uncovered(range.clone()) != [range.clone()] {
+                return Err("Unexpected compact OBJ setup source owner".into());
+            }
+            ranges.push((range, role));
+        }
+        packed_bytes += SETUP_BYTES;
+    }
     ranges.sort_unstable_by_key(|(range, _)| range.start);
     if ranges
         .windows(2)
@@ -260,7 +309,7 @@ pub(super) fn uncovered_ranges(
             .iter()
             .map(|(range, _)| u64::from(range.end - range.start))
             .sum::<u64>()
-            != PACKED_BYTES
+            != packed_bytes
     {
         return Err("Unexpected physical compact OBJ source ownership".into());
     }

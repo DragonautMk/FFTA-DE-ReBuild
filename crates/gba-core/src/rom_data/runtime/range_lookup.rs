@@ -1,5 +1,6 @@
 //! Typed range table bytes; guest scanning and writes remain original.
-use super::super::{range_lookup as model, SourceRange};
+use super::super::{SourceRange, range_lookup as model};
+use super::packed_tilemap_file::PackedTilemapFile;
 use crate::ffta_rom;
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -8,33 +9,81 @@ pub struct RangeLookupStats {
     pub bus_reads: u64,
     pub source_bytes: u64,
     pub records_used: u64,
+    pub text_id_bytes: u64,
 }
 pub(super) struct RangeLookupResources {
     data: model::RangeLookup,
+    text_ids: Option<PackedTilemapFile>,
     reads: AtomicU64,
     bytes: AtomicU64,
     used: AtomicU64,
 }
 impl RangeLookupResources {
-    pub(super) fn source_page(index: usize) -> bool { index >> 12 == 0x371 }
-    pub(super) fn new(data: model::RangeLookup, sources: &[SourceRange]) -> Result<Self, String> {
+    pub(super) fn source_page(index: usize) -> bool {
+        index >> 12 == 0x371 || model::LocalizedTextIds::source_page(index)
+    }
+
+    pub(super) fn new(
+        mut data: model::RangeLookup,
+        sources: &[SourceRange],
+    ) -> Result<Self, String> {
         let bytes = data.source_bytes()?;
-        if sources.len() != 1 || sources[0].offset != model::SOURCE
-            || sources[0].length as usize != bytes.len()
-            || sources[0].role != "bounded-range-lookup"
-            || sources[0].sha256 != ffta_rom::digest(&bytes) {
+        let (range_source, text_sources) =
+            sources.split_first().ok_or("Missing range lookup source")?;
+        if range_source.offset != model::SOURCE
+            || range_source.length as usize != bytes.len()
+            || range_source.role != "bounded-range-lookup"
+            || range_source.sha256 != ffta_rom::digest(&bytes)
+        {
             return Err("Range lookup typed source binding mismatch".into());
         }
-        Ok(Self { data, reads: AtomicU64::new(0), bytes: AtomicU64::new(0), used: AtomicU64::new(0) })
+        let text_ids = match data.localized_text_ids.take() {
+            Some(table) => {
+                let (packed, ranges) = table.pack();
+                if ranges != text_sources {
+                    return Err("Localized text ID source binding mismatch".into());
+                }
+                Some(PackedTilemapFile::new(&packed, text_sources)?)
+            }
+            None if text_sources.is_empty() => None,
+            None => return Err("Unexpected localized text ID source bindings".into()),
+        };
+        Ok(Self {
+            data,
+            text_ids,
+            reads: AtomicU64::new(0),
+            bytes: AtomicU64::new(0),
+            used: AtomicU64::new(0),
+        })
     }
-    pub(super) fn guest_read<const N: usize>(&self, index: usize, rom: &[u8], prior: Option<[u8; N]>) -> Option<[u8; N]> {
-        if !Self::source_page(index) { return prior; }
-        let values: [_; N] = std::array::from_fn(|i| u32::try_from(index + i).ok().and_then(|at| self.data.byte_at(at)));
-        if values.iter().all(Option::is_none) { return prior; }
+    pub(super) fn guest_read<const N: usize>(
+        &self,
+        index: usize,
+        rom: &[u8],
+        prior: Option<[u8; N]>,
+    ) -> Option<[u8; N]> {
+        if index >> 12 != 0x371 {
+            return self
+                .text_ids
+                .as_ref()
+                .map_or(prior, |ids| ids.guest_read(index, rom, prior));
+        }
+        let values: [_; N] = std::array::from_fn(|i| {
+            u32::try_from(index + i)
+                .ok()
+                .and_then(|at| self.data.byte_at(at))
+        });
+        if values.iter().all(Option::is_none) {
+            return prior;
+        }
         let mut count = 0;
         let mut used = 0;
         let result = std::array::from_fn(|i| match values[i] {
-            Some(value) => { count += 1; used |= 1 << ((index + i - model::SOURCE as usize) / 8); value }
+            Some(value) => {
+                count += 1;
+                used |= 1 << ((index + i - model::SOURCE as usize) / 8);
+                value
+            }
             None => prior.as_ref().map_or_else(|| rom[index + i], |p| p[i]),
         });
         self.reads.fetch_add(1, Ordering::Relaxed);
@@ -43,9 +92,22 @@ impl RangeLookupResources {
         Some(result)
     }
     pub(super) fn stats(&self) -> RangeLookupStats {
-        RangeLookupStats { bus_reads: self.reads.load(Ordering::Relaxed), source_bytes: self.bytes.load(Ordering::Relaxed), records_used: u64::from(self.used.load(Ordering::Relaxed).count_ones()) }
+        RangeLookupStats {
+            bus_reads: self.reads.load(Ordering::Relaxed),
+            source_bytes: self.bytes.load(Ordering::Relaxed),
+            records_used: u64::from(self.used.load(Ordering::Relaxed).count_ones()),
+            text_id_bytes: self
+                .text_ids
+                .as_ref()
+                .map_or(0, PackedTilemapFile::bus_bytes),
+        }
     }
     pub(super) fn resident_bytes(&self) -> usize {
-        std::mem::size_of::<Self>() + self.data.records.capacity() * std::mem::size_of::<model::Record>()
+        std::mem::size_of::<Self>()
+            + self.data.records.capacity() * std::mem::size_of::<model::Record>()
+            + self
+                .text_ids
+                .as_ref()
+                .map_or(0, PackedTilemapFile::resident_bytes)
     }
 }

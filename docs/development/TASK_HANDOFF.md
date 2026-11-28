@@ -34,7 +34,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: active
+- State: suspended
 - Outcome: partial
 - E260 owns E248; E302 e275 `idrflo71` zero residual, Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - E401 ties E291 White Flowers 3,600 code bytes to E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 zero residual (`3blfucoi`/`dnr49xgd`/`_z04mity`).
@@ -194,9 +194,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E659 EUR e381 world-map label runtime.
-- Last verified result: E658 PASS; typed indexed-archive extension prepared.
-- Remaining work: Build foxfdoz3, then one Wine check.
-- Errors or blockers: None. Preserve e380, archives and boundary reads.
-- Next action: Poll 7831; verify 300 selections, OBJ draw and reuse.
-- References: E658. Live/translated and Linux/USA remain open.
+- Task: E665 EUR compact OBJ setup publication paused by user.
+- Last verified result: E664 q9vmouo1 PASS and drained. e383 still current.
+- Remaining work: e384 build receipt and Wine readers, attachment and CLI. E655, ordinary/translated and ports open.
+- Errors or blockers: Build u4v8yayu receipt running, handle 52448 unavailable. Preserve its lease.
+- Next action: Only on resume, reconcile the existing build before any restart or Wine launch.
+- References: stage/e665-validation; compact catalog guide; recovery checklist.

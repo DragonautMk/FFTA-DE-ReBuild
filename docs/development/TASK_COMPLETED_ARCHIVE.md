@@ -30325,3 +30325,51 @@ Evidence: `docs/rom_data_graphics.md#e301-soil-evidence-remaining-rectangle-runt
 - Verified criteria: Dated Audio page for 49 clock values, 36 stored command words and 12 extended selectors. Player links reach both authenticated PCM echo songs and return to the reference. Separate scope carries the small tables.
 - Evidence: Synthetic 31jxr8js passes 13. Real 45cbcwlf checks five hashed spans and both live player routes. Its final marker guard detected the intended scope back-link change. Reconciliation b4my0s7l checks that one field, 49 scope payloads, 192 other resource pages and 1,128 matching Python/Docker outputs without repeating Chrome. Published 52 local files with verified preimages at out/ffta-audio-driver-before-783nrp8c. See docs/changes/2026-11-28-browse-audio-driver-reference.json.
 - Limits: Live mixer, physical audio, deferred Windows, other previews and official names remain open.
+
+### E659 European world-map labels at runtime
+
+- State: completed
+- Outcome: e381-d380 serves the 628-byte E658 bank through the existing indexed graphics resource.
+- Verified: Windows GNU build `foxfdoz3` and Wine `hawsy1fk` PASS. Both original selectors cover 150 language and node pairs, five original decodes and seven OBJ lists with 18 OAM entries. Altered backing, 960 boundary checks, raw alignment, complete state and clock, e380 attachment and invalid guards pass. The CLI creates, verifies and reuses 182 files. All 180 other resources are identical, all 17 input guards pass and Wine drains.
+- Limits: Controlled reader entries. Live index domains, ordinary and translated execution, Linux, USA and native Windows remain open. No performance measurements. Terra xhigh unconfirmed.
+- Evidence: Stage `gi448653` retains e381. [Guide](../rom_data_ui_graphics.md#e659-european-world-map-labels-at-runtime) and [change record](../changes/2026-11-28-serve-european-world-map-label-tables.json).
+
+### E660 European Flash configuration and division table sources
+
+- State: completed
+- Outcome: Four Flash descriptors, 12 timer tuples, 256 bit lengths and four reader literal words authenticated.
+- Verified: Wine `8lnsrbyn` attests 402 original halfwords and finds two 268-byte banks without owners in e381. All 13 guards and server drain pass.
+- Limits: Physical Flash lifecycle, runtime publication, live phase writers, translated execution, Linux, USA and native Windows stay open. Adjacent support requires readers. Terra xhigh unconfirmed.
+- Evidence: [Source guide](../rom_data_runtime.md#e660-european-flash-configurations-and-division-bit-lengths) and [change record](../changes/2026-11-28-trace-european-flash-and-division-tables.json).
+
+### E661 European Flash and division tables at runtime
+
+- State: completed
+- Outcome: e382-d381 serves all eight source spans and 536 bytes.
+- Verified: Windows GNU build `sjbeggdr` and Wine `nf5isxeo` PASS. Altered backing exercises the original Flash ID query on the emulated device, four descriptor choices, 12 timer rows, all 3,063 normalization inputs and 12 signed divisions. The in-memory backup bytes, neighboring audio and raw reads, 768 boundary checks, full state and clock and e381 attachment match. Two invalid candidates leave resources attached. CLI creates, verifies and reuses all 183 files; 181 prior resources match. All 17 guards and Wine drain pass.
+- Limits: Controlled original readers. Full startup, save lifecycle, other timer and generated paths, Linux, USA and native Windows stay open. No performance measurements. Terra xhigh unconfirmed.
+- Evidence: Stage `izglzzpx` retains e382. [Guide](../rom_data_runtime.md#e661-european-flash-and-division-tables-at-runtime) and [change record](../changes/2026-11-28-serve-european-flash-and-division-tables.json).
+
+### E662 European localized text ID table sources
+
+- State: completed
+- Outcome: 351 halfword slots at `6e9d8a` and seven reader literal words authenticated.
+- Verified: Wine `3ntrurud` attests 306 original halfwords and finds 730 unowned bytes against e382. The 347 nonzero slots cover the entire existing catalog selector 23, and the four zero slots resolve to selector 16 in the original range reader. All 13 input guards and Wine drain pass.
+- Limits: Adjacent `6e9cb6` producers, live index domains, runtime, ordinary and translated use, Linux, USA and native Windows stay open. Terra xhigh unconfirmed.
+- Evidence: [Source guide](../rom_data_gameplay.md#e662-european-localized-text-id-table) and [change record](../changes/2026-11-28-trace-european-localized-text-ids.json).
+
+### E663 European localized text IDs at runtime
+
+- State: completed
+- Outcome: e383-d382 adds the full 730-byte ID bank to the existing range lookup resource.
+- Verified: Windows GNU build `l4dfgvna` and Wine `vpkxtzkm` PASS. The original seven readers pass 2,362 cases and the resolver passes all 351 slots with altered backing. All 768 boundary checks, raw neighbor, full state and clock, e382 attachment and two invalid attachment guards pass. CLI creates, verifies and reuses 183 files. All 181 other resources match and Wine drains with 17 passing guards.
+- Limits: Controlled reader entries. Actual producer domains, rendering, translated execution, Linux, USA and native Windows remain open. No performance measurements. Terra xhigh unconfirmed.
+- Evidence: Stage `fyae8o78` retains e383. [Guide](../rom_data_gameplay.md#e663-european-localized-text-ids-at-runtime) and [change record](../changes/2026-11-28-serve-european-localized-text-ids.json).
+
+
+### E664-EUR-COMPACT-OBJ-SETUP-SOURCE
+
+- Outcome: completed
+- Verified criteria: Eight physical setup rows and two literals round-trip. Both direct call sites, eleven child uses and all six descendant banks are attested. e383 owns 4,648 of 5,072 projected bytes. The three setup spans account for 424 unowned bytes.
+- Evidence: `stage/e614-validation/wine/target/validation/units/e664-eur-compact-obj-setup-source-wine-q9vmouo1`, Wine PASS and server drained. Proof `fc02fbbcdfa663786970943bfd9d827a8d097249a8698a0fc727fd36fb2dbd92`. Read-only preflight `9dc0wsjb` stopped before the shared lease.
+- Limits: Original live selector producers, runtime attachment, ordinary and translated paths, Linux, USA and native Windows remain open.

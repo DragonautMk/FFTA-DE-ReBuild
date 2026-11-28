@@ -1092,6 +1092,34 @@ runtime publication, ordinary and translated use and deferred
 platforms remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
+## E659 European world-map labels at runtime
+
+`e381-d380` adds the two selection tables, eight variant slots,
+seven counted OBJ lists and six reader literals to the typed
+`graphics.indexed-archives` resource. Its new fields reproduce all
+628 E658 source bytes at the original addresses. The original
+archive groups and their encoded source bytes are preserved.
+
+Windows GNU build `foxfdoz3` and Wine `hawsy1fk` pass. With the
+selected ROM bytes altered, both original paths select all 150
+language and node pairs and pass the expected arguments to the
+original decoder. Five decoder calls reproduce the expected
+bytes. The original OBJ draw routine emits 18 shadow OAM entries
+from the seven lists. All eight pointer slots, 960 boundary
+checks across the three ROM mirrors, the raw alignment halfword
+and complete guest state and clock match the reference behavior.
+The e380 dataset still attaches. Both invalid attachments leave
+the current dataset in place.
+
+The Wine CLI creates, verifies and reuses all 182 files. The
+180 other resources are byte-identical to e380. All 17 guards
+pass and Wine drains. Stage `gi448653` retains the dataset with
+manifest SHA-256
+`faa14e5a117fd9f368d546889350fa751b5e44379c14f3712e344d8b403b8a58`.
+Ordinary and translated use, the first reader's live index domain,
+Linux, USA and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## E643 European fixed 30-by-20 screen-map source
 
 The original caller at `0804f894` invokes the loader at `0804fd68`.

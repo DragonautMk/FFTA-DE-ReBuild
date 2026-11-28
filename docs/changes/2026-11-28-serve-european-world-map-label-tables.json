@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-world-map-label-tables",
+  "title": "Serve European world-map labels from indexed graphics",
+  "kind": "added",
+  "platforms": [
+    "EUR / Windows GNU through Wine"
+  ],
+  "changes": [
+    "Extend the typed indexed graphics resource in e381-d380 with five pairs of language rows, eight variant slots, seven counted OBJ lists and six literal words. Preserve the previous layout and source owners."
+  ],
+  "validation": [
+    "Windows GNU foxfdoz3 and Wine hawsy1fk PASS. Both original paths exercise all 150 language/node pairs with altered backing, five original decodes and seven lists with 18 shadow OAM entries. All 960 mixed and mirrored boundaries, raw alignment, state, clock, e380 and invalid attachment guards pass. The CLI prepares, verifies and reuses 182 files with 180 unchanged resources. All 17 guards and Wine drain pass. Stage gi448653 retains e381."
+  ],
+  "limitations": [
+    "The first reader live index domain, ordinary and translated execution, Linux, USA and native Windows remain open. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics.rs",
+    "crates/gba-core/src/rom_data/indexed_graphics/world_map_labels.rs",
+    "crates/gba-core/src/rom_data/runtime/indexed_graphics.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/world_map_labels_tests.rs",
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

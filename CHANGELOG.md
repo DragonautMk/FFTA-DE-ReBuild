@@ -123,6 +123,26 @@ Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-menu-selection-banks.json)
 
+## 2026-11-28 — Trace the European localized text ID table
+
+Type: docs. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Identify all 351 text ID slots at 6e9d8a and seven original reader words. Tie the 347 nonzero IDs to the complete existing catalog selector 23 and preserve the four zero slots.
+
+**Validation**
+
+- Wine 3ntrurud attests 306 original halfwords and verifies 730 unowned source bytes against e382. All 13 input guards and the server drain pass.
+
+**Limitations**
+
+- The adjacent candidate at 6e9cb6, live producers, runtime publication, ordinary and translated use, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-localized-text-ids.json)
+
 ## 2026-11-28 — Trace the European localized inline UI text bank
 
 Type: docs. Platforms: EUR / Wine.
@@ -143,6 +163,26 @@ Documentation: [rom_data_text.md](docs/rom_data_text.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-inline-ui-text.json)
 
+## 2026-11-28 — Trace the European Flash and division tables
+
+Type: docs. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Map the original startup Flash selector, all four descriptors and 12 timer tuples, and the three normalization readers of the full 256-byte signed division table.
+
+**Validation**
+
+- Wine 8lnsrbyn attests 402 original halfwords and verifies 536 unowned source bytes in eight spans against e381. All 13 input guards and server drain pass.
+
+**Limitations**
+
+- Runtime, save lifecycle, timer phase writers, translated use, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-flash-and-division-tables.json)
+
 ## 2026-11-28 — Trace the European direct rectangle bank
 
 Type: docs. Platforms: EUR / Wine.
@@ -162,6 +202,46 @@ Type: docs. Platforms: EUR / Wine.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-28-trace-european-direct-rectangle-bank.json)
+
+## 2026-11-28 — Trace the European compact OBJ setup bank
+
+Type: docs. Platforms: European ROM through Wine.
+
+**Changes**
+
+- Bound eight original compact OBJ setups, two pointer words, and all six linked physical child banks.
+
+**Validation**
+
+- E664 q9vmouo1 attests 549 original instruction halfwords. The e383 ownership audit covers 5,072 bytes, with 424 new setup bytes and 4,648 bytes under existing owners. All 17 preservation guards pass and Wine drains.
+
+**Limitations**
+
+- Runtime publication, live producer domains, ordinary and translated execution, Linux, USA and native Windows remain open. Initial sandbox preflight 9dc0wsjb stopped before the shared Wine lease.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-compact-obj-setup-bank.json)
+
+## 2026-11-28 — Serve European world-map labels from indexed graphics
+
+Type: added. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Extend the typed indexed graphics resource in e381-d380 with five pairs of language rows, eight variant slots, seven counted OBJ lists and six literal words. Preserve the previous layout and source owners.
+
+**Validation**
+
+- Windows GNU foxfdoz3 and Wine hawsy1fk PASS. Both original paths exercise all 150 language/node pairs with altered backing, five original decodes and seven lists with 18 shadow OAM entries. All 960 mixed and mirrored boundaries, raw alignment, state, clock, e380 and invalid attachment guards pass. The CLI prepares, verifies and reuses 182 files with 180 unchanged resources. All 17 guards and Wine drain pass. Stage gi448653 retains e381.
+
+**Limitations**
+
+- The first reader live index domain, ordinary and translated execution, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-world-map-label-tables.json)
 
 ## 2026-11-28 — Serve the European screen-effect motion tables
 
@@ -267,6 +347,26 @@ Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-28-serve-european-menu-selection-banks.json)
 
+## 2026-11-28 — Serve European localized text IDs from extracted data
+
+Type: added. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Extend the typed range lookup in e383-d382 with 351 localized text IDs and seven reader literals. Preserve the original 11 descriptor records, the preceding layout, and raw reads beyond the projection.
+
+**Validation**
+
+- Windows GNU l4dfgvna and Wine vpkxtzkm PASS. Altered backing exercises 2362 original reads at seven sites and resolves all 351 IDs. All 768 mixed and mirrored checks, the raw neighboring halfword, complete state and clock, e382 attachment and two invalid attachment guards pass. The CLI creates, verifies and reuses 183 files with 181 unchanged resources. All 17 guards pass, Wine drains and stage fyae8o78 retains e383.
+
+**Limitations**
+
+- The tests enter original reader routines with controlled indices. Live producers, ordinary rendering, translated dispatch, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-localized-text-ids.json)
+
 ## 2026-11-28 — Serve the European localized inline UI text bank
 
 Type: added. Platforms: EUR / Wine.
@@ -309,6 +409,26 @@ Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
 
 [Change record](docs/changes/2026-11-28-serve-european-full-screen-map.json)
 
+## 2026-11-28 — Serve European Flash and division tables from extracted data
+
+Type: added. Platforms: EUR / Windows GNU through Wine.
+
+**Changes**
+
+- Publish all 536 authenticated Flash and signed division source bytes in e382-d381 and project the eight spans at their original bus addresses.
+
+**Validation**
+
+- Windows GNU sjbeggdr and Wine nf5isxeo PASS. One original in-memory Flash ID query, four selector cases, 12 timer rows, 3063 normalization cases and 12 signed divisions match with altered backing. Backup bytes, 768 boundary checks, complete state and clock, e381 attachment and two invalid attachment guards pass. The CLI creates, verifies and reuses 183 files and preserves 181 resources. All 17 guards and server drain pass. Stage izglzzpx retains e382.
+
+**Limitations**
+
+- The original routines run from controlled entries. Full startup, ordinary save and Load/Undo lifecycle, translated callers, Linux, USA and native Windows remain open. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-flash-and-division-tables.json)
+
 ## 2026-11-28 — Serve the European direct rectangle bank
 
 Type: added. Platforms: EUR / Wine.
@@ -329,6 +449,27 @@ Type: added. Platforms: EUR / Wine.
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
 [Change record](docs/changes/2026-11-28-serve-european-direct-rectangle-bank.json)
+
+## 2026-11-28 — Stage the European compact OBJ setups for runtime
+
+Type: changed. Platforms: European ROM through Wine.
+
+**Changes**
+
+- Add the eight compact OBJ setup records and two reader literals to the existing physical compact OBJ resource for e384 while keeping the e383 extraction contract available.
+- Add a focused check for the original reader and child constructor inputs, previous dataset attachment, and source tampering.
+
+**Validation**
+
+- E664 q9vmouo1 verified the full source bank under Wine. E665 formatting and whitespace checks passed. The Windows CLI compiled.
+
+**Limitations**
+
+- The E665 Windows build unit had no terminal receipt at the user-requested pause. The Wine test and CLI lifecycle, ordinary use, translated execution, Linux, USA and native Windows remain pending.
+
+Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-compact-obj-setup-bank.json)
 
 ## 2026-11-28 — Preview the stored PCM pseudo-echo tail
 

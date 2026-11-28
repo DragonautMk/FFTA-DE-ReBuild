@@ -595,6 +595,7 @@ pub struct RuntimeResources {
     direct_rectangle_bank: Option<Box<PackedTilemapFile>>,
     queued_matrix_sources: Option<Box<PackedTilemapFile>>,
     menu_selection_banks: Option<Box<PackedTilemapFile>>,
+    flash_and_division_tables: Option<Box<PackedTilemapFile>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -1246,6 +1247,14 @@ impl RuntimeResources {
                 PackedTilemapFile::new(file, &resource.sources)?,
             ));
         }
+        if let Some(file) = files.flash_and_division_tables {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == FLASH_AND_DIVISION_TABLES_ID)
+                .ok_or("Missing Flash and division tables")?;
+            resources.flash_and_division_tables = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1578,6 +1587,7 @@ impl RuntimeResources {
             direct_rectangle_bank: None,
             queued_matrix_sources: None,
             menu_selection_banks: None,
+            flash_and_division_tables: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1783,6 +1793,7 @@ impl RuntimeResources {
             + self.direct_rectangle_bank.as_ref().map_or(0, |i| i.resident_bytes())
             + self.queued_matrix_sources.as_ref().map_or(0, |i| i.resident_bytes())
             + self.menu_selection_banks.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.flash_and_division_tables.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -2093,6 +2104,9 @@ impl RuntimeResources {
     }
     pub fn menu_selection_banks_bus_bytes(&self) -> Option<u64> {
         self.menu_selection_banks.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn flash_and_division_tables_bus_bytes(&self) -> Option<u64> {
+        self.flash_and_division_tables.as_deref().map(PackedTilemapFile::bus_bytes)
     }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
@@ -2700,6 +2714,10 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.flash_and_division_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -3038,6 +3056,7 @@ impl crate::MemMap {
                 || resources.direct_rectangle_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.queued_matrix_sources.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.menu_selection_banks.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.flash_and_division_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.copied_halfword_lookups.as_ref().is_some_and(|data| data.fixed_byte_copy_overlaps(index, 4))
         })
             || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97
