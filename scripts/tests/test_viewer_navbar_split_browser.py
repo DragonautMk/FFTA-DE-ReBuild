@@ -90,8 +90,10 @@ class NavbarSplitBrowserTest(unittest.TestCase):
             self.assertNotIn('terrain_seeds', interface_data)
             rows = {row['id']: row for row in home['resources']}
             self.assertEqual(rows['graphics.bg-main-graphics']['viewer_scope'], 'interface')
-            self.assertEqual(rows['graphics.bg-packet-programs']['viewer_scope'], 'interface')
+            self.assertEqual(rows['graphics.bg-packet-programs']['viewer_scope'], 'interface-planes')
             self.assertIn('graphics.bg-packet-programs', [row['id'] for row in world_data['resources']])
+            self.assertNotIn('bg_plane_programs', interface_data)
+            self.assertIn('bg_plane_programs', parse_page(interface.with_name('interface-planes.html')))
             browser = Chrome(work, interface)
             try:
                 self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);

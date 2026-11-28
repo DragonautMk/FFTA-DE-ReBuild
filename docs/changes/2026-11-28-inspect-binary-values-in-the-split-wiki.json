@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "inspect-binary-values-in-the-split-wiki",
+  "title": "Inspect binary values in the split wiki",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a dated bounded byte interpreter to the split wiki and resource pages, with 8-, 16- and 32-bit signed and unsigned values, byte order, offsets and optional BGR555 swatches.",
+    "Read at most 64 values per page, preserve incomplete bytes, and discard in-flight results when the selected file or disclosure changes."
+  ],
+  "validation": [
+    "Synthetic viewer-binary-inspector-synthetic-bwe97m3r passed both browser cases, including large files and stale reads; 13 existing regression cases passed in aw7tdfb1.",
+    "Protected viewer-binary-inspector-real-ngnlxz5x checked 1212 source bytes and 321 browser rows across six interpretations, preserved 43 scoped payloads and 188 current/historical resource payloads, and matched 1116 Python/Docker files.",
+    "Published 210 private files with verified preimages in out/ffta-binary-inspector-before-ic_2pplj. Earlier test attempts exposed harness waits, a reused Chrome profile and an incorrect legacy single-page expectation."
+  ],
+  "limitations": [
+    "The values are manual interpretations, not inferred formats; the separate legacy single-page inspector and native Windows were not changed or verified."
+  ],
+  "files": [
+    "scripts/viewer_stable_inspector.html",
+    "scripts/viewer_stable_inspector.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/tests/test_viewer_binary_values_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

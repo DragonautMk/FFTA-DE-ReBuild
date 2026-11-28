@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-complete-european-unit-obj-bank",
+  "title": "Trace the complete European unit OBJ bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Follow the original 248-entry sprite directory through all 36,072 index cells to 4,934 counted sequences and their OBJ lists and pixel blocks."
+  ],
+  "validation": [
+    "Wine 5us1ggln attests 544 original halfwords and four reader literals. The e369 ownership audit finds 154,032 unowned bytes across 4,751 spans. All 15 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, naturally produced selections, translated execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

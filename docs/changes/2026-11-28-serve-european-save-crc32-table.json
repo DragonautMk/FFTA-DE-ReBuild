@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-save-crc32-table",
+  "title": "Serve the European save CRC32 table",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish all 256 checksum words and both reader literals through engine.save-crc32-table in e375-d374. Preserve the original guest algorithm and addresses."
+  ],
+  "validation": [
+    "Windows build v31npnju and Wine zsu3v1bs pass all 256 indices, three CRC vectors and original checksum write, valid and invalid branches for both actual payload lengths. Scratch RAM, guards, 192 mirrored boundaries, full state and clock match. Original readers account for 336,280 managed bytes with altered backing.",
+    "Stage tlf2q8ys retains 177 files after verified CLI creation and reuse. All 175 previous resources match by digest. e374 attaches, two invalid attachments preserve e375 and Wine drains after all 17 input guards pass."
+  ],
+  "limitations": [
+    "The test supplies scratch RAM payloads and enters verification after signature handling. Ordinary save and load, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/save_crc32_table.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/save_crc32_table_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

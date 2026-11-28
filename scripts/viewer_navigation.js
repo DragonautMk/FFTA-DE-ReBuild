@@ -2,11 +2,11 @@
 if (data.wiki) {
   const groups = [
     ['Audio', ['audio', 'audio-samples', 'audio-noise']],
-    ['Characters and animation', ['actors', 'battle', 'battle-alternate', 'objects', 'objects-physical', 'script-actors']],
-    ['Graphics', ['indexed-graphics', 'transfer-graphics']],
-    ['Interface', ['interface', 'interface-curves', 'interface-maps', 'interface-ui']],
-    ['Text and scripts', ['scripts', 'text', 'text-short', 'text-pointers', 'text-relative', 'text-scripts']],
-    ['World and other data', ['other', 'world', 'world-map']]
+    ['Characters and animation', ['actors', 'battle', 'battle-alternate', 'objects', 'objects-physical', 'physical-unit-sprites', 'script-actors']],
+    ['Graphics', ['indexed-graphics', 'indexed-attributes', 'transfer-graphics']],
+    ['Interface', ['interface', 'interface-curves', 'interface-motion-curves', 'interface-effect-motion', 'interface-effects', 'interface-fixed-maps', 'interface-full-screen', 'interface-height', 'interface-indexed-ui', 'interface-layouts', 'interface-maps', 'interface-planes', 'interface-queued-maps', 'interface-rectangles', 'interface-screen-palettes', 'interface-ui']],
+    ['Text and scripts', ['scripts', 'text', 'text-short', 'text-inline-ui', 'text-pointers', 'text-relative', 'text-scripts']],
+    ['World and other data', ['other', 'checksums', 'selection-groups', 'selection-tables', 'task-cycles', 'world', 'world-encounters', 'world-map', 'world-metadata16']]
   ];
   const navigation = document.getElementById('wiki-pages');
   const container = document.getElementById('wiki-page-links'); navigation.hidden = false;
@@ -96,7 +96,9 @@ if (data.wiki) {
     const params = new URLSearchParams(location.search);
     const view = params.get('view') || location.hash.slice(1);
     const moved = {
+      'world-encounters': ['encounters'],
       'world-map': ['terrain-seeds', 'script-paths', 'world', 'world-regions'],
+      'interface-planes': ['bg-planes'],
       'interface-ui': ['ui-choices', 'ui-context-templates', 'ui-tiles'],
       'interface-maps': ['transfer-directory', 'obj-tiles', 'firaga-transfers', 'firaga-palette-rows',
         'indexed-tilemap-controls', 'tilemaps', 'signed-map-deltas', 'byte-tilemaps', 'compact-cell-bank']
@@ -105,7 +107,7 @@ if (data.wiki) {
     if (data.wiki.current === 'world') {
       destination = Object.keys(moved).find(key => moved[key].includes(view)) || 'interface';
     } else if (data.wiki.current === 'interface') {
-      destination = ['interface-ui', 'interface-maps'].find(key => moved[key].includes(view));
+      destination = ['interface-ui', 'interface-maps', 'interface-planes'].find(key => moved[key].includes(view));
     } else if (data.wiki.current === 'text') {
       destination = ({texts:'text-short', 'font-atlas':'text-short', 'name-keyboard':'text-short',
         'pointer-texts':'text-pointers', 'relative-texts':'text-relative',

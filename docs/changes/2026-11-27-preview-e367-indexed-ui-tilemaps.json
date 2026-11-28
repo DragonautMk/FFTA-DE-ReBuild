@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e367-indexed-ui-tilemaps",
+  "title": "Preview European indexed UI tilemaps",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated Interface page for 31 source-backed UI maps and four ten-slot directories, preserving shared targets and linking directories to individual maps.",
+    "Support inspection of stored cells and a user-selected wrapping 16-bit copy addend, with reverse directory references; refresh the local wiki to e367-d366."
+  ],
+  "validation": [
+    "Synthetic viewer-indexed-ui-synthetic-s8x4ue7i passed 26 projection, browser and regression tests including the single-page view.",
+    "Protected viewer-indexed-ui-real-8utepglg checked 1902 source bytes, 855 stored and adjusted cells, and 40 directory links in Chrome; preserved 31 other scoped payloads and 179 resource pages; and matched 1075 Python/Docker files.",
+    "Published 35 private files with verified preimages out/ffta-indexed-ui-before-1x7d4m5r."
+  ],
+  "limitations": [
+    "Scene identity, graphics, palette, caller-selected addend and ordinary trigger are not established. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_indexed_ui_tilemaps.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

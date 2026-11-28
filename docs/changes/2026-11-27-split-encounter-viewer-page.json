@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "split-encounter-viewer-page",
+  "title": "Split the encounter viewer page",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Move encounter headers, unit templates and coordinates to a separate World navbar page, leaving compact source references on the world page.",
+    "Preserve bidirectional item, job, event and terrain navigation, localized labels, partial inputs and legacy bookmarks; date changed sections and the new page.",
+    "Reduce the e369 world page from 3724950 to 2531805 bytes; the 2624454-byte encounter page loads separately."
+  ],
+  "validation": [
+    "Synthetic viewer-encounter-scope-synthetic-ndzczgjo passed 39 scoped, cross-link, legacy, partial-input and regression tests.",
+    "Protected viewer-encounter-scope-real-hvtei8cb checked 442 headers, 2850 templates, 691 coordinate lists and 695 source segments; preserved 34 scoped payloads and 182 resource pages, updated three resource links and matched 1081 Python/Docker files.",
+    "Published 40 private local files with verified preimages out/ffta-encounter-scope-before-xlxk_mal."
+  ],
+  "limitations": [
+    "The page describes extracted source records and does not establish live selection, positions or scene behavior. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_encounter_scope.py",
+    "scripts/tests/test_viewer_encounter_jobs_browser.py",
+    "scripts/tests/test_viewer_focused_scopes_browser.py",
+    "scripts/tests/test_viewer_mission_text_candidates.py",
+    "scripts/tests/test_viewer_event_script_links.py",
+    "scripts/tests/test_viewer_scoped_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

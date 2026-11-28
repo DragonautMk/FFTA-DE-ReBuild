@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "search-observed-world-node-names",
+  "title": "Search observed world node names",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add authenticated observed world-node references to the lazy localized name index and identify their placement as conditional.",
+    "Open the selected map node directly from search while preserving the chosen language; invalid node identifiers fall back safely.",
+    "Update dated badges on the search and map sections and correct two existing tests to read the current pointer-text scope."
+  ],
+  "validation": [
+    "Synthetic viewer-node-search-synthetic-ftj7i1uw passed 58 projection, Chrome, focus, name and regression tests.",
+    "Protected viewer-node-search-real-emfdxes0 checked 30 localized names and six recorded placements against authenticated sources, exercised Chrome search/map navigation, preserved 26 scopes apart from name-index/badge metadata and 175 resource pages, and matched 610 Python/Docker files.",
+    "Published 28 private files with guarded preimages out/ffta-node-search-before-vame64sa."
+  ],
+  "limitations": [
+    "Node-to-region names describe one recorded game-state placement, not a permanent or complete world map. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_index.html",
+    "scripts/viewer_name_search.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_name_search_browser.py",
+    "scripts/tests/test_viewer_world_names_browser.py",
+    "scripts/tests/test_viewer_world_regions_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_maps.md"
+  ]
+}

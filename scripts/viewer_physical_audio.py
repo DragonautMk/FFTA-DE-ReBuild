@@ -5,6 +5,40 @@ import struct
 BANK_STARTS = (0x14d9fc, 0x14df78, 0x14e578, 0x14eb6c, 0x14f160)
 CGB_START, CGB_END = 0x14f47c, 0x14f4fc
 ROM_BASE = 0x08000000
+EUR_TONES_SHA256 = 'afa5e45a23857710fc629bba01532f225f7047bd72e8e278c9572217b9c645cd'
+EUR_PHYSICAL_SHA256 = '3392672622ea356b714d365cd1b057552376c58f8f3bb413fcdf4e50a535a413'
+
+
+def project_rhythm_links(audio, source_catalog):
+    """Project only physically present key-indexed children of rhythm tones."""
+    projected = audio['instruments']; by_id = {tone['id']: tone for tone in projected['tones']}
+    records = list(source_catalog['tones']) + [tone for tone in projected['tones'] if tone.get('physical_only')]
+    offsets = {}
+    for tone in records:
+        identity, offset = tone['id'], tone['source_offset']
+        current = by_id.get(identity)
+        if (type(offset) is not int or offset in offsets or not BANK_STARTS[0] <= offset < BANK_STARTS[-1]
+                or (offset - BANK_STARTS[0]) % 12 or not current
+                or any(current.get(key) != tone.get(key) for key in ('ctype', 'word04', 'word08'))
+                or type(tone.get('key')) is not int or not 0 <= tone['key'] <= 255
+                or type(tone.get('pan_or_sweep')) is not int or not 0 <= tone['pan_or_sweep'] <= 255):
+            raise ValueError('Invalid rhythm tone source binding')
+        offsets[offset] = tone
+    links = []
+    for root in records:
+        if root['ctype'] != 0x80:
+            continue
+        base = root['word04'] - ROM_BASE
+        if not BANK_STARTS[0] <= base < BANK_STARTS[-1] or (base - BANK_STARTS[0]) % 12:
+            raise ValueError('Invalid rhythm tone pointer')
+        for key in range(128):
+            target = offsets.get(base + 12 * key)
+            if target is None:
+                continue
+            links.append({'parent_tone': root['id'], 'key': key, 'tone': target['id'],
+                          'pitch_key': target['key'], 'pan_or_sweep': target['pan_or_sweep'],
+                          'supported': target['ctype'] in (0, 1, 2, 3, 8)})
+    return links
 
 
 def merge_physical_audio(segments, audio, source_catalog):

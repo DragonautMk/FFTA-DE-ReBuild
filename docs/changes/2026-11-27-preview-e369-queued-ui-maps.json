@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e369-queued-ui-maps",
+  "title": "Preview European queued UI maps",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated Interface page for five source-backed queued UI maps and nine original paths, preserving shared and alternate map targets.",
+    "Allow inspection of one to sixteen physically available rows in the live-height source map, preserve that selection, reuse on-demand graphics and palettes, and refresh the local wiki to e369-d368."
+  ],
+  "validation": [
+    "Synthetic viewer-queued-ui-synthetic-95fv_p7v passed 40 projection, browser and regression tests including single-page navigation.",
+    "Protected viewer-queued-ui-real-hse1rw8b checked 1284 source bytes, 624 cells, nine source paths and sixteen row previews, preserved 33 scoped payloads and 181 resource pages, and matched 1080 Python/Docker files.",
+    "Published 37 private files with verified preimages out/ffta-queued-ui-before-gcm5mb6p."
+  ],
+  "limitations": [
+    "The sixteen physical rows do not bound the live row count; scene, palette and graphics pairings remain unverified. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_queued_ui_maps.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

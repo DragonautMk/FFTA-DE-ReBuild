@@ -2090,6 +2090,70 @@ does not identify executing PCs or establish whole-game coverage. Other readers,
 indices and scenes, real-BIOS and UI save/Load, Linux, USA and native Windows
 remain open. No performance comparison was made.
 
+## E620 European grouped selection banks
+
+Four European tables hold 25 groups of twenty little-endian
+halfwords. The seven groups at `6e8994` are read by the original
+scans at `080d5d34` and `080d5d8e`, which derive their group count
+from the original flags and scan twenty entries per group. The first
+group retains its White Flowers owner. The previous E218 record
+table begins immediately after these seven groups at `6e8aac`.
+
+The seven groups at `6e900c` serve the mission tokens `fff1..fff7`
+read by `080d3a8e` and `080d3b20`. Token `ffff` selects the
+standalone twenty-entry group at `6e9124`. Both paths take the
+nonnegative original random value modulo twenty. A third caller
+clamps its group to 9 before looking up one of the ten groups at
+`6e914c`. A census of offsets 34 and 36 in all 512 mission records
+confirms the seven encoded tokens in both positions.
+
+The 160 twelve-byte weighted rows occupy `6e92dc..6e9a5c`.
+Original `080d5faa` adds twelve times the start row to the base.
+Mission getter 29 loads byte 53, and the equipment fallback reads
+byte 14 from the existing sixteen-byte metadata. The original
+special value 1 becomes row 94 when it survives the fallback.
+The 512 mission and 128 equipment records yield 21 known
+starts. Each group's weights sum to 100. The original scan
+subtracts the previous weight and compares its next random
+value to the live weight plus the nonnegative equipment bonus.
+The same group bounds hold for doubled weights in the selected
+mission-ID ranges. The last known terminal row is 158.
+
+Wine `rbnnyhbv` verifies 827 original halfwords and the e362
+ownership plan. The 2,956-byte plan includes all 500 halfwords,
+160 weighted rows and nine literal words. It finds 2,912 residual
+bytes after retaining the White Flowers group and its existing
+literal. All 11 input guards pass and Wine drains. Result
+SHA-256 `d03910125ea49b6543aad98baa0a7f97284e2b0fa59145b1fc04805b5011bbdb`.
+Other live producers and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E621 European grouped selection runtime
+
+Dataset `e363-d362` publishes `gameplay.grouped-selection-tables` in
+`grouped-selection-tables.bin`. The 2,912-byte E620 projection serves original
+guest addresses through the opt-in dataset binding. Its two dependencies
+retain the White Flowers row and shared Thumb literal. All 163 earlier
+resources are byte-identical. The e362 dataset still attaches.
+
+Wine `xkqkbee5` executes the original EUR readers over all 500 pool entries,
+six accessed fields in each of the 160 weighted rows, ten literal reader
+sites and 42 terminal paths with the original random-number generator.
+The comparison alters 2,912 new source bytes and 44 bytes served by the
+two earlier owners. It observes 4,111 managed bytes and equal complete
+guest state, clock and random-number generator state. The 1,056 mixed and
+mirrored boundary reads pass. Two invalid candidates leave the existing
+attachment in place.
+
+Windows GNU build `4wnqbnmw` and Wine CLI creation, verification and reuse
+pass. Stage `gj9_e_65` keeps the verified 165-file generation, and all 17
+Wine input guards pass with a completed server drain. Stage result SHA-256
+`88656d8e0d41fe47ad559258b4c7be0ed7d2038ada3aae37450594c591e3e371`; manifest SHA-256
+`66234ade484d1bc59d50dfb40245751a35d5c4a544b7048969f65a07c5d66fee`.
+Ordinary gameplay producers, other live indices, translated execution and
+deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## Item effect parameter static contract
 
 Eleven verified literals root6e879c. Original getterCFE28 and helpers CFDA8/

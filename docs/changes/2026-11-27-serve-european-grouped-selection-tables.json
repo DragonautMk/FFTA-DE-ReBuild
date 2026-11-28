@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-grouped-selection-tables",
+  "title": "Add European grouped selection table extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 2,912-byte E620 projection in e363-d362 at original guest addresses, retaining the White Flowers row and shared Thumb literal in their existing files."
+  ],
+  "validation": [
+    "Windows build 4wnqbnmw and Wine xkqkbee5 pass. The original readers traverse 500 halfword entries, 160 weighted rows, ten literal sites and 42 weighted terminal paths against altered backing with matching state, guest clock and RNG.",
+    "Stage gj9_e_65 retains the verified 165-file generation. CLI creation, verification and reuse, e362 attachment, two invalid candidates, 1,056 mixed and mirrored reads, 17 input guards and server drain pass."
+  ],
+  "limitations": [
+    "Ordinary and translated paths and other live indices, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/grouped_selection_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/counted_effect_table_tests.rs",
+    "crates/recomp/src/rom_data/grouped_selection_table_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-song-instructions-on-demand",
+  "title": "Load song instructions on demand",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Move split-page song instruction graphs into content-addressed local assets loaded for selected songs and timed auditions, while retaining inline single-page output.",
+    "Keep asynchronous selection, retry and cancellation safe and retain mute, focus, playback and export controls; add dated badges to modified audio sections."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-songs-synthetic-kuvls2ga passed 32 audio, loading, retry, cancellation and regression tests.",
+    "Protected viewer-lazy-songs-real-8ue83huz compared 454 header graphs and 105253 instruction nodes, matched notes, traces and controls for 17 real songs, exercised playback and focus, preserved 29 scopes apart from the instruction representation and badges, retained 177 resource pages, and matched 1069 Python/Docker files.",
+    "An initial baseline comparison ulr3you8 referenced a retry button absent from the old page; the corrected comparison passed. Published 30 private pages and 454 assets with preimages out/ffta-lazy-songs-before-ip7zr2q3. The song page fell from 8829683 to 1456000 bytes."
+  ],
+  "limitations": [
+    "The listener still approximates original driver and mixer behavior; native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_lazy_sequence_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

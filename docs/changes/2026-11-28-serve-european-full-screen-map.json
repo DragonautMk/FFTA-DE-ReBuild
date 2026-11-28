@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-full-screen-map",
+  "title": "Serve the original European full-screen map",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 600 map cells and three literal words through graphics.full-screen-map in e374-d373. Keep the preceding tileset literal in its existing UI resource."
+  ],
+  "validation": [
+    "Windows build _piq8s1k and Wine gd0efuq7 pass one original path with altered backing. The instructions read all 1,212 packed bytes. The 600 cells, 42 destination guards, shadow bit, 192 mirror checks, full state and clock match.",
+    "Stage lm4fie3o retains 176 verified files after CLI creation, verification and reuse. All 174 earlier resources are byte-identical. e373 attaches, two candidate rejections preserve e374, and all 17 Wine input guards and server drain pass."
+  ],
+  "limitations": [
+    "The test supplies the destination context. The ordinary screen route, other copy forms, neighboring attribute reader, translated paths, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/full_screen_map.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/full_screen_map_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

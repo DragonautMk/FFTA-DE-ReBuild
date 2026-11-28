@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-save-crc32-table",
+  "title": "Trace the European save CRC32 table",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the complete 256-word reflected CRC32 table, its two literals and its two original save checksum calls. Record the independent successor copy and the e374 residual range ranking."
+  ],
+  "validation": [
+    "Wine d_089fkr attests 59 original halfwords and validates 1,032 unowned bytes across two spans. All 256 words match the independent CRC32 recurrence, all 16 protected inputs pass and the Wine server drains."
+  ],
+  "limitations": [
+    "Runtime and ordinary save and load remain open. Larger cartridge-tail, post-transfer and uniform-heavy intervals still require separate source evidence."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md"
+  ]
+}

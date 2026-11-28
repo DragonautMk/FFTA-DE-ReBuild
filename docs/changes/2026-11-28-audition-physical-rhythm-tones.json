@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "audition-physical-rhythm-tones",
+  "title": "Audition physical rhythm tones",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Resolve the authenticated European rhythm tone to 128 physically available key-indexed children, exposing 127 direct PCM/CGB auditions and rejecting one nested map child.",
+    "Use each child tone's stored pitch key for instrument, sequence, timed and WAV previews while preserving CGB mute and indicating unavailable rhythm pan."
+  ],
+  "validation": [
+    "Original reader audit viewer-rhythm-reader-audit-8vnzhg5i decoded 44 instructions; synthetic viewer-rhythm-synthetic-jmfuhf51 passed 27 source, browser, sequence, timed and WAV tests.",
+    "Protected viewer-rhythm-real-kb9j9o23 checked 57131 source bytes and all 128 child bindings, exercised PCM/CGB playback, preserved 41 scoped payloads and 186 resource pages, and matched 1112 Python/Docker files.",
+    "Published 43 private wiki files with verified preimages in out/ffta-rhythm-before-x9sunwx4."
+  ],
+  "limitations": [
+    "Physical key availability does not prove ordinary usage. Rhythm pan, original timing, full mixing and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_physical_audio.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_rhythm_audio.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_audio.md"
+  ]
+}

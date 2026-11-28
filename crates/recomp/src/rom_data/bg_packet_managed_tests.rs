@@ -334,6 +334,21 @@ fn european_packet_dataset_publishes_authenticates_and_retains_e7() {
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
     )
     .is_err());
     let active_relative = repaired

@@ -101,3 +101,49 @@ indexing and fallback. Wine readers, a 606-frame altered-source Firaga scene and
 CLI pass for E274-d273. The address-only sample does not prove the caller path;
 other scenes, Linux, USA and native Windows remain open.
 [Evidence](rom_data_runtime.md#e359-firaga-palette-projection-runtime).
+
+## E637 European B8 screen palette bank
+
+The palette bank occupies `b8b9f8..b8c778`. Existing UI palettes and the
+two timeline buffers cover 1,984 of its 3,456 bytes. Three original
+loads account for the two remaining physical gaps.
+
+The calls at `08143c4e` and `0814434e` load `b8be58` and `b8c038`
+respectively. Both use the original byte-copy dispatcher `08145c14`
+and callback `03005ee9` to copy 480 bytes to offset `8bd8` in the
+selected screen context. The caller at `08144a8a` passes `b8c378`
+to the original staged palette loader `0814b6f0`. It writes 256
+halfwords to slots 256 through 511 of the table at `03003e68`,
+with a 12-byte record stride.
+
+Wine `z_zmh871` attests 117 original halfwords and the three reader
+literals. The e370 ownership audit finds 1,484 unowned bytes across
+five spans, including 736 color words and three literal words.
+All 15 input guards pass and Wine drains. Result SHA-256
+`5695b945d14d51c6465aee720ca62e9c9fefed8ebfdac84134eb902135e18c56`.
+
+## E638 European B8 screen palette runtime
+
+Dataset `e371-d370` publishes all 1,484 E637 bytes in
+`screen-palette-bank.bin` as `graphics.screen-palette-bank`.
+The manifest identifies each original address and source role.
+`graphics.ui-raw-palettes` and `graphics.layered-obj-animations`
+supply the established spans of the same physical bank.
+
+Wine `upvkln7r` verifies both original 480-byte copies and the
+256-color loop, with raw backing altered across the palette bank
+and the three source literals. The original instructions consume
+all 1,484 new bytes. All destination guards, the ten other bytes
+per staged record, 480 mixed and mirrored boundary reads, complete
+guest state and clock match. The staged path stops at the end of
+the color loop before it schedules updates.
+
+Windows GNU build `ci_n7_ch`, e370 attachment, invalid candidate
+rejection and CLI creation, verification and reuse pass. All 171
+earlier resources are byte-identical. All 17 Wine input guards pass
+and the server drains. Stage `dxp4zz3_` retains 173 files. Result SHA-256
+`d0db93ada4cdde68ce2223190b80f3ad1faceda69c1b7bd5e408ace06ec288d6`.
+
+The recovery checklist tracks ordinary screen triggers, scheduled
+updates, translated readers, Linux, USA and native Windows.
+[Recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

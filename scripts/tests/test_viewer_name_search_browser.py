@@ -45,6 +45,18 @@ class NameIndexProjectionTest(unittest.TestCase):
             self.assertNotIn('A b', page.read_text())
             self.assertNotIn('pointer_texts', home)
 
+    def test_observed_nodes_require_a_present_map_and_source_names(self):
+        source = {'languages': [0, 1], 'glyphs': [{'index': n} for n in (176, 203)],
+                  'locations': [{'node_index': 19, 'names': [[176, 203], [203]]},
+                                {'node_index': 99, 'names': [[176], None]}]}
+        data = {'profile': 'europe', 'world_location_names': source, 'world_nodes': {'nodes': [{'index': 19}]}}
+        entries = view_rom_data.project_wiki_name_index(data)
+        self.assertEqual([(row['kind'], row['id']) for row in entries], [('node', 19)])
+        self.assertEqual(entries[0]['names']['0']['text'], 'Ab')
+        self.assertEqual(entries[0]['names']['1']['text'], 'b')
+        data['world_nodes'] = None; self.assertEqual(view_rom_data.project_wiki_name_index(data), [])
+        data['profile'] = 'usa'; self.assertEqual(view_rom_data.project_wiki_name_index(data), [])
+
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')
 class NameSearchBrowserTest(unittest.TestCase):
@@ -102,3 +114,24 @@ class NameSearchBrowserTest(unittest.TestCase):
             work=Path(directory);page,_=item_fixture(work,with_text=False);browser=Chrome(work,page)
             try:self.assertTrue(browser.evaluate("!data.wiki.name_search && document.querySelector('#wiki-name-search').hidden && typeof globalThis.__FFTA_WIKI_NAMES__==='undefined'"))
             finally:browser.close()
+
+    def test_observed_node_search_selects_map_and_language(self):
+        with tempfile.TemporaryDirectory(prefix='viewer-name-search-node-') as directory:
+            work = Path(directory); page, _ = region_fixture(work); browser = Chrome(work, page)
+            try:
+                self.open_search(browser)
+                target = browser.evaluate('''(()=>{const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change'));
+                  q('#wiki-name-kind').value='node';change(q('#wiki-name-kind'));q('#wiki-name-language').value='1';change(q('#wiki-name-language'));
+                  const row=q('#wiki-name-rows tr[data-record-id="19"]');
+                  if(!row || row.cells[0].textContent!=='Observed world nodes' || row.cells[2].textContent!=='d')throw Error('observed node');
+                  return row.querySelector('a').href;})()''')
+                browser.command('Page.navigate', {'url': target})
+                wait_for(browser, "data.wiki.current==='world-map' && document.querySelector('#world-detail').textContent.includes('node 19')")
+                self.assertTrue(browser.evaluate('''(()=>{const q=s=>document.querySelector(s);return q('#world>details').open&&
+                  q('#world-name-language').value==='1'&&q('#world-selected-name').textContent==='Observed name: d';})()'''))
+                invalid = (page.parent / (page.name + '.parts') / 'world-map.html').as_uri() + '?view=world&node_id=99999#world'
+                browser.command('Page.navigate', {'url': invalid})
+                wait_for(browser, "data.wiki.current==='world-map' && document.querySelector('#world-detail').textContent.includes('node 0')")
+                self.assertTrue(browser.evaluate("document.querySelector('#world>details').open"))
+            finally:
+                browser.close()

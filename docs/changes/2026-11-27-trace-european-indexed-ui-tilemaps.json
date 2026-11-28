@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-indexed-ui-tilemaps",
+  "title": "Bound the European indexed UI tilemap bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Follow three direct map roots and four ten-slot directory tables to all 31 physical tilemaps. Preserve shared targets and the two trailing alignment bytes."
+  ],
+  "validation": [
+    "Wine stqxruch attests 971 original halfwords and verifies 40 slots, 855 cells and eight literal words. The e366 audit finds 1,902 unowned bytes in eight spans. All 18 input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary producer bounds, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -10,6 +10,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 DESCRIPTIONS = {
+    'localized-inline-ui.bin': 'European localized interface text, shared strings and threshold glyphs',
+    'screen-effect-motion.bin': 'European screen effect schedules, motion records and scanline profiles',
     'physical-tone-banks.bin': 'European physical instrument tones and additional PCM/CGB waves',
     'physical-compact-obj-banks.bin': 'European physical compact object animation banks',
     'localized-obj-animation-banks.bin': 'European localized object animation indices, frames, layouts and graphics',
@@ -93,6 +95,8 @@ DESCRIPTIONS = {
     'word-task-obj-animations.json': 'European four relative OBJ banks for u16 task selectors-ticks-phases; original old-list return, counter wrap, repeat and raw outside reads retained',
     'unit-obj-alternate-battle.json': 'European alternate actor battle poses with explicit shared index-root views, commands, OAM and decoded indexed tiles; original tasks and DMA retained',
     'unit-obj-normal-battle.json': 'European normal actor battle poses, shared source dependencies, commands, OAM and decoded indexed tiles; original tasks and DMA retained',
+    'screen-palette-bank.bin': 'European screen palette color sources and original reader references',
+    'physical-unit-obj-bank.bin': 'Additional European physical unit sprite index, sequence, object and tile sources',
     'unit-obj-equipment.json': 'European item/action-rooted equipment poses, null cells, commands, OAM and decoded indexed tiles; original live tasks and DMA retained',
     'color-mode-palettes.json': 'European typed unit/UI BGR555 colors and slice selectors; original live Color-Mode, copies and fades retained',
     'unit-obj-initial-pose.json': 'European producer-rooted initial unit frames, OAM and decoded indexed tiles; original scheduler and DMA retained',

@@ -690,3 +690,280 @@ unchanged. Private evidence is in `target/rom-data-clan-alias-bank-entry/`.
 This establishes one ordinary EUR Bank entry, not every language or caller, the
 full helper ABI or independent native-cache equivalence. Linux, USA and native
 Windows remain to verify. No performance measurement was performed.
+
+## E622 European fixed-width screen maps
+
+The original helper `081441f8` takes a tilemap pointer, a destination,
+a halfword count, a width and a tile value to add. It reads consecutive
+halfwords and writes each row at a stride of 32 cells. The ten direct
+calls use a zero tile value and read nine distinct maps. Two localized
+callers use the same 30 by 20 map at `b8d354`. The existing e22 selector
+uses the stored language byte at `02001f6e`.
+
+Eight complete maps occupy `b8c778..b8dcb4`, between the existing raw
+palette and DMA transfer owners. In source order they contain 12 by 16,
+10 by 17, 15 by 14, 22 by 11, 10 by 32, 12 by 32 and two 30 by 20
+rectangles. The same helper reads a 17 by 13 map at `6df2dc..6df496`
+immediately after the E610 background screen maps. The extents come
+from the original counts and widths. The eight bytes after the 17 by
+13 map are outside this reader.
+
+Wine `oi7b1y59` attests 964 original instruction halfwords and checks
+the 2,939 distinct map cells and ten source literals against e363. The
+ownership audit finds 5,918 unowned bytes in twelve spans. All 15 input
+guards pass and Wine drains. Result SHA-256
+`497567aca5ab4690d3628adcc991681799a504755b4ecbb360f41be9032fecc4`.
+Runtime publication, ordinary scenes, translated paths and deferred
+platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E623 European fixed-width screen map runtime
+
+Dataset `e364-d363` publishes the E622 projection in
+`graphics.fixed-screen-maps`, stored as `fixed-screen-maps.bin`.
+The 5,918-byte file supplies both map regions and ten source literals
+at their original guest addresses. The two localized callers continue
+to share the map at `b8d354`. The e363 dataset still attaches, and all
+164 earlier resources are byte-identical.
+
+Wine `h7701ipw` executes the original fetches and row copier
+from all ten caller sites with altered ROM backing. Controlled
+destinations verify 3,539 total copied cells, including all 2,939
+distinct cells, and 2,721 unwritten guard cells. Each path matches
+the guest clock. The complete final state matches, with 7,118 managed
+bytes read and 1,152 mixed and mirrored boundary checks. Two invalid
+candidates leave the current attachment in place.
+
+Windows GNU build `pwcxixfo` and the Wine CLI creation, verification
+and reuse pass. Stage `kdqkk4qk` keeps the 166-file generation.
+All 17 Wine input guards pass, and the server drains. Stage result
+SHA-256 `2d6317648a350c0fa85fcc7976a36a235058cb1f5558f495fcab1f0b9d2a7623`; manifest SHA-256
+`370363197c5245254fab98acf895733224f34f80c7fa61b96b483935ac859d40`.
+Ordinary scene and translated execution, Linux, USA and native Windows
+remain in the [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E624 European localized layout bank
+
+Four original builders select five language tables each using the
+stored language byte at `02001f6e`. The tables at `39810c..398d90`
+contain 267 twelve-byte records. The builder loops provide all 20
+counts, which match the physical table boundaries. Each builder uses
+four copies of the language selection sequence. The row readers load
+an OBJ list pointer and halfwords at offsets 4 and 6. The later layout
+loop at `0809367c` reads the halfword at offset 8 with a twelve-byte
+stride. All 267 rows share the one-object list at `398102`.
+
+The preceding selector at `08092746` reads a five-word allocation size
+table. The task setup selects four-object and three-object lists at
+`3980d4` and `3980ee`, and the original draw path uses the same counted
+six-byte OBJ format as `398102`. Two alignment bytes at `39810a` are
+outside the three lists. The four builders select individual fields
+from the five four-byte records at `398d90`. The transition reader at
+`0809573a` bounds 17 records at `398da4`, with complementary values
+from 16 to 0 and 0 to 16.
+
+Wine `gg6jocgf` verifies 6,218 original halfwords, all 20 layout bounds
+and 88 literal sites. The e364 ownership audit finds 3,718 unowned bytes
+in 91 spans. They cover the 3,366-byte source region with its two
+alignment bytes excluded, plus the literals. All 16 input guards pass
+and Wine drains. Result SHA-256
+`6fe639b8b18027de64d92bd6570cbc4f161800f427d89ce6736654676496727f`.
+Runtime publication, scene triggers, translated readers and deferred
+platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E625 European localized layout runtime
+
+Dataset `e365-d364` publishes the E624 projection in
+`graphics.localized-layout-tables`, stored as `localized-layout-tables.bin`.
+The 3,718-byte file supplies all 91 source spans at their original guest
+addresses. The 267 rows continue to share one OBJ list. The e364 dataset
+still attaches, and all 165 earlier resources are byte-identical.
+
+Wine `_2d3h_eq` enters the original builders with the five stored
+language values. The comparisons cover all 20 layouts and 267 rows,
+the allocation table, the four per-language parameters, the secondary
+position loop, eight objects drawn from the three OBJ lists, 17
+transition rows and 88 literal sites. With the new source bytes
+altered, the original instructions read 6,650 managed bytes.
+Complete guest state and clock match, and 8,736 mixed and mirrored
+boundary checks pass. Two invalid candidates leave the attachment
+in place.
+
+Windows GNU build `92ac4p6_` and the Wine CLI subreceipt from
+`roudsfiq` verify creation, verification and reuse of the 167 files
+retained in `v6z9rj49`. The first reader test reached its target on the
+fixture's final step. Build `x3wytrre` raises the test budget and reuses
+the verified dataset and CLI. All 21 retry input guards pass, and Wine
+drains. Retry result SHA-256 `79f7f3ae1977c8c093a66be65b447bf125a42ce3d43134aef00f84bcb0bfa020` and manifest SHA-256
+`3848a386380b56b64e1aa741cc4f92f69afb5982fdaeb6fe4dd8158fd2675c7d`.
+Ordinary scenes, translated execution, additional indirect callers,
+Linux, USA and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E628 European indexed UI tilemaps
+
+The original copier at `08036a54` takes a source, destination, height
+and width. It adds the selected tile value and advances the destination
+by the caller's stride between rows. The selector at `0803ae9c` uses
+the stored language byte at `02001f6e`. Value 1 selects two tilemaps,
+one 27 by 2 and one 27 by 1. The other branch selects a 27 by 2 map.
+
+The four contiguous ten-slot directories at `395a44..395ae4` select
+20 distinct 15 by 2 maps and eight distinct 15 by 1 maps. The first
+directory serves two original copier calls and a separate fill path.
+Duplicates in the four directories preserve the original addresses.
+The directories end at the following independent language table.
+
+The 31 maps contain 855 cells spanning `b543a8..b54a56`.
+Two alignment bytes precede the next transfer bank at `b54a58`.
+Wine `stqxruch` verifies 971 original halfwords, all 40 directory
+slots and eight literal words. The e366 ownership audit finds
+1,902 unowned bytes in eight spans. All 18 input guards pass and
+Wine drains. Result SHA-256
+`d72e37815c41e945bfa1c245ba560cd8fd6b8a8d8c2ba1fba4bd9a2ec40cacfe`.
+Runtime publication, ordinary producer bounds, translated readers
+and deferred platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E629 European indexed UI tilemap runtime
+
+Dataset `e367-d366` publishes the 1,902 E628 bytes as
+`graphics.indexed-ui-tilemaps` in `indexed-ui-tilemaps.bin`.
+The file serves the 31 maps, four directories and eight source
+literals at their original addresses. Shared targets keep the
+same addresses. The e366 dataset still attaches, and all 167
+earlier resources are byte-identical.
+
+Wine `kuqcbc2p` executes the original three direct copy sites and
+all ten physical indices at each of the five indexed sites.
+With the selected ROM backing altered, the callers copy 1,485
+cells including all 855 distinct cells. The original 27-cell stride,
+tile addend and untouched cells match. Complete guest state and clock,
+3,382 managed bytes and 768 mixed and mirrored boundary reads
+pass. Two invalid candidates leave the attachment active.
+
+Windows GNU build `l23bh7kw` and Wine CLI creation, verification and
+reuse pass. Stage `9m_lcvkw` retains 169 files. All 17 Wine input guards
+pass, and the server drains. Stage result SHA-256 `48818e49f6b429de3bafd2c1ef6e210f48968b16cf48be7a20debe6354b41e21`;
+manifest SHA-256 `361ec88752acbcf8e9c66844dcedc463f9f157a3853c4207ecec38a8c789cc94`.
+Ordinary triggers, index producers, translated execution, Linux, USA
+and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E632 European queued UI map bank
+
+Seven original calls to `08000be4` select the five tilemaps in
+`3ba358..3ba838` through nine literal sites. The map at `3ba358`
+has 20 columns and three rows. Four callers share the 30 by 4 map
+at `3ba3d0`. The final two maps have ten columns and seven rows.
+A branch selects between their two distinct addresses.
+
+The copies at `0812d666` use 19 columns and a 38-byte source
+stride. The next original root at `3ba720` bounds 16 physical rows
+starting at `3ba4c0`. Both original branches use the live row count
+from task offset 16. The physical height does not change that live
+reader. Every map uses a 64-byte destination stride.
+
+Wine `zcysqkbo` attests 3,273 original halfwords and verifies the
+624 cells and all nine literal words. The e368 ownership audit finds
+1,284 unowned bytes in nine spans. The neighboring White Flowers
+transfer and compressed UI bank keep their existing owners. All 15
+input guards pass and Wine drains. Result SHA-256
+`46481134b1dd7d42643470d759c2a76e126dda1e70bcd0339ab0e6a174ed3bd7`.
+Runtime publication, the live row domain, ordinary scenes, translated
+readers and deferred platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E633 European queued UI map runtime
+
+Dataset `e369-d368` publishes the 1,284 E632 bytes as
+`graphics.queued-ui-maps` in `queued-ui-maps.bin`. The original map
+addresses, nine literal words and the live row count remain in the
+guest paths. e368 still attaches, and all 169 earlier resources
+are byte-identical.
+
+Wine `uo7t0zos` executes the nine original source paths and eleven
+DMA copies with altered backing. Each live-height branch is checked
+with one row and all sixteen physical rows. Both conditional maps
+are selected through the original branch. All 1,326 copied cells,
+source and destination strides, destination guards, complete guest
+state and clock match. The original queues consume 2,700
+managed bytes. The 864 mixed and mirrored boundary reads and
+rejection of two invalid candidates pass.
+
+Windows GNU build `8llomu57` and Wine CLI creation, verification
+and reuse pass. Stage `xh8fmuqm` retains the 171-file generation.
+All 17 input guards pass, and the server drains. Stage result
+SHA-256 `9adbfdb5f35c581028b2e970cd7e3858f9c67e6a1f220424151db608c59713a5`; manifest SHA-256
+`a3ed0a5bbb9afca9a98e2efa9faf843f07a8c3769a1e15789b2100afdf7943cb`.
+Live row bounds, ordinary triggers, translated readers, Linux, USA
+and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E643 European fixed 30-by-20 screen-map source
+
+The original caller at `0804f894` invokes the loader at `0804fd68`.
+Its copy loop at `0804fd8e` reads exactly 600 halfwords from
+`3b53fc..3b58ac` in 20 rows of 30. The source row pitch is 60 bytes.
+The destination pitch is 64 bytes. The original code sets bit 8 in the
+halfword at `03000940` after the copy. Three literal words select the map,
+the destination context and that shadow-register address. The preceding
+tileset literal remains with its custom UI resource.
+
+A bounded aligned Thumb census through `146000` finds three candidates
+with the copy and dimension immediates. `0802be50` uses the screen
+dimensions to clip a variable-width board and takes its source from a
+caller argument. The census records all 11 direct callers in this
+interval. At `080e9890` the immediate is a stack offset. The scope
+covers this fixed loop form. Derived sources and other copy forms
+require separate proofs.
+
+Wine source unit `jbniu5w1` attests 301 original halfwords and the e373
+ownership audit. The selected graph contains 1,216 bytes. Of these,
+the 1,200 cell bytes and 12 literal bytes remain unowned. All 14 input
+guards pass, and the Wine server drains. Result SHA-256
+`426cd10b844e1f5eec84f993a14dcaac3c14291987382a77b3e93c5e69d909f0`.
+
+The compressed archive's adjacent tile attribute table at
+`3b58ac..3b5acc` still needs its original consumer. Runtime publication
+and altered-source copy parity follow in E644. The e373 interval audit
+ranks `493c05..4954dc` as the largest nonuniform gap between declared
+owners beginning in the data area. Two values, `bb` and `cc`, account for
+6,350 of its 6,359 bytes. The interval still needs an original source
+root and extent before classification.
+
+## E644 European full-screen map at runtime
+
+`e374-d373` publishes the 600 cells and three literal words through
+`graphics.full-screen-map` in `full-screen-map.bin`. Its 1,212 bytes
+retain their original addresses. The preceding tileset literal remains
+owned by `graphics.ui-custom-banks`.
+
+Windows build `_piq8s1k` and Wine unit `gd0efuq7` pass. The original
+copy reads every packed byte with altered ROM backing. All 600 copied
+halfwords, 42 destination guards and the shadow-register bit match.
+The 192 ROM mirror boundary checks pass, and complete guest state and
+clock match. e373 attaches, and two invalid candidates leave the active
+attachment in place.
+
+The CLI creates, verifies and reuses 176 files. All 174 previous resources
+are byte-identical. All 17 protected inputs pass, and the Wine server
+drains and releases its lease. Stage `lm4fie3o` retains the dataset.
+Result SHA-256 `6f962ba3ff4629419e116400e169319770480f23119b251734a923ac165eba6a`.
+
+The test supplies the destination context and executes the original copy.
+The ordinary screen route, other copy forms, the neighboring attribute
+reader, translated execution and deferred platforms remain in recovery.
+
+The static dispatcher at `0804f830` calls initializer `0804f990` before
+`0804fd68` on successive indexed states. Its masked low two bits from
+`02002fc2` choose the 160-byte palette source: values 0 and 3 select
+`40fcb0`, value 1 selects `411310`, and value 2 selects `410830`.
+The source is copied to shadow RAM at `03003860` through the original
+copy dispatcher, and its first halfword is then cleared. The reader and
+caller audits `viewer-screen-init-audit-lz4xdapt` and
+`viewer-screen-caller-audit-n8dyno0p` preserve the disassembly. The viewer
+binds these sources only when their palette catalog and source hashes match.
+It renders this initial palette as a source preview; zero-index transparency,
+other layers, later palette changes and a named scene are not established.

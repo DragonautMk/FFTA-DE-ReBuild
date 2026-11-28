@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-indexed-tile-attributes",
+  "title": "Trace the European indexed tile attribute tables",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Join the fixed-width archives to their packed tile attributes, direct getters and five stored-language selections."
+  ],
+  "validation": [
+    "Wine fmaeky09 verifies 69 archives, eight table extents and 118 original halfwords. Seven tables have authenticated original getters and the e371 join finds 1,187 unowned bytes for them. Fifteen guards and Wine drain pass."
+  ],
+  "limitations": [
+    "The 544-byte companion at 3b58ac still requires an original reader. Runtime publication, ordinary and translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

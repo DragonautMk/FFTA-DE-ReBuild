@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "split-background-plane-viewer",
+  "title": "Split background plane previews into a focused page",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Move initial background-plane programs and their existing composition controls to a dedicated Interface navbar page while leaving background tiles and palettes on the main page.",
+    "Preserve descriptor, tile, terrain and resource links, old World and Interface bookmarks, animation controls, partial sources and single-page behavior; date the changed sections.",
+    "Reduce the e371 Interface page from 6165115 to 4906588 bytes; the 5638807-byte plane page loads separately."
+  ],
+  "validation": [
+    "Synthetic viewer-interface-planes-synthetic-sixl07rm passed 34 cross-page, animation, partial-source, single-page and regression tests.",
+    "Protected viewer-interface-planes-real-vudqpzdu checked 352 source segments and 162 descriptors, compared three complete rendered previews, retained 37 scoped payloads and 184 resource pages, and matched 1107 Python/Docker files.",
+    "Published 40 private local files with verified preimages out/ffta-interface-planes-before-wc_14fve."
+  ],
+  "limitations": [
+    "The selected graphics, palettes, initial fill and timing remain preview choices; the live scene is not reconstructed. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_interface_planes_scope.py",
+    "scripts/tests/test_viewer_bg_planes_browser.py",
+    "scripts/tests/test_viewer_bg_plane_animation_browser.py",
+    "scripts/tests/test_viewer_navbar_split_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_maps.md"
+  ]
+}

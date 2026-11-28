@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import view_rom_data
 from test_viewer_encounters_browser import fixture as encounters_fixture
 from test_viewer_job_names_browser import fixture as jobs_fixture, payload
+from test_viewer_navbar_split_browser import wait_for
 from test_viewer_special_units_browser import special_catalog
 from viewer_browser_harness import Chrome
 
@@ -70,16 +71,21 @@ class EncounterJobProjectionTest(unittest.TestCase):
 class EncounterJobBrowserTest(unittest.TestCase):
     def test_name_language_reverse_pagination_and_fallbacks(self):
         with tempfile.TemporaryDirectory(prefix='viewer-encounter-jobs-browser-') as directory:
-            work = Path(directory); page = fixture(work); browser = Chrome(work, page.parent / 'index.html.parts/world.html')
+            work = Path(directory); page = fixture(work); browser = Chrome(work, page.parent / 'index.html.parts/world-encounters.html')
             try:
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
                   if(q('#encounter-unit-job').hidden || !q('#encounter-unit-job a') ||
                      q('#encounter-unit-job a').dataset.metadataId!=='1' || !q('#encounter-unit-job a').textContent.includes('d'))
                     throw Error('direct name');
-                  q('#metadata-name-language').value='1';change(q('#metadata-name-language'));
+                  q('#encounter-name-language').value='1';change(q('#encounter-name-language'));
                   if(!q('#encounter-unit-job a').textContent.includes('Ab'))throw Error('language');
-                  q('#encounter-unit-job a').click();
+                  return q('#encounter-unit-job a').href;})()'''))
+                target = browser.evaluate("document.querySelector('#encounter-unit-job a').href")
+                browser.command('Page.navigate', {'url': target})
+                wait_for(browser, "data.wiki.current==='world' && document.querySelector('#metadata-name-filter').value==='1'")
+                target = browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s);
                   const row=q('#metadata-name-rows tr[data-metadata-id="1"]'),button=row&&row.querySelector('button[data-metadata-id="1"]');
                   if(!button || button.textContent!=='21 templates' || !q('#metadata-names>details').open)throw Error('forward link');
                   button.click();
@@ -89,7 +95,11 @@ class EncounterJobBrowserTest(unittest.TestCase):
                   q('#metadata-encounters-next').click();
                   if(q('#metadata-encounters-rows').rows.length!==1 || !q('#metadata-encounters-page').textContent.includes('page 2'))
                     throw Error('reverse pagination');
-                  q('#metadata-encounters-rows a').click();
+                  return q('#metadata-encounters-rows a').href;})()''')
+                browser.command('Page.navigate', {'url': target})
+                wait_for(browser, "data.wiki.current==='world-encounters' && document.querySelector('#encounter-id').value==='2' && document.querySelector('#encounter-unit').value==='23'")
+                self.assertTrue(browser.evaluate('''(()=>{
+                  const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change',{bubbles:true}));
                   if(q('#encounter-id').value!=='2' || q('#encounter-unit').value!=='23' || !q('#encounter-unit-details').open)
                     throw Error('reverse link');
                   q('#encounter-unit').value='1';change(q('#encounter-unit'));

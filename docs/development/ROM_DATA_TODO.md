@@ -144,6 +144,125 @@ all 13 physical tables at `b4b0f4..b4bc84` through original literal
 and indexed readers. It authenticates 3,016 unowned bytes against e361.
 [Evidence](../rom_data_graphics.md#e618-european-counted-effect-tables).
 
+**ROMDATA-01-EUR-GROUPED-SELECTION-TABLES scoped EUR/Wine:** E620
+authenticates 25 groups of 20 value entries and 160 weighted rows,
+with 21 weighted starts bounded by the selected mission and equipment
+catalogs. The e362 audit identifies 2,912 unowned bytes.
+[Evidence](../rom_data_gameplay.md#e620-european-grouped-selection-banks).
+
+**ROMDATA-01-EUR-B8C778-BANK scoped EUR/Wine:** E622 bounds all nine
+maps selected by the ten direct callers of `081441f8`. Eight maps fill
+`b8c778..b8dcb4` and the ninth is at `6df2dc`. The e363 ownership audit
+identifies 5,918 unowned bytes including the ten source literals.
+[Evidence](../rom_data_ui_graphics.md#e622-european-fixed-width-screen-maps).
+
+**ROMDATA-01-EUR-3980C0-LAYOUT-BANK scoped EUR/Wine:** E624 bounds 20
+localized tables, 267 layout records, three OBJ lists, the allocation
+and configuration tables and 17 transition rows. The e364 ownership
+audit identifies 3,718 unowned bytes including all 88 reader literals.
+[Evidence](../rom_data_ui_graphics.md#e624-european-localized-layout-bank).
+
+**ROMDATA-01-EUR-DIRECT-RECTANGLE-DIRECTORY scoped EUR/Wine:** E626
+authenticates five complete rectangles through the original directory
+at `3ac9f8`, their position presets and two reader literals. The e365
+audit identifies 2,458 unowned bytes.
+[Evidence](../rom_data_graphics.md#e626-european-direct-rectangle-directory).
+
+**ROMDATA-01-EUR-B543A8-TILEMAP-BANK scoped EUR/Wine:** E628
+authenticates 31 tilemaps, four ten-slot directories and eight
+original source literals. The e366 audit identifies 1,902 unowned bytes.
+[Evidence](../rom_data_ui_graphics.md#e628-european-indexed-ui-tilemaps).
+
+**ROMDATA-01-EUR-MAP-HEIGHT-DIGITS scoped EUR/Wine:** E630 bounds all
+ten glyphs used by the original map-height display and keeps the E327
+owner of digit 5. The e367 audit identifies 2,308 unowned bytes.
+[Evidence](../rom_data_runtime.md#e630-european-map-height-digit-bank).
+
+**ROMDATA-01-EUR-3BA358-QUEUED-MAPS scoped EUR/Wine:** E632 bounds
+five tilemaps and nine literals through seven original queue calls.
+The e368 audit identifies 1,284 unowned bytes.
+[Evidence](../rom_data_ui_graphics.md#e632-european-queued-ui-map-bank).
+
+**ROMDATA-01-EUR-TILEMAP-3B53FC-BANK** remains partial. E643 verifies
+the 600-cell fixed copy at `0804fd8e` and 1,212 unowned bytes in the
+e373 join. It classifies the two other candidates of the bounded loop
+census. Variable and indirect sources remain open.
+[Evidence](../rom_data_ui_graphics.md#e643-european-fixed-30-by-20-screen-map-source).
+[Open criteria](ROM_DATA_VALIDATION_RECOVERY_TODO.md#whole-bank-extraction-priority).
+
+**ROMDATA-04-EUR-TILEMAP-3B53FC-BANK** passes its scoped EUR/Wine
+proof in E644. e374 supplies all 600 cells and three original literals.
+The copy, destination guards, guest state and clock match with altered
+backing. e373 attachment and the CLI lifecycle pass.
+[Evidence](../rom_data_ui_graphics.md#e644-european-full-screen-map-at-runtime).
+
+**ROMDATA-01-EUR-SAVE-CRC32-BANK** passes its scoped source proof in E645.
+Both save checksum callers use the same 256-word table. The e374 join
+finds 1,032 unowned bytes, including the two reader literals.
+[Evidence](../rom_data_runtime.md#e645-european-save-crc32-table-source).
+
+**ROMDATA-04-EUR-SAVE-CRC32-BANK** passes its scoped EUR/Wine proof
+in E646. e375 serves all 256 indices. The original writer and both
+verification outcomes match for both payload lengths with altered
+backing. e374 attachment and the CLI lifecycle pass.
+[Evidence](../rom_data_runtime.md#e646-european-save-crc32-table-at-runtime).
+
+**ROMDATA-01-EUR-SCREEN-EFFECT-MOTION** passes its scoped source proof
+in E647. Original scheduler, interpolation and scanline readers bound
+the physical tables, with 1,089 unowned bytes in the e375 join. The
+pending-release comparison retains the existing blend owner.
+[Evidence](../rom_data_graphics.md#e647-european-screen-effect-motion-tables).
+
+**ROMDATA-04-EUR-SCREEN-EFFECT-MOTION** passes its scoped EUR/Wine proof
+in E648. e376 serves 1,089 bytes. The original readers exercise the
+physical arrays, both scanline directions and the inherited blend value
+with altered backing. e375 attachment and the CLI lifecycle pass.
+[Evidence](../rom_data_graphics.md#e648-european-screen-effect-motion-at-runtime).
+
+**ROMDATA-01-EUR-INLINE-UI-TEXT** passes its scoped source proof in E649.
+Seven five-language directories, 35 localized strings, six shared
+strings, six threshold glyph pairs and their reader pointers contribute
+886 new bytes against e376. The language-3 exception keeps its shared
+source.
+[Evidence](../rom_data_text.md#e649-european-localized-inline-ui-text).
+
+**ROMDATA-04-EUR-INLINE-UI-TEXT** passes its scoped EUR/Wine proof in
+E650. e377 serves all 41 spans with altered backing. The original language
+selectors, shared fallback, string expander and glyph thresholds match.
+e376 attachment and the CLI lifecycle pass.
+[Evidence](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime).
+
+**ROMDATA-01-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E635 bounds
+all 248 directory entries and 36,072 physical cells, including the
+4,934 referenced sequences and their complete OBJ list and pixel
+banks. It identifies 154,032 unowned bytes across the five source roles.
+[Evidence](../rom_data_unit_obj.md#e635-european-physical-unit-obj-bank).
+
+**ROMDATA-01-EUR-B8-SCREEN-PALETTE-BANK scoped EUR/Wine:** E637 bounds
+both original 240-color copies and the staged 256-color palette.
+The e370 ownership audit leaves 1,484 source bytes in five spans.
+[Evidence](../rom_data_ui_palettes.md#e637-european-b8-screen-palette-bank).
+
+**ROMDATA-01-EUR-INDEXED-TILE-ATTRIBUTES scoped EUR/Wine:** E639
+identifies eight physical tables and seven tables with original
+getters. The e371 audit finds 1,187 unowned bytes on those paths.
+The table at `3b58ac` still requires an original reader.
+[Evidence](../rom_data_indexed_graphics.md#e639-european-indexed-tile-attribute-tables).
+
+**ROMDATA-01-EUR-SCREEN-CURVE-BANK scoped EUR/Wine:** E641 joins
+21 curve records and 30 position rows to seven original curves.
+It bounds the terminal alias and its independent 20-byte copy.
+The e372 audit identifies 1,450 unowned bytes.
+[Evidence](../rom_data_graphics.md#e641-european-screen-curve-bank).
+
+**ROMDATA-04-EUR-SCREEN-CURVE-BANK** passes its scoped EUR/Wine proof
+in E642 and publishes the 1,450 bytes in e373. Original position
+initialization, both axis readers, all seven terminal aliases and the
+independent copy match with altered backing. e372 attachment and the
+CLI lifecycle pass.
+Ordinary scheduling and translated execution remain in recovery.
+[Evidence](../rom_data_graphics.md#e642-european-screen-curves-at-runtime).
+
 **ROMDATA-01-CONTEXT-3AE42C ordinary return to English (2026-11-17):**
 After French was selected, the title route returns to English and publishes
 language ID 0. The E161 raw/managed interpreter pair passes on Wine with both
@@ -1555,6 +1674,74 @@ Direct consumption is now connected in 04; normal enablement awaits gate 05.
 ## ROMDATA-04 — Direct runtime use of extracted data
 
 **Dependencies:** ROMDATA-01/02/03. **Core of the main objective.**
+
+**ROMDATA-04-EUR-INDEXED-TILE-ATTRIBUTES scoped EUR/Wine:** E640
+publishes 1,187 source bytes in e372. All 584 direct reads, the 15
+stored-language cases, e371 attachment and the CLI lifecycle pass.
+Ordinary and translated paths remain open.
+[Evidence](../rom_data_indexed_graphics.md#e640-european-indexed-tile-attributes-at-runtime).
+
+**ROMDATA-04-EUR-B8-SCREEN-PALETTE-BANK scoped EUR/Wine:** E638
+publishes 1,484 source bytes in e371. Both 240-color copies, the
+staged 256-color loop, e370 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_ui_palettes.md#e638-european-b8-screen-palette-runtime).
+
+**ROMDATA-04-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E636
+publishes 154,032 residual bytes of the complete physical unit OBJ bank
+in e370. The original reset, frame commands and all 138 new pixel
+transfers pass with altered backing. e369 attachment and CLI lifecycle
+pass. Ordinary and translated paths remain open.
+[Evidence](../rom_data_unit_obj.md#e636-complete-european-unit-obj-bank-at-runtime).
+
+**ROMDATA-04-EUR-3BA358-QUEUED-MAPS scoped EUR/Wine:** E633 supplies
+all 1,284 E632 bytes in e369. All nine original source paths and
+eleven DMA copies match with altered backing, including live
+row counts of one and sixteen. e368 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_ui_graphics.md#e633-european-queued-ui-map-runtime).
+
+**ROMDATA-04-EUR-MAP-HEIGHT-DIGITS scoped EUR/Wine:** E631 supplies
+2,308 residual bytes in e368 and preserves the E327 digit 5 owner.
+The original getter, queues and DMA match both destinations over all
+100 controlled decimal heights, with altered new and earlier backing.
+e367 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_runtime.md#e631-european-map-height-digit-runtime).
+
+**ROMDATA-04-EUR-B543A8-TILEMAP-BANK scoped EUR/Wine:** E629 supplies
+all 1,902 E628 bytes in e367. All 53 original copy paths match with
+altered backing, including the stride, tile addend and destination
+guards. e366 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_ui_graphics.md#e629-european-indexed-ui-tilemap-runtime).
+
+**ROMDATA-04-EUR-DIRECT-RECTANGLE-DIRECTORY scoped EUR/Wine:** E627
+supplies the 2,458-byte E626 projection in e366. All five original
+row-zero copies and the shared helper for the remaining rows pass
+with altered backing. e365 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_graphics.md#e627-european-direct-rectangle-runtime).
+
+**ROMDATA-04-EUR-3980C0-LAYOUT-BANK scoped EUR/Wine:** E625 serves
+the 3,718-byte E624 projection in e365. The original builders,
+position and draw readers, transition paths and literals pass
+with altered backing. e364 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_ui_graphics.md#e625-european-localized-layout-runtime).
+
+**ROMDATA-04-EUR-FIXED-SCREEN-MAPS scoped EUR/Wine:** E623 serves
+the 5,918-byte E622 projection in e364. The ten original caller
+paths copy all nine maps with altered backing. Destination guards,
+complete guest state and clock, e363 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_ui_graphics.md#e623-european-fixed-width-screen-map-runtime).
+
+**ROMDATA-04-EUR-GROUPED-SELECTION-TABLES scoped EUR/Wine:** E621
+serves the 2,912-byte E620 projection in e363. Wine verifies original
+readers with altered backing across all 25 pools and 160 weighted
+rows, including 42 original weighted scans. The e362 attachment
+and e363 CLI lifecycle pass.
+[Evidence](../rom_data_gameplay.md#e621-european-grouped-selection-runtime).
+
+**ROMDATA-04-EUR-COUNTED-EFFECT-TABLES scoped EUR/Wine:** E619
+publishes the complete 3,016-byte E618 projection in e362. Original
+controlled paths read all 13 tables with altered backing and match
+state and clock. e361 attachment and CLI lifecycle pass.
+[Evidence](../rom_data_graphics.md#e619-european-counted-effect-table-runtime).
 
 **ROMDATA-04-EUR-PARALLEL-SCREEN-UPDATE-TABLES scoped EUR/Wine:** E616
 publishes both E615 banks and their reader literals in e361. Both

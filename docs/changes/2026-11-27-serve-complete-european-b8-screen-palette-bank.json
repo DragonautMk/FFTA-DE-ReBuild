@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-complete-european-b8-screen-palette-bank",
+  "title": "Serve the complete European B8 screen palette bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 1,484 residual B8 palette and literal bytes in e371-d370. Preserve the existing palette and timeline owners and e370 attachment."
+  ],
+  "validation": [
+    "Windows build ci_n7_ch and Wine upvkln7r pass both original 240-color copies, the staged 256-color loop, every new source byte, 480 mixed boundaries and complete guest state and clock. All 17 input guards and Wine drain pass.",
+    "Stage dxp4zz3_ retains 173 verified files after CLI creation, verification and reuse, with 171 earlier resources byte-identical."
+  ],
+  "limitations": [
+    "The staged proof stops before update scheduling. Ordinary triggers, translated execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/screen_palette_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/screen_palette_bank_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_palettes.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_palettes.md"
+  ]
+}

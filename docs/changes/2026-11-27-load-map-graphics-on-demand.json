@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "load-map-graphics-on-demand",
+  "title": "Load shared map graphics on demand",
+  "kind": "changed",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Move graphics and palettes shared by three focused map pages to one content-addressed local asset loaded only on request; keep map cells immediately available and preserve single-page behavior.",
+    "Allow retry after missing or invalid assets while preserving the selected map and update the affected section timestamps."
+  ],
+  "validation": [
+    "Synthetic viewer-lazy-maps-synthetic-budbp5gi passed 29 source, browser and regression tests including missing-file retry and manual pixels.",
+    "Protected viewer-lazy-maps-real-okbh5lh6 checked all three offline pages with 117 graphics and 184 palette choices, preserved 32 scoped payloads and 180 resource pages, and matched 1076 Python/Docker files.",
+    "Each focused page fell from about 4.2 MB to about 0.95 MB before the optional 2.96 MB shared asset loads. Published 35 private files with verified preimages out/ffta-lazy-maps-before-xfub0ev3."
+  ],
+  "limitations": [
+    "Graphics and palette combinations remain manual; their original scene pairings are not established. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_lazy_map_graphics.py",
+    "scripts/tests/test_viewer_fixed_screen_maps.py",
+    "scripts/tests/test_viewer_direct_rectangles.py",
+    "scripts/tests/test_viewer_indexed_ui_tilemaps.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md"
+  ]
+}

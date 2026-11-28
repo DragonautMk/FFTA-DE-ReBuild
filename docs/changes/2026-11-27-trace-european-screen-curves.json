@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-screen-curves",
+  "title": "Trace the European screen curve bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Join the two original screen controllers to their 21 curve records, 30 position records and seven halfword curves. Authenticate the terminal alias and its independent 20-byte copy."
+  ],
+  "validation": [
+    "Wine g7hdz_cf attests 754 halfwords. The e372 ownership join finds 1,450 unowned bytes in 26 spans and preserves the earlier 98-byte position projection. Fourteen guards and Wine drain pass."
+  ],
+  "limitations": [
+    "The second controller advances until a palette task finishes. Its ordinary scheduler order, adjacent 3a808c records, runtime publication, translation, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

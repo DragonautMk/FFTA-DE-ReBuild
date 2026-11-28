@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-map-height-digits",
+  "title": "Add European map-height digit extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 2,308 E630 bytes as e368-d367 and retain the E327 digit 5 data and earlier literals."
+  ],
+  "validation": [
+    "Windows build xe1s240g and Wine v_1cj6om pass. The original getter, queues and DMA consume all ten glyphs over 100 controlled heights, with 190 transfers and ten fills. New and prior backing are altered and complete state and guest clock match.",
+    "Stage nox0vrxd retains 170 files. CLI creation, verification and reuse, e367 attachment, two invalid candidates, 288 mixed and mirrored reads, 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Live height bounds, ordinary scenes, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/map_height_digits.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/map_height_digits_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_runtime.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-indexed-ui-tilemaps",
+  "title": "Add European indexed UI tilemap extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 1,902 E628 bytes as e367-d366 at their original guest addresses. Preserve shared maps and the original copy strides."
+  ],
+  "validation": [
+    "Windows build l23bh7kw and Wine kuqcbc2p pass. All 53 original copy paths match 1,485 copied cells, destination guards, original state and clock with altered backing.",
+    "Stage 9m_lcvkw retains 169 files. CLI creation, verification and reuse, e366 attachment, two invalid candidates, 768 mixed and mirrored reads, 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Ordinary triggers, live index producers, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/indexed_ui_tilemaps.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/indexed_ui_tilemaps_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

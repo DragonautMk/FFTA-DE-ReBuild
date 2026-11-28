@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e370-physical-unit-sprites",
+  "title": "Preview newly served physical unit sprites",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated physical unit sprite page and refresh the private wiki to verified e370-d369.",
+    "Authenticate and decode residual index, directory, sequence, object and tile spans; resolve prior owners, original sprite IDs and directory aliases without inferring live actors.",
+    "Browse 11596 cells and 860 sequences, select frame and manual palette, play and loop, and load sprite tile chunks on demand."
+  ],
+  "validation": [
+    "Synthetic viewer-e370-sprites-synthetic-gbsiqf6s passed 21 source-guard, alias, playback, lazy-loading and regression tests.",
+    "Protected viewer-e370-sprites-real-e3r27qx4 compared 154032 bytes and 4751 spans with source data, verified all 11596 cells and 860 sequences, resolved all 2554 graphics frames, preserved 35 scoped payloads and 182 resource pages, and matched 1104 Python/Docker files.",
+    "Published 60 private local files with verified preimages out/ffta-e370-sprites-before-cvsbhhh3."
+  ],
+  "limitations": [
+    "These are physical source cells for 228 IDs; original live actors, scheduling, timing, palette and composition remain conditional. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_physical_unit.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_physical_unit_sprites.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_unit_obj.md"
+  ]
+}

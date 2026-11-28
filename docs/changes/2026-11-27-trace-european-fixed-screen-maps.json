@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-fixed-screen-maps",
+  "title": "Bound the European fixed-width screen map banks",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound nine screen maps through every direct call to the original 081441f8 reader. The source plan preserves the duplicate localized map reference."
+  ],
+  "validation": [
+    "Wine oi7b1y59 attests 964 original halfwords, all ten direct caller sites and 2,939 unique map cells. The e363 ownership audit finds 5,918 unowned bytes. All 15 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary scene triggers, translated execution, Linux, USA and native Windows remain in recovery. The eight trailing bytes at 6df496 require a separate consumer."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

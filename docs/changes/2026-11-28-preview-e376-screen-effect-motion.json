@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "preview-e376-screen-effect-motion",
+  "title": "Preview the European screen effect motion tables",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the private wiki to verified e376-d375 and add a dated, separate Interface page for sprite schedules, motion records, background modes and scanline inputs.",
+    "Provide selectable, playable endpoint illustrations and exact stored sample curves, with source offsets, original bytes, loop, rate and collapsible detail tables."
+  ],
+  "validation": [
+    "Synthetic viewer-e376-effect-synthetic-vhybnqra passed three focused source and browser tests; 14 existing cases passed in claym7qj. Two initial test fixture issues were corrected.",
+    "Protected viewer-e376-effect-real-jjzu_1p9 checked all 1089 bytes and 26 source ranges, all 374 browser table rows, 43 previous scoped payloads and 188 resource pages, and matched 1118 Python/Docker files.",
+    "Published 47 private files with verified preimages in out/ffta-e376-effect-before-4166wgmt."
+  ],
+  "limitations": [
+    "Endpoint playback is an illustrative linear interpolation. Original scheduler, interpolation, live second-sprite domain, graphics, scene composition and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/viewer_effect_motion.py",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_effect_motion.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

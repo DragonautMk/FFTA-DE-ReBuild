@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-task-cycle-deltas",
+  "title": "Preview signed task-cycle deltas",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated wiki page for the 48 source-backed signed task-cycle deltas with a graph and inspectable source table.",
+    "Support selected starting phase, 16-bit initial value, add/subtract branch, stepping, playback and optional continuous cycles with explicit 16-bit wrapping.",
+    "Validate the source-byte hash and shape, preserve select focus on Play, and route the resource inspector to the new scoped page."
+  ],
+  "validation": [
+    "Synthetic viewer-task-cycle-synthetic-r34mgrr2 passed 41 projection, source-guard, Chrome, focus, playback and regression tests.",
+    "Protected viewer-task-cycle-real-a8nvlfpd checked 48 original bytes and 9216 arithmetic steps, exercised Chrome navigation/playback, preserved 24 scopes apart from resource relocation and navigation metadata, retained 173 unchanged resource pages, updated one inspector link, and matched 608 Python/Docker files.",
+    "Published 28 private files with guarded preimages out/ffta-task-cycle-before-05w2semu."
+  ],
+  "limitations": [
+    "The preview covers only phases 0–47 of the documented conditional branch; it does not infer the field meaning, task lifetime or original timing. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_task_cycle.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

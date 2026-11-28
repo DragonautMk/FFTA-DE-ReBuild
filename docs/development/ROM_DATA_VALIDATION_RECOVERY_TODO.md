@@ -201,11 +201,12 @@ changing another agent's selected goal.
   loaded tables and 14 literal words. The e361 audit leaves 3,016
   bytes available for publication.
   [Evidence](../rom_data_graphics.md#e618-european-counted-effect-tables).
-- [ ] **ROMDATA-04-EUR-COUNTED-EFFECT-TABLES:** E619 implements the
-  3,016-byte e362 projection and reader binding. At user suspension,
-  Windows build `pv6sdirf` was still running and the e362 Wine unit had
-  yet to run. On resume, inspect that build and verify publication and
-  the original readers with altered backing.
+- [x] **ROMDATA-04-EUR-COUNTED-EFFECT-TABLES scoped EUR/Wine:** E619
+  `xutdfh0i` verifies all 13 tables against altered ROM backing.
+  Original reads use 5,972 managed bytes with matching state and clock.
+  e361 attachment, boundary reads and the 164-file CLI lifecycle pass.
+  Stage `g3g2y23h` retains the verified e362 generation.
+  [Evidence](../rom_data_graphics.md#e619-european-counted-effect-table-runtime).
 - [ ] **ROMDATA-04-EUR-COUNTED-EFFECT-TABLES-ORDINARY:** establish
   ordinary triggers, selector producers, clipped variants and
   translated execution in the relevant scenes.
@@ -214,6 +215,317 @@ changing another agent's selected goal.
 - [ ] **ROMDATA-05-COUNTED-EFFECT-TABLES-USA:** authenticate the
   regional roots, count domains and bounds before USA verification.
   Native Windows remains separate.
+- [x] **ROMDATA-01-EUR-GROUPED-SELECTION-TABLES scoped EUR/Wine:**
+  E620 `rbnnyhbv` bounds 25 pools of 20 halfwords, 160 weighted
+  rows and nine literal words. It proves the 21 known weighted
+  starts stay within their groups and finds 2,912 unowned bytes.
+  The first White Flowers row and its earlier root retain their owners.
+  [Evidence](../rom_data_gameplay.md#e620-european-grouped-selection-banks).
+- [x] **ROMDATA-04-EUR-GROUPED-SELECTION-TABLES scoped EUR/Wine:** E621
+  `xkqkbee5` verifies the e363 projection with altered ROM backing,
+  including the 44 bytes retained by earlier owners. All 500 pool
+  entries, 160 weighted rows and 42 weighted paths match state, guest
+  clock and RNG. e362 attachment, two invalid candidates and e363 CLI
+  creation, verification and reuse pass. `gj9_e_65` retains 165 files.
+  [Evidence](../rom_data_gameplay.md#e621-european-grouped-selection-runtime).
+- [ ] **ROMDATA-04-EUR-GROUPED-SELECTION-TABLES-ORDINARY:** establish
+  live mission tokens, equipment and pool producers in the original
+  gameplay and translated paths. Check other index domains.
+- [ ] **ROMDATA-05-EUR-GROUPED-SELECTION-TABLES-LINUX:** repeat the
+  selected publication, attachment and reader checks on Linux.
+- [ ] **ROMDATA-05-GROUPED-SELECTION-TABLES-USA:** authenticate the
+  regional tables and callers before USA validation. Native Windows
+  remains separate.
+- [x] **ROMDATA-01-EUR-B8C778-BANK scoped EUR/Wine:** E622 `oi7b1y59`
+  bounds all ten direct calls to `081441f8`, nine distinct screen maps
+  and ten source literals. The e363 ownership audit finds 5,918 bytes
+  in twelve unowned spans, including all 5,436 bytes of `b8c778..b8dcb4`.
+  [Evidence](../rom_data_ui_graphics.md#e622-european-fixed-width-screen-maps).
+- [x] **ROMDATA-04-EUR-FIXED-SCREEN-MAPS scoped EUR/Wine:** E623
+  `h7701ipw` verifies the 5,918-byte e364 projection with altered ROM
+  backing across all ten original callers. All 3,539 output cells,
+  2,721 destination guards, complete guest state and clock match.
+  e363 attachment and CLI creation, verification and reuse pass.
+  Stage `kdqkk4qk` retains 166 verified files.
+  [Evidence](../rom_data_ui_graphics.md#e623-european-fixed-width-screen-map-runtime).
+- [ ] **ROMDATA-04-EUR-FIXED-SCREEN-MAPS-ORDINARY:** identify ordinary
+  scene triggers and verify the associated live language cases and
+  translated readers. Establish a separate consumer for the eight bytes
+  after `6df496` before adding any ownership there.
+- [ ] **ROMDATA-05-EUR-FIXED-SCREEN-MAPS-LINUX:** repeat the selected
+  publication, attachment and map reader checks on Linux.
+- [ ] **ROMDATA-05-FIXED-SCREEN-MAPS-USA:** authenticate the regional
+  maps, counts and callers before USA validation. Native Windows remains
+  separate.
+- [x] **ROMDATA-01-EUR-3980C0-LAYOUT-BANK scoped EUR/Wine:** E624
+  `gg6jocgf` bounds 20 localized tables, 267 layout records, three
+  OBJ lists and 17 transition records. The e364 audit finds 3,718
+  unowned bytes including all 88 reader literals.
+  [Evidence](../rom_data_ui_graphics.md#e624-european-localized-layout-bank).
+- [x] **ROMDATA-04-EUR-3980C0-LAYOUT-BANK scoped EUR/Wine:** E625
+  `_2d3h_eq` verifies all 20 tables and 267 layout rows, three OBJ
+  lists, allocation and configuration reads and 17 transitions with
+  altered backing. Full state and clock, e364 attachment and CLI
+  lifecycle pass. `v6z9rj49` retains the 167-file generation.
+  [Evidence](../rom_data_ui_graphics.md#e625-european-localized-layout-runtime).
+- [ ] **ROMDATA-04-EUR-3980C0-LAYOUT-BANK-ORDINARY:** select each
+  language at startup and verify the relevant scenes. Establish producer
+  domains, translated readers and the remaining indirect callers.
+- [ ] **ROMDATA-05-EUR-3980C0-LAYOUT-BANK-LINUX:** repeat the selected
+  publication, attachment and layout reader checks on Linux.
+- [ ] **ROMDATA-05-3980C0-LAYOUT-BANK-USA:** authenticate the regional
+  layouts and caller limits before USA validation. Native Windows remains
+  separate.
+- [x] **ROMDATA-01-EUR-DIRECT-RECTANGLE-DIRECTORY scoped EUR/Wine:**
+  E626 `y2ixxo5i` bounds all five 16 by 15 rectangles, 20 position
+  presets and two reader literals. The e365 audit identifies 2,458
+  unowned bytes including all five physical copies.
+  [Evidence](../rom_data_graphics.md#e626-european-direct-rectangle-directory).
+- [x] **ROMDATA-04-EUR-DIRECT-RECTANGLE-DIRECTORY scoped EUR/Wine:**
+  E627 `k2luox3z` verifies the five original row-zero calls, shared
+  helper copies of the remaining rows and all 20 position presets
+  with altered backing. Full state and clock, e365 attachment and
+  CLI lifecycle pass. Stage `z3kgd901` retains 168 files.
+  [Evidence](../rom_data_graphics.md#e627-european-direct-rectangle-runtime).
+- [ ] **ROMDATA-04-EUR-DIRECT-RECTANGLE-DIRECTORY-ORDINARY:** trace
+  the live task selector, triggers, higher-row consumers and translated
+  execution.
+- [ ] **ROMDATA-05-EUR-DIRECT-RECTANGLE-DIRECTORY-LINUX:** repeat the
+  selected publication, attachment and rectangle reader checks on Linux.
+- [ ] **ROMDATA-05-DIRECT-RECTANGLE-DIRECTORY-USA:** authenticate the
+  regional directory, extents and callers before USA validation. Native
+  Windows remains separate.
+- [x] **ROMDATA-01-EUR-B543A8-TILEMAP-BANK scoped EUR/Wine:** E628
+  `stqxruch` bounds all 31 tilemaps with 855 distinct cells and 40
+  directory slots. The e366 audit identifies 1,902 unowned bytes,
+  including eight original source literals.
+  [Evidence](../rom_data_ui_graphics.md#e628-european-indexed-ui-tilemaps).
+- [x] **ROMDATA-04-EUR-B543A8-TILEMAP-BANK scoped EUR/Wine:** E629
+  `kuqcbc2p` verifies all 53 original paths and the entire 1,902-byte
+  projection with altered backing. All 1,485 output cells, destination
+  guards, complete state and guest clock match. e366 attachment and
+  CLI lifecycle pass. Stage `9m_lcvkw` retains 169 verified files.
+  [Evidence](../rom_data_ui_graphics.md#e629-european-indexed-ui-tilemap-runtime).
+- [ ] **ROMDATA-04-EUR-B543A8-TILEMAP-BANK-ORDINARY:** trace the live
+  index producer at task offset `620` and confirm ordinary triggers,
+  the stored-language branch and translated readers.
+- [ ] **ROMDATA-05-EUR-B543A8-TILEMAP-BANK-LINUX:** repeat the selected
+  publication, attachment and original copier checks on Linux.
+- [ ] **ROMDATA-05-B543A8-TILEMAP-BANK-USA:** authenticate the regional
+  tables, extents and caller domains before USA validation. Native
+  Windows remains separate.
+- [x] **ROMDATA-01-EUR-MAP-HEIGHT-DIGITS scoped EUR/Wine:** E630
+  `jnf3ke4h` bounds all ten glyphs and the original decimal copy
+  paths. The e367 audit retains 264 earlier bytes and identifies
+  2,308 unowned bytes in three spans.
+  [Evidence](../rom_data_runtime.md#e630-european-map-height-digit-bank).
+- [x] **ROMDATA-04-EUR-MAP-HEIGHT-DIGITS scoped EUR/Wine:** E631
+  `v_1cj6om` verifies the original getter, queues and DMA for all
+  100 controlled heights with altered new and earlier backing.
+  All 190 glyph transfers, ten fills, destination guards, complete
+  state and clock match. e367 attachment and CLI lifecycle pass.
+  Stage `nox0vrxd` retains 170 files.
+  [Evidence](../rom_data_runtime.md#e631-european-map-height-digit-runtime).
+- [ ] **ROMDATA-04-EUR-MAP-HEIGHT-DIGITS-ORDINARY:** establish the
+  live height domain and triggers for the remaining glyphs. Verify
+  ordinary scenes and translated execution.
+- [ ] **ROMDATA-05-EUR-MAP-HEIGHT-DIGITS-LINUX:** repeat the selected
+  publication, attachment and reader checks on Linux.
+- [ ] **ROMDATA-05-MAP-HEIGHT-DIGITS-USA:** authenticate the regional
+  glyph allocation and callers before USA validation. Native Windows
+  remains separate.
+- [x] **ROMDATA-01-EUR-3BA358-QUEUED-MAPS scoped EUR/Wine:** E632
+  `zcysqkbo` bounds all five maps, 624 cells and nine reader literals.
+  The e368 ownership audit identifies 1,284 unowned bytes.
+  [Evidence](../rom_data_ui_graphics.md#e632-european-queued-ui-map-bank).
+- [x] **ROMDATA-04-EUR-3BA358-QUEUED-MAPS scoped EUR/Wine:** E633
+  `uo7t0zos` verifies all nine source paths, eleven DMA copies and
+  the original live-height branches with altered backing. All 1,326
+  cells, destination guards, complete state and guest clock match.
+  e368 attachment and CLI lifecycle pass. Stage `xh8fmuqm` retains 171 files.
+  [Evidence](../rom_data_ui_graphics.md#e633-european-queued-ui-map-runtime).
+- [ ] **ROMDATA-04-EUR-3BA358-QUEUED-MAPS-ORDINARY:** establish the live
+  row domain at task offset 16, original scenes and translated readers.
+- [ ] **ROMDATA-05-EUR-3BA358-QUEUED-MAPS-LINUX:** repeat the selected
+  publication, attachment and queue checks on Linux.
+- [ ] **ROMDATA-05-3BA358-QUEUED-MAPS-USA:** authenticate the regional
+  maps and callers before USA validation. Native Windows remains separate.
+- [x] **ROMDATA-01-EUR-TILEMAP-3B53FC-BANK** passes the scoped fixed-loop
+  source proof in E643 `jbniu5w1`. The reader copies 20 rows of 30
+  cells to a 64-byte destination pitch. The e373 ownership audit finds
+  1,212 unowned bytes. The two other candidates are a variable-width
+  clipped copy and a stack offset.
+  [Evidence](../rom_data_ui_graphics.md#e643-european-fixed-30-by-20-screen-map-source).
+- [ ] **ROMDATA-01-EUR-TILEMAP-3B53FC-BANK** still requires the wider
+  inventory of derived and indirect source operands. E639 identifies
+  `3b58ac..3b5acc` as the attribute table paired with the 1,080 tiles
+  of the following indexed archive. Identify its original consumer.
+- [x] **ROMDATA-04-EUR-TILEMAP-3B53FC-BANK** passes its scoped EUR/Wine
+  proof in E644 `gd0efuq7`. The original copy reads all 1,212 packed
+  bytes with altered backing. All 600 cells, 42 destination guards,
+  shadow bit, state and clock match. e373 attaches and the CLI lifecycle
+  passes. Stage `lm4fie3o` retains 176 files.
+  [Evidence](../rom_data_ui_graphics.md#e644-european-full-screen-map-at-runtime).
+- [ ] **ROMDATA-04-EUR-TILEMAP-3B53FC-BANK-ORDINARY** requires the
+  ordinary screen trigger, original transfer path and translated use.
+- [ ] **ROMDATA-05-EUR-TILEMAP-3B53FC-BANK-LINUX** repeats the selected
+  publication, attachment and original copy on native Linux.
+- [ ] **ROMDATA-05-TILEMAP-3B53FC-BANK-USA** requires authenticating the
+  regional source and consumer before validation. Native Windows remains open.
+- [ ] **ROMDATA-01-EUR-493C05-PRE-FONT-REGION** requires an original
+  source root and extent. The e373 audit ranks `493c05..4954dc` as a
+  6,359-byte nonuniform gap adjoining the font base. Repeated `bb` and
+  `cc` values account for 6,350 bytes. Classification requires a reader.
+- [x] **ROMDATA-01-EUR-SAVE-CRC32-BANK** passes the scoped source proof
+  in E645 `d_089fkr`. The original lookup uses all 256 CRC32 table words,
+  with two direct save checksum calls. The e374 audit finds 1,032 unowned
+  bytes. The separately rooted successor copy stays outside the bank.
+  [Evidence](../rom_data_runtime.md#e645-european-save-crc32-table-source).
+- [x] **ROMDATA-04-EUR-SAVE-CRC32-BANK** passes its scoped EUR/Wine
+  proof in E646 `zsu3v1bs`. The original lookup covers all 256 indices
+  with altered backing. Both payload lengths pass the writer, intact
+  verification and mismatch branch in scratch RAM. Complete state and
+  clock match. e374 attaches and the CLI lifecycle passes. Stage
+  `tlf2q8ys` retains 177 files.
+  [Evidence](../rom_data_runtime.md#e646-european-save-crc32-table-at-runtime).
+- [ ] **ROMDATA-04-EUR-SAVE-CRC32-BANK-ORDINARY** requires an ordinary
+  save and load round trip on a protected scratch copy and translated
+  execution where applicable.
+- [ ] **ROMDATA-05-EUR-SAVE-CRC32-BANK-LINUX** repeats the selected
+  checks on native Linux.
+- [ ] **ROMDATA-05-SAVE-CRC32-BANK-USA** requires authenticating the
+  regional lookup and callers before testing USA. Native Windows remains open.
+- [ ] **ROMDATA-01-EUR-PRE-EFFECT-TILE-REGION** requires an original
+  source and extent for `d6abc6..d6b4c8`. E645 records 2,270 occurrences
+  of byte `88` in the 2,306-byte interval adjoining the E605 bank.
+- [x] **ROMDATA-01-EUR-SCREEN-EFFECT-MOTION** passes its scoped source
+  proof in E647 `cpyj8zyd`. The complete selected physical tables and
+  24 literal words contribute 1,089 unowned bytes against e375. The
+  pending-release comparison keeps its existing blend halfword.
+  [Evidence](../rom_data_graphics.md#e647-european-screen-effect-motion-tables).
+- [x] **ROMDATA-04-EUR-SCREEN-EFFECT-MOTION** passes its scoped EUR/Wine
+  proof in E648 `3d4iw72q`. The original readers exercise 22 scheduled
+  ticks, 86 sprite rows, 12 sprite motion records, 20 offsets, seven
+  timed records, 84 scales, two 160-line outputs and five background
+  modes with altered backing. The pending-release value, full state
+  and clock match. e375 attaches and CLI lifecycle passes. Stage
+  `_l4sdrdj` retains 178 verified files.
+  [Evidence](../rom_data_graphics.md#e648-european-screen-effect-motion-at-runtime).
+- [ ] **ROMDATA-04-EUR-SCREEN-EFFECT-MOTION-ORDINARY** requires the
+  ordinary triggers and task timing, including the second sprite
+  selector domain, and translated consumer checks.
+- [ ] **ROMDATA-05-EUR-SCREEN-EFFECT-MOTION-LINUX** repeats the selected
+  publication, attachment and original reader checks on native Linux.
+- [ ] **ROMDATA-05-SCREEN-EFFECT-MOTION-USA** requires authenticating
+  the regional source arrays and readers. Native Windows remains open.
+- [x] **ROMDATA-01-EUR-INLINE-UI-TEXT** passes the scoped source proof
+  in E649 `wyoo0qtv`. The seven five-language directories, 35 localized
+  strings, six shared strings, six threshold glyph pairs and their
+  reader pointers contribute 886 unowned bytes against e376.
+  [Evidence](../rom_data_text.md#e649-european-localized-inline-ui-text).
+- [x] **ROMDATA-04-EUR-INLINE-UI-TEXT** passes its scoped EUR/Wine
+  proof in E650 `_dnd1r25`. It covers 29 literal loads, 40 language
+  selections, five guarded branch cases, 41 expansions and 18 glyph
+  cases using altered backing. e376 attachment, complete state and
+  clock, boundary checks and CLI lifecycle pass. Stage `sognrooh`
+  retains 179 verified files.
+  [Evidence](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime).
+- [ ] **ROMDATA-04-EUR-INLINE-UI-TEXT-ORDINARY** connects the first-entry
+  or title Language publisher to representative rendered screens in
+  this bank, with translated reads where applicable. Reuse the
+  [verified language publication](../rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
+- [ ] **ROMDATA-05-EUR-INLINE-UI-TEXT-LINUX** repeats the selected
+  publication, attachment and original reader checks on native Linux.
+- [ ] **ROMDATA-05-INLINE-UI-TEXT-USA** requires authenticating the
+  regional resources and readers. Native Windows remains open.
+- [x] **ROMDATA-01-EUR-REMAINING-UNROOTED-BANKS scoped to the E634
+  three pixel spans:** E635 roots `a33a40..a33fc0`,
+  `a2ec60..a2f1a0` and `a0f780..a0fc80` in the physical unit OBJ
+  bank. The original index and operation 1 establish each full extent.
+- [x] **ROMDATA-01-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E635
+  `5us1ggln` verifies the 248 directory entries, 36,072 index cells,
+  4,934 counted sequences, 164 OBJ lists and 5,262 pixel blocks.
+  The e369 ownership audit finds 154,032 unowned bytes.
+  [Evidence](../rom_data_unit_obj.md#e635-european-physical-unit-obj-bank).
+- [x] **ROMDATA-04-EUR-PHYSICAL-UNIT-OBJ-BANK scoped EUR/Wine:** E636
+  `vwre68z0` verifies the original reset for all 11,596 newly served
+  slots and the complete DMA output of 138 pixel blocks, with altered
+  backing. Alias, command, boundary, state and clock comparisons pass.
+  e369 attachment and the CLI lifecycle pass. Stage `1gbe3unw`
+  retains 172 files and all 170 earlier resources.
+  [Evidence](../rom_data_unit_obj.md#e636-complete-european-unit-obj-bank-at-runtime).
+- [ ] **ROMDATA-04-EUR-PHYSICAL-UNIT-OBJ-BANK-ORDINARY:** establish
+  naturally produced sprite, action and part selections. Verify
+  affected ordinary and translated execution.
+- [ ] **ROMDATA-05-EUR-PHYSICAL-UNIT-OBJ-BANK-LINUX:** run the selected
+  publication, attachment and original-reader checks on native Linux.
+- [ ] **ROMDATA-05-PHYSICAL-UNIT-OBJ-BANK-USA:** authenticate the
+  regional directory, allocations and consumers before USA validation.
+  Native Windows remains separate.
+- [x] **ROMDATA-01-EUR-B8-SCREEN-PALETTE-BANK scoped EUR/Wine:** E637
+  `z_zmh871` identifies both 240-color copies and the staged 256-color
+  loader. All 736 colors and three literals account for 1,484 unowned
+  bytes in the full B8 palette bank.
+  [Evidence](../rom_data_ui_palettes.md#e637-european-b8-screen-palette-bank).
+- [x] **ROMDATA-04-EUR-B8-SCREEN-PALETTE-BANK scoped EUR/Wine:** E638
+  `upvkln7r` verifies both 480-byte copies and the 256-color loop,
+  with altered backing across the palette bank. All 1,484 new bytes
+  are read. Output, guards, complete state and clock match.
+  e370 attachment and CLI lifecycle pass. Stage `dxp4zz3_` retains
+  173 files.
+  [Evidence](../rom_data_ui_palettes.md#e638-european-b8-screen-palette-runtime).
+- [ ] **ROMDATA-04-EUR-B8-SCREEN-PALETTE-BANK-ORDINARY:** establish the
+  ordinary screen triggers, scheduled color updates and translated readers.
+- [ ] **ROMDATA-05-EUR-B8-SCREEN-PALETTE-BANK-LINUX:** repeat the selected
+  publication, attachment and palette copies on native Linux.
+- [ ] **ROMDATA-05-B8-SCREEN-PALETTE-BANK-USA:** authenticate the regional
+  banks and consumers before USA validation. Native Windows is pending.
+- [x] **ROMDATA-01-EUR-INDEXED-TILE-ATTRIBUTES scoped EUR/Wine:** E639
+  `fmaeky09` identifies eight physical tables and three original
+  getters for seven of them. The e371 audit finds 1,187 unowned bytes
+  for the proved readers. The `3b58ac` reader remains open under E634.
+  [Evidence](../rom_data_indexed_graphics.md#e639-european-indexed-tile-attribute-tables).
+- [x] **ROMDATA-04-EUR-INDEXED-TILE-ATTRIBUTES scoped EUR/Wine:** E640
+  `vuznktga` verifies 584 direct reads and 15 localized cases across
+  all five saved language values, with altered backing. Source,
+  state and clock comparisons pass. e371 attachment and the CLI
+  lifecycle pass. Stage `9l_31bpd` retains 174 files.
+  [Evidence](../rom_data_indexed_graphics.md#e640-european-indexed-tile-attributes-at-runtime).
+- [ ] **ROMDATA-04-EUR-INDEXED-TILE-ATTRIBUTES-ORDINARY:** establish
+  ordinary consumer paths, including the startup language choice,
+  and verify translated execution.
+- [ ] **ROMDATA-05-EUR-INDEXED-TILE-ATTRIBUTES-LINUX:** repeat the
+  selected publication, attachment and getters on native Linux.
+- [ ] **ROMDATA-05-INDEXED-TILE-ATTRIBUTES-USA:** authenticate regional
+  tables and consumers before USA validation. Native Windows is pending.
+- [x] **ROMDATA-01-EUR-SCREEN-CURVE-BANK scoped EUR/Wine:** E641
+  `g7hdz_cf` verifies 21 linked records, 30 position rows, seven
+  curves and the independently rooted terminal copy. The first
+  controller reads index 60 before testing completion. The e372
+  join leaves 1,450 unowned bytes and preserves the earlier 98-byte
+  position projection.
+  [Evidence](../rom_data_graphics.md#e641-european-screen-curve-bank).
+- [x] **ROMDATA-04-EUR-SCREEN-CURVE-BANK** passes its scoped EUR/Wine
+  proof in E642 `tjpptb58` and serves 1,450 bytes in 26 spans. Wine
+  verifies 660 first-controller steps, 610 seeded second-controller cases, 30
+  position rows, seven index-60 aliases and the original 20-byte copy
+  with altered backing. Full state and clock match. e372 attachment
+  and CLI lifecycle pass. Stage `2mftykpq` retains 175 files.
+  [Evidence](../rom_data_graphics.md#e642-european-screen-curves-at-runtime).
+- [ ] **ROMDATA-04-EUR-SCREEN-CURVE-BANK-ORDINARY:** prove the
+  screen triggers, second controller's scheduler order with palette
+  task `b48ef4`, and translated execution. Find any reader of the
+  adjacent `3a808c..3a80c8` interval before assigning it an owner.
+- [ ] **ROMDATA-05-EUR-SCREEN-CURVE-BANK-LINUX:** repeat the selected
+  publication, attachment and curve checks on native Linux.
+- [ ] **ROMDATA-05-SCREEN-CURVE-BANK-USA:** authenticate the regional
+  banks and readers before USA validation. Native Windows is pending.
+- [ ] **ROMDATA-01-EUR-QUEUED-MAP-PRODUCERS:** the aligned branch
+  census identifies 39 direct calls to `08000be4` within Thumb branch
+  range, including the seven E632 calls. Trace computed source values
+  at the remaining unresolved calls, particularly `02de76..03037a`,
+  `051e12`, `052202`, `052302` and `12fb0a`, to their writers and
+  prove the full source and row domains before extending the bank.
 - [ ] **ROMDATA-01-EUR-CARTRIDGE-TAIL-SOURCES:** establish an original
   consumer for `fe0000..fe4000` and classify the vector and other code
   before assigning any resource ownership. The apparent entry pointers

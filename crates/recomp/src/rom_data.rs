@@ -131,6 +131,21 @@ use gba_core::rom_data::{
     MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES,
     SCREEN_UPDATE_TABLES_FILE, SCREEN_UPDATE_TABLES_ID, MAX_SCREEN_UPDATE_TABLES_FILE_BYTES,
     COUNTED_EFFECT_TABLES_FILE, COUNTED_EFFECT_TABLES_ID, MAX_COUNTED_EFFECT_TABLES_FILE_BYTES,
+    GROUPED_SELECTION_TABLES_FILE, GROUPED_SELECTION_TABLES_ID, MAX_GROUPED_SELECTION_TABLES_FILE_BYTES,
+    FIXED_SCREEN_MAPS_FILE, FIXED_SCREEN_MAPS_ID, MAX_FIXED_SCREEN_MAPS_FILE_BYTES,
+    LOCALIZED_LAYOUT_TABLES_FILE, LOCALIZED_LAYOUT_TABLES_ID, MAX_LOCALIZED_LAYOUT_TABLES_FILE_BYTES,
+    DIRECT_RECTANGLE_DIRECTORY_FILE, DIRECT_RECTANGLE_DIRECTORY_ID, MAX_DIRECT_RECTANGLE_DIRECTORY_FILE_BYTES,
+    INDEXED_UI_TILEMAPS_FILE, INDEXED_UI_TILEMAPS_ID, MAX_INDEXED_UI_TILEMAPS_FILE_BYTES,
+    MAP_HEIGHT_DIGITS_FILE, MAP_HEIGHT_DIGITS_ID, MAX_MAP_HEIGHT_DIGITS_FILE_BYTES,
+    QUEUED_UI_MAPS_FILE, QUEUED_UI_MAPS_ID, MAX_QUEUED_UI_MAPS_FILE_BYTES,
+    PHYSICAL_UNIT_OBJ_BANK_FILE, PHYSICAL_UNIT_OBJ_BANK_ID, MAX_PHYSICAL_UNIT_OBJ_BANK_FILE_BYTES,
+    SCREEN_PALETTE_BANK_FILE, SCREEN_PALETTE_BANK_ID, MAX_SCREEN_PALETTE_BANK_FILE_BYTES,
+    INDEXED_TILE_ATTRIBUTES_FILE, INDEXED_TILE_ATTRIBUTES_ID, MAX_INDEXED_TILE_ATTRIBUTES_FILE_BYTES,
+    SCREEN_CURVE_BANK_FILE, SCREEN_CURVE_BANK_ID, MAX_SCREEN_CURVE_BANK_FILE_BYTES,
+    FULL_SCREEN_MAP_FILE, FULL_SCREEN_MAP_ID, MAX_FULL_SCREEN_MAP_FILE_BYTES,
+    SAVE_CRC32_TABLE_FILE, SAVE_CRC32_TABLE_ID, MAX_SAVE_CRC32_TABLE_FILE_BYTES,
+    SCREEN_EFFECT_MOTION_FILE, SCREEN_EFFECT_MOTION_ID, MAX_SCREEN_EFFECT_MOTION_FILE_BYTES,
+    LOCALIZED_INLINE_UI_FILE, LOCALIZED_INLINE_UI_ID, MAX_LOCALIZED_INLINE_UI_FILE_BYTES,
     indexed_graphics::IndexedGraphics, INDEXED_GRAPHICS_ID, INDEXED_GRAPHICS_FILE, MAX_INDEXED_GRAPHICS_FILE_BYTES,
     world_records38::WorldRecords38, WORLD_RECORDS38_ID, WORLD_RECORDS38_FILE, MAX_WORLD_RECORDS38_FILE_BYTES,
     parameter_records27::ParameterRecords27, PARAMETER_RECORDS27_ID, PARAMETER_RECORDS27_FILE, MAX_PARAMETER_RECORDS27_FILE_BYTES,
@@ -1083,6 +1098,36 @@ mod physical_compact_obj_region_tests;
 mod screen_update_table_tests;
 #[cfg(all(test, feature = "rom-data-read-audit"))]
 mod counted_effect_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod grouped_selection_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod fixed_screen_map_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod localized_layout_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod direct_rectangle_directory_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod indexed_ui_tilemaps_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod map_height_digits_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod queued_ui_maps_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod physical_unit_obj_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod screen_palette_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod indexed_tile_attributes_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod screen_curve_bank_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod full_screen_map_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod save_crc32_table_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod screen_effect_motion_tests;
+#[cfg(all(test, feature = "rom-data-read-audit"))]
+mod localized_inline_ui_tests;
 mod preparation;
 pub(crate) mod diagnosis;
 #[cfg(test)]
@@ -2056,6 +2101,21 @@ struct Dataset {
     physical_compact_obj_region_bytes: Option<Vec<u8>>,
     screen_update_table_bytes: Option<Vec<u8>>,
     counted_effect_table_bytes: Option<Vec<u8>>,
+    grouped_selection_table_bytes: Option<Vec<u8>>,
+    fixed_screen_map_bytes: Option<Vec<u8>>,
+    localized_layout_table_bytes: Option<Vec<u8>>,
+    direct_rectangle_directory_bytes: Option<Vec<u8>>,
+    indexed_ui_tilemaps_bytes: Option<Vec<u8>>,
+    map_height_digits_bytes: Option<Vec<u8>>,
+    queued_ui_maps_bytes: Option<Vec<u8>>,
+    physical_unit_obj_bank_bytes: Option<Vec<u8>>,
+    screen_palette_bank_bytes: Option<Vec<u8>>,
+    indexed_tile_attributes_bytes: Option<Vec<u8>>,
+    screen_curve_bank_bytes: Option<Vec<u8>>,
+    full_screen_map_bytes: Option<Vec<u8>>,
+    save_crc32_table_bytes: Option<Vec<u8>>,
+    screen_effect_motion_bytes: Option<Vec<u8>>,
+    localized_inline_ui_bytes: Option<Vec<u8>>,
     map_raster_palettes_bytes: Option<Vec<u8>>,
     auxiliary_commands_bytes: Option<Vec<u8>>,
     auxiliary_archive_bytes: Option<Vec<u8>>,
@@ -2229,6 +2289,21 @@ impl Dataset {
             physical_compact_obj_region: self.physical_compact_obj_region_bytes.as_deref(),
             screen_update_tables: self.screen_update_table_bytes.as_deref(),
             counted_effect_tables: self.counted_effect_table_bytes.as_deref(),
+            grouped_selection_tables: self.grouped_selection_table_bytes.as_deref(),
+            fixed_screen_maps: self.fixed_screen_map_bytes.as_deref(),
+            localized_layout_tables: self.localized_layout_table_bytes.as_deref(),
+            direct_rectangle_directory: self.direct_rectangle_directory_bytes.as_deref(),
+            indexed_ui_tilemaps: self.indexed_ui_tilemaps_bytes.as_deref(),
+            map_height_digits: self.map_height_digits_bytes.as_deref(),
+            queued_ui_maps: self.queued_ui_maps_bytes.as_deref(),
+            physical_unit_obj_bank: self.physical_unit_obj_bank_bytes.as_deref(),
+            screen_palette_bank: self.screen_palette_bank_bytes.as_deref(),
+            indexed_tile_attributes: self.indexed_tile_attributes_bytes.as_deref(),
+            screen_curve_bank: self.screen_curve_bank_bytes.as_deref(),
+            full_screen_map: self.full_screen_map_bytes.as_deref(),
+            save_crc32_table: self.save_crc32_table_bytes.as_deref(),
+            screen_effect_motion: self.screen_effect_motion_bytes.as_deref(),
+            localized_inline_ui: self.localized_inline_ui_bytes.as_deref(),
             map_raster_palettes: self.map_raster_palettes.as_ref().zip(self.map_raster_palettes_bytes.as_deref()),
             auxiliary_commands: self.auxiliary_commands.as_ref().zip(self.auxiliary_commands_bytes.as_deref()),
             auxiliary_archive: self.auxiliary_archive.as_ref().zip(self.auxiliary_archive_bytes.as_deref()),
@@ -2564,6 +2639,171 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
             )
         })
         .transpose()?;
+    let grouped_selection_table_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == GROUPED_SELECTION_TABLES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(GROUPED_SELECTION_TABLES_FILE),
+                MAX_GROUPED_SELECTION_TABLES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let fixed_screen_map_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == FIXED_SCREEN_MAPS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(FIXED_SCREEN_MAPS_FILE),
+                MAX_FIXED_SCREEN_MAPS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let localized_layout_table_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == LOCALIZED_LAYOUT_TABLES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(LOCALIZED_LAYOUT_TABLES_FILE),
+                MAX_LOCALIZED_LAYOUT_TABLES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let direct_rectangle_directory_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == DIRECT_RECTANGLE_DIRECTORY_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(DIRECT_RECTANGLE_DIRECTORY_FILE),
+                MAX_DIRECT_RECTANGLE_DIRECTORY_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let indexed_ui_tilemaps_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == INDEXED_UI_TILEMAPS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(INDEXED_UI_TILEMAPS_FILE),
+                MAX_INDEXED_UI_TILEMAPS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let map_height_digits_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == MAP_HEIGHT_DIGITS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(MAP_HEIGHT_DIGITS_FILE),
+                MAX_MAP_HEIGHT_DIGITS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let queued_ui_maps_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == QUEUED_UI_MAPS_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(QUEUED_UI_MAPS_FILE),
+                MAX_QUEUED_UI_MAPS_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let physical_unit_obj_bank_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == PHYSICAL_UNIT_OBJ_BANK_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(PHYSICAL_UNIT_OBJ_BANK_FILE),
+                MAX_PHYSICAL_UNIT_OBJ_BANK_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let screen_palette_bank_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == SCREEN_PALETTE_BANK_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(SCREEN_PALETTE_BANK_FILE),
+                MAX_SCREEN_PALETTE_BANK_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let indexed_tile_attributes_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == INDEXED_TILE_ATTRIBUTES_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(INDEXED_TILE_ATTRIBUTES_FILE),
+                MAX_INDEXED_TILE_ATTRIBUTES_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let screen_curve_bank_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == SCREEN_CURVE_BANK_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(SCREEN_CURVE_BANK_FILE),
+                MAX_SCREEN_CURVE_BANK_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let full_screen_map_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == FULL_SCREEN_MAP_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(FULL_SCREEN_MAP_FILE),
+                MAX_FULL_SCREEN_MAP_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let save_crc32_table_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == SAVE_CRC32_TABLE_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(SAVE_CRC32_TABLE_FILE),
+                MAX_SAVE_CRC32_TABLE_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let screen_effect_motion_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == SCREEN_EFFECT_MOTION_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(SCREEN_EFFECT_MOTION_FILE),
+                MAX_SCREEN_EFFECT_MOTION_FILE_BYTES,
+            )
+        })
+        .transpose()?;
+    let localized_inline_ui_bytes = manifest
+        .coverage
+        .iter()
+        .any(|id| id == LOCALIZED_INLINE_UI_ID)
+        .then(|| {
+            read_bounded(
+                &path.join(LOCALIZED_INLINE_UI_FILE),
+                MAX_LOCALIZED_INLINE_UI_FILE_BYTES,
+            )
+        })
+        .transpose()?;
     let indexed_graphics_bytes=manifest.coverage.iter().any(|id|id==INDEXED_GRAPHICS_ID).then(||read_bounded(&path.join(INDEXED_GRAPHICS_FILE),MAX_INDEXED_GRAPHICS_FILE_BYTES)).transpose()?;
     let world_records38_bytes=manifest.coverage.iter().any(|id|id==WORLD_RECORDS38_ID).then(||read_bounded(&path.join(WORLD_RECORDS38_FILE),MAX_WORLD_RECORDS38_FILE_BYTES)).transpose()?;
     let parameter_records27_bytes=manifest.coverage.iter().any(|id|id==PARAMETER_RECORDS27_ID).then(||read_bounded(&path.join(PARAMETER_RECORDS27_FILE),MAX_PARAMETER_RECORDS27_FILE_BYTES)).transpose()?;
@@ -2755,6 +2995,21 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         physical_compact_obj_region_bytes.as_ref().map_or(0, Vec::len),
         screen_update_table_bytes.as_ref().map_or(0, Vec::len),
         counted_effect_table_bytes.as_ref().map_or(0, Vec::len),
+        grouped_selection_table_bytes.as_ref().map_or(0, Vec::len),
+        fixed_screen_map_bytes.as_ref().map_or(0, Vec::len),
+        localized_layout_table_bytes.as_ref().map_or(0, Vec::len),
+        direct_rectangle_directory_bytes.as_ref().map_or(0, Vec::len),
+        indexed_ui_tilemaps_bytes.as_ref().map_or(0, Vec::len),
+        map_height_digits_bytes.as_ref().map_or(0, Vec::len),
+        queued_ui_maps_bytes.as_ref().map_or(0, Vec::len),
+        physical_unit_obj_bank_bytes.as_ref().map_or(0, Vec::len),
+        screen_palette_bank_bytes.as_ref().map_or(0, Vec::len),
+        indexed_tile_attributes_bytes.as_ref().map_or(0, Vec::len),
+        screen_curve_bank_bytes.as_ref().map_or(0, Vec::len),
+        full_screen_map_bytes.as_ref().map_or(0, Vec::len),
+        save_crc32_table_bytes.as_ref().map_or(0, Vec::len),
+        screen_effect_motion_bytes.as_ref().map_or(0, Vec::len),
+        localized_inline_ui_bytes.as_ref().map_or(0, Vec::len),
     )?;
     let dimensions = parse(&obj_bytes, "OBJ dimensions")?;
     let background = parse_background(&bg_bytes)?;
@@ -3219,6 +3474,21 @@ fn read_dataset(path: &Path) -> Result<Dataset, String> {
         physical_compact_obj_region_bytes,
         screen_update_table_bytes,
         counted_effect_table_bytes,
+        grouped_selection_table_bytes,
+        fixed_screen_map_bytes,
+        localized_layout_table_bytes,
+        direct_rectangle_directory_bytes,
+        indexed_ui_tilemaps_bytes,
+        map_height_digits_bytes,
+        queued_ui_maps_bytes,
+        physical_unit_obj_bank_bytes,
+        screen_palette_bank_bytes,
+        indexed_tile_attributes_bytes,
+        screen_curve_bank_bytes,
+        full_screen_map_bytes,
+        save_crc32_table_bytes,
+        screen_effect_motion_bytes,
+        localized_inline_ui_bytes,
         map_raster_palettes_bytes,
         auxiliary_commands_bytes,
         auxiliary_archive_bytes,
@@ -3392,6 +3662,21 @@ fn check_dataset_budget(
     physical_compact_obj_region: usize,
     screen_update_tables: usize,
     counted_effect_tables: usize,
+    grouped_selection_tables: usize,
+    fixed_screen_maps: usize,
+    localized_layout_tables: usize,
+    direct_rectangle_directory: usize,
+    indexed_ui_tilemaps: usize,
+    map_height_digits: usize,
+    queued_ui_maps: usize,
+    physical_unit_obj_bank: usize,
+    screen_palette_bank: usize,
+    indexed_tile_attributes: usize,
+    screen_curve_bank: usize,
+    full_screen_map: usize,
+    save_crc32_table: usize,
+    screen_effect_motion: usize,
+    localized_inline_ui: usize,
 ) -> Result<(), String> {
     if manifest as u64 > MAX_MANIFEST_FILE_BYTES
         || obj as u64 > MAX_FILE_BYTES
@@ -3553,6 +3838,21 @@ fn check_dataset_budget(
         || physical_compact_obj_region as u64 > MAX_PHYSICAL_COMPACT_OBJ_REGION_FILE_BYTES
         || screen_update_tables as u64 > MAX_SCREEN_UPDATE_TABLES_FILE_BYTES
         || counted_effect_tables as u64 > MAX_COUNTED_EFFECT_TABLES_FILE_BYTES
+        || grouped_selection_tables as u64 > MAX_GROUPED_SELECTION_TABLES_FILE_BYTES
+        || fixed_screen_maps as u64 > MAX_FIXED_SCREEN_MAPS_FILE_BYTES
+        || localized_layout_tables as u64 > MAX_LOCALIZED_LAYOUT_TABLES_FILE_BYTES
+        || direct_rectangle_directory as u64 > MAX_DIRECT_RECTANGLE_DIRECTORY_FILE_BYTES
+        || indexed_ui_tilemaps as u64 > MAX_INDEXED_UI_TILEMAPS_FILE_BYTES
+        || map_height_digits as u64 > MAX_MAP_HEIGHT_DIGITS_FILE_BYTES
+        || queued_ui_maps as u64 > MAX_QUEUED_UI_MAPS_FILE_BYTES
+        || physical_unit_obj_bank as u64 > MAX_PHYSICAL_UNIT_OBJ_BANK_FILE_BYTES
+        || screen_palette_bank as u64 > MAX_SCREEN_PALETTE_BANK_FILE_BYTES
+        || indexed_tile_attributes as u64 > MAX_INDEXED_TILE_ATTRIBUTES_FILE_BYTES
+        || screen_curve_bank as u64 > MAX_SCREEN_CURVE_BANK_FILE_BYTES
+        || full_screen_map as u64 > MAX_FULL_SCREEN_MAP_FILE_BYTES
+        || save_crc32_table as u64 > MAX_SAVE_CRC32_TABLE_FILE_BYTES
+        || screen_effect_motion as u64 > MAX_SCREEN_EFFECT_MOTION_FILE_BYTES
+        || localized_inline_ui as u64 > MAX_LOCALIZED_INLINE_UI_FILE_BYTES
         || map_raster_palettes as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES
         || auxiliary_commands as u64 > MAX_AUXILIARY_COMMANDS_FILE_BYTES
         || auxiliary_archive as u64 > MAX_AUXILIARY_ARCHIVE_FILE_BYTES
@@ -3720,6 +4020,21 @@ fn check_dataset_budget(
         .saturating_add(physical_compact_obj_region)
         .saturating_add(screen_update_tables)
         .saturating_add(counted_effect_tables)
+        .saturating_add(grouped_selection_tables)
+        .saturating_add(fixed_screen_maps)
+        .saturating_add(localized_layout_tables)
+        .saturating_add(direct_rectangle_directory)
+        .saturating_add(indexed_ui_tilemaps)
+        .saturating_add(map_height_digits)
+        .saturating_add(queued_ui_maps)
+        .saturating_add(physical_unit_obj_bank)
+        .saturating_add(screen_palette_bank)
+        .saturating_add(indexed_tile_attributes)
+        .saturating_add(screen_curve_bank)
+        .saturating_add(full_screen_map)
+        .saturating_add(save_crc32_table)
+        .saturating_add(screen_effect_motion)
+        .saturating_add(localized_inline_ui)
         .saturating_add(map_raster_palettes)
         .saturating_add(auxiliary_commands)
         .saturating_add(auxiliary_archive)
@@ -4061,6 +4376,96 @@ fn attach_dataset(machine: &mut gba_core::Machine, dataset: &Dataset) -> Result<
         eprintln!(
             "ROM_DATA runtime=encoded resource={COUNTED_EFFECT_TABLES_ID} source_bytes={}",
             bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.grouped_selection_table_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={GROUPED_SELECTION_TABLES_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.fixed_screen_map_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={FIXED_SCREEN_MAPS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.localized_layout_table_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={LOCALIZED_LAYOUT_TABLES_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.direct_rectangle_directory_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={DIRECT_RECTANGLE_DIRECTORY_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.indexed_ui_tilemaps_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={INDEXED_UI_TILEMAPS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.map_height_digits_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={MAP_HEIGHT_DIGITS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.queued_ui_maps_bytes {
+        eprintln!(
+            "ROM_DATA runtime=encoded resource={QUEUED_UI_MAPS_ID} source_bytes={}",
+            bytes.len(),
+        );
+    }
+    if let Some(bytes) = &dataset.physical_unit_obj_bank_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={PHYSICAL_UNIT_OBJ_BANK_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.screen_palette_bank_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={SCREEN_PALETTE_BANK_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.indexed_tile_attributes_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={INDEXED_TILE_ATTRIBUTES_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.screen_curve_bank_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={SCREEN_CURVE_BANK_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.full_screen_map_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={FULL_SCREEN_MAP_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.save_crc32_table_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={SAVE_CRC32_TABLE_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.screen_effect_motion_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={SCREEN_EFFECT_MOTION_ID} source_bytes={}",
+            bytes.len()
+        );
+    }
+    if let Some(bytes) = &dataset.localized_inline_ui_bytes {
+        println!(
+            "ROM_DATA runtime=encoded resource={LOCALIZED_INLINE_UI_ID} source_bytes={}",
+            bytes.len()
         );
     }
     if let Some(data)=&dataset.indexed_graphics {eprintln!("ROM_DATA runtime=decoded resource={INDEXED_GRAPHICS_ID} file={} archives={}",dataset.manifest.resources[82].sha256,data.archives.len());}
@@ -4770,6 +5175,21 @@ fn write_dataset_inner(
     let physical_compact_obj_region_data = source.physical_compact_obj_region.clone();
     let screen_update_table_data = source.screen_update_tables.clone();
     let counted_effect_table_data = source.counted_effect_tables.clone();
+    let grouped_selection_table_data = source.grouped_selection_tables.clone();
+    let fixed_screen_map_data = source.fixed_screen_maps.clone();
+    let localized_layout_table_data = source.localized_layout_tables.clone();
+    let direct_rectangle_directory_data = source.direct_rectangle_directory.clone();
+    let indexed_ui_tilemaps_data = source.indexed_ui_tilemaps.clone();
+    let map_height_digits_data = source.map_height_digits.clone();
+    let queued_ui_maps_data = source.queued_ui_maps.clone();
+    let physical_unit_obj_bank_data = source.physical_unit_obj_bank.clone();
+    let screen_palette_bank_data = source.screen_palette_bank.clone();
+    let indexed_tile_attributes_data = source.indexed_tile_attributes.clone();
+    let screen_curve_bank_data = source.screen_curve_bank.clone();
+    let full_screen_map_data = source.full_screen_map.clone();
+    let save_crc32_table_data = source.save_crc32_table.clone();
+    let screen_effect_motion_data = source.screen_effect_motion.clone();
+    let localized_inline_ui_data = source.localized_inline_ui.clone();
     let indexed_graphics_data=source.indexed_graphics.as_ref().map(|c|encode_indexed_graphics(&c.decoded)).transpose()?;
     let world_records38_data=source.world_records38.as_ref().map(|c|encode_world_records38(&c.decoded)).transpose()?;
     let parameter_records27_data=source.parameter_records27.as_ref().map(|c|encode_parameter_records27(&c.decoded)).transpose()?;
@@ -4963,6 +5383,51 @@ fn write_dataset_inner(
     if let Some(bytes) = &counted_effect_table_data {
         files.push(bytes);
     }
+    if let Some(bytes) = &grouped_selection_table_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &fixed_screen_map_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &localized_layout_table_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &direct_rectangle_directory_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &indexed_ui_tilemaps_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &map_height_digits_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &queued_ui_maps_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &physical_unit_obj_bank_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &screen_palette_bank_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &indexed_tile_attributes_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &screen_curve_bank_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &full_screen_map_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &save_crc32_table_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &screen_effect_motion_data {
+        files.push(bytes);
+    }
+    if let Some(bytes) = &localized_inline_ui_data {
+        files.push(bytes);
+    }
     source.set_file_hashes(&files)?;
     let manifest = toml::to_string_pretty(&source.manifest)
         .map_err(|e| format!("Cannot encode manifest: {e}"))?;
@@ -5131,6 +5596,21 @@ fn write_dataset_inner(
         physical_compact_obj_region_data.as_ref().map_or(0, Vec::len),
         screen_update_table_data.as_ref().map_or(0, Vec::len),
         counted_effect_table_data.as_ref().map_or(0, Vec::len),
+        grouped_selection_table_data.as_ref().map_or(0, Vec::len),
+        fixed_screen_map_data.as_ref().map_or(0, Vec::len),
+        localized_layout_table_data.as_ref().map_or(0, Vec::len),
+        direct_rectangle_directory_data.as_ref().map_or(0, Vec::len),
+        indexed_ui_tilemaps_data.as_ref().map_or(0, Vec::len),
+        map_height_digits_data.as_ref().map_or(0, Vec::len),
+        queued_ui_maps_data.as_ref().map_or(0, Vec::len),
+        physical_unit_obj_bank_data.as_ref().map_or(0, Vec::len),
+        screen_palette_bank_data.as_ref().map_or(0, Vec::len),
+        indexed_tile_attributes_data.as_ref().map_or(0, Vec::len),
+        screen_curve_bank_data.as_ref().map_or(0, Vec::len),
+        full_screen_map_data.as_ref().map_or(0, Vec::len),
+        save_crc32_table_data.as_ref().map_or(0, Vec::len),
+        screen_effect_motion_data.as_ref().map_or(0, Vec::len),
+        localized_inline_ui_data.as_ref().map_or(0, Vec::len),
     )?;
     write(&path.join(OBJ_DIMENSIONS_FILE), data.as_bytes())?;
     write(&path.join(BG_DESCRIPTORS_FILE), &bg_data)?;
@@ -5321,6 +5801,51 @@ fn write_dataset_inner(
     }
     if let Some(bytes) = &counted_effect_table_data {
         write(&path.join(COUNTED_EFFECT_TABLES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &grouped_selection_table_data {
+        write(&path.join(GROUPED_SELECTION_TABLES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &fixed_screen_map_data {
+        write(&path.join(FIXED_SCREEN_MAPS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &localized_layout_table_data {
+        write(&path.join(LOCALIZED_LAYOUT_TABLES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &direct_rectangle_directory_data {
+        write(&path.join(DIRECT_RECTANGLE_DIRECTORY_FILE), bytes)?;
+    }
+    if let Some(bytes) = &indexed_ui_tilemaps_data {
+        write(&path.join(INDEXED_UI_TILEMAPS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &map_height_digits_data {
+        write(&path.join(MAP_HEIGHT_DIGITS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &queued_ui_maps_data {
+        write(&path.join(QUEUED_UI_MAPS_FILE), bytes)?;
+    }
+    if let Some(bytes) = &physical_unit_obj_bank_data {
+        write(&path.join(PHYSICAL_UNIT_OBJ_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &screen_palette_bank_data {
+        write(&path.join(SCREEN_PALETTE_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &indexed_tile_attributes_data {
+        write(&path.join(INDEXED_TILE_ATTRIBUTES_FILE), bytes)?;
+    }
+    if let Some(bytes) = &screen_curve_bank_data {
+        write(&path.join(SCREEN_CURVE_BANK_FILE), bytes)?;
+    }
+    if let Some(bytes) = &full_screen_map_data {
+        write(&path.join(FULL_SCREEN_MAP_FILE), bytes)?;
+    }
+    if let Some(bytes) = &save_crc32_table_data {
+        write(&path.join(SAVE_CRC32_TABLE_FILE), bytes)?;
+    }
+    if let Some(bytes) = &screen_effect_motion_data {
+        write(&path.join(SCREEN_EFFECT_MOTION_FILE), bytes)?;
+    }
+    if let Some(bytes) = &localized_inline_ui_data {
+        write(&path.join(LOCALIZED_INLINE_UI_FILE), bytes)?;
     }
     if let Some(bytes) = &map_raster_palettes_data {write(&path.join(MAP_RASTER_PALETTES_FILE),bytes)?;}
     if let Some(bytes) = &auxiliary_commands_data {write(&path.join(AUXILIARY_COMMANDS_FILE),bytes)?;}
@@ -5724,6 +6249,21 @@ mod tests {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -6051,8 +6591,8 @@ mod tests {
         verify(&path, &source).unwrap();
         // Exercise the actual aggregate boundary without allocating that much
         // JSON. Each individual file still fits its own input guard.
-        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
-        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        check_dataset_budget(0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0).unwrap();
+        assert!(check_dataset_budget(0, 1, 0, 0, 0, 0, 0, 0, 0, MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, MAX_DATASET_BYTES - MAX_TEXT_CATALOGS_FILE_BYTES as usize, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
             .unwrap_err()
             .contains("total size"));
         for (name, limit) in [

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-localized-layout-tables",
+  "title": "Add European localized layout extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 3,718 E624 bytes as e365-d364 at their original guest addresses. Preserve the shared OBJ list and the five language tables per builder."
+  ],
+  "validation": [
+    "After raising the transition test step limit, test build x3wytrre and Wine _2d3h_eq pass. All 20 layouts and 267 rows, 17 transitions, eight objects and 88 literal sites match with altered backing and equal state and guest clock.",
+    "Initial CLI subreceipt roudsfiq passes creation, verification and reuse of the 167 files retained in v6z9rj49. The retry protects this dataset and passes e364 attachment, two invalid candidates, 8,736 mixed and mirrored reads, 21 input guards and Wine drain."
+  ],
+  "limitations": [
+    "Ordinary scenes, translated execution, indirect callers, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/localized_layout_tables.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/localized_layout_table_tests.rs",
+    "crates/recomp/src/rom_data/localized_obj_animation_bank_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

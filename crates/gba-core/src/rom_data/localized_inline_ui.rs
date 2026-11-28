@@ -1,0 +1,50 @@
+//! European inline text directories, shared strings and glyph pairs.
+use std::ops::Range;
+
+pub(super) const PACKED_BYTES: u64 = 886;
+
+// The original language-3 branch uses the shared string at 395262.
+// Alignment gaps keep their original backing.
+pub(super) const SOURCES: [(Range<u32>, &str); 41] = [
+    (0x01aaf8..0x01aafc, "reader_literals"),
+    (0x0392b0..0x0392b4, "reader_literals"),
+    (0x039344..0x039348, "reader_literals"),
+    (0x039438..0x03943c, "reader_literals"),
+    (0x03fb1c..0x03fb20, "reader_literals"),
+    (0x03fc04..0x03fc08, "reader_literals"),
+    (0x03ffe4..0x03ffe8, "reader_literals"),
+    (0x040054..0x04005c, "reader_literals"),
+    (0x0400c4..0x0400c8, "reader_literals"),
+    (0x04b200..0x04b208, "reader_literals"),
+    (0x04c24c..0x04c258, "reader_literals"),
+    (0x04c44c..0x04c450, "reader_literals"),
+    (0x055944..0x055948, "reader_literals"),
+    (0x055950..0x055954, "reader_literals"),
+    (0x055c84..0x055c88, "reader_literals"),
+    (0x055e48..0x055e4c, "reader_literals"),
+    (0x055e54..0x055e58, "reader_literals"),
+    (0x05a604..0x05a608, "reader_literals"),
+    (0x05a6fc..0x05a704, "reader_literals"),
+    (0x05a76c..0x05a770, "reader_literals"),
+    (0x05a778..0x05a77c, "reader_literals"),
+    (0x05a7a8..0x05a7ac, "reader_literals"),
+    (0x395184..0x395187, "shared_strings"),
+    (0x395187..0x395262, "localized_strings"),
+    (0x395262..0x395269, "shared_strings"),
+    (0x39526c..0x395280, "language_directories"),
+    (0x395280..0x3952b3, "localized_strings"),
+    (0x3952b4..0x3952c8, "language_directories"),
+    (0x3952c8..0x39532e, "localized_strings"),
+    (0x395330..0x395344, "language_directories"),
+    (0x395344..0x395375, "localized_strings"),
+    (0x395378..0x39538c, "language_directories"),
+    (0x39538c..0x3953c5, "localized_strings"),
+    (0x3953c8..0x3953dc, "language_directories"),
+    (0x3953dc..0x39541d, "localized_strings"),
+    (0x395420..0x395434, "language_directories"),
+    (0x395434..0x39546d, "localized_strings"),
+    (0x395470..0x395484, "language_directories"),
+    (0x395484..0x395490, "shared_strings"),
+    (0x395490..0x39549c, "level_glyphs"),
+    (0x3954a0..0x3954a4, "level_glyph_pointer"),
+];

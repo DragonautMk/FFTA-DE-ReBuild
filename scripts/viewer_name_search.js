@@ -5,7 +5,7 @@ if (data.wiki.name_search) {
   const kind = document.getElementById('wiki-name-kind'), rows = document.getElementById('wiki-name-rows');
   const status = document.getElementById('wiki-name-status'), previous = document.getElementById('wiki-name-prev');
   const next = document.getElementById('wiki-name-next'), asset = data.wiki.name_search;
-  const labels = {item:'Items', action:'Action-linked records', job:'Job metadata', region:'Region references'};
+  const labels = {item:'Items', action:'Action-linked records', job:'Job metadata', mission:'Mission text candidates', region:'Region references', node:'Observed world nodes'};
   const pages = new Map(data.wiki.pages.map(page => [page.id, page]));
   let entries = null, loading = false, page = 0;
   section.hidden = false; previous.disabled = next.disabled = true;
@@ -13,10 +13,10 @@ if (data.wiki.name_search) {
     return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
   }
   function destination(entry, selected) {
-    const region = entry.kind === 'region', source = pages.get(region ? 'world-map' : 'world');
+    const map = entry.kind === 'region' || entry.kind === 'node', source = pages.get(map ? 'world-map' : 'world');
     if (!source) return null;
     const target = new URL(source.href, location.href);
-    const view = {item:'items', action:'action-records', job:'metadata-names', region:'world-regions'}[entry.kind];
+    const view = {item:'items', action:'action-records', job:'metadata-names', mission:'mission-records', region:'world-regions', node:'world'}[entry.kind];
     if (!view || !(source.sections || []).some(section => section.id === view)) return null;
     target.searchParams.set('view', view); target.hash = view;
     if (entry.kind === 'item') {
@@ -27,9 +27,15 @@ if (data.wiki.name_search) {
       target.searchParams.append('select', 'action-record-id:' + entry.id);
     } else if (entry.kind === 'job') {
       target.searchParams.set('metadata_id', String(entry.id)); target.searchParams.set('metadata_language', language.value);
-    } else {
+    } else if (entry.kind === 'mission') {
+      target.searchParams.append('select', 'mission-record-id:' + entry.id);
+      target.searchParams.append('select', 'mission-name-language:' + selected.option);
+    } else if (entry.kind === 'region') {
       target.searchParams.set('region_id', String(entry.id));
       target.searchParams.append('select', 'world-region-language:' + selected.option);
+    } else if (entry.kind === 'node') {
+      target.searchParams.set('node_id', String(entry.id));
+      target.searchParams.append('select', 'world-name-language:' + selected.option);
     }
     return target.href;
   }

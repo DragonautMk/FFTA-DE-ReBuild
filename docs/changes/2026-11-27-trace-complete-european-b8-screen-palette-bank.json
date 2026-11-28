@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-complete-european-b8-screen-palette-bank",
+  "title": "Trace the complete European B8 screen palette bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Identify the two 240-color screen copies and the staged 256-color copy in the original B8 palette allocation."
+  ],
+  "validation": [
+    "Wine z_zmh871 attests 117 halfwords and three source literals. The e370 ownership audit finds 1,484 unowned bytes across five spans. All 15 input guards pass and Wine drains."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary screen and scheduling paths, translated execution, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_ui_palettes.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_palettes.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

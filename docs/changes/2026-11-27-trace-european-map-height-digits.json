@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-map-height-digits",
+  "title": "Bound the European map-height digit bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Follow the quotient and remainder paths from the original map-height getter to both OBJ VRAM queue destinations. Bound all ten 256-byte glyphs and retain the E327 digit 5 owner."
+  ],
+  "validation": [
+    "Wine jnf3ke4h attests 133 instruction halfwords and checks the 2,572-byte projection. The e367 ownership audit retains 264 prior bytes and identifies 2,308 residual bytes. All 15 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, live height bounds, ordinary scenes, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_runtime.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

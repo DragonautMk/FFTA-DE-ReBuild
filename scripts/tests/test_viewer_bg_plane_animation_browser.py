@@ -22,7 +22,7 @@ def fixture(work):
                        'path="bg-transfer-programs.json"\nformat="bg-transfer-programs-v1-json"\n'
                        f'sha256="{hashlib.sha256(content).hexdigest()}"\n')
     index = generate(dataset, work / 'animated-view', split=True)
-    return index.parent / (index.name + '.parts/interface.html')
+    return index.parent / (index.name + '.parts/interface-planes.html')
 
 
 @unittest.skipUnless(shutil.which('google-chrome'), 'Google Chrome is unavailable')

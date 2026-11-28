@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-direct-rectangle-directory",
+  "title": "Add European direct rectangle extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 2,458 E626 bytes as e366-d365 at their original guest addresses. Keep all five rectangle pointer targets distinct."
+  ],
+  "validation": [
+    "Windows build awulgh29 and Wine k2luox3z pass. The five row-zero callers, controlled remaining-row copies and 20 position presets cover all 1,200 cells with altered backing and matching complete state and clock.",
+    "Stage z3kgd901 retains 168 files. CLI creation, verification and reuse, e365 attachment, two invalid candidates, 864 mixed and mirrored reads, 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Ordinary triggers, other live selectors and rows, translated code, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/direct_rectangle_directory.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/direct_rectangle_directory_tests.rs",
+    "crates/recomp/src/rom_data/tilemap_type2_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

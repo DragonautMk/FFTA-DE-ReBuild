@@ -956,3 +956,58 @@ This audit establishes ownership of the declared source projections. The fixed
 transfer lengths bound the known views. Additional bank tails, other readers
 and ordinary execution remain open. The Wine server drained and protected
 inputs passed. Linux, USA and native Windows remain pending.
+
+## E639 European indexed tile attribute tables
+
+Wine `fmaeky09` checks 69 authenticated fixed-width tile archives.
+Eight have a table immediately before the archive. Each table starts
+with two little-endian halfwords giving its byte length and tile count.
+The count matches the archive's program count multiplied by the
+decoded tiles per program. The tables store one four-bit value per
+tile, with two values per byte.
+
+The original getters at `080cf3cc` and `080cf3fc` address the tables
+at `3bd70c..3bdb24` and `3c943c..3c94bc`. Each original instruction
+sequence returns the high nibble of the first byte in a two-byte
+entry. The tables describe 522 and 62 four-tile programs respectively.
+The getter at `080cf45c` uses the saved language byte at `02001f6e`
+and the five pointers at `397d94` for the 44 eight-tile programs in
+each localized table. The original argument remapping selects
+the last two entries for their respective upper input branches.
+
+The e371 audit preserves the five localized tables, the directory,
+two literal words and the E399 byte at `3c9460`. It identifies 1,187
+unowned bytes across five spans for the three original getters.
+The eighth table, `3b58ac..3b5acc`, matches the 1,080 tiles in the
+54-program archive at `3b5acc`. An original reader for its 544 bytes
+is still required for publication. The source proof attests 118
+original halfwords. All 15 input guards pass and Wine drains. Result
+SHA-256 `0f697162673b355011edec3baf2b3fc07a1ecbbfc876f14cb929755dddb91987`.
+
+## E640 European indexed tile attributes at runtime
+
+Dataset `e372-d371` publishes 1,187 E639 bytes as
+`graphics.indexed-tile-attributes` in `indexed-tile-attributes.bin`.
+The file keeps all table bytes at their original addresses, with
+the E399 byte, established reader literals, five localized tables
+and language directory supplied by their existing resources.
+
+Wine `vuznktga` alters the backing of all seven tables, the five
+reader literals and the original language directory. Both direct
+getters return the expected nibble for all 584 entries. The original
+localized getter returns the expected nibble for inputs 2, 44 and
+83 with each of the five saved language values set by the fixture.
+The original instructions consume 2,791 bytes from the new file.
+All source bytes, 480 mixed and mirrored boundary reads, complete
+guest state and clock match.
+
+Windows GNU build `bv317yfu`, e371 attachment, two invalid candidate
+guards and CLI creation, verification and reuse pass. All 172 earlier
+resources are byte-identical. All 17 Wine input guards pass and the
+server drains. Stage `9l_31bpd` retains 174 files. Result SHA-256
+`c96d09664e2c17f72dfb76a30694926d23c37e5bc471f3e66ba7173a1a4b1576`.
+
+The recovery checklist tracks the reader for `3b58ac`, startup
+language selection through ordinary scenes, translated execution,
+Linux, USA and native Windows.
+[Recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

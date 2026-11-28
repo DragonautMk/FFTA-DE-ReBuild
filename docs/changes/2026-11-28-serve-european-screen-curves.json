@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-screen-curves",
+  "title": "Serve the European screen curve bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 1,450 source bytes in 26 spans through graphics.screen-curve-bank in e373-d372, including seven curves, their controller tables and the full terminal record. Retain the compact OBJ projection of the first position table."
+  ],
+  "validation": [
+    "Windows build 25zklhz0 and Wine tjpptb58 pass 660 first-controller steps, 610 seeded second-controller cases, 30 position rows, seven terminal aliases, the independent 20-byte copy and 2,496 mixed mirror checks. Original instructions read 24,026 packed bytes with altered backing. State, clock and guards match.",
+    "Stage 2mftykpq retains 175 verified files. The CLI creates, verifies and reuses the dataset. All 173 earlier resources are byte-identical. e372 attaches, and two candidate rejections preserve e373. All 17 Wine input guards and server drain pass."
+  ],
+  "limitations": [
+    "The second controller uses seeded cursors in the focused test. Ordinary screen triggers, palette scheduler order, translated execution, the adjacent 3a808c reader, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/screen_curve_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/screen_curve_bank_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "preview-e373-screen-motion-curves",
+  "title": "Preview European screen motion curves",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the private wiki to e373-d372 and add a separately loaded, dated Interface page for seven screen motion curves, 21 controller records and 30 position rows.",
+    "Graph and play the X and Y source values, show step-60 aliases and constant fallbacks accurately, and preserve preview settings across record changes."
+  ],
+  "validation": [
+    "Synthetic viewer-e373-curves-synthetic-dzyeapjr passed 17 source-guard, playback, Chrome and regression tests.",
+    "Protected viewer-e373-curves-real-qs8buc10 checked 1450 source bytes, 427 curve values, 21 records, 30 position rows and 2562 browser values; preserved 40 scoped payloads and 185 resource pages; and matched 1112 Python/Docker files.",
+    "Published 44 private wiki files with verified preimages in out/ffta-e373-curves-before-qwqm0kjn. Earlier real unit 964n81vk passed before the constant-axis label was corrected."
+  ],
+  "limitations": [
+    "The chosen preview speed does not establish original screen timing, full screen effects or the second controller scheduler. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_screen_curve_bank.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_screen_motion_curves.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

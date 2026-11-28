@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "explore-selection-thresholds-and-weights",
+  "title": "Explore selection thresholds and weights",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated wiki page for four source-backed selection thresholds and 30 ordinal weights.",
+    "Model the documented threshold comparison and independent eligibility scans using supplied inputs, including zero-total exit, zero weights and wrapping signed 32-bit subtraction.",
+    "Validate source spans and route the existing resource inspector to the new page without inferring ordinal names or a random distribution."
+  ],
+  "validation": [
+    "Synthetic viewer-selection-synthetic-f_rli0ap passed 61 projection, guard, Chrome and regression tests.",
+    "Protected viewer-selection-real-qnrazhjx checked 34 source bytes, six count cases and 96 browser scan combinations over 2880 result cells, preserved 26 scopes apart from resource relocation/navigation metadata, retained 174 resource pages and updated one inspector link, and matched 611 Python/Docker files.",
+    "Published 30 private files with guarded preimages out/ffta-selection-before-vsxhvd_5."
+  ],
+  "limitations": [
+    "The supplied rank and live eligibility values are diagnostic; numeric-helper distribution, ordinal meanings and full game behavior are not inferred. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_selection_byte_tables.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

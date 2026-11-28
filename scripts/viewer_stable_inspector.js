@@ -21,11 +21,21 @@
   const deepStatus = document.getElementById('tree-search-status'), deepResults = document.getElementById('tree-search-results');
   const deepPrev = document.getElementById('tree-search-prev'), deepNext = document.getElementById('tree-search-next');
   const deepPosition = document.getElementById('tree-search-position'), deepRows = document.getElementById('tree-search-rows');
+  const valuesPanel = document.getElementById('inspect-values'), valuesWidth = document.getElementById('inspect-values-width');
+  const valuesEndian = document.getElementById('inspect-values-endian'), valuesColor = document.getElementById('inspect-values-color');
+  const valuesColorControl = document.getElementById('inspect-values-color-control'), valuesColorHeading = document.getElementById('inspect-values-color-heading');
+  const valuesOffset = document.getElementById('inspect-values-offset'), valuesGo = document.getElementById('inspect-values-go');
+  const valuesPrev = document.getElementById('inspect-values-prev'), valuesNext = document.getElementById('inspect-values-next');
+  const valuesStatus = document.getElementById('inspect-values-status'), valuesRows = document.getElementById('inspect-values-rows');
+  const valuesBadge = document.getElementById('inspect-values-added');
+  valuesBadge.textContent = 'Added ' + new Intl.DateTimeFormat('en-GB', {year:'numeric', month:'short', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZoneName:'short'}).format(new Date(valuesBadge.dateTime));
   let treeFilterGeneration = 0;
   let deepGeneration = 0, deepMatches = [], deepPage = 0;
   const chunkSize = 16384;
   const treeLimit = 8 * 1024 * 1024, pageSize = 100;
   let file = null, fileLabel = '', fromDirectory = false, offset = 0, request = 0, fileGeneration = 0, root, path = [], page = 0;
+  let valuesStart = 0, valuesRequest = 0;
   let searchGeneration = 0, lastMatch = -1, lastQuery = '';
   function cancelSearch() { searchGeneration++; cancel.disabled = true; }
   async function findNext() {
@@ -353,6 +363,68 @@
       if (generation === fileGeneration) treeStatus.textContent = 'Cannot parse JSON: ' + error.message + '. Raw paging is still available.';
     }
   }
+  async function drawValues() {
+    const selected = file, width = Number(valuesWidth.value), little = valuesEndian.value === 'little';
+    const start = valuesStart, ticket = ++valuesRequest, showColor = width === 2 && valuesColor.checked;
+    valuesEndian.disabled = width === 1; valuesColorControl.hidden = width !== 2;
+    valuesColorHeading.hidden = !showColor; valuesOffset.value = String(start);
+    valuesGo.disabled = !selected; valuesPrev.disabled = !selected || start === 0; valuesNext.disabled = true;
+    valuesRows.replaceChildren();
+    if (!selected) { valuesStatus.textContent = 'Select a file to interpret its bytes.'; return; }
+    if (!valuesPanel.open) { valuesStatus.textContent = 'Open this section to interpret the selected file.'; return; }
+    if (!selected.size) { valuesStatus.textContent = fileLabel + ' · empty file.'; return; }
+    const end = Math.min(selected.size, start + 64 * width);
+    valuesStatus.textContent = 'Reading bytes…';
+    try {
+      const bytes = new Uint8Array(await selected.slice(start, end).arrayBuffer());
+      if (ticket !== valuesRequest || selected !== file || !valuesPanel.open) return;
+      if (bytes.length !== end - start) throw Error('Unexpected file block length.');
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      let incomplete = false;
+      for (let index = 0; index < bytes.length; index += width) {
+        const row = valuesRows.insertRow(), count = Math.min(width, bytes.length - index);
+        row.insertCell().textContent = '0x' + (start + index).toString(16).toUpperCase().padStart(8, '0');
+        row.insertCell().textContent = [...bytes.subarray(index, index + count)].map(value => value.toString(16).toUpperCase().padStart(2, '0')).join(' ');
+        let unsigned, signed;
+        if (count === width) {
+          unsigned = width === 1 ? view.getUint8(index) : width === 2 ? view.getUint16(index, little) : view.getUint32(index, little);
+          signed = width === 1 ? view.getInt8(index) : width === 2 ? view.getInt16(index, little) : view.getInt32(index, little);
+        } else incomplete = true;
+        row.insertCell().textContent = count === width ? String(unsigned) : 'Incomplete';
+        row.insertCell().textContent = count === width ? String(signed) : 'Incomplete';
+        const colorCell = row.insertCell(); colorCell.hidden = !showColor;
+        if (showColor && count === width) {
+          const rgb = [0, 5, 10].map(shift => Math.floor(((unsigned >> shift) & 31) * 255 / 31));
+          const color = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('').toUpperCase();
+          const swatch = document.createElement('span'); swatch.textContent = '\u00a0\u00a0\u00a0';
+          swatch.style.backgroundColor = color; swatch.style.border = '1px solid #777';
+          colorCell.append(swatch, document.createTextNode(' ' + color));
+        }
+      }
+      valuesPrev.disabled = start === 0; valuesNext.disabled = end >= selected.size;
+      valuesStatus.textContent = fileLabel + ' · bytes ' + start + '–' + end + ' of ' + selected.size
+        + (incomplete ? ' · final value is incomplete.' : '.');
+    } catch (error) {
+      if (ticket === valuesRequest && selected === file) valuesStatus.textContent = 'Cannot read values: ' + error.message;
+    }
+  }
+  function goValues() {
+    if (!file) return;
+    const text = valuesOffset.value.trim();
+    const position = /^(?:0x[0-9a-f]+|[0-9]+)$/i.test(text) ? Number(text) : NaN;
+    if (!Number.isSafeInteger(position) || position < 0 || position >= Math.max(file.size, 1)) {
+      valuesRequest++;
+      valuesStatus.textContent = file.size ? 'Enter a byte offset from 0 to ' + (file.size - 1) + ' (decimal or 0x hexadecimal).'
+        : 'The file is empty; its only offset is 0.'; return;
+    }
+    valuesStart = position; drawValues();
+  }
+  valuesPanel.addEventListener('toggle', () => { if (valuesPanel.open) drawValues(); else valuesRequest++; });
+  valuesGo.addEventListener('click', goValues);
+  valuesOffset.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); goValues(); } });
+  valuesPrev.addEventListener('click', () => { valuesStart = Math.max(0, valuesStart - 64 * Number(valuesWidth.value)); drawValues(); });
+  valuesNext.addEventListener('click', () => { valuesStart += 64 * Number(valuesWidth.value); drawValues(); });
+  [valuesWidth, valuesEndian, valuesColor].forEach(control => control.addEventListener('change', drawValues));
   async function showChunk(highlight = null, valid = () => true) {
     const generation = ++request;
     if (!file) return;
@@ -397,6 +469,7 @@
     deepStatus.textContent = 'Enter a field name or value.';
     file = selected || null; fileLabel = label || (file ? file.name : ''); fromDirectory = directory && !!file;
     offset = 0; request++; fileGeneration++; root = undefined;
+    valuesStart = 0; drawValues();
     cancelSearch(); lastMatch = -1; lastQuery = ''; findStatus.textContent = 'Search starts at the beginning of the selected file.';
     display.value = file && !/\.(json|toml|txt)$/i.test(file.name) ? 'hex' : 'text';
     if (file) { showChunk().catch(error => { status.textContent = 'Cannot read file: ' + error.message; }); loadTree(file, fileGeneration); }

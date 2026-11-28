@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-screen-effect-motion-tables",
+  "title": "Trace the European screen-effect motion tables",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the original sprite schedules, interpolation rows, offset and scale curves, scanline profile and five background modes. Preserve the neighboring blend halfword used during pending release."
+  ],
+  "validation": [
+    "Wine cpyj8zyd attests 1,001 original halfwords and confirms 1,089 unowned bytes across 26 spans against e375. The source graph retains the earlier blend owner. All 14 input guards and server drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary task timing and selector use, translated paths, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

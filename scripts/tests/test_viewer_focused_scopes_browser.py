@@ -45,7 +45,7 @@ class FocusedScopesBrowserTest(unittest.TestCase):
                   q('#terrain-descriptor').value='1';change(q('#terrain-descriptor'));
                   q('#terrain-encounter').value='1';change(q('#terrain-encounter'));})()''')
                 browser.click('#terrain-encounter-open')
-                wait_for(browser, "data.wiki.current==='world' && document.querySelector('#encounter-id').value==='1'")
+                wait_for(browser, "data.wiki.current==='world-encounters' && document.querySelector('#encounter-id').value==='1'")
                 self.assertTrue(browser.evaluate("!document.querySelector('#encounter-terrain-navigation').hidden"))
                 click_first_line(browser, '#encounter-terrain-open')
                 wait_for(browser, "data.wiki.current==='world-map' && document.querySelector('#terrain-descriptor').value==='1' && document.querySelector('#terrain-encounter').value==='1'")

@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-localized-inline-ui-text",
+  "title": "Serve the European localized inline UI text bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 886 bytes of localized UI strings, shared labels, threshold glyph pairs and reader pointers as text.localized-inline-ui in e377-d376. Preserve the original language-3 fallback and attach e376 through its original schema."
+  ],
+  "validation": [
+    "Windows GNU build 138cvd_f and Wine _dnd1r25 pass. With altered backing, the original code verifies 29 literal loads, 40 indexed language reads, five guarded choices, 41 expansions, 18 glyph cases, 3,936 mirror and width checks, and matching full state and clock.",
+    "The CLI creates, verifies and reuses 179 files, including all 177 previous resources unchanged. Stage sognrooh retains the verified dataset. Both invalid attachment guards, all 17 Wine input guards and the server drain pass."
+  ],
+  "limitations": [
+    "Ordinary chooser-to-rendered-screen use, translated execution, Linux, USA and native Windows remain on the recovery checklist. No performance measurements were made. Primary Terra xhigh settings could not be independently confirmed."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/localized_inline_ui.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/localized_inline_ui_tests.rs",
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

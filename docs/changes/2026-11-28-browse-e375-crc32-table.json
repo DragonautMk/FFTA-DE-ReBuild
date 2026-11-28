@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-e375-crc32-table",
+  "title": "Browse and calculate CRC32 locally",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the private wiki to e375-d374 and add a separately loaded, dated page for the 256 authenticated save CRC32 lookup words.",
+    "Calculate seeded CRC32 for UTF-8, hexadecimal bytes or locally selected files using bounded cancellable reads, without applying save-specific header rules."
+  ],
+  "validation": [
+    "Synthetic viewer-e375-crc-synthetic-ysafq76z passed 18 source, browser, chunking, cancellation and regression tests.",
+    "Protected viewer-e375-crc-real-8jup3fg0 checked 1032 source bytes, 256 words, 256 independent browser vectors and a 200000-byte seeded file; preserved 42 scoped payloads and 187 resource pages; and matched 1116 Python/Docker files.",
+    "Published 46 private wiki files with verified preimages in out/ffta-e375-crc-before-ywo3d9ed."
+  ],
+  "limitations": [
+    "The calculator does not transform or validate save headers; ordinary save behavior and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_crc32.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_runtime.md"
+  ]
+}

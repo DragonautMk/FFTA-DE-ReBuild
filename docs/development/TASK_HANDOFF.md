@@ -8,9 +8,11 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 - State: active
 - Outcome: partial
-- Verified: e361 grid movement `o3yceyn2`; curves `43n9ldm9`.
-- Missing: other previews, names/audio; Windows deferred.
-- Resume: select unimplemented viewer work; timestamp added or changed sections.
+- Selection: VIEWER-E377-INLINE-TEXT.
+- Verified: e377 `sognrooh` PASS; 35 strings, six shared, glyph pairs.
+- Deliver: scoped decoded text, fallback, settings and badges; Chrome/ROM/Docker.
+- Missing: parent audio/names, timing/composition and Windows.
+- Resume: decode proven sources, test and guarded publish; stop at PASS. Risk: encoding/fallback.
 
 ## Running or suspended tasks
 
@@ -33,7 +35,7 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ### ROM-DATA-FULL-EUR
 
-- State: suspended
+- State: active
 - Outcome: partial
 - E260 owns E248; E302 e275 `idrflo71` zero residual, Wine PASS. Code/full coverage, ROMDATA-01-SOIL-UPPER-NATIVE-CONTEXTS open.
 - E401 ties E291 White Flowers 3,600 code bytes to E246. E203–240/E425–510 Wine PASS (archive); E215/E207/E172 zero residual (`3blfucoi`/`dnr49xgd`/`_z04mity`).
@@ -193,9 +195,9 @@ English-first. [Resume](MEMORY_WORKFLOW.md).
 
 ## Final handover
 
-- Task: E619 suspended by user.
-- Last verified result: E618 l_fm3i3u, 13 tables and 3,016 bytes.
-- Remaining work: e362 reader/CLI validation. Ordinary, translated, Linux/USA open.
-- Errors or blockers: Build last observed running at 19:16:36 UTC.
-- Next action: On user resume inspect pv6sdirf/74260. No e362 Wine run yet.
-- References: ROMDATA-04-EUR-COUNTED-EFFECT-TABLES.
+- Task: E651 source census for EUR 080d80e0 rectangles.
+- Last verified result: e377 sognrooh PASS. E626 lists 67 calls.
+- Remaining work: Bound residual banks and attest original inputs on Wine.
+- Errors or blockers: Resolve indirect inputs and preserve earlier owners.
+- Next action: Trace profiles, rank full bank extents, audit ownership.
+- References: E626/E649. Ordinary, translated and ports open.

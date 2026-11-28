@@ -109,6 +109,21 @@ mod physical_audio_banks;
 mod physical_compact_obj_region;
 mod screen_update_tables;
 mod counted_effect_tables;
+mod grouped_selection_tables;
+mod fixed_screen_maps;
+mod localized_layout_tables;
+mod direct_rectangle_directory;
+mod indexed_ui_tilemaps;
+mod map_height_digits;
+mod queued_ui_maps;
+mod physical_unit_obj_bank;
+mod screen_palette_bank;
+mod indexed_tile_attributes;
+mod screen_curve_bank;
+mod full_screen_map;
+mod save_crc32_table;
+mod screen_effect_motion;
+mod localized_inline_ui;
 pub mod default48;
 pub mod constructor_alternates;
 pub mod metadata14;
@@ -174,8 +189,8 @@ mod custom_lz;
 pub mod lz77;
 
 pub const SCHEMA: u32 = 1;
-pub const EXTRACTOR_REV: u32 = 362;
-pub const DECODER_REV: u32 = 361;
+pub const EXTRACTOR_REV: u32 = 377;
+pub const DECODER_REV: u32 = 376;
 const PRE_INDEXED_TILEMAP_REVISION: (u32, u32) = (302, 301);
 const PRE_TILEMAP_STREAM_FILE_REVISION: (u32, u32) = (303, 302);
 const PRE_TILEMAP_LZ77_FILE_REVISION: (u32, u32) = (304, 303);
@@ -236,6 +251,21 @@ const PRE_PHYSICAL_AUDIO_BANKS_REVISION: (u32, u32) = (358, 357);
 const PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION: (u32, u32) = (359, 358);
 const PRE_SCREEN_UPDATE_TABLES_REVISION: (u32, u32) = (360, 359);
 const PRE_COUNTED_EFFECT_TABLES_REVISION: (u32, u32) = (361, 360);
+const PRE_GROUPED_SELECTION_TABLES_REVISION: (u32, u32) = (362, 361);
+const PRE_FIXED_SCREEN_MAPS_REVISION: (u32, u32) = (363, 362);
+const PRE_LOCALIZED_LAYOUT_TABLES_REVISION: (u32, u32) = (364, 363);
+const PRE_DIRECT_RECTANGLE_DIRECTORY_REVISION: (u32, u32) = (365, 364);
+const PRE_INDEXED_UI_TILEMAPS_REVISION: (u32, u32) = (366, 365);
+const PRE_MAP_HEIGHT_DIGITS_REVISION: (u32, u32) = (367, 366);
+const PRE_QUEUED_UI_MAPS_REVISION: (u32, u32) = (368, 367);
+const PRE_PHYSICAL_UNIT_OBJ_BANK_REVISION: (u32, u32) = (369, 368);
+const PRE_SCREEN_PALETTE_BANK_REVISION: (u32, u32) = (370, 369);
+const PRE_INDEXED_TILE_ATTRIBUTES_REVISION: (u32, u32) = (371, 370);
+const PRE_SCREEN_CURVE_BANK_REVISION: (u32, u32) = (372, 371);
+const PRE_FULL_SCREEN_MAP_REVISION: (u32, u32) = (373, 372);
+const PRE_SAVE_CRC32_TABLE_REVISION: (u32, u32) = (374, 373);
+const PRE_SCREEN_EFFECT_MOTION_REVISION: (u32, u32) = (375, 374);
+const PRE_LOCALIZED_INLINE_UI_REVISION: (u32, u32) = (376, 375);
 pub const METADATA16_ID: &str = "gameplay.linked-metadata16";
 pub const METADATA16_FILE: &str = "linked-metadata16.json";
 pub const METADATA16_FORMAT: &str = "linked-metadata16-v1-json";
@@ -751,6 +781,66 @@ pub const COUNTED_EFFECT_TABLES_ID: &str = "graphics.counted-effect-tables";
 pub const COUNTED_EFFECT_TABLES_FILE: &str = "counted-effect-tables.bin";
 pub const COUNTED_EFFECT_TABLES_FORMAT: &str = "counted-effect-tables-v1-bin";
 pub const MAX_COUNTED_EFFECT_TABLES_FILE_BYTES: u64 = counted_effect_tables::PACKED_BYTES;
+pub const GROUPED_SELECTION_TABLES_ID: &str = "gameplay.grouped-selection-tables";
+pub const GROUPED_SELECTION_TABLES_FILE: &str = "grouped-selection-tables.bin";
+pub const GROUPED_SELECTION_TABLES_FORMAT: &str = "grouped-selection-tables-v1-bin";
+pub const MAX_GROUPED_SELECTION_TABLES_FILE_BYTES: u64 = grouped_selection_tables::PACKED_BYTES;
+pub const FIXED_SCREEN_MAPS_ID: &str = "graphics.fixed-screen-maps";
+pub const FIXED_SCREEN_MAPS_FILE: &str = "fixed-screen-maps.bin";
+pub const FIXED_SCREEN_MAPS_FORMAT: &str = "fixed-screen-maps-v1-bin";
+pub const MAX_FIXED_SCREEN_MAPS_FILE_BYTES: u64 = fixed_screen_maps::PACKED_BYTES;
+pub const LOCALIZED_LAYOUT_TABLES_ID: &str = "graphics.localized-layout-tables";
+pub const LOCALIZED_LAYOUT_TABLES_FILE: &str = "localized-layout-tables.bin";
+pub const LOCALIZED_LAYOUT_TABLES_FORMAT: &str = "localized-layout-tables-v1-bin";
+pub const MAX_LOCALIZED_LAYOUT_TABLES_FILE_BYTES: u64 = localized_layout_tables::PACKED_BYTES;
+pub const DIRECT_RECTANGLE_DIRECTORY_ID: &str = "graphics.direct-rectangle-directory";
+pub const DIRECT_RECTANGLE_DIRECTORY_FILE: &str = "direct-rectangle-directory.bin";
+pub const DIRECT_RECTANGLE_DIRECTORY_FORMAT: &str = "direct-rectangle-directory-v1-bin";
+pub const MAX_DIRECT_RECTANGLE_DIRECTORY_FILE_BYTES: u64 = direct_rectangle_directory::PACKED_BYTES;
+pub const INDEXED_UI_TILEMAPS_ID: &str = "graphics.indexed-ui-tilemaps";
+pub const INDEXED_UI_TILEMAPS_FILE: &str = "indexed-ui-tilemaps.bin";
+pub const INDEXED_UI_TILEMAPS_FORMAT: &str = "indexed-ui-tilemaps-v1-bin";
+pub const MAX_INDEXED_UI_TILEMAPS_FILE_BYTES: u64 = indexed_ui_tilemaps::PACKED_BYTES;
+pub const MAP_HEIGHT_DIGITS_ID: &str = "graphics.map-height-digits";
+pub const MAP_HEIGHT_DIGITS_FILE: &str = "map-height-digits.bin";
+pub const MAP_HEIGHT_DIGITS_FORMAT: &str = "map-height-digits-v1-bin";
+pub const MAX_MAP_HEIGHT_DIGITS_FILE_BYTES: u64 = map_height_digits::PACKED_BYTES;
+pub const QUEUED_UI_MAPS_ID: &str = "graphics.queued-ui-maps";
+pub const QUEUED_UI_MAPS_FILE: &str = "queued-ui-maps.bin";
+pub const QUEUED_UI_MAPS_FORMAT: &str = "queued-ui-maps-v1-bin";
+pub const MAX_QUEUED_UI_MAPS_FILE_BYTES: u64 = queued_ui_maps::PACKED_BYTES;
+pub const PHYSICAL_UNIT_OBJ_BANK_ID: &str = "graphics.physical-unit-obj-bank";
+pub const PHYSICAL_UNIT_OBJ_BANK_FILE: &str = "physical-unit-obj-bank.bin";
+pub const PHYSICAL_UNIT_OBJ_BANK_FORMAT: &str = "physical-unit-obj-bank-v1-bin";
+pub const MAX_PHYSICAL_UNIT_OBJ_BANK_FILE_BYTES: u64 = physical_unit_obj_bank::PACKED_BYTES;
+pub const SCREEN_PALETTE_BANK_ID: &str = "graphics.screen-palette-bank";
+pub const SCREEN_PALETTE_BANK_FILE: &str = "screen-palette-bank.bin";
+pub const SCREEN_PALETTE_BANK_FORMAT: &str = "screen-palette-bank-v1-bin";
+pub const MAX_SCREEN_PALETTE_BANK_FILE_BYTES: u64 = screen_palette_bank::PACKED_BYTES;
+pub const INDEXED_TILE_ATTRIBUTES_ID: &str = "graphics.indexed-tile-attributes";
+pub const INDEXED_TILE_ATTRIBUTES_FILE: &str = "indexed-tile-attributes.bin";
+pub const INDEXED_TILE_ATTRIBUTES_FORMAT: &str = "indexed-tile-attributes-v1-bin";
+pub const MAX_INDEXED_TILE_ATTRIBUTES_FILE_BYTES: u64 = indexed_tile_attributes::PACKED_BYTES;
+pub const SCREEN_CURVE_BANK_ID: &str = "graphics.screen-curve-bank";
+pub const SCREEN_CURVE_BANK_FILE: &str = "screen-curve-bank.bin";
+pub const SCREEN_CURVE_BANK_FORMAT: &str = "screen-curve-bank-v1-bin";
+pub const MAX_SCREEN_CURVE_BANK_FILE_BYTES: u64 = screen_curve_bank::PACKED_BYTES;
+pub const FULL_SCREEN_MAP_ID: &str = "graphics.full-screen-map";
+pub const FULL_SCREEN_MAP_FILE: &str = "full-screen-map.bin";
+pub const FULL_SCREEN_MAP_FORMAT: &str = "full-screen-map-v1-bin";
+pub const MAX_FULL_SCREEN_MAP_FILE_BYTES: u64 = full_screen_map::PACKED_BYTES;
+pub const SAVE_CRC32_TABLE_ID: &str = "engine.save-crc32-table";
+pub const SAVE_CRC32_TABLE_FILE: &str = "save-crc32-table.bin";
+pub const SAVE_CRC32_TABLE_FORMAT: &str = "save-crc32-table-v1-bin";
+pub const MAX_SAVE_CRC32_TABLE_FILE_BYTES: u64 = save_crc32_table::PACKED_BYTES;
+pub const SCREEN_EFFECT_MOTION_ID: &str = "graphics.screen-effect-motion";
+pub const SCREEN_EFFECT_MOTION_FILE: &str = "screen-effect-motion.bin";
+pub const SCREEN_EFFECT_MOTION_FORMAT: &str = "screen-effect-motion-v1-bin";
+pub const MAX_SCREEN_EFFECT_MOTION_FILE_BYTES: u64 = screen_effect_motion::PACKED_BYTES;
+pub const LOCALIZED_INLINE_UI_ID: &str = "text.localized-inline-ui";
+pub const LOCALIZED_INLINE_UI_FILE: &str = "localized-inline-ui.bin";
+pub const LOCALIZED_INLINE_UI_FORMAT: &str = "localized-inline-ui-v1-bin";
+pub const MAX_LOCALIZED_INLINE_UI_FILE_BYTES: u64 = localized_inline_ui::PACKED_BYTES;
 pub const WORLD_RECORDS38_ID: &str = "gameplay.world-records38";
 pub const WORLD_RECORDS38_FILE: &str = "world-records38.json";
 pub const WORLD_RECORDS38_FORMAT: &str = "world-records38-v1-json";
@@ -1172,6 +1262,21 @@ pub struct Extraction {
     pub physical_compact_obj_region: Option<Vec<u8>>,
     pub screen_update_tables: Option<Vec<u8>>,
     pub counted_effect_tables: Option<Vec<u8>>,
+    pub grouped_selection_tables: Option<Vec<u8>>,
+    pub fixed_screen_maps: Option<Vec<u8>>,
+    pub localized_layout_tables: Option<Vec<u8>>,
+    pub direct_rectangle_directory: Option<Vec<u8>>,
+    pub indexed_ui_tilemaps: Option<Vec<u8>>,
+    pub map_height_digits: Option<Vec<u8>>,
+    pub queued_ui_maps: Option<Vec<u8>>,
+    pub physical_unit_obj_bank: Option<Vec<u8>>,
+    pub screen_palette_bank: Option<Vec<u8>>,
+    pub indexed_tile_attributes: Option<Vec<u8>>,
+    pub screen_curve_bank: Option<Vec<u8>>,
+    pub full_screen_map: Option<Vec<u8>>,
+    pub save_crc32_table: Option<Vec<u8>>,
+    pub screen_effect_motion: Option<Vec<u8>>,
+    pub localized_inline_ui: Option<Vec<u8>>,
     pub map_raster_palettes: Option<map_raster_palettes::Catalog>,
     pub auxiliary_scripts: Option<auxiliary_scripts::Catalog>,
     pub text_catalogs: Option<text_catalogs::Catalog>,
@@ -1341,6 +1446,21 @@ pub struct BaseFiles<'a> {
     pub physical_compact_obj_region: Option<&'a [u8]>,
     pub screen_update_tables: Option<&'a [u8]>,
     pub counted_effect_tables: Option<&'a [u8]>,
+    pub grouped_selection_tables: Option<&'a [u8]>,
+    pub fixed_screen_maps: Option<&'a [u8]>,
+    pub localized_layout_tables: Option<&'a [u8]>,
+    pub direct_rectangle_directory: Option<&'a [u8]>,
+    pub indexed_ui_tilemaps: Option<&'a [u8]>,
+    pub map_height_digits: Option<&'a [u8]>,
+    pub queued_ui_maps: Option<&'a [u8]>,
+    pub physical_unit_obj_bank: Option<&'a [u8]>,
+    pub screen_palette_bank: Option<&'a [u8]>,
+    pub indexed_tile_attributes: Option<&'a [u8]>,
+    pub screen_curve_bank: Option<&'a [u8]>,
+    pub full_screen_map: Option<&'a [u8]>,
+    pub save_crc32_table: Option<&'a [u8]>,
+    pub screen_effect_motion: Option<&'a [u8]>,
+    pub localized_inline_ui: Option<&'a [u8]>,
     pub map_raster_palettes: Option<(&'a map_raster_palettes::MapRasterPalettes, &'a [u8])>,
     pub auxiliary_commands: Option<(&'a auxiliary_scripts::AuxiliaryCommands, &'a [u8])>,
     pub auxiliary_archive: Option<(&'a auxiliary_scripts::AuxiliaryArchive, &'a [u8])>,
@@ -1390,7 +1510,22 @@ impl Extraction {
             | PRE_PHYSICAL_AUDIO_BANKS_REVISION
             | PRE_PHYSICAL_COMPACT_OBJ_REGION_REVISION
             | PRE_SCREEN_UPDATE_TABLES_REVISION
-            | PRE_COUNTED_EFFECT_TABLES_REVISION) => previous,
+            | PRE_COUNTED_EFFECT_TABLES_REVISION
+            | PRE_GROUPED_SELECTION_TABLES_REVISION
+            | PRE_FIXED_SCREEN_MAPS_REVISION
+            | PRE_LOCALIZED_LAYOUT_TABLES_REVISION
+            | PRE_DIRECT_RECTANGLE_DIRECTORY_REVISION
+            | PRE_INDEXED_UI_TILEMAPS_REVISION
+            | PRE_MAP_HEIGHT_DIGITS_REVISION
+            | PRE_QUEUED_UI_MAPS_REVISION
+            | PRE_PHYSICAL_UNIT_OBJ_BANK_REVISION
+            | PRE_SCREEN_PALETTE_BANK_REVISION
+            | PRE_INDEXED_TILE_ATTRIBUTES_REVISION
+            | PRE_SCREEN_CURVE_BANK_REVISION
+            | PRE_FULL_SCREEN_MAP_REVISION
+            | PRE_SAVE_CRC32_TABLE_REVISION
+            | PRE_SCREEN_EFFECT_MOTION_REVISION
+            | PRE_LOCALIZED_INLINE_UI_REVISION) => previous,
             _ => (EXTRACTOR_REV, DECODER_REV),
         };
         Self::from_rom_with_revision(rom, revision)
@@ -2870,6 +3005,224 @@ impl Extraction {
                 });
                 result.counted_effect_tables = Some(encoded);
             }
+            if revision > PRE_GROUPED_SELECTION_TABLES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, grouped_selection_tables::SOURCES);
+                result.manifest.coverage.push(GROUPED_SELECTION_TABLES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: GROUPED_SELECTION_TABLES_ID.into(),
+                    path: GROUPED_SELECTION_TABLES_FILE.into(),
+                    format: GROUPED_SELECTION_TABLES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![
+                        WHITE_FLOWERS_ISOLATED_VALUES_ID.into(),
+                        THUMB_PC_LITERALS_ID.into(),
+                    ],
+                    sources,
+                });
+                result.grouped_selection_tables = Some(encoded);
+            }
+            if revision > PRE_FIXED_SCREEN_MAPS_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, fixed_screen_maps::SOURCES);
+                result.manifest.coverage.push(FIXED_SCREEN_MAPS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: FIXED_SCREEN_MAPS_ID.into(),
+                    path: FIXED_SCREEN_MAPS_FILE.into(),
+                    format: FIXED_SCREEN_MAPS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![],
+                    sources,
+                });
+                result.fixed_screen_maps = Some(encoded);
+            }
+            if revision > PRE_LOCALIZED_LAYOUT_TABLES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, localized_layout_tables::SOURCES);
+                result.manifest.coverage.push(LOCALIZED_LAYOUT_TABLES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: LOCALIZED_LAYOUT_TABLES_ID.into(),
+                    path: LOCALIZED_LAYOUT_TABLES_FILE.into(),
+                    format: LOCALIZED_LAYOUT_TABLES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![],
+                    sources,
+                });
+                result.localized_layout_tables = Some(encoded);
+            }
+            if revision > PRE_DIRECT_RECTANGLE_DIRECTORY_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, direct_rectangle_directory::SOURCES);
+                result.manifest.coverage.push(DIRECT_RECTANGLE_DIRECTORY_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: DIRECT_RECTANGLE_DIRECTORY_ID.into(),
+                    path: DIRECT_RECTANGLE_DIRECTORY_FILE.into(),
+                    format: DIRECT_RECTANGLE_DIRECTORY_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![],
+                    sources,
+                });
+                result.direct_rectangle_directory = Some(encoded);
+            }
+            if revision > PRE_INDEXED_UI_TILEMAPS_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, indexed_ui_tilemaps::SOURCES);
+                result.manifest.coverage.push(INDEXED_UI_TILEMAPS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: INDEXED_UI_TILEMAPS_ID.into(),
+                    path: INDEXED_UI_TILEMAPS_FILE.into(),
+                    format: INDEXED_UI_TILEMAPS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![],
+                    sources,
+                });
+                result.indexed_ui_tilemaps = Some(encoded);
+            }
+            if revision > PRE_MAP_HEIGHT_DIGITS_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, map_height_digits::SOURCES);
+                result.manifest.coverage.push(MAP_HEIGHT_DIGITS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: MAP_HEIGHT_DIGITS_ID.into(),
+                    path: MAP_HEIGHT_DIGITS_FILE.into(),
+                    format: MAP_HEIGHT_DIGITS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![FIRAGA_QUEUED_TRANSFER_ID.into()],
+                    sources,
+                });
+                result.map_height_digits = Some(encoded);
+            }
+            if revision > PRE_QUEUED_UI_MAPS_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, queued_ui_maps::SOURCES);
+                result.manifest.coverage.push(QUEUED_UI_MAPS_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: QUEUED_UI_MAPS_ID.into(),
+                    path: QUEUED_UI_MAPS_FILE.into(),
+                    format: QUEUED_UI_MAPS_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![],
+                    sources,
+                });
+                result.queued_ui_maps = Some(encoded);
+            }
+            if revision > PRE_PHYSICAL_UNIT_OBJ_BANK_REVISION {
+                let ranges =
+                    physical_unit_obj_bank::uncovered_ranges(rom, &result.manifest.resources)?;
+                let (encoded, sources) = pack_encoded_sources(rom, ranges);
+                result.manifest.coverage.push(PHYSICAL_UNIT_OBJ_BANK_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: PHYSICAL_UNIT_OBJ_BANK_ID.into(),
+                    path: PHYSICAL_UNIT_OBJ_BANK_FILE.into(),
+                    format: PHYSICAL_UNIT_OBJ_BANK_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        UNIT_OBJ_INITIAL_POSE_ID,
+                        UNIT_OBJ_EQUIPMENT_ID,
+                        UNIT_OBJ_NORMAL_BATTLE_ID,
+                        UNIT_OBJ_ALTERNATE_BATTLE_ID,
+                        UNIT_OBJ_SCRIPT_SPECIAL_NORMAL_ID,
+                        UNIT_OBJ_SCRIPT_SPECIAL_ALTERNATE_ID,
+                        UNIT_OBJ_SCRIPT_OVERRIDE_ID,
+                        UNIT_OBJ_SCRIPT_REGISTRY_SPECIAL_ID,
+                        UNIT_OBJ_SCRIPT_REGISTRY_GENERIC_ID,
+                        SCRIPT39_REGISTRY_POSES_ID,
+                        SCRIPT39_SPECIAL_POSES_ID,
+                        THUMB_PC_LITERALS_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.physical_unit_obj_bank = Some(encoded);
+            }
+            if revision > PRE_SCREEN_PALETTE_BANK_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, screen_palette_bank::SOURCES);
+                result.manifest.coverage.push(SCREEN_PALETTE_BANK_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: SCREEN_PALETTE_BANK_ID.into(),
+                    path: SCREEN_PALETTE_BANK_FILE.into(),
+                    format: SCREEN_PALETTE_BANK_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [UI_RAW_PALETTES_ID, LAYERED_OBJ_ANIMATIONS_ID]
+                        .into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.screen_palette_bank = Some(encoded);
+            }
+            if revision > PRE_INDEXED_TILE_ATTRIBUTES_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, indexed_tile_attributes::SOURCES);
+                result.manifest.coverage.push(INDEXED_TILE_ATTRIBUTES_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: INDEXED_TILE_ATTRIBUTES_ID.into(),
+                    path: INDEXED_TILE_ATTRIBUTES_FILE.into(),
+                    format: INDEXED_TILE_ATTRIBUTES_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: [
+                        INDEXED_GRAPHICS_ID,
+                        WHITE_FLOWERS_ISOLATED_VALUES_ID,
+                        THUMB_PC_LITERALS_ID,
+                    ].into_iter().map(str::to_owned).collect(),
+                    sources,
+                });
+                result.indexed_tile_attributes = Some(encoded);
+            }
+            if revision > PRE_SCREEN_CURVE_BANK_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, screen_curve_bank::SOURCES);
+                result.manifest.coverage.push(SCREEN_CURVE_BANK_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: SCREEN_CURVE_BANK_ID.into(),
+                    path: SCREEN_CURVE_BANK_FILE.into(),
+                    format: SCREEN_CURVE_BANK_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![COMPACT_OBJ_CATALOG_ID.into()],
+                    sources,
+                });
+                result.screen_curve_bank = Some(encoded);
+            }
+            if revision > PRE_FULL_SCREEN_MAP_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, full_screen_map::SOURCES);
+                result.manifest.coverage.push(FULL_SCREEN_MAP_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: FULL_SCREEN_MAP_ID.into(),
+                    path: FULL_SCREEN_MAP_FILE.into(),
+                    format: FULL_SCREEN_MAP_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![UI_CUSTOM_GRAPHICS_ID.into()],
+                    sources,
+                });
+                result.full_screen_map = Some(encoded);
+            }
+            if revision > PRE_SAVE_CRC32_TABLE_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, save_crc32_table::SOURCES);
+                result.manifest.coverage.push(SAVE_CRC32_TABLE_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: SAVE_CRC32_TABLE_ID.into(),
+                    path: SAVE_CRC32_TABLE_FILE.into(),
+                    format: SAVE_CRC32_TABLE_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: Vec::new(),
+                    sources,
+                });
+                result.save_crc32_table = Some(encoded);
+            }
+            if revision > PRE_SCREEN_EFFECT_MOTION_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, screen_effect_motion::SOURCES);
+                result.manifest.coverage.push(SCREEN_EFFECT_MOTION_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: SCREEN_EFFECT_MOTION_ID.into(),
+                    path: SCREEN_EFFECT_MOTION_FILE.into(),
+                    format: SCREEN_EFFECT_MOTION_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![BLEND_PROGRAMS_ID.into()],
+                    sources,
+                });
+                result.screen_effect_motion = Some(encoded);
+            }
+            if revision > PRE_LOCALIZED_INLINE_UI_REVISION {
+                let (encoded, sources) = pack_encoded_sources(rom, localized_inline_ui::SOURCES);
+                result.manifest.coverage.push(LOCALIZED_INLINE_UI_ID.into());
+                result.manifest.resources.push(Resource {
+                    id: LOCALIZED_INLINE_UI_ID.into(),
+                    path: LOCALIZED_INLINE_UI_FILE.into(),
+                    format: LOCALIZED_INLINE_UI_FORMAT.into(),
+                    sha256: String::new(),
+                    dependencies: vec![FONT_BANK_ID.into()],
+                    sources,
+                });
+                result.localized_inline_ui = Some(encoded);
+            }
             result.tilemap_transfer_directory = Some(metadata);
             (result.manifest.extractor_revision, result.manifest.decoder_revision) = revision;
         } else {
@@ -3069,6 +3422,21 @@ impl Extraction {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_scripts: None,
             font_bank: None,
@@ -4679,6 +5047,216 @@ impl Extraction {
             (None, None) => {}
             _ => return Err("Missing or unexpected counted effect table file".into()),
         }
+        match (&self.grouped_selection_tables, files.grouped_selection_tables) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Grouped selection table file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == GROUPED_SELECTION_TABLES_ID)
+                    .ok_or("Missing grouped selection table resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected grouped selection table file".into()),
+        }
+        match (&self.fixed_screen_maps, files.fixed_screen_maps) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Fixed screen map file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == FIXED_SCREEN_MAPS_ID)
+                    .ok_or("Missing fixed screen map resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected fixed screen map file".into()),
+        }
+        match (&self.localized_layout_tables, files.localized_layout_tables) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Localized layout table file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == LOCALIZED_LAYOUT_TABLES_ID)
+                    .ok_or("Missing localized layout table resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected localized layout table file".into()),
+        }
+        match (&self.direct_rectangle_directory, files.direct_rectangle_directory) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Direct rectangle directory file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == DIRECT_RECTANGLE_DIRECTORY_ID)
+                    .ok_or("Missing direct rectangle directory resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected direct rectangle directory file".into()),
+        }
+        match (&self.indexed_ui_tilemaps, files.indexed_ui_tilemaps) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Indexed UI tilemap file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == INDEXED_UI_TILEMAPS_ID)
+                    .ok_or("Missing indexed UI tilemap resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected indexed UI tilemap file".into()),
+        }
+        match (&self.map_height_digits, files.map_height_digits) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Map-height digit file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == MAP_HEIGHT_DIGITS_ID)
+                    .ok_or("Missing map-height digit resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected map-height digit file".into()),
+        }
+        match (&self.queued_ui_maps, files.queued_ui_maps) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Queued UI map file differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == QUEUED_UI_MAPS_ID)
+                    .ok_or("Missing queued UI map resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected queued UI map file".into()),
+        }
+        match (&self.physical_unit_obj_bank, files.physical_unit_obj_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Physical unit OBJ bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == PHYSICAL_UNIT_OBJ_BANK_ID)
+                    .ok_or("Missing physical unit OBJ resource in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected physical unit OBJ bank".into()),
+        }
+        match (&self.screen_palette_bank, files.screen_palette_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Screen palette bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == SCREEN_PALETTE_BANK_ID)
+                    .ok_or("Missing screen palette bank in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected screen palette bank".into()),
+        }
+        match (&self.indexed_tile_attributes, files.indexed_tile_attributes) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Indexed tile attributes differ from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == INDEXED_TILE_ATTRIBUTES_ID)
+                    .ok_or("Missing indexed tile attributes in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected indexed tile attributes".into()),
+        }
+        match (&self.screen_curve_bank, files.screen_curve_bank) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Screen curve bank differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == SCREEN_CURVE_BANK_ID)
+                    .ok_or("Missing screen curve bank in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected screen curve bank".into()),
+        }
+        match (&self.full_screen_map, files.full_screen_map) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Full-screen map differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == FULL_SCREEN_MAP_ID)
+                    .ok_or("Missing full-screen map in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected full-screen map".into()),
+        }
+        match (&self.save_crc32_table, files.save_crc32_table) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Save CRC32 table differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == SAVE_CRC32_TABLE_ID)
+                    .ok_or("Missing save CRC32 table in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected save CRC32 table".into()),
+        }
+        match (&self.screen_effect_motion, files.screen_effect_motion) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Screen-effect motion differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == SCREEN_EFFECT_MOTION_ID)
+                    .ok_or("Missing screen-effect motion in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected screen-effect motion".into()),
+        }
+        match (&self.localized_inline_ui, files.localized_inline_ui) {
+            (Some(encoded), Some(bytes)) => {
+                if bytes != encoded.as_slice() {
+                    return Err("Localized inline UI text differs from authenticated source".into());
+                }
+                total = total.saturating_add(bytes.len());
+                expected.resources.iter_mut()
+                    .find(|resource| resource.id == LOCALIZED_INLINE_UI_ID)
+                    .ok_or("Missing localized inline UI text in expected manifest")?
+                    .sha256 = ffta_rom::digest(bytes);
+            }
+            (None, None) => {}
+            _ => return Err("Missing or unexpected localized inline UI text".into()),
+        }
         match (&self.map_raster_palettes, files.map_raster_palettes) {
             (Some(_), Some((_, bytes))) => {
                 if bytes.len() as u64 > MAX_MAP_RASTER_PALETTES_FILE_BYTES { return Err("MapRasterPalettes file exceeds input guard".into()); }
@@ -5556,6 +6134,21 @@ impl Extraction {
             + usize::from(self.physical_compact_obj_region.is_some())
             + usize::from(self.screen_update_tables.is_some())
             + usize::from(self.counted_effect_tables.is_some())
+            + usize::from(self.grouped_selection_tables.is_some())
+            + usize::from(self.fixed_screen_maps.is_some())
+            + usize::from(self.localized_layout_tables.is_some())
+            + usize::from(self.direct_rectangle_directory.is_some())
+            + usize::from(self.indexed_ui_tilemaps.is_some())
+            + usize::from(self.map_height_digits.is_some())
+            + usize::from(self.queued_ui_maps.is_some())
+            + usize::from(self.physical_unit_obj_bank.is_some())
+            + usize::from(self.screen_palette_bank.is_some())
+            + usize::from(self.indexed_tile_attributes.is_some())
+            + usize::from(self.screen_curve_bank.is_some())
+            + usize::from(self.full_screen_map.is_some())
+            + usize::from(self.save_crc32_table.is_some())
+            + usize::from(self.screen_effect_motion.is_some())
+            + usize::from(self.localized_inline_ui.is_some())
             + usize::from(self.map_raster_palettes.is_some())
             + 2 * usize::from(self.auxiliary_scripts.is_some())
     }
@@ -5773,6 +6366,21 @@ mod tests {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -5943,6 +6551,21 @@ mod tests {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6123,6 +6746,21 @@ mod tests {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,
@@ -6292,6 +6930,21 @@ mod tests {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             map_raster_palettes: None,
             auxiliary_commands: None,
             auxiliary_archive: None,

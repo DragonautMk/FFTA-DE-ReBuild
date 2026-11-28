@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "trace-european-inline-ui-text",
+  "title": "Trace the European localized inline UI text bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound seven five-language directories, 35 localized strings, six shared strings, six threshold glyph pairs and their original references. Preserve the language-3 shared selection and exclude alignment bytes."
+  ],
+  "validation": [
+    "Wine wyoo0qtv attests 900 original halfwords and confirms 886 unowned source bytes across 41 spans against e376. All 15 input guards and the Wine server drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, ordinary startup and rendering, translated paths, Linux, USA and native Windows remain open."
+  ],
+  "files": [
+    "docs/rom_data_text.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_text.md"
+  ]
+}

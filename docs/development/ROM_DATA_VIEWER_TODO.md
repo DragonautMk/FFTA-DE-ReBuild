@@ -113,6 +113,10 @@ from `scripts/viewer_stable_inspector.html` and `.js`; the suspended large-JSON
 prototype remains in the legacy single-page template and is not in the scoped
 wiki.
 
+The current local European wiki uses the verified e376-d375 dataset and includes
+its separately scoped screen-effect motion explorer. The dataset and generated
+pages remain private; see the e376 entry below for validation and limits.
+
 The earlier European wiki refresh used extractor 334 / decoder 333. Protected
 unit `n4iol0rn` built the source-authenticated core audio exporter, retained the
 155 unchanged resource files and reconstructed the changed audio directory;
@@ -317,7 +321,7 @@ pages for gameplay records, world maps and terrain, backgrounds and palettes,
 interface controls and tiles, tilemaps and transfer graphics, object animations,
 actors/equipment, battle actors, script actors, songs and timed sounds,
 waveforms and instruments, CGB noise, focused short texts and fonts, combined
-text search, event scripts, indexed graphics, transfer graphics and other resources. The overview embeds
+text search, event scripts, indexed graphics and tile attributes, transfer graphics and other resources. The overview embeds
 only index fields, and each topic page embeds its own projected data and the
 small shared dependencies required by its previews. PCM samples and battle or
 script sprite tiles load from local assets when needed. The tilemap and
@@ -388,6 +392,21 @@ including the generated index. Chrome unit `8m_fx21h` compared all 4,330
 indexed language strings to the existing viewer labels with zero mismatches.
 The private on-demand asset is 191,135 bytes. Published 23 ignored pages and the asset with preimages
 `out/ffta-name-search-before-35xegfz8`. Windows remains deferred.
+
+**Observed map nodes in name search.** The lazy name index also includes
+six authenticated observed world nodes, with their localized region names and
+a direct link selecting the node and language on the map. The search labels
+these as observed nodes: the recorded placement is conditional on game state.
+Missing or unverified names and absent nodes do not produce search entries.
+Updated search and map sections show dated badges. Synthetic
+`viewer-node-search-synthetic-ftj7i1uw` passed 58 projection, Chrome, focus,
+name and regression tests; two existing projection tests now read the current
+pointer-text scope. Protected `viewer-node-search-real-emfdxes0` checked all 30
+localized names and six recorded placements against authenticated sources,
+exercised Chrome search/map navigation, preserved 26 scoped payloads apart from
+name-index and badge metadata and 175 resource pages, and matched 610 Python/
+Docker files. Published 28 local files with preimages
+`out/ffta-node-search-before-vame64sa`. Native Windows remains deferred.
 
 **Focused world and interface pages.** World maps, terrain, paths and observed
 world names have their own page. The gameplay page keeps the related item,
@@ -517,6 +536,25 @@ The song page fell from 17,407,826 to 9,081,309 bytes and the sample page from
 verified preimages `out/ffta-lazy-pcm-before-an9r53tb`. Selected song previews
 still load every PCM wave used by their selected tracks; native Windows remains
 unverified.
+
+**On-demand song instructions.** Split audio pages retain track metadata and
+load the reachable instruction graph for a selected song from a local,
+content-addressed asset. Shared loads are reused, late selections cannot replace
+current results, and a missing or invalid asset can be retried. Timed auditions
+load their required songs and can be cancelled during loading; CGB and track
+mutes, focus, WAV export and inline single-page output remain available. The
+modified song and timed-sound sections carry dated badges. Synthetic
+`viewer-lazy-songs-synthetic-kuvls2ga` passed 32 audio, retry, cancellation and
+regression tests. Protected e364 `viewer-lazy-songs-real-8ue83huz` independently
+compared all 454 header graphs and 105,253 instructions, matched notes, traces
+and controls for 17 real songs in Chrome, exercised playback and focus,
+preserved 29 scoped payloads apart from the instruction representation and
+badges, retained 177 resource pages, and matched 1,069
+Python/Docker files. The initial real test `ulr3you8` used a new retry selector
+on the old baseline page; the corrected comparison passed. The song page fell
+from 8,829,683 to 1,456,000 bytes; 30 pages and 454 local assets were published
+with preimages `out/ffta-lazy-songs-before-ip7zr2q3`. Native Windows and exact
+original audio fidelity remain unverified.
 
 Synthetic unit `viewer-nav-synthetic-l9qux7c7` passed 61 browser and generator
 checks, including search, selected-folder inspection, topic navigation and saved
@@ -679,6 +717,30 @@ from the beginning. Synthetic real-time Chrome unit
 overlapping matches, cancellation, binary paging and hex search across a block
 boundary. Protected EUR unit `rom-data-viewer-hex-eur-vhuxoa4j` checked hex
 display and byte search in an extracted file beyond 8 MiB without modifying it.
+
+The split wiki's dated **Interpret file bytes** disclosure shows up to 64
+manually interpreted 8-, 16- or 32-bit values per page. Choose byte order,
+inspect stored bytes and signed/unsigned numbers, jump to a decimal or hex file
+offset, and optionally display 16-bit values as BGR555 swatches. Incomplete
+values are retained as bytes. Reads use bounded file slices, including files
+above 8 MiB; changing files or closing the section discards stale reads. These
+interpretations do not establish a file's actual format. Update both the
+`inspect-values` badge in `viewer_section_updates.json` and the matching time
+in `viewer_stable_inspector.html` when changing that disclosure.
+
+Synthetic `viewer-binary-inspector-synthetic-bwe97m3r` passed both focused
+browser cases, including limits, signed extremes, endian, colors, large files,
+partial words and in-flight replacement. Thirteen existing regression cases
+passed in `viewer-binary-inspector-synthetic-aw7tdfb1`; its second new test
+stopped because its browser profile directory was reused. The first attempt
+`mifu0ge1` exposed two test-harness waits. The later `a416bed_` confirmed that
+legacy `--single-page` still uses its separate inspector; the split wiki and
+resource-page test supersede that incorrect single-page expectation. Protected
+`viewer-binary-inspector-real-ngnlxz5x` checked 1,212 source bytes, 321 browser
+rows in six interpretations, 43 scoped payloads, 165 current and 23 historical
+resource payloads, and 1,116 matching Python/Docker files. Published 210 private
+files with preimages `out/ffta-binary-inspector-before-ic_2pplj`. The legacy
+single-page inspector and native Windows were not changed or verified here.
 
 JSON files up to 8 MiB can also be explored as objects and arrays, with at most
 100 entries per page and a path back to the parent. Larger or invalid JSON and
@@ -1059,6 +1121,19 @@ prototype only when the paused viewer task is requested again.
   an unrecognized v2 resource format; the corrected run passed. Primary
   Terra/xhigh settings were not independently confirmed. Windows is deferred.
   [Archive format](../rom_data_indexed_graphics.md#e507-european-indexed-reader-banks)
+- [x] **Indexed tile attributes.** A separate Graphics page browses two
+  direct and five language-slot tables: 804 programs and 4,096 source nibbles.
+  It shows source positions and the documented getter result, with two-way links
+  to matching archive programs. Source owners are checked independently; missing
+  owners leave available tables visible and mark the remainder unavailable.
+  Synthetic `viewer-e372-attrs-synthetic-ilrzqp0j` passed 19 projection,
+  Chrome, navigation and regression tests. Protected EUR
+  `viewer-e372-attrs-real-ycgw4xrl` compared all 1,187 new source bytes and all
+  4,096 displayed nibbles, retained 38 prior scoped payloads and 184 resource
+  pages, and matched 1,109 Python/Docker files. The ignored local e372-d371 wiki
+  was published with verified preimages in `out/ffta-e372-attrs-before-pii_wo82`.
+  Nibble meanings, their assignment to rendered tiles and native Windows remain
+  unverified. [Source evidence](../rom_data_indexed_graphics.md#e639-european-indexed-tile-attribute-tables)
 - [x] **Direct indexed archives.** Two independently rooted archives with
   four and 41 programs are available on the indexed-graphics page, with their
   own resource links, source file and caller-literal positions. Their previews
@@ -1401,6 +1476,18 @@ prototype only when the paused viewer task is requested again.
   extracted inputs. Fifteen ignored wiki pages were published with backup
   `out/ffta-item-metadata-before-gfcuvkm4`; native Windows remains deferred.
   [Source contract](../rom_data_gameplay.md#item-linked-pair-source-contract)
+- [x] **Sixteen-byte linked records.** A separate, dated World page makes all
+  128 authenticated records browsable by ID, with their alias, 14 source bytes,
+  bounded display-helper index and known reader uses. An expandable comparison
+  table opens a selected row. Record names and live two-record outcomes are not
+  inferred. Synthetic `viewer-metadata16-synthetic-5_w35yrk` passed 18 source,
+  Chrome, navigation and regression checks. Protected EUR
+  `viewer-metadata16-real-ez08ndf1` matched all 2,048 source bytes and 1,792
+  displayed fields, preserved 39 prior scoped payloads and 184 resource pages,
+  updated the original file page, and matched 1,110 Python/Docker files. The
+  ignored local wiki was published with preimages in
+  `out/ffta-metadata16-before-w0jea1dw`. Native Windows is deferred.
+  [Reader contract](../rom_data_gameplay.md#sixteen-byte-linked-metadata-source-contract)
 - [x] **Byte-pair metadata lookup.** Browse the 44 European key/value rows,
   their source offsets and links to verified localized metadata names. The
   metadata view links back to matching rows. A filter supports row, key, value
@@ -1887,6 +1974,315 @@ prototype only when the paused viewer task is requested again.
   it does not place these banks in the existing animation page. Graphics/palette
   pairing, live scene selection, original timing and native Windows remain
   unverified. [Physical source](../rom_data_compact_catalog.md#e613-european-physical-compact-obj-region)
+- [x] **Counted effect tables and e362 refresh.** That refresh used the
+  verified e362-d361 dataset and exposed all 13 counted tables and 1,455 byte
+  pairs on a separate, dated Interface page. Browse or play samples, inspect
+  their source halfwords and the documented reversed or biased reader values,
+  and view a diagnostic interval for each pair. Preview rate and looping remain
+  selected when changing tables. The view does not infer scene names or claim
+  original timing, clipping or a complete effect. Synthetic
+  `viewer-e362-effects-synthetic-bojvtdjx` passed 45 projection, guard, Chrome,
+  playback and regression tests. Protected `viewer-e362-effects-real-at6n3xm3`
+  checked all 1,455 source samples and six directory slots, exercised Chrome
+  navigation/playback, preserved 25 prior scoped payloads apart from revision
+  and navigation metadata and 174 resource pages, and matched 610 Python/Docker
+  files. Published 29 local files with preimages
+  `out/ffta-e362-effects-before-7anahly0`. Native Windows remains deferred.
+  [Source and readers](../rom_data_graphics.md#e619-european-counted-effect-table-runtime)
+- [x] **Focused background planes.** The Interface navbar now opens the
+  initial background-plane preview in its own dated page. The main Interface
+  page no longer embeds the plane programs; the focused page carries the
+  graphics, palette and transfer inputs needed for the existing composition
+  and animation controls. Descriptor, tile-sheet and terrain resource links
+  cross pages, while earlier Interface and World bookmarks redirect to the
+  selected descriptor. Invalid paired data keeps the independent terrain view.
+  For e371-d370, Interface fell from 6,165,115 to 4,906,588 bytes and the
+  separately loaded plane page is 5,638,807 bytes. Synthetic
+  `viewer-interface-planes-synthetic-sixl07rm` passed 34 navigation, animation,
+  partial-source, single-page and regression tests. Protected
+  `viewer-interface-planes-real-vudqpzdu` checked 352 source segments, preserved
+  all 162 descriptors, compared three complete rendered previews including
+  transfers, retained 37 scoped payloads and 184 resource pages, and matched
+  1,107 Python/Docker files. Published 40 private files with preimages
+  `out/ffta-interface-planes-before-wc_14fve`. Native Windows remains deferred.
+  [Background packet sources](../rom_data_maps.md)
+- [x] **Screen palette sources and e371 refresh.** The local wiki uses
+  verified e371-d370. A dated, separately loaded Interface page displays three
+  source-gated screen color tables in 16-color banks. Select a swatch to see
+  its BGR555 word, RGB interpretation, high bit, original address and documented
+  destination. The first two tables contain 240 colors each and the staged
+  table contains 256; their active screen and later changes are not inferred.
+  The reader literals and each source span must match before the preview is
+  enabled. Synthetic `viewer-e371-palettes-synthetic-v6_3022v` passed 22
+  source-guard, browser, bookmark and regression tests. Protected
+  `viewer-e371-palettes-real-h70idj7m` compared all 1,484 source bytes and
+  736 displayed colors, preserved 36 scoped payloads and 183 resource pages,
+  and matched 1,106 Python/Docker files. Published 40 private files with
+  preimages `out/ffta-e371-palettes-before-n3r23uii`. Native Windows remains
+  deferred. [Source contract](../rom_data_ui_palettes.md#e638-european-b8-screen-palette-runtime)
+- [x] **Physical unit sprite sequences and e370 refresh.** The verified
+  e370-d369 refresh added a dated **Physical unit sprite sequences** page
+  decodes the 4,751 authenticated, nonoverlapping source spans and joins their
+  index cells, directory roots, sequence frames, OBJ lists and 4-bit tiles to
+  previously extracted dependencies. It exposes 11,596 newly served physical
+  cells and 860 linked sequences (817 new), across 228 sprite IDs with these
+  cells. Original directory aliases remain separate IDs. Inspect null cells
+  and frame operations, select a manual palette, and play from a chosen frame
+  with optional looping; sprite changes retain preview settings. Tile assets
+  load on demand. Conflicting, missing or unrecognized source dependencies
+  disable or limit the preview rather than invent an association. Original
+  timing, live actor composition, scheduler and palette selection are not
+  simulated. Synthetic `viewer-e370-sprites-synthetic-gbsiqf6s` passed 21
+  decoding, alias, playback, lazy-load and regression tests. Protected
+  `viewer-e370-sprites-real-e3r27qx4` compared all 154,032 new bytes and
+  4,751 spans with their sources, verified 11,596 cells, all 860 displayed
+  sequences and every resolved object/tile against the ROM, and resolved all
+  2,554 graphics frames. It preserved 35 scoped payloads and 182 resource pages,
+  and matched 1,104 Python/Docker files. Published 60 private files with
+  preimages `out/ffta-e370-sprites-before-cvsbhhh3`. Native Windows remains
+  deferred. [Physical bank contract](../rom_data_unit_obj.md#e636-complete-european-unit-obj-bank-at-runtime)
+- [x] **Focused encounter page.** The World navbar has a separate
+  **Encounters and unit templates** page. Headers, unit templates and
+  coordinate lists load only there; the World page keeps compact references
+  needed for item, job and event reverse links. Follow both directions between
+  encounter templates and items, metadata, events and terrain. A language
+  selector keeps the available source-backed names readable on the encounter
+  page; old World bookmarks redirect to the selected encounter and unit.
+  Modified sections and the new page have dated badges. For the e369-d368
+  dataset, World fell from 3,724,950 to 2,531,805 bytes; the encounter page is
+  2,624,454 bytes and is loaded separately. Synthetic
+  `viewer-encounter-scope-synthetic-ndzczgjo` passed 39 navigation, partial
+  input, legacy bookmark and regression tests. Protected
+  `viewer-encounter-scope-real-hvtei8cb` checked all 442 headers, 2,850 unit
+  templates, 691 coordinate lists and 695 source segments; preserved 34 scoped
+  payloads and all 182 resource pages, with only three page links updated;
+  and matched 1,081 Python/Docker files. Published 40 private files with
+  preimages `out/ffta-encounter-scope-before-xlxk_mal`. Native Windows remains
+  deferred.
+  [Encounter source](../rom_data_gameplay.md#european-encounter-unit-templates-and-shared-ownership)
+- [x] **Same-index mission text candidates.** The local wiki
+  offers searchable, five-language candidates for 512 mission records. It
+  authenticates both European source catalogs and checks their 512 record IDs,
+  low-ten-bit values, matching text reader and five complete language tables.
+  The association is explicitly tentative: equal indices and recognizable
+  examples do not prove a title or live selection for every record. Search
+  loads its compact name asset on demand, opens the exact mission and language,
+  and links in both directions to the corresponding pointer-text entry. The
+  mission panel shares pinned language, command visibility and font settings
+  with other text views; modified sections and the added panel have dated
+  badges. The index does not embed the game strings; local generated assets
+  contain the extracted data. Synthetic `viewer-mission-text-synthetic-9k90t4ex`
+  passed 28 projection, navigation, text-settings and regression tests.
+  Protected `viewer-mission-text-real-2ctl456a` checked 512 records, 2,560
+  localized text entries and 33,657 source segments, preserved 34 scoped
+  payloads and 182 resource pages, and matched 1,080 Python/Docker files.
+  Published 37 private files with preimages
+  `out/ffta-mission-text-before-0sf6ru28`. Native Windows remains deferred.
+  [Source contract](../rom_data_gameplay.md#european-mission-record-source-contract)
+- [x] **Queued UI maps and e369 refresh.** That refresh used verified
+  e369-d368 and added a separately loaded, dated Interface page for five physical
+  maps, 624 cells and nine original source paths. Paths link to the relevant map,
+  preserving shared and alternate targets. For the live-height map, select one
+  through sixteen physically available rows for inspection; this is not a
+  bound on the game's live row count. Graphics and palettes remain optional and
+  share the on-demand map asset. Synthetic `viewer-queued-ui-synthetic-95fv_p7v`
+  passed 40 projection, browser and regression tests, including retained row
+  selection and single-page navigation. Protected `viewer-queued-ui-real-hse1rw8b`
+  checked 1,284 source bytes, all cells, paths and sixteen row previews, preserved
+  33 other scoped payloads and 181 resource pages, and matched 1,080 Python/Docker
+  files. Published 37 private files with preimages
+  `out/ffta-queued-ui-before-gcm5mb6p`. Scene, palette and live row bounds remain
+  unverified; native Windows remains deferred.
+  [Source and readers](../rom_data_ui_graphics.md#e633-european-queued-ui-map-runtime)
+- [x] **Map-height digits and e368 refresh.** That refresh used verified
+  e368-d367 and added a separately loaded, dated Interface page for ten
+  map-height digit sources. It joins the nine new sources with the earlier
+  hash-checked digit 5 transfer; if the latter is absent or inconsistent, the
+  other nine remain usable and digit 5 is marked unavailable. Enter a height
+  from 0 to 99, inspect individual source halfwords, and switch between solid
+  and grayscale index previews. The renderer interprets each source as a 2×4
+  arrangement of 4-bit tiles; the original palette and placement are not
+  established. Synthetic `viewer-height-synthetic-9n37njc7` passed 35 source,
+  browser and regression tests, including missing dependency and single-page
+  behavior. Protected `viewer-height-real-a5ugubd7` checked all 2,560 joined
+  glyph bytes and 100 preview values, preserved 32 earlier scoped payloads and
+  180 resource pages, and matched 1,078 Python/Docker files. Published 36
+  private files with preimages `out/ffta-height-before-htawh0lh`. Native Windows
+  remains deferred. [Source and readers](../rom_data_runtime.md#e631-european-map-height-digit-runtime)
+- [x] **On-demand map graphics and palettes.** The fixed-width maps, direct
+  rectangles and indexed UI pages keep their cells immediately available, while
+  a shared local asset supplies optional graphics and palettes when the reader
+  selects **Load graphics and palettes**. Missing or invalid assets can be
+  retried without losing the selected map; the legacy single-page viewer keeps
+  its existing embedded inputs. All three modified sections have dated badges.
+  Synthetic `viewer-lazy-maps-synthetic-budbp5gi` passed 29 browser, source and
+  regression tests, including a missing-file retry and existing manual pixels.
+  Protected `viewer-lazy-maps-real-okbh5lh6` preserved 32 scoped payloads and
+  180 resource pages, checked all three pages offline with 117 graphics and
+  184 palette choices, and matched 1,076 Python/Docker files. Initial page sizes
+  fell from 4,226,622–4,235,929 bytes to 942,799–952,106 bytes; the shared
+  2,964,154-byte asset loads only on request. Published 35 private files with
+  preimages `out/ffta-lazy-maps-before-xfub0ev3`. Native Windows remains deferred.
+- [x] **Indexed UI tilemaps and e367 refresh.** That refresh used verified
+  e367-d366 and added a separately loaded, dated Interface page for the three
+  language-selected maps and 28 distinct indexed maps. Four ten-slot
+  directories link to the physical maps and disclose shared targets; each map
+  lists its directory references. Inspect all 855 cells or apply a manually
+  selected 16-bit caller addend with wrapping. Scene, graphics, palette and the
+  actual caller value are not inferred. Synthetic
+  `viewer-indexed-ui-synthetic-s8x4ue7i` passed 26 projection, browser and
+  regression tests, including single-page navigation. Protected
+  `viewer-indexed-ui-real-8utepglg` checked 1,902 source bytes, all 855 stored
+  and adjusted cells and 40 slot links in Chrome, preserved 31 other scoped
+  payloads and 179 resource pages, and matched 1,075 Python/Docker files.
+  Published 35 private files with preimages `out/ffta-indexed-ui-before-1x7d4m5r`.
+  Native Windows remains deferred. [Source and readers](../rom_data_ui_graphics.md#e629-european-indexed-ui-tilemap-runtime)
+- [x] **Direct rectangle previews.** A separately loaded, dated Interface page
+  exposes all five E627 15×16 cell rectangles at their distinct source
+  addresses and the twenty selector preset bytes with the reader's +80 result.
+  Preset rows open the corresponding rectangle, whose cells can be inspected
+  and manually paired with existing graphics and palettes. The original task
+  was verified copying row zero; the shared helper was checked for the other
+  rows. Actual scene, graphics, palette and placement are not established.
+  Synthetic `viewer-direct-rectangles-synthetic-6bsfrc_5` passed 21 projection,
+  browser and regression tests, including single-page navigation. Protected
+  `viewer-direct-rectangles-real-7miy5cj1` checked 2,458 source bytes, all
+  1,200 cells and 20 presets in Chrome, preserved 30 other scope payloads and
+  178 resource pages, and matched 1,073 Python/Docker files. Earlier unit
+  `1lqrh6_x` reached the Docker step but failed on a shadowed test variable;
+  the test script was corrected. Published 34 private files with preimages
+  `out/ffta-direct-rectangles-before-b3pw5aos`. Native Windows remains deferred.
+  [Source and readers](../rom_data_graphics.md#e627-european-direct-rectangle-runtime)
+- [x] **Event-to-script links and e366 refresh.** That refresh used verified
+  e366-d365 and linked authenticated European event rows to their stored script
+  keys. Each key lists matching event rows and counts of stored mission
+  references, with pagination and direct bookmarks in both directions. The
+  key 0x4A live-selector exception and the distinction between stored references
+  and execution are explicit. Missing or unauthenticated sources hide the join;
+  missing mission authentication leaves event links available without counts.
+  Synthetic `viewer-event-script-synthetic-m_86xw5y` passed 29 source-guard,
+  browser and regression tests. An earlier unit `a5yfv6kd` exposed an obsolete
+  text-page expectation and a same-URL reload test; both were corrected.
+  Protected `viewer-event-script-real-wy_mph2l` checked 256 event rows, 512
+  mission references and 234 archive keys against the ROM, exercised both
+  navigation directions, preserved 30 scoped payloads apart from the join and
+  revision/navigation metadata and 178 resource pages, and matched 1,072
+  Python/Docker files. Published 33 private files with preimages
+  `out/ffta-event-script-before-kdltpz0p`. At that stage the e366 rectangle
+  resource was available in the local file inspector.
+  Native Windows remains deferred. [Event source](../rom_data_gameplay.md#european-event-record-source-contract) ·
+  [Script source](../rom_data_scripts.md#relative-script-archive-and-event-key-source-contract)
+- [x] **Localized layouts and e365 refresh.** That refresh used the verified
+  e365-d364 dataset and added a separately loaded, dated Interface page for
+  four builders, five language IDs, 267 layout rows and three object lists.
+  Inspect raw fields and the documented wrapping task positions on a plot,
+  view relative untransformed OBJ outlines, and play the 17 stored transition
+  pairs at a chosen preview rate with optional looping. Scene identities,
+  actual composition and original transition timing are not inferred. Synthetic
+  `viewer-e365-layout-synthetic-n97a9ppz` passed 29 projection, browser and
+  regression tests. Protected `viewer-e365-layout-real-7rpajuy8` checked 3,718
+  source bytes, all 20 layouts and 267 rows, eight objects and 17 transitions,
+  exercised Chrome and playback, preserved 29 earlier scoped payloads apart
+  from revision/navigation metadata and 177 resource pages, and matched 1,071
+  Python/Docker files. It used the verified E625 retry `_2d3h_eq` and passing
+  CLI subreceipt after the original staging unit's fixture-limit failure.
+  Published 33 private files with preimages `out/ffta-e365-layout-before-1y3ojqz6`.
+  Native Windows remains deferred. [Source and readers](../rom_data_ui_graphics.md#e625-european-localized-layout-runtime)
+- [x] **Full-screen map and e374 refresh.** A separately loaded, dated
+  Interface page displays all 600 authenticated cells of the 30×20 source map.
+  Its loader-selected 600-tile graphics bank is joined through the independently
+  authenticated literal and loaded only on request; palette choices remain
+  manual. Cell source addresses and 32-cell destination stride are explained.
+  Reader audit `viewer-e374-reader-audit-mt9ui1p4` confirmed the original
+  graphics and map copy sequence. Synthetic `viewer-e374-map-synthetic-_h4apm9c`
+  passed 30 source, browser, retry and regression tests. Protected EUR
+  `viewer-e374-map-real-5yojkzg3` checked 1,212 source bytes, all 600 cells and
+  38,400 grayscale pixels, preserved 41 scoped payloads and 186 resource pages,
+  and matched 1,114 Python/Docker files. Published 45 private files with
+  preimages `out/ffta-e374-map-before-4bmqu0vq`. Initial test `y065fnf5`
+  counted an accessible row header as a map cell; the corrected test passed.
+  Screen identity, live composition, ordinary execution and native Windows remain
+  unverified. The later initializer-color association is documented below.
+  [Source and readers](../rom_data_ui_graphics.md#e644-european-full-screen-map-at-runtime)
+- [x] **Full-screen initializer colors.** The dated full-screen page can load
+  the authenticated loader graphics with one of the preceding initializer's
+  three palette sources. Its four color-mode values include the default alias,
+  preserve the original first-color clear and use each cell's stored bank ID;
+  manual choices remain available. The shared map-graphics asset still loads on
+  request. Static audits `viewer-screen-init-audit-lz4xdapt` and
+  `viewer-screen-caller-audit-n8dyno0p` trace the selection and dispatcher.
+  Synthetic `viewer-screen-colors-synthetic-rvx4326w` passed 31 source, browser,
+  retry and regression tests. Protected EUR `viewer-screen-colors-real-85frh7mv`
+  checked three source ranges and all 38,400 pixels in each of four modes;
+  preserved 43 scoped payloads and 188 resource pages; and matched 1,116
+  Python/Docker files. Published 45 ignored files with verified preimages
+  `out/ffta-screen-colors-before-n1x30_iv`. Zero-index transparency and other
+  layers are not composited; subsequent palette changes, screen identity,
+  ordinary execution and native Windows remain unverified.
+  [Source and readers](../rom_data_ui_graphics.md#e644-european-full-screen-map-at-runtime)
+- [x] **Fixed-width screen maps and e364 refresh.** That refresh used the
+  verified e364-d363 dataset and added a separately loaded, dated Interface
+  page for nine bounded source rectangles. Browse their 2,939 cells, inspect
+  values and source offsets, and manually choose tile graphics and palettes.
+  Two localized callers share one stored rectangle. Graphics/palette pairing,
+  scene identity and original composition are not inferred. Synthetic
+  `viewer-e364-maps-synthetic-777lcf44` passed 30 projection, browser and
+  regression tests. Protected `viewer-e364-maps-real-poa0ee8y` checked 5,918
+  source bytes, all cells and their displayed index colors, plus 27 manual
+  graphics/palette pixels across nine maps. It preserved 28 prior scoped
+  payloads and 176 resource pages and matched 615 Python/Docker files. Two
+  earlier attempts (`fnid_m7v`, `b0ghn_b7`) stopped at an incorrect test DOM
+  selector; the corrected test passed. Published 32 private files with
+  preimages `out/ffta-e364-maps-before-ihnf3t19`. Native Windows remains
+  deferred. [Source and readers](../rom_data_ui_graphics.md#e623-european-fixed-width-screen-map-runtime)
+- [x] **Grouped selection banks and e363 refresh.** That refresh used the
+  verified e363-d362 dataset and added a separately loaded, dated page for four
+  banks of 25 groups (500 halfwords) and 160 weighted rows. Browse groups,
+  search values, inspect source offsets and field widths, and select the 21
+  observed European row ranges. Their weights are not presented as probabilities;
+  names and live selections remain unverified. The separately owned first group
+  is displayed only when its source checks pass; the remaining data stays usable
+  if that dependency is absent. Synthetic `viewer-e363-groups-synthetic-sh_5k9_u`
+  passed 17 source, browser and navigation tests. Protected real run
+  `viewer-e363-groups-real-y6gej8y4` checked 2,952 source bytes, all 500 pool
+  entries and 160 rows, 21 observed groups, Chrome navigation, 27 prior scoped
+  payloads and 613 Python/Docker files, then failed a publication bookkeeping
+  assertion comparing an absolute path with a relative path. The retained output
+  and protected inputs were reconciled in `viewer-e363-groups-finish-k2r2am76`
+  PASS; 175 previous resource pages were preserved. Published 31 private files
+  with preimages `out/ffta-e363-groups-before-26rtfkov`. Native Windows remains
+  deferred. [Source and readers](../rom_data_gameplay.md#e621-european-grouped-selection-runtime)
+- [x] **Selection thresholds and weight scans.** Browse the four source
+  thresholds and 30 ordinal weights on a separate, dated World and other data
+  page. Supply a header count and signed helper result to inspect the threshold
+  comparison; independently choose eligible ordinals for each live scan and a
+  32-bit rank to inspect the wrapping subtraction and selected ordinal. Zero
+  weights, zero-total exit, negative ranks and independent eligibility are
+  preserved. The view does not infer a random distribution or ordinal meaning.
+  Synthetic `viewer-selection-synthetic-f_rli0ap` passed 61 projection, guard,
+  Chrome and regression tests. Protected `viewer-selection-real-qnrazhjx`
+  checked 34 source bytes, six count cases and 96 browser scan combinations
+  across 2,880 result cells; it preserved 26 earlier scopes apart from resource
+  relocation/navigation metadata, retained 174 unchanged resource pages,
+  updated one inspector link and matched 611 Python/Docker files. Published 30
+  local files with preimages `out/ffta-selection-before-vsxhvd_5`. Native
+  Windows remains deferred. [Source contract](../rom_data_gameplay.md#european-selection-byte-table-source-contract)
+- [x] **Task-cycle delta playback.** Browse the 48 signed source bytes on a
+  separate World and other data page, with a graph and source table. Choose a
+  starting phase, unsigned 16-bit value and add/subtract branch; step or play
+  the documented bounded sequence, optionally continuing across cycles. The
+  calculation wraps at 16 bits and the next phase wraps after 47. The view
+  does not infer a coordinate, task lifetime or original timing. It rejects
+  inconsistent source bytes and carries a dated section badge. Synthetic
+  `viewer-task-cycle-synthetic-r34mgrr2` passed 41 projection, source-guard,
+  Chrome, focus, playback and regression tests. Protected
+  `viewer-task-cycle-real-a8nvlfpd` checked 48 source bytes and 9,216 arithmetic
+  steps, exercised Chrome navigation/playback, preserved 24 prior scopes apart
+  from moving the resource entry and adding navigation metadata, retained 173
+  resource pages unchanged and updated one inspector link, and matched 608
+  Python/Docker files. Published 28 local files with preimages
+  `out/ffta-task-cycle-before-05w2semu`. Native Windows remains deferred.
+  [Source contract](../rom_data_gameplay.md#conditional-european-task-cycle-delta-source-and-model)
 - [x] **Screen-update grid movement.** Join the two 24-row compact source
   grids to their documented byte-curve pointers. A collapsible view plots stored
   X against the controlled reader's signed 16-bit Y calculation, displays the
@@ -1902,6 +2298,40 @@ prototype only when the paused viewer task is requested again.
   resource pages, and matched 607 Python/Docker files. Published 25 local pages
   with preimages `out/ffta-e361-grid-before-3ns4jbk9`. Native Windows remains
   deferred. [Controlled reader](../rom_data_compact_catalog.md#e616-european-screen-update-table-runtime)
+- [x] **Screen effect motion and e376 refresh.** A dated, separate Interface
+  page browses 22 scheduled and 64 physical second-sprite rows, 12 motion
+  records, seven timed records, five background modes and 264 stored offset,
+  scale and scanline samples. A selectable, playable marker illustrates the
+  stored endpoints with linear interpolation; curves play their actual stored
+  samples. Source offsets, bytes, scanline branch values and the separate blend
+  alias are visible. Loop and preview rate survive selection changes. The
+  original sprite base, scheduler, interpolation, live second-row domain,
+  graphics, composition and scene identity are not established by this view.
+  Synthetic `viewer-e376-effect-synthetic-vhybnqra` passed three focused source
+  and browser tests; 14 existing cases passed in `claym7qj`, whose new fixtures
+  initially omitted an empty manifest list and focused a hidden select.
+  Protected `viewer-e376-effect-real-jjzu_1p9` checked all 1,089 bytes and 26
+  source spans and all 374 displayed rows, preserved 43 scoped payloads and 188
+  resource pages, and matched 1,118 Python/Docker files. Published 47 private
+  pages with preimages `out/ffta-e376-effect-before-4166wgmt`. Native Windows
+  remains deferred. [Source and readers](../rom_data_graphics.md#e648-european-screen-effect-motion-at-runtime)
+- [x] **Screen motion curves and e373 refresh.** A dated Interface page
+  displays and plays seven authenticated X/Y motion curves through step 60,
+  with 21 source records and 30 position rows. The last step is labelled as a
+  source alias only for a selected nonconstant curve; null pointers use 256.
+  Missing prior position owners leave their bytes explicitly unavailable. Rate
+  and loop settings are retained across controller and record changes.
+  Synthetic `viewer-e373-curves-synthetic-dzyeapjr` passed 17 source, Chrome,
+  playback and regression tests. Protected EUR
+  `viewer-e373-curves-real-qs8buc10` matched 1,450 new source bytes, 427 curve
+  values, all 21 records and 30 position rows, and 2,562 browser values. It
+  preserved 40 scoped payloads and 185 resource pages and matched 1,112
+  Python/Docker files. The local e373-d372 wiki was published with preimages
+  `out/ffta-e373-curves-before-qwqm0kjn`. The first browser run
+  `964n81vk` passed but displayed an alias label for two constant axes; the
+  corrected unit above supersedes it. Preview speed, complete screen effects,
+  the second controller scheduler and native Windows are not established.
+  [Source evidence](../rom_data_graphics.md#e642-european-screen-curves-at-runtime)
 - [x] **European screen-update curves and e361 refresh.** The local wiki now
   uses the verified e361-d360 dataset and has a separate, dated Interface page
   for both screen-update banks. Browse four 16-bit scale curves and thirteen
@@ -2480,6 +2910,22 @@ prototype only when the paused viewer task is requested again.
   synthetic input. These units used isolated temporary roots while `target`
   was unmounted; embedded data stayed unchanged and physical audio remains
   unverified.
+- [x] **Physical rhythm-tone audition.** The authenticated European rhythm
+  root exposes 128 physically present key-indexed children in the instrument
+  view. Its 127 direct PCM/CGB children can be auditioned using each stored
+  pitch key; the one nested map child is marked unavailable, matching the
+  original reader. The same lookup is used by sequence, timed audition and WAV
+  paths when a source selects it; CGB mute remains effective. Source domains
+  describe physical candidates, not established ordinary key use. Original
+  reader audit `viewer-rhythm-reader-audit-8vnzhg5i` checked 44 instruction
+  decodings. Synthetic `viewer-rhythm-synthetic-jmfuhf51` passed 27 source,
+  Chrome, PCM/CGB, sequence, timed, WAV and regression tests. Protected EUR
+  `viewer-rhythm-real-kb9j9o23` checked 57,131 physical bytes and all 128 child
+  bindings, exercised PCM and muted CGB playback, preserved 41 scoped payloads
+  and 186 resource pages, and matched 1,112 Python/Docker files. Published 43
+  private wiki files with preimages `out/ffta-rhythm-before-x9sunwx4`. Rhythm
+  pan, complete channel/mixer behavior, ordinary reachability and native Windows
+  remain unverified. [Source contract](../rom_data_audio.md#e611-european-physical-tone-and-direct-wave-banks)
 - [x] **Export resolved instrument waveforms.** Save the currently resolved
   PCM, fixed-rate PCM, CGB square or CGB wave as a mono 8-bit, 32 kHz WAV at
   the selected key and preview duration. Stored loops repeat; an unlooped PCM
@@ -2737,6 +3183,19 @@ prototype only when the paused viewer task is requested again.
 - [ ] **Complete song playback.** Reproduce original instruments, driver timing,
   mixing and effects before describing a synthesized audition as playback of
   the original song.
+- [x] **CRC32 table and e375 refresh.** A dated Checksums page browses all
+  256 authenticated lookup words and calculates the same reflected CRC32 over
+  user-supplied UTF-8, hexadecimal bytes or a locally selected file. File reads
+  use bounded chunks and can be cancelled; no file leaves the browser. A seed
+  can be supplied. The tool does not apply save-header transformations or prove
+  save validity. Synthetic `viewer-e375-crc-synthetic-ysafq76z` passed 18
+  projection, Chrome, chunking, cancellation and regression tests. Protected
+  EUR `viewer-e375-crc-real-8jup3fg0` checked all 1,032 source bytes, 256 table
+  words and 256 independent browser vectors, plus a 200,000-byte seeded file;
+  it preserved 42 scoped payloads and 187 resource pages and matched 1,116
+  Python/Docker files. Published 46 private files with preimages
+  `out/ffta-e375-crc-before-ywo3d9ed`. Ordinary save behavior and native Windows
+  remain unverified. [Reader evidence](../rom_data_runtime.md#e646-european-save-crc32-table-at-runtime)
 - [x] **Search extracted file contents.** Search local files for text or hex
   bytes with bounded reads, highlighting and cancellation. The real-time
   checks above supersede the removed initial prototype whose browser test did

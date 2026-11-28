@@ -3,6 +3,375 @@
 Unreleased development changes. Generated from `docs/changes/*.json`.
 Edit the structured records, then run `python3 scripts/project_memory.py render`.
 
+## 2026-11-28 — Trace the European screen-effect motion tables
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the original sprite schedules, interpolation rows, offset and scale curves, scanline profile and five background modes. Preserve the neighboring blend halfword used during pending release.
+
+**Validation**
+
+- Wine cpyj8zyd attests 1,001 original halfwords and confirms 1,089 unowned bytes across 26 spans against e375. The source graph retains the earlier blend owner. All 14 input guards and server drain pass.
+
+**Limitations**
+
+- Runtime publication, ordinary task timing and selector use, translated paths, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-screen-effect-motion-tables.json)
+
+## 2026-11-28 — Trace the European save CRC32 table
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the complete 256-word reflected CRC32 table, its two literals and its two original save checksum calls. Record the independent successor copy and the e374 residual range ranking.
+
+**Validation**
+
+- Wine d_089fkr attests 59 original halfwords and validates 1,032 unowned bytes across two spans. All 256 words match the independent CRC32 recurrence, all 16 protected inputs pass and the Wine server drains.
+
+**Limitations**
+
+- Runtime and ordinary save and load remain open. Larger cartridge-tail, post-transfer and uniform-heavy intervals still require separate source evidence.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-save-crc32-table.json)
+
+## 2026-11-28 — Trace the European localized inline UI text bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound seven five-language directories, 35 localized strings, six shared strings, six threshold glyph pairs and their original references. Preserve the language-3 shared selection and exclude alignment bytes.
+
+**Validation**
+
+- Wine wyoo0qtv attests 900 original halfwords and confirms 886 unowned source bytes across 41 spans against e376. All 15 input guards and the Wine server drain pass.
+
+**Limitations**
+
+- Runtime publication, ordinary startup and rendering, translated paths, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_text.md](docs/rom_data_text.md).
+
+[Change record](docs/changes/2026-11-28-trace-european-inline-ui-text.json)
+
+## 2026-11-28 — Serve the European screen-effect motion tables
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 1,089 bytes in 26 spans through graphics.screen-effect-motion in e376-d375. Preserve the earlier blend owner used by the pending-release comparison.
+
+**Validation**
+
+- Windows build zj4qgpli and Wine 3d4iw72q pass 22 scheduler ticks, 86 physical sprite rows, 12 sprite motion records, 20 offsets, seven timed rows, 84 scales, both 160-line outputs and five background modes. The blend comparison, full state, clock, scanline guards and 2,496 mirrored checks match with altered backing.
+- Original readers use 5,147 managed bytes. Stage _l4sdrdj retains all 178 files after CLI creation, verification and reuse. All 176 earlier resources match by digest. e375 attaches, two invalid candidates preserve e376 and Wine drains after all 17 input guards pass.
+
+**Limitations**
+
+- The focused test supplies task context and physical sprite indices. Ordinary triggers, scheduler order, live second sprite domain, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-screen-effect-motion-tables.json)
+
+## 2026-11-28 — Serve the European screen curve bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 1,450 source bytes in 26 spans through graphics.screen-curve-bank in e373-d372, including seven curves, their controller tables and the full terminal record. Retain the compact OBJ projection of the first position table.
+
+**Validation**
+
+- Windows build 25zklhz0 and Wine tjpptb58 pass 660 first-controller steps, 610 seeded second-controller cases, 30 position rows, seven terminal aliases, the independent 20-byte copy and 2,496 mixed mirror checks. Original instructions read 24,026 packed bytes with altered backing. State, clock and guards match.
+- Stage 2mftykpq retains 175 verified files. The CLI creates, verifies and reuses the dataset. All 173 earlier resources are byte-identical. e372 attaches, and two candidate rejections preserve e373. All 17 Wine input guards and server drain pass.
+
+**Limitations**
+
+- The second controller uses seeded cursors in the focused test. Ordinary screen triggers, palette scheduler order, translated execution, the adjacent 3a808c reader, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-screen-curves.json)
+
+## 2026-11-28 — Serve the European save CRC32 table
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish all 256 checksum words and both reader literals through engine.save-crc32-table in e375-d374. Preserve the original guest algorithm and addresses.
+
+**Validation**
+
+- Windows build v31npnju and Wine zsu3v1bs pass all 256 indices, three CRC vectors and original checksum write, valid and invalid branches for both actual payload lengths. Scratch RAM, guards, 192 mirrored boundaries, full state and clock match. Original readers account for 336,280 managed bytes with altered backing.
+- Stage tlf2q8ys retains 177 files after verified CLI creation and reuse. All 175 previous resources match by digest. e374 attaches, two invalid attachments preserve e375 and Wine drains after all 17 input guards pass.
+
+**Limitations**
+
+- The test supplies scratch RAM payloads and enters verification after signature handling. Ordinary save and load, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-save-crc32-table.json)
+
+## 2026-11-28 — Serve the European localized inline UI text bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 886 bytes of localized UI strings, shared labels, threshold glyph pairs and reader pointers as text.localized-inline-ui in e377-d376. Preserve the original language-3 fallback and attach e376 through its original schema.
+
+**Validation**
+
+- Windows GNU build 138cvd_f and Wine _dnd1r25 pass. With altered backing, the original code verifies 29 literal loads, 40 indexed language reads, five guarded choices, 41 expansions, 18 glyph cases, 3,936 mirror and width checks, and matching full state and clock.
+- The CLI creates, verifies and reuses 179 files, including all 177 previous resources unchanged. Stage sognrooh retains the verified dataset. Both invalid attachment guards, all 17 Wine input guards and the server drain pass.
+
+**Limitations**
+
+- Ordinary chooser-to-rendered-screen use, translated execution, Linux, USA and native Windows remain on the recovery checklist. No performance measurements were made. Primary Terra xhigh settings could not be independently confirmed.
+
+Documentation: [rom_data_text.md](docs/rom_data_text.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-localized-inline-ui-text.json)
+
+## 2026-11-28 — Serve the original European full-screen map
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 600 map cells and three literal words through graphics.full-screen-map in e374-d373. Keep the preceding tileset literal in its existing UI resource.
+
+**Validation**
+
+- Windows build _piq8s1k and Wine gd0efuq7 pass one original path with altered backing. The instructions read all 1,212 packed bytes. The 600 cells, 42 destination guards, shadow bit, 192 mirror checks, full state and clock match.
+- Stage lm4fie3o retains 176 verified files after CLI creation, verification and reuse. All 174 earlier resources are byte-identical. e373 attaches, two candidate rejections preserve e374, and all 17 Wine input guards and server drain pass.
+
+**Limitations**
+
+- The test supplies the destination context. The ordinary screen route, other copy forms, neighboring attribute reader, translated paths, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-serve-european-full-screen-map.json)
+
+## 2026-11-28 — Preview the full-screen initializer colors
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Join three authenticated initializer palette sources to the full-screen map and allow all four color-mode values, including the default alias.
+- Apply the initializer first-color clear and per-cell bank IDs while keeping manual colors, scoped pages and on-demand loading.
+
+**Validation**
+
+- Static audits viewer-screen-init-audit-lz4xdapt and viewer-screen-caller-audit-n8dyno0p trace the palette selection and preceding dispatcher states.
+- Synthetic viewer-screen-colors-synthetic-rvx4326w passed 31 tests; protected viewer-screen-colors-real-85frh7mv checked 38400 pixels in four modes, preserved 43 scoped payloads and 188 resource pages, and matched 1116 Python/Docker files.
+- Published 45 private files with verified preimages in out/ffta-screen-colors-before-n1x30_iv.
+
+**Limitations**
+
+- Zero-index transparency and other layers are not composited. Later palette changes, screen identity, ordinary execution and native Windows remain unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md).
+
+[Change record](docs/changes/2026-11-28-preview-full-screen-initializer-colors.json)
+
+## 2026-11-28 — Preview the European screen effect motion tables
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the private wiki to verified e376-d375 and add a dated, separate Interface page for sprite schedules, motion records, background modes and scanline inputs.
+- Provide selectable, playable endpoint illustrations and exact stored sample curves, with source offsets, original bytes, loop, rate and collapsible detail tables.
+
+**Validation**
+
+- Synthetic viewer-e376-effect-synthetic-vhybnqra passed three focused source and browser tests; 14 existing cases passed in claym7qj. Two initial test fixture issues were corrected.
+- Protected viewer-e376-effect-real-jjzu_1p9 checked all 1089 bytes and 26 source ranges, all 374 browser table rows, 43 previous scoped payloads and 188 resource pages, and matched 1118 Python/Docker files.
+- Published 47 private files with verified preimages in out/ffta-e376-effect-before-4166wgmt.
+
+**Limitations**
+
+- Endpoint playback is an illustrative linear interpolation. Original scheduler, interpolation, live second-sprite domain, graphics, scene composition and native Windows remain unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-preview-e376-screen-effect-motion.json)
+
+## 2026-11-28 — Preview the European full-screen map
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the private wiki to e374-d373 and add a separately loaded, dated Interface page for the authenticated 30-by-20 screen map.
+- Link the loader-selected 600-tile graphics source with on-demand loading, cell inspection, source addresses and manually selected palettes.
+
+**Validation**
+
+- Original reader audit viewer-e374-reader-audit-mt9ui1p4 inspected the loader and copy path; synthetic viewer-e374-map-synthetic-_h4apm9c passed 30 source, browser, retry and regression tests.
+- Protected viewer-e374-map-real-5yojkzg3 checked 1212 source bytes, 600 cells and 38400 grayscale pixels; preserved 41 scoped payloads and 186 resource pages; and matched 1114 Python/Docker files.
+- Published 45 private wiki files with verified preimages in out/ffta-e374-map-before-4bmqu0vq. Initial test y065fnf5 incorrectly counted a row header as a cell; the corrected test passed.
+
+**Limitations**
+
+- The original palette pairing, screen identity, ordinary execution and native Windows remain unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-preview-e374-full-screen-map.json)
+
+## 2026-11-28 — Preview European screen motion curves
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the private wiki to e373-d372 and add a separately loaded, dated Interface page for seven screen motion curves, 21 controller records and 30 position rows.
+- Graph and play the X and Y source values, show step-60 aliases and constant fallbacks accurately, and preserve preview settings across record changes.
+
+**Validation**
+
+- Synthetic viewer-e373-curves-synthetic-dzyeapjr passed 17 source-guard, playback, Chrome and regression tests.
+- Protected viewer-e373-curves-real-qs8buc10 checked 1450 source bytes, 427 curve values, 21 records, 30 position rows and 2562 browser values; preserved 40 scoped payloads and 185 resource pages; and matched 1112 Python/Docker files.
+- Published 44 private wiki files with verified preimages in out/ffta-e373-curves-before-qwqm0kjn. Earlier real unit 964n81vk passed before the constant-axis label was corrected.
+
+**Limitations**
+
+- The chosen preview speed does not establish original screen timing, full screen effects or the second controller scheduler. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-28-preview-e373-screen-motion-curves.json)
+
+## 2026-11-28 — Inspect binary values in the split wiki
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a dated bounded byte interpreter to the split wiki and resource pages, with 8-, 16- and 32-bit signed and unsigned values, byte order, offsets and optional BGR555 swatches.
+- Read at most 64 values per page, preserve incomplete bytes, and discard in-flight results when the selected file or disclosure changes.
+
+**Validation**
+
+- Synthetic viewer-binary-inspector-synthetic-bwe97m3r passed both browser cases, including large files and stale reads; 13 existing regression cases passed in aw7tdfb1.
+- Protected viewer-binary-inspector-real-ngnlxz5x checked 1212 source bytes and 321 browser rows across six interpretations, preserved 43 scoped payloads and 188 current/historical resource payloads, and matched 1116 Python/Docker files.
+- Published 210 private files with verified preimages in out/ffta-binary-inspector-before-ic_2pplj. Earlier test attempts exposed harness waits, a reused Chrome profile and an incorrect legacy single-page expectation.
+
+**Limitations**
+
+- The values are manual interpretations, not inferred formats; the separate legacy single-page inspector and native Windows were not changed or verified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
+
+[Change record](docs/changes/2026-11-28-inspect-binary-values-in-the-split-wiki.json)
+
+## 2026-11-28 — Browse sixteen-byte linked records
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated World page for 128 authenticated sixteen-byte linked records, with source fields, documented reader uses and a compact comparison table.
+- Provide bounded display-helper indices and record bookmarks without assigning unverified names or simulating live linked state.
+
+**Validation**
+
+- Synthetic viewer-metadata16-synthetic-5_w35yrk passed 18 source-guard, browser, navigation and regression tests.
+- Protected viewer-metadata16-real-ez08ndf1 compared 2048 source bytes and 1792 displayed fields, preserved 39 scoped payloads and 184 resource pages, and matched 1110 Python/Docker files.
+- Published 43 private wiki files with verified preimages in out/ffta-metadata16-before-w0jea1dw.
+
+**Limitations**
+
+- Overall record meanings, names and live pair outcomes remain unverified; native Windows is deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-28-browse-linked-metadata16-records.json)
+
+## 2026-11-28 — Browse and calculate CRC32 locally
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the private wiki to e375-d374 and add a separately loaded, dated page for the 256 authenticated save CRC32 lookup words.
+- Calculate seeded CRC32 for UTF-8, hexadecimal bytes or locally selected files using bounded cancellable reads, without applying save-specific header rules.
+
+**Validation**
+
+- Synthetic viewer-e375-crc-synthetic-ysafq76z passed 18 source, browser, chunking, cancellation and regression tests.
+- Protected viewer-e375-crc-real-8jup3fg0 checked 1032 source bytes, 256 words, 256 independent browser vectors and a 200000-byte seeded file; preserved 42 scoped payloads and 187 resource pages; and matched 1116 Python/Docker files.
+- Published 46 private wiki files with verified preimages in out/ffta-e375-crc-before-ywo3d9ed.
+
+**Limitations**
+
+- The calculator does not transform or validate save headers; ordinary save behavior and native Windows remain unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-28-browse-e375-crc32-table.json)
+
+## 2026-11-28 — Bound the original European 30-by-20 screen-map source
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound the fixed 600-cell map, its three copy literals and its 64-byte destination pitch. Record the original caller, the other full-screen loop candidates and the unresolved adjacent attribute table.
+
+**Validation**
+
+- Wine jbniu5w1 attests 301 original halfwords and the e373 ownership join. The bounded Thumb census finds three loop candidates and identifies 11 direct callers of the variable-width clipped copy. The fixed map contributes 1,212 unowned bytes across two spans. All 14 input guards and server drain pass.
+
+**Limitations**
+
+- Runtime publication, other copy forms and derived sources, the adjacent attribute reader, ordinary paths, translations, Linux, USA and native Windows remain open. The 6,359-byte pre-font gap requires a source root.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-28-bound-european-fixed-30-by-20-screen-map.json)
+
+## 2026-11-28 — Audition physical rhythm tones
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Resolve the authenticated European rhythm tone to 128 physically available key-indexed children, exposing 127 direct PCM/CGB auditions and rejecting one nested map child.
+- Use each child tone's stored pitch key for instrument, sequence, timed and WAV previews while preserving CGB mute and indicating unavailable rhythm pan.
+
+**Validation**
+
+- Original reader audit viewer-rhythm-reader-audit-8vnzhg5i decoded 44 instructions; synthetic viewer-rhythm-synthetic-jmfuhf51 passed 27 source, browser, sequence, timed and WAV tests.
+- Protected viewer-rhythm-real-kb9j9o23 checked 57131 source bytes and all 128 child bindings, exercised PCM/CGB playback, preserved 41 scoped payloads and 186 resource pages, and matched 1112 Python/Docker files.
+- Published 43 private wiki files with verified preimages in out/ffta-rhythm-before-x9sunwx4.
+
+**Limitations**
+
+- Physical key availability does not prove ordinary usage. Rhythm pan, original timing, full mixing and native Windows remain unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-28-audition-physical-rhythm-tones.json)
+
 ## 2026-11-27 — Verify European helper field dataset publication
 
 Type: docs. Platforms: Windows under Wine, European profile.
@@ -105,6 +474,26 @@ Documentation: [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-27-trace-european-screen-update-curve-banks.json)
 
+## 2026-11-27 — Trace the European screen curve bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Join the two original screen controllers to their 21 curve records, 30 position records and seven halfword curves. Authenticate the terminal alias and its independent 20-byte copy.
+
+**Validation**
+
+- Wine g7hdz_cf attests 754 halfwords. The e372 ownership join finds 1,450 unowned bytes in 26 spans and preserves the earlier 98-byte position projection. Fourteen guards and Wine drain pass.
+
+**Limitations**
+
+- The second controller advances until a palette task finishes. Its ordinary scheduler order, adjacent 3a808c records, runtime publication, translation, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-screen-curves.json)
+
 ## 2026-11-27 — Trace the European 80-byte scratch restore bank
 
 Type: docs. Platforms: Windows under Wine, European profile.
@@ -123,6 +512,26 @@ Type: docs. Platforms: Windows under Wine, European profile.
 - Actual allocation writers, caller-slot aliases, save-to-restore ordering, original BIOS, ordinary and generated execution, native Linux, USA and native Windows remain open. No performance measurements.
 
 [Change record](docs/changes/2026-11-27-trace-european-scratch-restore-bank.json)
+
+## 2026-11-27 — Bound the European queued UI map bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Trace the seven original queue calls and nine literal sites to all five physical maps at 3ba358. Preserve the original live row count and both neighboring owners.
+
+**Validation**
+
+- Wine zcysqkbo attests 3,273 original halfwords and authenticates 624 cells and nine literal words. The e368 audit finds 1,284 unowned bytes in nine spans. All 15 guards and Wine drain pass.
+
+**Limitations**
+
+- Runtime publication, live row bounds, ordinary scenes, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-queued-ui-map-bank.json)
 
 ## 2026-11-27 — Authenticate the complete European compact OBJ region
 
@@ -166,6 +575,26 @@ Documentation: [rom_data_audio.md](docs/rom_data_audio.md).
 
 [Change record](docs/changes/2026-11-27-trace-european-physical-audio-banks.json)
 
+## 2026-11-27 — Bound the European map-height digit bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Follow the quotient and remainder paths from the original map-height getter to both OBJ VRAM queue destinations. Bound all ten 256-byte glyphs and retain the E327 digit 5 owner.
+
+**Validation**
+
+- Wine jnf3ke4h attests 133 instruction halfwords and checks the 2,572-byte projection. The e367 ownership audit retains 264 prior bytes and identifies 2,308 residual bytes. All 15 input guards and Wine drain pass.
+
+**Limitations**
+
+- Runtime publication, live height bounds, ordinary scenes, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-map-height-digits.json)
+
 ## 2026-11-27 — Trace the remaining European type-3 tilemap lists
 
 Type: docs. Platforms: European ROM, Windows CLI on Wine.
@@ -184,6 +613,26 @@ Type: docs. Platforms: European ROM, Windows CLI on Wine.
 - Other computed and type-1 source producers, live list selection and queued writes, original BIOS, native Windows, Linux and USA remain open.
 
 [Change record](docs/changes/2026-11-27-trace-european-lz77-transfer-list-bounds.json)
+
+## 2026-11-27 — Bound the European localized layout bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Follow all four original layout builders for each of the five stored language values. Authenticate 267 layout rows, their shared OBJ list, two adjacent OBJ lists, layout parameters and the 17 transition records.
+
+**Validation**
+
+- Wine gg6jocgf attests 6,218 original halfwords and 88 literal sites. The e364 ownership audit finds 3,718 unowned bytes in 91 spans. All 16 input guards and Wine drain pass.
+
+**Limitations**
+
+- Runtime publication, ordinary scenes, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-localized-layout-tables.json)
 
 ## 2026-11-27 — Authenticate the European localized indexed OBJ animation banks
 
@@ -205,6 +654,46 @@ Type: docs. Platforms: EUR / Wine.
 Documentation: [rom_data_obj.md](docs/rom_data_obj.md).
 
 [Change record](docs/changes/2026-11-27-trace-european-localized-indexed-obj-banks.json)
+
+## 2026-11-27 — Bound the European indexed UI tilemap bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Follow three direct map roots and four ten-slot directory tables to all 31 physical tilemaps. Preserve shared targets and the two trailing alignment bytes.
+
+**Validation**
+
+- Wine stqxruch attests 971 original halfwords and verifies 40 slots, 855 cells and eight literal words. The e366 audit finds 1,902 unowned bytes in eight spans. All 18 input guards pass and Wine drains.
+
+**Limitations**
+
+- Runtime publication, ordinary producer bounds, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-indexed-ui-tilemaps.json)
+
+## 2026-11-27 — Trace the European indexed tile attribute tables
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Join the fixed-width archives to their packed tile attributes, direct getters and five stored-language selections.
+
+**Validation**
+
+- Wine fmaeky09 verifies 69 archives, eight table extents and 118 original halfwords. Seven tables have authenticated original getters and the e371 join finds 1,187 unowned bytes for them. Fifteen guards and Wine drain pass.
+
+**Limitations**
+
+- The 544-byte companion at 3b58ac still requires an original reader. Runtime publication, ordinary and translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-indexed-tile-attributes.json)
 
 ## 2026-11-27 — Trace European indexed record exchanges
 
@@ -248,6 +737,46 @@ Documentation: [TASK_HANDOFF.md](docs/development/TASK_HANDOFF.md).
 
 [Change record](docs/changes/2026-11-27-trace-european-helper-field-dispatch.json)
 
+## 2026-11-27 — Authenticate European grouped and weighted selection banks
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound four banks containing 25 twenty-entry pools and the adjacent 160 weighted rows. Reconcile the original 21 start indices from the mission and equipment catalogs.
+
+**Validation**
+
+- Wine rbnnyhbv verifies 827 original halfwords, 500 halfwords and 160 weighted rows. The e362 audit finds 2,912 residual bytes and preserves 44 earlier bytes. All 11 guards pass and the server drains.
+
+**Limitations**
+
+- Runtime publication, live producer and scene coverage, translated paths, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-grouped-selection-tables.json)
+
+## 2026-11-27 — Bound the European fixed-width screen map banks
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Bound nine screen maps through every direct call to the original 081441f8 reader. The source plan preserves the duplicate localized map reference.
+
+**Validation**
+
+- Wine oi7b1y59 attests 964 original halfwords, all ten direct caller sites and 2,939 unique map cells. The e363 ownership audit finds 5,918 unowned bytes. All 15 input guards and Wine drain pass.
+
+**Limitations**
+
+- Runtime publication, ordinary scene triggers, translated execution, Linux, USA and native Windows remain in recovery. The eight trailing bytes at 6df496 require a separate consumer.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-fixed-screen-maps.json)
+
 ## 2026-11-27 — Trace the European five-byte list direction bank
 
 Type: docs. Platforms: European ROM, Windows CLI on Wine.
@@ -265,6 +794,26 @@ Type: docs. Platforms: European ROM, Windows CLI on Wine.
 - Live owner and actor pointer identity, valid seed and cursor observations, ordinary and generated paths, original BIOS, native Windows, Linux and USA remain in the recovery checklist.
 
 [Change record](docs/changes/2026-11-27-trace-european-five-byte-list-bank.json)
+
+## 2026-11-27 — Bound five European direct rectangle sources
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Follow the original row copier and position preset reader through all five directory slots. Bound the five byte-identical but separately addressed rectangles and their alignment.
+
+**Validation**
+
+- Wine y2ixxo5i attests 183 original halfwords and reconciles a 67-site direct-call census. The e365 audit finds 2,458 unowned bytes in nine spans. All 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- The authenticated original task copies row zero. Other live row and selector domains, publication, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-european-direct-rectangle-directory.json)
 
 ## 2026-11-27 — Trace European CpuFastSet direct operands
 
@@ -403,6 +952,70 @@ Type: docs. Platforms: European ROM, Windows CLI on Wine.
 
 [Change record](docs/changes/2026-11-27-trace-european-background-relative-lz77-inputs.json)
 
+## 2026-11-27 — Trace the complete European unit OBJ bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Follow the original 248-entry sprite directory through all 36,072 index cells to 4,934 counted sequences and their OBJ lists and pixel blocks.
+
+**Validation**
+
+- Wine 5us1ggln attests 544 original halfwords and four reader literals. The e369 ownership audit finds 154,032 unowned bytes across 4,751 spans. All 15 input guards and Wine drain pass.
+
+**Limitations**
+
+- Runtime publication, naturally produced selections, translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-complete-european-unit-obj-bank.json)
+
+## 2026-11-27 — Trace the complete European B8 screen palette bank
+
+Type: docs. Platforms: EUR / Wine.
+
+**Changes**
+
+- Identify the two 240-color screen copies and the staged 256-color copy in the original B8 palette allocation.
+
+**Validation**
+
+- Wine z_zmh871 attests 117 halfwords and three source literals. The e370 ownership audit finds 1,484 unowned bytes across five spans. All 15 input guards pass and Wine drains.
+
+**Limitations**
+
+- Runtime publication, ordinary screen and scheduling paths, translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-trace-complete-european-b8-screen-palette-bank.json)
+
+## 2026-11-27 — Split the encounter viewer page
+
+Type: changed. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Move encounter headers, unit templates and coordinates to a separate World navbar page, leaving compact source references on the world page.
+- Preserve bidirectional item, job, event and terrain navigation, localized labels, partial inputs and legacy bookmarks; date changed sections and the new page.
+- Reduce the e369 world page from 3724950 to 2531805 bytes; the 2624454-byte encounter page loads separately.
+
+**Validation**
+
+- Synthetic viewer-encounter-scope-synthetic-ndzczgjo passed 39 scoped, cross-link, legacy, partial-input and regression tests.
+- Protected viewer-encounter-scope-real-hvtei8cb checked 442 headers, 2850 templates, 691 coordinate lists and 695 source segments; preserved 34 scoped payloads and 182 resource pages, updated three resource links and matched 1081 Python/Docker files.
+- Published 40 private local files with verified preimages out/ffta-encounter-scope-before-xlxk_mal.
+
+**Limitations**
+
+- The page describes extracted source records and does not establish live selection, positions or scene behavior. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-split-encounter-viewer-page.json)
+
 ## 2026-11-27 — Load battle sprite catalogs on separate wiki pages
 
 Type: changed. Platforms: Linux Chrome, Linux Docker.
@@ -425,6 +1038,30 @@ Type: changed. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
 
 [Change record](docs/changes/2026-11-27-split-battle-sprite-catalogs.json)
+
+## 2026-11-27 — Split background plane previews into a focused page
+
+Type: changed. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Move initial background-plane programs and their existing composition controls to a dedicated Interface navbar page while leaving background tiles and palettes on the main page.
+- Preserve descriptor, tile, terrain and resource links, old World and Interface bookmarks, animation controls, partial sources and single-page behavior; date the changed sections.
+- Reduce the e371 Interface page from 6165115 to 4906588 bytes; the 5638807-byte plane page loads separately.
+
+**Validation**
+
+- Synthetic viewer-interface-planes-synthetic-sixl07rm passed 34 cross-page, animation, partial-source, single-page and regression tests.
+- Protected viewer-interface-planes-real-vudqpzdu checked 352 source segments and 162 descriptors, compared three complete rendered previews, retained 37 scoped payloads and 184 resource pages, and matched 1107 Python/Docker files.
+- Published 40 private local files with verified preimages out/ffta-interface-planes-before-wc_14fve.
+
+**Limitations**
+
+- The selected graphics, palettes, initial fill and timing remain preview choices; the live scene is not reconstructed. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-27-split-background-plane-viewer.json)
 
 ## 2026-11-27 — Split audio topics into lighter pages
 
@@ -470,6 +1107,27 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDA
 
 [Change record](docs/changes/2026-11-27-serve-european-scratch-restore-literals.json)
 
+## 2026-11-27 — Add European queued UI map extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 1,284 E632 bytes as e369-d368 while preserving the original rectangles, source addresses and live row count.
+
+**Validation**
+
+- Windows build 8llomu57 and Wine uo7t0zos pass. The nine original source paths and eleven DMA copies cover all five maps and 1,326 output cells with altered backing and equal state and clock.
+- Stage xh8fmuqm retains 171 verified files. CLI creation, verification and reuse, e368 attachment, two invalid candidates, 864 mixed and mirrored reads, 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- Live row bounds, ordinary scenes, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-queued-ui-map-bank.json)
+
 ## 2026-11-27 — Serve European palette task and list literals
 
 Type: added. Platforms: European ROM, Windows GNU build and Wine runtime.
@@ -488,6 +1146,90 @@ Type: added. Platforms: European ROM, Windows GNU build and Wine runtime.
 - Live scroll writers, dynamic palette programs and flag order, ordinary and generated paths, original BIOS, Linux, USA and native Windows remain in the recovery checklist. Performance validation is deferred.
 
 [Change record](docs/changes/2026-11-27-serve-european-palette-task-literals.json)
+
+## 2026-11-27 — Add European map-height digit extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 2,308 E630 bytes as e368-d367 and retain the E327 digit 5 data and earlier literals.
+
+**Validation**
+
+- Windows build xe1s240g and Wine v_1cj6om pass. The original getter, queues and DMA consume all ten glyphs over 100 controlled heights, with 190 transfers and ten fills. New and prior backing are altered and complete state and guest clock match.
+- Stage nox0vrxd retains 170 files. CLI creation, verification and reuse, e367 attachment, two invalid candidates, 288 mixed and mirrored reads, 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- Live height bounds, ordinary scenes, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-map-height-digits.json)
+
+## 2026-11-27 — Add European localized layout extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 3,718 E624 bytes as e365-d364 at their original guest addresses. Preserve the shared OBJ list and the five language tables per builder.
+
+**Validation**
+
+- After raising the transition test step limit, test build x3wytrre and Wine _2d3h_eq pass. All 20 layouts and 267 rows, 17 transitions, eight objects and 88 literal sites match with altered backing and equal state and guest clock.
+- Initial CLI subreceipt roudsfiq passes creation, verification and reuse of the 167 files retained in v6z9rj49. The retry protects this dataset and passes e364 attachment, two invalid candidates, 8,736 mixed and mirrored reads, 21 input guards and Wine drain.
+
+**Limitations**
+
+- Ordinary scenes, translated execution, indirect callers, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-localized-layout-tables.json)
+
+## 2026-11-27 — Add European indexed UI tilemap extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 1,902 E628 bytes as e367-d366 at their original guest addresses. Preserve shared maps and the original copy strides.
+
+**Validation**
+
+- Windows build l23bh7kw and Wine kuqcbc2p pass. All 53 original copy paths match 1,485 copied cells, destination guards, original state and clock with altered backing.
+- Stage 9m_lcvkw retains 169 files. CLI creation, verification and reuse, e366 attachment, two invalid candidates, 768 mixed and mirrored reads, 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- Ordinary triggers, live index producers, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-indexed-ui-tilemaps.json)
+
+## 2026-11-27 — Serve the European indexed tile attribute tables
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 1,187 residual attribute and literal bytes in e372-d371. Keep the established localized archive, literal and White Flowers owners.
+
+**Validation**
+
+- Windows build bv317yfu and Wine vuznktga pass 584 direct getter cases and 15 localized cases using all five stored languages, with altered backing and 480 mixed boundaries. Guest state and clock match. All 17 input guards and Wine drain pass.
+- Stage 9l_31bpd retains 174 verified files after CLI creation, verification and reuse. e371 attaches and all 172 earlier resources are byte-identical.
+
+**Limitations**
+
+- The test sets the stored language byte directly. Startup selection, ordinary and translated execution, the 3b58ac reader, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-indexed-tile-attributes.json)
 
 ## 2026-11-27 — Serve European indexed exchange tables and directions
 
@@ -530,6 +1272,48 @@ Documentation: [rom_data_runtime.md](docs/rom_data_runtime.md), [ROM_DATA_VALIDA
 
 [Change record](docs/changes/2026-11-27-serve-european-helper-field-dispatch.json)
 
+## 2026-11-27 — Add European grouped selection table extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 2,912-byte E620 projection in e363-d362 at original guest addresses, retaining the White Flowers row and shared Thumb literal in their existing files.
+
+**Validation**
+
+- Windows build 4wnqbnmw and Wine xkqkbee5 pass. The original readers traverse 500 halfword entries, 160 weighted rows, ten literal sites and 42 weighted terminal paths against altered backing with matching state, guest clock and RNG.
+- Stage gj9_e_65 retains the verified 165-file generation. CLI creation, verification and reuse, e362 attachment, two invalid candidates, 1,056 mixed and mirrored reads, 17 input guards and server drain pass.
+
+**Limitations**
+
+- Ordinary and translated paths and other live indices, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_gameplay.md](docs/rom_data_gameplay.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-grouped-selection-tables.json)
+
+## 2026-11-27 — Add European fixed-width screen map extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 5,918 E622 bytes as e364-d363 at their original guest addresses. Keep the two localized callers on the same map.
+
+**Validation**
+
+- Windows build pwcxixfo and Wine h7701ipw pass. All ten readers copy 3,539 total cells from altered ROM backing with 2,721 untouched destination checks. Complete guest state and clock match.
+- Stage kdqkk4qk retains 166 verified files. CLI creation, verification and reuse, e363 attachment, two invalid candidates, 1,152 mixed and mirrored reads, 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- Ordinary and translated paths, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-fixed-screen-maps.json)
+
 ## 2026-11-27 — Serve the European five-byte list tables
 
 Type: added. Platforms: European ROM, Windows GNU build and Wine runtime.
@@ -548,6 +1332,27 @@ Type: added. Platforms: European ROM, Windows GNU build and Wine runtime.
 - Live seed, cursor and last-writer evidence, ordinary and generated routes, original BIOS, native Windows, Linux and USA remain in the recovery checklist. Performance validation is deferred.
 
 [Change record](docs/changes/2026-11-27-serve-european-five-byte-list-tables.json)
+
+## 2026-11-27 — Add European direct rectangle extraction and runtime binding
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish 2,458 E626 bytes as e366-d365 at their original guest addresses. Keep all five rectangle pointer targets distinct.
+
+**Validation**
+
+- Windows build awulgh29 and Wine k2luox3z pass. The five row-zero callers, controlled remaining-row copies and 20 position presets cover all 1,200 cells with altered backing and matching complete state and clock.
+- Stage z3kgd901 retains 168 files. CLI creation, verification and reuse, e365 attachment, two invalid candidates, 864 mixed and mirrored reads, 17 input guards and Wine drain pass.
+
+**Limitations**
+
+- Ordinary triggers, other live selectors and rows, translated code, Linux, USA and native Windows remain in recovery. No performance measurements.
+
+Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-european-direct-rectangle-directory.json)
 
 ## 2026-11-27 — Serve European CpuFastSet operand literals
 
@@ -596,19 +1401,20 @@ Documentation: [2026-11-27-trace-european-lz77-transfer-list-bounds.json](docs/c
 
 ## 2026-11-27 — Add European counted effect table extraction and runtime binding
 
-Type: added. Platforms: EUR implementation.
+Type: added. Platforms: EUR / Wine.
 
 **Changes**
 
-- Stage e362-d361 support for the 3,016-byte E618 projection with counted source bounds, directory checks, original guest addresses and e361 compatibility.
+- Publish the 3,016-byte E618 projection in e362-d361 with counted source bounds, directory checks, original guest addresses and e361 compatibility.
 
 **Validation**
 
-- The independent E618 source audit l_fm3i3u passes under Wine. E619 Windows build pv6sdirf was still running when the user paused the goal. The e362 reader and CLI checks had not started.
+- Windows build pv6sdirf and Wine xutdfh0i pass. Original readers cover all 1,455 samples, six directory slots and fifteen literal sites with altered backing. They consume 5,972 managed bytes with matching state and clock.
+- Stage g3g2y23h retains the verified 164-file dataset. CLI creation, verification and reuse, e361 attachment, two invalid candidates, 2,496 mixed boundary reads, 17 input guards and Wine drain pass.
 
 **Limitations**
 
-- Runtime acceptance, ordinary and translated paths, Linux, USA and native Windows are pending.
+- Ordinary triggers, selector domains, clipped variants, translated paths, Linux, USA and native Windows remain in recovery. No performance measurements.
 
 Documentation: [rom_data_graphics.md](docs/rom_data_graphics.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
@@ -677,6 +1483,74 @@ Type: added. Platforms: EUR Windows (Wine).
 Documentation: [2026-11-27-trace-european-background-relative-lz77-inputs.json](docs/changes/2026-11-27-trace-european-background-relative-lz77-inputs.json).
 
 [Change record](docs/changes/2026-11-27-serve-european-background-variant-state-dispatch.json)
+
+## 2026-11-27 — Serve the complete European unit OBJ bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 154,032 remaining bytes of the original unit OBJ directory, pose indices, sequences, object lists and pixel blocks in e370-d369.
+- Serve the bank at its original guest addresses and keep its earlier resource owners and e369 attachment compatible.
+
+**Validation**
+
+- Initial Windows build 6ho1_c3v compiled the CLI. Build u6imbkqm corrects the missing fixture argument and compiles the selected test with the same CLI.
+- Wine vwre68z0 passes all 11,596 new slots, six alias calls, four frame operations, 138 DMA transfers and 864 mixed boundaries with altered graph backing. Complete guest state and clock match. All 17 input guards and Wine drain pass.
+- Stage 1gbe3unw retains 172 files after CLI creation, verification and reuse. All 170 earlier resources are byte-identical, e369 attaches and two invalid candidates are rejected.
+
+**Limitations**
+
+- Ordinary action producers, translated execution, Linux, USA and native Windows remain in recovery.
+
+Documentation: [rom_data_unit_obj.md](docs/rom_data_unit_obj.md), [ROM_DATA_VALIDATION_RECOVERY_TODO.md](docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+[Change record](docs/changes/2026-11-27-serve-complete-european-unit-obj-bank.json)
+
+## 2026-11-27 — Serve the complete European B8 screen palette bank
+
+Type: added. Platforms: EUR / Wine.
+
+**Changes**
+
+- Publish the 1,484 residual B8 palette and literal bytes in e371-d370. Preserve the existing palette and timeline owners and e370 attachment.
+
+**Validation**
+
+- Windows build ci_n7_ch and Wine upvkln7r pass both original 240-color copies, the staged 256-color loop, every new source byte, 480 mixed boundaries and complete guest state and clock. All 17 input guards and Wine drain pass.
+- Stage dxp4zz3_ retains 173 verified files after CLI creation, verification and reuse, with 171 earlier resources byte-identical.
+
+**Limitations**
+
+- The staged proof stops before update scheduling. Ordinary triggers, translated execution, Linux, USA and native Windows remain open.
+
+Documentation: [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md).
+
+[Change record](docs/changes/2026-11-27-serve-complete-european-b8-screen-palette-bank.json)
+
+## 2026-11-27 — Search observed world node names
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add authenticated observed world-node references to the lazy localized name index and identify their placement as conditional.
+- Open the selected map node directly from search while preserving the chosen language; invalid node identifiers fall back safely.
+- Update dated badges on the search and map sections and correct two existing tests to read the current pointer-text scope.
+
+**Validation**
+
+- Synthetic viewer-node-search-synthetic-ftj7i1uw passed 58 projection, Chrome, focus, name and regression tests.
+- Protected viewer-node-search-real-emfdxes0 checked 30 localized names and six recorded placements against authenticated sources, exercised Chrome search/map navigation, preserved 26 scopes apart from name-index/badge metadata and 175 resource pages, and matched 610 Python/Docker files.
+- Published 28 private files with guarded preimages out/ffta-node-search-before-vame64sa.
+
+**Limitations**
+
+- Node-to-region names describe one recorded game-state placement, not a permanent or complete world map. Native Windows remains unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_maps.md](docs/rom_data_maps.md).
+
+[Change record](docs/changes/2026-11-27-search-observed-world-node-names.json)
 
 ## 2026-11-27 — Search nested fields in extracted resource pages
 
@@ -836,6 +1710,50 @@ Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.m
 
 [Change record](docs/changes/2026-11-27-refresh-viewer-e345.json)
 
+## 2026-11-27 — Rank the remaining European ROM data leads
+
+Type: docs. Platforms: EUR.
+
+**Changes**
+
+- Record the original 600-cell fixed-copy reader, three large unrooted residual spans and the unresolved computed sources of the queued map reader.
+
+**Validation**
+
+- Compare e369 manifest ownership with the static original Thumb copy and 39 direct queue branch encodings. The 20 by 30 copy bounds 1,200 bytes at 3b53fc.
+
+**Limitations**
+
+- The neighboring 544 bytes and larger unexplained spans require an original reader or transfer descriptor. Additional layouts, live queue sources and runtime checks remain open.
+
+Documentation: [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-27-rank-residual-european-rom-data.json)
+
+## 2026-11-27 — Preview signed task-cycle deltas
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated wiki page for the 48 source-backed signed task-cycle deltas with a graph and inspectable source table.
+- Support selected starting phase, 16-bit initial value, add/subtract branch, stepping, playback and optional continuous cycles with explicit 16-bit wrapping.
+- Validate the source-byte hash and shape, preserve select focus on Play, and route the resource inspector to the new scoped page.
+
+**Validation**
+
+- Synthetic viewer-task-cycle-synthetic-r34mgrr2 passed 41 projection, source-guard, Chrome, focus, playback and regression tests.
+- Protected viewer-task-cycle-real-a8nvlfpd checked 48 original bytes and 9216 arithmetic steps, exercised Chrome navigation/playback, preserved 24 scopes apart from resource relocation and navigation metadata, retained 173 unchanged resource pages, updated one inspector link, and matched 608 Python/Docker files.
+- Published 28 private files with guarded preimages out/ffta-task-cycle-before-05w2semu.
+
+**Limitations**
+
+- The preview covers only phases 0–47 of the documented conditional branch; it does not infer the field meaning, task lifetime or original timing. Native Windows remains unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-preview-task-cycle-deltas.json)
+
 ## 2026-11-27 — Preview sequence pitch, volume and pan modulation
 
 Type: added. Platforms: Linux Chrome, Linux Docker.
@@ -882,6 +1800,238 @@ Type: added. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_compact_catalog.md](docs/rom_data_compact_catalog.md).
 
 [Change record](docs/changes/2026-11-27-preview-screen-update-grid-movement.json)
+
+## 2026-11-27 — Browse indexed tile attributes
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separate dated Graphics page for seven authenticated indexed tile attribute tables and refresh the private wiki to e372-d371.
+- Browse source bytes, packed nibbles and documented getter values for 804 programs, with two-way links to verified matching graphics programs and explicit partial-source handling.
+
+**Validation**
+
+- Synthetic viewer-e372-attrs-synthetic-ilrzqp0j passed 19 projection, source-guard, Chrome, navigation and regression checks.
+- Protected viewer-e372-attrs-real-ycgw4xrl checked 1187 new source bytes and 4096 displayed nibbles, preserved 38 scoped payloads and 184 resource pages, and matched 1109 Python/Docker files.
+- Published 42 private wiki files with verified preimages in out/ffta-e372-attrs-before-pii_wo82.
+
+**Limitations**
+
+- The meaning of stored nibbles and their assignment to rendered tiles remain unverified; native Windows is deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_indexed_graphics.md](docs/rom_data_indexed_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e372-indexed-tile-attributes.json)
+
+## 2026-11-27 — Preview European screen palette sources
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for three authenticated screen palette sources and refresh the private wiki to e371-d370.
+- Browse 736 BGR555 words in 16-color banks, inspect RGB values, high bits, source addresses and documented destination slots.
+
+**Validation**
+
+- Synthetic viewer-e371-palettes-synthetic-v6_3022v passed 22 source-guard, browser, bookmark and regression tests.
+- Protected viewer-e371-palettes-real-h70idj7m compared all 1484 source bytes and 736 displayed colors, preserved 36 scoped payloads and 183 resource pages, and matched 1106 Python/Docker files.
+- Published 40 private local files with verified preimages out/ffta-e371-palettes-before-n3r23uii.
+
+**Limitations**
+
+- Screen identity, subsequent changes and final in-game colors remain unverified. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_palettes.md](docs/rom_data_ui_palettes.md).
+
+[Change record](docs/changes/2026-11-27-preview-e371-screen-palette-sources.json)
+
+## 2026-11-27 — Preview newly served physical unit sprites
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated physical unit sprite page and refresh the private wiki to verified e370-d369.
+- Authenticate and decode residual index, directory, sequence, object and tile spans; resolve prior owners, original sprite IDs and directory aliases without inferring live actors.
+- Browse 11596 cells and 860 sequences, select frame and manual palette, play and loop, and load sprite tile chunks on demand.
+
+**Validation**
+
+- Synthetic viewer-e370-sprites-synthetic-gbsiqf6s passed 21 source-guard, alias, playback, lazy-loading and regression tests.
+- Protected viewer-e370-sprites-real-e3r27qx4 compared 154032 bytes and 4751 spans with source data, verified all 11596 cells and 860 sequences, resolved all 2554 graphics frames, preserved 35 scoped payloads and 182 resource pages, and matched 1104 Python/Docker files.
+- Published 60 private local files with verified preimages out/ffta-e370-sprites-before-cvsbhhh3.
+
+**Limitations**
+
+- These are physical source cells for 228 IDs; original live actors, scheduling, timing, palette and composition remain conditional. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_unit_obj.md](docs/rom_data_unit_obj.md).
+
+[Change record](docs/changes/2026-11-27-preview-e370-physical-unit-sprites.json)
+
+## 2026-11-27 — Preview European queued UI maps
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for five source-backed queued UI maps and nine original paths, preserving shared and alternate map targets.
+- Allow inspection of one to sixteen physically available rows in the live-height source map, preserve that selection, reuse on-demand graphics and palettes, and refresh the local wiki to e369-d368.
+
+**Validation**
+
+- Synthetic viewer-queued-ui-synthetic-95fv_p7v passed 40 projection, browser and regression tests including single-page navigation.
+- Protected viewer-queued-ui-real-hse1rw8b checked 1284 source bytes, 624 cells, nine source paths and sixteen row previews, preserved 33 scoped payloads and 181 resource pages, and matched 1080 Python/Docker files.
+- Published 37 private files with verified preimages out/ffta-queued-ui-before-gcm5mb6p.
+
+**Limitations**
+
+- The sixteen physical rows do not bound the live row count; scene, palette and graphics pairings remain unverified. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e369-queued-ui-maps.json)
+
+## 2026-11-27 — Preview European map-height digits
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for ten map-height digit sources, joining the new bank with the earlier digit 5 transfer and retaining the other nine when that dependency is unavailable.
+- Allow interactive heights from 0 to 99, individual digit and halfword inspection, and solid or grayscale previews of an explicit 2-by-4 4-bit tile interpretation; refresh the local wiki to e368-d367.
+
+**Validation**
+
+- Synthetic viewer-height-synthetic-9n37njc7 passed 35 projection, browser and regression tests including incomplete dependencies and the single-page view.
+- Protected viewer-height-real-a5ugubd7 checked 2560 joined source bytes and all 100 preview values in Chrome, preserved 32 scoped payloads and 180 resource pages, and matched 1078 Python/Docker files.
+- Published 36 private files with verified preimages out/ffta-height-before-htawh0lh.
+
+**Limitations**
+
+- The displayed arrangement and grayscale are an interpretation; original palette, final screen placement, live height bounds and ordinary scenes remain unverified. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_runtime.md](docs/rom_data_runtime.md).
+
+[Change record](docs/changes/2026-11-27-preview-e368-map-height-digits.json)
+
+## 2026-11-27 — Preview European indexed UI tilemaps
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for 31 source-backed UI maps and four ten-slot directories, preserving shared targets and linking directories to individual maps.
+- Support inspection of stored cells and a user-selected wrapping 16-bit copy addend, with reverse directory references; refresh the local wiki to e367-d366.
+
+**Validation**
+
+- Synthetic viewer-indexed-ui-synthetic-s8x4ue7i passed 26 projection, browser and regression tests including the single-page view.
+- Protected viewer-indexed-ui-real-8utepglg checked 1902 source bytes, 855 stored and adjusted cells, and 40 directory links in Chrome; preserved 31 other scoped payloads and 179 resource pages; and matched 1075 Python/Docker files.
+- Published 35 private files with verified preimages out/ffta-indexed-ui-before-1x7d4m5r.
+
+**Limitations**
+
+- Scene identity, graphics, palette, caller-selected addend and ordinary trigger are not established. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e367-indexed-ui-tilemaps.json)
+
+## 2026-11-27 — Preview European direct rectangles and presets
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for five source-backed 15-by-16 rectangles, with cell inspection, manual graphics and palette selection, and links from the twenty stored preset bytes.
+- Validate source hashes, reader literals, directory pointers and dimensions; keep distinct physical sources and display each reader result as its stored byte plus 80.
+
+**Validation**
+
+- Synthetic viewer-direct-rectangles-synthetic-6bsfrc_5 passed 21 projection, browser and regression tests including the single-page view.
+- Protected viewer-direct-rectangles-real-7miy5cj1 checked all 2458 source bytes, 1200 Chrome-displayed cells and 20 presets, preserved 30 scoped payloads and 178 other resource pages, and matched 1073 Python/Docker files. Earlier 1lqrh6_x failed at Docker setup due to a shadowed test variable; the test was corrected.
+- Published 34 private files with verified preimages out/ffta-direct-rectangles-before-b3pw5aos.
+
+**Limitations**
+
+- Scene identity, original graphics and palette pairing, and actual placement remain unverified. The original task was verified copying row zero; the remaining rows were checked through the shared helper. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e366-direct-rectangles.json)
+
+## 2026-11-27 — Preview European localized layouts
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for 20 language-selected layouts, their object lists and a playable preview of 17 transition pairs.
+- Show source fields and bounded task positions without inferring scene names, graphics pairing or original timing; update the local wiki from e364 to verified e365.
+
+**Validation**
+
+- Synthetic viewer-e365-layout-synthetic-n97a9ppz passed 29 projection, browser and regression tests.
+- Protected viewer-e365-layout-real-7rpajuy8 checked 3718 source bytes, 20 layouts, 267 rows, eight objects and 17 transitions, exercised Chrome playback, preserved 29 prior scopes apart from revision/navigation metadata and 177 resource pages, and matched 1071 Python/Docker files.
+- Used the passing E625 reader retry and CLI subreceipt after the initial staging fixture-limit failure. Published 33 private files with guarded preimages out/ffta-e365-layout-before-1y3ojqz6.
+
+**Limitations**
+
+- Original scene identities, object composition and transition timing are unverified; native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e365-localized-layouts.json)
+
+## 2026-11-27 — Preview European fixed-width screen maps
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated Interface page for nine source-backed screen rectangles, with cell inspection and manual graphics and palette choices.
+- Validate the original reader literals and source ranges, retain the shared localized map once, and refresh the local wiki from e363 to e364.
+
+**Validation**
+
+- Synthetic viewer-e364-maps-synthetic-777lcf44 passed 30 projection, browser and regression tests.
+- Protected viewer-e364-maps-real-poa0ee8y checked 5918 source bytes, 2939 displayed cells and 27 manual graphics pixels across nine maps, preserved 28 earlier scopes and 176 resource pages, and matched 615 Python/Docker files.
+- Two earlier real attempts failed because the test counted a single DOM element as a list; the corrected test passed. Published 32 private files with guarded preimages out/ffta-e364-maps-before-ihnf3t19.
+
+**Limitations**
+
+- Scene identity, original graphics/palette pairings and composition remain unverified. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_ui_graphics.md](docs/rom_data_ui_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e364-fixed-screen-maps.json)
+
+## 2026-11-27 — Preview European counted effect tables
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Refresh the local wiki to e362-d361 and expose 13 counted effect tables in a separately loaded, dated Interface page.
+- Browse or play 1455 source byte pairs, see diagnostic pair intervals and inspect source halfwords and documented reversed or biased reader values.
+- Preserve playback settings across tables, authenticate source ranges and directory slots, and reject malformed inputs.
+
+**Validation**
+
+- Synthetic viewer-e362-effects-synthetic-bojvtdjx passed 45 projection, guard, Chrome, playback and regression tests.
+- Protected viewer-e362-effects-real-at6n3xm3 checked 1455 original samples and six directory slots, exercised Chrome navigation/playback, preserved 25 earlier scoped payloads apart from revision/navigation metadata and 174 resource pages, and matched 610 Python/Docker files.
+- Published 29 private files with guarded preimages out/ffta-e362-effects-before-7anahly0.
+
+**Limitations**
+
+- Byte intervals are a diagnostic view, not a reconstructed scene, clipping behavior or original timing. Native Windows remains unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
+
+[Change record](docs/changes/2026-11-27-preview-e362-counted-effect-tables.json)
 
 ## 2026-11-27 — Preview European screen-update curves
 
@@ -1075,6 +2225,29 @@ Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.m
 
 [Change record](docs/changes/2026-11-27-load-sprite-tiles-on-demand.json)
 
+## 2026-11-27 — Load song instructions on demand
+
+Type: changed. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Move split-page song instruction graphs into content-addressed local assets loaded for selected songs and timed auditions, while retaining inline single-page output.
+- Keep asynchronous selection, retry and cancellation safe and retain mute, focus, playback and export controls; add dated badges to modified audio sections.
+
+**Validation**
+
+- Synthetic viewer-lazy-songs-synthetic-kuvls2ga passed 32 audio, loading, retry, cancellation and regression tests.
+- Protected viewer-lazy-songs-real-8ue83huz compared 454 header graphs and 105253 instruction nodes, matched notes, traces and controls for 17 real songs, exercised playback and focus, preserved 29 scopes apart from the instruction representation and badges, retained 177 resource pages, and matched 1069 Python/Docker files.
+- An initial baseline comparison ulr3you8 referenced a retry button absent from the old page; the corrected comparison passed. Published 30 private pages and 454 assets with preimages out/ffta-lazy-songs-before-ip7zr2q3. The song page fell from 8829683 to 1456000 bytes.
+
+**Limitations**
+
+- The listener still approximates original driver and mixer behavior; native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_audio.md](docs/rom_data_audio.md).
+
+[Change record](docs/changes/2026-11-27-load-song-instructions-on-demand.json)
+
 ## 2026-11-27 — Load individual PCM waves on demand
 
 Type: performance. Platforms: Linux Chrome, Linux Docker.
@@ -1097,6 +2270,29 @@ Type: performance. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
 
 [Change record](docs/changes/2026-11-27-load-pcm-waves-on-demand.json)
+
+## 2026-11-27 — Load shared map graphics on demand
+
+Type: changed. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Move graphics and palettes shared by three focused map pages to one content-addressed local asset loaded only on request; keep map cells immediately available and preserve single-page behavior.
+- Allow retry after missing or invalid assets while preserving the selected map and update the affected section timestamps.
+
+**Validation**
+
+- Synthetic viewer-lazy-maps-synthetic-budbp5gi passed 29 source, browser and regression tests including missing-file retry and manual pixels.
+- Protected viewer-lazy-maps-real-okbh5lh6 checked all three offline pages with 117 graphics and 184 palette choices, preserved 32 scoped payloads and 180 resource pages, and matched 1076 Python/Docker files.
+- Each focused page fell from about 4.2 MB to about 0.95 MB before the optional 2.96 MB shared asset loads. Published 35 private files with verified preimages out/ffta-lazy-maps-before-xfub0ev3.
+
+**Limitations**
+
+- Graphics and palette combinations remain manual; their original scene pairings are not established. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
+
+[Change record](docs/changes/2026-11-27-load-map-graphics-on-demand.json)
 
 ## 2026-11-27 — Load large manifest source inventories on demand
 
@@ -1216,6 +2412,29 @@ Type: added. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md).
 
 [Change record](docs/changes/2026-11-27-link-items-to-equipment-sprites.json)
+
+## 2026-11-27 — Link stored event records and script keys
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add bidirectional, bookmarkable links between authenticated European event records and script keys, with paged reverse references and stored mission counts.
+- Preserve the live-selector caveat and omit unverified joins or counts; add dated badges and refresh the local wiki from e365 to e366.
+
+**Validation**
+
+- Synthetic viewer-event-script-synthetic-m_86xw5y passed 29 source, navigation, bookmark and regression tests. An earlier attempt exposed an obsolete text-page expectation and a same-URL reload test, both corrected.
+- Protected viewer-event-script-real-wy_mph2l checked 256 event rows, 512 mission references and 234 keys against the ROM, exercised both navigation directions, preserved 30 scopes apart from the join and revision/navigation metadata and 178 resource pages, and matched 1072 Python/Docker files.
+- Published 33 private files with guarded preimages out/ffta-event-script-before-kdltpz0p.
+
+**Limitations**
+
+- Stored references do not establish live execution; key 0x4A can use a live selector. The new e366 rectangle resource has only file inspection so far. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md), [rom_data_scripts.md](docs/rom_data_scripts.md).
+
+[Change record](docs/changes/2026-11-27-link-event-records-and-script-keys.json)
 
 ## 2026-11-27 — Link encounter templates to named jobs
 
@@ -1440,6 +2659,30 @@ Documentation: [STORAGE_CHECKLIST.md](docs/development/STORAGE_CHECKLIST.md).
 
 [Change record](docs/changes/2026-11-27-external-output-workstation-mount.json)
 
+## 2026-11-27 — Explore selection thresholds and weights
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded, dated wiki page for four source-backed selection thresholds and 30 ordinal weights.
+- Model the documented threshold comparison and independent eligibility scans using supplied inputs, including zero-total exit, zero weights and wrapping signed 32-bit subtraction.
+- Validate source spans and route the existing resource inspector to the new page without inferring ordinal names or a random distribution.
+
+**Validation**
+
+- Synthetic viewer-selection-synthetic-f_rli0ap passed 61 projection, guard, Chrome and regression tests.
+- Protected viewer-selection-real-qnrazhjx checked 34 source bytes, six count cases and 96 browser scan combinations over 2880 result cells, preserved 26 scopes apart from resource relocation/navigation metadata, retained 174 resource pages and updated one inspector link, and matched 611 Python/Docker files.
+- Published 30 private files with guarded preimages out/ffta-selection-before-vsxhvd_5.
+
+**Limitations**
+
+- The supplied rank and live eligibility values are diagnostic; numeric-helper distribution, ordinal meanings and full game behavior are not inferred. Native Windows remains unverified.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-explore-selection-thresholds-and-weights.json)
+
 ## 2026-11-27 — Combine background effect maps with manually selected tiles
 
 Type: added. Platforms: Linux Chrome, Linux Docker.
@@ -1596,6 +2839,29 @@ Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.m
 
 [Change record](docs/changes/2026-11-27-browse-packed-pair-sources.json)
 
+## 2026-11-27 — Browse same-index mission text candidates
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a lazy searchable five-language mission text candidate index, authenticate both European catalogs and link mission and pointer-text entries in both directions.
+- Share pinned language, command visibility and font preferences with other text views; add dated badges to the changed sections and the new collapsible panel.
+
+**Validation**
+
+- Synthetic viewer-mission-text-synthetic-9k90t4ex passed 28 source-guard, browser navigation, preferences, scope and regression tests.
+- Protected viewer-mission-text-real-2ctl456a checked 512 mission records, 2560 localized entries and 33657 source segments, preserved 34 scoped payloads and 182 resource pages, and matched 1080 Python/Docker files.
+- Published 37 private local files with verified preimages out/ffta-mission-text-before-0sf6ru28.
+
+**Limitations**
+
+- The equal-index association is tentative and does not establish a title or live selection for every mission. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-browse-mission-text-candidates.json)
+
 ## 2026-11-27 — Browse item-derived parameter records
 
 Type: added. Platforms: Linux Chrome, Linux Docker.
@@ -1664,6 +2930,29 @@ Type: added. Platforms: Linux Chrome, Linux Docker.
 Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_graphics.md](docs/rom_data_graphics.md).
 
 [Change record](docs/changes/2026-11-27-browse-european-background-effects.json)
+
+## 2026-11-27 — Browse European grouped selection banks
+
+Type: added. Platforms: Linux Chrome, Linux Docker.
+
+**Changes**
+
+- Add a separately loaded wiki page for four grouped selection banks and 160 weighted rows, with value search, observed group ranges and dated sections.
+- Validate the separately owned first pool row and keep the remaining banks available if that dependency is missing; refresh the local dataset from e362 to verified e363.
+
+**Validation**
+
+- Synthetic viewer-e363-groups-synthetic-sh_5k9_u passed 17 source, browser, navigation and regression tests.
+- Protected viewer-e363-groups-real-y6gej8y4 checked 2952 source bytes, 500 pool values, 160 rows and 21 observed groups, Chrome navigation, 27 earlier scopes and 613 Python/Docker files before a publication path assertion failed. Reconciliation viewer-e363-groups-finish-k2r2am76 passed with protected inputs and preserved 175 prior resource pages.
+- Published 31 private files with guarded preimages out/ffta-e363-groups-before-26rtfkov.
+
+**Limitations**
+
+- Pool meanings and live selections are unverified; stored weights are not presented as probabilities. Native Windows remains deferred.
+
+Documentation: [ROM_DATA_VIEWER_TODO.md](docs/development/ROM_DATA_VIEWER_TODO.md), [rom_data_gameplay.md](docs/rom_data_gameplay.md).
+
+[Change record](docs/changes/2026-11-27-browse-e363-grouped-selection-banks.json)
 
 ## 2026-11-27 — Browse conditional source records
 

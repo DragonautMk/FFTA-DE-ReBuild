@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-grouped-selection-tables",
+  "title": "Authenticate European grouped and weighted selection banks",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound four banks containing 25 twenty-entry pools and the adjacent 160 weighted rows. Reconcile the original 21 start indices from the mission and equipment catalogs."
+  ],
+  "validation": [
+    "Wine rbnnyhbv verifies 827 original halfwords, 500 halfwords and 160 weighted rows. The e362 audit finds 2,912 residual bytes and preserves 44 earlier bytes. All 11 guards pass and the server drains."
+  ],
+  "limitations": [
+    "Runtime publication, live producer and scene coverage, translated paths, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_gameplay.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_gameplay.md"
+  ]
+}

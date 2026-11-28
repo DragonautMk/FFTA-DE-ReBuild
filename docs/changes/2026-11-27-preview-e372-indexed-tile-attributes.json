@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e372-indexed-tile-attributes",
+  "title": "Browse indexed tile attributes",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separate dated Graphics page for seven authenticated indexed tile attribute tables and refresh the private wiki to e372-d371.",
+    "Browse source bytes, packed nibbles and documented getter values for 804 programs, with two-way links to verified matching graphics programs and explicit partial-source handling."
+  ],
+  "validation": [
+    "Synthetic viewer-e372-attrs-synthetic-ilrzqp0j passed 19 projection, source-guard, Chrome, navigation and regression checks.",
+    "Protected viewer-e372-attrs-real-ycgw4xrl checked 1187 new source bytes and 4096 displayed nibbles, preserved 38 scoped payloads and 184 resource pages, and matched 1109 Python/Docker files.",
+    "Published 42 private wiki files with verified preimages in out/ffta-e372-attrs-before-pii_wo82."
+  ],
+  "limitations": [
+    "The meaning of stored nibbles and their assignment to rendered tiles remain unverified; native Windows is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_indexed_attributes.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_indexed_attributes.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

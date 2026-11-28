@@ -1,11 +1,131 @@
 {
   "schema": 1,
   "sections": {
+    "text-inline-ui": {
+      "inline-ui-text": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-search": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-languages": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-shared": {"kind": "added", "at": "2026-11-28T00:23:43Z"},
+      "inline-ui-thresholds": {"kind": "added", "at": "2026-11-28T00:23:43Z"}
+    },
+    "interface-effect-motion": {
+      "screen-effect-motion": {"kind": "added", "at": "2026-11-28T00:09:51Z"},
+      "screen-effect-sprites": {"kind": "added", "at": "2026-11-28T00:09:51Z"},
+      "screen-effect-timed": {"kind": "added", "at": "2026-11-28T00:09:51Z"},
+      "screen-effect-backgrounds": {"kind": "added", "at": "2026-11-28T00:09:51Z"},
+      "screen-effect-values": {"kind": "added", "at": "2026-11-28T00:09:51Z"}
+    },
+    "checksums": {
+      "crc32-table": {"kind": "added", "at": "2026-11-27T23:37:22Z"},
+      "crc32-lookup": {"kind": "added", "at": "2026-11-27T23:37:22Z"},
+      "crc32-calculator": {"kind": "added", "at": "2026-11-27T23:37:22Z"}
+    },
+    "interface-full-screen": {
+      "tilemaps": {"kind": "updated", "at": "2026-11-27T23:50:05Z"}
+    },
+    "audio-samples": {
+      "instruments": {"kind": "updated", "at": "2026-11-27T23:18:26Z"},
+      "instrument-keymap": {"kind": "updated", "at": "2026-11-27T23:18:26Z"}
+    },
+    "interface-motion-curves": {
+      "screen-motion-curves": {"kind": "added", "at": "2026-11-27T23:05:18Z"},
+      "screen-motion-records": {"kind": "added", "at": "2026-11-27T23:05:18Z"},
+      "screen-motion-positions": {"kind": "added", "at": "2026-11-27T23:05:18Z"},
+      "screen-motion-values": {"kind": "added", "at": "2026-11-27T23:05:18Z"}
+    },
+    "world-metadata16": {
+      "metadata16": {"kind": "added", "at": "2026-11-27T22:55:45Z"},
+      "metadata16-all": {"kind": "added", "at": "2026-11-27T22:55:45Z"}
+    },
+    "indexed-attributes": {
+      "indexed-attributes": {"kind": "added", "at": "2026-11-27T22:45:22Z"}
+    },
+    "indexed-graphics": {
+      "indexed-graphics": {"kind": "updated", "at": "2026-11-27T22:45:22Z"}
+    },
+    "interface-planes": {
+      "bg-planes": {"kind": "added", "at": "2026-11-27T22:33:35Z"}
+    },
+    "interface": {
+      "bg-tiles": {"kind": "updated", "at": "2026-11-27T22:33:35Z"},
+      "bg-descriptors": {"kind": "updated", "at": "2026-11-27T22:33:35Z"},
+      "resource-index": {"kind": "updated", "at": "2026-11-27T22:33:35Z"}
+    },
+    "interface-screen-palettes": {
+      "screen-palettes": {"kind": "added", "at": "2026-11-27T22:25:47Z"}
+    },
+    "physical-unit-sprites": {
+      "equipment-sprites": {"kind": "added", "at": "2026-11-27T22:15:32Z"}
+    },
+    "interface-queued-maps": {
+      "queued-ui-paths": {"kind": "added", "at": "2026-11-27T21:34:37Z"},
+      "tilemaps": {"kind": "added", "at": "2026-11-27T21:34:37Z"}
+    },
+    "interface-height": {
+      "map-height-digits": {"kind": "added", "at": "2026-11-27T21:26:37Z"}
+    },
+    "interface-indexed-ui": {
+      "indexed-ui-directories": {"kind": "added", "at": "2026-11-27T21:08:39Z"},
+      "tilemaps": {"kind": "updated", "at": "2026-11-27T21:18:03Z"}
+    },
+    "interface-rectangles": {
+      "direct-rectangle-presets": {"kind": "added", "at": "2026-11-27T21:00:00Z"},
+      "tilemaps": {"kind": "updated", "at": "2026-11-27T21:18:03Z"}
+    },
+    "interface-layouts": {
+      "localized-layouts": {"kind": "added", "at": "2026-11-27T20:38:18Z"},
+      "localized-layout-objects": {"kind": "added", "at": "2026-11-27T20:38:18Z"},
+      "localized-layout-transitions": {"kind": "added", "at": "2026-11-27T20:38:18Z"}
+    },
+    "audio": {
+      "sequence-audio": {"kind": "updated", "at": "2026-11-27T23:18:26Z"},
+      "timed-sounds": {"kind": "updated", "at": "2026-11-27T23:18:26Z"}
+    },
+    "interface-fixed-maps": {
+      "tilemaps": {"kind": "updated", "at": "2026-11-27T21:18:03Z"}
+    },
+    "selection-groups": {
+      "grouped-selection-pools": {"kind": "added", "at": "2026-11-27T20:03:23Z"},
+      "grouped-selection-weights": {"kind": "added", "at": "2026-11-27T20:03:23Z"}
+    },
+    "selection-tables": {
+      "selection-byte-tables": {"kind": "added", "at": "2026-11-27T19:54:15Z"}
+    },
+    "index": {
+      "wiki-name-search": {"kind": "updated", "at": "2026-11-27T21:42:54Z"},
+      "resource-index": {"kind": "updated", "at": "2026-11-27T22:33:35Z"},
+      "file-inspector": {"kind": "updated", "at": "2026-11-27T23:57:52Z"},
+      "inspect-values": {"kind": "added", "at": "2026-11-27T23:57:52Z"}
+    },
+    "text-pointers": {
+      "pointer-texts": {"kind": "updated", "at": "2026-11-27T21:42:54Z"}
+    },
+    "world-map": {
+      "world": {"kind": "updated", "at": "2026-11-27T19:46:56Z"},
+      "terrain-seeds": {"kind": "updated", "at": "2026-11-27T21:58:37Z"},
+      "resource-index": {"kind": "updated", "at": "2026-11-27T22:33:35Z"}
+    },
+    "world-encounters": {
+      "encounters": {"kind": "added", "at": "2026-11-27T21:58:37Z"}
+    },
+    "interface-effects": {
+      "counted-effect-tables": {"kind": "added", "at": "2026-11-27T19:37:53Z"}
+    },
+    "task-cycles": {
+      "task-cycle-deltas": {"kind": "added", "at": "2026-11-27T19:25:44Z"}
+    },
     "interface-curves": {
       "screen-update-curves": {"kind": "updated", "at": "2026-11-27T19:08:01Z"}
     },
     "world": {
-      "conditional-lookups": {"kind": "added", "at": "2026-11-27T17:57:50Z"}
+      "conditional-lookups": {"kind": "added", "at": "2026-11-27T17:57:50Z"},
+      "mission-records": {"kind": "updated", "at": "2026-11-27T21:58:37Z"},
+      "items": {"kind": "updated", "at": "2026-11-27T21:58:37Z"},
+      "metadata-names": {"kind": "updated", "at": "2026-11-27T21:58:37Z"},
+      "mission-name-panel": {"kind": "added", "at": "2026-11-27T21:42:54Z"}
+    },
+    "scripts": {
+      "event-scripts": {"kind": "updated", "at": "2026-11-27T20:48:14Z"}
     },
     "objects": {
       "obj-animations": {"kind": "updated", "at": "2026-11-27T18:46:44Z"}

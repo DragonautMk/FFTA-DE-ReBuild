@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-complete-european-unit-obj-bank",
+  "title": "Serve the complete European unit OBJ bank",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 154,032 remaining bytes of the original unit OBJ directory, pose indices, sequences, object lists and pixel blocks in e370-d369.",
+    "Serve the bank at its original guest addresses and keep its earlier resource owners and e369 attachment compatible."
+  ],
+  "validation": [
+    "Initial Windows build 6ho1_c3v compiled the CLI. Build u6imbkqm corrects the missing fixture argument and compiles the selected test with the same CLI.",
+    "Wine vwre68z0 passes all 11,596 new slots, six alias calls, four frame operations, 138 DMA transfers and 864 mixed boundaries with altered graph backing. Complete guest state and clock match. All 17 input guards and Wine drain pass.",
+    "Stage 1gbe3unw retains 172 files after CLI creation, verification and reuse. All 170 earlier resources are byte-identical, e369 attaches and two invalid candidates are rejected."
+  ],
+  "limitations": [
+    "Ordinary action producers, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/physical_unit_obj_bank.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/physical_unit_obj_bank_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_unit_obj.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_unit_obj.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

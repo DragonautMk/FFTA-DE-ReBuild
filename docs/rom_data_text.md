@@ -878,3 +878,59 @@ The separately rooted substitution dispatcher can conditionally select the
 same range at indices 173..194; all 22 indices, their neighbors and `0x100`
 aliases pass 96 controlled Wine comparisons before indirect invocation
 (`knxnixuk`). This does not prove those indices are reached in ordinary play.
+
+## E649 European localized inline UI text
+
+The source interval `395182..3954a4` contains seven original five-word
+language directories at `39526c`, `3952b4`, `395330`, `395378`,
+`3953c8`, `395420` and `395470`. Eight reader paths index these
+directories through the saved language byte at `02001f6e`. The original
+branch at `0805a750` selects the shared string at `395262` for language
+3. The other four values take the indexed path through `3952b4`, which
+also has a physical entry for language 3.
+
+The seven directories own 35 bounded short strings in the encoding read by
+`08019d98`. Six additional strings are loaded directly by the original
+readers. The threshold reader at `0801aae6` selects one of six two-byte
+values from `395490` and writes it with a terminator to the stack.
+Its source pointer is at `3954a0`. The source join assigns 778
+payload bytes and 27 distinct literal words from 29 original PC-relative
+loads. Twenty-four zero alignment bytes between sources stay outside the
+selected resource.
+
+Protected EUR/Wine source unit `e649-european-inline-ui-text-source-wine-wyoo0qtv`
+attests 900 original halfwords. Against `e376-d375`, it verifies 886
+unowned bytes across 41 spans. The source proof SHA-256 is
+`15ada2da70db3b98df0b1b9843af2a9aad5cbf2244a8aef18fde68c8bc8e780b`.
+All 15 input guards and the Wine server drain pass. Earlier Wine evidence
+identifies both the first-entry chooser and the title menu's Language item
+as publishers of `02001f6e`. Connecting those ordinary choices to the
+rendered screens for this bank remains open.
+[Language writer evidence](rom_data_obj.md#bounded-eur-language-byte-writer-inventory).
+
+## E650 European localized inline UI text at runtime
+
+`e377-d376` publishes the 41 spans as `text.localized-inline-ui` in
+`localized-inline-ui.bin`. The manifest declares `font.complete-bank`
+for the text consumer. Original pointers, string controls and terminators,
+and the neighboring alignment retain their byte layout. The guest bus
+serves the spans at their original addresses and across ROM mirrors.
+
+The Windows GNU build `138cvd_f` and Wine unit `_dnd1r25` pass.
+The scoped Wine test alters all 886 source bytes in the managed ROM copy
+and exercises 29 original literal loads, eight selectors across all five
+language IDs, five cases of the branch at `0805a750`, all 41 string
+expansions and 18 inputs at the six glyph thresholds. The selected reads
+consume 1,574 managed source bytes. All 3,936 mixed-width boundary checks,
+the destination guards, complete guest state and guest clock match. The
+test attaches e376 and verifies that a missing resource or a changed
+resource with a recomputed hash leaves the accepted attachment in place.
+
+The Wine CLI creates, verifies and reuses 179 files and keeps all 177 e376
+resources byte-exact. The retained stage is `e650-e377-stage-sognrooh`,
+with manifest SHA-256
+`c56e7cabc83f5a845d160ff3ad879d26940567e0eea6a1c2b16f93c3396c24ef`.
+All 17 Wine input guards pass and the server drains. The controlled test
+sets the language byte before entering the readers. The ordinary route
+from the already verified chooser to these rendered screens, translated
+execution, native Linux, USA and native Windows remain open.

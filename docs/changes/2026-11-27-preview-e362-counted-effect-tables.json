@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e362-counted-effect-tables",
+  "title": "Preview European counted effect tables",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Refresh the local wiki to e362-d361 and expose 13 counted effect tables in a separately loaded, dated Interface page.",
+    "Browse or play 1455 source byte pairs, see diagnostic pair intervals and inspect source halfwords and documented reversed or biased reader values.",
+    "Preserve playback settings across tables, authenticate source ranges and directory slots, and reject malformed inputs."
+  ],
+  "validation": [
+    "Synthetic viewer-e362-effects-synthetic-bojvtdjx passed 45 projection, guard, Chrome, playback and regression tests.",
+    "Protected viewer-e362-effects-real-at6n3xm3 checked 1455 original samples and six directory slots, exercised Chrome navigation/playback, preserved 25 earlier scoped payloads apart from revision/navigation metadata and 174 resource pages, and matched 610 Python/Docker files.",
+    "Published 29 private files with guarded preimages out/ffta-e362-effects-before-7anahly0."
+  ],
+  "limitations": [
+    "Byte intervals are a diagnostic view, not a reconstructed scene, clipping behavior or original timing. Native Windows remains unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_counted_effect_tables.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_graphics.md"
+  ]
+}

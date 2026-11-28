@@ -2787,3 +2787,76 @@ managed path reads four property bytes, sixteen normal-battle index bytes and
 continuation does not prove an uninterrupted allocator path, alternate-sprite
 behavior, animation or pixel upload, action-13 ordinary reachability or actor
 overrides.
+
+## E635 European physical unit OBJ bank
+
+The original selector at `08022174` loads the directory at `394834`.
+The independent property reader at `080221c4` starts the next table at
+`394c14`. The 248 directory entries select 245 distinct index arrays
+in `371494..394834`. IDs 112 and 113, 117 and 118, and 186 and 187
+share their respective arrays. Each 24-byte group contains three part
+slots for each of the two physical facings. The original reset at
+`08022e20` applies the part offset, tests for null and reads the
+counted sequence header.
+
+All 36,072 slots resolve to 29,777 nulls and 6,295 sequence pointers.
+The pointers reach 4,934 counted sequences and 27,818 20-byte frames
+in `a512a0..ae6dac`. The 37,036 inter-sequence alignment bytes are
+zero and outside the counted records. Operation 1 uses relative
+object and pixel offsets through the original readers at `08022254`
+and `080221d4`. All 19,491 operation 1 frames resolve to 164
+counted lists filling `a50020..a5129c` and 5,262 distinct pixel
+blocks filling `898a40..a50020`. The original shape and size
+branches determine the length of each block. Each repeated pixel
+address has the same length.
+
+Wine source audit `5us1ggln` checks 544 original halfwords and
+four already managed reader literals. The verified e369 manifest
+covers 2,371,724 of the 2,525,756 source bytes. The 4,751 remaining
+spans contain 16 directory bytes, 46,384 index bytes, 62,468 sequence
+bytes, 44 OBJ-list bytes and 45,120 pixel bytes, for a total of 154,032
+bytes. The pixel spans fully include the three large residual gaps
+at `a33a40`, `a2ec60` and `a0f780`. All 15 input guards pass
+and Wine drains. Result SHA-256
+`4f1a28f6803033b0b8d55f45be8c4922d098325bdfcb78403bb3892ffea78794`.
+
+The recovery checklist tracks publication, file-backed readers,
+ordinary action producers, translation and deferred platforms.
+[Recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E636 Complete European unit OBJ bank at runtime
+
+Dataset `e370-d369` publishes the 154,032 E635 bytes in
+`physical-unit-obj-bank.bin`, resource `graphics.physical-unit-obj-bank`.
+The file concatenates the 4,751 spans in manifest order. The manifest
+identifies the original offsets, source roles and hashes. Eleven earlier
+OBJ resources supply their established directory, index, sequence,
+list and tile spans. The original reader literals come from
+`engine.thumb-pc-literals`. Null cells, directory aliases, original
+addresses and zero alignment retain their original behavior.
+
+Wine `vwre68z0` alters the raw backing of the complete graph and four
+reader literals. The original reset executes all 11,596 newly served
+slots, including 10,717 null cells and paths to all 817 affected
+sequences. Six controlled calls check both IDs of each directory alias
+with the other facing values. The original frame reader exercises
+operations 2, 3, 6 and 8. The original scheduler and DMA queue transfer
+all 138 newly served pixel blocks, covering 45,120 new pixel bytes.
+Output, destination guards, complete guest state and clock match. The
+original calls consume 96,671 bytes from the new file. Every new byte
+and 864 mixed and mirrored boundary reads match the original.
+
+The initial Windows test build `6ho1_c3v` compiled the CLI and found a
+missing budget argument in the packet test fixture. Retry `u6imbkqm`
+reuses the CLI and passes with the corrected fixture. Wine validates
+`e369-d368` attachment, rejection of two invalid candidates, and CLI
+creation, verification and unchanged reuse. All 170 earlier resources
+are byte-identical. All 17 Wine input guards pass and the server drains.
+Stage `1gbe3unw` retains 172 verified files. Result SHA-256
+`e5839b6454a97a576ea3b973ffac11370f1ef53546370891ba830757757dbe21`.
+Manifest SHA-256
+`6f30f9ac1c0e4292fe9a86e212ea381108c03d90feacdcf663c88b0c9ac3b0e4`.
+
+Ordinary action producers, translated execution, Linux, USA and native
+Windows remain open in the recovery checklist.
+[Recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).

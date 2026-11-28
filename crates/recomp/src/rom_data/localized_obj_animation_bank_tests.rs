@@ -137,7 +137,7 @@ fn update(machine: &mut Machine, sequence: u32, index: usize) {
     execute_until(machine, RETURN, 100);
 }
 
-fn draw(machine: &mut Machine, at: u32, x: i16, y: i8) {
+pub(super) fn draw(machine: &mut Machine, at: u32, x: i16, y: i8) {
     initialize(machine, 0x0800_1f6c);
     // Position the first object on screen. Transition lists can start far
     // enough outside the viewport for a nonempty list to produce no OAM.

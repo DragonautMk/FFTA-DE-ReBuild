@@ -39,6 +39,11 @@ fn input(name: &str) -> PathBuf {
     PathBuf::from(std::env::var_os(name).unwrap_or_else(|| panic!("Missing {name}")))
 }
 
+pub(super) fn install_rectangle_copy(machine: &mut Machine, rom: &[u8]) {
+    // The game installs its byte and word copy helper in IWRAM at boot.
+    machine.bus.iwram[0x5ee8..0x5f26].copy_from_slice(&rom[0xd968a8..0xd968e6]);
+}
+
 fn start_list(machine: &mut Machine, row: u32) {
     machine.bus.iwram[DESTINATION].fill(0x5a);
     machine.bus.write32(CONTEXT, row);
@@ -72,8 +77,7 @@ fn check_original_lists(
     let owner = managed.bus.rom_resources().unwrap().clone();
     let start = owner.tilemap_type2_bus_bytes().unwrap();
     for machine in [&mut *raw, &mut *managed] {
-        // The game's byte/word copy helper is installed in IWRAM at boot.
-        machine.bus.iwram[0x5ee8..0x5f26].copy_from_slice(&rom[0xd968a8..0xd968e6]);
+        install_rectangle_copy(machine, rom);
         machine.bus.ffta_sprites.enabled = false;
     }
     let mut copied = 0;

@@ -63,7 +63,7 @@ class ObservedWorldNameProjectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-world-names-projection-') as directory:
             index, digests = generate_fixture(Path(directory))
             parts = index.parent / 'index.html.parts'
-            world, text = payload(parts / 'world-map.html'), payload(parts / 'text.html')
+            world, text = payload(parts / 'world-map.html'), payload(parts / 'text-pointers.html')
             name = world['world_location_names']
             self.assertEqual(name['locations'][0], {'node_index': 19, 'region_index': 7, 'name_index': 725,
                                                     'names': [[176, 203, [0x40], 205, 1000], [205]]})

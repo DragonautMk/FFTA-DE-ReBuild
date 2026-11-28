@@ -41,7 +41,7 @@ struct Proof {
     new_ranges: Vec<SourceRange>,
 }
 
-fn literal_loads(machine: &mut Machine, rom: &[u8], sites: &BTreeMap<u32, u32>) {
+pub(super) fn literal_loads(machine: &mut Machine, rom: &[u8], sites: &BTreeMap<u32, u32>) {
     for (&pc, &source) in sites {
         let instruction = u16::from_le_bytes(rom[pc as usize..][..2].try_into().unwrap());
         let destination = usize::from((instruction >> 8) & 7);

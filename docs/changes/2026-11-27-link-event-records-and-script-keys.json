@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "link-event-records-and-script-keys",
+  "title": "Link stored event records and script keys",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add bidirectional, bookmarkable links between authenticated European event records and script keys, with paged reverse references and stored mission counts.",
+    "Preserve the live-selector caveat and omit unverified joins or counts; add dated badges and refresh the local wiki from e365 to e366."
+  ],
+  "validation": [
+    "Synthetic viewer-event-script-synthetic-m_86xw5y passed 29 source, navigation, bookmark and regression tests. An earlier attempt exposed an obsolete text-page expectation and a same-URL reload test, both corrected.",
+    "Protected viewer-event-script-real-wy_mph2l checked 256 event rows, 512 mission references and 234 keys against the ROM, exercised both navigation directions, preserved 30 scopes apart from the join and revision/navigation metadata and 178 resource pages, and matched 1072 Python/Docker files.",
+    "Published 33 private files with guarded preimages out/ffta-event-script-before-kdltpz0p."
+  ],
+  "limitations": [
+    "Stored references do not establish live execution; key 0x4A can use a live selector. The new e366 rectangle resource has only file inspection so far. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_event_script_links.py",
+    "scripts/tests/test_viewer_event_scripts_browser.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md",
+    "docs/rom_data_scripts.md"
+  ]
+}

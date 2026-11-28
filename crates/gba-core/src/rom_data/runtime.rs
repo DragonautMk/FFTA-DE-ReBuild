@@ -577,6 +577,21 @@ pub struct RuntimeResources {
     physical_compact_obj_region: Option<Box<PackedTilemapFile>>,
     screen_update_tables: Option<Box<PackedTilemapFile>>,
     counted_effect_tables: Option<Box<PackedTilemapFile>>,
+    grouped_selection_tables: Option<Box<PackedTilemapFile>>,
+    fixed_screen_maps: Option<Box<PackedTilemapFile>>,
+    localized_layout_tables: Option<Box<PackedTilemapFile>>,
+    direct_rectangle_directory: Option<Box<PackedTilemapFile>>,
+    indexed_ui_tilemaps: Option<Box<PackedTilemapFile>>,
+    map_height_digits: Option<Box<PackedTilemapFile>>,
+    queued_ui_maps: Option<Box<PackedTilemapFile>>,
+    physical_unit_obj_bank: Option<Box<PackedTilemapFile>>,
+    screen_palette_bank: Option<Box<PackedTilemapFile>>,
+    indexed_tile_attributes: Option<Box<PackedTilemapFile>>,
+    screen_curve_bank: Option<Box<PackedTilemapFile>>,
+    full_screen_map: Option<Box<PackedTilemapFile>>,
+    save_crc32_table: Option<Box<PackedTilemapFile>>,
+    screen_effect_motion: Option<Box<PackedTilemapFile>>,
+    localized_inline_ui: Option<Box<PackedTilemapFile>>,
     audio_driver: Option<Box<AudioDriverResources>>,
     palette_effect_dispatch: Option<Box<PaletteEffectDispatchResources>>,
     palette_programs: Option<Box<PaletteProgramResources>>,
@@ -1084,6 +1099,126 @@ impl RuntimeResources {
                 PackedTilemapFile::new(file, &resource.sources)?,
             ));
         }
+        if let Some(file) = files.grouped_selection_tables {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == GROUPED_SELECTION_TABLES_ID)
+                .ok_or("Missing grouped selection table resource")?;
+            resources.grouped_selection_tables = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.fixed_screen_maps {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == FIXED_SCREEN_MAPS_ID)
+                .ok_or("Missing fixed screen map resource")?;
+            resources.fixed_screen_maps = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.localized_layout_tables {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == LOCALIZED_LAYOUT_TABLES_ID)
+                .ok_or("Missing localized layout table resource")?;
+            resources.localized_layout_tables = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.direct_rectangle_directory {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == DIRECT_RECTANGLE_DIRECTORY_ID)
+                .ok_or("Missing direct rectangle directory resource")?;
+            resources.direct_rectangle_directory = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.indexed_ui_tilemaps {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == INDEXED_UI_TILEMAPS_ID)
+                .ok_or("Missing indexed UI tilemap resource")?;
+            resources.indexed_ui_tilemaps = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.map_height_digits {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == MAP_HEIGHT_DIGITS_ID)
+                .ok_or("Missing map-height digit resource")?;
+            resources.map_height_digits = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.queued_ui_maps {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == QUEUED_UI_MAPS_ID)
+                .ok_or("Missing queued UI map resource")?;
+            resources.queued_ui_maps = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.physical_unit_obj_bank {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == PHYSICAL_UNIT_OBJ_BANK_ID)
+                .ok_or("Missing physical unit OBJ bank")?;
+            resources.physical_unit_obj_bank = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.screen_palette_bank {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == SCREEN_PALETTE_BANK_ID)
+                .ok_or("Missing screen palette bank")?;
+            resources.screen_palette_bank = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.indexed_tile_attributes {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == INDEXED_TILE_ATTRIBUTES_ID)
+                .ok_or("Missing indexed tile attributes")?;
+            resources.indexed_tile_attributes = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.screen_curve_bank {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == SCREEN_CURVE_BANK_ID)
+                .ok_or("Missing screen curve bank")?;
+            resources.screen_curve_bank = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.full_screen_map {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == FULL_SCREEN_MAP_ID)
+                .ok_or("Missing full-screen map")?;
+            resources.full_screen_map = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.save_crc32_table {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == SAVE_CRC32_TABLE_ID)
+                .ok_or("Missing save CRC32 table")?;
+            resources.save_crc32_table = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.screen_effect_motion {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == SCREEN_EFFECT_MOTION_ID)
+                .ok_or("Missing screen-effect motion")?;
+            resources.screen_effect_motion = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
+        if let Some(file) = files.localized_inline_ui {
+            let resource = manifest.resources.iter()
+                .find(|item| item.id == LOCALIZED_INLINE_UI_ID)
+                .ok_or("Missing localized inline UI text")?;
+            resources.localized_inline_ui = Some(Box::new(
+                PackedTilemapFile::new(file, &resource.sources)?,
+            ));
+        }
         if let Some((data,_))= files.audio_driver {
             resources.audio_driver = Some(Box::new(AudioDriverResources::new(data.clone(), &source.audio_driver.as_ref().unwrap().sources, files.audio_sequences.ok_or("Missing typed audio sequence owner")?.0)?));
         }
@@ -1398,6 +1533,21 @@ impl RuntimeResources {
             physical_compact_obj_region: None,
             screen_update_tables: None,
             counted_effect_tables: None,
+            grouped_selection_tables: None,
+            fixed_screen_maps: None,
+            localized_layout_tables: None,
+            direct_rectangle_directory: None,
+            indexed_ui_tilemaps: None,
+            map_height_digits: None,
+            queued_ui_maps: None,
+            physical_unit_obj_bank: None,
+            screen_palette_bank: None,
+            indexed_tile_attributes: None,
+            screen_curve_bank: None,
+            full_screen_map: None,
+            save_crc32_table: None,
+            screen_effect_motion: None,
+            localized_inline_ui: None,
             audio_driver: None,
             palette_effect_dispatch: None,
             palette_programs: None,
@@ -1585,6 +1735,21 @@ impl RuntimeResources {
             + self.physical_compact_obj_region.as_ref().map_or(0, |i| i.resident_bytes())
             + self.screen_update_tables.as_ref().map_or(0, |i| i.resident_bytes())
             + self.counted_effect_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.grouped_selection_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.fixed_screen_maps.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.localized_layout_tables.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.direct_rectangle_directory.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.indexed_ui_tilemaps.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.map_height_digits.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.queued_ui_maps.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.physical_unit_obj_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.screen_palette_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.indexed_tile_attributes.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.screen_curve_bank.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.full_screen_map.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.save_crc32_table.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.screen_effect_motion.as_ref().map_or(0, |i| i.resident_bytes())
+            + self.localized_inline_ui.as_ref().map_or(0, |i| i.resident_bytes())
             + self.audio_driver.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_effect_dispatch.as_ref().map_or(0, |i| i.resident_bytes())
             + self.palette_programs.as_ref().map_or(0, |i| i.resident_bytes())
@@ -1830,6 +1995,62 @@ impl RuntimeResources {
 
     pub fn counted_effect_table_bus_bytes(&self) -> Option<u64> {
         self.counted_effect_tables.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn grouped_selection_table_bus_bytes(&self) -> Option<u64> {
+        self.grouped_selection_tables.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn fixed_screen_map_bus_bytes(&self) -> Option<u64> {
+        self.fixed_screen_maps.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn localized_layout_table_bus_bytes(&self) -> Option<u64> {
+        self.localized_layout_tables.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn direct_rectangle_directory_bus_bytes(&self) -> Option<u64> {
+        self.direct_rectangle_directory.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn indexed_ui_tilemaps_bus_bytes(&self) -> Option<u64> {
+        self.indexed_ui_tilemaps.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn map_height_digits_bus_bytes(&self) -> Option<u64> {
+        self.map_height_digits.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn queued_ui_maps_bus_bytes(&self) -> Option<u64> {
+        self.queued_ui_maps.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn physical_unit_obj_bank_bus_bytes(&self) -> Option<u64> {
+        self.physical_unit_obj_bank.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn screen_palette_bank_bus_bytes(&self) -> Option<u64> {
+        self.screen_palette_bank.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn indexed_tile_attributes_bus_bytes(&self) -> Option<u64> {
+        self.indexed_tile_attributes.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+
+    pub fn screen_curve_bank_bus_bytes(&self) -> Option<u64> {
+        self.screen_curve_bank.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn full_screen_map_bus_bytes(&self) -> Option<u64> {
+        self.full_screen_map.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn save_crc32_table_bus_bytes(&self) -> Option<u64> {
+        self.save_crc32_table.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn screen_effect_motion_bus_bytes(&self) -> Option<u64> {
+        self.screen_effect_motion.as_deref().map(PackedTilemapFile::bus_bytes)
+    }
+    pub fn localized_inline_ui_bus_bytes(&self) -> Option<u64> {
+        self.localized_inline_ui.as_deref().map(PackedTilemapFile::bus_bytes)
     }
     pub fn audio_driver_stats(&self) -> Option<AudioDriverStats> {self.audio_driver.as_ref().map(|m|m.stats())}
     pub fn palette_effect_dispatch_stats(&self) -> Option<PaletteEffectDispatchStats> {self.palette_effect_dispatch.as_ref().map(|m|m.stats())}
@@ -2365,6 +2586,66 @@ impl RuntimeResources {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
             };
+            let prior = match &self.grouped_selection_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.fixed_screen_maps {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.localized_layout_tables {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.direct_rectangle_directory {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.indexed_ui_tilemaps {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.map_height_digits {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.queued_ui_maps {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.physical_unit_obj_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.screen_palette_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.indexed_tile_attributes {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.screen_curve_bank {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.full_screen_map {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.save_crc32_table {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.screen_effect_motion {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
+            let prior = match &self.localized_inline_ui {
+                Some(data) => data.guest_read(index, rom, prior),
+                None => prior,
+            };
             let prior = match &self.audio_driver {
                 Some(data) => data.guest_read(index, rom, prior),
                 None => prior,
@@ -2685,6 +2966,21 @@ impl crate::MemMap {
                 || resources.physical_compact_obj_region.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.screen_update_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.counted_effect_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.grouped_selection_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.fixed_screen_maps.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.localized_layout_tables.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.direct_rectangle_directory.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.indexed_ui_tilemaps.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.map_height_digits.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.queued_ui_maps.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.physical_unit_obj_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.screen_palette_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.indexed_tile_attributes.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.screen_curve_bank.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.full_screen_map.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.save_crc32_table.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.screen_effect_motion.as_ref().is_some_and(|data| data.overlaps(index, 4))
+                || resources.localized_inline_ui.as_ref().is_some_and(|data| data.overlaps(index, 4))
                 || resources.copied_halfword_lookups.as_ref().is_some_and(|data| data.fixed_byte_copy_overlaps(index, 4))
         })
             || matches!(index >> 12, 0x149 | 0x14c | 0x14d | 0xa39 | 0xd97

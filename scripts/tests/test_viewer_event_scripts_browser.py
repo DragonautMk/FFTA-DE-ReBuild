@@ -107,7 +107,7 @@ class ScriptProjectionTest(unittest.TestCase):
     def test_scope_isolated_and_invalid_archive(self):
         with tempfile.TemporaryDirectory(prefix='viewer-scripts-scope-') as directory:
             index = fixture(Path(directory)); parts = index.parent / (index.name + '.parts')
-            home, scripts, text, world = (payload(p) for p in (index, parts/'scripts.html', parts/'text.html', parts/'world.html'))
+            home, scripts, text, world = (payload(p) for p in (index, parts/'scripts.html', parts/'text-scripts.html', parts/'world.html'))
             self.assertNotIn('script_archive', home); self.assertNotIn('script_archive', world); self.assertNotIn('script_texts', scripts)
             self.assertEqual(len(scripts['script_archive']['programs']), 3); self.assertEqual(len(text['script_texts']['languages']), 2)
             self.assertEqual([row['id'] for row in scripts['resources']], ['engine.script-archive', 'engine.script-command-directory'])

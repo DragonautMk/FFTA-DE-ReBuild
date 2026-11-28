@@ -122,7 +122,8 @@ class ScopeBrowserTest(unittest.TestCase):
                     self.fail('Scope did not load: ' + current)
                 self.assertTrue(browser.evaluate('''(()=>{
                   const q=s=>document.querySelector(s),row=q('#rows [data-resource-id="audio.m4a-tones"]');
-                  return !q('#wiki-pages').hidden && data.wiki.pages.length===23 &&
+                  return !q('#wiki-pages').hidden && data.wiki.pages.length===24 &&
+                    data.wiki.pages.some(page=>page.id==='world-encounters') &&
                     typeof data.audio==='undefined' && typeof data.short_texts==='undefined' &&
                     row.querySelector('a').textContent.includes('Browse Waveforms and instruments') && !q('#tree-load-large');
                 })()'''))

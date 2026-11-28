@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "browse-linked-metadata16-records",
+  "title": "Browse sixteen-byte linked records",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated World page for 128 authenticated sixteen-byte linked records, with source fields, documented reader uses and a compact comparison table.",
+    "Provide bounded display-helper indices and record bookmarks without assigning unverified names or simulating live linked state."
+  ],
+  "validation": [
+    "Synthetic viewer-metadata16-synthetic-5_w35yrk passed 18 source-guard, browser, navigation and regression tests.",
+    "Protected viewer-metadata16-real-ez08ndf1 compared 2048 source bytes and 1792 displayed fields, preserved 39 scoped payloads and 184 resource pages, and matched 1110 Python/Docker files.",
+    "Published 43 private wiki files with verified preimages in out/ffta-metadata16-before-w0jea1dw."
+  ],
+  "limitations": [
+    "Overall record meanings, names and live pair outcomes remain unverified; native Windows is deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_metadata16.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

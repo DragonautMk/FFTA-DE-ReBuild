@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "bound-european-fixed-30-by-20-screen-map",
+  "title": "Bound the original European 30-by-20 screen-map source",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Bound the fixed 600-cell map, its three copy literals and its 64-byte destination pitch. Record the original caller, the other full-screen loop candidates and the unresolved adjacent attribute table."
+  ],
+  "validation": [
+    "Wine jbniu5w1 attests 301 original halfwords and the e373 ownership join. The bounded Thumb census finds three loop candidates and identifies 11 direct callers of the variable-width clipped copy. The fixed map contributes 1,212 unowned bytes across two spans. All 14 input guards and server drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, other copy forms and derived sources, the adjacent attribute reader, ordinary paths, translations, Linux, USA and native Windows remain open. The 6,359-byte pre-font gap requires a source root."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

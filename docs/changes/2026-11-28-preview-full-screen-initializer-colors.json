@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "preview-full-screen-initializer-colors",
+  "title": "Preview the full-screen initializer colors",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Join three authenticated initializer palette sources to the full-screen map and allow all four color-mode values, including the default alias.",
+    "Apply the initializer first-color clear and per-cell bank IDs while keeping manual colors, scoped pages and on-demand loading."
+  ],
+  "validation": [
+    "Static audits viewer-screen-init-audit-lz4xdapt and viewer-screen-caller-audit-n8dyno0p trace the palette selection and preceding dispatcher states.",
+    "Synthetic viewer-screen-colors-synthetic-rvx4326w passed 31 tests; protected viewer-screen-colors-real-85frh7mv checked 38400 pixels in four modes, preserved 43 scoped payloads and 188 resource pages, and matched 1116 Python/Docker files.",
+    "Published 45 private files with verified preimages in out/ffta-screen-colors-before-n1x30_iv."
+  ],
+  "limitations": [
+    "Zero-index transparency and other layers are not composited. Later palette changes, screen identity, ordinary execution and native Windows remain unverified."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_full_screen_map.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md",
+    "docs/rom_data_ui_palettes.md"
+  ]
+}

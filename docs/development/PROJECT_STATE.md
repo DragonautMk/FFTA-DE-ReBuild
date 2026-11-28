@@ -1871,6 +1871,120 @@ and normal enablement retain their existing acceptance gates.
   original readers, e360 attachment and CLI lifecycle pass under Wine.
   Ordinary triggers and translated execution remain open.
 
+- EUR [E618](../rom_data_graphics.md#e618-european-counted-effect-tables)
+  bounds 13 complete effect tables and 1,455 two-byte samples.
+  [E619](../rom_data_graphics.md#e619-european-counted-effect-table-runtime)
+  serves all 3,016 residual bytes in `e362-d361`, retained in
+  `g3g2y23h` and verified by `xutdfh0i`. Controlled original readers,
+  e361 attachment and CLI lifecycle pass on Wine. Ordinary triggers,
+  live selector domains, clipped variants and translated paths remain open.
+
+- EUR [E620](../rom_data_gameplay.md#e620-european-grouped-selection-banks)
+  bounds 25 pools and 160 weighted rows. [E621](../rom_data_gameplay.md#e621-european-grouped-selection-runtime)
+  serves 2,912 residual bytes in `e363-d362`, retained in `gj9_e_65`.
+  Controlled original readers and weighted RNG paths, e362 attachment
+  and CLI lifecycle pass on Wine. Ordinary and translated paths remain open.
+
+- EUR [E622](../rom_data_ui_graphics.md#e622-european-fixed-width-screen-maps)
+  bounds all nine screen maps and the ten direct callers of `081441f8`.
+  [E623](../rom_data_ui_graphics.md#e623-european-fixed-width-screen-map-runtime) supplies their 5,918 bytes
+  in `e364-d363`, retained in `kdqkk4qk`. Controlled map copies,
+  e363 attachment and CLI lifecycle pass on Wine. Ordinary and translated
+  paths remain open.
+
+- EUR [E624](../rom_data_ui_graphics.md#e624-european-localized-layout-bank)
+  bounds 20 localized tables and their three OBJ lists and related fields.
+  [E625](../rom_data_ui_graphics.md#e625-european-localized-layout-runtime) supplies 3,718 bytes in
+  `e365-d364`, retained in `v6z9rj49`. Controlled builds for all five
+  languages, position and OBJ reads, transitions, e364 attachment and
+  CLI lifecycle pass on Wine. Ordinary and translated paths remain open.
+
+- EUR [E626](../rom_data_graphics.md#e626-european-direct-rectangle-directory)
+  bounds five complete rectangles selected through `3ac9f8`.
+  [E627](../rom_data_graphics.md#e627-european-direct-rectangle-runtime) serves their
+  2,458 bytes in `e366-d365`, retained in `z3kgd901`. The original
+  row-zero calls and controlled remaining-row copies, e365 attachment
+  and CLI lifecycle pass on Wine. Live producers remain open.
+
+- EUR [E628](../rom_data_ui_graphics.md#e628-european-indexed-ui-tilemaps)
+  bounds all 31 UI tilemaps and four ten-slot directories.
+  [E629](../rom_data_ui_graphics.md#e629-european-indexed-ui-tilemap-runtime) serves 1,902 bytes
+  in `e367-d366`, retained in `9m_lcvkw`. Controlled original
+  copy paths, e366 attachment and CLI lifecycle pass on Wine.
+  Ordinary producer bounds and translated readers remain open.
+
+- EUR [E630](../rom_data_runtime.md#e630-european-map-height-digit-bank)
+  bounds ten glyphs and the original decimal queues.
+  [E631](../rom_data_runtime.md#e631-european-map-height-digit-runtime) serves 2,308 bytes in
+  `e368-d367`, retained in `nox0vrxd`. The E327 digit 5 owner stays
+  in place. All 100 controlled decimal heights, e367 attachment and
+  CLI lifecycle pass on Wine. Live domain and translated use remain open.
+
+- EUR [E632](../rom_data_ui_graphics.md#e632-european-queued-ui-map-bank)
+  bounds all five UI maps in `3ba358..3ba838`.
+  [E633](../rom_data_ui_graphics.md#e633-european-queued-ui-map-runtime) serves 1,284 bytes in
+  `e369-d368`, retained in `xh8fmuqm`. Controlled original queues,
+  DMA, e368 attachment and CLI lifecycle pass on Wine. Live row bounds
+  and translated readers remain open.
+
+- EUR [E635](../rom_data_unit_obj.md#e635-european-physical-unit-obj-bank)
+  bounds the complete 248-entry unit OBJ directory and its 36,072
+  index cells, 4,934 sequences, 164 OBJ lists and 5,262 pixel blocks.
+  [E636](../rom_data_unit_obj.md#e636-complete-european-unit-obj-bank-at-runtime)
+  serves all 154,032 residual bytes in `e370-d369`, retained in
+  `1gbe3unw`. Controlled resets, commands and DMA pass on Wine with
+  e369 attachment and CLI lifecycle. Ordinary and translated paths remain open.
+
+- EUR [E637](../rom_data_ui_palettes.md#e637-european-b8-screen-palette-bank)
+  bounds the three missing B8 palette sources. [E638](../rom_data_ui_palettes.md#e638-european-b8-screen-palette-runtime)
+  serves all 736 colors and three reader literals in `e371-d370`,
+  retained in `dxp4zz3_`. Controlled copies, e370 attachment and
+  CLI lifecycle pass on Wine. Ordinary scheduling and translated
+  execution remain open.
+
+- EUR [E639](../rom_data_indexed_graphics.md#e639-european-indexed-tile-attribute-tables)
+  matches eight tile attribute tables to their indexed archives.
+  [E640](../rom_data_indexed_graphics.md#e640-european-indexed-tile-attributes-at-runtime)
+  serves 1,187 bytes in `e372-d371`, retained in `9l_31bpd`.
+  Direct and stored-language reads, e371 attachment and CLI lifecycle
+  pass on Wine. The `3b58ac` table still requires an original reader.
+
+- EUR [E641](../rom_data_graphics.md#e641-european-screen-curve-bank)
+  bounds seven screen curves, both controllers and the independent
+  terminal record. [E642](../rom_data_graphics.md#e642-european-screen-curves-at-runtime)
+  serves 1,450 bytes in `e373-d372`, retained in `2mftykpq`. Controlled
+  original readers, e372 attachment and CLI lifecycle pass on Wine.
+  Ordinary screen scheduling and translated execution remain open.
+
+- EUR [E643](../rom_data_ui_graphics.md#e643-european-fixed-30-by-20-screen-map-source)
+  authenticates the fixed 600-cell copy from `3b53fc` and its three
+  literals. [E644](../rom_data_ui_graphics.md#e644-european-full-screen-map-at-runtime)
+  serves the 1,212 bytes in `e374-d373`, retained in `lm4fie3o`.
+  The original copy, e373 attachment and CLI lifecycle pass on Wine.
+  The adjacent attribute table still requires its original reader.
+
+- EUR [E645](../rom_data_runtime.md#e645-european-save-crc32-table-source)
+  bounds the full 256-word save checksum table and two original calls.
+  [E646](../rom_data_runtime.md#e646-european-save-crc32-table-at-runtime)
+  serves 1,032 bytes in `e375-d374`, retained in `tlf2q8ys`. The original
+  write and verification branches, e374 attachment and CLI lifecycle
+  pass on Wine. Ordinary save and load remain open.
+
+- EUR [E647](../rom_data_graphics.md#e647-european-screen-effect-motion-tables)
+  bounds the sprite, interpolation and scanline tables near `3ac4dc`.
+  [E648](../rom_data_graphics.md#e648-european-screen-effect-motion-at-runtime)
+  serves 1,089 bytes in `e376-d375`, retained in `_l4sdrdj`. Original
+  readers, the blend boundary, e375 attachment and CLI lifecycle pass
+  on Wine. Ordinary scheduling and translated execution remain open.
+
+- EUR [E649](../rom_data_text.md#e649-european-localized-inline-ui-text)
+  authenticates seven five-language UI directories and their string
+  and glyph sources against e376. [E650](../rom_data_text.md#e650-european-localized-inline-ui-text-at-runtime)
+  serves all 886 bytes in `e377-d376`, retained in `sognrooh`. Original
+  selection and expansion with altered backing, e376 attachment and
+  CLI lifecycle pass on Wine. The ordinary path from language choice to
+  these rendered screens and translated execution remain open.
+
 - EUR [E521 direct CPUSet residuals](../rom_data_graphics.md#e521-european-direct-cpuset-residuals)
   classifies the 16 resolved calls against `e321-d320`. Five remaining
   calls copy executable support and two copy 52 unowned initializer

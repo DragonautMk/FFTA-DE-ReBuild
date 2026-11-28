@@ -40,6 +40,25 @@
     <p id="tree-table-note"></p>
     <div style="overflow-x:auto"><table><thead id="tree-head"><tr><th>Key or index</th><th>Value</th></tr></thead><tbody id="tree-rows"></tbody></table></div>
   </div>
+  <details id="inspect-values"><summary>Interpret file bytes
+    <time id="inspect-values-added" class="wiki-update-badge" datetime="2026-11-27T23:57:52Z"
+      title="2026-11-27T23:57:52Z" style="font-size:.75em">Added 2026-11-27 23:57 UTC</time></summary>
+    <p>Choose how to interpret the bytes. These values do not identify the file format.
+    Reading is limited to 64 values at a time; incomplete values remain visible as bytes.</p>
+    <label>Value width <select id="inspect-values-width"><option value="1">8 bits</option>
+      <option value="2">16 bits</option><option value="4">32 bits</option></select></label>
+    <label>Byte order <select id="inspect-values-endian"><option value="little">Little-endian</option>
+      <option value="big">Big-endian</option></select></label>
+    <label id="inspect-values-color-control" hidden><input id="inspect-values-color" type="checkbox"> Show BGR555 colors</label>
+    <label>File byte offset <input id="inspect-values-offset" type="text" inputmode="text" value="0" maxlength="18" style="width:10rem"></label>
+    <button type="button" id="inspect-values-go" disabled>Go</button>
+    <button type="button" id="inspect-values-prev" disabled>Previous values</button>
+    <button type="button" id="inspect-values-next" disabled>Next values</button>
+    <p id="inspect-values-status" role="status">Select a file to interpret its bytes.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>File offset</th><th>Stored bytes</th>
+      <th>Unsigned</th><th>Signed</th><th id="inspect-values-color-heading" hidden>BGR555 color</th></tr></thead>
+      <tbody id="inspect-values-rows"></tbody></table></div>
+  </details>
   <p id="inspect-status" role="status">No file selected.</p>
   <label>Find <select id="inspect-query-mode"><option value="text">UTF-8 text</option><option value="hex">Hex bytes</option></select></label>
   <label>Value <input id="inspect-query" type="search" maxlength="3072" placeholder="Case-sensitive text"></label>

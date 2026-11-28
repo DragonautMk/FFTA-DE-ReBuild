@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e368-map-height-digits",
+  "title": "Preview European map-height digits",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated Interface page for ten map-height digit sources, joining the new bank with the earlier digit 5 transfer and retaining the other nine when that dependency is unavailable.",
+    "Allow interactive heights from 0 to 99, individual digit and halfword inspection, and solid or grayscale previews of an explicit 2-by-4 4-bit tile interpretation; refresh the local wiki to e368-d367."
+  ],
+  "validation": [
+    "Synthetic viewer-height-synthetic-9n37njc7 passed 35 projection, browser and regression tests including incomplete dependencies and the single-page view.",
+    "Protected viewer-height-real-a5ugubd7 checked 2560 joined source bytes and all 100 preview values in Chrome, preserved 32 scoped payloads and 180 resource pages, and matched 1078 Python/Docker files.",
+    "Published 36 private files with verified preimages out/ffta-height-before-htawh0lh."
+  ],
+  "limitations": [
+    "The displayed arrangement and grayscale are an interpretation; original palette, final screen placement, live height bounds and ordinary scenes remain unverified. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_map_height_digits.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_runtime.md"
+  ]
+}

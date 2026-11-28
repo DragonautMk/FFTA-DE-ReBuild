@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-indexed-tile-attributes",
+  "title": "Serve the European indexed tile attribute tables",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish the 1,187 residual attribute and literal bytes in e372-d371. Keep the established localized archive, literal and White Flowers owners."
+  ],
+  "validation": [
+    "Windows build bv317yfu and Wine vuznktga pass 584 direct getter cases and 15 localized cases using all five stored languages, with altered backing and 480 mixed boundaries. Guest state and clock match. All 17 input guards and Wine drain pass.",
+    "Stage 9l_31bpd retains 174 verified files after CLI creation, verification and reuse. e371 attaches and all 172 earlier resources are byte-identical."
+  ],
+  "limitations": [
+    "The test sets the stored language byte directly. Startup selection, ordinary and translated execution, the 3b58ac reader, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/indexed_tile_attributes.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/indexed_tile_attributes_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_indexed_graphics.md",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_indexed_graphics.md"
+  ]
+}

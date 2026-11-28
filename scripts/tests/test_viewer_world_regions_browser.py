@@ -19,7 +19,7 @@ class WorldRegionProjectionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='viewer-world-regions-projection-') as directory:
             index, digests = generate_fixture(Path(directory))
             parts = index.parent / 'index.html.parts'
-            world, text = payload(parts / 'world-map.html'), payload(parts / 'text.html')
+            world, text = payload(parts / 'world-map.html'), payload(parts / 'text-pointers.html')
             regions = world['world_region_names']
             self.assertEqual([(row['region_index'], row['name_index']) for row in regions['regions']],
                              [(i, 718 + i) for i in range(31)])

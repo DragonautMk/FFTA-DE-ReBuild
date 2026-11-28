@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-fixed-screen-maps",
+  "title": "Add European fixed-width screen map extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 5,918 E622 bytes as e364-d363 at their original guest addresses. Keep the two localized callers on the same map."
+  ],
+  "validation": [
+    "Windows build pwcxixfo and Wine h7701ipw pass. All ten readers copy 3,539 total cells from altered ROM backing with 2,721 untouched destination checks. Complete guest state and clock match.",
+    "Stage kdqkk4qk retains 166 verified files. CLI creation, verification and reuse, e363 attachment, two invalid candidates, 1,152 mixed and mirrored reads, 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Ordinary and translated paths, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/fixed_screen_maps.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/fixed_screen_map_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

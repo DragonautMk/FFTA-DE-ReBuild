@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e365-localized-layouts",
+  "title": "Preview European localized layouts",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated Interface page for 20 language-selected layouts, their object lists and a playable preview of 17 transition pairs.",
+    "Show source fields and bounded task positions without inferring scene names, graphics pairing or original timing; update the local wiki from e364 to verified e365."
+  ],
+  "validation": [
+    "Synthetic viewer-e365-layout-synthetic-n97a9ppz passed 29 projection, browser and regression tests.",
+    "Protected viewer-e365-layout-real-7rpajuy8 checked 3718 source bytes, 20 layouts, 267 rows, eight objects and 17 transitions, exercised Chrome playback, preserved 29 prior scopes apart from revision/navigation metadata and 177 resource pages, and matched 1071 Python/Docker files.",
+    "Used the passing E625 reader retry and CLI subreceipt after the initial staging fixture-limit failure. Published 33 private files with guarded preimages out/ffta-e365-layout-before-1y3ojqz6."
+  ],
+  "limitations": [
+    "Original scene identities, object composition and transition timing are unverified; native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/viewer_localized_layouts.py",
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_localized_layouts.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

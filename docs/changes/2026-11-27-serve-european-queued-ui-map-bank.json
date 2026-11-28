@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "serve-european-queued-ui-map-bank",
+  "title": "Add European queued UI map extraction and runtime binding",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 1,284 E632 bytes as e369-d368 while preserving the original rectangles, source addresses and live row count."
+  ],
+  "validation": [
+    "Windows build 8llomu57 and Wine uo7t0zos pass. The nine original source paths and eleven DMA copies cover all five maps and 1,326 output cells with altered backing and equal state and clock.",
+    "Stage xh8fmuqm retains 171 verified files. CLI creation, verification and reuse, e368 attachment, two invalid candidates, 864 mixed and mirrored reads, 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Live row bounds, ordinary scenes, translated readers, Linux, USA and native Windows remain in recovery. No performance measurements."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/queued_ui_maps.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "crates/recomp/src/rom_data/queued_ui_maps_tests.rs",
+    "crates/recomp/src/rom_data/map_height_digits_tests.rs",
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_ui_graphics.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

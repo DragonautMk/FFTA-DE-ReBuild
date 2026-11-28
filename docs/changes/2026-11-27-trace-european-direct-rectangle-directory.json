@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-direct-rectangle-directory",
+  "title": "Bound five European direct rectangle sources",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Follow the original row copier and position preset reader through all five directory slots. Bound the five byte-identical but separately addressed rectangles and their alignment."
+  ],
+  "validation": [
+    "Wine y2ixxo5i attests 183 original halfwords and reconciles a 67-site direct-call census. The e365 audit finds 2,458 unowned bytes in nine spans. All 17 input guards and Wine drain pass."
+  ],
+  "limitations": [
+    "The authenticated original task copies row zero. Other live row and selector domains, publication, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

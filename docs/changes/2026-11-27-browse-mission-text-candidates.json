@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "browse-mission-text-candidates",
+  "title": "Browse same-index mission text candidates",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a lazy searchable five-language mission text candidate index, authenticate both European catalogs and link mission and pointer-text entries in both directions.",
+    "Share pinned language, command visibility and font preferences with other text views; add dated badges to the changed sections and the new collapsible panel."
+  ],
+  "validation": [
+    "Synthetic viewer-mission-text-synthetic-9k90t4ex passed 28 source-guard, browser navigation, preferences, scope and regression tests.",
+    "Protected viewer-mission-text-real-2ctl456a checked 512 mission records, 2560 localized entries and 33657 source segments, preserved 34 scoped payloads and 182 resource pages, and matched 1080 Python/Docker files.",
+    "Published 37 private local files with verified preimages out/ffta-mission-text-before-0sf6ru28."
+  ],
+  "limitations": [
+    "The equal-index association is tentative and does not establish a title or live selection for every mission. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_index.html",
+    "scripts/viewer_name_search.js",
+    "scripts/viewer_section_updates.json",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_mission_text_candidates.py",
+    "scripts/tests/test_viewer_event_script_links.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_gameplay.md"
+  ]
+}

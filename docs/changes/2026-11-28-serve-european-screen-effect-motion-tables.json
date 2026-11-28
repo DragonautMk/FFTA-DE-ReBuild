@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-28",
+  "slug": "serve-european-screen-effect-motion-tables",
+  "title": "Serve the European screen-effect motion tables",
+  "kind": "added",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Publish 1,089 bytes in 26 spans through graphics.screen-effect-motion in e376-d375. Preserve the earlier blend owner used by the pending-release comparison."
+  ],
+  "validation": [
+    "Windows build zj4qgpli and Wine 3d4iw72q pass 22 scheduler ticks, 86 physical sprite rows, 12 sprite motion records, 20 offsets, seven timed rows, 84 scales, both 160-line outputs and five background modes. The blend comparison, full state, clock, scanline guards and 2,496 mirrored checks match with altered backing.",
+    "Original readers use 5,147 managed bytes. Stage _l4sdrdj retains all 178 files after CLI creation, verification and reuse. All 176 earlier resources match by digest. e375 attaches, two invalid candidates preserve e376 and Wine drains after all 17 input guards pass."
+  ],
+  "limitations": [
+    "The focused test supplies task context and physical sprite indices. Ordinary triggers, scheduler order, live second sprite domain, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "crates/gba-core/src/rom_data.rs",
+    "crates/gba-core/src/rom_data/runtime.rs",
+    "crates/gba-core/src/rom_data/screen_effect_motion.rs",
+    "crates/recomp/src/rom_data.rs",
+    "crates/recomp/src/rom_data/screen_effect_motion_tests.rs",
+    "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
+    "docs/rom_data_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/development/PROJECT_STATE.md"
+  ],
+  "references": [
+    "docs/rom_data_graphics.md"
+  ]
+}

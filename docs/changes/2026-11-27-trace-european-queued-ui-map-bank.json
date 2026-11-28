@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "trace-european-queued-ui-map-bank",
+  "title": "Bound the European queued UI map bank",
+  "kind": "docs",
+  "platforms": [
+    "EUR / Wine"
+  ],
+  "changes": [
+    "Trace the seven original queue calls and nine literal sites to all five physical maps at 3ba358. Preserve the original live row count and both neighboring owners."
+  ],
+  "validation": [
+    "Wine zcysqkbo attests 3,273 original halfwords and authenticates 624 cells and nine literal words. The e368 audit finds 1,284 unowned bytes in nine spans. All 15 guards and Wine drain pass."
+  ],
+  "limitations": [
+    "Runtime publication, live row bounds, ordinary scenes, translated execution, Linux, USA and native Windows remain in recovery."
+  ],
+  "files": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ]
+}

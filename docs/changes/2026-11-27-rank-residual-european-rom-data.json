@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "rank-residual-european-rom-data",
+  "title": "Rank the remaining European ROM data leads",
+  "kind": "docs",
+  "platforms": [
+    "EUR"
+  ],
+  "changes": [
+    "Record the original 600-cell fixed-copy reader, three large unrooted residual spans and the unresolved computed sources of the queued map reader."
+  ],
+  "validation": [
+    "Compare e369 manifest ownership with the static original Thumb copy and 39 direct queue branch encodings. The 20 by 30 copy bounds 1,200 bytes at 3b53fc."
+  ],
+  "limitations": [
+    "The neighboring 544 bytes and larger unexplained spans require an original reader or transfer descriptor. Additional layouts, live queue sources and runtime checks remain open."
+  ],
+  "files": [
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+  ],
+  "references": [
+    "docs/rom_data_ui_graphics.md"
+  ]
+}

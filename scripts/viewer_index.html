@@ -30,10 +30,10 @@ table { border-collapse:collapse; width:100%; } td,th { text-align:left; padding
 <main>
 <section id="wiki-name-search" hidden>
   <details><summary><h2>Search recognized names</h2></summary>
-    <p>Search source-linked item, action, job metadata and region names. Unknown glyphs appear as �; live roles and availability may differ.</p>
+    <p>Search source-linked item, action, job metadata, region and observed world-node names, plus same-index mission text candidates. Mission matches are not proven names; node placements reflect recorded game state. Unknown glyphs appear as �.</p>
     <label>Name or ID <input id="wiki-name-query" type="search" placeholder="Search names or record IDs"></label>
     <label>Language ID <select id="wiki-name-language"></select></label>
-    <label>Category <select id="wiki-name-kind"><option value="all">All categories</option><option value="item">Items</option><option value="action">Action-linked records</option><option value="job">Job metadata</option><option value="region">Region references</option></select></label>
+    <label>Category <select id="wiki-name-kind"><option value="all">All categories</option><option value="item">Items</option><option value="action">Action-linked records</option><option value="job">Job metadata</option><option value="mission">Mission text candidates</option><option value="region">Region references</option><option value="node">Observed world nodes</option></select></label>
     <p><button type="button" id="wiki-name-prev">Previous</button>
       <span id="wiki-name-status" role="status">Open to load the local name index.</span>
       <button type="button" id="wiki-name-next">Next</button></p>

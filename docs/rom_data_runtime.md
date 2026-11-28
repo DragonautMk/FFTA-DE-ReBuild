@@ -5133,6 +5133,57 @@ and UI save/Load remain open. Older revision-sensitive fixtures need adaptation
 and rerun; Linux, USA and native Windows remain to be checked. No performance
 comparison was made.
 
+## E630 European map-height digit bank
+
+The original reader `0801dd88` returns the map-height byte for the
+chosen coordinate. The display code at `080ac8ee` divides that value
+by ten and computes the remainder. Both copy calls take the same base
+at `40e344` and scale the digit by 256 bytes. Each request copies 128
+halfwords to OBJ VRAM. The tens output at `06013600` uses a fill when
+the quotient is zero. The units output always uses `06013700`.
+
+Ten distinct 256-byte glyphs cover `40e344..40ed44`. The separately
+owned OBJ archive begins at `40ed44`. The E327 transfer keeps its
+digit 5 interval and two original literal words. The E630 projection
+adds the other nine glyphs and the first copy's destination literal.
+The physical digit domain covers decimal inputs 0 through 99.
+
+Wine `jnf3ke4h` verifies 133 original instruction halfwords and
+2,572 projected bytes. The e367 ownership audit retains the 264
+E327 bytes and identifies 2,308 unowned bytes in three spans.
+All 15 input guards pass and Wine drains. Result SHA-256
+`853b7df8f7d8e0b7c6e387ef2373531598a4af0e71756dd97595661d7fc03419`.
+Runtime execution, the live map-height domain, ordinary scenes,
+translated readers and deferred platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E631 European map-height digit runtime
+
+Dataset `e368-d367` publishes the residual 2,308 E630 bytes in
+`graphics.map-height-digits`, stored as `map-height-digits.bin`.
+The file supplies nine glyphs and the first copy destination at their
+original addresses. It depends on the E327 file for the digit 5 and
+the two earlier literals. e367 still attaches, and all 168 earlier
+resources are byte-identical.
+
+Wine `v_1cj6om` supplies controlled map cells with heights 0 through 99
+to the original getter and executes the original divider, queue
+producers and DMA executor. The 190 glyph transfers and ten leading
+fills match both OBJ VRAM destinations and their guards. The comparison
+alters all 2,308 new bytes and the earlier 264 bytes in ROM backing.
+The new file serves 43,880 observed bytes. Each earlier source
+group is also read. Complete guest state and clock, 288 mixed and
+mirrored reads and rejection of two invalid candidates pass.
+
+Windows GNU build `xe1s240g` and Wine CLI creation, verification
+and reuse pass. Stage `nox0vrxd` retains the 170-file generation.
+All 17 input guards pass, and the server drains. Stage result
+SHA-256 `38d3f22b3a61b895bfafe041d34aed26f6a0fc141798aa3444a043f583a3d566`; manifest SHA-256
+`7ebda6beff990f2be25337cbed3e3e966c2f54e81affad78cdb8a7c4a9fef147`.
+Live height bounds, ordinary scenes, translated execution, Linux, USA
+and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## E328 Firaga 2d/2e Thumb literal source plan
 
 Protected plan `e328-firaga-2d-2e-literals-source-plan-csk4bbyl` authenticates
@@ -9677,3 +9728,62 @@ The live message and list producers, queued writes, generated dispatch,
 other calculated source banks, original BIOS and deferred platforms
 remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E645 European save CRC32 table source
+
+Original Thumb reader `0813eee4` XORs the next input byte with the low
+byte of the complemented running state. It multiplies that byte index
+by four, reads a word at `0813ef04` and combines it with the state shifted
+right by eight. The instructions reach all 256 little-endian words at
+`397180..397580`. Every word matches the independently generated reflected
+CRC32 table for polynomial `edb88320`. Two literal words provide the
+24-bit mask and the table base.
+
+The bounded direct-call census through `146000` finds the calls at
+`0813f456` and `0813f774`. The first stores the result at save header
+offset `0x0c`. The second saves the expected checksum, clears the checksum
+and header bytes `0x12` through `0x16`, and compares the calculated result
+with the stored value. The next cartridge address, `397580`, has an
+independent 16-byte copy at `08050c00`.
+
+Wine source unit `d_089fkr` attests 59 original halfwords and confirms
+1,032 unowned bytes in the e374 ownership join. All 16 protected inputs
+pass, and the Wine server drains. Result SHA-256
+`bf6ba89fd55b3bf6c0800c38c4fae84786adb89dd87373bc0b5555a35b1e4d83`.
+E646 below verifies runtime publication. Ordinary save and load remain
+in recovery.
+
+The same audit ranks candidate intervals using the e374 manifest and the
+retained e345 code atlas. It separates 2,519,968 residual bytes in uniform
+runs of at least 1,024 bytes for prioritization. The large cartridge-tail
+and post-transfer candidates still need rooted consumers. The 2,306-byte
+interval before the E605 tile bank contains 2,270 repetitions of byte
+`88` and requires its own reader. The CRC32 lookup establishes its exact
+source bounds across the code atlas's candidate markings.
+
+## E646 European save CRC32 table at runtime
+
+`e375-d374` publishes all 256 CRC32 words and their two reader literals
+as `engine.save-crc32-table` in `save-crc32-table.bin`. The original
+checksum algorithm and guest addresses remain in use.
+
+Windows build `v31npnju` and Wine unit `zsu3v1bs` pass. With altered ROM
+backing, the original lookup exercises all 256 table indices and three
+CRC cases covering empty input, the standard check vector and a nonzero
+seed. The original prologues select 12,228- and 15,528-byte payloads.
+For each length, the checksum writer stores the reference value, the
+verifier accepts intact data and the mismatch branch rejects one
+altered byte. The cases match the expected header writes, destination
+guards, complete guest state and clock. The reader requests account for
+336,280 managed bytes. All 192 mixed-width ROM mirror checks pass.
+
+The CLI creates, verifies and reuses 177 files, with all 175 preceding
+resources byte-identical. e374 attaches and two invalid candidates
+preserve the active attachment. All 17 protected Wine inputs pass. The
+server drains and releases its lease. Stage `tlf2q8ys` retains the dataset.
+Result SHA-256 `98f57674add37719cd0eb992ae374522288a57033956cf56734bfe99e00744e8`.
+
+The test supplies synthetic payloads in scratch guest RAM and enters
+the original verification block after the signature check. Ordinary
+save and load, translated execution, Linux, USA and native Windows
+remain in recovery.

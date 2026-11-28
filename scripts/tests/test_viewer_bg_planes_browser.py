@@ -5,12 +5,25 @@ import json
 import shutil
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from view_rom_data import generate, project_bg_plane_programs
 from viewer_browser_harness import Chrome
+
+
+def wait_for(browser, condition):
+    deadline = time.monotonic() + 30
+    while time.monotonic() < deadline:
+        try:
+            if browser.evaluate('document.readyState === "complete" && ' + condition):
+                return
+        except (RuntimeError, OSError):
+            pass
+        time.sleep(.05)
+    raise AssertionError('Page or selection did not finish loading: ' + condition)
 
 
 def catalog():
@@ -71,9 +84,16 @@ class BackgroundPlanesProjectionTest(unittest.TestCase):
     def test_scope_and_partial_resource_isolation(self):
         for invalid in (None, 'paired', 'terrain'):
             with self.subTest(invalid=invalid), tempfile.TemporaryDirectory(prefix='viewer-bg-plane-scope-') as temp:
-                index, interface = fixture(Path(temp), invalid=invalid); data = payload(interface)
+                index, interface = fixture(Path(temp), invalid=invalid); data = payload(interface.with_name('interface-planes.html'))
+                original = payload(interface)
                 world = payload(interface.with_name('world-map.html'))
                 self.assertNotIn('bg_plane_programs', payload(index))
+                self.assertNotIn('bg_plane_programs', original)
+                self.assertNotIn('bg_graphics', data)
+                if invalid == 'paired':
+                    self.assertIsNone(data['plane_support'])
+                else:
+                    self.assertEqual(data['plane_support']['bg_graphics'], original['bg_graphics'])
                 self.assertEqual(bool(data['bg_plane_programs']), invalid != 'paired')
                 self.assertEqual(bool(world['terrain_seeds']), invalid != 'terrain')
                 self.assertNotIn('terrain_seeds', data)
@@ -85,7 +105,7 @@ class BackgroundPlanesProjectionTest(unittest.TestCase):
 class BackgroundPlanesBrowserTest(unittest.TestCase):
     def test_writes_layers_pixels_and_navigation(self):
         with tempfile.TemporaryDirectory(prefix='viewer-bg-plane-browser-') as temp:
-            work = Path(temp); _, world = fixture(work); browser = Chrome(work, world)
+            work = Path(temp); _, interface = fixture(work); browser = Chrome(work, interface.with_name('interface-planes.html'))
             try:
                 self.assertEqual(browser.evaluate('''(async()=>{
                   const q=s=>document.querySelector(s),change=e=>e.dispatchEvent(new Event('change')),
@@ -112,16 +132,21 @@ class BackgroundPlanesBrowserTest(unittest.TestCase):
                   q('#bg-plane-fill').value='0x1234';input(q('#bg-plane-fill'));q('#bg-plane-descriptor').value='1';change(q('#bg-plane-descriptor'));
                   if(!q('#bg-plane-source').textContent.includes('inheritance 0 → 1')||q('#bg-plane-fill').value!=='0x1234')throw Error('inheritance or settings');
                   q('#bg-plane-fill').value='-1';input(q('#bg-plane-fill'));if(!q('#bg-plane-source').textContent.includes('Choose an initial word'))throw Error('fill guard');
-                  q('#bg-plane-fill').value='0';input(q('#bg-plane-fill'));q('#bg-plane-tile-open').click();
-                  if(q('#bg-descriptor').value!=='1'||!q('#bg-tiles>details').open)throw Error('tile link');
-                  q('#bg-plane-open').click();if(q('#bg-plane-descriptor').value!=='1'||!q('#bg-planes>details').open)throw Error('return link');
+                  q('#bg-plane-fill').value='0';input(q('#bg-plane-fill'));
+                  if(!q('#bg-plane-tile-open').href.includes('/interface.html?'))throw Error('tile link');
                   return 'PASS';
                 })()'''), 'PASS')
+                browser.command('Page.navigate', {'url': browser.evaluate("document.querySelector('#bg-plane-tile-open').href")})
+                wait_for(browser, "data.wiki.current==='interface' && document.querySelector('#bg-descriptor').value==='1'")
+                self.assertTrue(browser.evaluate("document.querySelector('#bg-tiles>details').open && !document.querySelector('#bg-plane-navigation').hidden"))
+                browser.command('Page.navigate', {'url': browser.evaluate("document.querySelector('#bg-plane-open').href")})
+                wait_for(browser, "data.wiki.current==='interface-planes' && document.querySelector('#bg-plane-descriptor').value==='1'")
+                self.assertTrue(browser.evaluate("document.querySelector('#bg-planes>details').open"))
             finally: browser.close()
 
     def test_standalone_shades(self):
         with tempfile.TemporaryDirectory(prefix='viewer-bg-plane-alone-') as temp:
-            work = Path(temp); _, world = fixture(work, graphic=False); browser = Chrome(work, world)
+            work = Path(temp); _, world = fixture(work, graphic=False); browser = Chrome(work, world.with_name('interface-planes.html'))
             try:
                 self.assertTrue(browser.evaluate('''(async()=>{
                   const q=s=>document.querySelector(s);q('#bg-planes>details').open=true;await new Promise(r=>setTimeout(r,0));

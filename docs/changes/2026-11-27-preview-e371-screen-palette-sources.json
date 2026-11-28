@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "slug": "preview-e371-screen-palette-sources",
+  "title": "Preview European screen palette sources",
+  "kind": "added",
+  "platforms": [
+    "Linux Chrome",
+    "Linux Docker"
+  ],
+  "changes": [
+    "Add a separately loaded, dated Interface page for three authenticated screen palette sources and refresh the private wiki to e371-d370.",
+    "Browse 736 BGR555 words in 16-color banks, inspect RGB values, high bits, source addresses and documented destination slots."
+  ],
+  "validation": [
+    "Synthetic viewer-e371-palettes-synthetic-v6_3022v passed 22 source-guard, browser, bookmark and regression tests.",
+    "Protected viewer-e371-palettes-real-h70idj7m compared all 1484 source bytes and 736 displayed colors, preserved 36 scoped payloads and 183 resource pages, and matched 1106 Python/Docker files.",
+    "Published 40 private local files with verified preimages out/ffta-e371-palettes-before-n3r23uii."
+  ],
+  "limitations": [
+    "Screen identity, subsequent changes and final in-game colors remain unverified. Native Windows remains deferred."
+  ],
+  "files": [
+    "scripts/view_rom_data.py",
+    "scripts/viewer_navigation.js",
+    "scripts/viewer_section_updates.json",
+    "scripts/extract_rom_data.py",
+    "view_rom_data.html",
+    "scripts/tests/test_viewer_screen_palettes.py"
+  ],
+  "references": [
+    "docs/development/ROM_DATA_VIEWER_TODO.md",
+    "docs/rom_data_ui_palettes.md"
+  ]
+}

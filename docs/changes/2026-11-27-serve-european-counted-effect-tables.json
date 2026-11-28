@@ -5,16 +5,17 @@
   "title": "Add European counted effect table extraction and runtime binding",
   "kind": "added",
   "platforms": [
-    "EUR implementation"
+    "EUR / Wine"
   ],
   "changes": [
-    "Stage e362-d361 support for the 3,016-byte E618 projection with counted source bounds, directory checks, original guest addresses and e361 compatibility."
+    "Publish the 3,016-byte E618 projection in e362-d361 with counted source bounds, directory checks, original guest addresses and e361 compatibility."
   ],
   "validation": [
-    "The independent E618 source audit l_fm3i3u passes under Wine. E619 Windows build pv6sdirf was still running when the user paused the goal. The e362 reader and CLI checks had not started."
+    "Windows build pv6sdirf and Wine xutdfh0i pass. Original readers cover all 1,455 samples, six directory slots and fifteen literal sites with altered backing. They consume 5,972 managed bytes with matching state and clock.",
+    "Stage g3g2y23h retains the verified 164-file dataset. CLI creation, verification and reuse, e361 attachment, two invalid candidates, 2,496 mixed boundary reads, 17 input guards and Wine drain pass."
   ],
   "limitations": [
-    "Runtime acceptance, ordinary and translated paths, Linux, USA and native Windows are pending."
+    "Ordinary triggers, selector domains, clipped variants, translated paths, Linux, USA and native Windows remain in recovery. No performance measurements."
   ],
   "files": [
     "crates/gba-core/src/rom_data.rs",
@@ -24,7 +25,10 @@
     "crates/recomp/src/rom_data/bg_packet_managed_tests.rs",
     "crates/recomp/src/rom_data/screen_update_table_tests.rs",
     "crates/recomp/src/rom_data/counted_effect_table_tests.rs",
-    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md"
+    "docs/development/PROJECT_STATE.md",
+    "docs/development/ROM_DATA_TODO.md",
+    "docs/development/ROM_DATA_VALIDATION_RECOVERY_TODO.md",
+    "docs/rom_data_graphics.md"
   ],
   "references": [
     "docs/rom_data_graphics.md",

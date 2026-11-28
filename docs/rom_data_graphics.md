@@ -2709,6 +2709,89 @@ All 11 input guards pass and the server drains. The result SHA-256 is
 Ordinary invocation and deferred platforms remain in the
 [recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
 
+## E619 European counted effect table runtime
+
+European `e362-d361` adds `graphics.counted-effect-tables` in
+`counted-effect-tables.bin`. The extractor follows the original
+counts through all 13 tables, checks the six directory entries and
+preserves the 24 alignment bytes in ROM. It publishes the 26 E618
+ranges and keeps all 162 e361 resource entries and files identical.
+The bound runtime serves these bytes at the original guest addresses.
+
+Windows build `pv6sdirf` and Wine `xutdfh0i` pass. The controlled
+test alters all 3,016 source bytes in the ROM backing and executes
+the original edge animation, indexed pair copy, biased pair copies
+and halfword readers. It reads all 1,455 samples, six directory
+slots and fifteen literal sites and checks 2,496 mixed-width mirror
+boundaries. The original readers consume 5,972 managed bytes.
+Complete guest state and clock match. e361 attaches and two invalid
+attachments preserve the active binding.
+
+The CLI creates, verifies and reuses the same 164-file dataset.
+Stage `e619-e362-stage-g3g2y23h` under `stage/e619-validation/staging`
+retains the generation after all 17 Wine input guards pass and the
+server drains. The stage result SHA-256 is
+`2d5c798c1d15d25247cae0103624efcb799fe6a707fc6c6ef8ee715ba769ec88`.
+The manifest SHA-256 is
+`a5d70dec8de4a2f12dae8dc2d23b47ad981d3ab084fe7387a8f9aff44f82e2a9`
+and the resource SHA-256 is
+`fe3d0b97942adef88f7487a8212be1ceaa1ed7b31cfd9bca75174515f7c02646`.
+Ordinary triggers, clipped variants, translated execution and
+deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E626 European direct rectangle directory
+
+The original task at `081240b2` selects one of five rectangle pointers
+from `3ac9f8` using its byte at offset 8. Its call to `080d80e0` copies
+one row starting at row zero. The original helper reads the width and
+uses a 32-byte destination stride. The same task selects four position
+presets per index from the preceding table at `3ac9e4`. The next
+independent control table begins at `3aca0c`.
+
+The five rectangles start at `ae9110`, `ae92f4`, `ae94d8`, `ae96bc`
+and `ae98a0`. Each contains a two-byte 16-row by 15-column header
+and 240 halfword cells. The five physical copies are byte-identical.
+Their distinct addresses preserve the original directory. Twelve
+alignment bytes around the copies remain outside the projection.
+
+Wine `y2ixxo5i` verifies 183 original instruction halfwords and
+reconciles the selected call with 67 direct call patterns. The e365
+ownership audit finds 2,458 bytes in nine unowned spans. These contain
+all 1,200 physical cells, both tables and two literal words. All 17
+input guards pass and Wine drains. Result SHA-256
+`c21dac38615727c1ed1d0ff3078c9e5ba3ad14adf4759cd0c4d28cc0dc11be42`.
+Runtime publication, ordinary selector producers, other row readers,
+translated execution and deferred platforms are tracked in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E627 European direct rectangle runtime
+
+Dataset `e366-d365` publishes the nine E626 ranges in
+`graphics.direct-rectangle-directory`, stored as
+`direct-rectangle-directory.bin`. The 2,458-byte file supplies all
+five rectangles and both selector tables at their original guest
+addresses. The e365 dataset still attaches, and all 166 earlier
+resources are byte-identical.
+
+Wine `k2luox3z` executes the original task's row-zero copy for all
+five indices and the shared copy helper for the other fifteen rows.
+All 1,200 cells and 20 position presets match with the selected ROM
+backing altered. The comparisons preserve the destination guards
+and match complete guest state and clock. The original readers
+consume 2,705 managed bytes, and 864 mixed and mirrored
+boundary reads pass. Two invalid candidates leave the active
+binding in place.
+
+Windows GNU build `awulgh29` and Wine CLI creation, verification
+and reuse pass. Stage `z3kgd901` retains the 168-file generation.
+All 17 Wine input guards pass, and the server drains. Stage result
+SHA-256 `1d62c953c1217440f93e55e46f48b4c1820f5d43a8fb22303d7328ea0cc3c5de`; manifest SHA-256
+`8cbe07c08cb5543d28d171a96330ad7334d501912cb3b1d6d1fe2b4d070341f3`.
+Live selector producers, ordinary use, translated execution, Linux,
+USA and native Windows remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
 ## Other raw UI palette sources
 
 [EUR e20raw UI palettes](rom_data_ui_palettes.md) add a separate21-bank source
@@ -4653,3 +4736,124 @@ byte-mode domain using controlled inputs. The alternate child for action
 73, secondary task 384, translated dispatch and earlier save ancestry
 remain open. Linux, USA, native Windows and performance measurement are
 deferred.
+
+## E641 European screen curve bank
+
+Two original screen controllers select 11 and 10 twenty-byte records
+at `3a7fb0` and `3a823c`. Each has two optional curve pointers at
+offsets 8 and 12. Together these pointers reach seven 60-halfword
+curves in `3a89b0..3a8cf8`. The null branches supply the original
+scale value 256. The accompanying eight-byte position tables at
+`3a80c8` and `3a8304` contain 14 and 16 rows respectively.
+
+The original task allocator clears the working state. The first
+controller initializes its motion countdowns to 60, increments its
+cursor before reading and checks completion after applying both axes.
+At index 60, the first six curve addresses resolve to the first
+halfword of the following curve. The seventh resolves to `3a8cf8`.
+The original call at `081193c0` independently copies the full
+20-byte record at that address. The second controller reads before
+incrementing and leaves the phase when its original palette task
+finishes. The scheduler order for that path remains in recovery.
+
+Wine source audit `g7hdz_cf` verifies 754 original halfwords, the
+record loops, seven curve roots and seven literals. The e372
+ownership join preserves 98 bytes in the first position table under
+the earlier compact OBJ owner. It leaves 1,450 unowned bytes across
+26 spans, including the full terminal copy record. All 14 input
+guards pass and Wine drains. Result SHA-256
+`7a947c1797d23b0d20dd2f88415475c4a2dfda4d4e3f9ad123a1e70e9df7afa8`.
+
+## E642 European screen curves at runtime
+
+`e373-d372` serves the 26 residual spans through
+`graphics.screen-curve-bank`. Its 1,450-byte packed file includes all
+seven curves, their original row and position fields, and the 20-byte
+record that supplies the last curve's index-60 value. The compact OBJ
+catalog continues to supply 98 bytes of the first position table.
+
+Windows build `25zklhz0` and Wine unit `tjpptb58` pass. With altered ROM
+backing, the first original controller advances through 660 row updates
+and reports completion after applying cursor 60. The test seeds 610
+cursor cases for the second controller and runs its original axis and
+rotation code. Both initializers cover all 30 position rows. The test
+exercises all seven index-60 aliases, the independent 20-byte copy and
+2,496 mixed-width ROM mirror boundary checks. Original instructions read
+24,026 bytes from the new owner. Full state, guest clock and copy guards
+match the original backing.
+
+The CLI creates, verifies and reuses 175 files without changing any of
+the 173 earlier resources. The e372 predecessor attaches, and rejecting
+two invalid candidates preserves the active e373 attachment. All 17
+protected inputs pass, and Wine drains and releases its lease. Stage
+`2mftykpq` retains the verified dataset. Result SHA-256
+`8606ec1611cc056e148d96cf620b7a20828a65aefd8c340165e0b1cce7d7a4da`.
+
+Ordinary screen triggers, the second controller's palette scheduler order,
+translated execution and the reader for `3a808c..3a80c8` remain in recovery.
+Linux, USA and native Windows validation remain open.
+
+## E647 European screen-effect motion tables
+
+The original scheduler at `08122c46` reads 22 halfword ticks from
+`3ac4dc`. These ticks run from zero through 420 in steps of 20. It
+passes the same index to the first sprite constructor. Four 22-byte
+arrays select the sprite, its coordinate offsets and one of four
+eight-byte interpolation records. A separate scheduler passes a byte
+index in the second sprite message. Its three physical 64-byte arrays
+select coordinate offsets and one of eight eight-byte records. The
+ordinary domain of that second index still needs a task trace.
+
+The original transition at `08123208` consumes 20 signed offset samples.
+At `08123380` the reader uses seven 20-byte records to start interpolation
+children at their recorded ticks. It passes each record's three endpoint
+pairs and duration to the child at `08122d9c`. After the seventh child,
+waiting for the active sprite can leave the record index at seven. The
+comparison then reads the first halfword of the existing blend bank at
+`3ac734`. Its ownership stays with the blend resource.
+
+The later controller reads all 84 signed scale values at `3ac7b8`.
+The two window branches both use the 160 bytes at `3ac860`, one for each
+scanline. The parent passes mode indices zero through four to the
+background animation, which reads the position pairs and four selector
+tables at `3ac900..3ac942`. The following compact OBJ and rectangle
+sources retain their established ownership.
+
+Wine source unit `cpyj8zyd` attests 1,001 original halfwords. Its e375
+ownership audit leaves 993 payload bytes and 96 bytes for 24 literal
+words, organized in 26 spans. The existing blend halfword remains an
+inherited source. All 14 protected inputs pass and Wine drains. Result
+SHA-256 `f1e6119778cfbf88ded38d68ce88434a2fe1f791fad0b9e4761031473712eff9`.
+E648 below verifies runtime publication. Live scheduling, translated
+execution and deferred platforms remain in the
+[recovery checklist](development/ROM_DATA_VALIDATION_RECOVERY_TODO.md).
+
+## E648 European screen-effect motion at runtime
+
+`e376-d375` publishes the 26 spans through
+`graphics.screen-effect-motion` in `screen-effect-motion.bin`. The
+1,089 packed bytes retain their guest addresses. The pending-release
+comparison reads the inherited halfword from the blend resource.
+
+Windows build `zj4qgpli` and Wine unit `3d4iw72q` pass. With altered ROM
+backing, the test exercises all 22 original spawn ticks and first sprite
+rows, 64 controlled physical second sprite rows and 12 sprite motion
+records. It follows the original offset, timed motion and scale readers
+for 20 samples, seven records and 84 samples respectively. Both directions
+produce all 160 scanlines. The five background modes produce the expected
+positions, interpolation state and delayed events. The original
+pending-release comparison reads the expected blend value with its
+backing altered too.
+
+The original readers request 5,147 bytes from the new owner. All 2,496
+mirrored boundary checks pass. Complete guest state, clock and scanline
+guards match. The CLI creates, verifies and reuses 178 files, preserving
+all 176 earlier resources by digest. e375 attaches and two invalid
+candidates leave the active attachment in place. All 17 protected inputs
+pass, and Wine drains and releases its lease. Stage `_l4sdrdj` retains
+the dataset. Result SHA-256
+`7ca612049ee8278cca5049ae7aee53e98650ec66eb3b08e1b1be5f62d8e15f51`.
+
+The test supplies sprite indices and task context to the original
+readers. Ordinary triggers, task timing, the live second sprite index
+range, translated paths, Linux, USA and native Windows remain in recovery.
